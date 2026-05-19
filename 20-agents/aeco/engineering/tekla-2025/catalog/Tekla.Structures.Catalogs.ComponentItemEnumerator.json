@@ -1,0 +1,60 @@
+{
+  "name": "ComponentItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The ComponentItemEnumerator class allows to loop through the component catalog items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/56616cbe-13dc-2aee-eb1e-1438529de663",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSize",
+      "signature": "public int GetSize()",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db63047f-fe9b-99cf-200b-c0f83bb909b6"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/62006a3f-6909-42e1-a397-62eaeb85c44f"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/458e0c09-e8ec-7988-92a2-b14462fee30b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "ComponentItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a component item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2d874ffc-75ae-97ee-2ede-6c1a2923c0c7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

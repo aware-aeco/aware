@@ -1,0 +1,183 @@
+{
+  "name": "IFunctions",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "interface",
+  "summary": "Interface for executing calculation commands",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-ifunctions-64158",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddSection()",
+      "signature": "int AddSection()",
+      "summary": "Add a new variable section using the Tedds \u0027AddSection\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Returns the unique identifier of the new variable section"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/cf6f8832e7b6969398c9ceea55831ef219bfb40e6df7f228337dc225c5b6e61b"
+    },
+    {
+      "name": "Eval(string)",
+      "signature": "ICalcValue Eval(string Expression)",
+      "summary": "Returns the result of calculating an expression using the Tedds \u0027Eval\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+      "params": [
+        {
+          "name": "Expression",
+          "type": "string",
+          "doc": "Expression to calculate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICalcValue",
+        "doc": "Result of expression"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/f12c48fb7e6b02853b7fd3e115ef93ba3d6485cbbde1c3e4caa508c64c053fc4"
+    },
+    {
+      "name": "GetVar(string)",
+      "signature": "ICalcValue GetVar(string name)",
+      "summary": "Returns the value of a named variable using the Tedds \u0027GetVar\u0027 function",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the variable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICalcValue",
+        "doc": "Variables value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/06724dd15ce9e7ecae0e434ae49c424386e8db35cf88628ed181367f1568c5c5"
+    },
+    {
+      "name": "SetSection(int, string)",
+      "signature": "bool SetSection(int sectionId, string name)",
+      "summary": "Set the active variable section using the Tedds \u0027SetSection\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+      "params": [
+        {
+          "name": "sectionId",
+          "type": "int",
+          "doc": "Unique numeric identifier of the section which is to become the active section",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Display name of the section",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if successful; otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/4f0bba553d273c2ad4ca659bda6b5a4d2e56cbea2d65e54802a66a82cef76a59"
+    },
+    {
+      "name": "SetVar(string, object, string, string)",
+      "signature": "ICalcValue SetVar(string name, object value, string units = \u0022\u0022, string attributes = \u0022\u0022)",
+      "summary": "Assigns a value to the named variable using the Tedds \u0027SetVar\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the variable",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "Value to assign",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "string",
+          "doc": "Units of the assigned value, only applicable if the value is numeric.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "string",
+          "doc": "Variable attribute flags (h = hidden, t = temporary, e = expression, r = readonly)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICalcValue",
+        "doc": "Actual value of variable"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/355af9947c940067d8dec66613858a8b7a2e3e3a8413f309dad0abaf4fe6e968"
+    },
+    {
+      "name": "SetVarExpr(string, string, string)",
+      "signature": "ICalcValue SetVarExpr(string name, string value, string attributes = \u0022e\u0022)",
+      "summary": "Assigns an expression value to the named variable using the Tedds \u0027SetVar\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the variable",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "Expression to assign",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "string",
+          "doc": "attributes Variable attribute flags (h = hidden, t = temporary, e = expression, r = readonly)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICalcValue",
+        "doc": "numerical error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/59fc94f41fcb37cd176f6ba197b309e77d3c9589bca3de51a838caf6d37a9cb3"
+    },
+    {
+      "name": "VarExists(string)",
+      "signature": "bool VarExists(string name)",
+      "summary": "Returns true if the named variable already exists using the Tedds \u0027VarExists\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the variable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the variable already exists; otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/9ec27b9571900c755ad66a85fd2f3330299740800e8ac6c407eb68205c40f53e"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

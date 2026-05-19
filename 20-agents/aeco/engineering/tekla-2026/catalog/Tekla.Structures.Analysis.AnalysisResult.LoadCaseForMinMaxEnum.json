@@ -1,0 +1,89 @@
+{
+  "name": "AnalysisResult.LoadCaseForMinMaxEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Special load case numbers for min/max queries.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/63b98a3d-878d-ce75-ffeb-dfa9212b67f0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOADCASE_WITH_MIN_VALUE",
+      "value": -1,
+      "summary": "The load case with the minimum signed value of the queried value type."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_VALUE",
+      "value": -2,
+      "summary": "The load case with the maximum signed value of the queried value type."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_ABSOLUTE_VALUE",
+      "value": -3,
+      "summary": "The load case with the maximum absolute value of the queried value type."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_FX_VALUE",
+      "value": -11,
+      "summary": "The load case with the maximum axial (FX) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MIN_FX_VALUE",
+      "value": -12,
+      "summary": "The load case with the minimum axial (FX) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_FY_VALUE",
+      "value": -13,
+      "summary": "The load case with the maximum shear Y (FY) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MIN_FY_VALUE",
+      "value": -14,
+      "summary": "The load case with the minimum shear Y (FY) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_FZ_VALUE",
+      "value": -15,
+      "summary": "The load case with the maximum shear Z (FZ) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MIN_FZ_VALUE",
+      "value": -16,
+      "summary": "The load case with the minimum shear Z (FZ) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_MX_VALUE",
+      "value": -17,
+      "summary": "The load case with the maximum torsional moment (MX) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MIN_MX_VALUE",
+      "value": -18,
+      "summary": "The load case with the minimum torsional moment (MX) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_MY_VALUE",
+      "value": -19,
+      "summary": "The load case with the maximum bending moment Y (MY) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MIN_MY_VALUE",
+      "value": -20,
+      "summary": "The load case with the minimum bending moment Y (MY) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MAX_MZ_VALUE",
+      "value": -21,
+      "summary": "The load case with the maximum bending moment Z (MZ) value."
+    },
+    {
+      "name": "LOADCASE_WITH_MIN_MZ_VALUE",
+      "value": -22,
+      "summary": "The load case with the minimum bending moment Z (MZ) value."
+    }
+  ]
+}

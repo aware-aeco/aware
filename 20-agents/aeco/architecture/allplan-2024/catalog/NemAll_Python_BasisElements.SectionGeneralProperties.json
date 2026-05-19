@@ -1,0 +1,107 @@
+{
+  "name": "SectionGeneralProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "General section properties",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/",
+  "constructors": [
+    {
+      "name": "SectionGeneralProperties",
+      "signature": "SectionGeneralProperties() | SectionGeneralProperties(bInitFromSTW)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FilterProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the filter properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.FilterProperties"
+    },
+    {
+      "name": "FormatProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the format properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.FormatProperties"
+    },
+    {
+      "name": "HiddenSectionLinesProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the hidden section line properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.HiddenSectionLinesProperties"
+    },
+    {
+      "name": "LabelingProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the labeling properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.LabelingProperties"
+    },
+    {
+      "name": "PlacementAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the placement angle :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.PlacementAngle"
+    },
+    {
+      "name": "PlacementPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the placement point :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.PlacementPoint"
+    },
+    {
+      "name": "PlacementPointType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the placement point :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.PlacementPointType"
+    },
+    {
+      "name": "ShowSectionBody",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the showing of the section body :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.ShowSectionBody"
+    },
+    {
+      "name": "Status",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the drawing state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.Status"
+    },
+    {
+      "name": "VisibleHiddenEdgesProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the visible and hidden edge properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.VisibleHiddenEdgesProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

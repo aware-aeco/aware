@@ -1,0 +1,34 @@
+{
+  "name": "TaskDependency.DependencyTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The task dependency types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/51995429-984b-e28d-1b25-adbb3a83fe37",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FINISH_TO_FINISH",
+      "value": 0,
+      "summary": "The task dependency type finish-to-finish."
+    },
+    {
+      "name": "FINISH_TO_START",
+      "value": 1,
+      "summary": "The task dependency type finish-to-start."
+    },
+    {
+      "name": "START_TO_FINISH",
+      "value": 2,
+      "summary": "The task dependency type start-to-finish."
+    },
+    {
+      "name": "START_TO_START",
+      "value": 3,
+      "summary": "The task dependency type start-to-start."
+    }
+  ]
+}

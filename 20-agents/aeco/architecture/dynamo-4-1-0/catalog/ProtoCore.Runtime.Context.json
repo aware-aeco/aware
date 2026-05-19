@@ -1,0 +1,41 @@
+{
+  "name": "Context",
+  "namespace": "ProtoCore.Runtime",
+  "kind": "class",
+  "summary": "Type Context",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs",
+  "constructors": [
+    {
+      "name": "Context()",
+      "signature": "void Context()",
+      "summary": "Context.Context",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsImplicitCall",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Context.IsImplicitCall",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "IsReplicating",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Context.IsReplicating",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

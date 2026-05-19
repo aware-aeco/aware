@@ -1,0 +1,97 @@
+{
+  "name": "ContinuationStructure",
+  "namespace": "ProtoCore.Lang",
+  "kind": "class",
+  "summary": "Continuation structure holds the data for a partial execution of a replicated callsite",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs",
+  "constructors": [
+    {
+      "name": "ContinuationStructure()",
+      "signature": "void ContinuationStructure()",
+      "summary": "ContinuationStructure.ContinuationStructure",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Done",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "True iff execution is complete",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "InitialArguments",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "ContinuationStructure.InitialArguments",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "InitialDepth",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The depth of the replicating member function used in determining thisPtr",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "InitialDotCallDimensions",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "These are cached at the first replicating call so that they can be used in GC when the replication is Done",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "InitialPC",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The instruction point of the replicating CALLR instruction needs to be cached in order to return to the next instruction at end of replication",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "IsFirstCall",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This flag indicates whether the current FEP call is a continuation of a replicating call",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "NextDispatchArgs",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "This is the resolved list of arguments that should be used to execute the function end point",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "Result",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "This represents the result. If execution of the callsite is complete this is the retun value, otherwise it is a partial value",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    },
+    {
+      "name": "RunningResult",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/ContinuationStructure.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

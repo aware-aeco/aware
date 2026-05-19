@@ -1,0 +1,29 @@
+{
+  "name": "DimensionSetBaseAttributes.ExtensionLineTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The extension line types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8afb849b-02f7-669f-c75e-ae42040fd4cf",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "No",
+      "value": 0,
+      "summary": "The extension lines are visible."
+    },
+    {
+      "name": "Yes",
+      "value": 1,
+      "summary": "The extension lines of a dimension are not visible."
+    },
+    {
+      "name": "NotOnGridlines",
+      "value": 2,
+      "summary": "The extension lines are not visible when the lines are on a grid."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "EncodedBinary",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.EncodedBinary.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=EncodedBinary",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Content",
+      "type": "byte[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Base64-encoded contents of a file",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=EncodedBinary"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,257 @@
+{
+  "name": "BaseElementAdapterService",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "Implementation of the base element adapter service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AdaptElementsAfterTransaction",
+      "signature": "AdaptElementsAfterTransaction( elements: BaseElementAdapterList, ) -\u003E BaseElementAdapterList",
+      "summary": "Adapt the elements after a transaction (set new address, ...)",
+      "remarks": "Adapt the elements after a transaction (set new address, ...)",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements to adapt",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Adapted elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.AdaptElementsAfterTransaction"
+    },
+    {
+      "name": "GetConnectedElements",
+      "signature": "GetConnectedElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterList",
+      "summary": "Get the connected elements (ivk2)",
+      "remarks": "Get the connected elements (ivk2)",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Connected elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.GetConnectedElements"
+    },
+    {
+      "name": "GetDocumentIndex",
+      "signature": "GetDocumentIndex(ele: BaseElementAdapter) -\u003E int",
+      "summary": "Get the internal index of the element-document",
+      "remarks": "Get the internal index of the element-document",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Internal index of the element-document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.GetDocumentIndex"
+    },
+    {
+      "name": "GetLinkedElements",
+      "signature": "GetLinkedElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterVector",
+      "summary": "Get the linked elements",
+      "remarks": "Get the linked elements",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterVector",
+        "doc": "Linked elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.GetLinkedElements"
+    },
+    {
+      "name": "GetMacroElementAddress",
+      "signature": "GetMacroElementAddress(ele: BaseElementAdapter) -\u003E int",
+      "summary": "Get the array address of macro element, if exist",
+      "remarks": "Get the array address of macro element, if exist",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Address of macro if exist, otherwise 0"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.GetMacroElementAddress"
+    },
+    {
+      "name": "IsConnectedElement",
+      "signature": "IsConnectedElement(ele1: BaseElementAdapter, ele2: BaseElementAdapter) -\u003E bool",
+      "summary": "Check, whether the two elements are connected",
+      "remarks": "Check, whether the two elements are connected",
+      "params": [
+        {
+          "name": "ele1",
+          "type": "BaseElementAdapter",
+          "doc": "First element",
+          "optional": false
+        },
+        {
+          "name": "ele2",
+          "type": "BaseElementAdapter",
+          "doc": "Second element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are connected: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.IsConnectedElement"
+    },
+    {
+      "name": "IsElementFromElementGroup",
+      "signature": "IsElementFromElementGroup(ele: BaseElementAdapter) -\u003E bool",
+      "summary": "Check, whether the element is inside an element group",
+      "remarks": "Check, whether the element is inside an element group",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is inside an element group"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.IsElementFromElementGroup"
+    },
+    {
+      "name": "IsElementOrChildDeleted",
+      "signature": "IsElementOrChildDeleted(ele: BaseElementAdapter) -\u003E bool",
+      "summary": "Check, whether the element or a child element is deleted",
+      "remarks": "Check, whether the element or a child element is deleted",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element or child element is deleted"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.IsElementOrChildDeleted"
+    },
+    {
+      "name": "IsElementVisible",
+      "signature": "IsElementVisible(ele: BaseElementAdapter) -\u003E bool",
+      "summary": "Check, whether the element is visible",
+      "remarks": "Check, whether the element is visible",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is visible: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.IsElementVisible"
+    },
+    {
+      "name": "IsPostActivation",
+      "signature": "IsPostActivation(ele: BaseElementAdapter) -\u003E bool",
+      "summary": "Get the post activation state from the element",
+      "remarks": "Get the post activation state from the element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element with post activation: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.IsPostActivation"
+    },
+    {
+      "name": "IsTypeConnectedElement",
+      "signature": "IsTypeConnectedElement(ele: BaseElementAdapter, eleTypes: object) -\u003E bool",
+      "summary": "Check, whether the element is a type connected element",
+      "remarks": "Check, whether the element is a type connected element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "eleTypes",
+          "type": "object",
+          "doc": "Type(s) of the connection element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Text connected element: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterService.IsTypeConnectedElement"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

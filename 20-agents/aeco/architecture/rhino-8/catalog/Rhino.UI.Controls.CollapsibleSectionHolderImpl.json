@@ -1,0 +1,113 @@
+{
+  "name": "CollapsibleSectionHolderImpl",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.CollapsibleSectionHolderImpl\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_CollapsibleSectionHolderImpl.htm",
+  "constructors": [
+    {
+      "name": "CollapsibleSectionHolderImpl",
+      "signature": "public CollapsibleSectionHolderImpl(ICollapsibleSectionHolder client)",
+      "summary": "Initializes a new instance of the CollapsibleSectionHolderImpl class",
+      "params": [
+        {
+          "name": "client",
+          "type": "Rhino.UI.Controls.ICollapsibleSectionHolder",
+          "doc": "[Missing \u003Cparam name=\u0022client\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionHolderImpl.#ctor(Rhino.UI.Controls.ICollapsibleSectionHolder)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionHolderImpl__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the CollapsibleSectionHolderImpl",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionHolderImpl_Dispose.htm"
+    },
+    {
+      "name": "Find",
+      "signature": "public static ICollapsibleSectionHolder Find(IntPtr cpp)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cpp",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022cpp\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionHolderImpl.Find(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICollapsibleSectionHolder",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionHolderImpl.Find(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionHolderImpl_Find.htm"
+    },
+    {
+      "name": "IsSameObject",
+      "signature": "public bool IsSameObject(IntPtr cpp)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cpp",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022cpp\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionHolderImpl.IsSameObject(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionHolderImpl.IsSameObject(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionHolderImpl_IsSameObject.htm"
+    },
+    {
+      "name": "NewNativeWrapper",
+      "signature": "public static ICollapsibleSectionHolder NewNativeWrapper(IntPtr cpp)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cpp",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022cpp\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionHolderImpl.NewNativeWrapper(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICollapsibleSectionHolder",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionHolderImpl.NewNativeWrapper(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionHolderImpl_NewNativeWrapper.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_CollapsibleSectionHolderImpl_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

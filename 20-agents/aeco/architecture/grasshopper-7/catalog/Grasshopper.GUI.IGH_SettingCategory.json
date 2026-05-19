@@ -1,0 +1,46 @@
+{
+  "name": "IGH_SettingCategory",
+  "namespace": "Grasshopper.GUI",
+  "kind": "interface",
+  "summary": "Represents a single category in the Settings UI. Implement this interface or derive from GH_SettingsCategory to add a new Category to the Grasshopper Settings interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_IGH_SettingCategory.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Category description.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_SettingCategory_Description.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Category icon. Image should be 48x48 pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_SettingCategory_Icon.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Category name (not case sensitive). Use dots to separate subcategories.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_SettingCategory_Name.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the parent category. If the category is supposed to be top-level, this property will return null or a String.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_SettingCategory_Parent.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

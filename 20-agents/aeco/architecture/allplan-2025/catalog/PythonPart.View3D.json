@@ -1,0 +1,45 @@
+{
+  "name": "View3D",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Definition of a 3D view class",
+  "base": "View",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View3D/",
+  "constructors": [
+    {
+      "name": "View3D",
+      "signature": "View3D( elements: list[Any] | View3D()",
+      "summary": "Initialization of 3D view class",
+      "remarks": "Initialization of 3D view class",
+      "params": [
+        {
+          "name": "elements",
+          "type": "list[Any] | None",
+          "doc": "elements. Defaults to None.",
+          "optional": false
+        },
+        {
+          "name": "start_scale",
+          "type": "float",
+          "doc": "start scale. Defaults to 0.",
+          "optional": false
+        },
+        {
+          "name": "end_scale",
+          "type": "float",
+          "doc": "end scale. Defaults to 9999.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View3D/#PythonPart.View3D.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

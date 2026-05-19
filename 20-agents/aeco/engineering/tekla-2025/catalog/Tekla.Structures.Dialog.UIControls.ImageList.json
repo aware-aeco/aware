@@ -1,0 +1,25 @@
+{
+  "name": "ImageList",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ImageList class contains a list of ImageItems.",
+  "base": "System.Collections.Generic.List",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f4a5efe1-273a-dfc1-f835-f417cf772dde",
+  "constructors": [
+    {
+      "name": "ImageList",
+      "signature": "public ImageList()",
+      "summary": "Initializes a new instance of the ImageList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f0376fb7-a37d-bca5-635c-ad3b829b243f"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

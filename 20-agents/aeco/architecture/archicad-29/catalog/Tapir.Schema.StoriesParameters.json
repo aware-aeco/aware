@@ -1,0 +1,22 @@
+{
+  "name": "StoriesParameters",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of project stories, each with their complete parameters.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoriesParameters",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "StoryParameters[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoriesParameters"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

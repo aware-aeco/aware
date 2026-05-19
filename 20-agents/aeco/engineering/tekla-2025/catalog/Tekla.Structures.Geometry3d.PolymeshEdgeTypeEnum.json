@@ -1,0 +1,24 @@
+{
+  "name": "PolymeshEdgeTypeEnum",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "enum",
+  "summary": "The type of the polymesh edge. This should always correspond 1:1 with geometry::IndirectEdge_s::EdgeType_e on the Tekla Structures Core side",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/51c45a07-942f-59e1-2f66-5f88f94356ee",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "VISIBLE_EDGE",
+      "value": 1,
+      "summary": "Explicitly states that this edge is visible"
+    },
+    {
+      "name": "INVISIBLE_EDGE",
+      "value": 2,
+      "summary": "For hiding edges in visualizations"
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "name": "MeshVertexColorList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the vertex colors of a mesh object.",
+  "interfaces": [
+    "IResizableList\u003CColor\u003E",
+    "IList\u003CColor\u003E",
+    "ICollection\u003CColor\u003E",
+    "IEnumerable\u003CColor\u003E",
+    "IEnumerable",
+    "IList",
+    "ICollection",
+    "IReadOnlyList\u003CColor\u003E",
+    "IReadOnlyCollection\u003CColor\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_MeshVertexColorList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(Color)",
+      "signature": "public int Add(Color color)",
+      "summary": "Adds a new vertex color to the end of the color list.",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "Color to append, Alpha channels will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_Add.htm"
+    },
+    {
+      "name": "Add(Int32, Int32, Int32)",
+      "signature": "public int Add(int red, int green, int blue)",
+      "summary": "Adds a new vertex color to the end of the color list.",
+      "params": [
+        {
+          "name": "red",
+          "type": "System.Int32",
+          "doc": "Red component of color, must be in the 0~255 range.",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "System.Int32",
+          "doc": "Green component of color, must be in the 0~255 range.",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "System.Int32",
+          "doc": "Blue component of color, must be in the 0~255 range.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_Add_1.htm"
+    },
+    {
+      "name": "AppendColors",
+      "signature": "public bool AppendColors(Color[] colors)",
+      "summary": "Appends a collection of colors to the vertex color list. For the Mesh to be valid, the number of colors must match the number of vertices.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "System.Drawing.Color[]",
+          "doc": "Colors to append.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_AppendColors.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the vertex color list on the mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_Clear.htm"
+    },
+    {
+      "name": "CreateMonotoneMesh",
+      "signature": "public bool CreateMonotoneMesh(Color baseColor)",
+      "summary": "Constructs a valid vertex color list consisting of a single color.",
+      "params": [
+        {
+          "name": "baseColor",
+          "type": "System.Drawing.Color",
+          "doc": "Color to apply to every vertex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_CreateMonotoneMesh.htm"
+    },
+    {
+      "name": "Destroy",
+      "signature": "public void Destroy()",
+      "summary": "Releases all memory allocated to store vertex colors. The list capacity will be 0 after this call. Subsequent calls can add new items.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_Destroy.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CColor\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all colors in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CColor\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_GetEnumerator.htm"
+    },
+    {
+      "name": "SetColor(Int32, Color)",
+      "signature": "public bool SetColor(int index, Color color)",
+      "summary": "Sets or adds a vertex to the Vertex List. If [index] is less than [Count], the existing vertex at [index] will be modified.If [index] equals [Count], a new vertex is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex color to set. If index equals Count, then the color will be appended.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "Color to set, Alpha channels will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_SetColor_1.htm"
+    },
+    {
+      "name": "SetColor(MeshFace, Color)",
+      "signature": "public bool SetColor(MeshFace face, Color color)",
+      "summary": "Sets a color at the three or four vertex indices of a specified face.",
+      "params": [
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "A face to use to retrieve indices.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "A color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success; false on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_SetColor.htm"
+    },
+    {
+      "name": "SetColor(Int32, Int32, Int32, Int32)",
+      "signature": "public bool SetColor(int index, int red, int green, int blue)",
+      "summary": "Sets or adds a vertex color to the color List. If [index] is less than [Count], the existing vertex at [index] will be modified.If [index] equals [Count], a new vertex is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex color to set. If index equals Count, then the color will be appended.",
+          "optional": false
+        },
+        {
+          "name": "red",
+          "type": "System.Int32",
+          "doc": "Red component of vertex color. Value must be in the 0~255 range.",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "System.Int32",
+          "doc": "Green component of vertex color. Value must be in the 0~255 range.",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "System.Int32",
+          "doc": "Blue component of vertex color. Value must be in the 0~255 range.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_SetColor_2.htm"
+    },
+    {
+      "name": "SetColors",
+      "signature": "public bool SetColors(Color[] colors)",
+      "summary": "Sets all the vertex colors in one go. For the Mesh to be valid, the number of colors must match the number of vertices.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "System.Drawing.Color[]",
+          "doc": "Colors to set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_SetColors.htm"
+    },
+    {
+      "name": "ToARGBArray",
+      "signature": "public int[] ToARGBArray()",
+      "summary": "Return colors as an array of integers with packed ARGB values",
+      "params": [],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.MeshVertexColorList.ToARGBArray\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexColorList_ToARGBArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Capacity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the total number of vertex colors the internal data structure can hold without resizing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshVertexColorList_Capacity.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of mesh colors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshVertexColorList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the vertex color at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshVertexColorList_Item.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "MappingTag",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a mapping information for the mesh associated with these vertex colors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshVertexColorList_Tag.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,800 @@
+{
+  "name": "OBB",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The OBB class represents an oriented 3d bounding box.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5c37ba3e-c3a3-b597-5998-714e46e499c8",
+  "constructors": [
+    {
+      "name": "OBB()",
+      "signature": "public OBB()",
+      "summary": "Initializes a new instance of the OBB class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/44c1bf4e-913f-84ae-d0f4-ccf6169a5114"
+    },
+    {
+      "name": "OBB(OBB)",
+      "signature": "public OBB(OBB obb)",
+      "summary": "Initializes a new instance of the OBB class.",
+      "params": [
+        {
+          "name": "obb",
+          "type": "Tekla.Structures.Geometry3d.OBB",
+          "doc": "OBB to be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when initialization fails."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc4f77e4-093e-988e-ae64-5b33f519e0c0"
+    },
+    {
+      "name": "OBB(Point, .Vector[], .Double[])",
+      "signature": "public OBB(Point center, Vector[] axis, double[] extent)",
+      "summary": "Initializes a new instance of the OBB class.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Center point of the OBB.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": ".Tekla.Structures.Geometry3d.Vector.",
+          "doc": "Three element array of unit-length vectors parallel the axis of the OBB.",
+          "optional": false
+        },
+        {
+          "name": "extent",
+          "type": ".System.Double.",
+          "doc": "Three element array of the OBB extents (half-lengths of the edges).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when initialization fails."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1c313fcb-2f22-bf27-fc7e-482e9af4a077"
+    },
+    {
+      "name": "OBB(Point, Vector, Vector, Vector, Double, Double, Double)",
+      "signature": "public OBB(Point center, Vector axis0, Vector axis1, Vector axis2, double extent0, double extent1, double extent2)",
+      "summary": "Initializes a new instance of the OBB class.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Center point of the OBB",
+          "optional": false
+        },
+        {
+          "name": "axis0",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Unit-length vector parallel to one axis of the OBB.",
+          "optional": false
+        },
+        {
+          "name": "axis1",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Unit-length vector parallel to the second axis of the OBB.",
+          "optional": false
+        },
+        {
+          "name": "axis2",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Unit-length vector parallel to the third axis of the OBB.",
+          "optional": false
+        },
+        {
+          "name": "extent0",
+          "type": "System.Double",
+          "doc": "The extent (half-length) of the side parallel to axis one.",
+          "optional": false
+        },
+        {
+          "name": "extent1",
+          "type": "System.Double",
+          "doc": "The extent (half-length) of the side parallel to axis two.",
+          "optional": false
+        },
+        {
+          "name": "extent2",
+          "type": "System.Double",
+          "doc": "The extent (half-length) of the side parallel to axis three.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when initialization fails."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fe7bc8eb-6c5d-7aa6-2a2a-308def227d90"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestPointTo(Line)",
+      "signature": "public Point ClosestPointTo(Line line)",
+      "summary": "Calculates the closest point in OBB to given Line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "Line to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "Closest point in OBB to given Line."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the line parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a25d70d5-3938-345a-a199-ab5b4b770e43"
+    },
+    {
+      "name": "ClosestPointTo(LineSegment)",
+      "signature": "public Point ClosestPointTo(LineSegment lineSegment)",
+      "summary": "Calculates the closest point in OBB to given LineSegment.",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "LineSegment to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "Closest point in OBB to given LineSegment."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the lineSegment parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6edbf96c-c1c5-3fea-7f13-bed5db6c5ee4"
+    },
+    {
+      "name": "ClosestPointTo(Point)",
+      "signature": "public Point ClosestPointTo(Point point)",
+      "summary": "Calculates the closest point in OBB to given point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Point to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "Closest point in OBB to given point."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the point parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8ec45629-7b3a-29a2-0392-2cc29be33c8e"
+    },
+    {
+      "name": "ComputeVertices",
+      "signature": "public Point[] ComputeVertices()",
+      "summary": "Calculates the corner points of the OBB.",
+      "params": [],
+      "returns": {
+        "type": ".Point.",
+        "doc": "Array of corner points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dcd2474b-161b-da47-6359-bf876385b237"
+    },
+    {
+      "name": "DistanceTo(Line)",
+      "signature": "public double DistanceTo(Line line)",
+      "summary": "Calculates the distance from OBB to given Line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "Line to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Distance from OBB to given Line."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the line parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2610518f-52c2-ea1b-3c7a-1c7180057ce3"
+    },
+    {
+      "name": "DistanceTo(LineSegment)",
+      "signature": "public double DistanceTo(LineSegment lineSegment)",
+      "summary": "Calculates the distance from OBB to given LineSegment.",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "LineSegment to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Distance from OBB to given LineSegment."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the lineSegment parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9a3589b-b8a8-2d5b-e527-e9b42c43650e"
+    },
+    {
+      "name": "DistanceTo(Point)",
+      "signature": "public double DistanceTo(Point point)",
+      "summary": "Calculates the distance from OBB to given point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Point to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Distance from OBB to given point."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the point parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c9b771f-0733-4f40-dbdc-140832c3130e"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Tests for the exact equality of two OBBs.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "Object to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the OBBs are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ff7e1d3-fb35-30cd-ac4e-322fe65a6109"
+    },
+    {
+      "name": "Equals(OBB)",
+      "signature": "public bool Equals(OBB other)",
+      "summary": "Tests for the exact equality of two OBBs.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Geometry3d.OBB",
+          "doc": "OBB to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the OBBs are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4352acdc-5e16-9feb-5113-64ff906e73ce"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets the hash code for the obb.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "Hash code for the obb."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67b6f680-a672-b7bf-bc9d-dce1437c1108"
+    },
+    {
+      "name": "IntersectionPointsWith(Line)",
+      "signature": "public Point[] IntersectionPointsWith(Line line)",
+      "summary": "Calculates the intersection points between OBB and given Line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "Line to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": ".Point.",
+        "doc": "Array of intersection points."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the line parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f70ed589-fe37-2ab8-ee91-77aac4ebc562"
+    },
+    {
+      "name": "IntersectionPointsWith(LineSegment)",
+      "signature": "public Point[] IntersectionPointsWith(LineSegment lineSegment)",
+      "summary": "Calculates the intersection points between OBB and given LineSegment.",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "LineSegment to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": ".Point.",
+        "doc": "Array of intersection points."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the lineSegment parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c248e24c-b2c3-85e3-60a7-9874f25e9c99"
+    },
+    {
+      "name": "IntersectionWith(Line)",
+      "signature": "public LineSegment IntersectionWith(Line line)",
+      "summary": "Creates an intersection between the OBB and the given Line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "Line to calculate against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "Intersection as LineSegment or null if no intersection was found."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the line parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/18b7c3cd-6ec9-5406-83dc-b059faf6195a"
+    },
+    {
+      "name": "IntersectionWith(LineSegment)",
+      "signature": "public LineSegment IntersectionWith(LineSegment lineSegment)",
+      "summary": "Creates an intersection between the OBB and the given LineSegment.",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "LineSegment to calculate against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "Intersection as LineSegment or null if no intersection was found."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the lineSegment parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bfb9225e-4d44-5202-e089-bf6922640275"
+    },
+    {
+      "name": "Intersects(GeometricPlane)",
+      "signature": "public bool Intersects(GeometricPlane geometricPlane)",
+      "summary": "Tests if current OBB intersects with the given GeometricPlane",
+      "params": [
+        {
+          "name": "geometricPlane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "GeometricPlane to test against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the OBB intersects with the given GeometricPlane, otherwise false"
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the geometricPlane parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7d52dbda-9f4a-3724-a90a-8657f81ef392"
+    },
+    {
+      "name": "Intersects(Line)",
+      "signature": "public bool Intersects(Line line)",
+      "summary": "Tests if current OBB intersects with the given Line",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "Line to test against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the OBB intersects with the given Line, otherwise false"
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the line parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d5afac1a-997b-13dd-e4e1-dcae5d52a536"
+    },
+    {
+      "name": "Intersects(LineSegment)",
+      "signature": "public bool Intersects(LineSegment lineSegment)",
+      "summary": "Tests if current OBB intersects with the given LineSegment",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "LineSegment to test against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the OBB intersects with the given LineSegment, otherwise false"
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the lineSegment parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/de6988ef-d6f1-80fb-e617-712faf099d59"
+    },
+    {
+      "name": "Intersects(OBB)",
+      "signature": "public bool Intersects(OBB obb)",
+      "summary": "Tests if current OBB intersects with the given OBB",
+      "params": [
+        {
+          "name": "obb",
+          "type": "Tekla.Structures.Geometry3d.OBB",
+          "doc": "OBB to test against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the OBBs intersect, otherwise false"
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the obb parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d81fab1c-b77c-982c-c180-b511b40252e0"
+    },
+    {
+      "name": "SetAxis(.Vector[])",
+      "signature": "public void SetAxis(Vector[] axis)",
+      "summary": "Sets the Axis to the OBB.",
+      "params": [
+        {
+          "name": "axis",
+          "type": ".Tekla.Structures.Geometry3d.Vector.",
+          "doc": "Three element array of unit-length vectors parallel the axis of the OBB.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when setting the axis fails."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/72ab5a44-1b83-4e60-f54c-304d9dff66b6"
+    },
+    {
+      "name": "SetAxis(Vector, Vector, Vector)",
+      "signature": "public void SetAxis(Vector axis0, Vector axis1, Vector axis2)",
+      "summary": "Sets the Axis to the OBB.",
+      "params": [
+        {
+          "name": "axis0",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Unit-length vector parallel to one axis of the OBB.",
+          "optional": false
+        },
+        {
+          "name": "axis1",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Unit-length vector parallel to the second axis of the OBB.",
+          "optional": false
+        },
+        {
+          "name": "axis2",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Unit-length vector parallel to the third axis of the OBB.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when setting the axis fails."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef0df18d-695b-93ff-004a-6ff160d3a5b8"
+    },
+    {
+      "name": "SetExtent(.Double[])",
+      "signature": "public void SetExtent(double[] extent)",
+      "summary": "Sets the extents to the OBB.",
+      "params": [
+        {
+          "name": "extent",
+          "type": ".System.Double.",
+          "doc": "Three element array of the OBB extents (half-lengths of the edges).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when setting the extent fails."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6521170d-c8ab-0b5b-a4a1-67857790cde3"
+    },
+    {
+      "name": "SetExtent(Double, Double, Double)",
+      "signature": "public void SetExtent(double extent0, double extent1, double extent2)",
+      "summary": "Sets the extents to the OBB.",
+      "params": [
+        {
+          "name": "extent0",
+          "type": "System.Double",
+          "doc": "The extent (half-length) of the side parallel to axis one.",
+          "optional": false
+        },
+        {
+          "name": "extent1",
+          "type": "System.Double",
+          "doc": "The extent (half-length) of the side parallel to axis two.",
+          "optional": false
+        },
+        {
+          "name": "extent2",
+          "type": "System.Double",
+          "doc": "The extent (half-length) of the side parallel to axis three.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when setting the extent fails."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ae6c99a9-697a-e284-dcb5-bd8116fffcaa"
+    },
+    {
+      "name": "ShortestSegmentTo(Line)",
+      "signature": "public LineSegment ShortestSegmentTo(Line line)",
+      "summary": "Calculates the shortest LineSegment from OBB to the given Line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "Line to calculate against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "Shortest LineSegment from OBB to the given Line."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the line parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b6b25124-7c30-8e80-196d-f86f4f86762e"
+    },
+    {
+      "name": "ShortestSegmentTo(LineSegment)",
+      "signature": "public LineSegment ShortestSegmentTo(LineSegment lineSegment)",
+      "summary": "Calculates the shortest LineSegment from OBB to the given LineSegment.",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "LineSegment to calculate against",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "Shortest LineSegment from OBB to the given LineSegment."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the lineSegment parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3aed389b-03cd-c05e-cc2d-0ea7863d558e"
+    },
+    {
+      "name": "ShortestSegmentTo(Point)",
+      "signature": "public LineSegment ShortestSegmentTo(Point point)",
+      "summary": "Calculates the shortest LineSegment from OBB to the given point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Point to calculate against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "Shortest LineSegment from OBB to the given point."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when null is assigned to the point parameter."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4670fbf1-45ee-bde7-32c2-d7edbf307843"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Axis0",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an axis parallel to one side of the OBB, a unit-length vector orthogonal to Axis1 and Axis2.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ad2827a-5551-9c0c-19d5-347941bfe8f9"
+    },
+    {
+      "name": "Axis1",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an axis parallel to the second side of the OBB, a unit-length vector orthogonal to Axis0 and Axis2.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9cbc8e90-6769-9bdd-25c1-12ccc05b97d4"
+    },
+    {
+      "name": "Axis2",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an axis parallel to the third side of the OBB, a unit-length vector orthogonal to Axis0 and Axis1.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4542852f-d9ee-7ed3-01b6-02540f47ef20"
+    },
+    {
+      "name": "Center",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the center point of the box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f6c82558-bcea-80f3-2645-7db0ced7f473"
+    },
+    {
+      "name": "Extent0",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the extent parallel to Axis0.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4f81ff38-3342-02a1-cdf0-0648c1048f44"
+    },
+    {
+      "name": "Extent1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the extent parallel to Axis1.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d16f3ccf-ca5f-d325-6c91-4f35e3a976ea"
+    },
+    {
+      "name": "Extent2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the extent parallel to Axis2.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a775a6e0-ec8b-ad1b-765b-2a701e4b0aa1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

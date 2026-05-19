@@ -1,0 +1,41 @@
+{
+  "name": "Boolean",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "struct",
+  "summary": "The Boolean datatype.",
+  "remarks": "The purpose of this type is to enable dialog field binding with StructuresExtender. You don\u0027t need to use this type in your own programs.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0dbf9276-f795-5425-8573-6ff1d402fa38",
+  "constructors": [
+    {
+      "name": "Boolean",
+      "signature": "public Boolean(bool boolValue)",
+      "summary": "Initializes a new instance of the structure.",
+      "params": [
+        {
+          "name": "boolValue",
+          "type": "System.Boolean",
+          "doc": "The boolean value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5efcccb3-448c-63b9-18ca-094432c9e6fd"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the boolean value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67d99c10-937e-53d8-e226-59ab565fd0bd"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

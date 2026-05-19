@@ -1,0 +1,32 @@
+{
+  "name": "SetGDLParameterByNameDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Details of a GDL parameter.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetGDLParameterByNameDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetGDLParameterByNameDetails"
+    },
+    {
+      "name": "value",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetGDLParameterByNameDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

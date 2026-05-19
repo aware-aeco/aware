@@ -1,0 +1,69 @@
+{
+  "name": "TextureMappingType",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Defines enumerated constants for mapping types such as planar, cylindrical or spherical.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_TextureMappingType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No mapping is selected."
+    },
+    {
+      "name": "SurfaceParameters",
+      "value": 1,
+      "summary": "(u, v) = linear transform of surface params, w = 0."
+    },
+    {
+      "name": "PlaneMapping",
+      "value": 2,
+      "summary": "(u, v, w) = 3d coordinates wrt frame."
+    },
+    {
+      "name": "CylinderMapping",
+      "value": 3,
+      "summary": "(u, v, w) = longitude, height, radius."
+    },
+    {
+      "name": "SphereMapping",
+      "value": 4,
+      "summary": "(u, v, w) = longitude,latitude,radius."
+    },
+    {
+      "name": "BoxMapping",
+      "value": 5,
+      "summary": "Box mapping type."
+    },
+    {
+      "name": "MeshMappingPrimitive",
+      "value": 6,
+      "summary": "Mapping primitive is a mesh."
+    },
+    {
+      "name": "SurfaceMappingPrimitive",
+      "value": 7,
+      "summary": "Mapping primitive is a surface."
+    },
+    {
+      "name": "BrepMappingPrimitive",
+      "value": 8,
+      "summary": "Mapping primitive is a brep."
+    },
+    {
+      "name": "OcsMapping",
+      "value": 9,
+      "summary": "OCS mapping type (WCS/WCS Box with object frame)."
+    },
+    {
+      "name": "FalseColors",
+      "value": 10,
+      "summary": "Some sort of false color mapping used to set per vertex colors"
+    }
+  ]
+}

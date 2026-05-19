@@ -1,0 +1,39 @@
+{
+  "name": "VisibilityOverrides",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Visibility Overrides.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.VisibilityOverrides",
+  "constructors": [
+    {
+      "name": "VisibilityOverrides(Autodesk.Navisworks.Api.ModelItemCollection)",
+      "signature": "VisibilityOverrides(Autodesk.Navisworks.Api.ModelItemCollection hidden)",
+      "summary": "Visibility Overrides.",
+      "params": [
+        {
+          "name": "hidden",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VisibilityOverrides.%23ctor%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Hidden",
+      "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Visibility Overrides.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VisibilityOverrides.Hidden"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,47 @@
+{
+  "name": "GH_ColourPickerEventArgs",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "Arguments passed via GH_SliderBase.ValueChanged events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_ColourPickerEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Colour",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the new value of the colour picker. This value is cached, so even if the picker subsequently updates, this property remains constant.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerEventArgs_Colour.htm"
+    },
+    {
+      "name": "ColourPicker",
+      "type": "GH_ColourPickerBase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the instance of the picker that raised the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerEventArgs_ColourPicker.htm"
+    },
+    {
+      "name": "Intermediate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the change was an intermediate one.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerEventArgs_Intermediate.htm"
+    },
+    {
+      "name": "Original",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the original value of the colour picker. This value is cached, so even if the picker subsequently updates, this property remains constant.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerEventArgs_Original.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

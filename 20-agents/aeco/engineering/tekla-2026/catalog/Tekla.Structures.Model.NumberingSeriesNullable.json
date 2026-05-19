@@ -1,0 +1,65 @@
+{
+  "name": "NumberingSeriesNullable",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The NumberingSeriesNullable class describes how an object is to be numbered.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e2273fc8-03bf-259b-a74a-ae85efeca9e6",
+  "constructors": [
+    {
+      "name": "NumberingSeriesNullable()",
+      "signature": "public NumberingSeriesNullable()",
+      "summary": "Initializes a new instance of the NumberingSeriesNullable class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bca0517c-44eb-8154-fa02-addb3b429f04"
+    },
+    {
+      "name": "NumberingSeriesNullable(String, Int32)",
+      "signature": "public NumberingSeriesNullable(string prefix, int number)",
+      "summary": "Initializes a new instance of the NumberingSeriesNullable class with the given arguments.",
+      "params": [
+        {
+          "name": "prefix",
+          "type": "System.String",
+          "doc": "The prefix to be used.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "The start number to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dccc9eaa-d434-9789-d28e-713abc7f194a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Prefix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numbering prefix.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fb2322a6-fcba-63db-7a77-a3ed96be5640"
+    },
+    {
+      "name": "StartNumber",
+      "type": "Nullable\u003CInt32\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numbering start number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/56a5d8ea-09a5-94e9-b0d1-0231037503d7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

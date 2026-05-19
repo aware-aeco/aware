@@ -1,0 +1,42 @@
+{
+  "name": "LegacyManager",
+  "namespace": "Autodesk.Navisworks.Api.Interop.Plugins",
+  "kind": "class",
+  "summary": "LegacyManager class in Autodesk.Navisworks.Api.Interop.Plugins.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.Plugins.LegacyManager",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadPlugins",
+      "signature": "static int LoadPlugins(System.Attribute attribLoading)",
+      "summary": "LoadPlugins method of LegacyManager.",
+      "params": [
+        {
+          "name": "attribLoading",
+          "type": "System.Attribute",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.Plugins.LegacyManager.LoadPlugins%28System.Attribute%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Plugins",
+      "type": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.Interop.Plugins.LegacyPlugin\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Plugins property of LegacyManager.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.Plugins.LegacyManager.Plugins"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,41 @@
+{
+  "name": "CrashErrorReportArgs",
+  "namespace": "Dynamo.Core",
+  "kind": "class",
+  "summary": "Event argument for CER (crash error reporting) tool. It contains options on what to send out with the crash report.",
+  "base": "Dynamo.Core.CrashPromptArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs",
+  "constructors": [
+    {
+      "name": "CrashErrorReportArgs(System.Exception)",
+      "signature": "void CrashErrorReportArgs(System.Exception e)",
+      "summary": "Constructs the options class to customize what CER will collect.",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Exception",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SendRecordedCommands",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Allow Dynamo to send the recorded commands file to the CER system.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

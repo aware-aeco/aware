@@ -1,0 +1,29 @@
+{
+  "name": "GH_LoadingMechanism",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all assembly loading mechanisms.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_LoadingMechanism.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": -1,
+      "summary": "Assembly was loaded with an unknown mechanism."
+    },
+    {
+      "name": "COFF",
+      "value": 1,
+      "summary": "Assembly was loaded from a memory byte-array representation of the file."
+    },
+    {
+      "name": "Direct",
+      "value": 2,
+      "summary": "Assembly was loaded directly from disk."
+    }
+  ]
+}

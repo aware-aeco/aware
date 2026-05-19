@@ -1,0 +1,75 @@
+{
+  "name": "IExtension",
+  "namespace": "Dynamo.Extensions",
+  "kind": "interface",
+  "summary": "An extension to the model layer of Dynamo",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtension.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Ready(Dynamo.Extensions.ReadyParams)",
+      "signature": "void Ready(Dynamo.Extensions.ReadyParams sp)",
+      "summary": "Action to be invoked when the Dynamo has started up and is ready for user interaction. This action is guaranteed to be called even if the extension is installed after startup. Exceptions thrown from this method will be caught by Dynamo and logged.",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Dynamo.Extensions.ReadyParams",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtension.cs"
+    },
+    {
+      "name": "Shutdown",
+      "signature": "void Shutdown()",
+      "summary": "Action to be invoked when shutdown has begun.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtension.cs"
+    },
+    {
+      "name": "Startup(Dynamo.Extensions.StartupParams)",
+      "signature": "void Startup(Dynamo.Extensions.StartupParams sp)",
+      "summary": "Action to be invoked when Dynamo begins to start up. This action is *not* guaranteed to be invoked unless the extension is already installed at startup. Exceptions thrown from this method will be caught by Dynamo and logged.",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Dynamo.Extensions.StartupParams",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtension.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "A name for the Extension. This is used for more user-readable logging.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtension.cs"
+    },
+    {
+      "name": "UniqueId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "A unique id for this extension instance. There may be multiple instances of the same type, but the application will *not* allow two instances to coexist with the same id.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtension.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

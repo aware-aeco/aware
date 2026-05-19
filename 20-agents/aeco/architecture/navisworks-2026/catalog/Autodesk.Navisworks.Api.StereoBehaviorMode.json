@@ -1,0 +1,24 @@
+{
+  "name": "StereoBehaviorMode",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The stereo mode in use in stereo viewing options.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.StereoBehaviorMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BehindScreen",
+      "value": 0,
+      "summary": "Objects look as if they\u0027re behind the screen"
+    },
+    {
+      "name": "AroundFocalPoint",
+      "value": 1,
+      "summary": "Focal point is on screen, objects can be in front and behind"
+    }
+  ]
+}

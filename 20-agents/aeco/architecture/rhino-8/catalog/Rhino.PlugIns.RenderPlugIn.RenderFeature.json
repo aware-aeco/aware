@@ -1,0 +1,106 @@
+{
+  "name": "RenderPlugIn.RenderFeature",
+  "namespace": "Rhino.PlugIns",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.PlugIns.RenderPlugIn.RenderFeature\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_RenderPlugIn_RenderFeature.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Materials",
+      "value": 0
+    },
+    {
+      "name": "Environments",
+      "value": 1
+    },
+    {
+      "name": "Textures",
+      "value": 2
+    },
+    {
+      "name": "PostEffects",
+      "value": 3
+    },
+    {
+      "name": "Sun",
+      "value": 4
+    },
+    {
+      "name": "CustomRenderMeshes",
+      "value": 5
+    },
+    {
+      "name": "Decals",
+      "value": 6
+    },
+    {
+      "name": "GroundPlane",
+      "value": 7
+    },
+    {
+      "name": "SkyLight",
+      "value": 8
+    },
+    {
+      "name": "CustomDecalProperties",
+      "value": 9
+    },
+    {
+      "name": "LinearWorkflow",
+      "value": 10
+    },
+    {
+      "name": "Exposure",
+      "value": 11
+    },
+    {
+      "name": "ShadowOnlyGroundPlane",
+      "value": 12
+    },
+    {
+      "name": "RenderBlowup",
+      "value": 13
+    },
+    {
+      "name": "RenderWindow",
+      "value": 14
+    },
+    {
+      "name": "RenderInWindow",
+      "value": 15
+    },
+    {
+      "name": "FocalBlur",
+      "value": 17
+    },
+    {
+      "name": "RenderArctic",
+      "value": 18
+    },
+    {
+      "name": "RenderViewSource",
+      "value": 19
+    },
+    {
+      "name": "CustomSkylightEnvironment",
+      "value": 20
+    },
+    {
+      "name": "CustomReflectionEnvironment",
+      "value": 21
+    },
+    {
+      "name": "RenderChannels",
+      "value": 22
+    },
+    {
+      "name": "LightMaterials",
+      "value": 23
+    }
+  ]
+}

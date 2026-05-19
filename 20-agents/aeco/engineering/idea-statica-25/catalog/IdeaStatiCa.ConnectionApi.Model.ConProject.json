@@ -1,0 +1,38 @@
+{
+  "name": "ConProject",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConProject.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConProject.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ProjectId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConProject.projectId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConProject.md"
+    },
+    {
+      "name": "ProjectInfo",
+      "type": "ConProjectData",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConProject.projectInfo.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConProject.md"
+    },
+    {
+      "name": "Connections",
+      "type": "List\u003CConConnection\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConProject.connections.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConProject.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

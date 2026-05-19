@@ -1,0 +1,91 @@
+{
+  "name": "AxisElementAdapter",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "Implementation of the axis element adapter",
+  "base": "BaseElementAdapter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/",
+  "constructors": [
+    {
+      "name": "AxisElementAdapter",
+      "signature": "AxisElementAdapter() | AxisElementAdapter(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAxis",
+      "signature": "GetAxis()",
+      "summary": "Get wall axis",
+      "remarks": "Get wall axis",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "IGeometry2D arbitrary curve pointer"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetAxis"
+    },
+    {
+      "name": "GetGeometry",
+      "signature": "GetGeometry()",
+      "summary": "copydoc BaseElementAdapter::GetGeometry",
+      "remarks": "copydoc BaseElementAdapter::GetGeometry",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetGeometry"
+    },
+    {
+      "name": "GetTiersCount",
+      "signature": "GetTiersCount()",
+      "summary": "Get the amount of tiers",
+      "remarks": "Get the amount of tiers",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "number of tiers of this axis element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetTiersCount"
+    },
+    {
+      "name": "HasAxis",
+      "signature": "HasAxis()",
+      "summary": "Check, if this element has an axis",
+      "remarks": "Check, if this element has an axis",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if axis element has an axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.HasAxis"
+    },
+    {
+      "name": "IsNull",
+      "signature": "IsNull()",
+      "summary": "copydoc BaseElementAdapter::IsNull",
+      "remarks": "copydoc BaseElementAdapter::IsNull",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.IsNull"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

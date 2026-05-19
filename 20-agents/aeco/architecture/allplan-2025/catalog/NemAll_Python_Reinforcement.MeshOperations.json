@@ -1,0 +1,53 @@
+{
+  "name": "MeshOperations",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.MeshOperations.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshOperations/",
+  "constructors": [
+    {
+      "name": "MeshOperations",
+      "signature": "MeshOperations()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshOperations/#NemAll_Python_Reinforcement.MeshOperations.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CutMesh",
+      "signature": "CutMesh(placements: BaseElementAdapter, divisionLine: Polygon2D) -\u003E str",
+      "summary": "Divide the bars placement",
+      "remarks": "Divide the bars placement",
+      "params": [
+        {
+          "name": "placement",
+          "type": "object",
+          "doc": "BaseElementAdapter with the placement",
+          "optional": false
+        },
+        {
+          "name": "cutPolygon",
+          "type": "object",
+          "doc": "Cut polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Result message"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshOperations/#NemAll_Python_Reinforcement.MeshOperations.CutMesh"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

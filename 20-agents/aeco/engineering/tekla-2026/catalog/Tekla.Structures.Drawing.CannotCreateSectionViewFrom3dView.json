@@ -1,0 +1,32 @@
+{
+  "name": "CannotCreateSectionViewFrom3dView",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotCreateSectionViewFrom3dView class defines the exception that is thrown when a user tries to create a section view from a 3d view.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4df15a75-29d2-f97f-fb2d-26edc10a4b2b",
+  "constructors": [
+    {
+      "name": "CannotCreateSectionViewFrom3dView",
+      "signature": "public CannotCreateSectionViewFrom3dView(string Message)",
+      "summary": "Creates a new cannot create section view from 3d view exception instance.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e1879bd1-4a3e-a987-0446-7a93421ec824"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

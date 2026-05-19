@@ -1,0 +1,61 @@
+{
+  "name": "Installation",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "The type of Rhino executable that is executing",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_Installation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "Unknown"
+    },
+    {
+      "name": "Commercial",
+      "value": 1
+    },
+    {
+      "name": "Educational",
+      "value": 2
+    },
+    {
+      "name": "EducationalLab",
+      "value": 3
+    },
+    {
+      "name": "NotForResale",
+      "value": 4
+    },
+    {
+      "name": "NotForResaleLab",
+      "value": 5
+    },
+    {
+      "name": "Beta",
+      "value": 6
+    },
+    {
+      "name": "BetaLab",
+      "value": 7
+    },
+    {
+      "name": "Evaluation",
+      "value": 8,
+      "summary": "25 Save limit evaluation version of Rhino"
+    },
+    {
+      "name": "Corporate",
+      "value": 9
+    },
+    {
+      "name": "EvaluationTimed",
+      "value": 10,
+      "summary": "90 day time limit evaluation version of Rhino"
+    }
+  ]
+}

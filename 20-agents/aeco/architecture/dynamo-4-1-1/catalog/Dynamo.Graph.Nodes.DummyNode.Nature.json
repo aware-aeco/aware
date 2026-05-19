@@ -1,0 +1,22 @@
+{
+  "name": "Nature",
+  "namespace": "Dynamo.Graph.Nodes.DummyNode",
+  "kind": "enum",
+  "summary": "Type Nature",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/DummyNode.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Deprecated",
+      "value": 0
+    },
+    {
+      "name": "Unresolved",
+      "value": 1
+    }
+  ]
+}

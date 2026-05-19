@@ -1,0 +1,324 @@
+{
+  "name": "GH_Variant",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "Variant data used in Grasshopper Expressions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_Variant.htm",
+  "constructors": [
+    {
+      "name": "GH_Variant()",
+      "signature": "public GH_Variant()",
+      "summary": "Create a new Null variant.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor.htm"
+    },
+    {
+      "name": "GH_Variant(Boolean)",
+      "signature": "public GH_Variant(bool value)",
+      "summary": "Create a new Bool variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_6.htm"
+    },
+    {
+      "name": "GH_Variant(Complex)",
+      "signature": "public GH_Variant(Complex value)",
+      "summary": "Create a new Complex variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_2.htm"
+    },
+    {
+      "name": "GH_Variant(Double)",
+      "signature": "public GH_Variant(double value)",
+      "summary": "Create a new Double variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_7.htm"
+    },
+    {
+      "name": "GH_Variant(GH_Variant)",
+      "signature": "public GH_Variant(GH_Variant other)",
+      "summary": "Duplicate a Variant.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "doc": "Variant to duplicate",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_1.htm"
+    },
+    {
+      "name": "GH_Variant(Int32)",
+      "signature": "public GH_Variant(int value)",
+      "summary": "Create a new Integer variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_8.htm"
+    },
+    {
+      "name": "GH_Variant(Plane)",
+      "signature": "public GH_Variant(Plane value)",
+      "summary": "Create a new Plane variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Plane",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_3.htm"
+    },
+    {
+      "name": "GH_Variant(Point3d)",
+      "signature": "public GH_Variant(Point3d value)",
+      "summary": "Create a new Point variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Point3d",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_4.htm"
+    },
+    {
+      "name": "GH_Variant(String)",
+      "signature": "public GH_Variant(string value)",
+      "summary": "Create a new String variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_9.htm"
+    },
+    {
+      "name": "GH_Variant(Vector3d)",
+      "signature": "public GH_Variant(Vector3d value)",
+      "summary": "Create a new Point variant.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Vector3d",
+          "doc": "Value of Variant.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant__ctor_5.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Data\u003CT\u003E",
+      "signature": "public T Data\u003CT\u003E()",
+      "summary": "Perform a straight cast of the data inside this Variant.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "The value inside this Variant cast to T."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant_Data__1.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public GH_Variant Duplicate()",
+      "summary": "Duplicate this Variant. If the type of this Variant is [unknown] the contents are not guaranteed to be duplicated.",
+      "params": [],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant_Duplicate.htm"
+    },
+    {
+      "name": "Evaluate",
+      "signature": "public bool Evaluate()",
+      "summary": "If this variant represents a string, this function will attempt to evaluate that string and replace the data inside this variant.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the string was evaluated, false if otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant_Evaluate.htm"
+    },
+    {
+      "name": "ToGoo",
+      "signature": "public IGH_Goo ToGoo()",
+      "summary": "Attempt to convert a Variant to a Grasshopper IGH_Goo type.",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": "An instance of a class implementing IGH_Goo or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant_ToGoo.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_Variant_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "_Bool",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as a bool.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__Bool.htm"
+    },
+    {
+      "name": "_Complex",
+      "type": "Complex",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as a complex number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__Complex.htm"
+    },
+    {
+      "name": "_Double",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as a double. If the Variant is of type Integer this cast will also work.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__Double.htm"
+    },
+    {
+      "name": "_Int",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as an integer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__Int.htm"
+    },
+    {
+      "name": "_Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as a Plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__Plane.htm"
+    },
+    {
+      "name": "_Point",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as a Point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__Point.htm"
+    },
+    {
+      "name": "_String",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as a String. This function will work for all Variant types.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__String.htm"
+    },
+    {
+      "name": "_Vector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of this Variant as a Vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant__Vector.htm"
+    },
+    {
+      "name": "IsNumeric",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the Variant is a numeric type. Only Doubles and Integers are considered to be Numeric.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant_IsNumeric.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_VariantType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Type of this Variant.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_Variant_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Weld.WeldPositionEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The weld position.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/845f121d-e5ce-cfe1-1467-bd657060b631",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WELD_POSITION_PLUS_X",
+      "value": 1,
+      "summary": "The position \u002Bx."
+    },
+    {
+      "name": "WELD_POSITION_MINUS_X",
+      "value": 2,
+      "summary": "The position -x."
+    },
+    {
+      "name": "WELD_POSITION_PLUS_Y",
+      "value": 3,
+      "summary": "The position \u002By."
+    },
+    {
+      "name": "WELD_POSITION_MINUS_Y",
+      "value": 4,
+      "summary": "The position -y."
+    },
+    {
+      "name": "WELD_POSITION_PLUS_Z",
+      "value": 5,
+      "summary": "The position \u002Bz."
+    },
+    {
+      "name": "WELD_POSITION_MINUS_Z",
+      "value": 6,
+      "summary": "The position -z."
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "name": "Events",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The Events class allows the user to register event listeners for drawing events.",
+  "remarks": "Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft\u0027s documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft\u0027s documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft\u0027s documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/70b96e37-c90a-f11f-1554-a4bf7c4147e4",
+  "constructors": [
+    {
+      "name": "Events",
+      "signature": "public Events()",
+      "summary": "Constructs a new instance of Events.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/440e228c-47af-3808-420e-53d5017956be"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Disposes of the Events instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4d79d261-bcf1-d034-f6d8-6c413402a2a8"
+    },
+    {
+      "name": "InitializeLifetimeService",
+      "signature": "public override Object InitializeLifetimeService()",
+      "summary": "Initializes the lifetime service.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Always null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d68de3c6-70b9-635e-aeef-074e2c0ee453"
+    },
+    {
+      "name": "Register",
+      "signature": "public void Register()",
+      "summary": "Registers the instance to listen to the specified events.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if attempting registration when already registered."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b196e5b4-cac8-a0dd-94f3-2f351076174a"
+    },
+    {
+      "name": "UnRegister",
+      "signature": "public void UnRegister()",
+      "summary": "Unregisters the instance from listening to events.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aaab4b70-a62a-2f51-bca6-3926ab0b156b"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "DrawingChanged",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingStatusChangedDelegate",
+      "signature": "public event Events.DrawingStatusChangedDelegate DrawingChanged",
+      "summary": "The DrawingChanged event is raised when the drawing has been changed and the database is committed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5fbe8494-e106-fdcc-720a-a513e1d87046",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingDeleted",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingDeletedDelegate",
+      "signature": "public event Events.DrawingDeletedDelegate DrawingDeleted",
+      "summary": "The DrawingDeleted event is raised when a drawing has been deleted.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3a3213f5-aa9f-9c69-5263-4d36fb12851b",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingInserted",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingInsertedDelegate",
+      "signature": "public event Events.DrawingInsertedDelegate DrawingInserted",
+      "summary": "The DrawingInserted event is raised when a drawing has been inserted.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/735b2e7d-95df-fb8a-a7aa-ce30800afa0b",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingReadyForIssuingChange",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingReadyForIssuingChangeDelegate",
+      "signature": "public event Events.DrawingReadyForIssuingChangeDelegate DrawingReadyForIssuingChange",
+      "summary": "The DrawingReadyForIssuingChange event is raised just after a drawing is marked or unmarked ready for issuing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea59f224-4b9c-d9b2-ecb9-3e333a3a6cbe",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingStatusChanged",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingStatusChangedDelegate",
+      "signature": "public event Events.DrawingStatusChangedDelegate DrawingStatusChanged",
+      "summary": "The DrawingStatusChanged event is raised when the drawing status has changed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9006d864-225b-0144-4e0e-88c243fe1224",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingUpdated",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingUpdatedDelegate",
+      "signature": "public event Events.DrawingUpdatedDelegate DrawingUpdated",
+      "summary": "The DrawingUpdated event is raised when the drawing has been inserted, deleted or modified, and the database is committed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b3864f6-9c92-e5d7-e611-eadcc58ae121",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

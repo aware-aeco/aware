@@ -1,0 +1,34 @@
+{
+  "name": "RefitTrimKnotMode",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "The mode for adding kinots to the surface for fitting",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_RefitTrimKnotMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No knots are added"
+    },
+    {
+      "name": "UniformEntireSurface",
+      "value": 1,
+      "summary": "The entire surface is fit using uniform spacing with the specified number of knots"
+    },
+    {
+      "name": "UniformPerSpan",
+      "value": 2,
+      "summary": "Each existing span is uniformly spaced with the specified number of knots"
+    },
+    {
+      "name": "Custom",
+      "value": 3,
+      "summary": "The provided knot vector will be used"
+    }
+  ]
+}

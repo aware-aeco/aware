@@ -1,0 +1,527 @@
+{
+  "name": "GH_FontServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Maintains a collection of standard fonts and mays to measure them.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_FontServer.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FontToString",
+      "signature": "public static string FontToString(Font font)",
+      "summary": "Convert a font to a string.",
+      "params": [
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to convert.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Strig representing the font family, size, bold and italic flags."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_FontToString.htm"
+    },
+    {
+      "name": "MeasureString(String, Font)",
+      "signature": "public static Size MeasureString(string text, Font font)",
+      "summary": "Measure the size of a string",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The string to measure",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "The font to measure with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_MeasureString.htm"
+    },
+    {
+      "name": "MeasureString(String, Font, SizeF)",
+      "signature": "public static Size MeasureString(string text, Font font, SizeF iLayout)",
+      "summary": "Measure the size of a string",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The string to measure",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "The font to measure with",
+          "optional": false
+        },
+        {
+          "name": "iLayout",
+          "type": "System.Drawing.SizeF",
+          "doc": "The layout rectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_MeasureString_1.htm"
+    },
+    {
+      "name": "MeasureString(String, Font, Single)",
+      "signature": "public static Size MeasureString(string text, Font font, float maxwidth)",
+      "summary": "Measure the size of a string",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The string to measure",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "The font to measure with",
+          "optional": false
+        },
+        {
+          "name": "maxwidth",
+          "type": "System.Single",
+          "doc": "The maximum width (in pixels) for the layout",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_MeasureString_2.htm"
+    },
+    {
+      "name": "NewFont(Font, FontStyle)",
+      "signature": "public static Font NewFont(Font font, FontStyle style)",
+      "summary": "Safe font constructor.",
+      "params": [
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Base font.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "System.Drawing.FontStyle",
+          "doc": "New style.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_NewFont.htm"
+    },
+    {
+      "name": "NewFont(Font, Single)",
+      "signature": "public static Font NewFont(Font font, float size)",
+      "summary": "Safe font constructor.",
+      "params": [
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Base font.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Single",
+          "doc": "New size (points)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_NewFont_1.htm"
+    },
+    {
+      "name": "NewFont(FontFamily, Single)",
+      "signature": "public static Font NewFont(FontFamily family, float size)",
+      "summary": "Safe font constructor.",
+      "params": [
+        {
+          "name": "family",
+          "type": "System.Drawing.FontFamily",
+          "doc": "Font family.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Single",
+          "doc": "Size (in points).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_NewFont_3.htm"
+    },
+    {
+      "name": "NewFont(Font, Single, FontStyle)",
+      "signature": "public static Font NewFont(Font font, float size, FontStyle style)",
+      "summary": "Safe font constructor.",
+      "params": [
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Base font.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Single",
+          "doc": "New size (points)",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "System.Drawing.FontStyle",
+          "doc": "New style.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_NewFont_2.htm"
+    },
+    {
+      "name": "NewFont(FontFamily, Single, FontStyle)",
+      "signature": "public static Font NewFont(FontFamily family, float size, FontStyle style)",
+      "summary": "Safe font constructor.",
+      "params": [
+        {
+          "name": "family",
+          "type": "System.Drawing.FontFamily",
+          "doc": "Font family.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Single",
+          "doc": "Size (in points).",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "System.Drawing.FontStyle",
+          "doc": "Style (if available).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_NewFont_4.htm"
+    },
+    {
+      "name": "NewFont(String, Single, FontStyle)",
+      "signature": "public static Font NewFont(string family, float size, FontStyle style)",
+      "summary": "High level function for Font creation. We\u0027ve ran into loads of trouble in the past with missing Fonts. Never create a font directly via GDI\u002B, always use this method.",
+      "params": [
+        {
+          "name": "family",
+          "type": "System.String",
+          "doc": "Font Family Name. If a font is found with the exact name, it will be loaded.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Single",
+          "doc": "Size of font.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "System.Drawing.FontStyle",
+          "doc": "Font style, if the requested family does not support the requested style, the style flags will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": "A font that might or might not be what you asked for."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_NewFont_5.htm"
+    },
+    {
+      "name": "StringToFont",
+      "signature": "public static Font StringToFont(string text)",
+      "summary": "Convert a font description string back into a font.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": "Font represented by the text, or null if no font could be created."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_StringToFont.htm"
+    },
+    {
+      "name": "StringWidth(IEnumerable\u003CString\u003E, Font)",
+      "signature": "public static int StringWidth(IEnumerable\u003Cstring\u003E text, Font font)",
+      "summary": "Measure the maximum width of a collection of strings",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The strings to measure",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "The font to measure with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_StringWidth.htm"
+    },
+    {
+      "name": "StringWidth(String, Font)",
+      "signature": "public static int StringWidth(string text, Font font)",
+      "summary": "Measure the width of a string in pixels",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The string to measure",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "The font to measure with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_FontServer_StringWidth_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Console",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "FontFamily.GenericMonospace, 10pt, regular",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_Console.htm"
+    },
+    {
+      "name": "ConsoleAdjusted",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "FontFamily.GenericMonospace, 10pt, regular, adjusted to counter UI scaling.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_ConsoleAdjusted.htm"
+    },
+    {
+      "name": "ConsoleSmall",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "FontFamily.GenericMonospace, 8pt, regular",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_ConsoleSmall.htm"
+    },
+    {
+      "name": "ConsoleSmallAdjusted",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "FontFamily.GenericMonospace, 8pt, regular, adjusted to counter UI scaling.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_ConsoleSmallAdjusted.htm"
+    },
+    {
+      "name": "FamilyConsole",
+      "type": "FontFamily",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the FontFamily used for monospaced fonts in Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_FamilyConsole.htm"
+    },
+    {
+      "name": "FamilyScript",
+      "type": "FontFamily",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the FontFamily used for scripted fonts in Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_FamilyScript.htm"
+    },
+    {
+      "name": "FamilyStandard",
+      "type": "FontFamily",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the FontFamily used for standard fonts in Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_FamilyStandard.htm"
+    },
+    {
+      "name": "Large",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "SystemFonts.CaptionFont, 10pt, bold",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_Large.htm"
+    },
+    {
+      "name": "LargeAdjusted",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "SystemFonts.CaptionFont, 10pt, bold, adjusted for logical pixel size.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_LargeAdjusted.htm"
+    },
+    {
+      "name": "Script",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "FontFamily.GenericSansSerif, 10pt, italic",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_Script.htm"
+    },
+    {
+      "name": "ScriptSmall",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "FontFamily.GenericSansSerif, 8pt, italic",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_ScriptSmall.htm"
+    },
+    {
+      "name": "Small",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "SystemFonts.CaptionFont, 6pt, regular",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_Small.htm"
+    },
+    {
+      "name": "Standard",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "SystemFonts.CaptionFont, 8pt, regular",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_Standard.htm"
+    },
+    {
+      "name": "StandardAdjusted",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "SystemFonts.CaptionFont, 8pt, regular, adjusted for logical pixel size.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_StandardAdjusted.htm"
+    },
+    {
+      "name": "StandardBold",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "SystemFonts.CaptionFont, 8pt, bold",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_StandardBold.htm"
+    },
+    {
+      "name": "StandardItalic",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "SystemFonts.CaptionFont, 8pt, italic",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_FontServer_StandardItalic.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ConsoleFamilyChanged",
+      "delegate": "Grasshopper.Kernel.GH_FontServer.ConsoleFamilyChangedEventHandler",
+      "signature": "public static event GH_FontServer.ConsoleFamilyChangedEventHandler ConsoleFamilyChanged",
+      "summary": "Raised whenever the MonospacedFamily is changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_FontServer_ConsoleFamilyChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ScriptFamilyChanged",
+      "delegate": "Grasshopper.Kernel.GH_FontServer.ScriptFamilyChangedEventHandler",
+      "signature": "public static event GH_FontServer.ScriptFamilyChangedEventHandler ScriptFamilyChanged",
+      "summary": "Raised whenever the ScriptFamily is changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_FontServer_ScriptFamilyChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "StandardFamilyChanged",
+      "delegate": "Grasshopper.Kernel.GH_FontServer.StandardFamilyChangedEventHandler",
+      "signature": "public static event GH_FontServer.StandardFamilyChangedEventHandler StandardFamilyChanged",
+      "summary": "Raised whenever the StandardFamily is changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_FontServer_StandardFamilyChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

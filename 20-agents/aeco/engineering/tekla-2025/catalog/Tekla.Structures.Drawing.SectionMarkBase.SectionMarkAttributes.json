@@ -1,0 +1,188 @@
+{
+  "name": "SectionMarkBase.SectionMarkAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SectionMarkAttributes class is the attributes class for section marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bc3ac46a-11ed-0b50-182d-2f8fbddb2763",
+  "constructors": [
+    {
+      "name": "SectionMarkBase.SectionMarkAttributes()",
+      "signature": "public SectionMarkAttributes()",
+      "summary": "Creates a new default SectionMarkAttributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8b3dccf3-faee-f358-6a4a-960832f4fd38"
+    },
+    {
+      "name": "SectionMarkBase.SectionMarkAttributes(String)",
+      "signature": "public SectionMarkAttributes(string AttributesFile)",
+      "summary": "Creates a new SectionMarkAttributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The attributes file\u0027s filename.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/56bf0682-1ed4-e8c8-8332-b625ee6cb3b9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6e982ee0-53e8-1f44-d19b-5c335d6e4462"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string attributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "attributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a6910abe-d01a-b867-6c65-66f7f1f34fa9"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LeftSymbol",
+      "type": "SectionMarkBase.SectionMarkSymbol",
+      "getter": true,
+      "setter": true,
+      "summary": "The symbol to use on the left side of the section mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/512dc9d6-004c-3b2b-b447-09a6a74c6d12"
+    },
+    {
+      "name": "LineColor",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the section mark line (see DrawingColors for options).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ed295db-9e73-cb3e-8e12-849fcf6dcd1f"
+    },
+    {
+      "name": "LineLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The length of the section mark lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2088eeef-8987-cbe5-99c0-908e57d3f59b"
+    },
+    {
+      "name": "LineLengthOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset from the end of the line on both sides of the section mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/76da036d-1b64-6c4d-c6bc-7483d33ff5c9"
+    },
+    {
+      "name": "LineWidth",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the section mark lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4d8d53ac-1750-58fa-ba05-f0175ae2eb17"
+    },
+    {
+      "name": "LineWidthOffsetLeft",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset from the start of the line on the left side of the section mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/24a95bb9-ebaa-0848-77fa-ff0a22d07699"
+    },
+    {
+      "name": "LineWidthOffsetRight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset from the start of the line on the right side of the section mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/60e79b1d-dde3-c7d1-c46c-59a1617869cb"
+    },
+    {
+      "name": "MarkName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The section mark name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d33dc499-88d5-3b9e-9a37-24ed53584fb0"
+    },
+    {
+      "name": "RightSymbol",
+      "type": "SectionMarkBase.SectionMarkSymbol",
+      "getter": true,
+      "setter": true,
+      "summary": "The symbol to use on the right side of the section mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/72f73fb2-7503-9ff0-2dde-3f49df533ced"
+    },
+    {
+      "name": "SymbolColor",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the mark symbols (see DrawingColors for options).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e2004329-6316-dc18-28c0-bbcfe0031cad"
+    },
+    {
+      "name": "TagsAttributes",
+      "type": "SectionMarkBase.SectionMarkTagsAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tags A1-A5 in the section mark attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f375bff7-4101-e4aa-c022-0f38f3f1c092"
+    },
+    {
+      "name": "TrueLineColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (rgb enabled) of the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b6508e14-14ed-53ff-83e9-e3ab97c238bd"
+    },
+    {
+      "name": "TrueSymbolColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (rgb enabled) of the symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/159d6e9f-c7c4-be8e-c11b-4730b14b317b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

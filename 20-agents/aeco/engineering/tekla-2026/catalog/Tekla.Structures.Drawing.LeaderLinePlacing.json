@@ -1,0 +1,62 @@
+{
+  "name": "LeaderLinePlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LeaderLinePlacing class defines a placing where the object is placed attached to a leader line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8d9ed204-c63f-3704-6012-4a401c2cd950",
+  "constructors": [
+    {
+      "name": "LeaderLinePlacing",
+      "signature": "public LeaderLinePlacing(Point LeaderLineStartPoint)",
+      "summary": "Creates a new leader line placing instance. The given point defines the start point of the leader line.",
+      "params": [
+        {
+          "name": "LeaderLineStartPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The start point of the leader line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d6d1cfc4-52bb-774b-7ca3-ff77d986202e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9eceac7d-2672-4279-d808-b365ecc3e2c7"
+    }
+  ],
+  "properties": [
+    {
+      "name": "StartPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "The start point of the leader line (if multiple leader lines exist, only returns the first).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3831ee31-2ad3-505d-4050-ae9cde9a4469"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

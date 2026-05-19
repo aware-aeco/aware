@@ -1,0 +1,66 @@
+{
+  "name": "AnalysisPartLoadingProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartLoadingProperties class contains information related to analysis part loading properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4f3a0d61-c97c-03ad-35a5-2209874b0ff9",
+  "constructors": [
+    {
+      "name": "AnalysisPartLoadingProperties",
+      "signature": "public AnalysisPartLoadingProperties()",
+      "summary": "Initializes a new instance of the AnalysisPartLoadingProperties class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9b97a13f-5cef-0c42-8527-c1f5287c2d6d"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LoadGenerationAutoCreateFixedSupports",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether fixed supports are automatically created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2e72f59c-3433-8aac-8546-0f1142b4f38b"
+    },
+    {
+      "name": "LoadGenerationGroupIdentifierFactors",
+      "type": "Dictionary\u003CInt32,Double\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The load generation group identifier factors.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3b68a778-bcf7-0198-e3f6-ef7ad35e7557"
+    },
+    {
+      "name": "LoadGenerationPartNames",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The load generation part names.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8bef0116-3375-c8bc-5e85-02cfbf807f59"
+    },
+    {
+      "name": "LoadGenerationPartNamesInclude",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether part names are included in the load generation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/822d9bbe-1b48-0917-0bca-6634e13e9304"
+    },
+    {
+      "name": "LoadGenerationSelfWeight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the selfweight load is generated.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/451dc799-d977-966d-28dd-d60a779a7f20"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

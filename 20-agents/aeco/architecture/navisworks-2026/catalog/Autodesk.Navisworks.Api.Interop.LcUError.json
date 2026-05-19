@@ -1,0 +1,208 @@
+{
+  "name": "LcUError",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUError class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcUSysError",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUError",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUError InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUError.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUError",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUError.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcUError.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.IsInitialised"
+    },
+    {
+      "name": "TraceWideString",
+      "signature": "static bool TraceWideString(int level, string string)",
+      "summary": "TraceWideString method of LcUError.",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "string",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.TraceWideString%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "DisableMessageBox",
+      "signature": "static void DisableMessageBox()",
+      "summary": "DisableMessageBox method of LcUError.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.DisableMessageBox"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcUError.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.Initialise"
+    },
+    {
+      "name": "LogWideString",
+      "signature": "static void LogWideString(string string)",
+      "summary": "LogWideString method of LcUError.",
+      "params": [
+        {
+          "name": "string",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.LogWideString%28System.String%29"
+    },
+    {
+      "name": "PostWideString",
+      "signature": "static void PostWideString(Autodesk.Navisworks.Api.Interop.LcUSysErrorSeverity severity, string string)",
+      "summary": "PostWideString method of LcUError.",
+      "params": [
+        {
+          "name": "severity",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUSysErrorSeverity",
+          "optional": false
+        },
+        {
+          "name": "string",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.PostWideString%28Autodesk.Navisworks.Api.Interop.LcUSysErrorSeverity%2CSystem.String%29"
+    },
+    {
+      "name": "ReportEnvironmentErrorAndAbort",
+      "signature": "static void ReportEnvironmentErrorAndAbort(string string)",
+      "summary": "ReportEnvironmentErrorAndAbort method of LcUError.",
+      "params": [
+        {
+          "name": "string",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.ReportEnvironmentErrorAndAbort%28System.String%29"
+    },
+    {
+      "name": "RequireEnvironmentErrorMessageBoxes",
+      "signature": "static void RequireEnvironmentErrorMessageBoxes(bool required)",
+      "summary": "RequireEnvironmentErrorMessageBoxes method of LcUError.",
+      "params": [
+        {
+          "name": "required",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.RequireEnvironmentErrorMessageBoxes%28System.Boolean%29"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcUError.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUError.Terminate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUError.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUError.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

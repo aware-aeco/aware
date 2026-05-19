@@ -1,0 +1,29 @@
+{
+  "name": "UserPropertyVisibilityEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "The visibility of the user property.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/219352c9-b588-0b0b-133a-a94dd92eb15d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "VISIBILITY_NORMAL",
+      "value": 0,
+      "summary": "The user property is visible and the user can modify it."
+    },
+    {
+      "name": "VISIBILITY_READONLY",
+      "value": 1,
+      "summary": "The user property is visible but the user cannot modify it."
+    },
+    {
+      "name": "VISIBILITY_HIDDEN",
+      "value": 2,
+      "summary": "The user property is hidden."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "ErrorDialog.Severity",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "enum",
+  "summary": "The severity of the message to be displayed.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ca65bfc1-0d16-171d-c5c0-0241308720ad",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INFO",
+      "value": 0,
+      "summary": "The message is for informing."
+    },
+    {
+      "name": "WARNING",
+      "value": 1,
+      "summary": "The message is for warning."
+    },
+    {
+      "name": "ERROR",
+      "value": 2,
+      "summary": "The message is for notifying that an error has occurred."
+    }
+  ]
+}

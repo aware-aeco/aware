@@ -1,0 +1,86 @@
+{
+  "name": "HatchPattern.Defaults",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.HatchPattern.Defaults\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_HatchPattern_Defaults.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Dash",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Dash.htm"
+    },
+    {
+      "name": "Grid",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Grid.htm"
+    },
+    {
+      "name": "Grid60",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Grid60.htm"
+    },
+    {
+      "name": "Hatch1",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Hatch1.htm"
+    },
+    {
+      "name": "Hatch2",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Hatch2.htm"
+    },
+    {
+      "name": "Hatch3",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Hatch3.htm"
+    },
+    {
+      "name": "Plus",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Plus.htm"
+    },
+    {
+      "name": "Solid",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Solid.htm"
+    },
+    {
+      "name": "Squares",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_HatchPattern_Defaults_Squares.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

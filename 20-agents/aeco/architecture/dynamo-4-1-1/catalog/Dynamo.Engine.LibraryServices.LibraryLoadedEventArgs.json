@@ -1,0 +1,40 @@
+{
+  "name": "LibraryLoadedEventArgs",
+  "namespace": "Dynamo.Engine.LibraryServices",
+  "kind": "class",
+  "summary": "Type LibraryLoadedEventArgs",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/LibraryServices.cs",
+  "constructors": [
+    {
+      "name": "LibraryLoadedEventArgs(System.Collections.Generic.IEnumerable\u003Cstring\u003E)",
+      "signature": "void LibraryLoadedEventArgs(System.Collections.Generic.IEnumerable\u003Cstring\u003E libraryPaths)",
+      "summary": "LibraryLoadedEventArgs.LibraryLoadedEventArgs",
+      "params": [
+        {
+          "name": "libraryPaths",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LibraryPaths",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Paths to libraries that are loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

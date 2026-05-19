@@ -1,0 +1,94 @@
+{
+  "name": "ExtensionMethods",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.ExtensionMethods\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ExtensionMethods.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToEnvironmentMappingMode",
+      "signature": "public static TextureEnvironmentMappingMode ToEnvironmentMappingMode(this SimulatedTexture.EnvironmentMappingModes e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Render.SimulatedTexture.EnvironmentMappingModes",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToEnvironmentMappingMode(Rhino.Render.SimulatedTexture.EnvironmentMappingModes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureEnvironmentMappingMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToEnvironmentMappingMode(Rhino.Render.SimulatedTexture.EnvironmentMappingModes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ExtensionMethods_ToEnvironmentMappingMode.htm"
+    },
+    {
+      "name": "ToSimulatedEnvironmentMappingMode",
+      "signature": "public static SimulatedTexture.EnvironmentMappingModes ToSimulatedEnvironmentMappingMode(this TextureEnvironmentMappingMode e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Render.TextureEnvironmentMappingMode",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToSimulatedEnvironmentMappingMode(Rhino.Render.TextureEnvironmentMappingMode)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SimulatedTexture.EnvironmentMappingModes",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToSimulatedEnvironmentMappingMode(Rhino.Render.TextureEnvironmentMappingMode)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ExtensionMethods_ToSimulatedEnvironmentMappingMode.htm"
+    },
+    {
+      "name": "ToSimulatedTextureProjectionMode",
+      "signature": "public static SimulatedTexture.ProjectionModes ToSimulatedTextureProjectionMode(this TextureProjectionMode e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Render.TextureProjectionMode",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToSimulatedTextureProjectionMode(Rhino.Render.TextureProjectionMode)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SimulatedTexture.ProjectionModes",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToSimulatedTextureProjectionMode(Rhino.Render.TextureProjectionMode)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ExtensionMethods_ToSimulatedTextureProjectionMode.htm"
+    },
+    {
+      "name": "ToTextureProjectionMode",
+      "signature": "public static TextureProjectionMode ToTextureProjectionMode(this SimulatedTexture.ProjectionModes e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Render.SimulatedTexture.ProjectionModes",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToTextureProjectionMode(Rhino.Render.SimulatedTexture.ProjectionModes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureProjectionMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ExtensionMethods.ToTextureProjectionMode(Rhino.Render.SimulatedTexture.ProjectionModes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ExtensionMethods_ToTextureProjectionMode.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

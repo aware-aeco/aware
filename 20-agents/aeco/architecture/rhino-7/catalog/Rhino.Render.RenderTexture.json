@@ -1,0 +1,2814 @@
+{
+  "name": "RenderTexture",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderTexture\u0022]",
+  "base": "RenderContent",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderTexture.htm",
+  "constructors": [
+    {
+      "name": "RenderTexture",
+      "signature": "protected RenderTexture()",
+      "summary": "Initializes a new instance of the RenderTexture class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAutomaticUserInterfaceSection",
+      "signature": "public bool AddAutomaticUserInterfaceSection(string caption, int id)",
+      "summary": "Add a new automatic user interface section, Field values which include prompts will be automatically added to this section.",
+      "params": [
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "Expandable tab caption.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "Tab id which may be used later on to reference this tab.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the automatic tab section was added otherwise; returns false on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_AddAutomaticUserInterfaceSection.htm"
+    },
+    {
+      "name": "AddChild(RenderContent)",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete and simply calls SetChild\u0022)] public bool AddChild(RenderContent renderContent)",
+      "summary": "Obsolete. (Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "renderContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022renderContent\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.AddChild(Rhino.Render.RenderContent)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.AddChild(Rhino.Render.RenderContent)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_AddChild.htm"
+    },
+    {
+      "name": "AddChild(RenderContent, String)",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete and simply calls SetChild\u0022)] public bool AddChild(RenderContent renderContent, string childSlotName)",
+      "summary": "Obsolete. (Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "renderContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022renderContent\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.AddChild(Rhino.Render.RenderContent,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022childSlotName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.AddChild(Rhino.Render.RenderContent,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.AddChild(Rhino.Render.RenderContent,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_AddChild_1.htm"
+    },
+    {
+      "name": "AddUserInterfaceSection(ICollapsibleSection)",
+      "signature": "public bool AddUserInterfaceSection(ICollapsibleSection section)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "section",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022section\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.AddUserInterfaceSection(Rhino.UI.Controls.ICollapsibleSection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.AddUserInterfaceSection(Rhino.UI.Controls.ICollapsibleSection)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_AddUserInterfaceSection.htm"
+    },
+    {
+      "name": "AddUserInterfaceSection(Type, String, Boolean, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Use AddUserInterfaceSection(Rhino.UI.Controls.ICollapsibleSection) below instead. This function will not work on the Mac and is not type-safe.\u0022)] public UserInterfaceSection AddUserInterfaceSection(Type classType, string caption, bool createExpanded, bool createVisible)",
+      "summary": "Add a new .NET control to an content expandable tab section, the height of the createExpanded tabs client area will be the initial height of the specified control.",
+      "params": [
+        {
+          "name": "classType",
+          "type": "System.Type",
+          "doc": "The control class to create and embed as a child window in the expandable tab client area. This class type must be derived from IWin32Window or this method will throw an ArgumentException. Implement the IUserInterfaceSection interface in your classType to get UserInterfaceSection notification.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "Expandable tab caption.",
+          "optional": false
+        },
+        {
+          "name": "createExpanded",
+          "type": "System.Boolean",
+          "doc": "If this value is true then the new expandable tab section will initially be expanded, if it is false it will be collapsed.",
+          "optional": false
+        },
+        {
+          "name": "createVisible",
+          "type": "System.Boolean",
+          "doc": "If this value is true then the new expandable tab section will initially be visible, if it is false it will be hidden.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UserInterfaceSection",
+        "doc": "Returns the UserInterfaceSection object used to manage the new user control object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_AddUserInterfaceSection_1.htm"
+    },
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts changeContext)",
+      "summary": "Begins a change or batch of changes. It may also make a copy of the content state allowing EndChange() to send an event with the old and new contents. Calls to this method are counted; you must call EndChange() once for every call to BeginChange(). Note: If Changed() was called between the calls to BeginChange() and EndChange(), the last call to EndChange() may cause the ContentChanged event to be sent.",
+      "params": [
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "the change context. If this is ChangeContexts.UI, ChangeContexts.Program,ChangeContexts.Drop or ChangeContexts.Tree, the content will be copied. EndChange() will then send the copy as \u0027old\u0027 in the OnContentChanged event. EndChange()ContentChanged",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_BeginChange.htm"
+    },
+    {
+      "name": "BeginCreateDynamicFields",
+      "signature": "public void BeginCreateDynamicFields(bool automatic)",
+      "summary": "Automatic Dynamic Field support. Dynamic fields are typically created in the constructor of RenderContent and they are therefore created automatically whenever the content is created. However, some advanced users require the fields to be created in response to some user action which occurs much later. This creates the problem that the fields do not exist by default and therefore cannot be loaded when the document is loaded. These methods are provided to solve that problem by making it possible to automatically create the dynamic fields on loading if they don\u0027t already exist. Dynamic fields that have this auto-create-on-load behavior are referred to as automatic dynamic fields. Dynamic fields that do not require the advanced automatic feature can still be created by using these methods (recommended), or they can be created manually (legacy usage). You must call this before creating any dynamic fields. Calls to this method are counted; you must call EndCreateDynamicFields() once for every call to BeginCreateDynamicFields().",
+      "params": [
+        {
+          "name": "automatic",
+          "type": "System.Boolean",
+          "doc": "automatic specifies if the dynamic fields are automatic. If so, they will be created automatically during loading of the document.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_BeginCreateDynamicFields.htm"
+    },
+    {
+      "name": "BindParameterToField(String, Field, RenderContent.ChangeContexts)",
+      "signature": "public void BindParameterToField(string parameterName, Field field, RenderContent.ChangeContexts setEvent)",
+      "summary": "Use bindings to automatically wire parameters to fields",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022parameterName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.BindParameterToField(System.String,Rhino.Render.Fields.Field,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "field",
+          "type": "Rhino.Render.Fields.Field",
+          "doc": "[Missing \u003Cparam name=\u0022field\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.BindParameterToField(System.String,Rhino.Render.Fields.Field,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "setEvent",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022setEvent\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.BindParameterToField(System.String,Rhino.Render.Fields.Field,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_BindParameterToField.htm"
+    },
+    {
+      "name": "BindParameterToField(String, String, Field, RenderContent.ChangeContexts)",
+      "signature": "public void BindParameterToField(string parameterName, string childSlotName, Field field, RenderContent.ChangeContexts setEvent)",
+      "summary": "Use bindings to automatically wire parameters to fields",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022parameterName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.BindParameterToField(System.String,System.String,Rhino.Render.Fields.Field,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022childSlotName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.BindParameterToField(System.String,System.String,Rhino.Render.Fields.Field,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "field",
+          "type": "Rhino.Render.Fields.Field",
+          "doc": "[Missing \u003Cparam name=\u0022field\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.BindParameterToField(System.String,System.String,Rhino.Render.Fields.Field,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "setEvent",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022setEvent\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.BindParameterToField(System.String,System.String,Rhino.Render.Fields.Field,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_BindParameterToField_1.htm"
+    },
+    {
+      "name": "CalculateRenderHash",
+      "signature": "protected virtual uint CalculateRenderHash(ulong rcrcFlags)",
+      "summary": "Override this method to calculate the render hash of the state that affects how the content is rendered. Does not include children or perform any caching. Render hash values are now automatically cached by the content framework and you do not have to worry about caching. You also do not have to worry about iterating into children. This method is now only called internally by the framework, use the RenderHash property to get the current hash value.",
+      "params": [
+        {
+          "name": "rcrcFlags",
+          "type": "System.UInt64",
+          "doc": "[Missing \u003Cparam name=\u0022rcrcFlags\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.CalculateRenderHash(System.UInt64)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.CalculateRenderHash(System.UInt64)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_CalculateRenderHash.htm"
+    },
+    {
+      "name": "ChangeChild",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete and simply calls SetChild\u0022)] public bool ChangeChild(RenderContent oldContent, RenderContent newContent)",
+      "summary": "Obsolete. (Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "oldContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022oldContent\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.ChangeChild(Rhino.Render.RenderContent,Rhino.Render.RenderContent)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "newContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022newContent\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.ChangeChild(Rhino.Render.RenderContent,Rhino.Render.RenderContent)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.ChangeChild(Rhino.Render.RenderContent,Rhino.Render.RenderContent)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ChangeChild.htm"
+    },
+    {
+      "name": "ChildSlotAmount",
+      "signature": "public double ChildSlotAmount(string childSlotName)",
+      "summary": "Gets the amount property for the texture in the specified child slot.",
+      "params": [
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "The child slot name of the texture.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The requested amount value. Values are typically from 0.0 to 100.0"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ChildSlotAmount.htm"
+    },
+    {
+      "name": "ChildSlotNameFromParamName",
+      "signature": "public string ChildSlotNameFromParamName(string paramName)",
+      "summary": "A \u0022child slot\u0022 is the specific \u0022slot\u0022 that a child (usually a texture) occupies. This is generally the \u0022use\u0022 of the child - in other words, the thing the child operates on. Some examples are \u0022color\u0022, \u0022transparency\u0022.",
+      "params": [
+        {
+          "name": "paramName",
+          "type": "System.String",
+          "doc": "The name of a parameter field. Since child textures will usually correspond with some parameter (they generally either replace or modify a parameter over UV space) these functions are used to specify which parameter corresponded with child slot. If there is no correspondence, return the empty string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The default behavior for these functions is to return the input string. Sub-classes may (in the future) override these functions to provide different mappings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ChildSlotNameFromParamName.htm"
+    },
+    {
+      "name": "ChildSlotOn",
+      "signature": "public bool ChildSlotOn(string childSlotName)",
+      "summary": "Gets the on-ness property for the texture in the specified child slot.",
+      "params": [
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "The child slot name of the texture.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, else false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ChildSlotOn.htm"
+    },
+    {
+      "name": "ConvertUnits",
+      "signature": "public virtual void ConvertUnits(UnitSystem from, UnitSystem to)",
+      "summary": "Modify your content so that it is converted from meters into the units of the unit system. No need to call the base class when you override this, and no need to recurse into children.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022from\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.ConvertUnits(Rhino.UnitSystem,Rhino.UnitSystem)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022to\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.ConvertUnits(Rhino.UnitSystem,Rhino.UnitSystem)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ConvertUnits.htm"
+    },
+    {
+      "name": "CreateDynamicField",
+      "signature": "public bool CreateDynamicField(string internalName, string localName, string englishName, Object value, Object minValue, Object maxValue, int sectionId)",
+      "summary": "Create a dynamic field with an initial value and min and max limits.",
+      "params": [
+        {
+          "name": "internalName",
+          "type": "System.String",
+          "doc": "is the internal name of the field. Not localized.",
+          "optional": false
+        },
+        {
+          "name": "localName",
+          "type": "System.String",
+          "doc": "is the localized user-friendly name of the field.",
+          "optional": false
+        },
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "is the English user-friendly name of the field.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "is the initial value of the field.",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "System.Object",
+          "doc": "is the minimum value of the field. Must be the same type as vValue.",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "System.Object",
+          "doc": "is the maximum value of the field. Must be the same type as vValue.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "is used for filtering fields between sections. Zero if not needed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.CreateDynamicField(System.String,System.String,System.String,System.Object,System.Object,System.Object,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_CreateDynamicField.htm"
+    },
+    {
+      "name": "CreateEvaluator()",
+      "signature": "[ObsoleteAttribute(\u0022Use version that takes TextureEvaluatorFlags enum\u0022)] public virtual TextureEvaluator CreateEvaluator()",
+      "summary": "Constructs a texture evaluator. This is an independent lightweight object capable of evaluating texture color throughout uvw space. May be called from within a rendering shade pipeline.",
+      "params": [],
+      "returns": {
+        "type": "TextureEvaluator",
+        "doc": "A texture evaluator instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_CreateEvaluator.htm"
+    },
+    {
+      "name": "CreateEvaluator(RenderTexture.TextureEvaluatorFlags)",
+      "signature": "public virtual TextureEvaluator CreateEvaluator(RenderTexture.TextureEvaluatorFlags evaluatorFlags)",
+      "summary": "Constructs a texture evaluator. This is an independent lightweight object capable of evaluating texture color throughout uvw space. May be called from within a rendering shade pipeline.",
+      "params": [
+        {
+          "name": "evaluatorFlags",
+          "type": "Rhino.Render.RenderTexture.TextureEvaluatorFlags",
+          "doc": "[Missing \u003Cparam name=\u0022evaluatorFlags\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.CreateEvaluator(Rhino.Render.RenderTexture.TextureEvaluatorFlags)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureEvaluator",
+        "doc": "A texture evaluator instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_CreateEvaluator_1.htm"
+    },
+    {
+      "name": "DeleteAllChildren",
+      "signature": "public void DeleteAllChildren(RenderContent.ChangeContexts changeContexts)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "changeContexts",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContexts\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.DeleteAllChildren(Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_DeleteAllChildren.htm"
+    },
+    {
+      "name": "DeleteChild",
+      "signature": "public bool DeleteChild(string childSlotName, RenderContent.ChangeContexts changeContexts)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022childSlotName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.DeleteChild(System.String,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContexts",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContexts\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.DeleteChild(System.String,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.DeleteChild(System.String,Rhino.Render.RenderContent.ChangeContexts)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_DeleteChild.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Dispose",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Dispose_1.htm"
+    },
+    {
+      "name": "DynamicIcon",
+      "signature": "public virtual bool DynamicIcon(Size size, out Bitmap bitmap, DynamicIconUsage usage)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.DynamicIcon(System.Drawing.Size,System.Drawing.Bitmap@,Rhino.Render.DynamicIconUsage)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022bitmap\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.DynamicIcon(System.Drawing.Size,System.Drawing.Bitmap@,Rhino.Render.DynamicIconUsage)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "usage",
+          "type": "Rhino.Render.DynamicIconUsage",
+          "doc": "[Missing \u003Cparam name=\u0022usage\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.DynamicIcon(System.Drawing.Size,System.Drawing.Bitmap@,Rhino.Render.DynamicIconUsage)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.DynamicIcon(System.Drawing.Size,System.Drawing.Bitmap@,Rhino.Render.DynamicIconUsage)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_DynamicIcon.htm"
+    },
+    {
+      "name": "Edit",
+      "signature": "public RenderContent Edit()",
+      "summary": "This method allows a render content hierarchy to be edited using a modal (AKA \u0027pop-up\u0027) editor. If the original render content is in a document, it will remain there, and the edited one will be \u0027free-floating\u0027. Therefore it is the caller\u0027s responsibility to do any replacement in the document if required. The returned new content will be owned by the caller.",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "Returns an edited version of the content hierarchy if successful, else null. The method always edits the entire hierarchy. It places a copy of the hierarchy in the editor and selects the copied item that corresponds to this one. Therefore, editing a child will return a top-level render content, not a child."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Edit.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public void EndChange()",
+      "summary": "Ends a change or batch of changes. Calls to this method are counted; you must call this method once for every call to BeginChange(RenderContent.ChangeContexts). Note: If BeginChange(RenderContent.ChangeContexts) was called with ChangeContexts.UI, ChangeContexts.Program, ChangeContexts.Drop or ChangeContexts.UI.Tree and Changed() was called between the calls to BeginChange(RenderContent.ChangeContexts) and EndChange(), the last call to EndChange() will raise the ContentChanged event.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_EndChange.htm"
+    },
+    {
+      "name": "EndCreateDynamicFields",
+      "signature": "public void EndCreateDynamicFields()",
+      "summary": "You must call this after creating dynamic fields. Calls to this method are counted; you must call BeginCreateDynamicFields() once for every call to EndCreateDynamicFields().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_EndCreateDynamicFields.htm"
+    },
+    {
+      "name": "Factory",
+      "signature": "public ContentFactory Factory()",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [],
+      "returns": {
+        "type": "ContentFactory",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.Factory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Factory.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Finalize.htm"
+    },
+    {
+      "name": "FindChild",
+      "signature": "public RenderContent FindChild(string childSlotName)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022childSlotName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.FindChild(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.FindChild(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_FindChild.htm"
+    },
+    {
+      "name": "ForDisplay",
+      "signature": "public RenderContent ForDisplay()",
+      "summary": "The only place a single proxy can be displayed is in the New Content Control main thumbnail. All other attempts to use a single proxy in a UI require it to be replaced with the corresponding multi proxy. Single proxies override this to find the corresponding multi proxy.",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "The cotnent."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ForDisplay.htm"
+    },
+    {
+      "name": "GetChildSlotParameter",
+      "signature": "public virtual Object GetChildSlotParameter(string contentParameterName, string extraRequirementParameter)",
+      "summary": "Extra requirements are a way of specifying extra functionality on parameters in the automatic UI. Override this function to specify additional functionality for automatic UI sections or the texture summary. See IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK for string definitions for the parameter names. Call the base class from your override if you do not support the extra requirement parameter. Please do not call this function. It is only retained for backward compatibility. You should instead call GetExtraRequirementParameter().",
+      "params": [
+        {
+          "name": "contentParameterName",
+          "type": "System.String",
+          "doc": "The parameter or field internal name to which this query applies.",
+          "optional": false
+        },
+        {
+          "name": "extraRequirementParameter",
+          "type": "System.String",
+          "doc": "The extra requirement parameter, as listed in IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The value of the requested extra requirement parameter or null if the parameter does not exist. Current supported return values are (int, bool, float, double, string, Guid, Color, Vector3d, Point3d, DateTime)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_GetChildSlotParameter.htm"
+    },
+    {
+      "name": "GetDisplayInViewport",
+      "signature": "public bool GetDisplayInViewport()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetDisplayInViewport\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetDisplayInViewport.htm"
+    },
+    {
+      "name": "GetEmbeddedFilesList",
+      "signature": "public string[] GetEmbeddedFilesList()",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.GetEmbeddedFilesList\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_GetEmbeddedFilesList.htm"
+    },
+    {
+      "name": "GetEnvironmentMappingMode",
+      "signature": "public TextureEnvironmentMappingMode GetEnvironmentMappingMode()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "TextureEnvironmentMappingMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetEnvironmentMappingMode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetEnvironmentMappingMode.htm"
+    },
+    {
+      "name": "GetEnvironmentMappingProjection",
+      "signature": "public static bool GetEnvironmentMappingProjection(TextureEnvironmentMappingMode mode, Vector3d reflectionVector, out float u, out float v)",
+      "summary": "",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Rhino.Render.TextureEnvironmentMappingMode",
+          "doc": "[Missing \u003Cparam name=\u0022mode\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetEnvironmentMappingProjection(Rhino.Render.TextureEnvironmentMappingMode,Rhino.Geometry.Vector3d,System.Single@,System.Single@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "reflectionVector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022reflectionVector\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetEnvironmentMappingProjection(Rhino.Render.TextureEnvironmentMappingMode,Rhino.Geometry.Vector3d,System.Single@,System.Single@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "u",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022u\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetEnvironmentMappingProjection(Rhino.Render.TextureEnvironmentMappingMode,Rhino.Geometry.Vector3d,System.Single@,System.Single@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022v\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetEnvironmentMappingProjection(Rhino.Render.TextureEnvironmentMappingMode,Rhino.Geometry.Vector3d,System.Single@,System.Single@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetEnvironmentMappingProjection(Rhino.Render.TextureEnvironmentMappingMode,Rhino.Geometry.Vector3d,System.Single@,System.Single@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetEnvironmentMappingProjection.htm"
+    },
+    {
+      "name": "GetExtraRequirementParameter",
+      "signature": "public Object GetExtraRequirementParameter(string contentParameterName, string extraRequirementParameter)",
+      "summary": "Extra requirements are a way of specifying extra functionality on parameters in the automatic UI. See IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK for string definitions for the parameter names.",
+      "params": [
+        {
+          "name": "contentParameterName",
+          "type": "System.String",
+          "doc": "The parameter or field internal name to which this query applies.",
+          "optional": false
+        },
+        {
+          "name": "extraRequirementParameter",
+          "type": "System.String",
+          "doc": "The extra requirement parameter, as listed in IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The value of the requested extra requirement parameter or null if the parameter does not exist. Current supported return values are (int, bool, float, double, string, Guid, Color, Vector3d, Point3d, DateTime)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_GetExtraRequirementParameter.htm"
+    },
+    {
+      "name": "GetInternalEnvironmentMappingMode",
+      "signature": "public TextureEnvironmentMappingMode GetInternalEnvironmentMappingMode()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "TextureEnvironmentMappingMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetInternalEnvironmentMappingMode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetInternalEnvironmentMappingMode.htm"
+    },
+    {
+      "name": "GetLocalMappingType",
+      "signature": "public RenderTexture.eLocalMappingType GetLocalMappingType()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "RenderTexture.eLocalMappingType",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetLocalMappingType\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetLocalMappingType.htm"
+    },
+    {
+      "name": "GetMappingChannel",
+      "signature": "public virtual int GetMappingChannel()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetMappingChannel\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetMappingChannel.htm"
+    },
+    {
+      "name": "GetOffset",
+      "signature": "public virtual Vector3d GetOffset()",
+      "summary": "Get offset value across UVW space. If the projection type is WCS or other type specified in model units, then this is the offset in meters.",
+      "params": [],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetOffset\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetOffset.htm"
+    },
+    {
+      "name": "GetOffsetLocked",
+      "signature": "public virtual bool GetOffsetLocked()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetOffsetLocked\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetOffsetLocked.htm"
+    },
+    {
+      "name": "GetParameter",
+      "signature": "public virtual Object GetParameter(string parameterName)",
+      "summary": "Query the content instance for the value of a given named parameter. If you do not support this parameter, call the base class.",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "Name of the parameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "IConvertible. Note that you can\u0027t directly cast from object, instead you have to use the Convert mechanism."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_GetParameter.htm"
+    },
+    {
+      "name": "GetPreviewIn3D",
+      "signature": "public virtual bool GetPreviewIn3D()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetPreviewIn3D\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetPreviewIn3D.htm"
+    },
+    {
+      "name": "GetPreviewLocalMapping",
+      "signature": "public bool GetPreviewLocalMapping()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetPreviewLocalMapping\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetPreviewLocalMapping.htm"
+    },
+    {
+      "name": "GetProjectionMode",
+      "signature": "public virtual TextureProjectionMode GetProjectionMode()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "TextureProjectionMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetProjectionMode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetProjectionMode.htm"
+    },
+    {
+      "name": "GetRepeat",
+      "signature": "public virtual Vector3d GetRepeat()",
+      "summary": "Get repeat value across UVW space. If the projection type is WCS or other type specified in model units, then this is the repeat across 1 meter of the model.",
+      "params": [],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetRepeat\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetRepeat.htm"
+    },
+    {
+      "name": "GetRepeatLocked",
+      "signature": "public virtual bool GetRepeatLocked()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetRepeatLocked\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetRepeatLocked.htm"
+    },
+    {
+      "name": "GetRotation",
+      "signature": "public virtual Vector3d GetRotation()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetRotation\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetRotation.htm"
+    },
+    {
+      "name": "GetUiHash",
+      "signature": "public virtual ulong GetUiHash()",
+      "summary": "This allows a content to have more than one UI for the same content type.",
+      "params": [],
+      "returns": {
+        "type": "UInt64",
+        "doc": "Default is zero and is ignored."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_GetUiHash.htm"
+    },
+    {
+      "name": "GetUnderlyingInstances",
+      "signature": "public bool GetUnderlyingInstances(ref RenderContentCollection collection)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "collection",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "[Missing \u003Cparam name=\u0022collection\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.GetUnderlyingInstances(Rhino.Render.RenderContentCollection@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.GetUnderlyingInstances(Rhino.Render.RenderContentCollection@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_GetUnderlyingInstances.htm"
+    },
+    {
+      "name": "GetWcsBoxMapping",
+      "signature": "public static Point3d GetWcsBoxMapping(Point3d worldXyz, Vector3d normal)",
+      "summary": "",
+      "params": [
+        {
+          "name": "worldXyz",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022worldXyz\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetWcsBoxMapping(Rhino.Geometry.Point3d,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022normal\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetWcsBoxMapping(Rhino.Geometry.Point3d,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetWcsBoxMapping(Rhino.Geometry.Point3d,Rhino.Geometry.Vector3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetWcsBoxMapping.htm"
+    },
+    {
+      "name": "GetWrapType",
+      "signature": "public virtual TextureWrapType GetWrapType()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "TextureWrapType",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GetWrapType\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GetWrapType.htm"
+    },
+    {
+      "name": "GraphInfo",
+      "signature": "public void GraphInfo(ref TextureGraphInfo tgi)",
+      "summary": "",
+      "params": [
+        {
+          "name": "tgi",
+          "type": "Rhino.Render.TextureGraphInfo",
+          "doc": "[Missing \u003Cparam name=\u0022tgi\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.GraphInfo(Rhino.Render.TextureGraphInfo@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_GraphInfo.htm"
+    },
+    {
+      "name": "Icon",
+      "signature": "public virtual bool Icon(Size size, out Bitmap bitmap)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.Icon(System.Drawing.Size,System.Drawing.Bitmap@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022bitmap\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.Icon(System.Drawing.Size,System.Drawing.Bitmap@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.Icon(System.Drawing.Size,System.Drawing.Bitmap@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Icon.htm"
+    },
+    {
+      "name": "Initialize",
+      "signature": "[ObsoleteAttribute(\u0022This method should not be called.\u0022)] public bool Initialize()",
+      "summary": "Obsolete. (Inherited from RenderContent.)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.Initialize\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Initialize.htm"
+    },
+    {
+      "name": "IsCompatible",
+      "signature": "public virtual bool IsCompatible(Guid renderEngineId)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "renderEngineId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022renderEngineId\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsCompatible(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsCompatible(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_IsCompatible.htm"
+    },
+    {
+      "name": "IsContentTypeAcceptableAsChild",
+      "signature": "public virtual bool IsContentTypeAcceptableAsChild(Guid type, string childSlotName)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsContentTypeAcceptableAsChild(System.Guid,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022childSlotName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsContentTypeAcceptableAsChild(System.Guid,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsContentTypeAcceptableAsChild(System.Guid,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_IsContentTypeAcceptableAsChild.htm"
+    },
+    {
+      "name": "IsFactoryProductAcceptableAsChild(ContentFactory, String)",
+      "signature": "public virtual bool IsFactoryProductAcceptableAsChild(ContentFactory factory, string childSlotName)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "factory",
+          "type": "Rhino.Render.DataSources.ContentFactory",
+          "doc": "[Missing \u003Cparam name=\u0022factory\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsFactoryProductAcceptableAsChild(Rhino.Render.DataSources.ContentFactory,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022childSlotName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsFactoryProductAcceptableAsChild(Rhino.Render.DataSources.ContentFactory,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsFactoryProductAcceptableAsChild(Rhino.Render.DataSources.ContentFactory,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_IsFactoryProductAcceptableAsChild.htm"
+    },
+    {
+      "name": "IsFactoryProductAcceptableAsChild(Guid, String, String)",
+      "signature": "public virtual bool IsFactoryProductAcceptableAsChild(Guid kindId, string factoryKind, string childSlotName)",
+      "summary": "Override this method to restrict the type of acceptable child content. The default implementation of this method just returns true.",
+      "params": [
+        {
+          "name": "kindId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022kindId\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsFactoryProductAcceptableAsChild(System.Guid,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "factoryKind",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022factoryKind\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsFactoryProductAcceptableAsChild(System.Guid,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022childSlotName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.IsFactoryProductAcceptableAsChild(System.Guid,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true only if content with the specified kindId can be accepted as a child in the specified child slot."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_IsFactoryProductAcceptableAsChild_1.htm"
+    },
+    {
+      "name": "IsHdrCapable",
+      "signature": "public bool IsHdrCapable()",
+      "summary": "Return true if the texture is HDR capable. When creating a custom RenderTexture implementation that is HDR capable set the appropriate property on the CustomRenderContentAttribute decorator on that clas.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.IsHdrCapable\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_IsHdrCapable.htm"
+    },
+    {
+      "name": "IsImageBased",
+      "signature": "public virtual bool IsImageBased()",
+      "summary": "Query if the texture is image based. When creating a custom RenderTexture implementation of an image-based texture set the appropriate property on the CustomRenderContentAttribute decorator on that class. Do not override this function",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the texture is image-based."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_IsImageBased.htm"
+    },
+    {
+      "name": "IsLinear",
+      "signature": "public virtual bool IsLinear()",
+      "summary": "Return true if the texture color data is linear. NOTE: this function is marked as virtual, but the correct way to make a custom RenderTexture linear is by setting the correct property for the CustomRenderContentAttribute decorator on the class.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.IsLinear\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_IsLinear.htm"
+    },
+    {
+      "name": "IsNormalMap",
+      "signature": "public bool IsNormalMap()",
+      "summary": "Return true if the texture is a normalmap. When creating a custom RenderTexture implementation of a normal map set the appropriate property on the CustomRenderContentAttribute decorator on that clas.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.IsNormalMap\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_IsNormalMap.htm"
+    },
+    {
+      "name": "IsReference",
+      "signature": "public bool IsReference()",
+      "summary": "Query whether or not the content or any of its ancestors is a reference content.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the content is a reference, else false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_IsReference.htm"
+    },
+    {
+      "name": "IsRenderHashCached",
+      "signature": "[ObsoleteAttribute(\u0022This method is deprecated and no longer called. For more information see CalculateRenderHash\u0022)] public bool IsRenderHashCached()",
+      "summary": "This method is deprecated and no longer called. For more information see CalculateRenderHash(UInt64)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "bool"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_IsRenderHashCached.htm"
+    },
+    {
+      "name": "MakeCopy",
+      "signature": "public RenderContent MakeCopy()",
+      "summary": "Create a copy of the render content. All content is the same, except for the instance Id.",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "The new RenderContent"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_MakeCopy.htm"
+    },
+    {
+      "name": "MakeGroupInstance",
+      "signature": "public RenderContent MakeGroupInstance()",
+      "summary": "Create an \u0027instance\u0027 of the content hierarchy and group the new hierarchy with this hierarchy. If the instance is subsequently attached to the same document, the state of all members of the group will be kept synchronized. With the exception of the instance ids, all state is exactly preserved in the new instance hierarchy. \\note The grouping will have no effect until the new instance is attached to the same document.",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "A grouped instance of the content hierarchy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_MakeGroupInstance.htm"
+    },
+    {
+      "name": "MatchData",
+      "signature": "public virtual RenderContent.MatchDataResult MatchData(RenderContent oldContent)",
+      "summary": "Implement to transfer data from another content to this content during creation.",
+      "params": [
+        {
+          "name": "oldContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "An old content object from which the implementation may harvest data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent.MatchDataResult",
+        "doc": "Information about how much data was matched."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_MatchData.htm"
+    },
+    {
+      "name": "ModifyRenderContentStyles",
+      "signature": "protected void ModifyRenderContentStyles(RenderContentStyles stylesToAdd, RenderContentStyles stylesToRemove)",
+      "summary": "ModifyRenderContentStyles",
+      "params": [
+        {
+          "name": "stylesToAdd",
+          "type": "Rhino.Render.RenderContentStyles",
+          "doc": "[Missing \u003Cparam name=\u0022stylesToAdd\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.ModifyRenderContentStyles(Rhino.Render.RenderContentStyles,Rhino.Render.RenderContentStyles)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "stylesToRemove",
+          "type": "Rhino.Render.RenderContentStyles",
+          "doc": "[Missing \u003Cparam name=\u0022stylesToRemove\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.ModifyRenderContentStyles(Rhino.Render.RenderContentStyles,Rhino.Render.RenderContentStyles)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ModifyRenderContentStyles.htm"
+    },
+    {
+      "name": "NewBitmapTexture(SimulatedTexture)",
+      "signature": "[ObsoleteAttribute] public static RenderTexture NewBitmapTexture(SimulatedTexture texture)",
+      "summary": "Constructs a new basic texture from a SimulatedTexture.",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.Render.SimulatedTexture",
+          "doc": "The texture to create the basic texture from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderTexture",
+        "doc": "A new render texture."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_NewBitmapTexture.htm"
+    },
+    {
+      "name": "NewBitmapTexture(Bitmap, RhinoDoc)",
+      "signature": "public static RenderTexture NewBitmapTexture(Bitmap bitmap, RhinoDoc doc)",
+      "summary": "Constructs a new basic texture from a Bitmap.",
+      "remarks": "The returned bitmap texture holds a copy of \u0027bitmap\u0027.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "The bitmap to create the basic texture from.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The document to associate the texture with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderTexture",
+        "doc": "A new render texture."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_NewBitmapTexture_2.htm"
+    },
+    {
+      "name": "NewBitmapTexture(SimulatedTexture, RhinoDoc)",
+      "signature": "public static RenderTexture NewBitmapTexture(SimulatedTexture texture, RhinoDoc doc)",
+      "summary": "Constructs a new basic texture from a SimulatedTexture.",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.Render.SimulatedTexture",
+          "doc": "The texture to create the basic texture from.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The document to associate the texture with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderTexture",
+        "doc": "A new render texture."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_NewBitmapTexture_1.htm"
+    },
+    {
+      "name": "NewPreviewSceneServer",
+      "signature": "public PreviewSceneServer NewPreviewSceneServer(SceneServerData ssd)",
+      "summary": "Gets the PreviewSceneServer of the content",
+      "params": [
+        {
+          "name": "ssd",
+          "type": "Rhino.Render.SceneServerData",
+          "doc": "SceneServerData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PreviewSceneServer",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.NewPreviewSceneServer(Rhino.Render.SceneServerData)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_NewPreviewSceneServer.htm"
+    },
+    {
+      "name": "OnAddUserInterfaceSections",
+      "signature": "protected virtual void OnAddUserInterfaceSections()",
+      "summary": "Override to provide UI sections to display in the editor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_OnAddUserInterfaceSections.htm"
+    },
+    {
+      "name": "OnGetDefaultsInteractive",
+      "signature": "protected virtual bool OnGetDefaultsInteractive()",
+      "summary": "Override this method to prompt user for information necessary to create a new content object. For example, if you are created a textured material you may prompt the user for a bitmap file name prior to creating the textured material.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If true is returned the content is created otherwise the creation is aborted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_OnGetDefaultsInteractive.htm"
+    },
+    {
+      "name": "OnMakeCopy",
+      "signature": "protected virtual void OnMakeCopy(ref RenderContent newContent)",
+      "summary": "Override this function to supplement the standard copying behavour for your RenderContent.",
+      "params": [
+        {
+          "name": "newContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Is the content that will be returned from MakeCopy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_OnMakeCopy.htm"
+    },
+    {
+      "name": "OpenInEditor",
+      "signature": "public bool OpenInEditor()",
+      "summary": "Call this method to open the content in the relevant thumbnail editor and select it for editing by the user. The content must be in the document or the call will fail.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true on success or false on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_OpenInEditor.htm"
+    },
+    {
+      "name": "OpenInModalEditor",
+      "signature": "[ObsoleteAttribute(\u0022Obsolete, use Edit a version that returns a RenderContent\u0022, false)] public bool OpenInModalEditor()",
+      "summary": "Call this method to open the content in the a modal version of the editor. The content must be in the document or the call will fail.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true on success or false on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_OpenInModalEditor.htm"
+    },
+    {
+      "name": "ParamNameFromChildSlotName",
+      "signature": "public string ParamNameFromChildSlotName(string childSlotName)",
+      "summary": "A \u0022child slot\u0022 is the specific \u0022slot\u0022 that a child (usually a texture) occupies. This is generally the \u0022use\u0022 of the child - in other words, the thing the child operates on. Some examples are \u0022color\u0022, \u0022transparency\u0022.",
+      "params": [
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "The named of the child slot to receive the parameter name for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The default behavior for these functions is to return the input string. Sub-classes may (in the future) override these functions to provide different mappings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_ParamNameFromChildSlotName.htm"
+    },
+    {
+      "name": "PixelSize",
+      "signature": "public void PixelSize(out int u, out int v, out int w)",
+      "summary": "Get the texture dimensions for the RenderTexture.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "width",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "height",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "System.Int32",
+          "doc": "depth, used for 3D textures",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_PixelSize.htm"
+    },
+    {
+      "name": "RenderHashExclude(CrcRenderHashFlags, String)",
+      "signature": "public uint RenderHashExclude(CrcRenderHashFlags flags, string excludeParameterNames)",
+      "summary": "As RenderHash, but ignore parameter names given.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Rhino.Render.CrcRenderHashFlags",
+          "doc": "Flags to ignore",
+          "optional": false
+        },
+        {
+          "name": "excludeParameterNames",
+          "type": "System.String",
+          "doc": "semicolon-delimited string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "Render hash"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_RenderHashExclude.htm"
+    },
+    {
+      "name": "RenderHashExclude(TextureRenderHashFlags, String)",
+      "signature": "public uint RenderHashExclude(TextureRenderHashFlags flags, string excludeParameterNames)",
+      "summary": "As RenderHash, but ignore parameter names given.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Rhino.Render.TextureRenderHashFlags",
+          "doc": "Flags to ignore",
+          "optional": false
+        },
+        {
+          "name": "excludeParameterNames",
+          "type": "System.String",
+          "doc": "semicolon-delimited string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "Render hash"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_RenderHashExclude_2.htm"
+    },
+    {
+      "name": "RenderHashExclude(CrcRenderHashFlags, String, LinearWorkflow)",
+      "signature": "public uint RenderHashExclude(CrcRenderHashFlags flags, string excludeParameterNames, LinearWorkflow lw)",
+      "summary": "As RenderHash, but ignore parameter names given. Use this version of the function to calculate a render hash when you have the linear workflow information and you are not running on the main thread. Access to LinearWorkflow data requires document access. CrcRenderHashFlags.ExcludeLinearWorkflow must be specified.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Rhino.Render.CrcRenderHashFlags",
+          "doc": "Flags to ignore",
+          "optional": false
+        },
+        {
+          "name": "excludeParameterNames",
+          "type": "System.String",
+          "doc": "semicolon-delimited string",
+          "optional": false
+        },
+        {
+          "name": "lw",
+          "type": "Rhino.Render.LinearWorkflow",
+          "doc": "Linear Workflow to use for CRC",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "Render hash"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_RenderHashExclude_1.htm"
+    },
+    {
+      "name": "Replace",
+      "signature": "public bool Replace(RenderContent newcontent)",
+      "summary": "(Inherited from RenderContent.)",
+      "params": [
+        {
+          "name": "newcontent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022newcontent\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.Replace(Rhino.Render.RenderContent)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.Replace(Rhino.Render.RenderContent)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Replace.htm"
+    },
+    {
+      "name": "SaveAsImage",
+      "signature": "public bool SaveAsImage(string FullPath, int width, int height, int depth)",
+      "summary": "Save texture as image",
+      "params": [
+        {
+          "name": "FullPath",
+          "type": "System.String",
+          "doc": "The full path of the file",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "Image width",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "Image height",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Int32",
+          "doc": "Image depth",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "returns true if file was saved, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SaveAsImage.htm"
+    },
+    {
+      "name": "SetChild(RenderContent, String)",
+      "signature": "public bool SetChild(RenderContent renderContent, string childSlotName)",
+      "summary": "Set another content as a child of this content. This content may or may not be attached to a document. If this content already has a child with the specified child slot name, that child will be deleted. If this content is not attached to a document, the child will be added without sending any events. If this content is attached to a document, the necessary events will be sent to update the UI. Note: Do not call this method to add children in your constructor. If you want to add default children, you should override Initialize() and add them there.",
+      "params": [
+        {
+          "name": "renderContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Child content to add to this content. If pChild is NULL, the function will fail. If pChild is already attached to a document, the function will fail. If pChild is already a child of this or another content, the function will fail.",
+          "optional": false
+        },
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "The name that will be assigned to this child slot. The child slot name cannot be an empty string. If it is, the function will fail.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the content was added or the child slot with this name was modified otherwise; returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetChild.htm"
+    },
+    {
+      "name": "SetChild(RenderContent, String, RenderContent.ChangeContexts)",
+      "signature": "[ObsoleteAttribute(\u0022Use SetChild without ChangeContexts and Begin/EndChange\u0022)] public bool SetChild(RenderContent renderContent, string childSlotName, RenderContent.ChangeContexts changeContexts)",
+      "summary": "Set another content as a child of this content. This content may or may not be attached to a document. If this content already has a child with the specified child slot name, that child will be deleted. If this content is not attached to a document, the child will be added without sending any events. If this content is attached to a document, the necessary events will be sent to update the UI. Note: Do not call this method to add children in your constructor. If you want to add default children, you should override Initialize() and add them there.",
+      "params": [
+        {
+          "name": "renderContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Child content to add to this content. If pChild is NULL, the function will fail. If pChild is already attached to a document, the function will fail. If pChild is already a child of this or another content, the function will fail.",
+          "optional": false
+        },
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "The name that will be assigned to this child slot. The child slot name cannot be an empty string. If it is, the function will fail.",
+          "optional": false
+        },
+        {
+          "name": "changeContexts",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContexts\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetChild(Rhino.Render.RenderContent,System.String,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the content was added or the child slot with this name was modified otherwise; returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetChild_1.htm"
+    },
+    {
+      "name": "SetChildSlotAmount",
+      "signature": "public void SetChildSlotAmount(string childSlotName, double amount, RenderContent.ChangeContexts cc)",
+      "summary": "Sets the amount property for the texture in the specified child slot.",
+      "params": [
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "The child slot name of the texture.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Double",
+          "doc": "The texture amount. Values are typically from 0.0 to 100.0",
+          "optional": false
+        },
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "The context of the change.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetChildSlotAmount.htm"
+    },
+    {
+      "name": "SetChildSlotOn",
+      "signature": "public void SetChildSlotOn(string childSlotName, bool bOn, RenderContent.ChangeContexts cc)",
+      "summary": "Sets the on-ness property for the texture in the specified child slot.",
+      "params": [
+        {
+          "name": "childSlotName",
+          "type": "System.String",
+          "doc": "The child slot name of the texture.",
+          "optional": false
+        },
+        {
+          "name": "bOn",
+          "type": "System.Boolean",
+          "doc": "Value for the on-ness property.",
+          "optional": false
+        },
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "Context of the change",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetChildSlotOn.htm"
+    },
+    {
+      "name": "SetChildSlotParameter",
+      "signature": "public virtual bool SetChildSlotParameter(string contentParameterName, string extraRequirementParameter, Object value, RenderContent.ExtraRequirementsSetContexts sc)",
+      "summary": "Extra requirements are a way of specifying extra functionality on parameters in the automatic UI. Override this function to support values being set from automatic UI sections or the texture summary. See IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK for string definitions for the parameter names. Call the base class from your override if you do not support the extra requirement parameter. Please do not call this function. It is only retained for backward compatibility. You should instead call SetExtraRequirementParameter().",
+      "params": [
+        {
+          "name": "contentParameterName",
+          "type": "System.String",
+          "doc": "The parameter or field internal name to which this query applies.",
+          "optional": false
+        },
+        {
+          "name": "extraRequirementParameter",
+          "type": "System.String",
+          "doc": "The extra requirement parameter, as listed in IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The value to set this extra requirement parameter. You will typically use System.Convert to convert the value to the type you need.",
+          "optional": false
+        },
+        {
+          "name": "sc",
+          "type": "Rhino.Render.RenderContent.ExtraRequirementsSetContexts",
+          "doc": "The context of this operation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, else false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetChildSlotParameter.htm"
+    },
+    {
+      "name": "SetDisplayInViewport(Boolean)",
+      "signature": "public void SetDisplayInViewport(bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetDisplayInViewport(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetDisplayInViewport.htm"
+    },
+    {
+      "name": "SetDisplayInViewport(Boolean, RenderContent.ChangeContexts)",
+      "signature": "public void SetDisplayInViewport(bool value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetDisplayInViewport(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetDisplayInViewport(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetDisplayInViewport_1.htm"
+    },
+    {
+      "name": "SetEnvironmentMappingMode(TextureEnvironmentMappingMode)",
+      "signature": "public void SetEnvironmentMappingMode(TextureEnvironmentMappingMode value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Render.TextureEnvironmentMappingMode",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetEnvironmentMappingMode(Rhino.Render.TextureEnvironmentMappingMode)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetEnvironmentMappingMode.htm"
+    },
+    {
+      "name": "SetEnvironmentMappingMode(TextureEnvironmentMappingMode, RenderContent.ChangeContexts)",
+      "signature": "public void SetEnvironmentMappingMode(TextureEnvironmentMappingMode value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Render.TextureEnvironmentMappingMode",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetEnvironmentMappingMode(Rhino.Render.TextureEnvironmentMappingMode,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetEnvironmentMappingMode(Rhino.Render.TextureEnvironmentMappingMode,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetEnvironmentMappingMode_1.htm"
+    },
+    {
+      "name": "SetExtraRequirementParameter",
+      "signature": "public bool SetExtraRequirementParameter(string contentParameterName, string extraRequirementParameter, Object value, RenderContent.ExtraRequirementsSetContexts sc)",
+      "summary": "Extra requirements are a way of specifying extra functionality on parameters in the automatic UI. See IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK for string definitions for the parameter names.",
+      "params": [
+        {
+          "name": "contentParameterName",
+          "type": "System.String",
+          "doc": "The parameter or field internal name to which this query applies.",
+          "optional": false
+        },
+        {
+          "name": "extraRequirementParameter",
+          "type": "System.String",
+          "doc": "The extra requirement parameter, as listed in IAutoUIExtraRequirements.h in the C\u002B\u002B RDK SDK.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The value to set this extra requirement parameter. You will typically use System.Convert to convert the value to the type you need.",
+          "optional": false
+        },
+        {
+          "name": "sc",
+          "type": "Rhino.Render.RenderContent.ExtraRequirementsSetContexts",
+          "doc": "The context of this operation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, else false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetExtraRequirementParameter.htm"
+    },
+    {
+      "name": "SetGraphInfo",
+      "signature": "public void SetGraphInfo(TextureGraphInfo tgi)",
+      "summary": "",
+      "params": [
+        {
+          "name": "tgi",
+          "type": "Rhino.Render.TextureGraphInfo",
+          "doc": "[Missing \u003Cparam name=\u0022tgi\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetGraphInfo(Rhino.Render.TextureGraphInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetGraphInfo.htm"
+    },
+    {
+      "name": "SetIsRenderHashRecursive",
+      "signature": "public void SetIsRenderHashRecursive(bool recursive)",
+      "summary": "By default, RenderHash() recurses into children when computing the render CRC. However, some applications may require children to be excluded from the render CRC calculation. Call this method to enable or disable recursing into children. see RenderHash",
+      "params": [
+        {
+          "name": "recursive",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetIsRenderHashRecursive.htm"
+    },
+    {
+      "name": "SetMappingChannel",
+      "signature": "public virtual void SetMappingChannel(int value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetMappingChannel(System.Int32,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetMappingChannel(System.Int32,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetMappingChannel.htm"
+    },
+    {
+      "name": "SetName",
+      "signature": "public void SetName(string name, bool renameEvents, bool ensureNameUnique)",
+      "summary": "Set instance name for this content",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetName(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "renameEvents",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022renameEvents\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetName(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ensureNameUnique",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022ensureNameUnique\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetName(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetName.htm"
+    },
+    {
+      "name": "SetOffset",
+      "signature": "public virtual void SetOffset(Vector3d value, RenderContent.ChangeContexts changeContext)",
+      "summary": "Set offset value across UVW space. If the projection type is WCS or other type specified in model units, then this is the offset in meters.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetOffset(Rhino.Geometry.Vector3d,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetOffset(Rhino.Geometry.Vector3d,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetOffset.htm"
+    },
+    {
+      "name": "SetOffsetLocked",
+      "signature": "public virtual void SetOffsetLocked(bool value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetOffsetLocked(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetOffsetLocked(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetOffsetLocked.htm"
+    },
+    {
+      "name": "SetParameter(String, Object)",
+      "signature": "public virtual bool SetParameter(string parameterName, Object value)",
+      "summary": "Set the named parameter value for this content instance. If you do not support this parameter, call the base class.",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022parameterName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetParameter(System.String,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetParameter(System.String,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetParameter(System.String,System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetParameter.htm"
+    },
+    {
+      "name": "SetParameter(String, Object, RenderContent.ChangeContexts)",
+      "signature": "[ObsoleteAttribute(\u0022Use SetParameter without ChangeContexts and Begin/EndChange\u0022)] public virtual bool SetParameter(string parameterName, Object value, RenderContent.ChangeContexts changeContext)",
+      "summary": "Set the named parameter value for this content instance. If you do not support this parameter, call the base class.",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022parameterName\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetParameter(System.String,System.Object,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetParameter(System.String,System.Object,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetParameter(System.String,System.Object,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.SetParameter(System.String,System.Object,Rhino.Render.RenderContent.ChangeContexts)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetParameter_1.htm"
+    },
+    {
+      "name": "SetPreviewIn3D",
+      "signature": "public virtual void SetPreviewIn3D(bool value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetPreviewIn3D(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetPreviewIn3D(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetPreviewIn3D.htm"
+    },
+    {
+      "name": "SetPreviewLocalMapping(Boolean)",
+      "signature": "public void SetPreviewLocalMapping(bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetPreviewLocalMapping(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetPreviewLocalMapping.htm"
+    },
+    {
+      "name": "SetPreviewLocalMapping(Boolean, RenderContent.ChangeContexts)",
+      "signature": "public void SetPreviewLocalMapping(bool value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetPreviewLocalMapping(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetPreviewLocalMapping(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetPreviewLocalMapping_1.htm"
+    },
+    {
+      "name": "SetProjectionMode",
+      "signature": "public virtual void SetProjectionMode(TextureProjectionMode value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Render.TextureProjectionMode",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetProjectionMode(Rhino.Render.TextureProjectionMode,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetProjectionMode(Rhino.Render.TextureProjectionMode,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetProjectionMode.htm"
+    },
+    {
+      "name": "SetRenderHash",
+      "signature": "[ObsoleteAttribute(\u0022This method is deprecated and no longer called. For more information see CalculateRenderHash\u0022)] public void SetRenderHash(uint hash)",
+      "summary": "This method is deprecated and no longer called. For more information see CalculateRenderHash(UInt64)",
+      "params": [
+        {
+          "name": "hash",
+          "type": "System.UInt32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SetRenderHash.htm"
+    },
+    {
+      "name": "SetRepeat",
+      "signature": "public virtual void SetRepeat(Vector3d value, RenderContent.ChangeContexts changeContext)",
+      "summary": "Set repeat value across UVW space. If the projection type is WCS or other type specified in model units, then this is the repeat across 1 meter of the model.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetRepeat(Rhino.Geometry.Vector3d,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetRepeat(Rhino.Geometry.Vector3d,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetRepeat.htm"
+    },
+    {
+      "name": "SetRepeatLocked",
+      "signature": "public virtual void SetRepeatLocked(bool value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetRepeatLocked(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetRepeatLocked(System.Boolean,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetRepeatLocked.htm"
+    },
+    {
+      "name": "SetRotation",
+      "signature": "public virtual void SetRotation(Vector3d value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetRotation(Rhino.Geometry.Vector3d,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetRotation(Rhino.Geometry.Vector3d,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetRotation.htm"
+    },
+    {
+      "name": "SetWrapType",
+      "signature": "public virtual void SetWrapType(TextureWrapType value, RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Render.TextureWrapType",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetWrapType(Rhino.Render.TextureWrapType,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SetWrapType(Rhino.Render.TextureWrapType,Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SetWrapType.htm"
+    },
+    {
+      "name": "SimulatedTexture",
+      "signature": "public virtual SimulatedTexture SimulatedTexture(RenderTexture.TextureGeneration tg, int size = -1, RhinoObject obj = null)",
+      "summary": "",
+      "params": [
+        {
+          "name": "tg",
+          "type": "Rhino.Render.RenderTexture.TextureGeneration",
+          "doc": "[Missing \u003Cparam name=\u0022tg\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulatedTexture(Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulatedTexture(Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulatedTexture(Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "SimulatedTexture",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulatedTexture(Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SimulatedTexture.htm"
+    },
+    {
+      "name": "SimulateTexture(SimulatedTexture, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Use SimulateTexture with size, TextureGeneration and object instead\u0022)] public virtual void SimulateTexture(ref SimulatedTexture simulation, bool isForDataOnly)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "simulation",
+          "type": "Rhino.Render.SimulatedTexture",
+          "doc": "[Missing \u003Cparam name=\u0022simulation\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulateTexture(Rhino.Render.SimulatedTexture@,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "isForDataOnly",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022isForDataOnly\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulateTexture(Rhino.Render.SimulatedTexture@,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SimulateTexture_1.htm"
+    },
+    {
+      "name": "SimulateTexture(SimulatedTexture, RenderTexture.TextureGeneration, Int32, RhinoObject)",
+      "signature": "public virtual void SimulateTexture(ref SimulatedTexture simulation, RenderTexture.TextureGeneration tg, int size = -1, RhinoObject obj = null)",
+      "summary": "",
+      "params": [
+        {
+          "name": "simulation",
+          "type": "Rhino.Render.SimulatedTexture",
+          "doc": "[Missing \u003Cparam name=\u0022simulation\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulateTexture(Rhino.Render.SimulatedTexture@,Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tg",
+          "type": "Rhino.Render.RenderTexture.TextureGeneration",
+          "doc": "[Missing \u003Cparam name=\u0022tg\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulateTexture(Rhino.Render.SimulatedTexture@,Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulateTexture(Rhino.Render.SimulatedTexture@,Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTexture.SimulateTexture(Rhino.Render.SimulatedTexture@,Rhino.Render.RenderTexture.TextureGeneration,System.Int32,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTexture_SimulateTexture.htm"
+    },
+    {
+      "name": "SmartUngroupRecursive",
+      "signature": "public bool SmartUngroupRecursive()",
+      "summary": "Remove this content and all its children from any instance groups they may be a member of. If any content in the same document is left alone in the group, that content is also ungrouped. Records undo and sends events OnContentChanged and OnContentGroupIdChanged. \\note This method is designed to be called from a content UI and is intended for RDK internal use but may be used as an expert user override.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a content was ungrouped, \\e false if no content or child was part of a group."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_SmartUngroupRecursive.htm"
+    },
+    {
+      "name": "Ungroup",
+      "signature": "public bool Ungroup()",
+      "summary": "Remove this content from any instance group it may be a member of. Does not record undo but does send the OnContentGroupIdChanged event.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if content was ungrouped, \\e false if it was not part of a group."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Ungroup.htm"
+    },
+    {
+      "name": "UngroupRecursive",
+      "signature": "public bool UngroupRecursive()",
+      "summary": "Remove this content and all its children from any instance groups they may be a member of. Does not record undo but does send the OnContentGroupIdChanged event.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a content was ungrouped, \\e false if no content or child was part of a group."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_UngroupRecursive.htm"
+    },
+    {
+      "name": "Uninitialize",
+      "signature": "[ObsoleteAttribute(\u0022This method should not be called.\u0022)] public void Uninitialize()",
+      "summary": "Obsolete. (Inherited from RenderContent.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_Uninitialize.htm"
+    },
+    {
+      "name": "UseCount",
+      "signature": "public int UseCount()",
+      "summary": "UseCount returns how many times the content is used",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContent.UseCount\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_UseCount.htm"
+    },
+    {
+      "name": "VirtualIcon",
+      "signature": "public virtual bool VirtualIcon(Size size, out Bitmap bitmap)",
+      "summary": "Icon to display in the content browser, this bitmap needs to be valid for the life of this content object, the content object that returns the bitmap is responsible for disposing of the bitmap.",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "Requested icon size",
+          "optional": false
+        },
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022bitmap\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContent.VirtualIcon(System.Drawing.Size,System.Drawing.Bitmap@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return Icon to display in the content browser."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContent_VirtualIcon.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanBeEdited",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the content can be edited.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_CanBeEdited.htm"
+    },
+    {
+      "name": "Category",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Category for this content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Category.htm"
+    },
+    {
+      "name": "ChildSlotDisplayName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the localized display name of the child slot name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_ChildSlotDisplayName.htm"
+    },
+    {
+      "name": "ChildSlotName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from RenderContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_ChildSlotName.htm"
+    },
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RenderContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_CppPointer.htm"
+    },
+    {
+      "name": "DisplayName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Display name for this content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_DisplayName.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete. Do not use. You should use DocumentOwner instead.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Document.htm"
+    },
+    {
+      "name": "DocumentAssoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": true,
+      "summary": "If this render content is associated with a document in any way, the document will be returned. This includes copies of render contents that were attached to a document when the copy was made. Otherwise returns null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_DocumentAssoc.htm"
+    },
+    {
+      "name": "DocumentOwner",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "If this render content is owned by a document, the document will be returned. This is the same as getting the document the render content is attached to. Otherwise returns null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_DocumentOwner.htm"
+    },
+    {
+      "name": "DocumentRegistered",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete. Do not use. You should use DocumentOwner instead.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_DocumentRegistered.htm"
+    },
+    {
+      "name": "Fields",
+      "type": "FieldDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Render.Fields FieldDictionary which provides access to setting and retrieving field values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Fields.htm"
+    },
+    {
+      "name": "Filename",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "If the content is file based, this function can be overridden to deal with setting/getting the filename. Corresponds to IRhRdkFileBasedContent in the C\u002B\u002B SDK",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Filename.htm"
+    },
+    {
+      "name": "FilesToEmbed",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A string array of full paths to files used by the content that may be embedded in .3dm files and library files (.rmtl, .renv, .rtex). The default implementation returns an empty string list. Override this to return the file name or file names used by your content. This is typically used by textures that reference files containing the texture imagery.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_FilesToEmbed.htm"
+    },
+    {
+      "name": "FirstChild",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "Return First child of this content or nullptr if none.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_FirstChild.htm"
+    },
+    {
+      "name": "GroupId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Group ID of the content",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_GroupId.htm"
+    },
+    {
+      "name": "Hidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the render content\u0027s \u0027hidden\u0027 state. This feature only works for top-level render contents because it hides the entire hierarchy. It is normally used for \u0027implementation detail\u0027 render contents. For expert use only. Hidden render contents are never shown in the UI, with the exception of the Object (or Layer) Material Properties UI which always shows whatever is assigned to the object (or layer). In the Object (or Layer) Material Properties UI, if the user drops down the list, hidden render contents are not listed. Hidden render contents, being part of the document content list, will be listed by any scripts or other code that iterates over the document render content list. It is recommended that you set IsHidden once when you create your render content and leave it on to prevent flicker or slow performance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Hidden.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Instance identifier for this content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Id.htm"
+    },
+    {
+      "name": "IsDefaultInstance",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Checks if render content is default instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_IsDefaultInstance.htm"
+    },
+    {
+      "name": "IsHiddenByAutoDelete",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Contents can be created as \u0027auto-delete\u0027 by certain commands such as \u0027Picture\u0027. These contents are automatically hidden from the user when the associated Rhino object is deleted. They are later deleted when the document is saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_IsHiddenByAutoDelete.htm"
+    },
+    {
+      "name": "IsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set this property to true prior to adding content to the document to lock the content browser editing UI methods. Setting this to true will keep the browser from allowing things like deleting, renaming or changing content. This is useful for custom child content that you want to be editable but persistent. Setting this after adding content to the document will cause an exception to be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_IsLocked.htm"
+    },
+    {
+      "name": "LocalMappingTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the transformation that can be applied to the UVW vector to convert it from normalized texture space into locally mapped space (ie - with repeat, offset and rotation applied.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderTexture_LocalMappingTransform.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Instance \u0027raw\u0027 name for this content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Name.htm"
+    },
+    {
+      "name": "NextSibling",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "Return First sibling of this content or nullptr if none.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_NextSibling.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Notes for this content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Notes.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the top content in this parent/child chain.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Parent.htm"
+    },
+    {
+      "name": "PixelSize2",
+      "type": "Nullable\u003CValueTuple\u003CT1,T2,T3\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Override to provide details on the actual pixel sizes of this texture in UVW directions return null if the texture should not be treated as a bitmap.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderTexture_PixelSize2.htm"
+    },
+    {
+      "name": "ProxyType",
+      "type": "ProxyTypes",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the proxy type of the render content",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_ProxyType.htm"
+    },
+    {
+      "name": "RenderHash",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Render hash for the content hierarchy. It iterates children and includes a caching mechanism which means the hash value can be retrieved quickly if it hasn\u0027t changed. The cache is invalidated when Changed() is called. You can override the CalculateRenderHash(UInt64) method to provide a custom hash value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_RenderHash.htm"
+    },
+    {
+      "name": "RenderHashWithoutLocalMapping",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Render hash for texture excluding local mapping.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderTexture_RenderHashWithoutLocalMapping.htm"
+    },
+    {
+      "name": "Styles",
+      "type": "RenderContentStyles",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RenderContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Styles.htm"
+    },
+    {
+      "name": "Tags",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Tags for this content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Tags.htm"
+    },
+    {
+      "name": "TopLevel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if this content has no parent, false if it is the child of another content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_TopLevel.htm"
+    },
+    {
+      "name": "TopLevelParent",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the top content in this parent/child chain.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_TopLevelParent.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Description for your content type. ie. \u0022Procedural checker pattern\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_TypeDescription.htm"
+    },
+    {
+      "name": "TypeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Type identifier for this content",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_TypeId.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Name for your content type. ie. \u0022My .net Texture\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_TypeName.htm"
+    },
+    {
+      "name": "Xml",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RenderContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContent_Xml.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

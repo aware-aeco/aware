@@ -1,0 +1,66 @@
+{
+  "name": "SectionDefinitionData",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Section definition data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionData/",
+  "constructors": [
+    {
+      "name": "SectionDefinitionData",
+      "signature": "SectionDefinitionData()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionData/#NemAll_Python_BasisElements.SectionDefinitionData.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ClippingPath",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the clipping path :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionData/#NemAll_Python_BasisElements.SectionDefinitionData.ClippingPath"
+    },
+    {
+      "name": "DefinitionProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/Get the definition properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionData/#NemAll_Python_BasisElements.SectionDefinitionData.DefinitionProperties"
+    },
+    {
+      "name": "DirectionVector",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the direction vector :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionData/#NemAll_Python_BasisElements.SectionDefinitionData.DirectionVector"
+    },
+    {
+      "name": "HeightDirection",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the height direction :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionData/#NemAll_Python_BasisElements.SectionDefinitionData.HeightDirection"
+    },
+    {
+      "name": "SectionBody",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the section body :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionData/#NemAll_Python_BasisElements.SectionDefinitionData.SectionBody"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

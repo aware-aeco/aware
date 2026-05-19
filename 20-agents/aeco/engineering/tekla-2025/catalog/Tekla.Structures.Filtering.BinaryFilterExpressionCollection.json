@@ -1,0 +1,352 @@
+{
+  "name": "BinaryFilterExpressionCollection",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The BinaryFilterExpressionCollection class represents a collection of BinaryFilterItem objects. The class is used to represent linear expressions. This class cannot be inherited.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b265602f-8b11-715f-8159-73cbd7464c26",
+  "constructors": [
+    {
+      "name": "BinaryFilterExpressionCollection",
+      "signature": "public BinaryFilterExpressionCollection()",
+      "summary": "Initializes a new instance of the BinaryFilterExpressionCollection class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9a397fb6-0bdd-2f4f-0d72-ac65d61ee99b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(BinaryFilterExpressionItem Item)",
+      "summary": "Adds a BinaryFilterExpressionItem object at the end of the collection.",
+      "params": [
+        {
+          "name": "Item",
+          "type": "Tekla.Structures.Filtering.BinaryFilterExpressionItem",
+          "doc": "The object to add to the collection. This value cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the supplied item is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/37a55e1e-c3d1-ab03-a52f-1f0856960257"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all the elements from the collection.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d4879053-d92b-b022-d9a3-4d2381f59faa"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(BinaryFilterExpressionItem Item)",
+      "summary": "Determines whether an element is in the collection.",
+      "params": [
+        {
+          "name": "Item",
+          "type": "Tekla.Structures.Filtering.BinaryFilterExpressionItem",
+          "doc": "The object to locate in the collection. This value cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the object exists."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the supplied item is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/692fe680-5d97-a396-86e7-c53e541ca7c8"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(BinaryFilterExpressionItem[] Array, int ArrayIndex)",
+      "summary": "Copies the collection to the input array.",
+      "params": [
+        {
+          "name": "Array",
+          "type": ".Tekla.Structures.Filtering.BinaryFilterExpressionItem.",
+          "doc": "The input array. This value cannot be null.",
+          "optional": false
+        },
+        {
+          "name": "ArrayIndex",
+          "type": "System.Int32",
+          "doc": "The starting index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the supplied item is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the supplied array index is out of bounds."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4aa802f3-e3bf-08cb-56ec-b5b6109cfbc3"
+    },
+    {
+      "name": "GetFirst",
+      "signature": "public BinaryFilterExpressionItem GetFirst()",
+      "summary": "Gets the first item of the collection.",
+      "params": [],
+      "returns": {
+        "type": "BinaryFilterExpressionItem",
+        "doc": "The first item of the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67080931-72ad-1368-a331-8b823209cc19"
+    },
+    {
+      "name": "GetLast",
+      "signature": "public BinaryFilterExpressionItem GetLast()",
+      "summary": "Gets the last item of the collection.",
+      "params": [],
+      "returns": {
+        "type": "BinaryFilterExpressionItem",
+        "doc": "The last item of the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed7ab484-7f6e-9cc3-73af-519a3ebe6d5e"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "public int IndexOf(BinaryFilterExpressionItem Item)",
+      "summary": "Searches for the specified BinaryFilterExpressionItem in the collection and returns a zero-based index if found.",
+      "params": [
+        {
+          "name": "Item",
+          "type": "Tekla.Structures.Filtering.BinaryFilterExpressionItem",
+          "doc": "The item to search for. This value cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the item in the collection. -1 if not found."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the supplied item is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11f12bd5-c925-b507-86f1-6d1f242ac214"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(int Index, BinaryFilterExpressionItem Item)",
+      "summary": "Inserts an element in the collection at a specified index.",
+      "params": [
+        {
+          "name": "Index",
+          "type": "System.Int32",
+          "doc": "The zero-based index at which the item shoud be inserted.",
+          "optional": false
+        },
+        {
+          "name": "Item",
+          "type": "Tekla.Structures.Filtering.BinaryFilterExpressionItem",
+          "doc": "The item to insert. This value cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the supplied item is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the supplied index is out of bounds."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed34cf70-121c-8d04-16fd-3dff463b7ca7"
+    },
+    {
+      "name": "IsFirst",
+      "signature": "public bool IsFirst(BinaryFilterExpressionItem BinaryFilterExpressionItem)",
+      "summary": "Determines whether an element is the first item of the collection.",
+      "params": [
+        {
+          "name": "BinaryFilterExpressionItem",
+          "type": "Tekla.Structures.Filtering.BinaryFilterExpressionItem",
+          "doc": "The element to evaluate. This value cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the element is the first item."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the supplied item is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5cb79128-858c-ecc0-f8e2-aec6aa31db13"
+    },
+    {
+      "name": "IsLast",
+      "signature": "public bool IsLast(BinaryFilterExpressionItem BinaryFilterExpressionItem)",
+      "summary": "Determines whether an element is the last item of the collection.",
+      "params": [
+        {
+          "name": "BinaryFilterExpressionItem",
+          "type": "Tekla.Structures.Filtering.BinaryFilterExpressionItem",
+          "doc": "The element to evaluate. This value cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the element is the last item."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the supplied item is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/980afcfa-dae4-215d-1493-5caba0671bbd"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(BinaryFilterExpressionItem Item)",
+      "summary": "Removes the first occurrence of a specific object from the collection.",
+      "params": [
+        {
+          "name": "Item",
+          "type": "Tekla.Structures.Filtering.BinaryFilterExpressionItem",
+          "doc": "The object to remove from the collection. This value cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if item was successfully removed. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4488a5f8-cfac-c06e-9537-badb4d390f35"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "public void RemoveAt(int Index)",
+      "summary": "Removes the element at the specified index from the collection.",
+      "params": [
+        {
+          "name": "Index",
+          "type": "System.Int32",
+          "doc": "The index of the item to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the supplied index is out of bounds."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/51945f78-fec1-8f3c-1c9e-13a0ef3eeb1b"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fece057a-34f0-fbb1-7184-27f66452ed40"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements actually contained in the collection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e25aa77-870c-e8cb-c660-ff3c0383184c"
+    },
+    {
+      "name": "IsEnable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of the filter expression.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a436cbc9-a74e-3b98-1736-723e4f015b27"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the collection is read-only.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a433f181-9907-871a-4204-2c09c211f3a2"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the collection supports multithreading.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/102fbd99-34a7-73dc-61d9-33ebf3ea489b"
+    },
+    {
+      "name": "Item",
+      "type": "BinaryFilterExpressionItem",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the item at a specific index.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/561edc68-8980-5543-1048-227b6f5f3182"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the root for synchronization.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d60ef229-2678-d000-38f6-466e5c32fd1b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

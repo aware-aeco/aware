@@ -1,0 +1,158 @@
+{
+  "name": "GH_ResourceGate",
+  "namespace": "Grasshopper.Plugin",
+  "kind": "class",
+  "summary": "This class provides access to specific resources of the Grasshopper assembly.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Plugin_GH_ResourceGate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BlackIcon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 24x24 hexagonal black icon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_BlackIcon.htm"
+    },
+    {
+      "name": "Error_12x12",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 12x12 round red icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Error_12x12.htm"
+    },
+    {
+      "name": "Error_16x16",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 16x16 round red icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Error_16x16.htm"
+    },
+    {
+      "name": "Error_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 24x24 round red icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Error_24x24.htm"
+    },
+    {
+      "name": "Error_40x40",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 40x40 round red icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Error_40x40.htm"
+    },
+    {
+      "name": "Info_12x12",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 12x12 round blue icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Info_12x12.htm"
+    },
+    {
+      "name": "Info_16x16",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 16x16 round blue icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Info_16x16.htm"
+    },
+    {
+      "name": "Info_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 24x24 round blue icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Info_24x24.htm"
+    },
+    {
+      "name": "Info_40x40",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 40x40 round blue icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Info_40x40.htm"
+    },
+    {
+      "name": "OK_12x12",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 12x12 round green icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_OK_12x12.htm"
+    },
+    {
+      "name": "OK_16x16",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 16x16 round green icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_OK_16x16.htm"
+    },
+    {
+      "name": "OK_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 24x24 round green icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_OK_24x24.htm"
+    },
+    {
+      "name": "OK_40x40",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 40x40 round green icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_OK_40x40.htm"
+    },
+    {
+      "name": "Warning_12x12",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 12x12 round yellow icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Warning_12x12.htm"
+    },
+    {
+      "name": "Warning_16x16",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 16x16 round yellow icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Warning_16x16.htm"
+    },
+    {
+      "name": "Warning_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 24x24 round yellow icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Warning_24x24.htm"
+    },
+    {
+      "name": "Warning_40x40",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 40x40 round yellow icon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_Warning_40x40.htm"
+    },
+    {
+      "name": "WhiteIcon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a 24x24 square white icon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Plugin_GH_ResourceGate_WhiteIcon.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

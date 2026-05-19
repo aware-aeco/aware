@@ -1,0 +1,24 @@
+{
+  "name": "MeshExtruderParameterMode",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Parameter mode for creating texture coordinates and surface parameters",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshExtruderParameterMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CoverWalls",
+      "value": 0,
+      "summary": "Stretch parameters slightly on extruded faces to cover walls"
+    },
+    {
+      "name": "KeepAndStretch",
+      "value": 1,
+      "summary": "Keep parameters on extruded faces and stretch on walls"
+    }
+  ]
+}

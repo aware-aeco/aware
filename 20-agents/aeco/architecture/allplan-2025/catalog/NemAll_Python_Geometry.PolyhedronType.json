@@ -1,0 +1,31 @@
+{
+  "name": "PolyhedronType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Type of polyhedron visual representation",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "tEdges",
+      "value": 1
+    },
+    {
+      "name": "tFaces",
+      "value": 2
+    },
+    {
+      "name": "tInvalid",
+      "value": 0
+    },
+    {
+      "name": "tVolume",
+      "value": 3
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "name": "ReinforcementService",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Reinforcement service",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetACIBarMark",
+      "signature": "GetACIBarMark(barsDefinitionElement, showIndex)",
+      "summary": "Get the bar mark",
+      "remarks": "Get the bar mark",
+      "params": [
+        {
+          "name": "barsDefinitionElement",
+          "type": "BaseElementAdapter",
+          "doc": "Bars definition element",
+          "optional": false
+        },
+        {
+          "name": "showIndex",
+          "type": "bool",
+          "doc": "Show the index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list",
+        "doc": "bar mark for ACI"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/#NemAll_Python_Reinforcement.ReinforcementService.GetACIBarMark"
+    },
+    {
+      "name": "GetACIPlacementBarMark",
+      "signature": "GetACIPlacementBarMark(barsPlacementElement, showIndex)",
+      "summary": "Get the bar mark for a placement",
+      "remarks": "Get the bar mark for a placement",
+      "params": [
+        {
+          "name": "barsPlacementElement",
+          "type": "BaseElementAdapter",
+          "doc": "Bars placement element",
+          "optional": false
+        },
+        {
+          "name": "showIndex",
+          "type": "bool",
+          "doc": "Show the index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "tuple(bar mark for ACI, bar count)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/#NemAll_Python_Reinforcement.ReinforcementService.GetACIPlacementBarMark"
+    },
+    {
+      "name": "GetBarPositionData",
+      "signature": "GetBarPositionData(elementVec)",
+      "summary": "Get the bar position data",
+      "remarks": "Get the bar position data",
+      "params": [
+        {
+          "name": "elementVec",
+          "type": "BaseElementAdapterList",
+          "doc": "GUID vector with the elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list",
+        "doc": "List with the bar position data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/#NemAll_Python_Reinforcement.ReinforcementService.GetBarPositionData"
+    },
+    {
+      "name": "GetBarShapeCode",
+      "signature": "GetBarShapeCode(barsDefinitionElement)",
+      "summary": "Get the bar shape code",
+      "remarks": "Get the bar shape code",
+      "params": [
+        {
+          "name": "barsDefinitionElement",
+          "type": "BarShapeCodeStandard",
+          "doc": "Bars definition element",
+          "optional": false
+        },
+        {
+          "name": "barShapeCopdeStandard",
+          "type": "object",
+          "doc": "Standard for the bar shape code",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "shape code count, list of (shape codes, bar length), list of (segment name, segment lengths)) for ACI"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/#NemAll_Python_Reinforcement.ReinforcementService.GetBarShapeCode"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

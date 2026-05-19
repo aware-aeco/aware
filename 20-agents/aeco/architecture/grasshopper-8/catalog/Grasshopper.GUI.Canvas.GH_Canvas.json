@@ -1,0 +1,1091 @@
+{
+  "name": "GH_Canvas",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "The GH_Canvas is the control that handles all mouse and paint events for a single loaded document.",
+  "base": "Control",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Canvas.htm",
+  "constructors": [
+    {
+      "name": "GH_Canvas",
+      "signature": "public GH_Canvas()",
+      "summary": "Initializes a new instance of the GH_Canvas class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddTagArtist",
+      "signature": "public void AddTagArtist(IGH_TagArtist artist)",
+      "summary": "Add a Tag Artist instance to this canvas.",
+      "params": [
+        {
+          "name": "artist",
+          "type": "Grasshopper.GUI.Canvas.TagArtists.IGH_TagArtist",
+          "doc": "Tag artist to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_AddTagArtist.htm"
+    },
+    {
+      "name": "AddValidator",
+      "signature": "public void AddValidator(IGH_CanvasValidator validator)",
+      "summary": "Add a new drop validator to the canvas.",
+      "params": [
+        {
+          "name": "validator",
+          "type": "Grasshopper.GUI.Canvas.IGH_CanvasValidator",
+          "doc": "Validator to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_AddValidator.htm"
+    },
+    {
+      "name": "AutoSaveDocument",
+      "signature": "public void AutoSaveDocument(GH_AutoSaveTrigger trigger)",
+      "summary": "",
+      "params": [
+        {
+          "name": "trigger",
+          "type": "Grasshopper.Kernel.GH_AutoSaveTrigger",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_AutoSaveDocument.htm"
+    },
+    {
+      "name": "CanvasOldSchoolMenu",
+      "signature": "public ToolStripDropDownMenu CanvasOldSchoolMenu()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ToolStripDropDownMenu",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_CanvasOldSchoolMenu.htm"
+    },
+    {
+      "name": "CreateMRUPanels",
+      "signature": "public void CreateMRUPanels()",
+      "summary": "Create new MRU panels. This function only does something if there is no document loaded in the canvas.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_CreateMRUPanels.htm"
+    },
+    {
+      "name": "CreatePreview",
+      "signature": "public Bitmap CreatePreview(Size size)",
+      "summary": "Render this canvas to a thumbnail preview.",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_CreatePreview.htm"
+    },
+    {
+      "name": "DestroyMRUPanels",
+      "signature": "public void DestroyMRUPanels()",
+      "summary": "Destroy any MRU panels that might be in existence.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_DestroyMRUPanels.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_Canvas and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_Dispose.htm"
+    },
+    {
+      "name": "GenerateHiResImage",
+      "signature": "public List\u003Cstring\u003E GenerateHiResImage(Rectangle rec, GH_Canvas.GH_ImageSettings settings, out Size totalSize)",
+      "summary": "Generate a collection of hi-res images of the document.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "BoundingBox rectangle of export.",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas.GH_ImageSettings",
+          "doc": "Hi-res settings.",
+          "optional": false
+        },
+        {
+          "name": "totalSize",
+          "type": "System.Drawing.Size",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "List of file paths that indicate the individual images."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_GenerateHiResImage.htm"
+    },
+    {
+      "name": "GenerateHiResImageTile",
+      "signature": "public Bitmap GenerateHiResImageTile(GH_Viewport vp, Color bg)",
+      "summary": "Generate a single tile in a Hi-Res image export.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Grasshopper.GUI.Canvas.GH_Viewport",
+          "doc": "Viewport override",
+          "optional": false
+        },
+        {
+          "name": "bg",
+          "type": "System.Drawing.Color",
+          "doc": "Background color override.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A list of image tiles."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_GenerateHiResImageTile.htm"
+    },
+    {
+      "name": "GetCanvasScreenBuffer",
+      "signature": "public Bitmap GetCanvasScreenBuffer(GH_CanvasMode modeOverride)",
+      "summary": "Get a bitmap that resembles the current state of the canvas.",
+      "params": [
+        {
+          "name": "modeOverride",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasMode",
+          "doc": "The mode to apply during the off-screen rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A Format24bppRgb bitmap similar to the current canvas display."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_GetCanvasScreenBuffer.htm"
+    },
+    {
+      "name": "GetGraphicsObject",
+      "signature": "public Graphics GetGraphicsObject(bool setupDisplayTransform)",
+      "summary": "Gets a graphics object for this control. You are not allowed to draw with this object, use it only for visibility testing and such. If you\u0027re inside a canvas update, use the Graphics() property instead. You must dispose of the Graphics object returned by this method or resources will be leaked.",
+      "params": [
+        {
+          "name": "setupDisplayTransform",
+          "type": "System.Boolean",
+          "doc": "If true, the display transform will be added to the graphics object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Graphics",
+        "doc": "A non-drawing Graphics object on success or null on failure.."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_GetGraphicsObject.htm"
+    },
+    {
+      "name": "HideMRUPanels",
+      "signature": "public void HideMRUPanels()",
+      "summary": "Hide all existing MRU panels by sliding them out of view.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_HideMRUPanels.htm"
+    },
+    {
+      "name": "InstantiateNewObject(Guid, PointF, Boolean)",
+      "signature": "public bool InstantiateNewObject(Guid id, PointF at, bool update)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "at",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "update",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_InstantiateNewObject.htm"
+    },
+    {
+      "name": "InstantiateNewObject(Guid, String, PointF, Boolean)",
+      "signature": "public bool InstantiateNewObject(Guid id, string init_code, PointF at, bool update)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "init_code",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "at",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "update",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_InstantiateNewObject_1.htm"
+    },
+    {
+      "name": "Navigate",
+      "signature": "public void Navigate(GH_CanvasNavigation navigation)",
+      "summary": "Perform a single navigation step.",
+      "params": [
+        {
+          "name": "navigation",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasNavigation",
+          "doc": "Type of navigation step.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_Navigate.htm"
+    },
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_OnPaintBackground.htm"
+    },
+    {
+      "name": "OnViewportChanged",
+      "signature": "public void OnViewportChanged()",
+      "summary": "Ensure the canvas and document viewport data are synchronised and raises the ViewportChanged event.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_OnViewportChanged.htm"
+    },
+    {
+      "name": "ReevaluateMarkovSuggestions",
+      "signature": "public void ReevaluateMarkovSuggestions()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_ReevaluateMarkovSuggestions.htm"
+    },
+    {
+      "name": "RemoveAllTagArtists",
+      "signature": "public void RemoveAllTagArtists()",
+      "summary": "Remove all IGH_TagArtists from this canvas. Do not use this method unless you want to screw over everyone else.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_RemoveAllTagArtists.htm"
+    },
+    {
+      "name": "RemoveTagArtist(Guid)",
+      "signature": "public int RemoveTagArtist(Guid artistId)",
+      "summary": "Remove all IGH_TagArtists from this canvas that match a certain ID.",
+      "params": [
+        {
+          "name": "artistId",
+          "type": "System.Guid",
+          "doc": "ID of IGH_TagArtists to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of IGH_TagArtist instances removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_RemoveTagArtist_1.htm"
+    },
+    {
+      "name": "RemoveTagArtist(IGH_TagArtist)",
+      "signature": "public int RemoveTagArtist(IGH_TagArtist artist)",
+      "summary": "Remove a specific tag artist from this canvas. If the instance occurs multiple times in the TagArtist list, all instances will be removed.",
+      "params": [
+        {
+          "name": "artist",
+          "type": "Grasshopper.GUI.Canvas.TagArtists.IGH_TagArtist",
+          "doc": "TagArtist to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of IGH_TagArtist instances removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_RemoveTagArtist.htm"
+    },
+    {
+      "name": "RemoveValidator",
+      "signature": "public void RemoveValidator(IGH_CanvasValidator validator)",
+      "summary": "Remove a drop validator from the canvas.",
+      "params": [
+        {
+          "name": "validator",
+          "type": "Grasshopper.GUI.Canvas.IGH_CanvasValidator",
+          "doc": "Validator to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_RemoveValidator.htm"
+    },
+    {
+      "name": "ScheduleRegen",
+      "signature": "public void ScheduleRegen(int delay)",
+      "summary": "Schedule a regen to occur after the specified number of milliseconds have elapsed. If a Regen is called in this time frame, the schedule will be cleared. Only a single schedule can be active at any time, so any call to ScheduleRegen will clear existing schedules.",
+      "params": [
+        {
+          "name": "delay",
+          "type": "System.Int32",
+          "doc": "Number of milliseconds to wait until repainting the canvas. intervals equal to or less than zero will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_ScheduleRegen.htm"
+    },
+    {
+      "name": "SetSmartTextRenderingHint",
+      "signature": "public void SetSmartTextRenderingHint()",
+      "summary": "When this method is called during a redraw, the TextRenderingHint of the associated graphics object will be set to either GH_CrispText or GH_SmoothText depending on zoom level.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_SetSmartTextRenderingHint.htm"
+    },
+    {
+      "name": "ShowComponentSearchBox()",
+      "signature": "public bool ShowComponentSearchBox()",
+      "summary": "Display the component Search dialog at the current mouse location. The dialog cannot be shown if ModifiersEnabled=False.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_ShowComponentSearchBox.htm"
+    },
+    {
+      "name": "ShowComponentSearchBox(Point)",
+      "signature": "public bool ShowComponentSearchBox(Point at)",
+      "summary": "Display the component Search dialog at the given coordinate. The dialog cannot be shown if ModifiersEnabled=False.",
+      "params": [
+        {
+          "name": "at",
+          "type": "System.Drawing.Point",
+          "doc": "Location (in screen space) for the center of the search box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_ShowComponentSearchBox_1.htm"
+    },
+    {
+      "name": "ShowMRUPanels",
+      "signature": "public void ShowMRUPanels()",
+      "summary": "Show any hidden MRU panels by sliding them back into view.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_ShowMRUPanels.htm"
+    },
+    {
+      "name": "ShowNavigationPane",
+      "signature": "public void ShowNavigationPane()",
+      "summary": "Displays the quick-navigation popup pane at the cursor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_ShowNavigationPane.htm"
+    },
+    {
+      "name": "ShowSearchDialog",
+      "signature": "public void ShowSearchDialog(bool centerOnCursor)",
+      "summary": "Display the Find dialog. If a Find dialog is already active for this canvas, nothing will happen.",
+      "params": [
+        {
+          "name": "centerOnCursor",
+          "type": "System.Boolean",
+          "doc": "If true, the dialog will be centered on the cursor, otherwise it will be put in the upper left corner of the canvas.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_ShowSearchDialog.htm"
+    },
+    {
+      "name": "StartAutoPan",
+      "signature": "public void StartAutoPan()",
+      "summary": "Start the auto-panning timer.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_StartAutoPan.htm"
+    },
+    {
+      "name": "StopAutoPan",
+      "signature": "public void StopAutoPan()",
+      "summary": "Stop the auto-panning timer.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_StopAutoPan.htm"
+    },
+    {
+      "name": "UpdateDocumentPreview",
+      "signature": "public void UpdateDocumentPreview()",
+      "summary": "Call this method to update the preview thumbnail for the currently loaded document. If no document is currently loaded, nothing will happen.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_UpdateDocumentPreview.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveInteraction",
+      "type": "IGH_MouseInteraction",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the currently active interaction object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ActiveInteraction.htm"
+    },
+    {
+      "name": "ActiveObject",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the currently active object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ActiveObject.htm"
+    },
+    {
+      "name": "ActiveWidget",
+      "type": "IGH_Widget",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the currently active widget.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ActiveWidget.htm"
+    },
+    {
+      "name": "CursorCanvasPosition",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location of the cursor in Canvas coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_CursorCanvasPosition.htm"
+    },
+    {
+      "name": "CursorControlPosition",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location of the cursor in Control coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_CursorControlPosition.htm"
+    },
+    {
+      "name": "DisplayVoronoiWarning",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the Voronoi Over-dose warning message is displayed. This property is set once at Grasshopper startup to True.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_DisplayVoronoiWarning.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the document currently loaded in this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_Document.htm"
+    },
+    {
+      "name": "DrawingMode",
+      "type": "GH_CanvasMode",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current drawing mode for this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_DrawingMode.htm"
+    },
+    {
+      "name": "HasControlWithFocus",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not this canvas has a child control on it with focus.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_HasControlWithFocus.htm"
+    },
+    {
+      "name": "IsActiveInteraction",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not there is an interaction object loaded in this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_IsActiveInteraction.htm"
+    },
+    {
+      "name": "IsActiveObject",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not an object is currently activated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_IsActiveObject.htm"
+    },
+    {
+      "name": "IsActiveWidget",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not a widget is currently activated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_IsActiveWidget.htm"
+    },
+    {
+      "name": "IsDocument",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not a document is currently loaded in this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_IsDocument.htm"
+    },
+    {
+      "name": "MarkovSuggestions",
+      "type": "List\u003CIGH_ObjectProxy\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_MarkovSuggestions.htm"
+    },
+    {
+      "name": "ModifiersEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the modifiers enabled flag. When modifiers are disabled, only zooming and panning is still allowed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ModifiersEnabled.htm"
+    },
+    {
+      "name": "NavigationPanDown",
+      "type": "Keys",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the special key for panning down.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationPanDown.htm"
+    },
+    {
+      "name": "NavigationPanLeft",
+      "type": "Keys",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the special key for panning left.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationPanLeft.htm"
+    },
+    {
+      "name": "NavigationPanPixels",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of pixels for each pan operation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationPanPixels.htm"
+    },
+    {
+      "name": "NavigationPanRight",
+      "type": "Keys",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the special key for panning right.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationPanRight.htm"
+    },
+    {
+      "name": "NavigationPanUp",
+      "type": "Keys",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the special key for panning up.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationPanUp.htm"
+    },
+    {
+      "name": "NavigationZoomFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the zoom factor for navigation zoom operations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationZoomFactor.htm"
+    },
+    {
+      "name": "NavigationZoomIn",
+      "type": "Keys",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the special key for zooming in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationZoomIn.htm"
+    },
+    {
+      "name": "NavigationZoomOut",
+      "type": "Keys",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the special key for zooming in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_NavigationZoomOut.htm"
+    },
+    {
+      "name": "Painter",
+      "type": "GH_Painter",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the painter object that handles most of the drawing logic for this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_Painter.htm"
+    },
+    {
+      "name": "Painting",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this canvas is currently busy painting itself.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_Painting.htm"
+    },
+    {
+      "name": "RecordPreviewBoundary",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_RecordPreviewBoundary.htm"
+    },
+    {
+      "name": "TagArtistIDs",
+      "type": "List\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all the TagArtist IDs in this Canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_TagArtistIDs.htm"
+    },
+    {
+      "name": "ThumbnailSize",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the thumbnail size for documents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ThumbnailSize.htm"
+    },
+    {
+      "name": "TooltipDelay",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the delay (in milliseconds) required for a tooltip popup. This delay is a user setting stored under the Canvas:TooltipDelay field of the core settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_TooltipDelay.htm"
+    },
+    {
+      "name": "Validator",
+      "type": "IGH_CanvasValidator",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to all the validators associated with this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_Validator.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "GH_Viewport",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the viewport that determines the panning and zooming for this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_Viewport.htm"
+    },
+    {
+      "name": "Widgets",
+      "type": "List\u003CIGH_Widget\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the widgets on this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_Widgets.htm"
+    },
+    {
+      "name": "ZoomFadeHigh",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ZUI fade alpha value for the high zoom level threshold. This static field gets set on every Canvas paint start. The high threshold is typically used for ZUI elements that only appear when zoomed in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ZoomFadeHigh.htm"
+    },
+    {
+      "name": "ZoomFadeLow",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ZUI fade alpha value for the low zoom level threshold. This static field gets set on every Canvas paint start. The low threshold is typically used for fading of icons and object names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ZoomFadeLow.htm"
+    },
+    {
+      "name": "ZoomFadeMedium",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ZUI fade alpha value for the medium zoom level threshold. This static field gets set on every Canvas paint start. The medium threshold is typically used for non-informative UI elements such as highlights.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_ZoomFadeMedium.htm"
+    },
+    {
+      "name": "ScheduleInactive",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Defines the delay used to indicate the absence of a schedule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Canvas_ScheduleInactive.htm"
+    },
+    {
+      "name": "ThumbnailHeight",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Canvas_ThumbnailHeight.htm"
+    },
+    {
+      "name": "ThumbnailWidth",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Canvas_ThumbnailWidth.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "CanvasPaintBackground",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPaintBackgroundEventHandler",
+      "signature": "public event GH_Canvas.CanvasPaintBackgroundEventHandler CanvasPaintBackground",
+      "summary": "Raised after the background has been drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPaintBackground.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPaintBegin",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPaintBeginEventHandler",
+      "signature": "public event GH_Canvas.CanvasPaintBeginEventHandler CanvasPaintBegin",
+      "summary": "Raised before a new paint operation starts. This event is always raised, even if the Canvas isn\u0027t visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPaintBegin.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPaintEnd",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPaintEndEventHandler",
+      "signature": "public event GH_Canvas.CanvasPaintEndEventHandler CanvasPaintEnd",
+      "summary": "Raised after a paint operation completes. This event is always raised, even if the Canvas isn\u0027t visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPaintEnd.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPostPaintGroups",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPostPaintGroupsEventHandler",
+      "signature": "public event GH_Canvas.CanvasPostPaintGroupsEventHandler CanvasPostPaintGroups",
+      "summary": "Raised after group drawing completes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPostPaintGroups.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPostPaintObjects",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPostPaintObjectsEventHandler",
+      "signature": "public event GH_Canvas.CanvasPostPaintObjectsEventHandler CanvasPostPaintObjects",
+      "summary": "Raised after object drawing completes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPostPaintObjects.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPostPaintOverlay",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPostPaintOverlayEventHandler",
+      "signature": "public event GH_Canvas.CanvasPostPaintOverlayEventHandler CanvasPostPaintOverlay",
+      "summary": "Raised after object overlay drawing completes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPostPaintOverlay.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPostPaintWidgets",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPostPaintWidgetsEventHandler",
+      "signature": "public event GH_Canvas.CanvasPostPaintWidgetsEventHandler CanvasPostPaintWidgets",
+      "summary": "Raised after widgets are drawn. This is the final event in the Drawing pipeline.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPostPaintWidgets.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPostPaintWires",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPostPaintWiresEventHandler",
+      "signature": "public event GH_Canvas.CanvasPostPaintWiresEventHandler CanvasPostPaintWires",
+      "summary": "Raised after wire drawing completes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPostPaintWires.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPrePaintGroups",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPrePaintGroupsEventHandler",
+      "signature": "public event GH_Canvas.CanvasPrePaintGroupsEventHandler CanvasPrePaintGroups",
+      "summary": "Raised before group drawing starts.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPrePaintGroups.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPrePaintObjects",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPrePaintObjectsEventHandler",
+      "signature": "public event GH_Canvas.CanvasPrePaintObjectsEventHandler CanvasPrePaintObjects",
+      "summary": "Raised before object drawing starts.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPrePaintObjects.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPrePaintOverlay",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPrePaintOverlayEventHandler",
+      "signature": "public event GH_Canvas.CanvasPrePaintOverlayEventHandler CanvasPrePaintOverlay",
+      "summary": "Raised before object overlay drawing starts.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPrePaintOverlay.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPrePaintWidgets",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPrePaintWidgetsEventHandler",
+      "signature": "public event GH_Canvas.CanvasPrePaintWidgetsEventHandler CanvasPrePaintWidgets",
+      "summary": "Raised before Widgets are drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPrePaintWidgets.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasPrePaintWires",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.CanvasPrePaintWiresEventHandler",
+      "signature": "public event GH_Canvas.CanvasPrePaintWiresEventHandler CanvasPrePaintWires",
+      "summary": "Raised before wire drawing starts.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_CanvasPrePaintWires.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Document_ModifiedChanged",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.Document_ModifiedChangedEventHandler",
+      "signature": "public event GH_Canvas.Document_ModifiedChangedEventHandler Document_ModifiedChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_Document_ModifiedChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Document_ObjectsAdded",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.Document_ObjectsAddedEventHandler",
+      "signature": "public event GH_Canvas.Document_ObjectsAddedEventHandler Document_ObjectsAdded",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_Document_ObjectsAdded.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Document_ObjectsDeleted",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.Document_ObjectsDeletedEventHandler",
+      "signature": "public event GH_Canvas.Document_ObjectsDeletedEventHandler Document_ObjectsDeleted",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_Document_ObjectsDeleted.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Document_SettingsChanged",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.Document_SettingsChangedEventHandler",
+      "signature": "public event GH_Canvas.Document_SettingsChangedEventHandler Document_SettingsChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_Document_SettingsChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DocumentChanged",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.DocumentChangedEventHandler",
+      "signature": "public event GH_Canvas.DocumentChangedEventHandler DocumentChanged",
+      "summary": "This event is raised whenever a different document is loaded into this canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_DocumentChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DocumentObjectMouseDown",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.DocumentObjectMouseDownEventHandler",
+      "signature": "public event GH_Canvas.DocumentObjectMouseDownEventHandler DocumentObjectMouseDown",
+      "summary": "This event is raised whenever the left mouse button is pressed while over a Document object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_DocumentObjectMouseDown.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModifiersChanged",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.ModifiersChangedEventHandler",
+      "signature": "public event GH_Canvas.ModifiersChangedEventHandler ModifiersChanged",
+      "summary": "This event is raised whenever the ModifiersEnabled property changes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_ModifiersChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NavigationSettingsChanged",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.NavigationSettingsChangedEventHandler",
+      "signature": "public static event GH_Canvas.NavigationSettingsChangedEventHandler NavigationSettingsChanged",
+      "summary": "Raised whenever any of the shared navigation properties changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_NavigationSettingsChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ViewportChanged",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.ViewportChangedEventHandler",
+      "signature": "public event GH_Canvas.ViewportChangedEventHandler ViewportChanged",
+      "summary": "This event is raised whenever the viewport properties are modified, for example when the pan or zoom values are affected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_ViewportChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WidgetListCreated",
+      "delegate": "Grasshopper.GUI.Canvas.GH_Canvas.WidgetListCreatedEventHandler",
+      "signature": "public static event GH_Canvas.WidgetListCreatedEventHandler WidgetListCreated",
+      "summary": "This event is raised once for every GH_Canvas object that is created anew. The event is Shared (static) because it is raised inside the constructor of a GH_Canvas object and therefor cannot be registered on an instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_Canvas_WidgetListCreated.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

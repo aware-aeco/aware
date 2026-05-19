@@ -1,0 +1,26 @@
+{
+  "name": "DisplayOptions",
+  "namespace": "Dynamo.Core.CrashPromptArgs",
+  "kind": "enum",
+  "summary": "Type DisplayOptions",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CrashPromptArgs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HasDetails",
+      "value": 2
+    },
+    {
+      "name": "HasFilePath",
+      "value": 4
+    },
+    {
+      "name": "IsDefaultTextOverridden",
+      "value": 1
+    }
+  ]
+}

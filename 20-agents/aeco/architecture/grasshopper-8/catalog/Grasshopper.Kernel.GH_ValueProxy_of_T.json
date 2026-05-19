@@ -1,0 +1,175 @@
+{
+  "name": "GH_ValueProxy\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents the abstract base implementation of the IGH_ValueProxy interface.",
+  "interfaces": [
+    "IGH_ValueProxy"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ValueProxy_1.htm",
+  "constructors": [
+    {
+      "name": "GH_ValueProxy\u003CT\u003E",
+      "signature": "protected GH_ValueProxy(T nValue, string nProxyName, bool bIsStringProxy)",
+      "summary": "Default constructor for the base class. All derived classes must call this constructor.",
+      "params": [
+        {
+          "name": "nValue",
+          "type": "T",
+          "doc": "The value to store in this proxy",
+          "optional": false
+        },
+        {
+          "name": "nProxyName",
+          "type": "System.String",
+          "doc": "The human-friendly name of this value type",
+          "optional": false
+        },
+        {
+          "name": "bIsStringProxy",
+          "type": "System.Boolean",
+          "doc": "If True, then this proxy becomes Parsable.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ValueProxy_1__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Duplicate",
+      "signature": "public IGH_ValueProxy Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_ValueProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ValueProxy_1_Duplicate.htm"
+    },
+    {
+      "name": "Duplicate_T",
+      "signature": "public abstract GH_ValueProxy\u003CT\u003E Duplicate_T()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_ValueProxy\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ValueProxy_1_Duplicate_T.htm"
+    },
+    {
+      "name": "FromString",
+      "signature": "public virtual bool FromString(string in)",
+      "summary": "Performs the String-\u003EValue parsing. The default implementation always returns False.",
+      "remarks": "The result of the parse is stored in the local value pointer. If this function returns False there is no guarantee the local value is still valid.",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "doc": "The String to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True in cae of success, False in case of failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ValueProxy_1_FromString.htm"
+    },
+    {
+      "name": "MutateString",
+      "signature": "public virtual string MutateString(string in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ValueProxy_1_MutateString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Performs a default ToString operation on the local value. If the value is Nothing, an empty String is returned.",
+      "remarks": "Implementors: override this function if you need custom formatting logic.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ValueProxy_1_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ValueProxy_1_IsValid.htm"
+    },
+    {
+      "name": "m_IsStringProxy",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_ValueProxy_1_m_IsStringProxy.htm"
+    },
+    {
+      "name": "m_Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_ValueProxy_1_m_Name.htm"
+    },
+    {
+      "name": "m_UserString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_ValueProxy_1_m_UserString.htm"
+    },
+    {
+      "name": "m_Valid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_ValueProxy_1_m_Valid.htm"
+    },
+    {
+      "name": "m_Value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_ValueProxy_1_m_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

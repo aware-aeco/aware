@@ -1,0 +1,35 @@
+{
+  "name": "ePolygonNormalizeType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "type of Polygon2D normalization",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ePolygonNormalizeType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DEFAULT_NORM_TYPE",
+      "value": 0
+    },
+    {
+      "name": "HATCHING_MEASUR_NORM_TYPE",
+      "value": 2
+    },
+    {
+      "name": "HATCHING_NORM_TYPE",
+      "value": 3
+    },
+    {
+      "name": "SIDEFACE_NORM_TYPE",
+      "value": 1
+    },
+    {
+      "name": "STARTPOINT_NORM_TYPE",
+      "value": 4
+    }
+  ]
+}

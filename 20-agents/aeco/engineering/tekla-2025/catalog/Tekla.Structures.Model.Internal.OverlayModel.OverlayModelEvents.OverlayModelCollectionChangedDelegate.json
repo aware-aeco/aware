@@ -1,0 +1,14 @@
+{
+  "name": "OverlayModelEvents.OverlayModelCollectionChangedDelegate",
+  "namespace": "Tekla.Structures.Model.Internal.OverlayModel",
+  "kind": "delegate",
+  "summary": "The delegate for the OverlayModelCollectionChanged event",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/450cc808-78d9-f139-b6a4-0593c47218e5",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void OverlayModelCollectionChangedDelegate( string path, OverlayModelCollectionChangesAction action )"
+}

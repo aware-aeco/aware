@@ -1,0 +1,114 @@
+{
+  "name": "MeshAreaPlacementProperties",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.MeshAreaPlacementProperties.)",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/",
+  "constructors": [
+    {
+      "name": "MeshAreaPlacementProperties",
+      "signature": "MeshAreaPlacementProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LapJointOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the lap joint offset state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.LapJointOffset"
+    },
+    {
+      "name": "MeshSizeRound",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the mesh size round state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.MeshSizeRound"
+    },
+    {
+      "name": "OverlapCross",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the cross overlap :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.OverlapCross"
+    },
+    {
+      "name": "OverlapLongitudinal",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the longitudinal overlap :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.OverlapLongitudinal"
+    },
+    {
+      "name": "PlacementDirection",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the placement direction :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.PlacementDirection"
+    },
+    {
+      "name": "PlacementEndJustified",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the placement end justified state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.PlacementEndJustified"
+    },
+    {
+      "name": "PlacementStartChange",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the placement start change state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.PlacementStartChange"
+    },
+    {
+      "name": "StartLength",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the start length :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.StartLength"
+    },
+    {
+      "name": "StartWidth",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the start width :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/#NemAll_Python_Reinforcement.MeshAreaPlacementProperties.StartWidth"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

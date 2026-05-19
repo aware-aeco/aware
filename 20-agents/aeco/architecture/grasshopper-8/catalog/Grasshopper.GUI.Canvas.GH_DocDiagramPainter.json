@@ -1,0 +1,353 @@
+{
+  "name": "GH_DocDiagramPainter",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "This class paints diagrammatic images of a collection of objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_DocDiagramPainter.htm",
+  "constructors": [
+    {
+      "name": "GH_DocDiagramPainter",
+      "signature": "public GH_DocDiagramPainter()",
+      "summary": "Initializes a new instance of the GH_DocDiagramPainter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "MapPoint(Point)",
+      "signature": "public Point MapPoint(Point pt)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_MapPoint.htm"
+    },
+    {
+      "name": "MapPoint(PointF)",
+      "signature": "public PointF MapPoint(PointF pt)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_MapPoint_1.htm"
+    },
+    {
+      "name": "MapRectangle",
+      "signature": "public Rectangle MapRectangle(Rectangle rec)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_MapRectangle.htm"
+    },
+    {
+      "name": "MapX(Int32)",
+      "signature": "public int MapX(int x)",
+      "summary": "",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_MapX.htm"
+    },
+    {
+      "name": "MapX(Single)",
+      "signature": "public float MapX(float x)",
+      "summary": "",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_MapX_1.htm"
+    },
+    {
+      "name": "MapY(Int32)",
+      "signature": "public int MapY(int y)",
+      "summary": "",
+      "params": [
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_MapY.htm"
+    },
+    {
+      "name": "MapY(Single)",
+      "signature": "public float MapY(float y)",
+      "summary": "",
+      "params": [
+        {
+          "name": "y",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_MapY_1.htm"
+    },
+    {
+      "name": "PaintDiagram(IEnumerable\u003CIGH_DocumentObject\u003E, Int32, Int32)",
+      "signature": "public bool PaintDiagram(IEnumerable\u003CIGH_DocumentObject\u003E objs, int approx_size, int inflate)",
+      "summary": "Paint a diagram of a document.",
+      "params": [
+        {
+          "name": "objs",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_DocumentObject\u003E",
+          "doc": "Objects to paint.",
+          "optional": false
+        },
+        {
+          "name": "approx_size",
+          "type": "System.Int32",
+          "doc": "Approximate size along each side.",
+          "optional": false
+        },
+        {
+          "name": "inflate",
+          "type": "System.Int32",
+          "doc": "Padding around the objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_PaintDiagram.htm"
+    },
+    {
+      "name": "PaintDiagram(IEnumerable\u003CIGH_DocumentObject\u003E, Int32, Int32, Int32)",
+      "signature": "public bool PaintDiagram(IEnumerable\u003CIGH_DocumentObject\u003E objs, int mapWidth, int mapHeight, int inflate)",
+      "summary": "Paint a diagram of a document.",
+      "params": [
+        {
+          "name": "objs",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_DocumentObject\u003E",
+          "doc": "Objects to paint.",
+          "optional": false
+        },
+        {
+          "name": "mapWidth",
+          "type": "System.Int32",
+          "doc": "Width (in pixels) of diagram.",
+          "optional": false
+        },
+        {
+          "name": "mapHeight",
+          "type": "System.Int32",
+          "doc": "Height (in pixels) of diagram.",
+          "optional": false
+        },
+        {
+          "name": "inflate",
+          "type": "System.Int32",
+          "doc": "Padding around the objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_PaintDiagram_1.htm"
+    },
+    {
+      "name": "UnmapPoint",
+      "signature": "public Point UnmapPoint(Point pt)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_UnmapPoint.htm"
+    },
+    {
+      "name": "UnmapRectangle",
+      "signature": "public Rectangle UnmapRectangle(Rectangle rec)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_UnmapRectangle.htm"
+    },
+    {
+      "name": "UnmapX",
+      "signature": "public int UnmapX(int x)",
+      "summary": "",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_UnmapX.htm"
+    },
+    {
+      "name": "UnmapY",
+      "signature": "public int UnmapY(int y)",
+      "summary": "",
+      "params": [
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_UnmapY.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 2D domain of the diagram in canvas coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_BoundingBox.htm"
+    },
+    {
+      "name": "DrawingBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 2D domain of the diagram in image coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_DrawingBox.htm"
+    },
+    {
+      "name": "IgnoreSelectedStates",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Ignore Selected State flag. When set to True, selected objects are not drawn in a different colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_IgnoreSelectedStates.htm"
+    },
+    {
+      "name": "Image",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the diagram image (only available after a call to PaintDiagram().",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_Image.htm"
+    },
+    {
+      "name": "Size",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the width and height (in pixels) of this diagram image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_Size.htm"
+    },
+    {
+      "name": "Zoom",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the zoom factor for this diagram.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_DocDiagramPainter_Zoom.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

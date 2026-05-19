@@ -1,0 +1,14 @@
+{
+  "name": "GH_Canvas.Document_ModifiedChangedEventHandler",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Canvas.GH_Canvas.Document_ModifiedChangedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Canvas_Document_ModifiedChangedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void Document_ModifiedChangedEventHandler( GH_Document sender, GH_DocModifiedEventArgs e )"
+}

@@ -1,0 +1,127 @@
+{
+  "name": "PlacingQuarterAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PlacingQuarterAttributes class contains the basic attributes for placing quarters.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c71a59d4-6836-e9f2-a51e-09c64d4ed72d",
+  "constructors": [
+    {
+      "name": "PlacingQuarterAttributes()",
+      "signature": "public PlacingQuarterAttributes()",
+      "summary": "Creates a new placing quarter attributes instance. The default parameters are: TopLeft = true, TopRight = true, BottomLeft = true, BottomRight = true.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d26de711-bfa8-a2cc-b89c-c6128e6c130d"
+    },
+    {
+      "name": "PlacingQuarterAttributes(Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public PlacingQuarterAttributes(bool TopLeft, bool TopRight, bool BottomLeft, bool BottomRight)",
+      "summary": "Creates a new placing quarter attributes instance with the given parameters.",
+      "params": [
+        {
+          "name": "TopLeft",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the top left direction.",
+          "optional": false
+        },
+        {
+          "name": "TopRight",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the top right direction.",
+          "optional": false
+        },
+        {
+          "name": "BottomLeft",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the bottom left direction.",
+          "optional": false
+        },
+        {
+          "name": "BottomRight",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the bottom right direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5e018245-f171-cd9d-fdcf-c7edbff412cb"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public Object Clone()",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A new object that is a copy of the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3528770e-cd45-9205-73d7-b00c3e84a270"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c39a275d-9cb2-f970-34d2-f2fcf3beacb2"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BottomLeft",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the bottom left direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/801891a0-aa0d-29b8-2846-9f62c17244e7"
+    },
+    {
+      "name": "BottomRight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the bottom right direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e84d85fe-e12a-9d2d-a8df-aee889c45d1b"
+    },
+    {
+      "name": "TopLeft",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the top left direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d0c243c1-1a55-6b59-aba2-a09f5d0839f8"
+    },
+    {
+      "name": "TopRight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the top right direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e982ea3e-7a91-f704-3a3f-bc013f2081cb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

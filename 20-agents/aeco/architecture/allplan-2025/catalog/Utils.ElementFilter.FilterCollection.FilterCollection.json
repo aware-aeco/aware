@@ -1,0 +1,66 @@
+{
+  "name": "FilterCollection",
+  "namespace": "Utils.ElementFilter.FilterCollection",
+  "kind": "class",
+  "summary": "implementation of the filter collection",
+  "base": "BaseFilterObject",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/FilterCollection/",
+  "constructors": [
+    {
+      "name": "FilterCollection",
+      "signature": "FilterCollection()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/FilterCollection/#Utils.ElementFilter.FilterCollection.FilterCollection.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__(element: BaseElementAdapter) -\u003E bool",
+      "summary": "execute the filter collection",
+      "remarks": "execute the filter collection",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "element to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "element fulfills the filter: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/FilterCollection/#Utils.ElementFilter.FilterCollection.FilterCollection.__call__"
+    },
+    {
+      "name": "append",
+      "signature": "append(ele_filter: BaseFilterObject | SelectionQuery)",
+      "summary": "append a filter",
+      "remarks": "append a filter",
+      "params": [
+        {
+          "name": "ele_filter",
+          "type": "BaseFilterObject | SelectionQuery",
+          "doc": "filter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/FilterCollection/#Utils.ElementFilter.FilterCollection.FilterCollection.append"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,719 @@
+{
+  "name": "HistoryRecord",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Provides a single bundling of information to be passed to Rhino when setting up history for an object.",
+  "remarks": "To use this object, just pass it to a RhinoDoc.Add() method along with the needed geometry. Do not reuse this class for more than one history addition.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_HistoryRecord.htm",
+  "constructors": [
+    {
+      "name": "HistoryRecord",
+      "signature": "public HistoryRecord(Command command, int version)",
+      "summary": "Initializes a new instance of the HistoryRecord class",
+      "params": [
+        {
+          "name": "command",
+          "type": "Rhino.Commands.Command",
+          "doc": "[Missing \u003Cparam name=\u0022command\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.#ctor(Rhino.Commands.Command,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022version\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.#ctor(Rhino.Commands.Command,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_Finalize.htm"
+    },
+    {
+      "name": "SetBool",
+      "signature": "public bool SetBool(int id, bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBool(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBool(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBool(System.Int32,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetBool.htm"
+    },
+    {
+      "name": "SetBools",
+      "signature": "public bool SetBools(int id, IEnumerable\u003Cbool\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBools(System.Int32,System.Collections.Generic.IEnumerable{System.Boolean})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CBoolean\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBools(System.Int32,System.Collections.Generic.IEnumerable{System.Boolean})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBools(System.Int32,System.Collections.Generic.IEnumerable{System.Boolean})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetBools.htm"
+    },
+    {
+      "name": "SetBrep",
+      "signature": "public bool SetBrep(int id, Brep value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBrep(System.Int32,Rhino.Geometry.Brep)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBrep(System.Int32,Rhino.Geometry.Brep)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetBrep(System.Int32,Rhino.Geometry.Brep)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetBrep.htm"
+    },
+    {
+      "name": "SetColor",
+      "signature": "public bool SetColor(int id, Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetColor(System.Int32,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetColor(System.Int32,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetColor(System.Int32,System.Drawing.Color)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetColor.htm"
+    },
+    {
+      "name": "SetColors",
+      "signature": "public bool SetColors(int id, IEnumerable\u003CColor\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetColors(System.Int32,System.Collections.Generic.IEnumerable{System.Drawing.Color})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetColors(System.Int32,System.Collections.Generic.IEnumerable{System.Drawing.Color})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetColors(System.Int32,System.Collections.Generic.IEnumerable{System.Drawing.Color})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetColors.htm"
+    },
+    {
+      "name": "SetCurve",
+      "signature": "public bool SetCurve(int id, Curve value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetCurve(System.Int32,Rhino.Geometry.Curve)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetCurve(System.Int32,Rhino.Geometry.Curve)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetCurve(System.Int32,Rhino.Geometry.Curve)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetCurve.htm"
+    },
+    {
+      "name": "SetDouble",
+      "signature": "public bool SetDouble(int id, double value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetDouble(System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetDouble(System.Int32,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetDouble(System.Int32,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetDouble.htm"
+    },
+    {
+      "name": "SetDoubles",
+      "signature": "public bool SetDoubles(int id, IEnumerable\u003Cdouble\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetDoubles(System.Int32,System.Collections.Generic.IEnumerable{System.Double})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetDoubles(System.Int32,System.Collections.Generic.IEnumerable{System.Double})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetDoubles(System.Int32,System.Collections.Generic.IEnumerable{System.Double})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetDoubles.htm"
+    },
+    {
+      "name": "SetGuid",
+      "signature": "public bool SetGuid(int id, Guid value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetGuid(System.Int32,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetGuid(System.Int32,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetGuid(System.Int32,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetGuid.htm"
+    },
+    {
+      "name": "SetGuids",
+      "signature": "public bool SetGuids(int id, IEnumerable\u003CGuid\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetGuids(System.Int32,System.Collections.Generic.IEnumerable{System.Guid})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetGuids(System.Int32,System.Collections.Generic.IEnumerable{System.Guid})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetGuids(System.Int32,System.Collections.Generic.IEnumerable{System.Guid})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetGuids.htm"
+    },
+    {
+      "name": "SetHistoryVersion",
+      "signature": "public bool SetHistoryVersion(int historyVersion)",
+      "summary": "Specifies a non-zero integer that identifies the version of this history record. The virtual ReplayHistory() functions can check this version to avoid replaying history using information created by earlier versions of the command.",
+      "params": [
+        {
+          "name": "historyVersion",
+          "type": "System.Int32",
+          "doc": "Any non-zero integer. It is strongly suggested that something like YYYYMMDD be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetHistoryVersion.htm"
+    },
+    {
+      "name": "SetInt",
+      "signature": "public bool SetInt(int id, int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetInt(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetInt(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetInt(System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetInt.htm"
+    },
+    {
+      "name": "SetInts",
+      "signature": "public bool SetInts(int id, IEnumerable\u003Cint\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetInts(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetInts(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetInts(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetInts.htm"
+    },
+    {
+      "name": "SetMesh",
+      "signature": "public bool SetMesh(int id, Mesh value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetMesh(System.Int32,Rhino.Geometry.Mesh)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetMesh(System.Int32,Rhino.Geometry.Mesh)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetMesh(System.Int32,Rhino.Geometry.Mesh)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetMesh.htm"
+    },
+    {
+      "name": "SetObjRef",
+      "signature": "public bool SetObjRef(int id, ObjRef value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetObjRef(System.Int32,Rhino.DocObjects.ObjRef)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.DocObjects.ObjRef",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetObjRef(System.Int32,Rhino.DocObjects.ObjRef)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetObjRef(System.Int32,Rhino.DocObjects.ObjRef)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetObjRef.htm"
+    },
+    {
+      "name": "SetPoint3d",
+      "signature": "public bool SetPoint3d(int id, Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3d(System.Int32,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3d(System.Int32,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3d(System.Int32,Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetPoint3d.htm"
+    },
+    {
+      "name": "SetPoint3dOnObject",
+      "signature": "public bool SetPoint3dOnObject(int id, ObjRef objref, Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3dOnObject(System.Int32,Rhino.DocObjects.ObjRef,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "objref",
+          "type": "Rhino.DocObjects.ObjRef",
+          "doc": "[Missing \u003Cparam name=\u0022objref\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3dOnObject(System.Int32,Rhino.DocObjects.ObjRef,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3dOnObject(System.Int32,Rhino.DocObjects.ObjRef,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3dOnObject(System.Int32,Rhino.DocObjects.ObjRef,Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetPoint3dOnObject.htm"
+    },
+    {
+      "name": "SetPoint3ds",
+      "signature": "public bool SetPoint3ds(int id, IEnumerable\u003CPoint3d\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3ds(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3ds(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetPoint3ds(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetPoint3ds.htm"
+    },
+    {
+      "name": "SetString",
+      "signature": "public bool SetString(int id, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetString(System.Int32,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetString(System.Int32,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetString(System.Int32,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetString.htm"
+    },
+    {
+      "name": "SetStrings",
+      "signature": "public bool SetStrings(int id, IEnumerable\u003Cstring\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetStrings(System.Int32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetStrings(System.Int32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetStrings(System.Int32,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetStrings.htm"
+    },
+    {
+      "name": "SetSurface",
+      "signature": "public bool SetSurface(int id, Surface value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetSurface(System.Int32,Rhino.Geometry.Surface)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetSurface(System.Int32,Rhino.Geometry.Surface)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetSurface(System.Int32,Rhino.Geometry.Surface)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetSurface.htm"
+    },
+    {
+      "name": "SetTransorm",
+      "signature": "public bool SetTransorm(int id, Transform value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetTransorm(System.Int32,Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetTransorm(System.Int32,Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetTransorm(System.Int32,Rhino.Geometry.Transform)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetTransorm.htm"
+    },
+    {
+      "name": "SetVector3d",
+      "signature": "public bool SetVector3d(int id, Vector3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetVector3d(System.Int32,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetVector3d(System.Int32,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetVector3d(System.Int32,Rhino.Geometry.Vector3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetVector3d.htm"
+    },
+    {
+      "name": "SetVector3ds",
+      "signature": "public bool SetVector3ds(int id, IEnumerable\u003CVector3d\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetVector3ds(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.Vector3d})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CVector3d\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetVector3ds(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.Vector3d})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HistoryRecord.SetVector3ds(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.Vector3d})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HistoryRecord_SetVector3ds.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CopyOnReplaceObject",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When an object is replaced and the old object has a history record with this field set, the history record is copied and attached to the new object. That allows a descendant object to continue the history linkage after it is edited.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HistoryRecord_CopyOnReplaceObject.htm"
+    },
+    {
+      "name": "Handle",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Wrapped native C\u002B\u002B pointer to CRhinoHistory instance",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HistoryRecord_Handle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

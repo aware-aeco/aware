@@ -1,0 +1,162 @@
+{
+  "name": "LcOpSimulationSource",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSimulationSource class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSimulationSource",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDisplay",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay GetDisplay()",
+      "summary": "GetDisplay method of LcOpSimulationSource.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.GetDisplay"
+    },
+    {
+      "name": "IsPlaybackOnly",
+      "signature": "bool IsPlaybackOnly()",
+      "summary": "IsPlaybackOnly method of LcOpSimulationSource.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.IsPlaybackOnly"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSimulationSource InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSimulationSource.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSimulationSource.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddNotify",
+      "signature": "void AddNotify(Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceNotify notify)",
+      "summary": "AddNotify method of LcOpSimulationSource.",
+      "params": [
+        {
+          "name": "notify",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceNotify",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.AddNotify%28Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceNotify%29"
+    },
+    {
+      "name": "DisableDisplay",
+      "signature": "void DisableDisplay(Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay display)",
+      "summary": "DisableDisplay method of LcOpSimulationSource.",
+      "params": [
+        {
+          "name": "display",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.DisableDisplay%28Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay%29"
+    },
+    {
+      "name": "EnableDisplay",
+      "signature": "void EnableDisplay(Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay display)",
+      "summary": "EnableDisplay method of LcOpSimulationSource.",
+      "params": [
+        {
+          "name": "display",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.EnableDisplay%28Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay%29"
+    },
+    {
+      "name": "RemoveNotify",
+      "signature": "void RemoveNotify(Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceNotify notify)",
+      "summary": "RemoveNotify method of LcOpSimulationSource.",
+      "params": [
+        {
+          "name": "notify",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceNotify",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.RemoveNotify%28Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceNotify%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSimulationSource.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSource.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,68 @@
+{
+  "name": "BoundingBox3D",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A 3D bounding box of an element.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BoundingBox3D",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "xMin",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The minimum X value of the bounding box.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BoundingBox3D"
+    },
+    {
+      "name": "yMin",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The minimum Y value of the bounding box.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BoundingBox3D"
+    },
+    {
+      "name": "zMin",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The minimum Z value of the bounding box.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BoundingBox3D"
+    },
+    {
+      "name": "xMax",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The maximum X value of the bounding box.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BoundingBox3D"
+    },
+    {
+      "name": "yMax",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The maximum Y value of the bounding box.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BoundingBox3D"
+    },
+    {
+      "name": "zMax",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The maximum Z value of the bounding box.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BoundingBox3D"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

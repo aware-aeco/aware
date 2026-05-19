@@ -1,0 +1,29 @@
+{
+  "name": "BinaryFilterOperatorType",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "enum",
+  "summary": "The binary filter operator type defines the operators between two binary filters.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bd8993a4-6571-5c4f-d307-fbc742d65b20",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOOLEAN_OR",
+      "value": 0,
+      "summary": "The Boolean OR operator."
+    },
+    {
+      "name": "BOOLEAN_AND",
+      "value": 1,
+      "summary": "The Boolean AND operator."
+    },
+    {
+      "name": "EMPTY",
+      "value": 2,
+      "summary": "The empty operator represents the end of the expression."
+    }
+  ]
+}

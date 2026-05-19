@@ -1,0 +1,41 @@
+{
+  "name": "ProjectInfoField",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Shared schema type \u0060ProjectInfoField\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ProjectInfoField",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "projectInfoId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The id of the project info field.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ProjectInfoField"
+    },
+    {
+      "name": "projectInfoName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the project info field visible on UI.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ProjectInfoField"
+    },
+    {
+      "name": "projectInfoValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the project info field.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ProjectInfoField"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

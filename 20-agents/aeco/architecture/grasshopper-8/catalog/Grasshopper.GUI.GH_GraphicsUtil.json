@@ -1,0 +1,2771 @@
+{
+  "name": "GH_GraphicsUtil",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Utility class with static (Shared) functions that help with colour, shape and text rendering.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_GraphicsUtil.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AppendArc(Point3d, Point3d, Vector3d, GraphicsPath)",
+      "signature": "public static void AppendArc(Point3d p0, Point3d p1, Vector3d dir, GraphicsPath path)",
+      "summary": "Append an arc segment to a GraphicsPath. If the arc cannot be solved, a linear segment is appended instead.",
+      "params": [
+        {
+          "name": "p0",
+          "type": "Point3d",
+          "doc": "Start point of arc.",
+          "optional": false
+        },
+        {
+          "name": "p1",
+          "type": "Point3d",
+          "doc": "End point of arc.",
+          "optional": false
+        },
+        {
+          "name": "dir",
+          "type": "Vector3d",
+          "doc": "Tangent direction at start of arc.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "System.Drawing.Drawing2D.GraphicsPath",
+          "doc": "Path to append to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_AppendArc.htm"
+    },
+    {
+      "name": "AppendArc(PointF, PointF, SizeF, GraphicsPath)",
+      "signature": "public static void AppendArc(PointF p0, PointF p1, SizeF dir, GraphicsPath path)",
+      "summary": "Append an arc segment to a GraphicsPath. If the arc cannot be solved, a linear segment is appended instead.",
+      "params": [
+        {
+          "name": "p0",
+          "type": "System.Drawing.PointF",
+          "doc": "Start point of arc.",
+          "optional": false
+        },
+        {
+          "name": "p1",
+          "type": "System.Drawing.PointF",
+          "doc": "End point of arc.",
+          "optional": false
+        },
+        {
+          "name": "dir",
+          "type": "System.Drawing.SizeF",
+          "doc": "Tangent direction at start of arc.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "System.Drawing.Drawing2D.GraphicsPath",
+          "doc": "Path to append to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_AppendArc_1.htm"
+    },
+    {
+      "name": "BlendColour(Color, Color)",
+      "signature": "public static Color BlendColour(Color bottom, Color top)",
+      "summary": "Overlays two colours. The Alpha component of the top colour controls the blend.",
+      "params": [
+        {
+          "name": "bottom",
+          "type": "System.Drawing.Color",
+          "doc": "Base colour.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Drawing.Color",
+          "doc": "Overlay colour.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The blended colour. Alpha channels are added together."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BlendColour.htm"
+    },
+    {
+      "name": "BlendColour(Color, Color, Double)",
+      "signature": "public static Color BlendColour(Color bottom, Color top, double factor)",
+      "summary": "Overlays two colours.",
+      "params": [
+        {
+          "name": "bottom",
+          "type": "System.Drawing.Color",
+          "doc": "Base colour.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Drawing.Color",
+          "doc": "Overlay colour.",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "doc": "Blend factor. 0.0 means the return colour will be identical to the bottom colour, 1.0 means the return colour will be identical to the top colour.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The blended colour."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BlendColour_1.htm"
+    },
+    {
+      "name": "BlendInteger",
+      "signature": "public static int BlendInteger(double t0, double t1, int a0, int a1, double t)",
+      "summary": "Calculates a linear blend between two extremes. Although the inputs are unlimited integers, the output is an integer in the byte range (0-255).",
+      "params": [
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "Value of first extreme.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "Value of second extreme.",
+          "optional": false
+        },
+        {
+          "name": "a0",
+          "type": "System.Int32",
+          "doc": "Integer value at first extreme.",
+          "optional": false
+        },
+        {
+          "name": "a1",
+          "type": "System.Int32",
+          "doc": "Integer value at second extreme.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Interpolation parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Interpolated value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BlendInteger.htm"
+    },
+    {
+      "name": "BoxClosestArcPoint",
+      "signature": "public static PointF BoxClosestArcPoint(PointF pt, RectangleF box)",
+      "summary": "Find the closest point on or in a box given a test point. Arc extension is implied.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Sample point.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BoxClosestArcPoint.htm"
+    },
+    {
+      "name": "BoxClosestPoint(Point, Rectangle)",
+      "signature": "public static Point BoxClosestPoint(Point pt, Rectangle box)",
+      "summary": "Find the closest point on or in a box given a test point.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.Point",
+          "doc": "Sample point.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BoxClosestPoint.htm"
+    },
+    {
+      "name": "BoxClosestPoint(PointF, RectangleF)",
+      "signature": "public static PointF BoxClosestPoint(PointF pt, RectangleF box)",
+      "summary": "Find the closest point on or in a box given a test point.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Sample point.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BoxClosestPoint_1.htm"
+    },
+    {
+      "name": "BoxFurthestPoint(Point, Rectangle)",
+      "signature": "public static Point BoxFurthestPoint(Point pt, Rectangle box)",
+      "summary": "Find the furthest point on or in a box given a test point.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.Point",
+          "doc": "Sample point.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BoxFurthestPoint.htm"
+    },
+    {
+      "name": "BoxFurthestPoint(PointF, RectangleF)",
+      "signature": "public static PointF BoxFurthestPoint(PointF pt, RectangleF box)",
+      "summary": "Find the furthest point on or in a box given a test point.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Sample point.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BoxFurthestPoint_1.htm"
+    },
+    {
+      "name": "BoxViewCone",
+      "signature": "public static GraphicsPath BoxViewCone(PointF pt, RectangleF box)",
+      "summary": "Computes the graphicspath that represents the viewcone for a point and a rectangle. If the rectangle contains the point, null is returned.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_BoxViewCone.htm"
+    },
+    {
+      "name": "ColourARGB(Double, Double, Double)",
+      "signature": "public static Color ColourARGB(double r, double g, double b)",
+      "summary": "Create a colour from floating ARGB channels (0.0~1.0). Channels are clipped to valid ranges.",
+      "params": [
+        {
+          "name": "r",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The colour implied by the RGB channel values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ColourARGB.htm"
+    },
+    {
+      "name": "ColourARGB(Int32, Int32, Int32)",
+      "signature": "public static Color ColourARGB(int r, int g, int b)",
+      "summary": "Create a colour from integer RGB channels. Channels are clipped to valid ranges.",
+      "params": [
+        {
+          "name": "r",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "Returns the colour as implied by the RGB channel values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ColourARGB_1.htm"
+    },
+    {
+      "name": "ColourARGB(Int32, Int32, Int32, Int32)",
+      "signature": "public static Color ColourARGB(int a, int r, int g, int b)",
+      "summary": "Create a colour from integer ARGB channels. Channels are clipped to valid ranges.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "Returns the colour as implied by the ARGB channel values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ColourARGB_2.htm"
+    },
+    {
+      "name": "CreateColourIcon",
+      "signature": "public static Bitmap CreateColourIcon(int width, int height, Color colour)",
+      "summary": "Create a colour swatch icon.",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "Width of icon.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "Height of icon.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour for swatch, if colour contains an alpha component, you should draw an alpha-grid behind the icon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A bitmap with the requested icon colour."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_CreateColourIcon.htm"
+    },
+    {
+      "name": "DentHorizontal(Graphics, Rectangle)",
+      "signature": "public static void DentHorizontal(Graphics g, Rectangle box)",
+      "summary": "Draws a horizontal dent. A horizontal dent had dark lines along the top and bottom edges.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Dimensions of the dent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_DentHorizontal.htm"
+    },
+    {
+      "name": "DentHorizontal(Graphics, Rectangle, Int32, Int32)",
+      "signature": "public static void DentHorizontal(Graphics g, Rectangle box, int alphaEdge, int alphaFill)",
+      "summary": "Draws a horizontal dent. A horizontal dent had dark lines along the top and bottom edges.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Dimensions of the dent.",
+          "optional": false
+        },
+        {
+          "name": "alphaEdge",
+          "type": "System.Int32",
+          "doc": "Transparency on the middle of the edges.",
+          "optional": false
+        },
+        {
+          "name": "alphaFill",
+          "type": "System.Int32",
+          "doc": "Transparency on the middle of the fill.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_DentHorizontal_1.htm"
+    },
+    {
+      "name": "DentVertical(Graphics, Rectangle)",
+      "signature": "public static void DentVertical(Graphics g, Rectangle box)",
+      "summary": "Draws a vertical dent. A vertical dent had dark lines along the left and right edges.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Dimensions of the dent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_DentVertical.htm"
+    },
+    {
+      "name": "DentVertical(Graphics, Rectangle, Int32, Int32)",
+      "signature": "public static void DentVertical(Graphics g, Rectangle box, int alphaEdge, int alphaFill)",
+      "summary": "Draws a vertical dent. A vertical dent had dark lines along the left and right edges.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Dimensions of the dent.",
+          "optional": false
+        },
+        {
+          "name": "alphaEdge",
+          "type": "System.Int32",
+          "doc": "Transparency on the middle of the edges.",
+          "optional": false
+        },
+        {
+          "name": "alphaFill",
+          "type": "System.Int32",
+          "doc": "Transparency on the middle of the fill.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_DentVertical_1.htm"
+    },
+    {
+      "name": "Distance",
+      "signature": "public static float Distance(PointF a, PointF b)",
+      "summary": "Compute the distance between two points.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Drawing.PointF",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Drawing.PointF",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_Distance.htm"
+    },
+    {
+      "name": "DistanceS",
+      "signature": "public static float DistanceS(PointF a, PointF b)",
+      "summary": "Compute the squared distance between two points.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Drawing.PointF",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Drawing.PointF",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_DistanceS.htm"
+    },
+    {
+      "name": "EtchFadingHorizontal",
+      "signature": "public static void EtchFadingHorizontal(Graphics g, int x0, int x1, int y, int alphaLight = 200, int alphaDark = 35)",
+      "summary": "Draw an etched line with fading on the extremes.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x0",
+          "type": "System.Int32",
+          "doc": "Left x coordinate of etch.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "System.Int32",
+          "doc": "Right x coordinate of etch.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Y coordinate of etch.",
+          "optional": false
+        },
+        {
+          "name": "alphaLight",
+          "type": "System.Int32",
+          "doc": "Transparancy of bright etch line.",
+          "optional": true
+        },
+        {
+          "name": "alphaDark",
+          "type": "System.Int32",
+          "doc": "Transparency of dark etch line.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_EtchFadingHorizontal.htm"
+    },
+    {
+      "name": "EtchFadingVertical",
+      "signature": "public static void EtchFadingVertical(Graphics g, int y0, int y1, int x, int alphaLight = 200, int alphaDark = 80)",
+      "summary": "Draw an etched line with fading on the extremes.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "System.Int32",
+          "doc": "Top y coordinate of etch.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "System.Int32",
+          "doc": "Bottom y coordinate of etch.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "X coordinate of etch.",
+          "optional": false
+        },
+        {
+          "name": "alphaLight",
+          "type": "System.Int32",
+          "doc": "Transparancy of etch.",
+          "optional": true
+        },
+        {
+          "name": "alphaDark",
+          "type": "System.Int32",
+          "doc": "Transparancy of etch.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_EtchFadingVertical.htm"
+    },
+    {
+      "name": "EtchHorizontal(Graphics, Single, Single, Single, Int32)",
+      "signature": "public static void EtchHorizontal(Graphics g, float x0, float x1, float y, int alpha = 50)",
+      "summary": "Draws an etched line segment.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x0",
+          "type": "System.Single",
+          "doc": "x component of start point.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "System.Single",
+          "doc": "x component of end point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "doc": "y component of line segment.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Int32",
+          "doc": "Alpha level of etched line.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_EtchHorizontal_1.htm"
+    },
+    {
+      "name": "EtchHorizontal(Graphics, Int32, Int32, Int32, Int32, Int32)",
+      "signature": "public static void EtchHorizontal(Graphics g, int x0, int x1, int y, int alphaLight = 200, int alphaDark = 35)",
+      "summary": "Draws an etched line segment.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x0",
+          "type": "System.Int32",
+          "doc": "x component of start point.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "System.Int32",
+          "doc": "x component of end point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "y component of line segment.",
+          "optional": false
+        },
+        {
+          "name": "alphaLight",
+          "type": "System.Int32",
+          "doc": "Alpha level of etched lit line.",
+          "optional": true
+        },
+        {
+          "name": "alphaDark",
+          "type": "System.Int32",
+          "doc": "Alpha level of etched shadow line.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_EtchHorizontal.htm"
+    },
+    {
+      "name": "EtchVertical(Graphics, Int32, Int32, Int32, Int32)",
+      "signature": "public static void EtchVertical(Graphics g, int x, int y0, int y1, int alpha = 50)",
+      "summary": "Draws an etched line segment.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "x component of line segment.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "System.Int32",
+          "doc": "x component of start point.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "System.Int32",
+          "doc": "y component of end point.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Int32",
+          "doc": "Alpha level of etched line.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_EtchVertical.htm"
+    },
+    {
+      "name": "EtchVertical(Graphics, Single, Single, Single, Int32)",
+      "signature": "public static void EtchVertical(Graphics g, float x, float y0, float y1, int alpha = 50)",
+      "summary": "Draws an etched line segment.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "x component of line segment.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "System.Single",
+          "doc": "x component of start point.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "System.Single",
+          "doc": "y component of end point.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Int32",
+          "doc": "Alpha level of etched line.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_EtchVertical_1.htm"
+    },
+    {
+      "name": "FadeColour",
+      "signature": "public static Color FadeColour(double t0, double t1, double t, Color col)",
+      "summary": "Fade a colour to transparency by linearly blending a parameter between extremes.",
+      "params": [
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "First extreme. (represents transparency)",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "Second extreme. (represent unaltered colour)",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Blending factor between t0 and t1.",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to fade.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The colour adjusted for blending."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_FadeColour.htm"
+    },
+    {
+      "name": "ForegroundColour",
+      "signature": "public static Color ForegroundColour(Color col, int contrast = 30)",
+      "summary": "Calculates a suitable foreground color. If the background is lighter than 50%, the foreground will be darker, otherwise the foreground will be lighter.",
+      "params": [
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "Foreground colour that works well on the given background colour.",
+          "optional": false
+        },
+        {
+          "name": "contrast",
+          "type": "System.Int32",
+          "doc": "Contrast amount (in 0~255 range)",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ForegroundColour.htm"
+    },
+    {
+      "name": "Grid(Graphics, RectangleF, Int32)",
+      "signature": "public static void Grid(Graphics g, RectangleF rec, int density)",
+      "summary": "Draw a default grid.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Grid rectangle.",
+          "optional": false
+        },
+        {
+          "name": "density",
+          "type": "System.Int32",
+          "doc": "Density in both directions.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_Grid.htm"
+    },
+    {
+      "name": "Grid(Graphics, RectangleF, Int32, Int32)",
+      "signature": "public static void Grid(Graphics g, RectangleF rec, int densityX, int densityY)",
+      "summary": "Draw a default grid.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Grid rectangle.",
+          "optional": false
+        },
+        {
+          "name": "densityX",
+          "type": "System.Int32",
+          "doc": "Density in x direction.",
+          "optional": false
+        },
+        {
+          "name": "densityY",
+          "type": "System.Int32",
+          "doc": "Density in y direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_Grid_1.htm"
+    },
+    {
+      "name": "Grid(Graphics, RectangleF, Int32, Int32, Color, Color)",
+      "signature": "public static void Grid(Graphics g, RectangleF rec, int densityX, int densityY, Color colorBg, Color colorWire)",
+      "summary": "Draw a grid.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Grid rectangle.",
+          "optional": false
+        },
+        {
+          "name": "densityX",
+          "type": "System.Int32",
+          "doc": "Density in x direction.",
+          "optional": false
+        },
+        {
+          "name": "densityY",
+          "type": "System.Int32",
+          "doc": "Density in y direction.",
+          "optional": false
+        },
+        {
+          "name": "colorBg",
+          "type": "System.Drawing.Color",
+          "doc": "Background colour override, the default is 30/255 white.",
+          "optional": false
+        },
+        {
+          "name": "colorWire",
+          "type": "System.Drawing.Color",
+          "doc": "Grid line colour override, the default is 40/255 black.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_Grid_2.htm"
+    },
+    {
+      "name": "HighlightBrush",
+      "signature": "public static Brush HighlightBrush()",
+      "summary": "Gets a new brush object that can be used to draw the content of hover and focus rectangles. Caller is responsible for disposing the brush.",
+      "params": [],
+      "returns": {
+        "type": "Brush",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_HighlightBrush.htm"
+    },
+    {
+      "name": "HighlightPen",
+      "signature": "public static Pen HighlightPen()",
+      "summary": "Gets a new pen object that can be used to draw the edges of hover and focus rectangles. Caller is responsible for disposing the pen.",
+      "params": [],
+      "returns": {
+        "type": "Pen",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_HighlightPen.htm"
+    },
+    {
+      "name": "InvertColour",
+      "signature": "public static Color InvertColour(Color col)",
+      "summary": "Computes the inverted colour. Alpha remains the same.",
+      "params": [
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "Colour where RGB channels are set to 255-C."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_InvertColour.htm"
+    },
+    {
+      "name": "IsPointInEllipse",
+      "signature": "public static bool IsPointInEllipse(RectangleF ellipse, PointF point)",
+      "summary": "Test whether a point is inside or outside an ellipse.",
+      "params": [
+        {
+          "name": "ellipse",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Rectangle describing ellipse.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "doc": "Point to test for inclusion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the point is in or on the ellipse."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_IsPointInEllipse.htm"
+    },
+    {
+      "name": "LimitInteger",
+      "signature": "public static void LimitInteger(ref int channel)",
+      "summary": "Limits the given integer to the 0~255 range.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_LimitInteger.htm"
+    },
+    {
+      "name": "LimitIntegers",
+      "signature": "public static void LimitIntegers(ref int r, ref int g, ref int b)",
+      "summary": "Limits RGB channels to the 0~255 range,",
+      "params": [
+        {
+          "name": "r",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_LimitIntegers.htm"
+    },
+    {
+      "name": "OffsetColour(Color, Int32)",
+      "signature": "public static Color OffsetColour(Color col, int shift)",
+      "summary": "Add a fixed value to all the channels in a colour.",
+      "remarks": "The alpha channel of the colour is not offset.",
+      "params": [
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "The colour to mutate.",
+          "optional": false
+        },
+        {
+          "name": "shift",
+          "type": "System.Int32",
+          "doc": "Offset value (-255 ~ \u002B255).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The offsetted colour."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_OffsetColour.htm"
+    },
+    {
+      "name": "OffsetColour(Color, Int32, Int32, Int32)",
+      "signature": "public static Color OffsetColour(Color col, int redShift, int greenShift, int blueShift)",
+      "summary": "Add a fixed value to all the channels in a colour.",
+      "remarks": "The alpha channel of the colour is not offset.",
+      "params": [
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "The colour to mutate",
+          "optional": false
+        },
+        {
+          "name": "redShift",
+          "type": "System.Int32",
+          "doc": "Offset value for red channel (-255 ~ \u002B255).",
+          "optional": false
+        },
+        {
+          "name": "greenShift",
+          "type": "System.Int32",
+          "doc": "Offset value for green channel (-255 ~ \u002B255).",
+          "optional": false
+        },
+        {
+          "name": "blueShift",
+          "type": "System.Int32",
+          "doc": "Offset value for blue channel (-255 ~ \u002B255).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The offsetted colour."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_OffsetColour_1.htm"
+    },
+    {
+      "name": "RenderBalloonTag(Graphics, String, PointF, RectangleF)",
+      "signature": "public static void RenderBalloonTag(Graphics g, string text, PointF tip, RectangleF container)",
+      "summary": "Draw a default balloon tag in a container.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text of tag.",
+          "optional": false
+        },
+        {
+          "name": "tip",
+          "type": "System.Drawing.PointF",
+          "doc": "Tip of balloon.",
+          "optional": false
+        },
+        {
+          "name": "container",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Container for balloon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderBalloonTag_3.htm"
+    },
+    {
+      "name": "RenderBalloonTag(Graphics, String, Font, PointF, RectangleF)",
+      "signature": "public static void RenderBalloonTag(Graphics g, string text, Font font, PointF tip, RectangleF container)",
+      "summary": "Draw a default balloon tag in a container with a Font override.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text of tag.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font of tag.",
+          "optional": false
+        },
+        {
+          "name": "tip",
+          "type": "System.Drawing.PointF",
+          "doc": "Tip of balloon.",
+          "optional": false
+        },
+        {
+          "name": "container",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Container for balloon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderBalloonTag_2.htm"
+    },
+    {
+      "name": "RenderBalloonTag(Graphics, String, Font, Color, Color, PointF, Boolean)",
+      "signature": "public static void RenderBalloonTag(Graphics g, string text, Font font, Color backColor, Color foreColor, PointF tip, bool upright)",
+      "summary": "Draw a balloon tag in a container.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text of tag.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font of tag.",
+          "optional": false
+        },
+        {
+          "name": "backColor",
+          "type": "System.Drawing.Color",
+          "doc": "Background colour of balloon.",
+          "optional": false
+        },
+        {
+          "name": "foreColor",
+          "type": "System.Drawing.Color",
+          "doc": "Foreground colour of balloon edge and text.",
+          "optional": false
+        },
+        {
+          "name": "tip",
+          "type": "System.Drawing.PointF",
+          "doc": "Tip of balloon.",
+          "optional": false
+        },
+        {
+          "name": "upright",
+          "type": "System.Boolean",
+          "doc": "If true, the balloon will be above the tip point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderBalloonTag.htm"
+    },
+    {
+      "name": "RenderBalloonTag(Graphics, String, Font, Color, Color, PointF, RectangleF)",
+      "signature": "public static void RenderBalloonTag(Graphics g, string text, Font font, Color backColor, Color foreColor, PointF tip, RectangleF container)",
+      "summary": "Draw a balloon tag in a container.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text of tag.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font of tag.",
+          "optional": false
+        },
+        {
+          "name": "backColor",
+          "type": "System.Drawing.Color",
+          "doc": "Background colour of balloon.",
+          "optional": false
+        },
+        {
+          "name": "foreColor",
+          "type": "System.Drawing.Color",
+          "doc": "Foreground colout of balloon edge and text.",
+          "optional": false
+        },
+        {
+          "name": "tip",
+          "type": "System.Drawing.PointF",
+          "doc": "Tip of balloon (should be inside container).",
+          "optional": false
+        },
+        {
+          "name": "container",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Container for balloon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderBalloonTag_1.htm"
+    },
+    {
+      "name": "RenderCenteredIcon(Graphics, RectangleF, Image)",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete, use a RenderIcon() overload instead.\u0022)] public static void RenderCenteredIcon(Graphics g, RectangleF frame, Image icon)",
+      "summary": "Draw an icon centered in a frame. This code is not zoom-aware, but it will perform consistent rounding (to avoid pixel-jitter when moving the frame across the screen). Icon will not be clipped to the frame.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to render with.",
+          "optional": false
+        },
+        {
+          "name": "frame",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Frame to center icon in.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to render",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderCenteredIcon.htm"
+    },
+    {
+      "name": "RenderCenteredIcon(Graphics, RectangleF, Image, Double)",
+      "signature": "public static void RenderCenteredIcon(Graphics g, RectangleF frame, Image icon, double alpha)",
+      "summary": "Draw an icon centered in a frame. This code is not zoom-aware, but it will perform consistent rounding (to avoid pixel-jitter when moving the frame across the screen). Icon will not be clipped to the frame.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to render with.",
+          "optional": false
+        },
+        {
+          "name": "frame",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Frame to center icon in.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to render",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Transparency factor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderCenteredIcon_1.htm"
+    },
+    {
+      "name": "RenderCenteredIcon(Graphics, RectangleF, Image, Single)",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete, use a RenderIcon() overload instead.\u0022)] public static void RenderCenteredIcon(Graphics g, RectangleF frame, Image icon, float scale)",
+      "summary": "Draw an icon centered in a frame. This code is not zoom-aware, but it will perform consistent rounding (to avoid pixel-jitter when moving the frame across the screen). Icon will not be clipped to the frame.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to render with.",
+          "optional": false
+        },
+        {
+          "name": "frame",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Frame to center icon in.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to render",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderCenteredIcon_2.htm"
+    },
+    {
+      "name": "RenderCenteredText",
+      "signature": "public static void RenderCenteredText(Graphics g, string text, Font font, Color color, PointF center)",
+      "summary": "Render a bit of text centered on a point.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to draw.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to use.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "Text color.",
+          "optional": false
+        },
+        {
+          "name": "center",
+          "type": "System.Drawing.PointF",
+          "doc": "Center point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderCenteredText.htm"
+    },
+    {
+      "name": "RenderColourIcon(Graphics, Rectangle, Color)",
+      "signature": "[ObsoleteAttribute(\u0022Use RenderColourIcon(Graphics, Rectangle, Color, Single) instead.\u0022)] public static void RenderColourIcon(Graphics g, Rectangle rec, Color colour)",
+      "summary": "Render a colour icon into a graphics context. A colour icon contains a black outer and white inner edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle describing icon dimensions.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour for icon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderColourIcon.htm"
+    },
+    {
+      "name": "RenderColourIcon(Graphics, Rectangle, Color, Single)",
+      "signature": "public static void RenderColourIcon(Graphics g, Rectangle rec, Color colour, float scale)",
+      "summary": "Render a colour icon into a graphics context. A colour icon contains a black outer and white inner edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle describing icon dimensions.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour for icon.",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Single",
+          "doc": "Scale adjustment.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderColourIcon_1.htm"
+    },
+    {
+      "name": "RenderFadedImage(Graphics, Image, Rectangle, Double)",
+      "signature": "public static void RenderFadedImage(Graphics graphics, Image image, Rectangle destination, double fade)",
+      "summary": "Render an icon into a rectangle with a specific fading factor.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "Image to draw.",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Destination rectangle.",
+          "optional": false
+        },
+        {
+          "name": "fade",
+          "type": "System.Double",
+          "doc": "Fading amount. 0.0=completely transparent, 1.0=original transparency.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderFadedImage.htm"
+    },
+    {
+      "name": "RenderFadedImage(Graphics, Image, Rectangle, Int32)",
+      "signature": "public static void RenderFadedImage(Graphics graphics, Image image, Rectangle destination, int alpha)",
+      "summary": "Render an icon into a rectangle with a specific fading factor.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "Image to draw.",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Destination rectangle.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Int32",
+          "doc": "Alpha value. 0=completely transparent, 255=original transparency.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderFadedImage_1.htm"
+    },
+    {
+      "name": "RenderHighlightBox(Graphics, Rectangle, Int32)",
+      "signature": "public static void RenderHighlightBox(Graphics g, Rectangle box, int cornerRadius)",
+      "summary": "Render a typical blueish highlight rectangle",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to render with.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Dimensions of selection box.",
+          "optional": false
+        },
+        {
+          "name": "cornerRadius",
+          "type": "System.Int32",
+          "doc": "Radius (in pixels) of box corners, use zero or less to render crisp rectangles.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderHighlightBox.htm"
+    },
+    {
+      "name": "RenderHighlightBox(Graphics, Rectangle, Int32, Boolean, Boolean)",
+      "signature": "public static void RenderHighlightBox(Graphics g, Rectangle box, int cornerRadius, bool drawFill, bool drawEdge)",
+      "summary": "Render a typical blueish highlight rectangle",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to render with.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Dimensions of selection box.",
+          "optional": false
+        },
+        {
+          "name": "cornerRadius",
+          "type": "System.Int32",
+          "doc": "Radius (in pixels) of box corners, use zero or less to render crisp rectangles.",
+          "optional": false
+        },
+        {
+          "name": "drawFill",
+          "type": "System.Boolean",
+          "doc": "If true, the box fill have a blue background.",
+          "optional": false
+        },
+        {
+          "name": "drawEdge",
+          "type": "System.Boolean",
+          "doc": "If true, the box will have a blue edge.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderHighlightBox_1.htm"
+    },
+    {
+      "name": "RenderHighlightBox(Graphics, Rectangle, Int32, Color, Color)",
+      "signature": "public static void RenderHighlightBox(Graphics g, Rectangle box, int cornerRadius, Color fill, Color edge)",
+      "summary": "Render a typical blueish highlight rectangle",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to render with.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Dimensions of selection box.",
+          "optional": false
+        },
+        {
+          "name": "cornerRadius",
+          "type": "System.Int32",
+          "doc": "Radius (in pixels) of box corners, use zero or less to render crisp rectangles.",
+          "optional": false
+        },
+        {
+          "name": "fill",
+          "type": "System.Drawing.Color",
+          "doc": "Fill colour",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "System.Drawing.Color",
+          "doc": "Edge colour",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderHighlightBox_2.htm"
+    },
+    {
+      "name": "RenderIcon",
+      "signature": "public static void RenderIcon(Graphics graphics, RectangleF frame, Image icon)",
+      "summary": "Render an icon into a frame. The icon is positioned in the center and will be drawn at its own size multiplied by the system UiScale, provided it doesn\u0027t exceed the frame.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "frame",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Limiting frame.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to draw.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderIcon.htm"
+    },
+    {
+      "name": "RenderObjectOverlay(Graphics, IGH_DocumentObject, RectangleF)",
+      "signature": "public static void RenderObjectOverlay(Graphics graphics, IGH_DocumentObject obj, RectangleF target)",
+      "summary": "Render all overlay icons for a specific object. Overlays aren\u0027t drawn when the zoom is less than 80%",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "doc": "Object to draw overlay for.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Destination area for overlay icons.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderObjectOverlay.htm"
+    },
+    {
+      "name": "RenderObjectOverlay(Graphics, IGH_ObjectProxy, RectangleF)",
+      "signature": "public static void RenderObjectOverlay(Graphics graphics, IGH_ObjectProxy obj, RectangleF target)",
+      "summary": "Render all overlay icons for a specific object. Overlays aren\u0027t drawn when the zoom is less than 80%",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_ObjectProxy",
+          "doc": "Proxy to draw overlay for.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Destination area for overlay icons.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderObjectOverlay_1.htm"
+    },
+    {
+      "name": "RenderRoundBar",
+      "signature": "public static void RenderRoundBar(Graphics graphics, RectangleF rec, Color colour)",
+      "summary": "Render a cylinder shaped object with round caps.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Rectangle containing shape.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Fill colour of shape.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderRoundBar.htm"
+    },
+    {
+      "name": "RenderTag",
+      "signature": "public static void RenderTag(Graphics g, string tag, Font font, Color backColor, Color foreColor, RectangleF frame, StringAlignment alignH, StringAlignment alignV)",
+      "summary": "Render a text tag into a Graphics surface.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.String",
+          "doc": "Text to draw.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to use.",
+          "optional": false
+        },
+        {
+          "name": "backColor",
+          "type": "System.Drawing.Color",
+          "doc": "Tag background colour.",
+          "optional": false
+        },
+        {
+          "name": "foreColor",
+          "type": "System.Drawing.Color",
+          "doc": "Tag foreground colour.",
+          "optional": false
+        },
+        {
+          "name": "frame",
+          "type": "System.Drawing.RectangleF",
+          "doc": "The frame into which the tags should be aligned.",
+          "optional": false
+        },
+        {
+          "name": "alignH",
+          "type": "System.Drawing.StringAlignment",
+          "doc": "Horizontal alignment.",
+          "optional": false
+        },
+        {
+          "name": "alignV",
+          "type": "System.Drawing.StringAlignment",
+          "doc": "Vertical alignment.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderTag.htm"
+    },
+    {
+      "name": "RenderUnscaledIcon(Graphics, Image, Int32, Int32)",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete, use a RenderIcon() overload instead.\u0022)] public static void RenderUnscaledIcon(Graphics g, Image icon, int cx, int cy)",
+      "summary": "Draws an image file at 1:1 scale centered on the given coordinates.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Image to draw.",
+          "optional": false
+        },
+        {
+          "name": "cx",
+          "type": "System.Int32",
+          "doc": "X center of image in Graphics coordinate.",
+          "optional": false
+        },
+        {
+          "name": "cy",
+          "type": "System.Int32",
+          "doc": "Y center of image in Graphics coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderUnscaledIcon.htm"
+    },
+    {
+      "name": "RenderUnscaledIcon(Graphics, Image, Int32, Int32, Double)",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete, use a RenderIcon() overload instead.\u0022)] public static void RenderUnscaledIcon(Graphics g, Image icon, int cx, int cy, double fade)",
+      "summary": "Draws an image file at 1:1 scale centered on the given coordinates.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Image to draw.",
+          "optional": false
+        },
+        {
+          "name": "cx",
+          "type": "System.Int32",
+          "doc": "X center of image in Graphics coordinate.",
+          "optional": false
+        },
+        {
+          "name": "cy",
+          "type": "System.Int32",
+          "doc": "Y center of image in Graphics coordinate.",
+          "optional": false
+        },
+        {
+          "name": "fade",
+          "type": "System.Double",
+          "doc": "Alpha fading factor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderUnscaledIcon_1.htm"
+    },
+    {
+      "name": "RenderVerticalString",
+      "signature": "public static void RenderVerticalString(Graphics g, string text, Font font, Color colour, RectangleF rec, StringFormat format)",
+      "summary": "Render vertical text (rotated 90 degrees counter-clockwise) within a rectangle.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to render.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to render with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of text content.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "System.Drawing.StringFormat",
+          "doc": "Formatting flags.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderVerticalString.htm"
+    },
+    {
+      "name": "RenderWarningIcon",
+      "signature": "public static void RenderWarningIcon(Graphics graphics, PointF center, float radius, int alpha)",
+      "summary": "Render a typical warning icon into a graphics context. A warning icon is an upright yellow triangle.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "center",
+          "type": "System.Drawing.PointF",
+          "doc": "Center of icon.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Single",
+          "doc": "Radius of icon.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Int32",
+          "doc": "Transparency of icon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_RenderWarningIcon.htm"
+    },
+    {
+      "name": "ScaleColour",
+      "signature": "public static Color ScaleColour(Color col, double factor)",
+      "summary": "Multiply the channels of a colour construct with a fixed factor.",
+      "remarks": "The alpha channel of the colour is not mutated.",
+      "params": [
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "The colour to mutate",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "doc": "An adjustment factor.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The scaled colour."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ScaleColour.htm"
+    },
+    {
+      "name": "ShadowHorizontal(Graphics, Int32, Int32, Int32, Int32, Boolean, Color)",
+      "signature": "public static void ShadowHorizontal(Graphics g, int x0, int x1, int y, int size, bool below, Color color)",
+      "summary": "Draws a horizontal shadow edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x0",
+          "type": "System.Int32",
+          "doc": "Start of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "System.Int32",
+          "doc": "End of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Elevation of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Length of cast shadow.",
+          "optional": false
+        },
+        {
+          "name": "below",
+          "type": "System.Boolean",
+          "doc": "If true, shadow is drawn below elevation line.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "Colour at shadow edge.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowHorizontal.htm"
+    },
+    {
+      "name": "ShadowHorizontal(Graphics, Int32, Int32, Int32, Int32, Boolean, Int32)",
+      "signature": "public static void ShadowHorizontal(Graphics g, int x0, int x1, int y, int size = 10, bool below = true, int darkness = 50)",
+      "summary": "Draws a horizontal shadow edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x0",
+          "type": "System.Int32",
+          "doc": "Start of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "System.Int32",
+          "doc": "End of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Elevation of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Length of cast shadow.",
+          "optional": true
+        },
+        {
+          "name": "below",
+          "type": "System.Boolean",
+          "doc": "If true, shadow is drawn below elevation line.",
+          "optional": true
+        },
+        {
+          "name": "darkness",
+          "type": "System.Int32",
+          "doc": "Alpha component of darkness directly underneath the edge.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowHorizontal_1.htm"
+    },
+    {
+      "name": "ShadowHorizontal(Graphics, Single, Single, Single, Single, Boolean, Int32)",
+      "signature": "public static void ShadowHorizontal(Graphics g, float x0, float x1, float y, float size = 10f, bool below = true, int darkness = 50)",
+      "summary": "Draws a horizontal shadow edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x0",
+          "type": "System.Single",
+          "doc": "Start of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "System.Single",
+          "doc": "End of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "doc": "Elevation of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Single",
+          "doc": "Length of cast shadow.",
+          "optional": true
+        },
+        {
+          "name": "below",
+          "type": "System.Boolean",
+          "doc": "If true, shadow is drawn below elevation line.",
+          "optional": true
+        },
+        {
+          "name": "darkness",
+          "type": "System.Int32",
+          "doc": "Alpha component of darkness directly underneath the edge.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowHorizontal_2.htm"
+    },
+    {
+      "name": "ShadowRectangle(Graphics, Rectangle, Int32, Color)",
+      "signature": "public static void ShadowRectangle(Graphics g, Rectangle rec, int size, Color color)",
+      "summary": "Draws shadow edges on the interior of a rectangle.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Bounding rectangle.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Length of cast shadow.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "Color at edge of shadow.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowRectangle.htm"
+    },
+    {
+      "name": "ShadowRectangle(Graphics, Rectangle, Int32, Int32)",
+      "signature": "public static void ShadowRectangle(Graphics g, Rectangle rec, int size = 10, int darkness = 50)",
+      "summary": "Draws shadow edges on the interior of a rectangle.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Bounding rectangle.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Length of cast shadow.",
+          "optional": true
+        },
+        {
+          "name": "darkness",
+          "type": "System.Int32",
+          "doc": "Alpha component of darkness directly underneath the edge.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowRectangle_1.htm"
+    },
+    {
+      "name": "ShadowVertical(Graphics, Int32, Int32, Int32, Int32, Boolean, Color)",
+      "signature": "public static void ShadowVertical(Graphics g, int x, int y0, int y1, int size, bool right, Color color)",
+      "summary": "Draws a vertical shadow edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "Offset of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "System.Int32",
+          "doc": "Start of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "System.Int32",
+          "doc": "End of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Length of cast shadow.",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Boolean",
+          "doc": "If true, shadow is drawn to the right of the elevated line.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "Color at shadow edge.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowVertical.htm"
+    },
+    {
+      "name": "ShadowVertical(Graphics, Int32, Int32, Int32, Int32, Boolean, Int32)",
+      "signature": "public static void ShadowVertical(Graphics g, int x, int y0, int y1, int size = 10, bool right = true, int darkness = 50)",
+      "summary": "Draws a vertical shadow edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "Offset of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "System.Int32",
+          "doc": "Start of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "System.Int32",
+          "doc": "End of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Length of cast shadow.",
+          "optional": true
+        },
+        {
+          "name": "right",
+          "type": "System.Boolean",
+          "doc": "If true, shadow is drawn to the right of the elevated line.",
+          "optional": true
+        },
+        {
+          "name": "darkness",
+          "type": "System.Int32",
+          "doc": "Alpha component of darkness directly underneath the edge.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowVertical_1.htm"
+    },
+    {
+      "name": "ShadowVertical(Graphics, Single, Single, Single, Single, Boolean, Int32)",
+      "signature": "public static void ShadowVertical(Graphics g, float x, float y0, float y1, float size = 10f, bool right = true, int darkness = 50)",
+      "summary": "Draws a vertical shadow edge.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "Offset of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "System.Single",
+          "doc": "Start of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "System.Single",
+          "doc": "End of shadow edge.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Single",
+          "doc": "Length of cast shadow.",
+          "optional": true
+        },
+        {
+          "name": "right",
+          "type": "System.Boolean",
+          "doc": "If true, shadow is drawn to the right of the elevated line.",
+          "optional": true
+        },
+        {
+          "name": "darkness",
+          "type": "System.Int32",
+          "doc": "Alpha component of darkness directly underneath the edge.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_ShadowVertical_2.htm"
+    },
+    {
+      "name": "SolveArc(Point3d, Point3d, Vector3d, RectangleF, Single, Single)",
+      "signature": "public static bool SolveArc(Point3d p0, Point3d p1, Vector3d dir, ref RectangleF box, ref float angle, ref float sweep)",
+      "summary": "Create a GDI circular arc definition from start-point, end-point and tangent direction.",
+      "params": [
+        {
+          "name": "p0",
+          "type": "Point3d",
+          "doc": "Start point of arc.",
+          "optional": false
+        },
+        {
+          "name": "p1",
+          "type": "Point3d",
+          "doc": "End point of arc.",
+          "optional": false
+        },
+        {
+          "name": "dir",
+          "type": "Vector3d",
+          "doc": "Tangent direction at start of arc.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Bounding box of arc (out)",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Single",
+          "doc": "Start angle of arc (out)",
+          "optional": false
+        },
+        {
+          "name": "sweep",
+          "type": "System.Single",
+          "doc": "Sweep angle of arc (out)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_SolveArc.htm"
+    },
+    {
+      "name": "SolveArc(PointF, PointF, SizeF, RectangleF, Single, Single)",
+      "signature": "public static bool SolveArc(PointF p0, PointF p1, SizeF dir, ref RectangleF box, ref float angle, ref float sweep)",
+      "summary": "Create a GDI circular arc definition from start-point, end-point and tangent direction.",
+      "params": [
+        {
+          "name": "p0",
+          "type": "System.Drawing.PointF",
+          "doc": "Start point of arc.",
+          "optional": false
+        },
+        {
+          "name": "p1",
+          "type": "System.Drawing.PointF",
+          "doc": "End point of arc.",
+          "optional": false
+        },
+        {
+          "name": "dir",
+          "type": "System.Drawing.SizeF",
+          "doc": "Tangent direction at start of arc.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Bounding box of arc (out)",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Single",
+          "doc": "Start angle of arc (out)",
+          "optional": false
+        },
+        {
+          "name": "sweep",
+          "type": "System.Single",
+          "doc": "Sweep angle of arc (out)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_SolveArc_2.htm"
+    },
+    {
+      "name": "SolveArc(Double, Double, Double, Double, Double, Double, RectangleF, Single, Single)",
+      "signature": "public static bool SolveArc(double p0X, double p0Y, double p1X, double p1Y, double dx, double dy, ref RectangleF box, ref float angle, ref float sweep)",
+      "summary": "Create a GDI circular arc definition from start-point, end-point and tangent direction.",
+      "params": [
+        {
+          "name": "p0X",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "p0Y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "p1X",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "p1Y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "sweep",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_SolveArc_1.htm"
+    },
+    {
+      "name": "TransparencyMatrix(Double)",
+      "signature": "public static ColorMatrix TransparencyMatrix(double fade)",
+      "summary": "Create an image transparency matrix for a specific blending factor.",
+      "params": [
+        {
+          "name": "fade",
+          "type": "System.Double",
+          "doc": "Alpha fade amount. 0.0=complete transparency, 1.0=original transparency.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorMatrix",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_TransparencyMatrix.htm"
+    },
+    {
+      "name": "TransparencyMatrix(Int32)",
+      "signature": "public static ColorMatrix TransparencyMatrix(int alpha)",
+      "summary": "Create an image transparency matrix for a specific blending factor.",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Int32",
+          "doc": "Alpha level of color matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorMatrix",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GraphicsUtil_TransparencyMatrix_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "UiScale",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the screen-scaling factor for the entire system. Use the UiAdjust methods in the Grasshopper top level namespace (Global_Proc module) to modify integer and single values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GraphicsUtil_UiScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

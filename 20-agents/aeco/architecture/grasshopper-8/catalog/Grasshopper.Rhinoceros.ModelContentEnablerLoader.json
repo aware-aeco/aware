@@ -1,0 +1,39 @@
+{
+  "name": "ModelContentEnablerLoader",
+  "namespace": "Grasshopper.Rhinoceros",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.ModelContentEnablerLoader.)",
+  "base": "GH_AssemblyPriority",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_ModelContentEnablerLoader.htm",
+  "constructors": [
+    {
+      "name": "ModelContentEnablerLoader",
+      "signature": "public ModelContentEnablerLoader()",
+      "summary": "Initializes a new instance of the ModelContentEnablerLoader class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentEnablerLoader__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PriorityLoad",
+      "signature": "public override GH_LoadingInstruction PriorityLoad()",
+      "summary": "(Overrides GH_AssemblyPriority.PriorityLoad().)",
+      "params": [],
+      "returns": {
+        "type": "GH_LoadingInstruction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentEnablerLoader_PriorityLoad.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

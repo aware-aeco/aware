@@ -1,0 +1,79 @@
+{
+  "name": "CalcProgressEvent",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "enum",
+  "summary": "Progress bar modes",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-calcprogressevent-64151",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ProgressAddOutput",
+      "value": 6,
+      "summary": "Add item to output log"
+    },
+    {
+      "name": "ProgressClearOutput",
+      "value": 7,
+      "summary": "Clear output log"
+    },
+    {
+      "name": "ProgressDisable",
+      "value": 3,
+      "summary": "Disable"
+    },
+    {
+      "name": "ProgressEnable",
+      "value": 4,
+      "summary": "Enable"
+    },
+    {
+      "name": "ProgressFinished",
+      "value": 8,
+      "summary": "Notify finish"
+    },
+    {
+      "name": "ProgressGetStatus",
+      "value": 5,
+      "summary": "Get state"
+    },
+    {
+      "name": "ProgressHide",
+      "value": 12,
+      "summary": "Hide progress log"
+    },
+    {
+      "name": "ProgressReset",
+      "value": 0,
+      "summary": "Reset position to 0"
+    },
+    {
+      "name": "ProgressSetDestroyOnFinish",
+      "value": 9,
+      "summary": "Set flag to destroy on finish"
+    },
+    {
+      "name": "ProgressSetHideOnFinish",
+      "value": 10,
+      "summary": "Set flag to hide on finish"
+    },
+    {
+      "name": "ProgressSetPos",
+      "value": 1,
+      "summary": "Set position"
+    },
+    {
+      "name": "ProgressSetText",
+      "value": 2,
+      "summary": "Set text"
+    },
+    {
+      "name": "ProgressShow",
+      "value": 11,
+      "summary": "Show progress log"
+    }
+  ]
+}

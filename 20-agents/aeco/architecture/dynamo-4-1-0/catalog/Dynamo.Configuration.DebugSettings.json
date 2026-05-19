@@ -1,0 +1,25 @@
+{
+  "name": "DebugSettings",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "This class is used for setting debug settings through Dynamo UI. E.g. turn on/off logging; show/hide compiled node values.",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/DebugSettings.cs",
+  "constructors": [
+    {
+      "name": "DebugSettings()",
+      "signature": "void DebugSettings()",
+      "summary": "DebugSettings.DebugSettings",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/DebugSettings.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

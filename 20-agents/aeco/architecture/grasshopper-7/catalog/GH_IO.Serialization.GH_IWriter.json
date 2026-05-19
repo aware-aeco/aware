@@ -1,0 +1,2327 @@
+{
+  "name": "GH_IWriter",
+  "namespace": "GH_IO.Serialization",
+  "kind": "interface",
+  "summary": "Provides access to a subset of GH_Chunk methods used for writing archives.",
+  "interfaces": [
+    "GH_IChunk",
+    "GH_IBinarySupport",
+    "GH_IXmlSupport"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_Serialization_GH_IWriter.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddComment",
+      "signature": "void AddComment(string comment_text)",
+      "summary": "Adds a text comment to this chunk. Comments are serialized only if the output flavour is a human readable format. Comments are never deserialized, they are purely for the benefit of the humans reading the file data.",
+      "params": [
+        {
+          "name": "comment_text",
+          "type": "System.String",
+          "doc": "The content of the comment, text might be altered if it contains invalid characters for a chosen format flavour.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the content text is either null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_AddComment.htm"
+    },
+    {
+      "name": "AddMessage",
+      "signature": "void AddMessage(string m, GH_Message_Type t)",
+      "summary": "Log a new message with the top-level archive. Messages are collected during read/write operations, and can be displayed to the user upon completion using GH_Archive.ShowMessageLog().",
+      "params": [
+        {
+          "name": "m",
+          "type": "System.String",
+          "doc": "Message text.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "GH_IO.Serialization.GH_Message_Type",
+          "doc": "Message type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IChunk_AddMessage.htm"
+    },
+    {
+      "name": "CreateChunk(String)",
+      "signature": "GH_IWriter CreateChunk(string chunk_name)",
+      "summary": "Create a new child chunk with the specified name but without an index qualifier. If another chunk already exists with similar properties, an exception will be thrown.",
+      "params": [
+        {
+          "name": "chunk_name",
+          "type": "System.String",
+          "doc": "Name of new child chunk.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_IWriter",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if the name coordinte is already occupied by another chunk."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_CreateChunk.htm"
+    },
+    {
+      "name": "CreateChunk(String, Int32)",
+      "signature": "GH_IWriter CreateChunk(string chunk_name, int chunk_index)",
+      "summary": "Create a new child chunk with the specified name and index qualifier. If another chunk already exists with similar properties, an exception will be thrown.",
+      "params": [
+        {
+          "name": "chunk_name",
+          "type": "System.String",
+          "doc": "Name of new child.",
+          "optional": false
+        },
+        {
+          "name": "chunk_index",
+          "type": "System.Int32",
+          "doc": "Index of new child.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_IWriter",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if the name\u002Bindex coordinte is already occupied by another chunk."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_CreateChunk_1.htm"
+    },
+    {
+      "name": "Read(BinaryReader)",
+      "signature": "void Read(BinaryReader reader)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "doc": "Reader object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Read.htm"
+    },
+    {
+      "name": "Read(XmlNode)",
+      "signature": "void Read(XmlNode node)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Xml.XmlNode",
+          "doc": "Node object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Read.htm"
+    },
+    {
+      "name": "RemoveChunk(String)",
+      "signature": "bool RemoveChunk(string chunk_name)",
+      "summary": "Remove the first chunk with a matching name. Only chunks without index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "chunk_name",
+          "type": "System.String",
+          "doc": "Name of chunk to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is chunk was removed, false if no matching chunk could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_RemoveChunk_1.htm"
+    },
+    {
+      "name": "RemoveChunk(GH_IChunk)",
+      "signature": "bool RemoveChunk(GH_IChunk chunk)",
+      "summary": "Remove the specified chunk from the litter.",
+      "params": [
+        {
+          "name": "chunk",
+          "type": "GH_IO.Serialization.GH_IChunk",
+          "doc": "Chunk to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is chunk was removed, false if chunk is not part of this litter."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if chunk is a null reference."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_RemoveChunk.htm"
+    },
+    {
+      "name": "RemoveChunk(String, Int32)",
+      "signature": "bool RemoveChunk(string chunk_name, int chunk_index)",
+      "summary": "Remove the first chunk with a matching name and index. Only chunks with index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "chunk_name",
+          "type": "System.String",
+          "doc": "Name of chunk to remove.",
+          "optional": false
+        },
+        {
+          "name": "chunk_index",
+          "type": "System.Int32",
+          "doc": "Index of chunk to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is chunk was removed, false if no matching chunk could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_RemoveChunk_2.htm"
+    },
+    {
+      "name": "RemoveItem(String)",
+      "signature": "bool RemoveItem(string itemName)",
+      "summary": "Remove an unindexed item from this chunk.",
+      "params": [
+        {
+          "name": "itemName",
+          "type": "System.String",
+          "doc": "Name of item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_RemoveItem.htm"
+    },
+    {
+      "name": "RemoveItem(String, Int32)",
+      "signature": "bool RemoveItem(string itemName, int itemIndex)",
+      "summary": "Remove an indexed item from this chunk.",
+      "params": [
+        {
+          "name": "itemName",
+          "type": "System.String",
+          "doc": "Name of item.",
+          "optional": false
+        },
+        {
+          "name": "itemIndex",
+          "type": "System.Int32",
+          "doc": "Index of item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_RemoveItem_1.htm"
+    },
+    {
+      "name": "SetBoolean(String, Boolean)",
+      "signature": "void SetBoolean(string item_name, bool item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Boolean",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetBoolean.htm"
+    },
+    {
+      "name": "SetBoolean(String, Int32, Boolean)",
+      "signature": "void SetBoolean(string item_name, int item_index, bool item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Boolean",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetBoolean_1.htm"
+    },
+    {
+      "name": "SetBoundingBox(String, GH_BoundingBox)",
+      "signature": "void SetBoundingBox(string item_name, GH_BoundingBox item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_BoundingBox",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetBoundingBox.htm"
+    },
+    {
+      "name": "SetBoundingBox(String, Int32, GH_BoundingBox)",
+      "signature": "void SetBoundingBox(string item_name, int item_index, GH_BoundingBox item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_BoundingBox",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetBoundingBox_1.htm"
+    },
+    {
+      "name": "SetByte(String, Byte)",
+      "signature": "void SetByte(string item_name, byte item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Byte",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetByte.htm"
+    },
+    {
+      "name": "SetByte(String, Int32, Byte)",
+      "signature": "void SetByte(string item_name, int item_index, byte item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Byte",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetByte_1.htm"
+    },
+    {
+      "name": "SetByteArray(String, Byte[])",
+      "signature": "void SetByteArray(string item_name, byte[] item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Byte[]",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetByteArray.htm"
+    },
+    {
+      "name": "SetByteArray(String, Int32, Byte[])",
+      "signature": "void SetByteArray(string item_name, int item_index, byte[] item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Byte[]",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetByteArray_1.htm"
+    },
+    {
+      "name": "SetDate(String, DateTime)",
+      "signature": "void SetDate(string item_name, DateTime item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.DateTime",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDate.htm"
+    },
+    {
+      "name": "SetDate(String, Int32, DateTime)",
+      "signature": "void SetDate(string item_name, int item_index, DateTime item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.DateTime",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDate_1.htm"
+    },
+    {
+      "name": "SetDecimal(String, Decimal)",
+      "signature": "void SetDecimal(string item_name, decimal item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Decimal",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDecimal.htm"
+    },
+    {
+      "name": "SetDecimal(String, Int32, Decimal)",
+      "signature": "void SetDecimal(string item_name, int item_index, decimal item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Decimal",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDecimal_1.htm"
+    },
+    {
+      "name": "SetDouble(String, Double)",
+      "signature": "void SetDouble(string item_name, double item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Double",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDouble.htm"
+    },
+    {
+      "name": "SetDouble(String, Int32, Double)",
+      "signature": "void SetDouble(string item_name, int item_index, double item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Double",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDouble_1.htm"
+    },
+    {
+      "name": "SetDoubleArray(String, Double[])",
+      "signature": "void SetDoubleArray(string item_name, double[] item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Double[]",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDoubleArray.htm"
+    },
+    {
+      "name": "SetDoubleArray(String, Int32, Double[])",
+      "signature": "void SetDoubleArray(string item_name, int item_index, double[] item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Double[]",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDoubleArray_1.htm"
+    },
+    {
+      "name": "SetDrawingBitmap(String, Bitmap)",
+      "signature": "void SetDrawingBitmap(string item_name, Bitmap item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingBitmap.htm"
+    },
+    {
+      "name": "SetDrawingBitmap(String, Int32, Bitmap)",
+      "signature": "void SetDrawingBitmap(string item_name, int item_index, Bitmap item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingBitmap_1.htm"
+    },
+    {
+      "name": "SetDrawingColor(String, Color)",
+      "signature": "void SetDrawingColor(string item_name, Color item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Color",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingColor.htm"
+    },
+    {
+      "name": "SetDrawingColor(String, Int32, Color)",
+      "signature": "void SetDrawingColor(string item_name, int item_index, Color item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Color",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingColor_1.htm"
+    },
+    {
+      "name": "SetDrawingPoint(String, Point)",
+      "signature": "void SetDrawingPoint(string item_name, Point item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Point",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingPoint.htm"
+    },
+    {
+      "name": "SetDrawingPoint(String, Int32, Point)",
+      "signature": "void SetDrawingPoint(string item_name, int item_index, Point item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Point",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingPoint_1.htm"
+    },
+    {
+      "name": "SetDrawingPointF(String, PointF)",
+      "signature": "void SetDrawingPointF(string item_name, PointF item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.PointF",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingPointF.htm"
+    },
+    {
+      "name": "SetDrawingPointF(String, Int32, PointF)",
+      "signature": "void SetDrawingPointF(string item_name, int item_index, PointF item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.PointF",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingPointF_1.htm"
+    },
+    {
+      "name": "SetDrawingRectangle(String, Rectangle)",
+      "signature": "void SetDrawingRectangle(string item_name, Rectangle item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingRectangle.htm"
+    },
+    {
+      "name": "SetDrawingRectangle(String, Int32, Rectangle)",
+      "signature": "void SetDrawingRectangle(string item_name, int item_index, Rectangle item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingRectangle_1.htm"
+    },
+    {
+      "name": "SetDrawingRectangleF(String, RectangleF)",
+      "signature": "void SetDrawingRectangleF(string item_name, RectangleF item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingRectangleF.htm"
+    },
+    {
+      "name": "SetDrawingRectangleF(String, Int32, RectangleF)",
+      "signature": "void SetDrawingRectangleF(string item_name, int item_index, RectangleF item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingRectangleF_1.htm"
+    },
+    {
+      "name": "SetDrawingSize(String, Size)",
+      "signature": "void SetDrawingSize(string item_name, Size item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Size",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingSize.htm"
+    },
+    {
+      "name": "SetDrawingSize(String, Int32, Size)",
+      "signature": "void SetDrawingSize(string item_name, int item_index, Size item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.Size",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingSize_1.htm"
+    },
+    {
+      "name": "SetDrawingSizeF(String, SizeF)",
+      "signature": "void SetDrawingSizeF(string item_name, SizeF item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.SizeF",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingSizeF.htm"
+    },
+    {
+      "name": "SetDrawingSizeF(String, Int32, SizeF)",
+      "signature": "void SetDrawingSizeF(string item_name, int item_index, SizeF item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Drawing.SizeF",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetDrawingSizeF_1.htm"
+    },
+    {
+      "name": "SetGuid(String, Guid)",
+      "signature": "void SetGuid(string item_name, Guid item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Guid",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetGuid.htm"
+    },
+    {
+      "name": "SetGuid(String, Int32, Guid)",
+      "signature": "void SetGuid(string item_name, int item_index, Guid item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Guid",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetGuid_1.htm"
+    },
+    {
+      "name": "SetInt32(String, Int32)",
+      "signature": "void SetInt32(string item_name, int item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Int32",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInt32.htm"
+    },
+    {
+      "name": "SetInt32(String, Int32, Int32)",
+      "signature": "void SetInt32(string item_name, int item_index, int item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Int32",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInt32_1.htm"
+    },
+    {
+      "name": "SetInt64(String, Int64)",
+      "signature": "void SetInt64(string item_name, long item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Int64",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInt64_1.htm"
+    },
+    {
+      "name": "SetInt64(String, Int32, Int64)",
+      "signature": "void SetInt64(string item_name, int item_index, long item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Int64",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInt64.htm"
+    },
+    {
+      "name": "SetInterval1D(String, GH_Interval1D)",
+      "signature": "void SetInterval1D(string item_name, GH_Interval1D item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInterval1D.htm"
+    },
+    {
+      "name": "SetInterval1D(String, Int32, GH_Interval1D)",
+      "signature": "void SetInterval1D(string item_name, int item_index, GH_Interval1D item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInterval1D_1.htm"
+    },
+    {
+      "name": "SetInterval2D(String, GH_Interval2D)",
+      "signature": "void SetInterval2D(string item_name, GH_Interval2D item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Interval2D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInterval2D.htm"
+    },
+    {
+      "name": "SetInterval2D(String, Int32, GH_Interval2D)",
+      "signature": "void SetInterval2D(string item_name, int item_index, GH_Interval2D item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Interval2D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetInterval2D_1.htm"
+    },
+    {
+      "name": "SetLine(String, GH_Line)",
+      "signature": "void SetLine(string item_name, GH_Line item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Line",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetLine.htm"
+    },
+    {
+      "name": "SetLine(String, Int32, GH_Line)",
+      "signature": "void SetLine(string item_name, int item_index, GH_Line item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Line",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetLine_1.htm"
+    },
+    {
+      "name": "SetPath(String, String, String)",
+      "signature": "void SetPath(string item_name, string absolutePath, string basePath)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "absolutePath",
+          "type": "System.String",
+          "doc": "Absolute path to store.",
+          "optional": false
+        },
+        {
+          "name": "basePath",
+          "type": "System.String",
+          "doc": "Base path. This will be used to also store a relative path.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPath_1.htm"
+    },
+    {
+      "name": "SetPath(String, Int32, String, String)",
+      "signature": "void SetPath(string item_name, int item_index, string absolutePath, string basePath)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "absolutePath",
+          "type": "System.String",
+          "doc": "Absolute path to store.",
+          "optional": false
+        },
+        {
+          "name": "basePath",
+          "type": "System.String",
+          "doc": "Base path. This will be used to also store a relative path.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPath.htm"
+    },
+    {
+      "name": "SetPlane(String, GH_Plane)",
+      "signature": "void SetPlane(string item_name, GH_Plane item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Plane",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPlane.htm"
+    },
+    {
+      "name": "SetPlane(String, Int32, GH_Plane)",
+      "signature": "void SetPlane(string item_name, int item_index, GH_Plane item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Plane",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPlane_1.htm"
+    },
+    {
+      "name": "SetPoint2D(String, GH_Point2D)",
+      "signature": "void SetPoint2D(string item_name, GH_Point2D item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Point2D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPoint2D.htm"
+    },
+    {
+      "name": "SetPoint2D(String, Int32, GH_Point2D)",
+      "signature": "void SetPoint2D(string item_name, int item_index, GH_Point2D item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Point2D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPoint2D_1.htm"
+    },
+    {
+      "name": "SetPoint3D(String, GH_Point3D)",
+      "signature": "void SetPoint3D(string item_name, GH_Point3D item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPoint3D.htm"
+    },
+    {
+      "name": "SetPoint3D(String, Int32, GH_Point3D)",
+      "signature": "void SetPoint3D(string item_name, int item_index, GH_Point3D item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPoint3D_1.htm"
+    },
+    {
+      "name": "SetPoint4D(String, GH_Point4D)",
+      "signature": "void SetPoint4D(string item_name, GH_Point4D item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Point4D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPoint4D.htm"
+    },
+    {
+      "name": "SetPoint4D(String, Int32, GH_Point4D)",
+      "signature": "void SetPoint4D(string item_name, int item_index, GH_Point4D item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Point4D",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetPoint4D_1.htm"
+    },
+    {
+      "name": "SetSingle(String, Single)",
+      "signature": "void SetSingle(string item_name, float item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Single",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetSingle_1.htm"
+    },
+    {
+      "name": "SetSingle(String, Int32, Single)",
+      "signature": "void SetSingle(string item_name, int item_index, float item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.Single",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetSingle.htm"
+    },
+    {
+      "name": "SetString(String, String)",
+      "signature": "void SetString(string item_name, string item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.String",
+          "doc": "Value of item to add. If a null String is supplied, a zero-length String will be serialized.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetString_1.htm"
+    },
+    {
+      "name": "SetString(String, Int32, String)",
+      "signature": "void SetString(string item_name, int item_index, string item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "System.String",
+          "doc": "Value of item to add. If a null String is supplied, a zero-length String will be serialized.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetString.htm"
+    },
+    {
+      "name": "SetVersion(String, GH_Version)",
+      "signature": "void SetVersion(string item_name, GH_Version item_value)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetVersion.htm"
+    },
+    {
+      "name": "SetVersion(String, Int32, GH_Version)",
+      "signature": "void SetVersion(string item_name, int item_index, GH_Version item_value)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_value",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Value of item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetVersion_1.htm"
+    },
+    {
+      "name": "SetVersion(String, Int32, Int32, Int32)",
+      "signature": "void SetVersion(string item_name, int major, int minor, int revision)",
+      "summary": "Add a new data item to this chunk. The name must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "System.Int32",
+          "doc": "Major component of version structure.",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "System.Int32",
+          "doc": "Minor component of version structure.",
+          "optional": false
+        },
+        {
+          "name": "revision",
+          "type": "System.Int32",
+          "doc": "Revision component of version structure.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetVersion_2.htm"
+    },
+    {
+      "name": "SetVersion(String, Int32, Int32, Int32, Int32)",
+      "signature": "void SetVersion(string item_name, int item_index, int major, int minor, int revision)",
+      "summary": "Add a new data item to this chunk. The combination of name and index must be unique or an exception will be thrown.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to add.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to add.",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "System.Int32",
+          "doc": "Major component of version structure.",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "System.Int32",
+          "doc": "Minor component of version structure.",
+          "optional": false
+        },
+        {
+          "name": "revision",
+          "type": "System.Int32",
+          "doc": "Revision component of version structure.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if another item with the same name and index already exists."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IWriter_SetVersion_3.htm"
+    },
+    {
+      "name": "Write(BinaryWriter)",
+      "signature": "void Write(BinaryWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Write.htm"
+    },
+    {
+      "name": "Write(XmlWriter)",
+      "signature": "void Write(XmlWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Archive",
+      "type": "GH_Archive",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the archive that owns the Root of the tree this chunk belongs to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Archive.htm"
+    },
+    {
+      "name": "ArchiveLocation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string representing the URI with which the archive is associated. The location may be a null string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ArchiveLocation.htm"
+    },
+    {
+      "name": "ChunkCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of child chunks contained in this chunk. The set of all child chunks is referred to as a \u0027litter\u0027.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ChunkCount.htm"
+    },
+    {
+      "name": "Chunks",
+      "type": "List\u003CGH_IChunk\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the internal list of child chunks. Do not access this list unless you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Chunks.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of this chunk. The index is set by the owner of this chunk. Indices smaller than zero imply no index has been set. The combination of name\u002Bindex is always unique among a set of chunks in the same litter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Index.htm"
+    },
+    {
+      "name": "ItemCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of items contained in this chunk.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ItemCount.htm"
+    },
+    {
+      "name": "Items",
+      "type": "List\u003CGH_Item\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the internal list of items. Do not access this list unless you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Items.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of this chunk. The name is set by the owner of this chunk. Names must be at least 1 character long. The combination of name\u002Bindex is always unique among a set of chunks in a single litter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

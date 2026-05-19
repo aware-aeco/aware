@@ -1,0 +1,134 @@
+{
+  "name": "GH_IndexRanges",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Represents a sorted, non-colliding collection of index ranges.",
+  "base": "GH_ISerializable",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_IndexRanges.htm",
+  "constructors": [
+    {
+      "name": "GH_IndexRanges",
+      "signature": "public GH_IndexRanges()",
+      "summary": "Initializes a new instance of the GH_IndexRanges class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRanges__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InsertRange",
+      "signature": "public bool InsertRange(GH_IndexRange range)",
+      "summary": "Insert an index range into the collection.",
+      "params": [
+        {
+          "name": "range",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to insert.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the collection was meaningfully modified."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRanges_InsertRange.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRanges_Read.htm"
+    },
+    {
+      "name": "RemoveRange",
+      "signature": "public bool RemoveRange(GH_IndexRange range)",
+      "summary": "Remove an index range from the collection.",
+      "params": [
+        {
+          "name": "range",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the collection was meaningfully modified."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRanges_RemoveRange.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRanges_ToString.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRanges_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of ranges stored in this collection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRanges_Count.htm"
+    },
+    {
+      "name": "Range",
+      "type": "GH_IndexRange",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the range at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRanges_Range.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

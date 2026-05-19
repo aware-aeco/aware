@@ -1,0 +1,39 @@
+{
+  "name": "ReferenceEntity",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "An entity that represents the data inserted from an external file.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/ReferenceEntity.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "entities",
+      "signature": "entities =\u003E Layout::Group",
+      "summary": "The #entities method returns the Group that represents the Layout::ReferenceEntity in its exploded form.",
+      "remarks": "The #entities method returns the Group that represents the Layout::ReferenceEntity in its exploded form.",
+      "params": [],
+      "returns": {
+        "type": "Layout::Group",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/ReferenceEntity.html#entities-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "clip_mask",
+      "type": "Layout::Entity",
+      "getter": true,
+      "setter": true,
+      "summary": "The #clip_mask method returns the clip mask of the Layout::ReferenceEntity, or nil if it does not have a clip mask.",
+      "remarks": "The #clip_mask method returns the clip mask of the Layout::ReferenceEntity, or nil if it does not have a clip mask.",
+      "doc_url": "https://ruby.sketchup.com/Layout/ReferenceEntity.html#clip_mask-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

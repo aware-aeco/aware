@@ -1,0 +1,80 @@
+{
+  "name": "PostEffectThreadEngine",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectThreadEngine\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectThreadEngine.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectThreadEngine",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectThreadEngine_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectThreadEngine_Finalize.htm"
+    },
+    {
+      "name": "RunPostEffect",
+      "signature": "public bool RunPostEffect(PostEffectJob job, PostEffectPipeline pipeline, PostEffect plugin, Rectangle rect, Guid[] channels)",
+      "summary": "",
+      "params": [
+        {
+          "name": "job",
+          "type": "Rhino.Render.PostEffects.PostEffectJob",
+          "doc": "[Missing \u003Cparam name=\u0022job\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectThreadEngine.RunPostEffect(Rhino.Render.PostEffects.PostEffectJob,Rhino.Render.PostEffects.PostEffectPipeline,Rhino.Render.PostEffects.PostEffect,System.Drawing.Rectangle,System.Guid[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Render.PostEffects.PostEffectPipeline",
+          "doc": "[Missing \u003Cparam name=\u0022pipeline\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectThreadEngine.RunPostEffect(Rhino.Render.PostEffects.PostEffectJob,Rhino.Render.PostEffects.PostEffectPipeline,Rhino.Render.PostEffects.PostEffect,System.Drawing.Rectangle,System.Guid[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "plugin",
+          "type": "Rhino.Render.PostEffects.PostEffect",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectThreadEngine.RunPostEffect(Rhino.Render.PostEffects.PostEffectJob,Rhino.Render.PostEffects.PostEffectPipeline,Rhino.Render.PostEffects.PostEffect,System.Drawing.Rectangle,System.Guid[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rect",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectThreadEngine.RunPostEffect(Rhino.Render.PostEffects.PostEffectJob,Rhino.Render.PostEffects.PostEffectPipeline,Rhino.Render.PostEffects.PostEffect,System.Drawing.Rectangle,System.Guid[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "channels",
+          "type": "System.Guid[]",
+          "doc": "[Missing \u003Cparam name=\u0022channels\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectThreadEngine.RunPostEffect(Rhino.Render.PostEffects.PostEffectJob,Rhino.Render.PostEffects.PostEffectPipeline,Rhino.Render.PostEffects.PostEffect,System.Drawing.Rectangle,System.Guid[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectThreadEngine.RunPostEffect(Rhino.Render.PostEffects.PostEffectJob,Rhino.Render.PostEffects.PostEffectPipeline,Rhino.Render.PostEffects.PostEffect,System.Drawing.Rectangle,System.Guid[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectThreadEngine_RunPostEffect.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

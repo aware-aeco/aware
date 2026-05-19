@@ -1,0 +1,24 @@
+{
+  "name": "RunMode",
+  "namespace": "Rhino.Commands",
+  "kind": "enum",
+  "summary": "Provides enumerated constants for a command running mode. This is currently interactive or scripted.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Commands_RunMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Interactive",
+      "value": 0,
+      "summary": "Can use dialogs for input. Must use message boxes to report serious error conditions."
+    },
+    {
+      "name": "Scripted",
+      "value": 1,
+      "summary": "All input must come from command line, GetPoint, GetObject, GetString, etc. Must use message boxes to report serious error conditions. Script mode gets used when a command is run with a hyphen (-) prefix."
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "InputObjectDependencyAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The InputObjectDependencyAttribute class is used for storing an input object dependency which determines when the plug-in is updated in the system. The attribute is initialized from the custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] in the plug-in source.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/683d0814-ff48-9371-384c-8b8a2db73b46",
+  "constructors": [
+    {
+      "name": "InputObjectDependencyAttribute(Int32)",
+      "signature": "public InputObjectDependencyAttribute(int Type)",
+      "summary": "The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type of the input object dependency as an integer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3c626bba-3646-07d9-9195-8f1425dd1013"
+    },
+    {
+      "name": "InputObjectDependencyAttribute(PluginBase.InputObjectDependency)",
+      "signature": "public InputObjectDependencyAttribute(PluginBase.InputObjectDependency Type)",
+      "summary": "The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.PluginBase.InputObjectDependency",
+          "doc": "The type of the input object dependency.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f2321b17-18ce-2d26-694b-a2179bc40282"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "PluginBase.InputObjectDependency",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the type of the input object dependency.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b9ba5df-ee92-a4f8-ae31-dc3db5ecb650"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

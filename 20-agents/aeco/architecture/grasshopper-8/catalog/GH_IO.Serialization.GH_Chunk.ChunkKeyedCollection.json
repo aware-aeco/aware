@@ -1,0 +1,143 @@
+{
+  "name": "GH_Chunk.ChunkKeyedCollection",
+  "namespace": "GH_IO.Serialization",
+  "kind": "class",
+  "summary": "Represents a collection of chunks with associated IDs",
+  "interfaces": [
+    "IEnumerable\u003CGH_Chunk\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection.htm",
+  "constructors": [
+    {
+      "name": "GH_Chunk.ChunkKeyedCollection",
+      "signature": "public ChunkKeyedCollection()",
+      "summary": "Create a new collection.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(GH_Chunk chunk)",
+      "summary": "Adds a new chunk.",
+      "params": [
+        {
+          "name": "chunk",
+          "type": "GH_IO.Serialization.GH_Chunk",
+          "doc": "The chunk to be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all chunks from the collection.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection_Clear.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CGH_Chunk\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that iterates over all chunks in the collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CGH_Chunk\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection_GetEnumerator.htm"
+    },
+    {
+      "name": "Remove(GH_Chunk)",
+      "signature": "public bool Remove(GH_Chunk chunk)",
+      "summary": "Removes a chunk.",
+      "params": [
+        {
+          "name": "chunk",
+          "type": "GH_IO.Serialization.GH_Chunk",
+          "doc": "The chunk to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation was successful; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection_Remove.htm"
+    },
+    {
+      "name": "Remove(ID)",
+      "signature": "public bool Remove(ID id)",
+      "summary": "Removes an ID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "GH_IO.Serialization.ID",
+          "doc": "The ID to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation was successful; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection_Remove_1.htm"
+    },
+    {
+      "name": "TryGetValue",
+      "signature": "public bool TryGetValue(ID id, out GH_Chunk chunk)",
+      "summary": "Try and find the chunk that belongs to a given ID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "GH_IO.Serialization.ID",
+          "doc": "ID to look for.",
+          "optional": false
+        },
+        {
+          "name": "chunk",
+          "type": "GH_IO.Serialization.GH_Chunk",
+          "doc": "Chunk result.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is a chunk was found, false if otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection_TryGetValue.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the amount in the collection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_Chunk_ChunkKeyedCollection_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

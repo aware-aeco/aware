@@ -1,0 +1,339 @@
+{
+  "name": "KeyboardKey",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Keyboard key recognized by shortcuts",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_KeyboardKey.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No key"
+    },
+    {
+      "name": "Tab",
+      "value": 9,
+      "summary": "Tab key"
+    },
+    {
+      "name": "PageUp",
+      "value": 33,
+      "summary": "PageUp key"
+    },
+    {
+      "name": "PageDown",
+      "value": 34,
+      "summary": "PageDown key"
+    },
+    {
+      "name": "End",
+      "value": 35,
+      "summary": "End key"
+    },
+    {
+      "name": "Home",
+      "value": 36,
+      "summary": "Home key"
+    },
+    {
+      "name": "Num0",
+      "value": 48,
+      "summary": "0 key"
+    },
+    {
+      "name": "Num1",
+      "value": 49,
+      "summary": "1 key"
+    },
+    {
+      "name": "Num2",
+      "value": 50,
+      "summary": "2 key"
+    },
+    {
+      "name": "Num3",
+      "value": 51,
+      "summary": "3 key"
+    },
+    {
+      "name": "Num4",
+      "value": 52,
+      "summary": "4 key"
+    },
+    {
+      "name": "Num5",
+      "value": 53,
+      "summary": "5 key"
+    },
+    {
+      "name": "Num6",
+      "value": 54,
+      "summary": "6 key"
+    },
+    {
+      "name": "Num7",
+      "value": 55,
+      "summary": "7 key"
+    },
+    {
+      "name": "Num8",
+      "value": 56,
+      "summary": "8 key"
+    },
+    {
+      "name": "Num9",
+      "value": 57,
+      "summary": "9 key"
+    },
+    {
+      "name": "A",
+      "value": 65,
+      "summary": "A key"
+    },
+    {
+      "name": "B",
+      "value": 66,
+      "summary": "B key"
+    },
+    {
+      "name": "C",
+      "value": 67,
+      "summary": "C key"
+    },
+    {
+      "name": "D",
+      "value": 68,
+      "summary": "D key"
+    },
+    {
+      "name": "E",
+      "value": 69,
+      "summary": "E key"
+    },
+    {
+      "name": "F",
+      "value": 70,
+      "summary": "F key"
+    },
+    {
+      "name": "G",
+      "value": 71,
+      "summary": "G key"
+    },
+    {
+      "name": "H",
+      "value": 72,
+      "summary": "H key"
+    },
+    {
+      "name": "I",
+      "value": 73,
+      "summary": "I key"
+    },
+    {
+      "name": "J",
+      "value": 74,
+      "summary": "J key"
+    },
+    {
+      "name": "K",
+      "value": 75,
+      "summary": "K key"
+    },
+    {
+      "name": "L",
+      "value": 76,
+      "summary": "L key"
+    },
+    {
+      "name": "M",
+      "value": 77,
+      "summary": "M key"
+    },
+    {
+      "name": "N",
+      "value": 78,
+      "summary": "N key"
+    },
+    {
+      "name": "O",
+      "value": 79,
+      "summary": "O key"
+    },
+    {
+      "name": "P",
+      "value": 80,
+      "summary": "P key"
+    },
+    {
+      "name": "Q",
+      "value": 81,
+      "summary": "Q key"
+    },
+    {
+      "name": "R",
+      "value": 82,
+      "summary": "R key"
+    },
+    {
+      "name": "S",
+      "value": 83,
+      "summary": "S key"
+    },
+    {
+      "name": "T",
+      "value": 84,
+      "summary": "T key"
+    },
+    {
+      "name": "U",
+      "value": 85,
+      "summary": "U key"
+    },
+    {
+      "name": "V",
+      "value": 86,
+      "summary": "V key"
+    },
+    {
+      "name": "W",
+      "value": 87,
+      "summary": "W key"
+    },
+    {
+      "name": "X",
+      "value": 88,
+      "summary": "X key"
+    },
+    {
+      "name": "Y",
+      "value": 89,
+      "summary": "Y key"
+    },
+    {
+      "name": "Z",
+      "value": 90,
+      "summary": "Z key"
+    },
+    {
+      "name": "F1",
+      "value": 112,
+      "summary": "F1 key"
+    },
+    {
+      "name": "F2",
+      "value": 113,
+      "summary": "F2 key"
+    },
+    {
+      "name": "F3",
+      "value": 114,
+      "summary": "F3 key"
+    },
+    {
+      "name": "F4",
+      "value": 115,
+      "summary": "F4 key"
+    },
+    {
+      "name": "F5",
+      "value": 116,
+      "summary": "F5 key"
+    },
+    {
+      "name": "F6",
+      "value": 117,
+      "summary": "F6 key"
+    },
+    {
+      "name": "F7",
+      "value": 118,
+      "summary": "F7 key"
+    },
+    {
+      "name": "F8",
+      "value": 119,
+      "summary": "F8 key"
+    },
+    {
+      "name": "F9",
+      "value": 120,
+      "summary": "F9 key"
+    },
+    {
+      "name": "F10",
+      "value": 121,
+      "summary": "F10 key"
+    },
+    {
+      "name": "F11",
+      "value": 122,
+      "summary": "F11 key"
+    },
+    {
+      "name": "F12",
+      "value": 123,
+      "summary": "F12 key"
+    },
+    {
+      "name": "Semicolon",
+      "value": 186,
+      "summary": "; key"
+    },
+    {
+      "name": "Equal",
+      "value": 187,
+      "summary": "\u002B key"
+    },
+    {
+      "name": "Comma",
+      "value": 188,
+      "summary": ", key"
+    },
+    {
+      "name": "Minus",
+      "value": 189,
+      "summary": "- key"
+    },
+    {
+      "name": "Period",
+      "value": 190,
+      "summary": ". key"
+    },
+    {
+      "name": "Slash",
+      "value": 191,
+      "summary": "/ key"
+    },
+    {
+      "name": "Grave",
+      "value": 192,
+      "summary": "Backtick key"
+    },
+    {
+      "name": "LeftBracket",
+      "value": 219,
+      "summary": "[ key"
+    },
+    {
+      "name": "BackSlash",
+      "value": 220,
+      "summary": "Back slash key"
+    },
+    {
+      "name": "RightBracket",
+      "value": 221,
+      "summary": "] key"
+    },
+    {
+      "name": "Quote",
+      "value": 222,
+      "summary": "Quote key"
+    }
+  ]
+}

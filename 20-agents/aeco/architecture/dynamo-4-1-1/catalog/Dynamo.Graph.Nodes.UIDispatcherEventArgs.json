@@ -1,0 +1,41 @@
+{
+  "name": "UIDispatcherEventArgs",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "This class represents the UIDIspatcher thread event arguments.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+  "constructors": [
+    {
+      "name": "UIDispatcherEventArgs(System.Action)",
+      "signature": "void UIDispatcherEventArgs(System.Action a)",
+      "summary": "Creates UIDispatcherEventArgs.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action",
+          "doc": "action to call on UI thread",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ActionToDispatch",
+      "type": "System.Action",
+      "getter": true,
+      "setter": true,
+      "summary": "Action to call on UI thread.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

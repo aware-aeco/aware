@@ -1,0 +1,29 @@
+{
+  "name": "DecalProjection",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DecalProjection\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_DecalProjection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Forward",
+      "value": 0,
+      "summary": "Project forward"
+    },
+    {
+      "name": "Backward",
+      "value": 1,
+      "summary": "Project backward"
+    },
+    {
+      "name": "Both",
+      "value": 2,
+      "summary": "Project forward and backward"
+    }
+  ]
+}

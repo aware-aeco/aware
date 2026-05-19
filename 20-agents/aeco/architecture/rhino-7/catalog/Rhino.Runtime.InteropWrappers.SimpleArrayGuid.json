@@ -1,0 +1,137 @@
+{
+  "name": "SimpleArrayGuid",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Wrapper for ON_SimpleArray\u003CON_UUID\u003E. If you are not writing C\u002B\u002B code then this class is not for you.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InteropWrappers_SimpleArrayGuid.htm",
+  "constructors": [
+    {
+      "name": "SimpleArrayGuid()",
+      "signature": "public SimpleArrayGuid()",
+      "summary": "Initializes a new SimpleArrayGuid class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid__ctor.htm"
+    },
+    {
+      "name": "SimpleArrayGuid(IEnumerable\u003CGuid\u003E)",
+      "signature": "public SimpleArrayGuid(IEnumerable\u003CGuid\u003E values)",
+      "summary": "Initializes a new SimpleArrayGuid class",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "initial set of Guids to add to the array",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Append",
+      "signature": "public void Append(Guid uuid)",
+      "summary": "Appends a new Guid at the end of this array.",
+      "params": [
+        {
+          "name": "uuid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuid\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.SimpleArrayGuid.Append(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_Append.htm"
+    },
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "Gets the constant (immutable) pointer of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_Finalize.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "Gets the non-constant pointer (for modification) of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The non-constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_NonConstPointer.htm"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public Guid[] ToArray()",
+      "summary": "Returns the managed counterpart of the unmanaged array.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "The managed array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_ToArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of elements in this array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the Guid at index",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_SimpleArrayGuid_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

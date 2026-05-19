@@ -1,0 +1,67 @@
+{
+  "name": "DefaultArgNode",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type DefaultArgNode",
+  "base": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "DefaultArgNode()",
+      "signature": "void DefaultArgNode()",
+      "summary": "DefaultArgNode.DefaultArgNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Accept(ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E)",
+      "signature": "TResult Accept\u003CTResult\u003E(ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E visitor)",
+      "summary": "DefaultArgNode.Accept",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Children",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Children()",
+      "summary": "DefaultArgNode.Children",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "ProtoCore.AST.AssociativeAST.AstKind",
+      "getter": true,
+      "setter": false,
+      "summary": "DefaultArgNode.Kind",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

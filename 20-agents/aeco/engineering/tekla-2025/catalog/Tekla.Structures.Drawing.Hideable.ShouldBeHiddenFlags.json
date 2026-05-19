@@ -1,0 +1,39 @@
+{
+  "name": "Hideable.ShouldBeHiddenFlags",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The flag for keeping track if object should be hidden.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b2667dac-9ffe-f073-4d30-08a3983132fd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ShouldNotBeHidden",
+      "value": 0,
+      "summary": "Should not be hidden, default value."
+    },
+    {
+      "name": "HideFromDrawingView",
+      "value": 1,
+      "summary": "To be hidden from drawing view."
+    },
+    {
+      "name": "HideFromDrawing",
+      "value": 2,
+      "summary": "To be hidden from drawing."
+    },
+    {
+      "name": "ShowInDrawingView",
+      "value": 3,
+      "summary": "To be shown in drawing view."
+    },
+    {
+      "name": "ShowInDrawing",
+      "value": 4,
+      "summary": "To be shown in drawing."
+    }
+  ]
+}

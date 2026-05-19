@@ -1,0 +1,44 @@
+{
+  "name": "GH_FileWatcherEvents",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible file watcher events. These can be combined.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_FileWatcherEvents.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No events are specified."
+    },
+    {
+      "name": "Changed",
+      "value": 1,
+      "summary": "The file is changed."
+    },
+    {
+      "name": "Renamed",
+      "value": 2,
+      "summary": "The file is renamed."
+    },
+    {
+      "name": "Created",
+      "value": 4,
+      "summary": "A file is created."
+    },
+    {
+      "name": "Deleted",
+      "value": 8,
+      "summary": "A file is deleted."
+    },
+    {
+      "name": "All",
+      "value": 15,
+      "summary": "Represents all possible events."
+    }
+  ]
+}

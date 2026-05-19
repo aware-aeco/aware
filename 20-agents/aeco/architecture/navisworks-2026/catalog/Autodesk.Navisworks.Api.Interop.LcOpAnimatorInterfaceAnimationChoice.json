@@ -1,0 +1,50 @@
+{
+  "name": "LcOpAnimatorInterfaceAnimationChoice",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpAnimatorInterfaceAnimationChoice enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimatorInterfaceAnimationChoice",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDESCRIBE_ANIM_SCENE",
+      "value": 1
+    },
+    {
+      "name": "eDESCRIBE_ANIM_FOLDER",
+      "value": 2
+    },
+    {
+      "name": "eDESCRIBE_ANIM_SCENE_FOLDER",
+      "value": 4
+    },
+    {
+      "name": "eDESCRIBE_ANIM_CAMERA_AN",
+      "value": 8
+    },
+    {
+      "name": "eDESCRIBE_ANIM_SELECTION_AN",
+      "value": 16
+    },
+    {
+      "name": "eDESCRIBE_ANIM_SECTION_AN",
+      "value": 32
+    },
+    {
+      "name": "eDESCRIBE_ANIM_ALL_ANIMS",
+      "value": 56
+    },
+    {
+      "name": "eDESCRIBE_ANIM_ANIMS_AND_SCENES",
+      "value": 57
+    },
+    {
+      "name": "eDESCRIBE_ANIM_ALL",
+      "value": 63
+    }
+  ]
+}

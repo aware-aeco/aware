@@ -1,0 +1,440 @@
+{
+  "name": "AttributeCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Attribute Commands\u0027 command group \u2014 21 JSON-RPC commands (Archicad 29.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateAttributeFolders",
+      "signature": "CreateAttributeFolders(attributeFolders: AttributeFolderCreationParameters[]): object",
+      "summary": "Creates attribute folders. To create a folder, its full path has to be provided. The command will create all folders along the path, if they do not exist.",
+      "params": [
+        {
+          "name": "attributeFolders",
+          "type": "AttributeFolderCreationParameters[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#CreateAttributeFolders"
+    },
+    {
+      "name": "DeleteAttributeFolders",
+      "signature": "DeleteAttributeFolders(attributeFolderIds: AttributeFolderIds): object",
+      "summary": "Deletes attribute folders and all the deletable attributes and folders it contains. To delete a folder, its identifier has to be provided.",
+      "params": [
+        {
+          "name": "attributeFolderIds",
+          "type": "AttributeFolderIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#DeleteAttributeFolders"
+    },
+    {
+      "name": "DeleteAttributes",
+      "signature": "DeleteAttributes(attributeIds: AttributeIds): object",
+      "summary": "Deletes attributes.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#DeleteAttributes"
+    },
+    {
+      "name": "GetActivePenTables",
+      "signature": "GetActivePenTables(): object",
+      "summary": "Returns the model view and layout book pen table identifiers.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: modelViewPenTableId, layoutBookPenTableId."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetActivePenTables"
+    },
+    {
+      "name": "GetAttributeFolderStructure",
+      "signature": "GetAttributeFolderStructure(attributeType: AttributeType, path?: AttributeFolderPath): object",
+      "summary": "Returns the detailed folder structure for the attributes of a given type. If the path is not given, the root folder will be returned",
+      "params": [
+        {
+          "name": "attributeType",
+          "type": "AttributeType",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "AttributeFolderPath",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeFolder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAttributeFolderStructure"
+    },
+    {
+      "name": "GetAttributeFolders",
+      "signature": "GetAttributeFolders(attributeFolderIds: AttributeFolderIds): object",
+      "summary": "Returns the detailed attribute folders identified by their Ids.",
+      "params": [
+        {
+          "name": "attributeFolderIds",
+          "type": "AttributeFolderIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeFolders."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAttributeFolders"
+    },
+    {
+      "name": "GetAttributesByType",
+      "signature": "GetAttributesByType(attributeType: AttributeType): object",
+      "summary": "Returns the identifier of every attribute of the given type.",
+      "params": [
+        {
+          "name": "attributeType",
+          "type": "AttributeType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAttributesByType"
+    },
+    {
+      "name": "GetAttributesIndices",
+      "signature": "GetAttributesIndices(attributeIds: AttributeIds): object",
+      "summary": "Returns the requested indices and guids of attributes.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeIndicesAndGuids."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAttributesIndices"
+    },
+    {
+      "name": "GetBuildingMaterialAttributes",
+      "signature": "GetBuildingMaterialAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed building material attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetBuildingMaterialAttributes"
+    },
+    {
+      "name": "GetCompositeAttributes",
+      "signature": "GetCompositeAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed composite attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetCompositeAttributes"
+    },
+    {
+      "name": "GetFillAttributes",
+      "signature": "GetFillAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed fill attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetFillAttributes"
+    },
+    {
+      "name": "GetLayerAttributes",
+      "signature": "GetLayerAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed layer attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetLayerAttributes"
+    },
+    {
+      "name": "GetLayerCombinationAttributes",
+      "signature": "GetLayerCombinationAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed layer combination attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetLayerCombinationAttributes"
+    },
+    {
+      "name": "GetLineAttributes",
+      "signature": "GetLineAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed line attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetLineAttributes"
+    },
+    {
+      "name": "GetPenTableAttributes",
+      "signature": "GetPenTableAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed pen table attributes (including their pens) identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetPenTableAttributes"
+    },
+    {
+      "name": "GetProfileAttributePreview",
+      "signature": "GetProfileAttributePreview(attributeIds: AttributeIds, imageWidth: integer, imageHeight: integer, backgroundColor?: RGBColor): object",
+      "summary": "Returns the preview image of each requested profile attribute in a base64 string format.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        },
+        {
+          "name": "imageWidth",
+          "type": "integer",
+          "doc": "The width of the preview image.",
+          "optional": false
+        },
+        {
+          "name": "imageHeight",
+          "type": "integer",
+          "doc": "The height of the preview image.",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "RGBColor",
+          "doc": "The background color of the preview image.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: previewImages."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetProfileAttributePreview"
+    },
+    {
+      "name": "GetProfileAttributes",
+      "signature": "GetProfileAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed profile attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetProfileAttributes"
+    },
+    {
+      "name": "GetSurfaceAttributes",
+      "signature": "GetSurfaceAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed surface attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetSurfaceAttributes"
+    },
+    {
+      "name": "GetZoneCategoryAttributes",
+      "signature": "GetZoneCategoryAttributes(attributeIds: AttributeIds): object",
+      "summary": "Returns the detailed zone category attributes identified by their GUIDs.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetZoneCategoryAttributes"
+    },
+    {
+      "name": "MoveAttributesAndFolders",
+      "signature": "MoveAttributesAndFolders(attributeFolderIds: AttributeFolderIds, attributeIds: AttributeIds, targetFolderId: AttributeFolderId): object",
+      "summary": "Moves attributes and attribute folders.",
+      "params": [
+        {
+          "name": "attributeFolderIds",
+          "type": "AttributeFolderIds",
+          "optional": false
+        },
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        },
+        {
+          "name": "targetFolderId",
+          "type": "AttributeFolderId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Empty result object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#MoveAttributesAndFolders"
+    },
+    {
+      "name": "RenameAttributeFolders",
+      "signature": "RenameAttributeFolders(attributeFolderParametersList: AttributeFolderRenameParameters[]): object",
+      "summary": "Rename attribute folder.",
+      "params": [
+        {
+          "name": "attributeFolderParametersList",
+          "type": "AttributeFolderRenameParameters[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#RenameAttributeFolders"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

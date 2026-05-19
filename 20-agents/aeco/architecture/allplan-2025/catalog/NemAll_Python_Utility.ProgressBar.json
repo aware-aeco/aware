@@ -1,0 +1,322 @@
+{
+  "name": "ProgressBar",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "Representation of the progress bar",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/",
+  "constructors": [
+    {
+      "name": "ProgressBar",
+      "signature": "ProgressBar() | ProgressBar(element: ProgressBar) | ProgressBar(countOfSteps: int, headerTextNumber: int, bWithCancel: bool)",
+      "summary": "Shows the progress bar",
+      "remarks": "Shows the progress bar",
+      "params": [
+        {
+          "name": "countOfSteps",
+          "type": "object",
+          "doc": "Number of expected steps",
+          "optional": false
+        },
+        {
+          "name": "headerTextNumber",
+          "type": "object",
+          "doc": "Header text, 0 = standard",
+          "optional": false
+        },
+        {
+          "name": "bWithCancel",
+          "type": "object",
+          "doc": "True if the cancel button should appear on the bar, False otherwise",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CloseProgressbar",
+      "signature": "CloseProgressbar() -\u003E bool",
+      "summary": "Closed progressbar dialog",
+      "remarks": "Closed progressbar dialog",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if progressbar closed correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.CloseProgressbar"
+    },
+    {
+      "name": "MakeStep",
+      "signature": "MakeStep(step: int) -\u003E bool | MakeStep(step: int, additionalInfoStrID: int) -\u003E bool | MakeStep(step: int, additionalInfo: str) -\u003E bool",
+      "summary": "Make a step",
+      "remarks": "Make a step",
+      "params": [
+        {
+          "name": "step",
+          "type": "int",
+          "doc": "step count",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true step is correctly executed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.MakeStep"
+    },
+    {
+      "name": "ResetProgressBar",
+      "signature": "ResetProgressBar( numberOfSteps: int, progressBarTitle: str, additionalInfo: str, closable: bool, ) -\u003E bool | ResetProgressBar( numberOfSteps: int, progressBarTitleStrID: int, additionalInfoStrID: int, closable: bool, ) -\u003E bool",
+      "summary": "Reset progressbar dialog",
+      "remarks": "Reset progressbar dialog",
+      "params": [
+        {
+          "name": "numberOfSteps",
+          "type": "int",
+          "doc": "number of steps/elements",
+          "optional": false
+        },
+        {
+          "name": "progressBarTitle",
+          "type": "str",
+          "doc": "title of progressbar",
+          "optional": false
+        },
+        {
+          "name": "additionalInfo",
+          "type": "str",
+          "doc": "additional info",
+          "optional": false
+        },
+        {
+          "name": "closable",
+          "type": "bool",
+          "doc": "progressbar can be canceled",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if progressbar started correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.ResetProgressBar"
+    },
+    {
+      "name": "SetAditionalInfo",
+      "signature": "SetAditionalInfo(textId: int) -\u003E bool | SetAditionalInfo(text: str) -\u003E bool",
+      "summary": "Set the additional info",
+      "remarks": "Set the additional info",
+      "params": [
+        {
+          "name": "textId",
+          "type": "int",
+          "doc": "additional info text ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if set correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetAditionalInfo"
+    },
+    {
+      "name": "SetInfinitProgressbar",
+      "signature": "SetInfinitProgressbar(isInfinit: bool) -\u003E bool",
+      "summary": "Set infinite progressbar dialog",
+      "remarks": "Set infinite progressbar dialog",
+      "params": [
+        {
+          "name": "isInfinit",
+          "type": "bool",
+          "doc": "infinite state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if set correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetInfinitProgressbar"
+    },
+    {
+      "name": "SetIsClosable",
+      "signature": "SetIsClosable(isClosable: bool) -\u003E bool",
+      "summary": "Set the closeable state",
+      "remarks": "Set the closeable state",
+      "params": [
+        {
+          "name": "isClosable",
+          "type": "bool",
+          "doc": "closable state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if set correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetIsClosable"
+    },
+    {
+      "name": "SetNumberOfSteps",
+      "signature": "SetNumberOfSteps(numberOfSteps: int) -\u003E bool",
+      "summary": "Set number of steps",
+      "remarks": "Set number of steps",
+      "params": [
+        {
+          "name": "numberOfSteps",
+          "type": "int",
+          "doc": "number of steps/elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if set correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetNumberOfSteps"
+    },
+    {
+      "name": "SetTitle",
+      "signature": "SetTitle(textId: int) -\u003E bool | SetTitle(text: str) -\u003E bool",
+      "summary": "Set the title",
+      "remarks": "Set the title",
+      "params": [
+        {
+          "name": "textId",
+          "type": "int",
+          "doc": "title text ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if set correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetTitle"
+    },
+    {
+      "name": "StartInfiniteProgressbar",
+      "signature": "StartInfiniteProgressbar( progressBarTitle: str, additionalInfo: str, closable: bool, startImmediately: bool = False, ) -\u003E bool | StartInfiniteProgressbar( progressBarTitleID: int, additionalInfoStrID: int, closable: bool, startImmediately: bool = False, ) -\u003E bool | StartInfiniteProgressbar( progressBarTitle: str, closable: bool, startImmediately: bool = False ) -\u003E bool | StartInfiniteProgressbar( progressBarTitleID: int, closable: bool, startImmediately: bool = False ) -\u003E bool",
+      "summary": "Starts infinite progressbar dialog",
+      "remarks": "Starts infinite progressbar dialog",
+      "params": [
+        {
+          "name": "progressBarTitle",
+          "type": "str",
+          "doc": "title of progressbar",
+          "optional": false
+        },
+        {
+          "name": "additionalInfo",
+          "type": "str",
+          "doc": "additional info",
+          "optional": false
+        },
+        {
+          "name": "closable",
+          "type": "bool",
+          "doc": "progressbar can be canceled",
+          "optional": false
+        },
+        {
+          "name": "startImmediately",
+          "type": "bool",
+          "doc": "start immediately",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if progressbar started correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartInfiniteProgressbar"
+    },
+    {
+      "name": "StartProgressbar",
+      "signature": "StartProgressbar( numberOfSteps: int, progressBarTitle: str, additionalInfo: str, closable: bool, startImmediately: bool = False, ) -\u003E bool | StartProgressbar( numberOfSteps: int, progressBarTitleID: int, additionalInfoStrID: int, closable: bool, startImmediately: bool = False, ) -\u003E bool | StartProgressbar( numberOfSteps: int, progressBarTitle: str, closable: bool, startImmediately: bool = False, ) -\u003E bool | StartProgressbar( numberOfSteps: int, progressBarTitleID: int, closable: bool, startImmediately: bool = False, ) -\u003E bool",
+      "summary": "Starts progressbar dialog",
+      "remarks": "Starts progressbar dialog",
+      "params": [
+        {
+          "name": "numberOfSteps",
+          "type": "int",
+          "doc": "number of steps/elements",
+          "optional": false
+        },
+        {
+          "name": "progressBarTitle",
+          "type": "str",
+          "doc": "title of progressbar",
+          "optional": false
+        },
+        {
+          "name": "additionalInfo",
+          "type": "str",
+          "doc": "additional info",
+          "optional": false
+        },
+        {
+          "name": "closable",
+          "type": "bool",
+          "doc": "progressbar can be canceled",
+          "optional": false
+        },
+        {
+          "name": "startImmediately",
+          "type": "bool",
+          "doc": "start immediately",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if progressbar started correctly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartProgressbar"
+    },
+    {
+      "name": "Step",
+      "signature": "Step() -\u003E bool",
+      "summary": "Increase the progress bar by one step",
+      "remarks": "Increase the progress bar by one step",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when cancel button was clicked, False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.Step"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

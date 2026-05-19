@@ -1,0 +1,22 @@
+{
+  "name": "LibraryFileAdditions",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of library file additions to the embedded library",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LibraryFileAdditions",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "LibraryFileAddition[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LibraryFileAdditions"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

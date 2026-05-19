@@ -1,0 +1,30 @@
+{
+  "name": "RibbonTabRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents the definition of a ribbon tab in the GUI system.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.RibbonTabRecord",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The text to be displayed for this Ribbon tab",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonTabRecord.DisplayName"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The full Id of the ribbon tab. This is a combination of and Plugin.Id",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonTabRecord.Id"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

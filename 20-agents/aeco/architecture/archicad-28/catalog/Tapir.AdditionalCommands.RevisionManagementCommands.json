@@ -1,0 +1,96 @@
+{
+  "name": "RevisionManagementCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Revision Management Commands\u0027 command group \u2014 5 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetRevisionIssues",
+      "signature": "GetRevisionIssues(): object",
+      "summary": "Retrieves all issues.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: revisionIssues."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetRevisionIssues",
+      "since": "1.1.9"
+    },
+    {
+      "name": "GetRevisionChanges",
+      "signature": "GetRevisionChanges(): object",
+      "summary": "Retrieves all changes.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: revisionChanges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetRevisionChanges",
+      "since": "1.1.9"
+    },
+    {
+      "name": "GetDocumentRevisions",
+      "signature": "GetDocumentRevisions(): object",
+      "summary": "Retrieves all document revisions.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: documentRevisions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetDocumentRevisions",
+      "since": "1.1.9"
+    },
+    {
+      "name": "GetCurrentRevisionChangesOfLayouts",
+      "signature": "GetCurrentRevisionChangesOfLayouts(layoutDatabaseIds: Databases): object",
+      "summary": "Retrieves all changes belong to the last revision of the given layouts.",
+      "params": [
+        {
+          "name": "layoutDatabaseIds",
+          "type": "Databases",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: currentRevisionChangesOfLayouts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetCurrentRevisionChangesOfLayouts",
+      "since": "1.1.9"
+    },
+    {
+      "name": "GetRevisionChangesOfElements",
+      "signature": "GetRevisionChangesOfElements(elements: Elements): object",
+      "summary": "Retrieves the changes belong to the given elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: revisionChangesOfElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetRevisionChangesOfElements",
+      "since": "1.1.9"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

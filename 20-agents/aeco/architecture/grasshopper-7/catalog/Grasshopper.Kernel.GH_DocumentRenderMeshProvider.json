@@ -1,0 +1,152 @@
+{
+  "name": "GH_DocumentRenderMeshProvider",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Utility class for seeding render queues with GH geometry.",
+  "base": "CustomRenderMeshProvider2",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentRenderMeshProvider.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentRenderMeshProvider",
+      "signature": "public GH_DocumentRenderMeshProvider()",
+      "summary": "Initializes a new instance of the GH_DocumentRenderMeshProvider class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentRenderMeshProvider__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BoundingBox(ViewportInfo, RhinoObject, RhinoDoc, Guid, DisplayPipelineAttributes)",
+      "signature": "public override BoundingBox BoundingBox(ViewportInfo vp, RhinoObject obj, RhinoDoc doc, Guid requestingPlugIn, DisplayPipelineAttributes attrs)",
+      "summary": "(Overrides CustomRenderMeshProvider2.BoundingBox(ViewportInfo, RhinoObject, RhinoDoc, Guid, DisplayPipelineAttributes).)",
+      "params": [
+        {
+          "name": "vp",
+          "type": "ViewportInfo",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "RhinoObject",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "DisplayPipelineAttributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentRenderMeshProvider_BoundingBox.htm"
+    },
+    {
+      "name": "BuildCustomMeshes(ViewportInfo, RhinoDoc, RenderPrimitiveList, Guid, DisplayPipelineAttributes)",
+      "signature": "public override bool BuildCustomMeshes(ViewportInfo vp, RhinoDoc doc, RenderPrimitiveList objMeshes, Guid requestingPlugIn, DisplayPipelineAttributes attrs)",
+      "summary": "(Overrides CustomRenderMeshProvider2.BuildCustomMeshes(ViewportInfo, RhinoDoc, RenderPrimitiveList, Guid, DisplayPipelineAttributes).)",
+      "params": [
+        {
+          "name": "vp",
+          "type": "ViewportInfo",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "objMeshes",
+          "type": "RenderPrimitiveList",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "DisplayPipelineAttributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentRenderMeshProvider_BuildCustomMeshes.htm"
+    },
+    {
+      "name": "WillBuildCustomMeshes(ViewportInfo, RhinoObject, RhinoDoc, Guid, DisplayPipelineAttributes)",
+      "signature": "public override bool WillBuildCustomMeshes(ViewportInfo vp, RhinoObject obj, RhinoDoc doc, Guid requestingPlugIn, DisplayPipelineAttributes attrs)",
+      "summary": "(Overrides CustomRenderMeshProvider2.WillBuildCustomMeshes(ViewportInfo, RhinoObject, RhinoDoc, Guid, DisplayPipelineAttributes).)",
+      "params": [
+        {
+          "name": "vp",
+          "type": "ViewportInfo",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "RhinoObject",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "DisplayPipelineAttributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentRenderMeshProvider_WillBuildCustomMeshes.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides CustomRenderMeshProvider.Name.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentRenderMeshProvider_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

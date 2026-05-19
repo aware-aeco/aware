@@ -1,0 +1,14 @@
+{
+  "name": "TaskStateChangedEventArgs",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "class",
+  "summary": "Provides data for DynamoScheduler.TaskStateChanged events.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

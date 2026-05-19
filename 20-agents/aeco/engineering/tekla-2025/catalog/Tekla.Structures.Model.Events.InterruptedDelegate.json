@@ -1,0 +1,14 @@
+{
+  "name": "Events.InterruptedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for interrupted event",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/055e98a3-bab4-394b-2407-c89799aec5d4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void InterruptedDelegate()"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "WeldFilterExpressions.TypeAboveLine",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The TypeAboveLine class represents the type above line filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dfb0412e-aecf-0cf5-c602-2fbf29e7912c",
+  "constructors": [
+    {
+      "name": "WeldFilterExpressions.TypeAboveLine",
+      "signature": "public TypeAboveLine()",
+      "summary": "Initializes a new instance of the TypeAboveLine class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/878e7c84-3909-547b-c53f-9e1db6a2f812"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,805 @@
+{
+  "name": "RenderPipeline",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Provides facilities to a render plug-in for integrating with the standard Rhino render window. Also adds helper functions for processing a render scene. This is the suggested class to use when integrating a renderer with Rhino and maintaining a \u0022standard\u0022 user interface that users will expect.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderPipeline.htm",
+  "constructors": [
+    {
+      "name": "RenderPipeline(RhinoDoc, RunMode, PlugIn, Size, String, RenderWindow.StandardChannels, Boolean, Boolean)",
+      "signature": "protected RenderPipeline(RhinoDoc doc, RunMode mode, PlugIn plugin, Size sizeRendering, string caption, RenderWindow.StandardChannels channels, bool reuseRenderWindow, bool clearLastRendering)",
+      "summary": "Constructs a subclass of this object on the stack in your Rhino plug-in\u0027s Render() or RenderWindow() implementation.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.Commands.RunMode",
+          "doc": "A command running mode, such as scripted or interactive.",
+          "optional": false
+        },
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "A plug-in.",
+          "optional": false
+        },
+        {
+          "name": "sizeRendering",
+          "type": "System.Drawing.Size",
+          "doc": "The width and height of the rendering.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "The caption to display in the frame window.",
+          "optional": false
+        },
+        {
+          "name": "channels",
+          "type": "Rhino.Render.RenderWindow.StandardChannels",
+          "doc": "The color channel or channels.",
+          "optional": false
+        },
+        {
+          "name": "reuseRenderWindow",
+          "type": "System.Boolean",
+          "doc": "This parameter is obsolete.",
+          "optional": false
+        },
+        {
+          "name": "clearLastRendering",
+          "type": "System.Boolean",
+          "doc": "true If the last rendering should be removed. Indicates that this render is being done using RenderQuiet(). It specifically makes sure the render mesh iterator does not display any progress user interface.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline__ctor.htm"
+    },
+    {
+      "name": "RenderPipeline(RhinoDoc, RunMode, PlugIn, Size, String, RenderWindow.StandardChannels, Boolean, Boolean, AsyncRenderContext)",
+      "signature": "protected RenderPipeline(RhinoDoc doc, RunMode mode, PlugIn plugin, Size sizeRendering, string caption, RenderWindow.StandardChannels channels, bool reuseRenderWindow, bool clearLastRendering, ref AsyncRenderContext aRC)",
+      "summary": "Constructs a subclass of this object on the stack in your Rhino plug-in\u0027s Render() or RenderWindow() implementation. This constructor should be used when a non-blocking RenderWindow is required. Note that the asynchronous render context will not be used when mode is Scripted.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.Commands.RunMode",
+          "doc": "A command running mode, such as scripted or interactive.",
+          "optional": false
+        },
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "A plug-in.",
+          "optional": false
+        },
+        {
+          "name": "sizeRendering",
+          "type": "System.Drawing.Size",
+          "doc": "The width and height of the rendering.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "The caption to display in the frame window.",
+          "optional": false
+        },
+        {
+          "name": "channels",
+          "type": "Rhino.Render.RenderWindow.StandardChannels",
+          "doc": "The color channel or channels.",
+          "optional": false
+        },
+        {
+          "name": "reuseRenderWindow",
+          "type": "System.Boolean",
+          "doc": "This parameter is obsolete.",
+          "optional": false
+        },
+        {
+          "name": "clearLastRendering",
+          "type": "System.Boolean",
+          "doc": "true if the last rendering should be removed. Indicates that this render is being done using RenderQuiet(). It specifically makes sure the render mesh iterator does not display any progress user interface.",
+          "optional": false
+        },
+        {
+          "name": "aRC",
+          "type": "Rhino.Render.AsyncRenderContext",
+          "doc": "The asynchronous render context to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddLightToScene",
+      "signature": "protected virtual bool AddLightToScene(LightObject light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.DocObjects.LightObject",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.AddLightToScene(Rhino.DocObjects.LightObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.AddLightToScene(Rhino.DocObjects.LightObject)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_AddLightToScene.htm"
+    },
+    {
+      "name": "AddRenderMeshToScene",
+      "signature": "protected virtual bool AddRenderMeshToScene(RhinoObject obj, Material material, Mesh mesh)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.AddRenderMeshToScene(Rhino.DocObjects.RhinoObject,Rhino.DocObjects.Material,Rhino.Geometry.Mesh)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.DocObjects.Material",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.AddRenderMeshToScene(Rhino.DocObjects.RhinoObject,Rhino.DocObjects.Material,Rhino.Geometry.Mesh)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "[Missing \u003Cparam name=\u0022mesh\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.AddRenderMeshToScene(Rhino.DocObjects.RhinoObject,Rhino.DocObjects.Material,Rhino.Geometry.Mesh)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.AddRenderMeshToScene(Rhino.DocObjects.RhinoObject,Rhino.DocObjects.Material,Rhino.Geometry.Mesh)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_AddRenderMeshToScene.htm"
+    },
+    {
+      "name": "CloseWindow",
+      "signature": "public bool CloseWindow()",
+      "summary": "Closes the render window associated with this render instance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if successful or false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_CloseWindow.htm"
+    },
+    {
+      "name": "CommandResult",
+      "signature": "public Result CommandResult()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.CommandResult\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_CommandResult.htm"
+    },
+    {
+      "name": "ContinueModal",
+      "signature": "protected abstract bool ContinueModal()",
+      "summary": "Frequently called during a rendering by the frame work in order to determine if the rendering should continue.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the rendering should continue."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_ContinueModal.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RenderPipeline",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Releases the unmanaged resources used by the RenderPipeline and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_Finalize.htm"
+    },
+    {
+      "name": "GetRenderWindow()",
+      "signature": "public RenderWindow GetRenderWindow()",
+      "summary": "Get the RenderWindow associated with this RenderPipeline instance. This is virtual rather than abstract for V5 compat",
+      "params": [],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "RenderWindow if one exists, null otherwise (i.e. rendering has already completed)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_GetRenderWindow.htm"
+    },
+    {
+      "name": "GetRenderWindow(Boolean)",
+      "signature": "public RenderWindow GetRenderWindow(bool withWireframeChannel)",
+      "summary": "As GetRenderWindow(), but if withWireframeChannel is true the returned RenderWindow will have the channel added.",
+      "params": [
+        {
+          "name": "withWireframeChannel",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022withWireframeChannel\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.GetRenderWindow(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "RenderWindow with wireframe channel enabled, or null if no RenderWindow can be found (i.e. rendering has completed already)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_GetRenderWindow_3.htm"
+    },
+    {
+      "name": "GetRenderWindow(Boolean, Boolean)",
+      "signature": "public RenderWindow GetRenderWindow(bool withWireframeChannel, bool fromRenderViewSource)",
+      "summary": "As GetRenderWindow(). The parameter withWireframeChannel controls whether the returned RenderWindow will have the channel added. The parameter fromRenderViewSource controls from where the RenderSize is queried.",
+      "params": [
+        {
+          "name": "withWireframeChannel",
+          "type": "System.Boolean",
+          "doc": "true if the RenderWindow needs to have a wireframe channel.",
+          "optional": false
+        },
+        {
+          "name": "fromRenderViewSource",
+          "type": "System.Boolean",
+          "doc": "true if the RenderWindow size needs to be set from RenderViewSource size. false will use the active view.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "RenderWindow if one exists, null otherwise (i.e. rendering has already completed)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_GetRenderWindow_4.htm"
+    },
+    {
+      "name": "GetRenderWindow(ViewportInfo, Boolean)",
+      "signature": "public RenderWindow GetRenderWindow(ViewportInfo viewportInfo, bool fromRenderViewSource)",
+      "summary": "As GetRenderWindow(). The parameter withWireframeChannel controls whether the returned RenderWindow will have the channel added. The parameter fromRenderViewSource controls from where the RenderSize is queried. The viewportInfo instance will be used to set up wireframe channel. This is necessary for rendering different view than is currently active in the viewport",
+      "params": [
+        {
+          "name": "viewportInfo",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "ViewportInfo used to generate the wireframe channel for",
+          "optional": false
+        },
+        {
+          "name": "fromRenderViewSource",
+          "type": "System.Boolean",
+          "doc": "true if the RenderWindow size needs to be set from RenderViewSource size. false will use the active view.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "RenderWindow if one exists, null otherwise (i.e. rendering has already completed)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_GetRenderWindow_1.htm"
+    },
+    {
+      "name": "GetRenderWindow(ViewportInfo, Boolean, Rectangle)",
+      "signature": "public RenderWindow GetRenderWindow(ViewportInfo viewportInfo, bool fromRenderViewSource, Rectangle region)",
+      "summary": "As GetRenderWindow(). The parameter withWireframeChannel controls whether the returned RenderWindow will have the channel added. The parameter fromRenderViewSource controls from where the RenderSize is queried. The viewportInfo instance will be used to set up wireframe channel. This is necessary for rendering different view than is currently active in the viewport",
+      "params": [
+        {
+          "name": "viewportInfo",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "ViewportInfo used to generate the wireframe channel",
+          "optional": false
+        },
+        {
+          "name": "fromRenderViewSource",
+          "type": "System.Boolean",
+          "doc": "true if the RenderWindow size needs to be set from RenderViewSource size. false will use the active view.",
+          "optional": false
+        },
+        {
+          "name": "region",
+          "type": "System.Drawing.Rectangle",
+          "doc": "The region to render. Usually the same as the full render window but in the case of RenderWindow and RenderInWindow, it is the region the user selected in the viewport.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "RenderWindow if one exists, null otherwise (i.e. rendering has already completed)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_GetRenderWindow_2.htm"
+    },
+    {
+      "name": "GetRenderWindowFromRenderViewSource",
+      "signature": "public RenderWindow GetRenderWindowFromRenderViewSource(bool fromRenderViewSource)",
+      "summary": "Like GetRenderWindow(), but with the size for RenderWindow set from RenderViewSources if fromRenderViewSource is set to true",
+      "params": [
+        {
+          "name": "fromRenderViewSource",
+          "type": "System.Boolean",
+          "doc": "true if",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "RenderWindow if one exists, null otherwise (i.e. rendering has already completed)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_GetRenderWindowFromRenderViewSource.htm"
+    },
+    {
+      "name": "IgnoreRhinoObject",
+      "signature": "protected virtual bool IgnoreRhinoObject(RhinoObject obj)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.IgnoreRhinoObject(Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.IgnoreRhinoObject(Rhino.DocObjects.RhinoObject)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_IgnoreRhinoObject.htm"
+    },
+    {
+      "name": "LocalizeRenderReturnCode",
+      "signature": "public static string LocalizeRenderReturnCode(RenderPipeline.RenderReturnCode rc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rc",
+          "type": "Rhino.Render.RenderPipeline.RenderReturnCode",
+          "doc": "[Missing \u003Cparam name=\u0022rc\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.LocalizeRenderReturnCode(Rhino.Render.RenderPipeline.RenderReturnCode)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.LocalizeRenderReturnCode(Rhino.Render.RenderPipeline.RenderReturnCode)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_LocalizeRenderReturnCode.htm"
+    },
+    {
+      "name": "NeedToProcessGeometryTable",
+      "signature": "protected virtual bool NeedToProcessGeometryTable()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.NeedToProcessGeometryTable\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_NeedToProcessGeometryTable.htm"
+    },
+    {
+      "name": "NeedToProcessLightTable",
+      "signature": "protected virtual bool NeedToProcessLightTable()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.NeedToProcessLightTable\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_NeedToProcessLightTable.htm"
+    },
+    {
+      "name": "OnRenderBegin",
+      "signature": "protected abstract bool OnRenderBegin()",
+      "summary": "Called by the framework when it is time to start rendering, the render window will be created at this point and it is safe to start",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.OnRenderBegin\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_OnRenderBegin.htm"
+    },
+    {
+      "name": "OnRenderBeginQuiet",
+      "signature": "protected virtual bool OnRenderBeginQuiet(Size imageSize)",
+      "summary": "Called by the framework when it is time to start rendering quietly, there is no user interface when rendering in this mode and the default post process effects will get applied to the scene when the rendering is complete.",
+      "params": [
+        {
+          "name": "imageSize",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022imageSize\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.OnRenderBeginQuiet(System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.OnRenderBeginQuiet(System.Drawing.Size)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_OnRenderBeginQuiet.htm"
+    },
+    {
+      "name": "OnRenderEnd",
+      "signature": "protected abstract void OnRenderEnd(RenderEndEventArgs e)",
+      "summary": "Called by the framework when the user closes the render window or clicks on the stop button in the render window.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Render.RenderEndEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.OnRenderEnd(Rhino.Render.RenderEndEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_OnRenderEnd.htm"
+    },
+    {
+      "name": "OnRenderWindowBegin",
+      "signature": "protected abstract bool OnRenderWindowBegin(RhinoView view, Rectangle rectangle)",
+      "summary": "",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.OnRenderWindowBegin(Rhino.Display.RhinoView,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rectangle\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.OnRenderWindowBegin(Rhino.Display.RhinoView,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.OnRenderWindowBegin(Rhino.Display.RhinoView,System.Drawing.Rectangle)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_OnRenderWindowBegin.htm"
+    },
+    {
+      "name": "PauseRendering",
+      "signature": "public virtual void PauseRendering()",
+      "summary": "Implement to pause the current render session",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_PauseRendering.htm"
+    },
+    {
+      "name": "Render",
+      "signature": "public RenderPipeline.RenderReturnCode Render()",
+      "summary": "Call this function to render the scene normally. The function returns when rendering is complete (or cancelled).",
+      "params": [],
+      "returns": {
+        "type": "RenderPipeline.RenderReturnCode",
+        "doc": "A code that explains how rendering completed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_Render.htm"
+    },
+    {
+      "name": "RenderEnterModalLoop",
+      "signature": "protected virtual bool RenderEnterModalLoop()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderEnterModalLoop\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderEnterModalLoop.htm"
+    },
+    {
+      "name": "RenderExitModalLoop",
+      "signature": "protected virtual bool RenderExitModalLoop()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderExitModalLoop\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderExitModalLoop.htm"
+    },
+    {
+      "name": "RenderPreCreateWindow",
+      "signature": "protected virtual bool RenderPreCreateWindow()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderPreCreateWindow\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderPreCreateWindow.htm"
+    },
+    {
+      "name": "RenderSceneWithNoMeshes",
+      "signature": "protected virtual bool RenderSceneWithNoMeshes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderSceneWithNoMeshes\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderSceneWithNoMeshes.htm"
+    },
+    {
+      "name": "RenderSize()",
+      "signature": "[ObsoleteAttribute] public static Size RenderSize()",
+      "summary": "Obsolete.",
+      "params": [],
+      "returns": {
+        "type": "Size",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderSize\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderSize.htm"
+    },
+    {
+      "name": "RenderSize(RhinoDoc)",
+      "signature": "public static Size RenderSize(RhinoDoc doc)",
+      "summary": "Get the render size as specified in the ON_3dmRenderSettings. Will automatically return the correct size based on the ActiveView or custom settings.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderSize(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": "The render size."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderSize_1.htm"
+    },
+    {
+      "name": "RenderSize(RhinoDoc, Boolean)",
+      "signature": "public static Size RenderSize(RhinoDoc doc, bool fromRenderSources)",
+      "summary": "Get the render size as specified in the ON_3dmRenderSettings, and from RenderSources when fromRenderSources is true.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderSize(Rhino.RhinoDoc,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fromRenderSources",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022fromRenderSources\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.RenderSize(Rhino.RhinoDoc,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": "The render size."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderSize_2.htm"
+    },
+    {
+      "name": "RenderWindow",
+      "signature": "public RenderPipeline.RenderReturnCode RenderWindow(RhinoView view, Rectangle rect, bool inWindow)",
+      "summary": "Call this function to render the scene in a view window. The function returns when rendering is complete (or cancelled).",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "the view that the user selected a rectangle in.",
+          "optional": false
+        },
+        {
+          "name": "rect",
+          "type": "System.Drawing.Rectangle",
+          "doc": "rectangle that the user selected.",
+          "optional": false
+        },
+        {
+          "name": "inWindow",
+          "type": "System.Boolean",
+          "doc": "true to render directly into the view window.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderPipeline.RenderReturnCode",
+        "doc": "A code that explains how rendering completed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_RenderWindow.htm"
+    },
+    {
+      "name": "ResumeRendering",
+      "signature": "public virtual void ResumeRendering()",
+      "summary": "Implement to resume current render session",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_ResumeRendering.htm"
+    },
+    {
+      "name": "SaveImage",
+      "signature": "public bool SaveImage(string fileName, bool saveAlpha)",
+      "summary": "Saves the rendered image to a file. Does not prompt the user in any way.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "Full path to the file name to save to.",
+          "optional": false
+        },
+        {
+          "name": "saveAlpha",
+          "type": "System.Boolean",
+          "doc": "Determines if alpha will be saved in files that support it (e.g., PNG).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.SaveImage(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_SaveImage.htm"
+    },
+    {
+      "name": "SetAsyncRenderContext",
+      "signature": "public void SetAsyncRenderContext(ref AsyncRenderContext aRC)",
+      "summary": "",
+      "params": [
+        {
+          "name": "aRC",
+          "type": "Rhino.Render.AsyncRenderContext",
+          "doc": "[Missing \u003Cparam name=\u0022aRC\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPipeline.SetAsyncRenderContext(Rhino.Render.AsyncRenderContext@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_SetAsyncRenderContext.htm"
+    },
+    {
+      "name": "SupportsPause",
+      "signature": "public virtual bool SupportsPause()",
+      "summary": "Override and return true if the renderer supports pausing",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if pausing is supported, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPipeline_SupportsPause.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ConfirmationSeconds",
+      "type": "Int32",
+      "getter": false,
+      "setter": true,
+      "summary": "Sets the number of seconds that need to elapse during rendering before the user is asked if the rendered image should be saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPipeline_ConfirmationSeconds.htm"
+    },
+    {
+      "name": "PlugIn",
+      "type": "PlugIn",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPipeline_PlugIn.htm"
+    },
+    {
+      "name": "RenderSessionId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the Id associated with this render session, this is useful when looking up Rhino.Render.RenderPanels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPipeline_RenderSessionId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

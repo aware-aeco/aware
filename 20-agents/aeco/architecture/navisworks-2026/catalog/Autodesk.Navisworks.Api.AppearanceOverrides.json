@@ -1,0 +1,39 @@
+{
+  "name": "AppearanceOverrides",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Appearance overrides.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.AppearanceOverrides",
+  "constructors": [
+    {
+      "name": "AppearanceOverrides(System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.MaterialOverride\u003E)",
+      "signature": "AppearanceOverrides(System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.MaterialOverride\u003E materialOverrides)",
+      "summary": "Appearance overrides.",
+      "params": [
+        {
+          "name": "materialOverrides",
+          "type": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.MaterialOverride\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.AppearanceOverrides.%23ctor%28System.Collections.ObjectModel.Collection%7BAutodesk.Navisworks.Api.MaterialOverride%7D%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "MaterialOverrides",
+      "type": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.MaterialOverride\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Material overrides.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.AppearanceOverrides.MaterialOverrides"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

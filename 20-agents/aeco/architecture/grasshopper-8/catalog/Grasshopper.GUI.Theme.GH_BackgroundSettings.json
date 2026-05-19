@@ -1,0 +1,46 @@
+{
+  "name": "GH_BackgroundSettings",
+  "namespace": "Grasshopper.GUI.Theme",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Theme.GH_BackgroundSettings.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Theme_GH_BackgroundSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Colour1",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "First background colour. Depending on the background style, this colour is used in different ways.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_BackgroundSettings_Colour1.htm"
+    },
+    {
+      "name": "Colour2",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Second background colour. Depending on the background style, this colour is used in different ways.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_BackgroundSettings_Colour2.htm"
+    },
+    {
+      "name": "Hatch",
+      "type": "HatchStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Background hatch brush style. This property is only used if BackgroundStyle is set to GH_ThemeBackgroundStyle.Hatch.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_BackgroundSettings_Hatch.htm"
+    },
+    {
+      "name": "Style",
+      "type": "GH_BackgroundStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Canvas monochromatic flag. If True, the canvas background is a solid colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_BackgroundSettings_Style.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

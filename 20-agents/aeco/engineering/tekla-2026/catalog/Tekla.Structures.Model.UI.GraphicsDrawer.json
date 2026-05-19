@@ -1,0 +1,260 @@
+{
+  "name": "GraphicsDrawer",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The GraphicsDrawer class draws temporary graphics in the currently active rendered view in Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8092772c-d824-bb09-119a-66be50652cdd",
+  "constructors": [
+    {
+      "name": "GraphicsDrawer",
+      "signature": "public GraphicsDrawer()",
+      "summary": "Creates a new graphics drawer instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4d8ff2a4-97c4-2248-ef72-09ec20d71b57"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DrawLineSegment(LineSegment, Color)",
+      "signature": "public bool DrawLineSegment(LineSegment LineSegment, Color Color)",
+      "summary": "Draws a temporary line segment in the currently active rendered view.",
+      "params": [
+        {
+          "name": "LineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line to draw.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the line. The transparency value of the color is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/47539009-0382-e285-cb13-897763966564"
+    },
+    {
+      "name": "DrawLineSegment(Point, Point, Color)",
+      "signature": "public bool DrawLineSegment(Point Point1, Point Point2, Color Color)",
+      "summary": "Draws a temporary line segment in the currently active rendered view.",
+      "params": [
+        {
+          "name": "Point1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first point of the line.",
+          "optional": false
+        },
+        {
+          "name": "Point2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second point of the line.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the line. The transparency value of the color is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1dbfa523-0c96-1182-67f9-6b97cb659d4c"
+    },
+    {
+      "name": "DrawMeshLines",
+      "signature": "public bool DrawMeshLines(Mesh Mesh, Color Color)",
+      "summary": "Draws the mesh lines as temporary graphics in the currently active Tekla Structures rendered view.",
+      "params": [
+        {
+          "name": "Mesh",
+          "type": "Tekla.Structures.Model.UI.Mesh",
+          "doc": "The mesh to draw.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the mesh lines. The transparency value of the color is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/51ab9888-d8b4-5567-e892-800ccc2421cb"
+    },
+    {
+      "name": "DrawMeshSurface",
+      "signature": "public bool DrawMeshSurface(Mesh Mesh, Color Color)",
+      "summary": "Draws the mesh surface as temporary graphics in the currently active Tekla Structures rendered view. The counterclockwise sides of the mesh triangles are drawn.",
+      "params": [
+        {
+          "name": "Mesh",
+          "type": "Tekla.Structures.Model.UI.Mesh",
+          "doc": "The mesh to draw.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e84b3995-55be-c1ab-5d03-6fe1cfa88910"
+    },
+    {
+      "name": "DrawPolyLine",
+      "signature": "public int DrawPolyLine(GraphicPolyLine GraphicPolyLine)",
+      "summary": "Draw a temporary polyline into all open Tekla Structures views.",
+      "params": [
+        {
+          "name": "GraphicPolyLine",
+          "type": "Tekla.Structures.Model.UI.GraphicPolyLine",
+          "doc": "The polyline to draw.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The identifier of the temporary graphic. You can delete the graphic with RemoveTemporaryGraphicsObject."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/97b4045b-be65-c41a-32bc-740e4d96d702"
+    },
+    {
+      "name": "DrawText",
+      "signature": "public bool DrawText(Point Location, string Text, Color Color)",
+      "summary": "Draws a temporary text in the currently active rendered view.",
+      "params": [
+        {
+          "name": "Location",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location of the text\u0027s top-left corner.",
+          "optional": false
+        },
+        {
+          "name": "Text",
+          "type": "System.String",
+          "doc": "The text to be drawn. The maximum length is 511 characters.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the text. The transparency value of the color is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b52f67f7-5eab-6845-165e-28d1fd7f05df"
+    },
+    {
+      "name": "DrawTextToView",
+      "signature": "public int DrawTextToView(Point Location, string Text, Color Color, View View)",
+      "summary": "Draws a temporary text to the specified view. You can set the view Identifier.ID = 0 for current active view.",
+      "params": [
+        {
+          "name": "Location",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location of the text\u0027s top-left corner.",
+          "optional": false
+        },
+        {
+          "name": "Text",
+          "type": "System.String",
+          "doc": "The text to be drawn. The maximum length is 511 characters.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the text. The transparency value of the color is ignored.",
+          "optional": false
+        },
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Model.UI.View",
+          "doc": "The model view (ID = 0 for current active view)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The id of the inserted text."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/df22dab0-8c2f-24dd-8c0c-2296f00bed91"
+    },
+    {
+      "name": "RemoveTemporaryGraphicsObject",
+      "signature": "public void RemoveTemporaryGraphicsObject(int GraphicObjectID)",
+      "summary": "Remove a temporary graphic object from all views.",
+      "params": [
+        {
+          "name": "GraphicObjectID",
+          "type": "System.Int32",
+          "doc": "The identifier that was returned when the object was created.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed6abf2c-2620-83d6-8236-184adcb99bc6"
+    },
+    {
+      "name": "RemoveTemporaryGraphicsObjects",
+      "signature": "public void RemoveTemporaryGraphicsObjects(IEnumerable GraphicObjectIDs)",
+      "summary": "Remove a list of temporary graphic objects from all views.",
+      "params": [
+        {
+          "name": "GraphicObjectIDs",
+          "type": "System.Collections.IEnumerable",
+          "doc": "The identifiers that was returned when the object was created.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7735db7-bffa-c22a-cb4b-2af599a0c709"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

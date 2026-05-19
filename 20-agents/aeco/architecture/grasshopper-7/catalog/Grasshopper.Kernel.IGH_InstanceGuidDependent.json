@@ -1,0 +1,31 @@
+{
+  "name": "IGH_InstanceGuidDependent",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in your IGH_DocumentObject class if you want to be informed when the InstanceGuids of objects in the document are mutated.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_InstanceGuidDependent.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InstanceGuidsChanged",
+      "signature": "void InstanceGuidsChanged(SortedDictionary\u003CGuid, Guid\u003E map)",
+      "summary": "This method will be called by the GH_Document that owns this object after it mutates some or all of it\u0027s object InstanceIds.",
+      "params": [
+        {
+          "name": "map",
+          "type": "System.Collections.Generic.SortedDictionary\u003CGuid,Guid\u003E",
+          "doc": "A translation dictionary of old InstanceID keys (no longer existent) and new InstanceID values.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_InstanceGuidDependent_InstanceGuidsChanged.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

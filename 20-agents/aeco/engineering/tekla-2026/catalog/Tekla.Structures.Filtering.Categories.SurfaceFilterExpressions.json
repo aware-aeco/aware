@@ -1,0 +1,14 @@
+{
+  "name": "SurfaceFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The SurfaceFilterExpressions class contains all the surface object filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/21e01e3c-abda-90ae-746b-231f8a1e1320",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

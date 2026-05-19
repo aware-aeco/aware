@@ -1,0 +1,29 @@
+{
+  "name": "Position.PlaneEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The position in the plane sense.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c599df35-04b2-a919-1c2a-92c3b8be2a94",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MIDDLE",
+      "value": 0,
+      "summary": "The middle option."
+    },
+    {
+      "name": "LEFT",
+      "value": 1,
+      "summary": "The left option."
+    },
+    {
+      "name": "RIGHT",
+      "value": 2,
+      "summary": "The right option."
+    }
+  ]
+}

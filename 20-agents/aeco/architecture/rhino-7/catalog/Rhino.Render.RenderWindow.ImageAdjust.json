@@ -1,0 +1,30 @@
+{
+  "name": "RenderWindow.ImageAdjust",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Class to set image adjusting settings to a RenderWindow. This can\u0027t be directly created. Instead, one should use RenderWindow.GetAdjust() to get an ImageAdjust instance that can be modified, then passed into RenderWindow.SetAdjust() to update image adjusting settings.1",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderWindow_ImageAdjust.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Dither",
+      "type": "Dithering.Methods",
+      "getter": true,
+      "setter": true,
+      "summary": "Set the Dithering method to use when adjusting the RenderWindow content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderWindow_ImageAdjust_Dither.htm"
+    },
+    {
+      "name": "Gamma",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Set the gamma value. The inverse of this will be used to apply gamma correction to the RenderWindow RGBA channel when necessary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderWindow_ImageAdjust_Gamma.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

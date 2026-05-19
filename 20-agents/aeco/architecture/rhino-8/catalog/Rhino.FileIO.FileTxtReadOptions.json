@@ -1,0 +1,63 @@
+{
+  "name": "FileTxtReadOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for writing a Txt file.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileTxtReadOptions.htm",
+  "constructors": [
+    {
+      "name": "FileTxtReadOptions",
+      "signature": "public FileTxtReadOptions()",
+      "summary": "Initializes a new instance of the FileTxtReadOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileTxtReadOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Export function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileTxtReadOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileTxtReadOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CreatePointCloud",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileTxtReadOptions_CreatePointCloud.htm"
+    },
+    {
+      "name": "Delimiter",
+      "type": "FileTxtReadOptions.DelimiterMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileTxtReadOptions_Delimiter.htm"
+    },
+    {
+      "name": "DelimiterCharacter",
+      "type": "Char",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileTxtReadOptions_DelimiterCharacter.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

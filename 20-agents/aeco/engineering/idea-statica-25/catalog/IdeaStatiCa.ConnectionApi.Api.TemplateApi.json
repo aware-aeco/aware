@@ -1,0 +1,408 @@
+{
+  "name": "TemplateApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Template endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetTemplateInConnectionAsync",
+      "signature": "Task\u003CConConnectionTemplate\u003E GetTemplateInConnectionAsync(Guid projectId, int connectionId, int templateInstanceId)",
+      "summary": "Retrieves a specific template by its ID for a given connection within a project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the project containing the connection.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The identifier of the connection.",
+          "optional": false
+        },
+        {
+          "name": "templateInstanceId",
+          "type": "int",
+          "doc": "The instance identifier of the template to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConConnectionTemplate",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "DeleteAllAsync",
+      "signature": "Task DeleteAllAsync(Guid projectId, int connectionId)",
+      "summary": "Delete all templates in connection",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "GetTemplatesInConnectionAsync",
+      "signature": "Task\u003CList\u003CConConnectionTemplate\u003E\u003E GetTemplatesInConnectionAsync(Guid projectId, int connectionId)",
+      "summary": "Retrieves a list of templates associated with a specific connection within a project.",
+      "remarks": "This method fetches the templates applied to a connection withina project. Each template includes details such as its IDwithin the project, template id, members, operations, parameters, and associatedcommon properties.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the project containing the connection.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The identifier of the connection for which templates are to be retrieved.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CConConnectionTemplate\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "CreateConTemplateAsync",
+      "signature": "Task\u003Cstring\u003E CreateConTemplateAsync(Guid projectId, int connectionId)",
+      "summary": "Create a template for the connection connectionId in the project projectId",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "Id of the connection to be converted to a template",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "GetDefaultTemplateMappingAsync",
+      "signature": "Task\u003CTemplateConversions\u003E GetDefaultTemplateMappingAsync(Guid projectId, int connectionId, ConTemplateMappingGetParam conTemplateMappingGetParam)",
+      "summary": "Get the default mappings for the application of the connection templatepassed in templateToApply on connectionId in the project projectId",
+      "remarks": "The result IdeaStatiCa.Api.Connection.Model.TemplateConversionsDefaultmapping to apply the passed template. It can be modified by a user andused for the application of a template M:IdeaStatiCa.ConnectionRestApi.Controllers.TemplateController.ApplyConnectionTemplateAsync(System.Guid,System.Int32,IdeaStatiCa.Api.Connection.Model.ConTemplateApplyParam)method.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "Id of the connection to get default mapping",
+          "optional": false
+        },
+        {
+          "name": "conTemplateMappingGetParam",
+          "type": "ConTemplateMappingGetParam",
+          "doc": "Data of the template to get default mapping",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "TemplateConversions",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "ApplyTemplateAsync",
+      "signature": "Task\u003CConTemplateApplyResult\u003E ApplyTemplateAsync(Guid projectId, int connectionId, ConTemplateApplyParam conTemplateApplyParam)",
+      "summary": "Apply the connection template applyTemplateParam on the connection connectionId in the project projectId",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "Id of the connection where to apply the template",
+          "optional": false
+        },
+        {
+          "name": "conTemplateApplyParam",
+          "type": "ConTemplateApplyParam",
+          "doc": "Template to apply",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConTemplateApplyResult",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "ExplodeAllAsync",
+      "signature": "Task ExplodeAllAsync(Guid projectId, int connectionId)",
+      "summary": "Explode all templates (delete parameters, keep operations)",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "ExplodeAsync",
+      "signature": "Task ExplodeAsync(Guid projectId, int connectionId, Guid templateId)",
+      "summary": "Explode specific template (delete parameters, keep operations)",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "templateId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "DeleteAsync",
+      "signature": "Task DeleteAsync(Guid projectId, int connectionId, Guid templateId)",
+      "summary": "Delete specific template",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "templateId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "GetTemplateCommonOperationPropertiesAsync",
+      "signature": "Task\u003CConOperationCommonProperties\u003E GetTemplateCommonOperationPropertiesAsync(Guid projectId, int connectionId, Guid templateId)",
+      "summary": "Get Common properties for specific template",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "templateId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConOperationCommonProperties",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "UpdateTemplateCommonOperationPropertiesAsync",
+      "signature": "Task UpdateTemplateCommonOperationPropertiesAsync(Guid projectId, int connectionId, Guid templateId, ConOperationCommonProperties conOperationCommonProperties)",
+      "summary": "Set common properties for specific template",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "templateId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "conOperationCommonProperties",
+          "type": "ConOperationCommonProperties",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    },
+    {
+      "name": "LoadDefaultsAsync",
+      "signature": "Task\u003CParameterUpdateResponse\u003E LoadDefaultsAsync(Guid projectId, int connectionId, Guid templateId)",
+      "summary": "Load parameter defaults for specific template.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "templateId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ParameterUpdateResponse",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/TemplateApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

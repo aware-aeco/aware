@@ -1,0 +1,86 @@
+{
+  "name": "Resources",
+  "namespace": "DynamoPackages.Properties",
+  "kind": "class",
+  "summary": "A strongly-typed resource class, for looking up localized strings, etc.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CannotRemovePackageAssemblyMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Due to limitations in the .NET framework, it is not possible to update your package assembly while it is already loaded. Please update the assembly while Dynamo is not running and try again..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CannotRemovePackageAssemblyTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot update assembly.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "Culture",
+      "type": "System.Globalization.CultureInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "Overrides the current thread\u0027s CurrentUICulture property for all resource lookups using this strongly typed resource class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DownloadPackageDisabled",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Package download is disabled in no-network mode..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidPackageFolderWarning",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The folder \u0027{0}\u0027 does not exist.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidPackageMalformedNodeLibraryDefinition",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022A package called {0} found at {1} has improperly defined its node libraries in the package manifest. Ignoring it.\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidPackageNodeLibraryIsNotSigned",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022A package called {0} found at {1} could not be verified to have signed dll files. {2} Ignoring it.\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackagesDirectorySkipped",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} was not scanned for packages because a preference setting disabled loading from that location.\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ResourceManager",
+      "type": "System.Resources.ResourceManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the cached ResourceManager instance used by this class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Properties/Resources.Designer.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

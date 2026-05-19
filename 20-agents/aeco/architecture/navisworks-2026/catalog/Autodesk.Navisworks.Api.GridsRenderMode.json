@@ -1,0 +1,39 @@
+{
+  "name": "GridsRenderMode",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Determines which Levels are rendered.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.GridsRenderMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AboveAndBelow",
+      "value": 0,
+      "summary": "Renders Levels directly above and directly below the current Viewpoint."
+    },
+    {
+      "name": "Above",
+      "value": 1,
+      "summary": "Renders the Level directly above the current Viewpoint."
+    },
+    {
+      "name": "Below",
+      "value": 2,
+      "summary": "Renders the Level directly below the current Viewpoint."
+    },
+    {
+      "name": "All",
+      "value": 3,
+      "summary": "Renders all Levels."
+    },
+    {
+      "name": "Locked",
+      "value": 4,
+      "summary": "Renders just the level you are locked to."
+    }
+  ]
+}

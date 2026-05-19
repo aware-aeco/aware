@@ -1,0 +1,460 @@
+{
+  "name": "ModelItem",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents an instance within the model hierarchy, corresponding to an item in the Navisworks selection tree",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ModelItem",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D BoundingBox()",
+      "summary": "Calculates bounding box of item and its children",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.BoundingBox"
+    },
+    {
+      "name": "BoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D BoundingBox(bool ignoreHidden)",
+      "summary": "Calculates bounding box of item and its children",
+      "params": [
+        {
+          "name": "ignoreHidden",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.BoundingBox%28System.Boolean%29"
+    },
+    {
+      "name": "FindFirstGeometry",
+      "signature": "Autodesk.Navisworks.Api.ModelGeometry FindFirstGeometry()",
+      "summary": "Depth first search for geometry below this item in hierarchy",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelGeometry",
+        "doc": "First geometry or null if none found"
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.FindFirstGeometry"
+    },
+    {
+      "name": "FindFirstObjectAncestor",
+      "signature": "Autodesk.Navisworks.Api.ModelItem FindFirstObjectAncestor()",
+      "summary": "Find ancestor that meets the requirements for First Object selection Behavior",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": "Return ancestor that meets the requirements for First Object selection Behavior or nulll if no ancestor does"
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.FindFirstObjectAncestor"
+    },
+    {
+      "name": "GetUserFilteredPropertyCategories",
+      "signature": "Autodesk.Navisworks.Api.PropertyCategoryCollection GetUserFilteredPropertyCategories()",
+      "summary": "Properties of this item filtered so that only the categories that the end user would see in the GUI are shown (based on global options settings)",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PropertyCategoryCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.GetUserFilteredPropertyCategories"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.Equals%28System.Object%29"
+    },
+    {
+      "name": "IsSameInstance",
+      "signature": "bool IsSameInstance(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Does this item refer to the same instance data as another item ?",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "Other item to compare instance data with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.IsSameInstance%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.GetHashCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.ModelItem InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of ModelItem.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalCustomCreator",
+      "signature": "static Autodesk.Navisworks.Api.ModelItem InternalCustomCreator(nint handleIn, Autodesk.Navisworks.Api.NativeHandle source)",
+      "summary": "InternalCustomCreator method of ModelItem.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "source",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.InternalCustomCreator%28System.IntPtr%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of ModelItem.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItem.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Ancestors",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "All ancestors of this item (excluding item itself) within the model hierarchy",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Ancestors"
+    },
+    {
+      "name": "AncestorsAndSelf",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "All ancestors of this item (including item itself) within the model hierarchy",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.AncestorsAndSelf"
+    },
+    {
+      "name": "Children",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Children of this item within the model hierarchy",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Children"
+    },
+    {
+      "name": "ClassDisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Display name for type of item, derived from types in original design application.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.ClassDisplayName"
+    },
+    {
+      "name": "ClassName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name for type of item. Derived from types in original design application.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.ClassName"
+    },
+    {
+      "name": "Descendants",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "All descendants of this item (excluding item itself) within the model hierarchy",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Descendants"
+    },
+    {
+      "name": "DescendantsAndSelf",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "All descendants of this item (including item itself) within the model hierarchy",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.DescendantsAndSelf"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "End user supplied name for item. May be null.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.DisplayName"
+    },
+    {
+      "name": "Geometry",
+      "type": "Autodesk.Navisworks.Api.ModelGeometry",
+      "getter": true,
+      "setter": false,
+      "summary": "Geometry for this item, null if it does not have geometry",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Geometry"
+    },
+    {
+      "name": "HasGeometry",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this item have geometry ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.HasGeometry"
+    },
+    {
+      "name": "HasModel",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this item refer to a model ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.HasModel"
+    },
+    {
+      "name": "InstanceGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Guid for the instance data refered to by this item",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.InstanceGuid"
+    },
+    {
+      "name": "InstanceHashCode",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "HashCode for the instance data refered to by this item",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.InstanceHashCode"
+    },
+    {
+      "name": "Instances",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "All items in the model hierarchy (including this item) that share instance data with this item",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Instances"
+    },
+    {
+      "name": "IsCollection",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this item represent a collection ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsCollection"
+    },
+    {
+      "name": "IsComposite",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this item represent a composite object ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsComposite"
+    },
+    {
+      "name": "IsFrozen",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this item frozen (frozen items cannot be picked graphically).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsFrozen"
+    },
+    {
+      "name": "IsHidden",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this item hidden (won\u0027t be displayed in viewing window).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsHidden"
+    },
+    {
+      "name": "IsInsert",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this item represent an insert ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsInsert"
+    },
+    {
+      "name": "IsLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this item represent a layer ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsLayer"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsReadOnly"
+    },
+    {
+      "name": "IsRequired",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this item required (will always display in viewing window, won\u0027t drop out).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.IsRequired"
+    },
+    {
+      "name": "Model",
+      "type": "Autodesk.Navisworks.Api.Model",
+      "getter": true,
+      "setter": false,
+      "summary": "Model corresponding to item, null if it does not have a model",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Model"
+    },
+    {
+      "name": "Parent",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Parent item within the model hierarchy, null if this is the root of the hierarchy",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Parent"
+    },
+    {
+      "name": "PropertyCategories",
+      "type": "Autodesk.Navisworks.Api.PropertyCategoryCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Properties of this item divided into multiple categories",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.PropertyCategories"
+    },
+    {
+      "name": "Self",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "This item as an enumerable collection of one item",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Self"
+    },
+    {
+      "name": "Transform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Transform attached to this item in the original source design file",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItem.Transform"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

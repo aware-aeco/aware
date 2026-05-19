@@ -1,0 +1,160 @@
+{
+  "name": "ProjectsSharedLinksApi",
+  "namespace": "Bluebeam.StudioApi.Projects",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Projects / Shared Links endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateProjectSharedLink",
+      "signature": "Task CreateProjectSharedLink(Guid projectId, CreateProjectSharedLinkRequest request)",
+      "summary": "Create a shared link for a project file",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/sharedlinks\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CreateProjectSharedLinkRequest",
+          "doc": "Request body. JSON object with fields: Expires, Flatten, Password, PasswordProtected, ProjectFileId.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListProjectSharedlinks",
+      "signature": "Task ListProjectSharedlinks(Guid projectId)",
+      "summary": "Get all shared links in a project",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/sharedlinks\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetSharedLink",
+      "signature": "Task GetSharedLink(Guid projectId, Guid id)",
+      "summary": "Get shared link metadata",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateSharedLink",
+      "signature": "Task UpdateSharedLink(Guid projectId, Guid id, UpdateSharedLinkRequest request)",
+      "summary": "Update shared link. Can be used to disable or hide shared link",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateSharedLinkRequest",
+          "doc": "Request body. JSON object with fields: Enabled, Hidden.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "DeleteSharedLink",
+      "signature": "Task DeleteSharedLink(Guid projectId, Guid id)",
+      "summary": "Delete shared link",
+      "remarks": "HTTP DELETE \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/sharedlinks/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

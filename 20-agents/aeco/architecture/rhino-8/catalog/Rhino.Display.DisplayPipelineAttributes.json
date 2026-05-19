@@ -1,0 +1,2212 @@
+{
+  "name": "DisplayPipelineAttributes",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "Represents display pipeline settings, such as \u0022show transparency\u0022 and \u0022show grips\u0022.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes.htm",
+  "constructors": [
+    {
+      "name": "DisplayPipelineAttributes",
+      "signature": "protected DisplayPipelineAttributes(SerializationInfo info, StreamingContext context)",
+      "summary": "Initializes a new instance of the DisplayPipelineAttributes class",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the DisplayPipelineAttributes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the DisplayPipelineAttributes and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_Finalize.htm"
+    },
+    {
+      "name": "GetColorFadeEffect",
+      "signature": "public void GetColorFadeEffect(out Color fadeColor, out float fadeAmount)",
+      "summary": "Get the current color fade effect data.",
+      "params": [
+        {
+          "name": "fadeColor",
+          "type": "System.Drawing.Color",
+          "doc": "The current fade amount",
+          "optional": false
+        },
+        {
+          "name": "fadeAmount",
+          "type": "System.Single",
+          "doc": "The current fade color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetColorFadeEffect.htm"
+    },
+    {
+      "name": "GetDiagonalHatchEffect",
+      "signature": "public void GetDiagonalHatchEffect(out float hatchStrength, out float hatchWidth)",
+      "summary": "Get the current diagonal hatch strength and width in pixels.",
+      "params": [
+        {
+          "name": "hatchStrength",
+          "type": "System.Single",
+          "doc": "The strength of the hatch effect.",
+          "optional": false
+        },
+        {
+          "name": "hatchWidth",
+          "type": "System.Single",
+          "doc": "The width of the diagonal hatch in pixels.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetDiagonalHatchEffect.htm"
+    },
+    {
+      "name": "GetDitherTransparencyEffect",
+      "signature": "public float GetDitherTransparencyEffect()",
+      "summary": "Get the current dither transparency amount.",
+      "params": [],
+      "returns": {
+        "type": "Single",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetDitherTransparencyEffect\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetDitherTransparencyEffect.htm"
+    },
+    {
+      "name": "GetFill",
+      "signature": "public void GetFill(out Color topLeft, out Color bottomLeft, out Color topRight, out Color bottomRight)",
+      "summary": "Get fill colors used for clearing the frame buffer",
+      "params": [
+        {
+          "name": "topLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022topLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottomLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022bottomLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "topRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022topRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottomRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022bottomRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetFill.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetObjectData.htm"
+    },
+    {
+      "name": "GetSurfaceEdgeThicknessUsage",
+      "signature": "public DisplayPipelineAttributes.SurfaceThicknessUse GetSurfaceEdgeThicknessUsage()",
+      "summary": "Helper function for setting the SurfaceEdgeThicknessFlags",
+      "params": [],
+      "returns": {
+        "type": "DisplayPipelineAttributes.SurfaceThicknessUse",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetSurfaceEdgeThicknessUsage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetSurfaceEdgeThicknessUsage.htm"
+    },
+    {
+      "name": "GetSurfaceIsoApplyPattern",
+      "signature": "public void GetSurfaceIsoApplyPattern(out bool u, out bool v, out bool w)",
+      "summary": "",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Boolean",
+          "doc": "Gets mode in the u direction",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Boolean",
+          "doc": "Gets mode in the v direction",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "System.Boolean",
+          "doc": "Gets mode in the w direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetSurfaceIsoApplyPattern.htm"
+    },
+    {
+      "name": "GetSurfaceIsoColorUsage",
+      "signature": "public DisplayPipelineAttributes.SurfaceIsoColorUse GetSurfaceIsoColorUsage()",
+      "summary": "Helper function for getting SurfaceIsoColorsUsed and SurfaceSingleIsoColor",
+      "params": [],
+      "returns": {
+        "type": "DisplayPipelineAttributes.SurfaceIsoColorUse",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetSurfaceIsoColorUsage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetSurfaceIsoColorUsage.htm"
+    },
+    {
+      "name": "GetSurfaceIsoThicknessUsage",
+      "signature": "public DisplayPipelineAttributes.SurfaceIsoThicknessUse GetSurfaceIsoThicknessUsage()",
+      "summary": "This is a helper function that combines getting IsoThicknessUsed and SurfaceNakedEdgeThicknessUsageFlags settings to correspond to the behavor of the Settings page.",
+      "params": [],
+      "returns": {
+        "type": "DisplayPipelineAttributes.SurfaceIsoThicknessUse",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetSurfaceIsoThicknessUsage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetSurfaceIsoThicknessUsage.htm"
+    },
+    {
+      "name": "GetSurfaceNakedEdgeThicknessUsage",
+      "signature": "public DisplayPipelineAttributes.SurfaceNakedEdgeThicknessUse GetSurfaceNakedEdgeThicknessUsage()",
+      "summary": "This is a helper function that combines getting SurfaceNakeEdgeUseNormalThickness and SurfaceNakedEdgeThicknessUsageFlags settings to correspond to the behavor of the Settings page.",
+      "params": [],
+      "returns": {
+        "type": "DisplayPipelineAttributes.SurfaceNakedEdgeThicknessUse",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetSurfaceNakedEdgeThicknessUsage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_GetSurfaceNakedEdgeThicknessUsage.htm"
+    },
+    {
+      "name": "HasColorFadeEffect",
+      "signature": "public bool HasColorFadeEffect()",
+      "summary": "Returns TRUE if there is a color fade effect enabled with a color fade effect amount larger than 0.0, FALSE otherwise.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.HasColorFadeEffect\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_HasColorFadeEffect.htm"
+    },
+    {
+      "name": "HasDiagonalHatchEffect",
+      "signature": "public bool HasDiagonalHatchEffect()",
+      "summary": "Returns TRUE if there is a diagonal hatch effect enabled with a hatch strength larger than 0.0, FALSE otherwise.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.HasDiagonalHatchEffect\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_HasDiagonalHatchEffect.htm"
+    },
+    {
+      "name": "HasDitherTransparencyEffect",
+      "signature": "public bool HasDitherTransparencyEffect()",
+      "summary": "Returns TRUE if there is a dither transparency effect enabled with a transparency amount larger than 0.0, FALSE otherwise.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.HasDitherTransparencyEffect\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_HasDitherTransparencyEffect.htm"
+    },
+    {
+      "name": "SetColorFadeEffect",
+      "signature": "public void SetColorFadeEffect(in Color fadeColor, in float fadeAmount)",
+      "summary": "Set a color fade effect to make objects fade a given amount towards a given color.",
+      "params": [
+        {
+          "name": "fadeColor",
+          "type": "System.Drawing.Color",
+          "doc": "The amount of fade towards the given color (0..1).",
+          "optional": false
+        },
+        {
+          "name": "fadeAmount",
+          "type": "System.Single",
+          "doc": "The color to fade towards.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetColorFadeEffect.htm"
+    },
+    {
+      "name": "SetDiagonalHatchEffect",
+      "signature": "public void SetDiagonalHatchEffect(in float hatchStrength, in float hatchWidth)",
+      "summary": "Set a diagonal hatch effect to make objects render with diagonal hatch with a given strength and width in pixels. The effect works by brightening and darkening pixels in a diagonal pattern.",
+      "params": [
+        {
+          "name": "hatchStrength",
+          "type": "System.Single",
+          "doc": "The strength of the hatch effect (0..1).",
+          "optional": false
+        },
+        {
+          "name": "hatchWidth",
+          "type": "System.Single",
+          "doc": "The width of the diagonal hatch in pixels (\u003E= 0).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetDiagonalHatchEffect.htm"
+    },
+    {
+      "name": "SetDitherTransparencyEffect",
+      "signature": "public void SetDitherTransparencyEffect(in float transparencyAmount)",
+      "summary": "Set a dither transparency effect to make objects render with a given amount of transparency using a dither effect.",
+      "params": [
+        {
+          "name": "transparencyAmount",
+          "type": "System.Single",
+          "doc": "The amount of transparency (0..1).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetDitherTransparencyEffect.htm"
+    },
+    {
+      "name": "SetFill(Color)",
+      "signature": "public void SetFill(Color singleColor)",
+      "summary": "Set fill mode to solid color and set the fill color",
+      "params": [
+        {
+          "name": "singleColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022singleColor\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetFill.htm"
+    },
+    {
+      "name": "SetFill(Color, Color)",
+      "signature": "public void SetFill(Color gradientTop, Color gradientBottom)",
+      "summary": "Set fill mode to two color and set the colors",
+      "params": [
+        {
+          "name": "gradientTop",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientTop\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientBottom",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientBottom\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetFill_1.htm"
+    },
+    {
+      "name": "SetFill(Color, Color, Color, Color)",
+      "signature": "public void SetFill(Color gradientTopLeft, Color gradientBottomLeft, Color gradientTopRight, Color gradientBottomRight)",
+      "summary": "Set the fill mode to four color gradient and set the colors",
+      "params": [
+        {
+          "name": "gradientTopLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientTopLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientBottomLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientBottomLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientTopRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientTopRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientBottomRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientBottomRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetFill_2.htm"
+    },
+    {
+      "name": "SetSurfaceEdgeThicknessUsage",
+      "signature": "public void SetSurfaceEdgeThicknessUsage(DisplayPipelineAttributes.SurfaceThicknessUse use)",
+      "summary": "Helper function for getting the SurfaceEdgeThicknessFlags",
+      "params": [
+        {
+          "name": "use",
+          "type": "Rhino.Display.DisplayPipelineAttributes.SurfaceThicknessUse",
+          "doc": "[Missing \u003Cparam name=\u0022use\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetSurfaceEdgeThicknessUsage(Rhino.Display.DisplayPipelineAttributes.SurfaceThicknessUse)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetSurfaceEdgeThicknessUsage.htm"
+    },
+    {
+      "name": "SetSurfaceIsoApplyPattern",
+      "signature": "public void SetSurfaceIsoApplyPattern(bool u, bool v, bool w)",
+      "summary": "",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022u\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetSurfaceIsoApplyPattern(System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022v\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetSurfaceIsoApplyPattern(System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022w\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetSurfaceIsoApplyPattern(System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetSurfaceIsoApplyPattern.htm"
+    },
+    {
+      "name": "SetSurfaceIsoColorUsage",
+      "signature": "public void SetSurfaceIsoColorUsage(DisplayPipelineAttributes.SurfaceIsoColorUse use)",
+      "summary": "Helper function for setting SurfaceIsoColorsUsed and SurfaceIsoSingleColor",
+      "params": [
+        {
+          "name": "use",
+          "type": "Rhino.Display.DisplayPipelineAttributes.SurfaceIsoColorUse",
+          "doc": "[Missing \u003Cparam name=\u0022use\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetSurfaceIsoColorUsage(Rhino.Display.DisplayPipelineAttributes.SurfaceIsoColorUse)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetSurfaceIsoColorUsage.htm"
+    },
+    {
+      "name": "SetSurfaceIsoThicknessUsage",
+      "signature": "public void SetSurfaceIsoThicknessUsage(DisplayPipelineAttributes.SurfaceIsoThicknessUse value)",
+      "summary": "This is a helper function that combines setting IsoThicknessUsed and SurfaceNakedEdgeThicknessUsageFlags settings to correspond to the behavor of the Settings page.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Display.DisplayPipelineAttributes.SurfaceIsoThicknessUse",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetSurfaceIsoThicknessUsage(Rhino.Display.DisplayPipelineAttributes.SurfaceIsoThicknessUse)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetSurfaceIsoThicknessUsage.htm"
+    },
+    {
+      "name": "SetSurfaceNakedEdgeThicknessUsage",
+      "signature": "public void SetSurfaceNakedEdgeThicknessUsage(DisplayPipelineAttributes.SurfaceNakedEdgeThicknessUse use)",
+      "summary": "This is a helper function that combines setting SurfaceNakeEdgeUseNormalThickness and SurfaceNakedEdgeThicknessUsageFlags settings to correspond to the behavor of the Settings page.",
+      "params": [
+        {
+          "name": "use",
+          "type": "Rhino.Display.DisplayPipelineAttributes.SurfaceNakedEdgeThicknessUse",
+          "doc": "[Missing \u003Cparam name=\u0022use\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetSurfaceNakedEdgeThicknessUsage(Rhino.Display.DisplayPipelineAttributes.SurfaceNakedEdgeThicknessUse)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPipelineAttributes_SetSurfaceNakedEdgeThicknessUsage.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AmbientLightingColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_AmbientLightingColor.htm"
+    },
+    {
+      "name": "AxesSizePercentage",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Size of axes as a percentage of the grid extents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_AxesSizePercentage.htm"
+    },
+    {
+      "name": "BackfaceDisplayStyle",
+      "type": "DisplayPipelineAttributes.BackfaceStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Changes the display of the backfaces (the side opposite of the surface normal direction).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BackfaceDisplayStyle.htm"
+    },
+    {
+      "name": "BackMaterialDiffuseColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BackMaterialDiffuseColor.htm"
+    },
+    {
+      "name": "BackMaterialShine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the back material shine (0 to Rhino.DocObjects.MaxShine). You must call DisplayModeDescription.UpdateDisplayMode() to commit this change.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BackMaterialShine.htm"
+    },
+    {
+      "name": "BackMaterialTransparency",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the back material transparency (0 to 100). You must call DisplayModeDescription.UpdateDisplayMode() to commit this change.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BackMaterialTransparency.htm"
+    },
+    {
+      "name": "BackOverrideObjectReflectivity",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Objects acquire reflectivity from render materials.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BackOverrideObjectReflectivity.htm"
+    },
+    {
+      "name": "BackOverrideObjectTransparency",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Objects acquire transparency from render materials.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BackOverrideObjectTransparency.htm"
+    },
+    {
+      "name": "BakeTextures",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Adds the ability to display procedural textures in viewports. When it is turned off, procedural textures in viewports look different from the rendering.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BakeTextures.htm"
+    },
+    {
+      "name": "BoundingBoxMode",
+      "type": "DisplayPipelineAttributes.BoundingBoxDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_BoundingBoxMode.htm"
+    },
+    {
+      "name": "CastShadows",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Cast shadows.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CastShadows.htm"
+    },
+    {
+      "name": "ClippingEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Clipping edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingEdgeColor.htm"
+    },
+    {
+      "name": "ClippingEdgeColorUsage",
+      "type": "DisplayPipelineAttributes.ClippingEdgeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how the color for the Edges is determined",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingEdgeColorUsage.htm"
+    },
+    {
+      "name": "ClippingEdgeThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingEdgeThickness.htm"
+    },
+    {
+      "name": "ClippingFillColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Clipping plane fill color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingFillColor.htm"
+    },
+    {
+      "name": "ClippingPlaneFillColorUsage",
+      "type": "DisplayPipelineAttributes.ClippingPlaneFillColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how the color for the clipping plane object fill is determined.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingPlaneFillColorUsage.htm"
+    },
+    {
+      "name": "ClippingShadeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Clipping plane solid color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingShadeColor.htm"
+    },
+    {
+      "name": "ClippingShadeColorUsage",
+      "type": "DisplayPipelineAttributes.ClippingShadeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how to shade the clipping plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingShadeColorUsage.htm"
+    },
+    {
+      "name": "ClippingShadeSelectedPlane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shades the selected clipping plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingShadeSelectedPlane.htm"
+    },
+    {
+      "name": "ClippingShadeTransparency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the clipping plane transparency percentage.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClippingShadeTransparency.htm"
+    },
+    {
+      "name": "ClipSelectionHighlight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Clips the highlight wires. Shaded selections always clip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ClipSelectionHighlight.htm"
+    },
+    {
+      "name": "ContextForDraw",
+      "type": "DisplayPipelineAttributes.ContextsForDraw",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ContextForDraw.htm"
+    },
+    {
+      "name": "ControlPolygonColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Control polygon color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonColor.htm"
+    },
+    {
+      "name": "ControlPolygonGripSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The control point size in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonGripSize.htm"
+    },
+    {
+      "name": "ControlPolygonHighlight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Highlights the segments of the control polygon on either side of the control points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonHighlight.htm"
+    },
+    {
+      "name": "ControlPolygonShow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows the control polygon and only shows the control points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonShow.htm"
+    },
+    {
+      "name": "ControlPolygonShowPoints",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows the control points while the control polygon is displayed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonShowPoints.htm"
+    },
+    {
+      "name": "ControlPolygonShowSurface",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows the object while the control polygon is displayed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonShowSurface.htm"
+    },
+    {
+      "name": "ControlPolygonStyle",
+      "type": "PointStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "PointStyle for the control polygon. Supported values are ControlPoint, RoundControlPoint, VariableDot, and RoundDot",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonStyle.htm"
+    },
+    {
+      "name": "ControlPolygonUseFixedSingleColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies a color for the control polygon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonUseFixedSingleColor.htm"
+    },
+    {
+      "name": "ControlPolygonUseSolidLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use dotted / solid lines",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonUseSolidLines.htm"
+    },
+    {
+      "name": "ControlPolygonWireThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the control polygon lines in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ControlPolygonWireThickness.htm"
+    },
+    {
+      "name": "CullBackfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CullBackfaces.htm"
+    },
+    {
+      "name": "CurveColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color used for drawing curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CurveColor.htm"
+    },
+    {
+      "name": "CurveThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Pixel thickness for curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CurveThickness.htm"
+    },
+    {
+      "name": "CurveThicknessScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Scale thickness for curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CurveThicknessScale.htm"
+    },
+    {
+      "name": "CurveThicknessUsage",
+      "type": "DisplayPipelineAttributes.CurveThicknessUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Use a pixel thickness (CurveThickness) or a scale thickness (CurveThicknessScale)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CurveThicknessUsage.htm"
+    },
+    {
+      "name": "CustomGroundPlaneAltitude",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Height above the world XY plane in model units",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CustomGroundPlaneAltitude.htm"
+    },
+    {
+      "name": "CustomGroundPlaneAutomaticAltitude",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turns on auto-elevation that moves Ground Plane to the lowest point of the objects in the model.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CustomGroundPlaneAutomaticAltitude.htm"
+    },
+    {
+      "name": "CustomGroundPlaneOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn the custom ground plane on or off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CustomGroundPlaneOn.htm"
+    },
+    {
+      "name": "CustomGroundPlaneShadowOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Makes the ground plane transparent, but allows shadows to still be cast on it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_CustomGroundPlaneShadowOnly.htm"
+    },
+    {
+      "name": "DisableConduits",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_DisableConduits.htm"
+    },
+    {
+      "name": "DisableTransparency",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_DisableTransparency.htm"
+    },
+    {
+      "name": "DynamicDisplayUsage",
+      "type": "DisplayPipelineAttributes.DynamicDisplayUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the appearance of objects in the display",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_DynamicDisplayUsage.htm"
+    },
+    {
+      "name": "EnglishName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_EnglishName.htm"
+    },
+    {
+      "name": "FillMode",
+      "type": "DisplayPipelineAttributes.FrameBufferFillMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the frame buffer fill mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FillMode.htm"
+    },
+    {
+      "name": "FrontDiffuse",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Shades the current viewport with no smoothing so the individual render mesh faces are visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FrontDiffuse.htm"
+    },
+    {
+      "name": "FrontFlatShaded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shades the current viewport with no smoothing so the individual render mesh faces are visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FrontFlatShaded.htm"
+    },
+    {
+      "name": "FrontMaterialShine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the front material shine (0 to Rhino.DocObjects.MaxShine). You must call DisplayModeDescription.UpdateDisplayMode() to commit this change.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FrontMaterialShine.htm"
+    },
+    {
+      "name": "FrontMaterialTransparency",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the front material transparency (0 to 100). You must call DisplayModeDescription.UpdateDisplayMode() to commit this change.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FrontMaterialTransparency.htm"
+    },
+    {
+      "name": "FrontOverrideObjectColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FrontOverrideObjectColor.htm"
+    },
+    {
+      "name": "FrontOverrideObjectReflectivity",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Objects acquire reflectivity from render materials.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FrontOverrideObjectReflectivity.htm"
+    },
+    {
+      "name": "FrontOverrideObjectTransparency",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Objects acquire transparency from render materials.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_FrontOverrideObjectTransparency.htm"
+    },
+    {
+      "name": "GhostLockedObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set locked appearance",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_GhostLockedObjects.htm"
+    },
+    {
+      "name": "GridPlaneColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the grid plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_GridPlaneColor.htm"
+    },
+    {
+      "name": "GridPlaneTransparency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Transparency of the grid plane, percentage (0-100)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_GridPlaneTransparency.htm"
+    },
+    {
+      "name": "GridPlaneVisibility",
+      "type": "DisplayPipelineAttributes.GridPlaneVisibilityMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Set when to show the grid plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_GridPlaneVisibility.htm"
+    },
+    {
+      "name": "GridTransparency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Transparency of the grid, percentage (0-100)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_GridTransparency.htm"
+    },
+    {
+      "name": "GroundPlaneUsage",
+      "type": "DisplayPipelineAttributes.GroundPlaneUsages",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn on or off custom Ground plane settungs",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_GroundPlaneUsage.htm"
+    },
+    {
+      "name": "HighlightSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shades entire object with highlight color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_HighlightSurfaces.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_Id.htm"
+    },
+    {
+      "name": "IgnoreHighlights",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_IgnoreHighlights.htm"
+    },
+    {
+      "name": "LayersFollowLockUsage",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Applies the settings for locked objects to locked layers.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LayersFollowLockUsage.htm"
+    },
+    {
+      "name": "LightingScheme",
+      "type": "DisplayPipelineAttributes.LightingSchema",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LightingScheme.htm"
+    },
+    {
+      "name": "LinearWorkflowUsage",
+      "type": "DisplayPipelineAttributes.LinearWorkflowUsages",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn on or off custom linear workflow settings",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LinearWorkflowUsage.htm"
+    },
+    {
+      "name": "LocalName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LocalName.htm"
+    },
+    {
+      "name": "LockedColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Locked Object Color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LockedColor.htm"
+    },
+    {
+      "name": "LockedObjectsDrawBehindOthers",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Locked object are drawn behind other objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LockedObjectsDrawBehindOthers.htm"
+    },
+    {
+      "name": "LockedObjectTransparency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "LockedObjectTransparency.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LockedObjectTransparency.htm"
+    },
+    {
+      "name": "LockedObjectUsage",
+      "type": "DisplayPipelineAttributes.LockedObjectUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Set asource of display attributes for locked objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_LockedObjectUsage.htm"
+    },
+    {
+      "name": "MeshEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the mesh edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshEdgeColor.htm"
+    },
+    {
+      "name": "MeshEdgeColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The darken percentage of the color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshEdgeColorReduction.htm"
+    },
+    {
+      "name": "MeshEdgeThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Mesh edge width in pixels",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshEdgeThickness.htm"
+    },
+    {
+      "name": "MeshNakedEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the naked edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshNakedEdgeColor.htm"
+    },
+    {
+      "name": "MeshNakedEdgeColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The darken percentage of the color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshNakedEdgeColorReduction.htm"
+    },
+    {
+      "name": "MeshNakedEdgeThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Naked mesh edge width in pixels.}",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshNakedEdgeThickness.htm"
+    },
+    {
+      "name": "MeshNonmanifoldEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the nonmanifold edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshNonmanifoldEdgeColor.htm"
+    },
+    {
+      "name": "MeshNonmanifoldEdgeColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The darken percentage of the color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshNonmanifoldEdgeColorReduction.htm"
+    },
+    {
+      "name": "MeshNonmanifoldEdgeThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Non-manifold mesh edge width in pixels",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshNonmanifoldEdgeThickness.htm"
+    },
+    {
+      "name": "MeshSpecificAttributes",
+      "type": "DisplayPipelineAttributes.MeshDisplayAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshSpecificAttributes.htm"
+    },
+    {
+      "name": "MeshVertexSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Mesh vertex size in pixels",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_MeshVertexSize.htm"
+    },
+    {
+      "name": "ObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ObjectColor.htm"
+    },
+    {
+      "name": "PlaneUsesGridColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, use the grid thin line color in App settings",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PlaneUsesGridColor.htm"
+    },
+    {
+      "name": "PointCloudRadius",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PointCloudRadius.htm"
+    },
+    {
+      "name": "PointCloudStyle",
+      "type": "PointStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PointCloudStyle.htm"
+    },
+    {
+      "name": "PointRadius",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PointRadius.htm"
+    },
+    {
+      "name": "PointStyle",
+      "type": "PointStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PointStyle.htm"
+    },
+    {
+      "name": "PostProcessFrameBuffer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow Adjust output image",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PostProcessFrameBuffer.htm"
+    },
+    {
+      "name": "PostProcessGamma",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow Output image gamma",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PostProcessGamma.htm"
+    },
+    {
+      "name": "PreProcessColors",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow input colors",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PreProcessColors.htm"
+    },
+    {
+      "name": "PreProcessGamma",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow input gamma",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PreProcessGamma.htm"
+    },
+    {
+      "name": "PreProcessTextures",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow input textures",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_PreProcessTextures.htm"
+    },
+    {
+      "name": "RealtimeDisplayId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the ID of the real-time display engine attached to the view. This will be Guid.Empty if no real-time display engine is in use. This can be the case for instance when starting a _Render session for a real-time viewport integration. That still would cause this ID to be Guid.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_RealtimeDisplayId.htm"
+    },
+    {
+      "name": "RealtimeRenderPasses",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the real-time passes amount",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_RealtimeRenderPasses.htm"
+    },
+    {
+      "name": "ShadeVertexColors",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shade using vertex colors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadeVertexColors.htm"
+    },
+    {
+      "name": "ShadingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Draw shaded meshes and surfaces",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadingEnabled.htm"
+    },
+    {
+      "name": "ShadowBiasX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "ShadowBiasX (Self shadowing artifacts) from 0 (dirty) to 50 (cleaner).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowBiasX.htm"
+    },
+    {
+      "name": "ShadowClippingRadius",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Camera-based shadow clipping radius",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowClippingRadius.htm"
+    },
+    {
+      "name": "ShadowColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowColor.htm"
+    },
+    {
+      "name": "ShadowEdgeBlur",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Set blurring from 0 (no blurring) to 16 (maximum blurring)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowEdgeBlur.htm"
+    },
+    {
+      "name": "ShadowIntensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Shadow intensity (percentage 0-100)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowIntensity.htm"
+    },
+    {
+      "name": "ShadowMemoryUsage",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Value from 1 to 16384 indicating how much memory is to be allocated. Actual memory use is ShadowMemoryUsage*ShadowMemoryUsage*4.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowMemoryUsage.htm"
+    },
+    {
+      "name": "ShadowsIgnoreUserDefinedClippingPlanes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, shadows ignore user-defined clipping planes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowsIgnoreUserDefinedClippingPlanes.htm"
+    },
+    {
+      "name": "ShadowSoftEdgeQuality",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Soft edge quality, from 0 (none/faster) to 12 (softer/slower)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowSoftEdgeQuality.htm"
+    },
+    {
+      "name": "ShadowsOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable shadows",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowsOn.htm"
+    },
+    {
+      "name": "ShadowTransparencyTolerance",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Transparency tolerance from 0 (never cast shadows) to 100 (always case shadows)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowTransparencyTolerance.htm"
+    },
+    {
+      "name": "ShowAnnotations",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show annotations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowAnnotations.htm"
+    },
+    {
+      "name": "ShowClipIntersectionEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show edges and hatches where clipping planes clip objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowClipIntersectionEdges.htm"
+    },
+    {
+      "name": "ShowClipIntersectionSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show fills where clipping planes clip solid objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowClipIntersectionSurfaces.htm"
+    },
+    {
+      "name": "ShowClippingEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows the edges between the clipping plane and clipped objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowClippingEdges.htm"
+    },
+    {
+      "name": "ShowClippingFills",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When a clipping plane intersects a 3-D object and the section is closed, the section is filled.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowClippingFills.htm"
+    },
+    {
+      "name": "ShowClippingPlanes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show clipping planes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowClippingPlanes.htm"
+    },
+    {
+      "name": "ShowCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Draw curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowCurves.htm"
+    },
+    {
+      "name": "ShowGrips",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowGrips.htm"
+    },
+    {
+      "name": "ShowIsoCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Draw surface ISO curves.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowIsoCurves.htm"
+    },
+    {
+      "name": "ShowLights",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show light widgets.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowLights.htm"
+    },
+    {
+      "name": "ShowMeshEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Display mesh edges on/off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowMeshEdges.htm"
+    },
+    {
+      "name": "ShowMeshNakedEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Display mesh naked edges on/off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowMeshNakedEdges.htm"
+    },
+    {
+      "name": "ShowMeshNonmanifoldEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Display mesh manifold edges on/off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowMeshNonmanifoldEdges.htm"
+    },
+    {
+      "name": "ShowPointClouds",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show point clouds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowPointClouds.htm"
+    },
+    {
+      "name": "ShowPoints",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowPoints.htm"
+    },
+    {
+      "name": "ShowRealtimeRenderProgressBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set whether the display is used for preview rendering or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowRealtimeRenderProgressBar.htm"
+    },
+    {
+      "name": "ShowSubDBoundary",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set visibility of SubD naked edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSubDBoundary.htm"
+    },
+    {
+      "name": "ShowSubDCreases",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set visibility of SubD creased edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSubDCreases.htm"
+    },
+    {
+      "name": "ShowSubDEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set visibility of SubD smooth edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSubDEdges.htm"
+    },
+    {
+      "name": "ShowSubDNonmanifoldEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn on/off color differentiation of SubD symmetry children.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSubDNonmanifoldEdges.htm"
+    },
+    {
+      "name": "ShowSubDReflectionPlanePreview",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSubDReflectionPlanePreview.htm"
+    },
+    {
+      "name": "ShowSurfaceEdge",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn Surface Edge visibility on or off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSurfaceEdge.htm"
+    },
+    {
+      "name": "ShowSurfaceEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show surface edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSurfaceEdges.htm"
+    },
+    {
+      "name": "ShowSurfaceNakedEdge",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn Surface Naked Edge visibility on or off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSurfaceNakedEdge.htm"
+    },
+    {
+      "name": "ShowTangentEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show tangent edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowTangentEdges.htm"
+    },
+    {
+      "name": "ShowTangentSeams",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show tangent seams.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowTangentSeams.htm"
+    },
+    {
+      "name": "ShowText",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ShowText.htm"
+    },
+    {
+      "name": "SkylightShadowQuality",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Skylight shadow quality, from 0 (lowest) to 8 (highest)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SkylightShadowQuality.htm"
+    },
+    {
+      "name": "StereoContext",
+      "type": "StereoContext",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the stereo render context.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_StereoContext.htm"
+    },
+    {
+      "name": "SubDBoundaryApplyPattern",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Apply pattern to the edge",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDBoundaryApplyPattern.htm"
+    },
+    {
+      "name": "SubDBoundaryColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Color reduction percentage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDBoundaryColorReduction.htm"
+    },
+    {
+      "name": "SubDBoundaryEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDBoundaryEdgeColor.htm"
+    },
+    {
+      "name": "SubDBoundaryEdgeColorUsage",
+      "type": "DisplayPipelineAttributes.SubDEdgeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color usage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDBoundaryEdgeColorUsage.htm"
+    },
+    {
+      "name": "SubDBoundaryEdgeThickness",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness (pixels).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDBoundaryEdgeThickness.htm"
+    },
+    {
+      "name": "SubDBoundaryThicknessScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness scale",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDBoundaryThicknessScale.htm"
+    },
+    {
+      "name": "SubDBoundaryThicknessUsage",
+      "type": "DisplayPipelineAttributes.SubDThicknessUse",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDBoundaryThicknessUsage.htm"
+    },
+    {
+      "name": "SubDCreaseInteriorApplyPattern",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Apply pattern to the edge",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDCreaseInteriorApplyPattern.htm"
+    },
+    {
+      "name": "SubDCreaseInteriorColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Color reduction percentage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDCreaseInteriorColorReduction.htm"
+    },
+    {
+      "name": "SubDCreaseInteriorEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDCreaseInteriorEdgeColor.htm"
+    },
+    {
+      "name": "SubDCreaseInteriorEdgeColorUsage",
+      "type": "DisplayPipelineAttributes.SubDEdgeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color usage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDCreaseInteriorEdgeColorUsage.htm"
+    },
+    {
+      "name": "SubDCreaseInteriorEdgeThickness",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness (pixels).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDCreaseInteriorEdgeThickness.htm"
+    },
+    {
+      "name": "SubDCreaseInteriorThicknessScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness scale",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDCreaseInteriorThicknessScale.htm"
+    },
+    {
+      "name": "SubDCreaseInteriorThicknessUsage",
+      "type": "DisplayPipelineAttributes.SubDThicknessUse",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDCreaseInteriorThicknessUsage.htm"
+    },
+    {
+      "name": "SubDNonManifoldApplyPattern",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Apply pattern to the edge",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDNonManifoldApplyPattern.htm"
+    },
+    {
+      "name": "SubDNonManifoldColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Color reduction percentage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDNonManifoldColorReduction.htm"
+    },
+    {
+      "name": "SubDNonManifoldEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDNonManifoldEdgeColor.htm"
+    },
+    {
+      "name": "SubDNonManifoldEdgeColorUsage",
+      "type": "DisplayPipelineAttributes.SubDEdgeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color usage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDNonManifoldEdgeColorUsage.htm"
+    },
+    {
+      "name": "SubDNonManifoldEdgeThickness",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness (pixels).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDNonManifoldEdgeThickness.htm"
+    },
+    {
+      "name": "SubDNonManifoldThicknessScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness scale",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDNonManifoldThicknessScale.htm"
+    },
+    {
+      "name": "SubDNonManifoldThicknessUsage",
+      "type": "DisplayPipelineAttributes.SubDThicknessUse",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDNonManifoldThicknessUsage.htm"
+    },
+    {
+      "name": "SubDReflectionAxisLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Reflection axis line color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDReflectionAxisLineColor.htm"
+    },
+    {
+      "name": "SubDReflectionPlaneAxisLineOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Apply Turnh on or off the reflection plane axis line",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDReflectionPlaneAxisLineOn.htm"
+    },
+    {
+      "name": "SubDReflectionPlaneColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Reflection plane color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDReflectionPlaneColor.htm"
+    },
+    {
+      "name": "SubDReflectionPlaneColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "SubD replection plane color reduction percentage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDReflectionPlaneColorReduction.htm"
+    },
+    {
+      "name": "SubDReflectionPlaneColorUsage",
+      "type": "DisplayPipelineAttributes.SubDReflectionPlaneColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "SubD replection plane color use",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDReflectionPlaneColorUsage.htm"
+    },
+    {
+      "name": "SubDSmoothInteriorApplyPattern",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Apply pattern to the edge",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDSmoothInteriorApplyPattern.htm"
+    },
+    {
+      "name": "SubDSmoothInteriorColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Color reduction percentage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDSmoothInteriorColorReduction.htm"
+    },
+    {
+      "name": "SubDSmoothInteriorEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDSmoothInteriorEdgeColor.htm"
+    },
+    {
+      "name": "SubDSmoothInteriorEdgeColorUsage",
+      "type": "DisplayPipelineAttributes.SubDEdgeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge color usage",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDSmoothInteriorEdgeColorUsage.htm"
+    },
+    {
+      "name": "SubDSmoothInteriorEdgeThickness",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness (pixels).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDSmoothInteriorEdgeThickness.htm"
+    },
+    {
+      "name": "SubDSmoothInteriorThicknessScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge thickness scale",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDSmoothInteriorThicknessScale.htm"
+    },
+    {
+      "name": "SubDSmoothInteriorThicknessUsage",
+      "type": "DisplayPipelineAttributes.SubDThicknessUse",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDSmoothInteriorThicknessUsage.htm"
+    },
+    {
+      "name": "SubDThicknessUsage",
+      "type": "DisplayPipelineAttributes.SubDThicknessUse",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness usage, pixel thickness or a scale thickness",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SubDThicknessUsage.htm"
+    },
+    {
+      "name": "SurfaceEdgeApplyPattern",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn pattern application on or off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceEdgeApplyPattern.htm"
+    },
+    {
+      "name": "SurfaceEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceEdgeColor.htm"
+    },
+    {
+      "name": "SurfaceEdgeColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceEdgeColorReduction.htm"
+    },
+    {
+      "name": "SurfaceEdgeColorUsage",
+      "type": "DisplayPipelineAttributes.SurfaceEdgeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceEdgeColorUsage.htm"
+    },
+    {
+      "name": "SurfaceEdgeThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness for surface edges",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceEdgeThickness.htm"
+    },
+    {
+      "name": "SurfaceEdgeThicknessScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceEdgeThicknessScale.htm"
+    },
+    {
+      "name": "SurfaceIsoColorsUsed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoColorsUsed.htm"
+    },
+    {
+      "name": "SurfaceIsoShowForFlatFaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoShowForFlatFaces.htm"
+    },
+    {
+      "name": "SurfaceIsoSingleColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoSingleColor.htm"
+    },
+    {
+      "name": "SurfaceIsoThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoThickness.htm"
+    },
+    {
+      "name": "SurfaceIsoThicknessUScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoThicknessUScale.htm"
+    },
+    {
+      "name": "SurfaceIsoThicknessUsed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoThicknessUsed.htm"
+    },
+    {
+      "name": "SurfaceIsoThicknessVScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoThicknessVScale.htm"
+    },
+    {
+      "name": "SurfaceIsoThicknessWScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoThicknessWScale.htm"
+    },
+    {
+      "name": "SurfaceIsoUColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoUColor.htm"
+    },
+    {
+      "name": "SurfaceIsoUThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoUThickness.htm"
+    },
+    {
+      "name": "SurfaceIsoUVColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoUVColor.htm"
+    },
+    {
+      "name": "SurfaceIsoVColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoVColor.htm"
+    },
+    {
+      "name": "SurfaceIsoVThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoVThickness.htm"
+    },
+    {
+      "name": "SurfaceNakedAdgeColorReduction",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceNakedAdgeColorReduction.htm"
+    },
+    {
+      "name": "SurfaceNakedEdgeApplyPattern",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn pattern application on or off",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceNakedEdgeApplyPattern.htm"
+    },
+    {
+      "name": "SurfaceNakedEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceNakedEdgeColor.htm"
+    },
+    {
+      "name": "SurfaceNakedEdgeColorUsage",
+      "type": "DisplayPipelineAttributes.SurfaceNakedEdgeColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceNakedEdgeColorUsage.htm"
+    },
+    {
+      "name": "SurfaceNakedEdgeThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceNakedEdgeThickness.htm"
+    },
+    {
+      "name": "SurfaceNakedEdgeThicknessScale",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceNakedEdgeThicknessScale.htm"
+    },
+    {
+      "name": "UseAssignedObjectMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using their assigned rendering material.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseAssignedObjectMaterial.htm"
+    },
+    {
+      "name": "UseBackfaceMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use the backface material for displaying backfaces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseBackfaceMaterial.htm"
+    },
+    {
+      "name": "UseCustomBackface",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use a custom material for displaying backfaces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomBackface.htm"
+    },
+    {
+      "name": "UseCustomObjectColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectColor.htm"
+    },
+    {
+      "name": "UseCustomObjectColorBackfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom color for back faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectColorBackfaces.htm"
+    },
+    {
+      "name": "UseCustomObjectMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom material.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectMaterial.htm"
+    },
+    {
+      "name": "UseCustomObjectMaterialBackfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom material on backfaces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectMaterialBackfaces.htm"
+    },
+    {
+      "name": "UseLightColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Draw lights using light color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseLightColor.htm"
+    },
+    {
+      "name": "UseObjectBackfaceMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use the backface material of the object for displaying its backfaces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseObjectBackfaceMaterial.htm"
+    },
+    {
+      "name": "UseSectionStyles",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When enabled, the appearances of clipping fills and edges are based on objects\u0027 section style properties.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseSectionStyles.htm"
+    },
+    {
+      "name": "UseSingleCurveColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use a single color for drawing curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_UseSingleCurveColor.htm"
+    },
+    {
+      "name": "ViewSpecificAttributes",
+      "type": "DisplayPipelineAttributes.ViewDisplayAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_ViewSpecificAttributes.htm"
+    },
+    {
+      "name": "WorldAxesIconColorUsage",
+      "type": "DisplayPipelineAttributes.WorldAxesIconColorUse",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_WorldAxesIconColorUsage.htm"
+    },
+    {
+      "name": "XrayAllObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPipelineAttributes_XrayAllObjects.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

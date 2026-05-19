@@ -1,0 +1,256 @@
+{
+  "name": "ModelGeometry",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents geometry within the model hierarchy",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ModelGeometry",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelGeometry.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelGeometry.GetHashCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.ModelGeometry InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of ModelGeometry.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelGeometry",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelGeometry.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalCustomCreator",
+      "signature": "static Autodesk.Navisworks.Api.ModelGeometry InternalCustomCreator(nint handleIn, Autodesk.Navisworks.Api.NativeHandle source)",
+      "summary": "InternalCustomCreator method of ModelGeometry.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "source",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelGeometry",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelGeometry.InternalCustomCreator%28System.IntPtr%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of ModelGeometry.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelGeometry.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveColor",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Current (visible) color for this geometry",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.ActiveColor"
+    },
+    {
+      "name": "ActiveTransform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the currently active transform of the geometry.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.ActiveTransform"
+    },
+    {
+      "name": "ActiveTransparency",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Current (visible) transparency for this geometry",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.ActiveTransparency"
+    },
+    {
+      "name": "BoundingBox",
+      "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Bounding box of this geometry in world space",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.BoundingBox"
+    },
+    {
+      "name": "FragmentCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of fragments this geometry is divided into",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.FragmentCount"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.IsReadOnly"
+    },
+    {
+      "name": "IsSolid",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this geometry solid ? (Includes triangle primitives which all form closed, manifold shells)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.IsSolid"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Item in the model hierarchy corresponding to this geometry",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.Item"
+    },
+    {
+      "name": "OriginalColor",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Original color for this geometry (as specified by design file)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.OriginalColor"
+    },
+    {
+      "name": "OriginalTransform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the original transform of the geometry when it was loaded.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.OriginalTransform"
+    },
+    {
+      "name": "OriginalTransparency",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Original transparency for this geometry (as specified by design file)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.OriginalTransparency"
+    },
+    {
+      "name": "PermanentColor",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Permanent color for geometry. Either original color or color explicitly overriden by user.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.PermanentColor"
+    },
+    {
+      "name": "PermanentOverrideTransform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Transform applied to the original transform of the model geometry.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.PermanentOverrideTransform"
+    },
+    {
+      "name": "PermanentTransform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Permanent transform for the model geometry. The transform formed as a result of combining the original transform with the override transform.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.PermanentTransform"
+    },
+    {
+      "name": "PermanentTransparency",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Permanent transparency for geometry. Either original transparency or transparency explicitly overriden by user.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.PermanentTransparency"
+    },
+    {
+      "name": "PrimitiveCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of primitives (triangles,lines,points) that define this geometry",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.PrimitiveCount"
+    },
+    {
+      "name": "PrimitiveTypes",
+      "type": "Autodesk.Navisworks.Api.PrimitiveTypes",
+      "getter": true,
+      "setter": false,
+      "summary": "Types of primitives used to define this geometry",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelGeometry.PrimitiveTypes"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

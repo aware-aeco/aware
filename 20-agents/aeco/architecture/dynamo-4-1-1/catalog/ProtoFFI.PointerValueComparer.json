@@ -1,0 +1,70 @@
+{
+  "name": "PointerValueComparer",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "This class compares two Pointer type StackValue objects.",
+  "interfaces": [
+    "System.Collections.Generic.IEqualityComparer\u003CProtoCore.DSASM.StackValue\u003E"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRObjectMarshaler.cs",
+  "constructors": [
+    {
+      "name": "PointerValueComparer()",
+      "signature": "void PointerValueComparer()",
+      "summary": "PointerValueComparer.PointerValueComparer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRObjectMarshaler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue)",
+      "signature": "bool Equals(ProtoCore.DSASM.StackValue x, ProtoCore.DSASM.StackValue y)",
+      "summary": "PointerValueComparer.Equals",
+      "params": [
+        {
+          "name": "x",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRObjectMarshaler.cs"
+    },
+    {
+      "name": "GetHashCode(ProtoCore.DSASM.StackValue)",
+      "signature": "int GetHashCode(ProtoCore.DSASM.StackValue obj)",
+      "summary": "PointerValueComparer.GetHashCode",
+      "params": [
+        {
+          "name": "obj",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRObjectMarshaler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

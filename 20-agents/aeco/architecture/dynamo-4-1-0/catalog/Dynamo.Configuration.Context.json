@@ -1,0 +1,13 @@
+{
+  "name": "Context",
+  "namespace": "Dynamo.Configuration",
+  "kind": "static-class",
+  "summary": "This specifies the Dynamo Context (RunTime). ex : Revit 2014, Revit 2015 etc.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/Context.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

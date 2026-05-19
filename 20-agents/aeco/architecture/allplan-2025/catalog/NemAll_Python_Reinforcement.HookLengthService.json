@@ -1,0 +1,171 @@
+{
+  "name": "HookLengthService",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Service class for the hook length calculation",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookLengthService/",
+  "constructors": [
+    {
+      "name": "HookLengthService",
+      "signature": "HookLengthService(norm: int, concreteGrade: int, steelGrade: int, bExactLength: bool)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "norm",
+          "type": "int",
+          "doc": "Norm",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "bExactLength",
+          "type": "bool",
+          "doc": "Calculate the exact length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookLengthService/#NemAll_Python_Reinforcement.HookLengthService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetHookLength",
+      "signature": "GetHookLength(hookAngle: float, hookType: HookType, diameter: float) -\u003E float",
+      "summary": "Calculate the hook length",
+      "remarks": "Calculate the hook length",
+      "params": [
+        {
+          "name": "hookAngle",
+          "type": "float",
+          "doc": "Hook angle",
+          "optional": false
+        },
+        {
+          "name": "hookType",
+          "type": "HookType",
+          "doc": "Hook type",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Hook length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookLengthService/#NemAll_Python_Reinforcement.HookLengthService.GetHookLength"
+    },
+    {
+      "name": "GetHookLengthPartFromBendingRoller",
+      "signature": "GetHookLengthPartFromBendingRoller( hookAngle: float, hookType: HookType, diameter: float ) -\u003E float",
+      "summary": "Calculate the hook length part from the beginning of the bending roller",
+      "remarks": "Calculate the hook length part from the beginning of the bending roller",
+      "params": [
+        {
+          "name": "hookAngle",
+          "type": "float",
+          "doc": "Hook angle",
+          "optional": false
+        },
+        {
+          "name": "hookType",
+          "type": "HookType",
+          "doc": "Hook type",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Hook length part from the beginning of the bending roller"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookLengthService/#NemAll_Python_Reinforcement.HookLengthService.GetHookLengthPartFromBendingRoller"
+    },
+    {
+      "name": "GetHookLengthPartOfBendingRoller",
+      "signature": "GetHookLengthPartOfBendingRoller( hookAngle: float, hookType: HookType, diameter: float ) -\u003E float",
+      "summary": "Calculate the hook length part of the bending roller",
+      "remarks": "Calculate the hook length part of the bending roller",
+      "params": [
+        {
+          "name": "hookAngle",
+          "type": "float",
+          "doc": "Hook angle",
+          "optional": false
+        },
+        {
+          "name": "hookType",
+          "type": "HookType",
+          "doc": "Hook type",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Hook length part of the bending roller"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookLengthService/#NemAll_Python_Reinforcement.HookLengthService.GetHookLengthPartOfBendingRoller"
+    },
+    {
+      "name": "GetStandardAnchorageHookLength",
+      "signature": "GetStandardAnchorageHookLength(diameter: float) -\u003E float",
+      "summary": "Calculate the standard anchorage hook length",
+      "remarks": "Calculate the standard anchorage hook length",
+      "params": [
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Standard anchorage hook length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookLengthService/#NemAll_Python_Reinforcement.HookLengthService.GetStandardAnchorageHookLength"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "LoopEnumerator",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The LoopEnumerator class is used to enumerate the loops of a face instance.",
+  "base": "System.Object",
+  "interfaces": [
+    "IEnumerator"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/12ea17c8-9b81-5906-dc7f-d14bc934f7c0",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/eda4e568-ca17-a8e5-84d6-fa64d29e8470"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d99626c8-ee72-cbfb-0edf-39323caa4db1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "Loop",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the current loop.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/309e4b1c-e499-2335-f61b-7e2d0df60ab0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

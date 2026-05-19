@@ -1,0 +1,85 @@
+{
+  "name": "MaterialRef",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.MaterialRef\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_MaterialRef.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the MaterialRef",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRef_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRef_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackFaceMaterialId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The Id of the Material used to render the back of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRef_BackFaceMaterialId.htm"
+    },
+    {
+      "name": "BackFaceMaterialIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The index of the material used to render the back of an object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRef_BackFaceMaterialIndex.htm"
+    },
+    {
+      "name": "FrontFaceMaterialId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The Id of the Material used to render the front of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRef_FrontFaceMaterialId.htm"
+    },
+    {
+      "name": "FrontFaceMaterialIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The index of the material used to render the front of an object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRef_FrontFaceMaterialIndex.htm"
+    },
+    {
+      "name": "MaterialSource",
+      "type": "ObjectMaterialSource",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the simple material should come from the object or from it\u0027s layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRef_MaterialSource.htm"
+    },
+    {
+      "name": "PlugInId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifies a rendering plug-in",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRef_PlugInId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

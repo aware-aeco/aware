@@ -1,0 +1,26 @@
+{
+  "name": "BoltShearType",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.BoltShearType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltShearType.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "bearing",
+      "value": "bearing"
+    },
+    {
+      "name": "interaction",
+      "value": "interaction"
+    },
+    {
+      "name": "friction",
+      "value": "friction"
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "name": "IApplicationGui",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "interface",
+  "summary": "Provides access to the Gui of the application which is hosting the API.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.IApplicationGui",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDockPanePluginVisibility",
+      "signature": "bool GetDockPanePluginVisibility(string pluginId)",
+      "summary": "Called when a DockPanePlugin gets it\u0027s Visible property",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "string",
+          "doc": "The full identifier for the plugin.\nThis is formed as Name.DeveloperId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.GetDockPanePluginVisibility%28System.String%29"
+    },
+    {
+      "name": "IsSignedIn",
+      "signature": "bool IsSignedIn()",
+      "summary": "Reports if there is an authenticated user.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Sign In status."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.IsSignedIn"
+    },
+    {
+      "name": "SignIn",
+      "signature": "bool SignIn()",
+      "summary": "Authenticate with Autodesk ID. Popup generic sign-in UI in Navisworks to allow users to enter the credentials.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if authenticated or false if failed to authenticate."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SignIn"
+    },
+    {
+      "name": "SignOut",
+      "signature": "bool SignOut()",
+      "summary": "Sign-out the current authenticated user.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if succeeded or false if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SignOut"
+    },
+    {
+      "name": "SetDockPanePluginActive",
+      "signature": "void SetDockPanePluginActive(string pluginId)",
+      "summary": "Called when a DockPanePlugin activates the plugin pane.",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "string",
+          "doc": "The full identifier for the plugin.\nThis is formed as Name.DeveloperId",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SetDockPanePluginActive%28System.String%29"
+    },
+    {
+      "name": "SetDockPanePluginVisibility",
+      "signature": "void SetDockPanePluginVisibility(string pluginId, bool visible)",
+      "summary": "Called when a DockPanePlugin sets it\u0027s Visible property",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "string",
+          "doc": "The full identifier for the plugin.\nThis is formed as Name.DeveloperId",
+          "optional": false
+        },
+        {
+          "name": "visible",
+          "type": "bool",
+          "doc": "The value to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SetDockPanePluginVisibility%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetRaiseIdle",
+      "signature": "void SetRaiseIdle(System.Action\u003CSystem.EventArgs\u003E raiseIdle)",
+      "summary": "Allows Idle to be raised.",
+      "params": [
+        {
+          "name": "raiseIdle",
+          "type": "System.Action\u003CSystem.EventArgs\u003E",
+          "doc": "Action to raise Idle. Will be called with valid Action during GUI\ncreation, and with null during GUI destruction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SetRaiseIdle%28System.Action%7BSystem.EventArgs%7D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MainWindow",
+      "type": "System.Windows.Forms.IWin32Window",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the main window of the application. Use as parent window for dialogs and message boxes.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.MainWindow"
+    },
+    {
+      "name": "ServerType",
+      "type": "Autodesk.Navisworks.Api.ServerType",
+      "getter": true,
+      "setter": false,
+      "summary": "Sign In server type.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.ServerType"
+    },
+    {
+      "name": "SignInUserId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The internal user ID of the user currently logged in. The user ID will be null if no user is logged in.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SignInUserId"
+    },
+    {
+      "name": "SignInUserName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The current authenticated user\u0027s Autodesk ID.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SignInUserName"
+    }
+  ],
+  "events": [
+    {
+      "name": "Closed",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler Closed",
+      "summary": "Occurs when the Gui (including the main window) is about to close.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.Closed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Closing",
+      "delegate": "System.ComponentModel.CancelEventHandler",
+      "signature": "event System.ComponentModel.CancelEventHandler Closing",
+      "summary": "Occurs when the Gui is about to close and can be handled to cancel closure.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.Closing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ServerTypeChanged",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler ServerTypeChanged",
+      "summary": "Occurs when the server type changes.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.ServerTypeChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SignedIn",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler SignedIn",
+      "summary": "Occurs when user signs in.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SignedIn",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SignedOut",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler SignedOut",
+      "summary": "Occurs when user has signed out.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SignedOut",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SigningOut",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler SigningOut",
+      "summary": "Occurs when user is signing out.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationGui.SigningOut",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

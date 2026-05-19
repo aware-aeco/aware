@@ -1,0 +1,28 @@
+{
+  "name": "StringFilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The StringFilterExpression class represents a string filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2ad423fa-08aa-b2e7-0053-07ee753a700d",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

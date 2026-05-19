@@ -1,0 +1,185 @@
+{
+  "name": "AABB",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The AABB class represents an axis-aligned 3d bounding box.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1f5576c5-859c-2d9b-55f4-5b4d66bbf320",
+  "constructors": [
+    {
+      "name": "AABB()",
+      "signature": "public AABB()",
+      "summary": "Instantiates a new axis-aligned 3d bounding box with the maximum point initialized to the smallest possible value and the minimum point to the largest possible value.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/37eff7da-019c-5ffc-e62a-9ff10db35787"
+    },
+    {
+      "name": "AABB(AABB)",
+      "signature": "public AABB(AABB AABB)",
+      "summary": "Instantiates a new axis-aligned 3d bounding box which is a copy of the given axis-aligned 3d bounding box.",
+      "params": [
+        {
+          "name": "AABB",
+          "type": "Tekla.Structures.Geometry3d.AABB",
+          "doc": "The axis-aligned 3d bounding box to copy from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b43eb84f-0fcc-f6d5-baf5-84e9a2bfa760"
+    },
+    {
+      "name": "AABB(IEnumerable\u003CPoint\u003E)",
+      "signature": "public AABB(IEnumerable\u003CPoint\u003E Points)",
+      "summary": "Constructs AABB from given point list.",
+      "params": [
+        {
+          "name": "Points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/577d83ea-a6c4-11df-7c68-05eef8ad2eef"
+    },
+    {
+      "name": "AABB(Point, Point)",
+      "signature": "public AABB(Point MinPoint, Point MaxPoint)",
+      "summary": "Instantiates a new axis-aligned 3d bounding box with the given minimum and maximum points.",
+      "params": [
+        {
+          "name": "MinPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The minimum point to be used.",
+          "optional": false
+        },
+        {
+          "name": "MaxPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The maximum point to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3fba0785-cc81-45a8-735f-59b651cea356"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Collide",
+      "signature": "public bool Collide(AABB Other)",
+      "summary": "Checks if the current axis-aligned 3d bounding box collides with another given axis-aligned 3d bounding box. Both axis-aligned 3d bounding boxes need to be in the same coordinate system or in the same workplane, so that they are defined using the same axes.",
+      "params": [
+        {
+          "name": "Other",
+          "type": "Tekla.Structures.Geometry3d.AABB",
+          "doc": "Another axis-aligned 3d bounding box to be used in the collision check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the axis-aligned 3d bounding boxes collide."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/057b4309-6593-9b8a-581e-8233518f597a"
+    },
+    {
+      "name": "GetCenterPoint",
+      "signature": "public Point GetCenterPoint()",
+      "summary": "Returns the geometric center point of the current axis-aligned 3d bounding box.",
+      "params": [],
+      "returns": {
+        "type": "Point",
+        "doc": "The geometric center point of the current axis-aligned 3d bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/015fb65b-ad44-3e33-e891-0d9351e340cf"
+    },
+    {
+      "name": "GetCornerPoints",
+      "signature": "public Point[] GetCornerPoints()",
+      "summary": "Returns all corner points of the current axis-aligned 3d bounding box.",
+      "params": [],
+      "returns": {
+        "type": ".Point.",
+        "doc": "All corner points of the current axis-aligned 3d bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f6f6ca4-13aa-d956-047a-f84112c028bb"
+    },
+    {
+      "name": "IsInside(LineSegment)",
+      "signature": "public bool IsInside(LineSegment LineSegment)",
+      "summary": "Checks if the given line segment is inside the current axis-aligned 3d bounding box.",
+      "params": [
+        {
+          "name": "LineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line segment to be checked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the point is inside the current axis-aligned 3d bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31e46219-4fba-b1da-4b5b-2ab276eef609"
+    },
+    {
+      "name": "IsInside(Point)",
+      "signature": "public bool IsInside(Point Point)",
+      "summary": "Checks if the given point is inside the current axis-aligned 3d bounding box.",
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be checked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the point is inside the current axis-aligned 3d bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/29c49520-1316-8e73-c29e-f4c1dd49711d"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MaxPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The maximum point of the axis-aligned 3d bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea0d7e90-c316-f57f-598e-f43fdeaa00f6"
+    },
+    {
+      "name": "MinPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The minimum point of the axis-aligned 3d bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/829ce6ec-1a09-e265-17ab-328de948d864"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

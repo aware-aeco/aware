@@ -1,0 +1,102 @@
+{
+  "name": "PropertyCategoryNames",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Names (values of Name) of commonly found property categories.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PropertyCategoryNames",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AutoCad",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of AutoCAD \u0022AutoCad\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.AutoCad"
+    },
+    {
+      "name": "AutoCadEntityHandle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of AutoCAD \u0022Entity Handle\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.AutoCadEntityHandle"
+    },
+    {
+      "name": "Geometry",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of \u0022Geometry\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.Geometry"
+    },
+    {
+      "name": "Hyperlinks",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of \u0022Hyperlinks\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.Hyperlinks"
+    },
+    {
+      "name": "Item",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of \u0022Item\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.Item"
+    },
+    {
+      "name": "Material",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of \u0022Material\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.Material"
+    },
+    {
+      "name": "Microstation",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Microstation \u0022MicroStation\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.Microstation"
+    },
+    {
+      "name": "MicrostationElementId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Microstation \u0022Element Id\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.MicrostationElementId"
+    },
+    {
+      "name": "RevitElementId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Revit \u0022Element Id\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.RevitElementId"
+    },
+    {
+      "name": "Transform",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of \u0022Transform\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.Transform"
+    },
+    {
+      "name": "XRef",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of \u0022XRef\u0022 property category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryNames.XRef"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

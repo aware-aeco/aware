@@ -1,0 +1,158 @@
+{
+  "name": "GetResult",
+  "namespace": "Rhino.Input",
+  "kind": "enum",
+  "summary": "Possible results from GetObject.Get(), GetPoint.Get(), etc...",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_GetResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoResult",
+      "value": 0
+    },
+    {
+      "name": "Cancel",
+      "value": 1,
+      "summary": "User wants to cancel current command."
+    },
+    {
+      "name": "Nothing",
+      "value": 2,
+      "summary": "User pressed enter - typically used to accept defaults."
+    },
+    {
+      "name": "Option",
+      "value": 3,
+      "summary": "User specified an option - call Option() to get option index."
+    },
+    {
+      "name": "Number",
+      "value": 4,
+      "summary": "User entered a real number - call Number() to get value."
+    },
+    {
+      "name": "Color",
+      "value": 5,
+      "summary": "User entered a color - call Color() to get value."
+    },
+    {
+      "name": "Undo",
+      "value": 6,
+      "summary": "User pressed undo."
+    },
+    {
+      "name": "Miss",
+      "value": 7,
+      "summary": "User clicked and missed."
+    },
+    {
+      "name": "Point",
+      "value": 8,
+      "summary": "User picked 3d point - call Point() to get 3d point."
+    },
+    {
+      "name": "Point2d",
+      "value": 9,
+      "summary": "User picked 2d window point in CRhinoGetPoint::Get2dPoint() call ON_2dPoint() to get the point and View() to get the view."
+    },
+    {
+      "name": "Line2d",
+      "value": 10,
+      "summary": "User picked a 2d line in CRhinoGetPoint::Get2dLine() call Line2d() to get the line and View() to get the view."
+    },
+    {
+      "name": "Rectangle2d",
+      "value": 11,
+      "summary": "User picked a 2d rectangle in CRhinoGetPoint::Get2dRectangle() call Rectangle2d() to get the rectangle and View() to get the view."
+    },
+    {
+      "name": "Object",
+      "value": 12,
+      "summary": "User selected an object - call Object() to get object."
+    },
+    {
+      "name": "String",
+      "value": 13,
+      "summary": "User typed a string - call String() to get the string."
+    },
+    {
+      "name": "CustomMessage",
+      "value": 14,
+      "summary": "A custom message was posted to the RhinoGet"
+    },
+    {
+      "name": "Timeout",
+      "value": 15,
+      "summary": "The getter waited for the amount of time specified in RhinoGet::SetWaitDuration() and then gave up."
+    },
+    {
+      "name": "Circle",
+      "value": 16,
+      "summary": "call CRhinoGetCircle::GetCircle() to get the circle."
+    },
+    {
+      "name": "Plane",
+      "value": 17,
+      "summary": "call CRhinoGetPlane::GetPlane() to get the plane."
+    },
+    {
+      "name": "Cylinder",
+      "value": 18,
+      "summary": "call CRhinoGetCylinder::GetCylinder() to get the cylinder."
+    },
+    {
+      "name": "Sphere",
+      "value": 19,
+      "summary": "call CRhinoGetSphere::GetSphere() to get the sphere."
+    },
+    {
+      "name": "Angle",
+      "value": 20,
+      "summary": "call CRhinoGetAngle::Angle() to get the angle in radians (CRhinoGetAngle() returns this for typed number, too)."
+    },
+    {
+      "name": "Distance",
+      "value": 21,
+      "summary": "call CRhinoGetDistance::Distance() to get the distance value."
+    },
+    {
+      "name": "Direction",
+      "value": 22,
+      "summary": "call CRhinoGetDirection::Direction() to get the direction vector."
+    },
+    {
+      "name": "Frame",
+      "value": 23,
+      "summary": "call CRhinoGetFrame::Frame() to get the frame that was picked."
+    },
+    {
+      "name": "User1",
+      "value": "4294967295"
+    },
+    {
+      "name": "User2",
+      "value": "4294967294"
+    },
+    {
+      "name": "User3",
+      "value": "4294967293"
+    },
+    {
+      "name": "User4",
+      "value": "4294967292"
+    },
+    {
+      "name": "User5",
+      "value": "4294967291"
+    },
+    {
+      "name": "ExitRhino",
+      "value": 268435455,
+      "summary": "Stop now, do not cleanup, just return ASAP."
+    }
+  ]
+}

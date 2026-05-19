@@ -1,0 +1,22 @@
+{
+  "name": "DocumentRevisionReferences",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "All document revisions belong to the current issue.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DocumentRevisionReferences",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "DocumentRevisionReference[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DocumentRevisionReferences"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

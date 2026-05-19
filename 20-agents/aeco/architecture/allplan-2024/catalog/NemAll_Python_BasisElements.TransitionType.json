@@ -1,0 +1,49 @@
+{
+  "name": "TransitionType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Transition types of the filling property",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TransitionType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransitionType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TransitionType/#NemAll_Python_BasisElements.TransitionType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNoTransition",
+      "value": 0
+    },
+    {
+      "name": "eOneColorTransition",
+      "value": 1
+    },
+    {
+      "name": "eTwoColorTransition",
+      "value": 2
+    }
+  ]
+}

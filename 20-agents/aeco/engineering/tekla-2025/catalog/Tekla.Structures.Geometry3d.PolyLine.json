@@ -1,0 +1,88 @@
+{
+  "name": "PolyLine",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The PolyLine class represents a line that consists of one or more line segments. To create a polyline, you have to give a list of the points that will form the polyline. The first point in the list will be connected with the second point in the list, the second point in the list will be connected with the third point in the list, etc.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5f792268-8861-1d47-978b-1380f7d4e1c0",
+  "constructors": [
+    {
+      "name": "PolyLine",
+      "signature": "public PolyLine(IEnumerable Points)",
+      "summary": "Instantiates a polyline with the given Points.",
+      "params": [
+        {
+          "name": "Points",
+          "type": "System.Collections.IEnumerable",
+          "doc": "A list of the points that will form the polyline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd824d26-63de-d656-5965-5cd2a798fcb8"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object O)",
+      "summary": "Returns true if the objects are equal.",
+      "params": [
+        {
+          "name": "O",
+          "type": "System.Object",
+          "doc": "The object that equality is wished to be checked with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the objects are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b7ce0d5e-662d-c157-fbd6-40a9c01d7f72"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Returns a hash code for a polyline. Notice, in extremely rare cases, you might not get the same hash code for two polylines even though they are considered equal! This should, however, happen only in extremely rare cases!",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The hash code for the polyline."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d2a8500c-8cab-16c4-78b7-881c3633b65b"
+    },
+    {
+      "name": "Length",
+      "signature": "public double Length()",
+      "summary": "Returns the length of a polyline.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "The length of the polyline."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9d429505-b15d-8a4d-bf62-1923a263ec03"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Points",
+      "type": "ArrayList",
+      "getter": true,
+      "setter": true,
+      "summary": "The points the polyline consists of.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/56cec382-56c7-020c-b904-a38a549960df"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

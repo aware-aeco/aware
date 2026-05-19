@@ -1,0 +1,288 @@
+{
+  "name": "RebarSpacing",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarSpacing class defines spacing properties for a RebarGuideline.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/05404a92-6125-9e64-38ac-784900b5a5da",
+  "constructors": [
+    {
+      "name": "RebarSpacing",
+      "signature": "public RebarSpacing()",
+      "summary": "Initializes a new instance of the RebarSpacing class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/865a444f-0d1c-0d8a-22bc-ac801310d1a7"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public RebarSpacing Clone()",
+      "summary": "Makes a copy of this object.",
+      "params": [],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "a new RebarSpacing instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9fd9bc4-c7ec-bd90-7e3d-d7ce3564ffee"
+    },
+    {
+      "name": "Create(RebarSpacing.Offset, RebarSpacing.Offset, Int32)",
+      "signature": "public static RebarSpacing Create(RebarSpacing.Offset startOffset, RebarSpacing.Offset endOffset, int number)",
+      "summary": "Craetes a spacing defined by number of bars.",
+      "params": [
+        {
+          "name": "startOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The start offset.",
+          "optional": false
+        },
+        {
+          "name": "endOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The end offset.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "The number of bars.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "A RebarSpacing instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e25e1d85-f2fd-c378-2d88-d0593f44ef8b"
+    },
+    {
+      "name": "Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable\u003CRebarSpacing.ExactSpacing.Element\u003E, RebarSpacing.ExactSpacing.Validation.)",
+      "signature": "public static RebarSpacing Create(RebarSpacing.Offset startOffset, RebarSpacing.Offset endOffset, IEnumerable\u003CRebarSpacing.ExactSpacing.Element\u003E elements, out RebarSpacing.ExactSpacing.Validation validation)",
+      "summary": "Creates an exact spacing if the given elements are valid.",
+      "params": [
+        {
+          "name": "startOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The start offset.",
+          "optional": false
+        },
+        {
+          "name": "endOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The end offset.",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "System.Collections.Generic.IEnumerable\u003CRebarSpacing.ExactSpacing.Element\u003E",
+          "doc": "The elements.",
+          "optional": false
+        },
+        {
+          "name": "validation",
+          "type": "Tekla.Structures.Model.RebarSpacing.ExactSpacing.Validation.",
+          "doc": "Returns a value indicating the validity of the elements.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "A RebarSpacing instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5aad86a8-235d-3196-c3c3-a2b4726808d8"
+    },
+    {
+      "name": "Create(RebarSpacing.SpacingType, RebarSpacing.Offset, RebarSpacing.Offset, Double)",
+      "signature": "public static RebarSpacing Create(RebarSpacing.SpacingType type, RebarSpacing.Offset startOffset, RebarSpacing.Offset endOffset, double distance)",
+      "summary": "Create a spacing which is defined by a single distance.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Model.RebarSpacing.SpacingType",
+          "doc": "The type of spacing.",
+          "optional": false
+        },
+        {
+          "name": "startOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The start offset.",
+          "optional": false
+        },
+        {
+          "name": "endOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The end offset.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The spacing distance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "A RebarSpacing instance if the given type and distance are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/720eb400-0689-b240-5abe-1f6de1db595d"
+    },
+    {
+      "name": "IsExactFlexibleType",
+      "signature": "public static bool IsExactFlexibleType(RebarSpacing.SpacingType type)",
+      "summary": "Gets whether the spacing is an exact type with flexible space(s).",
+      "params": [
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Model.RebarSpacing.SpacingType",
+          "doc": "The spacing type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if it is an exact flexible type spacing."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/53f65e5e-ad47-7e3a-64fe-6f4654c435ee"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the proposed offset to the last reinforcing bar from the end of the RebarGuideline.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b8b6e634-6590-2e59-c196-546418ae30a0"
+    },
+    {
+      "name": "EndOffsetIsAutomatic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the end offset is automatic. When automatic the proposed end offset is calculated to be the concrete cover thickness plus half the reinforcing bar diameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b645db26-bb26-0e8b-b927-39704d32f47c"
+    },
+    {
+      "name": "EndOffsetType",
+      "type": "RebarSpacing.OffsetEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the end offset is exact or minimum. If the end offset is minimum the spacing algorithm may determine a larger offset.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4004b1d4-85a5-c625-8992-e223e4f1b890"
+    },
+    {
+      "name": "ExactElements",
+      "type": "List\u003CRebarSpacing.ExactSpacing.Element\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the exact elements of the spacing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/16868550-b56a-8181-e9c9-28701accdab1"
+    },
+    {
+      "name": "ExactSpace",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the exact space.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2aeb379d-cc5c-51e3-8d09-3b6bee2fb996"
+    },
+    {
+      "name": "ExcludeType",
+      "type": "RebarSpacing.ExcludeTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the exclusion of first and last bars.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/299f18fb-9e90-a605-399f-c3fbe5c26181"
+    },
+    {
+      "name": "InheritFromPrimary",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the secondary guideline inherits all its spacing properties from the primary guideline. This property is not applicable to a primary guideline.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/df4aa455-7d36-2759-2d7e-6b9227deaa31"
+    },
+    {
+      "name": "InheritOffsetsFromPrimary",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the secondary guideline inherits its start and end offsets from the primary guideline. This property is not applicable to a primary guideline.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/695f32c5-42d0-351c-e447-34c5a8311235"
+    },
+    {
+      "name": "NumberOfBars",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of bars in the spacing object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c9756cf-aa91-167c-f9c1-e4819c01c2c1"
+    },
+    {
+      "name": "StartOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the proposed offset to the first reinforcing bar from the start of the RebarGuideline.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/69db28b1-e570-6a8d-093a-737455a0531f"
+    },
+    {
+      "name": "StartOffsetIsAutomatic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the start offset is automatic. When automatic the proposed start offset is calculated to be the concrete cover thickness plus half the reinforcing bar diameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/df7f2664-b9c6-d401-ea60-d85438024b8d"
+    },
+    {
+      "name": "StartOffsetType",
+      "type": "RebarSpacing.OffsetEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the start offset is exact or minimum. If the start offset is minimum the spacing algorithm may determine a larger offset.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cbabdea6-4fc9-ba06-fbd7-707a31d37496"
+    },
+    {
+      "name": "TargetSpace",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the target space.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/734233e4-beb3-7bcc-b5e6-6b50e63f578b"
+    },
+    {
+      "name": "Type",
+      "type": "RebarSpacing.SpacingType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of spacing. Does not allow change to exact spacing or number bars spacing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1b4b71f5-833e-8f11-5bd1-47bab7ace03e"
+    },
+    {
+      "name": "Zones",
+      "type": "List\u003CRebarSpacingZone\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the spacing zones.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9cc6881c-4851-f358-3c9f-79d0115f6e8d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,179 @@
+{
+  "name": "DrawingPluginBase.InputDefinition",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The InputDefinition class is a class for defining the plug-in dependency over the input (points or identifiers). The user implemented method DefineInput() of the DrawingPluginBase interface should return an array list of input definition instances. This defines the points and identifiers the plug-in will receive as input when the Run() method is called.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/671978ea-ae03-3158-95ff-a55cbd398d67",
+  "constructors": [
+    {
+      "name": "DrawingPluginBase.InputDefinition(Identifier, List\u003CPoint\u003E)",
+      "signature": "public InputDefinition(Identifier viewId, List\u003CPoint\u003E points)",
+      "summary": "Creates a new input definition with multiple points.",
+      "params": [
+        {
+          "name": "viewId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The view identifier.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.List\u003CPoint\u003E",
+          "doc": "The points.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/320dae8b-7499-ba35-16a7-391fb28bd9d4"
+    },
+    {
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Point)",
+      "signature": "public InputDefinition(Identifier viewId, Point point)",
+      "summary": "Creates a new input definition instance with one point.",
+      "params": [
+        {
+          "name": "viewId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier for the view object.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/858ba391-a1ad-6eb7-e58f-b62cdbfcf1f3"
+    },
+    {
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Identifier)",
+      "signature": "public InputDefinition(Identifier viewId, Identifier ObjectId)",
+      "summary": "Creates a new input definition instance with one identifier.",
+      "params": [
+        {
+          "name": "viewId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier for the view object.",
+          "optional": false
+        },
+        {
+          "name": "ObjectId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The object identifier.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31f5ea8d-6e32-c233-8385-4f1805279118"
+    },
+    {
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Point, Point)",
+      "signature": "public InputDefinition(Identifier viewId, Point point1, Point point2)",
+      "summary": "Creates a new input definition instance with two points.",
+      "params": [
+        {
+          "name": "viewId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier for the view object.",
+          "optional": false
+        },
+        {
+          "name": "point1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8ade92e0-d3f7-afab-4031-04ba40d40464"
+    },
+    {
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Point, Point, Point)",
+      "signature": "public InputDefinition(Identifier viewId, Point point1, Point point2, Point point3)",
+      "summary": "Creates a new input definition instance with three points.",
+      "params": [
+        {
+          "name": "viewId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier for the view object.",
+          "optional": false
+        },
+        {
+          "name": "point1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second point.",
+          "optional": false
+        },
+        {
+          "name": "point3",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/74cad141-d5bd-1665-dd82-7c4fdf0837ae"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetInput",
+      "signature": "public Object GetInput()",
+      "summary": "Returns the input Tekla Structures gave to the plug-in. The input is either a point instance, an identifier instance, an array list of points or an array list of identifiers. This is based on the input format returned from the DefineInput() method.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "The input to use in the Run() method."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9376bb9a-beae-f280-96ac-1b6fd0160c65"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "DrawingPluginBase.InputDefinition.InputTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the input the current instance contains.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0469c903-0f3c-30f8-827e-e90aaec6a264"
+    },
+    {
+      "name": "ViewId",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "The view object\u0027s identifier.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67558f92-e64b-e837-17ed-1769c7c6910c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

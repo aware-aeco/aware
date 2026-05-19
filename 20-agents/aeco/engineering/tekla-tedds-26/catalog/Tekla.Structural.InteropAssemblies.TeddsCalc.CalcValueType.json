@@ -1,0 +1,29 @@
+{
+  "name": "CalcValueType",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "enum",
+  "summary": "Value data types",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-calcvaluetype-64154",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Expression",
+      "value": 3,
+      "summary": "Sequence of characters which can be calculated"
+    },
+    {
+      "name": "Number",
+      "value": 1,
+      "summary": "Numerical value including unit dimensions"
+    },
+    {
+      "name": "String",
+      "value": 2,
+      "summary": "Sequence of characters"
+    }
+  ]
+}

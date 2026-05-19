@@ -1,0 +1,24 @@
+{
+  "name": "RebarSplice.RebarSpliceBarPositionsEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The bar group positions in the splice.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cdbe3eee-707a-0ae2-9131-b8237bc02d51",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SPLICE_BAR_ON_TOP",
+      "value": 0,
+      "summary": "Joined bars on top of each other."
+    },
+    {
+      "name": "SPLICE_BAR_PARALLEL",
+      "value": 1,
+      "summary": "Joined bars parallel to each other."
+    }
+  ]
+}

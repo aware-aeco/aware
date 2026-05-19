@@ -1,0 +1,54 @@
+{
+  "name": "FileDwgWriteOptions.AutocadVersion",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "AutoCAD version format to write to",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileDwgWriteOptions_AutocadVersion.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Release12",
+      "value": 12,
+      "summary": "Acad 12"
+    },
+    {
+      "name": "Release14",
+      "value": 14,
+      "summary": "Acad 14"
+    },
+    {
+      "name": "Acad2000",
+      "value": 2000,
+      "summary": "Acad 2000"
+    },
+    {
+      "name": "Acad2004",
+      "value": 2004,
+      "summary": "Acad 2004"
+    },
+    {
+      "name": "Acad2007",
+      "value": 2007,
+      "summary": "Acad 2007"
+    },
+    {
+      "name": "Acad2010",
+      "value": 2010,
+      "summary": "Acad 2010"
+    },
+    {
+      "name": "Acad2013",
+      "value": 2013,
+      "summary": "Acad 2013"
+    },
+    {
+      "name": "Acad2018",
+      "value": 2018,
+      "summary": "Acad 2018"
+    }
+  ]
+}

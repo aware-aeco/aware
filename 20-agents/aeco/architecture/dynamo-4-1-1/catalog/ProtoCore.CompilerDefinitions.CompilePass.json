@@ -1,0 +1,54 @@
+{
+  "name": "CompilePass",
+  "namespace": "ProtoCore.CompilerDefinitions",
+  "kind": "enum",
+  "summary": "Type CompilePass",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CompilerOptions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ClassBaseClass",
+      "value": 1
+    },
+    {
+      "name": "ClassHierarchy",
+      "value": 2
+    },
+    {
+      "name": "ClassMemFuncBody",
+      "value": 6
+    },
+    {
+      "name": "ClassMemFuncSig",
+      "value": 4
+    },
+    {
+      "name": "ClassMemVar",
+      "value": 3
+    },
+    {
+      "name": "ClassName",
+      "value": 0
+    },
+    {
+      "name": "Done",
+      "value": 9
+    },
+    {
+      "name": "GlobalFuncBody",
+      "value": 7
+    },
+    {
+      "name": "GlobalFuncSig",
+      "value": 5
+    },
+    {
+      "name": "GlobalScope",
+      "value": 8
+    }
+  ]
+}

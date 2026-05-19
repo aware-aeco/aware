@@ -1,0 +1,273 @@
+{
+  "name": "HandleModificationService",
+  "namespace": "HandleModificationService",
+  "kind": "class",
+  "summary": "Implementation of the handle modification service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/",
+  "constructors": [
+    {
+      "name": "HandleModificationService",
+      "signature": "HandleModificationService( coord_input: CoordinateInput, build_ele_list: list[BuildingElement], control_props_list: list[BuildingElementControlProperties], asso_ref_ele: BaseElementAdapter | HandleModificationService()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        },
+        {
+          "name": "control_props_list",
+          "type": "list[BuildingElementControlProperties]",
+          "doc": "list with the control properties",
+          "optional": false
+        },
+        {
+          "name": "asso_ref_ele",
+          "type": "BaseElementAdapter | None",
+          "doc": "reference element of the associative view",
+          "optional": false
+        },
+        {
+          "name": "use_system_angle",
+          "type": "bool",
+          "doc": "use system angle state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "get_local_handle_point",
+      "signature": "get_local_handle_point(input_pnt: Point3D) -\u003E Point3D | None",
+      "summary": "get the local handle point",
+      "remarks": "get the local handle point",
+      "params": [
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "new handle point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D | None",
+        "doc": "handle point in the local element coordinate system, None if not exist"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.get_local_handle_point"
+    },
+    {
+      "name": "is_handle_draw_lock",
+      "signature": "is_handle_draw_lock() -\u003E bool",
+      "summary": "get the handle draw lock state",
+      "remarks": "get the handle draw lock state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "handle draw lock state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.is_handle_draw_lock"
+    },
+    {
+      "name": "new_handle_point_input",
+      "signature": "new_handle_point_input(mouse_msg: int, pnt: Point2D, msg_info: Any) -\u003E Point3D",
+      "summary": "Input the new handle point",
+      "remarks": "Input the new handle point",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "Any",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "new handle point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.new_handle_point_input"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: Any) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "Any",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.process_mouse_msg"
+    },
+    {
+      "name": "reset_value",
+      "signature": "reset_value()",
+      "summary": "reset the handle value",
+      "remarks": "reset the handle value",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.reset_value"
+    },
+    {
+      "name": "set_handle_draw_lock",
+      "signature": "set_handle_draw_lock(handle_draw_lock: bool)",
+      "summary": "set the handle draw lock state",
+      "remarks": "set the handle draw lock state",
+      "params": [
+        {
+          "name": "handle_draw_lock",
+          "type": "bool",
+          "doc": "handle draw lock state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.set_handle_draw_lock"
+    },
+    {
+      "name": "start",
+      "signature": "start( handle_list: list[HandleProperties], placement_mat: Matrix3D, input_doc: DocumentAdapter, view_world_proj: ViewWorldProjection, create_view_input_controls: bool, )",
+      "summary": "start the handle modification",
+      "remarks": "start the handle modification",
+      "params": [
+        {
+          "name": "handle_list",
+          "type": "list[HandleProperties]",
+          "doc": "list with the handles",
+          "optional": false
+        },
+        {
+          "name": "placement_mat",
+          "type": "Matrix3D",
+          "doc": "placement matrix of the PythonPart",
+          "optional": false
+        },
+        {
+          "name": "input_doc",
+          "type": "DocumentAdapter",
+          "doc": "input document",
+          "optional": false
+        },
+        {
+          "name": "view_world_proj",
+          "type": "ViewWorldProjection",
+          "doc": "view world projection",
+          "optional": false
+        },
+        {
+          "name": "create_view_input_controls",
+          "type": "bool",
+          "doc": "create the input controls in the view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.start"
+    },
+    {
+      "name": "start_new_handle_point_input",
+      "signature": "start_new_handle_point_input( str_table_service: StringTableService, handle_placement_geo: list[Any] | None = None, )",
+      "summary": "start the new handle point input",
+      "remarks": "start the new handle point input",
+      "params": [
+        {
+          "name": "str_table_service",
+          "type": "StringTableService",
+          "doc": "string table service",
+          "optional": false
+        },
+        {
+          "name": "handle_placement_geo",
+          "type": "list[Any] | None",
+          "doc": "additional geometry element for the point input (hidden elements, preview elements)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.start_new_handle_point_input"
+    },
+    {
+      "name": "stop",
+      "signature": "stop()",
+      "summary": "stop the handle modification",
+      "remarks": "stop the handle modification",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.stop"
+    }
+  ],
+  "properties": [
+    {
+      "name": "handle_prop",
+      "type": "HandleProperties | None",
+      "getter": true,
+      "setter": false,
+      "summary": "get the handle property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/#HandleModificationService.HandleModificationService.handle_prop"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,78 @@
+{
+  "name": "CurvatureGraphSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Represents a snapshot of CurvatureGraphSettings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_CurvatureGraphSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurveHairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the curve hair color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_CurveHairColor.htm"
+    },
+    {
+      "name": "HairDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the hair density.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_HairDensity.htm"
+    },
+    {
+      "name": "HairScale",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the hair scale.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_HairScale.htm"
+    },
+    {
+      "name": "SampleDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the sample density.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_SampleDensity.htm"
+    },
+    {
+      "name": "SrfUHair",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the whether to show surface U hairs",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_SrfUHair.htm"
+    },
+    {
+      "name": "SrfVHair",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the whether to show surface V hairs",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_SrfVHair.htm"
+    },
+    {
+      "name": "SurfaceUHairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface U hair color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_SurfaceUHairColor.htm"
+    },
+    {
+      "name": "SurfaceVHairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface V hair color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettingsState_SurfaceVHairColor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

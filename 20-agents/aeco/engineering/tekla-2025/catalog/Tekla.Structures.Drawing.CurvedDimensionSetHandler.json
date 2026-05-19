@@ -1,0 +1,238 @@
+{
+  "name": "CurvedDimensionSetHandler",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CurvedDimensionSetHandler class contains operations for creating curved dimension sets.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3b6dc735-5bad-9707-8004-f93b4f170e3b",
+  "constructors": [
+    {
+      "name": "CurvedDimensionSetHandler",
+      "signature": "public CurvedDimensionSetHandler()",
+      "summary": "Initializes a new instance of the CurvedDimensionSetHandler class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/75c8d7c5-1805-4eea-a8f9-0ac24f5859e7"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateCurvedDimensionSetOrthogonal(ViewBase, Point, Point, Point, PointList, Double)",
+      "signature": "public CurvedDimensionSetOrthogonal CreateCurvedDimensionSetOrthogonal(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, PointList DimensionPoints, double Distance)",
+      "summary": "Creates a curved dimension set with orthogonal reference lines from the specified points and inserts it to the database.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint3",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "DimensionPoints",
+          "type": "Tekla.Structures.Drawing.PointList",
+          "doc": "The dimension points to be used.",
+          "optional": false
+        },
+        {
+          "name": "Distance",
+          "type": "System.Double",
+          "doc": "The distance to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurvedDimensionSetOrthogonal",
+        "doc": "The created dimension set or null if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/af2e21ff-e20c-e3ee-7e1f-4f8ce296d084"
+    },
+    {
+      "name": "CreateCurvedDimensionSetOrthogonal(ViewBase, Point, Point, Point, PointList, Double, CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes)",
+      "signature": "public CurvedDimensionSetOrthogonal CreateCurvedDimensionSetOrthogonal(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, PointList DimensionPoints, double Distance, CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes Attributes)",
+      "summary": "Creates a curved dimension set with orthogonal reference lines from the specified points and inserts it to the database.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint3",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "DimensionPoints",
+          "type": "Tekla.Structures.Drawing.PointList",
+          "doc": "The dimension points to be used.",
+          "optional": false
+        },
+        {
+          "name": "Distance",
+          "type": "System.Double",
+          "doc": "The distance to be used.",
+          "optional": false
+        },
+        {
+          "name": "Attributes",
+          "type": "Tekla.Structures.Drawing.CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes",
+          "doc": "The attributes to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurvedDimensionSetOrthogonal",
+        "doc": "The created dimension set or null if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ce6fb41-f2ea-6d9d-7a18-34a2644ba4ed"
+    },
+    {
+      "name": "CreateCurvedDimensionSetRadial(ViewBase, Point, Point, Point, PointList, Double)",
+      "signature": "public CurvedDimensionSetRadial CreateCurvedDimensionSetRadial(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, PointList DimensionPoints, double Distance)",
+      "summary": "Creates a curved dimension set from the specified points and inserts it to the database. Uses the default attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint3",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "DimensionPoints",
+          "type": "Tekla.Structures.Drawing.PointList",
+          "doc": "The dimension points to be used.",
+          "optional": false
+        },
+        {
+          "name": "Distance",
+          "type": "System.Double",
+          "doc": "The distance to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurvedDimensionSetRadial",
+        "doc": "The created dimension set or null if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a1fb93d0-4b06-952e-ce28-7e5c314d3a4a"
+    },
+    {
+      "name": "CreateCurvedDimensionSetRadial(ViewBase, Point, Point, Point, PointList, Double, CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes)",
+      "signature": "public CurvedDimensionSetRadial CreateCurvedDimensionSetRadial(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, PointList DimensionPoints, double Distance, CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes Attributes)",
+      "summary": "Creates a curved dimension set from the specified points and inserts it to the database.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint3",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "DimensionPoints",
+          "type": "Tekla.Structures.Drawing.PointList",
+          "doc": "The dimension points to be used.",
+          "optional": false
+        },
+        {
+          "name": "Distance",
+          "type": "System.Double",
+          "doc": "The distance to be used.",
+          "optional": false
+        },
+        {
+          "name": "Attributes",
+          "type": "Tekla.Structures.Drawing.CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
+          "doc": "The attributes to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurvedDimensionSetRadial",
+        "doc": "The created dimension set or null if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67a02edd-e008-051a-d444-09f0edd8d1ca"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

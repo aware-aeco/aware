@@ -1,0 +1,13 @@
+{
+  "name": "NormalOrUserUndefinedPropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A normal or a userUndefined property value.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalOrUserUndefinedPropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

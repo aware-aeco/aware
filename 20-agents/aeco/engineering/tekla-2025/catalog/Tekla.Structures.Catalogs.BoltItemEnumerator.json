@@ -1,0 +1,60 @@
+{
+  "name": "BoltItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The BoltItemEnumerator class allows to loop through the bolt catalog items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1b842d05-50f4-8862-42f7-703fdaa505a0",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSize",
+      "signature": "public int GetSize()",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e6c7329c-43d2-5c89-1c91-89a81813f37e"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d7ef7d06-eed2-5dc8-3024-0097c5d7e8bd"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a42dea55-ef04-8bc3-cefb-aa00d6c1cc52"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "BoltItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a bolt item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/100f6498-192c-1ca9-a28b-8d1a35d15b26"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

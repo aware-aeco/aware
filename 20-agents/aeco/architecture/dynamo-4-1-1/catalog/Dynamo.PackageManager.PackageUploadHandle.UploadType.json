@@ -1,0 +1,22 @@
+{
+  "name": "UploadType",
+  "namespace": "Dynamo.PackageManager.PackageUploadHandle",
+  "kind": "enum",
+  "summary": "Type UploadType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Local",
+      "value": 0
+    },
+    {
+      "name": "Submit",
+      "value": 1
+    }
+  ]
+}

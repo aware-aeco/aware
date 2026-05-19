@@ -1,0 +1,24 @@
+{
+  "name": "BrepType",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Shape catalog renewal makes it possible to organize shapes in the shape catalog compared to a plain list before. Thus, it is now possible and required to distinguish shapes in such a manner that: BuildingProduct represent shapes that users can import from, for example, Tekla Warehouse and insert them into a model. These are usually provided by the manufacturer and not detailed by users themselves. StructuralShape represent shapes that get created by \u0022Convert part to item\u0022 or from geometry editing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2bf93ab8-7617-e2d7-910b-3baf23087211",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BuildingProduct",
+      "value": 0,
+      "summary": "Default value if the flag doesn\u0027t exist for the shape. It is also assigned in case of shape import."
+    },
+    {
+      "name": "StructuralShape",
+      "value": 1,
+      "summary": "StructuralShape is assigned in case a shape is created by \u0022Convert part to item\u0022, or on shape edit and save."
+    }
+  ]
+}

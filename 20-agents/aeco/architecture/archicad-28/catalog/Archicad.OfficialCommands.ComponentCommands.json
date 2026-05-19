@@ -1,0 +1,57 @@
+{
+  "name": "ComponentCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Component Commands\u0027 command group \u2014 2 JSON-RPC commands (Archicad 28.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetComponentsOfElements",
+      "signature": "GetComponentsOfElements(elements: Elements): object",
+      "summary": "Returns the identifier of every component for a list of elements. The order of the returned list is the same as the given elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: componentsOfElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetComponentsOfElements"
+    },
+    {
+      "name": "GetPropertyValuesOfElementComponents",
+      "signature": "GetPropertyValuesOfElementComponents(elementComponents: ElementComponents, properties: PropertyIds): object",
+      "summary": "Returns the property values of the components for the given property.",
+      "params": [
+        {
+          "name": "elementComponents",
+          "type": "ElementComponents",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "PropertyIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyValuesForElementComponents."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetPropertyValuesOfElementComponents"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

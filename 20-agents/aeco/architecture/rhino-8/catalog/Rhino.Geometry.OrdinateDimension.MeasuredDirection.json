@@ -1,0 +1,28 @@
+{
+  "name": "OrdinateDimension.MeasuredDirection",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Ordinate dimension measures x or y direction",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_OrdinateDimension_MeasuredDirection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0
+    },
+    {
+      "name": "Xaxis",
+      "value": 1,
+      "summary": "Measures horizontal distance"
+    },
+    {
+      "name": "Yaxis",
+      "value": 2,
+      "summary": "Measures vertical distance"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "IGeometryNode",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "The IGeometryNode interface represents geometry tree node. This is implemented by concrete classes for the various types of geometry nodes",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d79a60dd-f84b-ce24-8bfa-a7a2f1cb3912",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AcceptVisitor",
+      "signature": "void AcceptVisitor(IGeometryNodeVisitor visitor)",
+      "summary": "Entry method for the visitor pattern",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "Tekla.Structures.Model.IGeometryNodeVisitor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e4a23ca4-afba-4ac6-574b-9133549c4515"
+    },
+    {
+      "name": "Clone",
+      "signature": "IGeometryNode Clone()",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "returns": {
+        "type": "IGeometryNode",
+        "doc": "A new object that is a copy of the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e01da20e-a19e-e9c9-dfb4-c1aa981b41b4"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsAutomatic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this geometry node was automatically generated (i.e. false if it was originally a user-defined part)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2ee02a12-a2eb-ebbc-b1dd-25eb94a668f3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Events.HiddenObjectsChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use when objects are hidden or view is redrawn",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4625ea6b-72a9-6f0d-7bb0-a8971b1e7c7c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void HiddenObjectsChangedDelegate()"
+}

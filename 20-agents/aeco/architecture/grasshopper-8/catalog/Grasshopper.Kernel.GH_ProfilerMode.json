@@ -1,0 +1,29 @@
+{
+  "name": "GH_ProfilerMode",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Lists all profiler modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ProfilerMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Indicates no profiling is required."
+    },
+    {
+      "name": "Processor",
+      "value": 1,
+      "summary": "Indicates processor time is being measured."
+    },
+    {
+      "name": "Memory",
+      "value": 2,
+      "summary": "Indicates memory footprint is being measured."
+    }
+  ]
+}

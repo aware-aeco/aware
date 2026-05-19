@@ -1,0 +1,49 @@
+{
+  "name": "ShellEnumerator",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The ShellEnumerator class is used to enumerate the shells of a solid.",
+  "base": "System.Object",
+  "interfaces": [
+    "IEnumerator"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/129adcea-7427-5204-6df8-622483d21f39",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c34845cf-8306-297b-69f0-996247973225"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ecc6e966-8065-dd88-6e15-ab58ed76821a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current shell.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/244ddb95-92a3-0ca3-f658-b3339470aae3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

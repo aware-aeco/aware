@@ -1,0 +1,288 @@
+{
+  "collection": {
+    "info": {
+      "name": "Bluebeam Studio API (test mini)",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "id": "",
+        "name": "Sessions",
+        "item": [
+          {
+            "id": "",
+            "name": "Files",
+            "item": [
+              {
+                "id": "",
+                "name": "Create metadata for a new Studio Session file.",
+                "item": null,
+                "request": {
+                  "method": "POST",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{sessionId}","files"]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"CRC\":\"\",\"Name\":\"\",\"Size\":0,\"Source\":\"\"}",
+                    "options": { "raw": { "language": "json" } }
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Get all files in a Studio Session",
+                "item": null,
+                "request": {
+                  "method": "GET",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{sessionId}","files"]
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Get Studio Session file metadata.",
+                "item": null,
+                "request": {
+                  "method": "GET",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{sessionId}","files","{id}"]
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Start Studio Session document snapshot job.",
+                "item": null,
+                "request": {
+                  "method": "POST",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{sessionId}","files","{id}","snapshot"]
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Delete a Studio Session file",
+                "item": null,
+                "request": {
+                  "method": "DELETE",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{sessionId}","files","{id}"]
+                  }
+                },
+                "uid": ""
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "item": [
+              {
+                "id": "",
+                "name": "Create a Studio Session",
+                "item": null,
+                "request": {
+                  "method": "POST",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions"]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"Name\":\"\",\"Notification\":false,\"Restricted\":false,\"SessionEndDate\":\"\"}",
+                    "options": { "raw": { "language": "json" } }
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Get all Studio Sessions",
+                "item": null,
+                "request": {
+                  "method": "GET",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions"]
+                  }
+                },
+                "uid": ""
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "Single Session",
+            "item": [
+              {
+                "id": "",
+                "name": "Get a single Studio Session metadata",
+                "item": null,
+                "request": {
+                  "method": "GET",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{id}"]
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Delete a Studio Session",
+                "item": null,
+                "request": {
+                  "method": "DELETE",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{id}"]
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Invite user to Studio Session by email",
+                "item": null,
+                "request": {
+                  "method": "POST",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","sessions","{sessionId}","invite"]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"Email\":\"\",\"Message\":\"\"}",
+                    "options": { "raw": { "language": "json" } }
+                  }
+                },
+                "uid": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "",
+        "name": "Jobs",
+        "item": [
+          {
+            "id": "",
+            "name": "Project File Jobs",
+            "item": [
+              {
+                "id": "",
+                "name": "Converts a DWG file to Pdf.",
+                "item": null,
+                "request": {
+                  "method": "POST",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","projects","{projectId}","files","{fileId}","jobs","dwg2pdf"]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"OutputFileName\":\"\",\"OutputPath\":\"\",\"Priority\":0}",
+                    "options": { "raw": { "language": "json" } }
+                  }
+                },
+                "uid": ""
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "Job",
+            "item": [
+              {
+                "id": "",
+                "name": "Get a list of jobs.",
+                "item": null,
+                "request": {
+                  "method": "GET",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","jobs"]
+                  }
+                },
+                "uid": ""
+              },
+              {
+                "id": "",
+                "name": "Cancel a job.",
+                "item": null,
+                "request": {
+                  "method": "PUT",
+                  "url": {
+                    "host": ["api","bluebeam","com"],
+                    "protocol": "https",
+                    "path": ["publicapi","v1","jobs","{id}","cancel"]
+                  }
+                },
+                "uid": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "",
+        "name": "Misc",
+        "item": [
+          {
+            "id": "",
+            "name": "Get info about currently authenticated user",
+            "item": null,
+            "request": {
+              "method": "GET",
+              "url": {
+                "host": ["api","bluebeam","com"],
+                "protocol": "https",
+                "path": ["publicapi","v1","users","me"]
+              }
+            },
+            "uid": ""
+          },
+          {
+            "id": "",
+            "name": "Get Current Version",
+            "item": null,
+            "request": {
+              "method": "GET",
+              "url": {
+                "host": ["api","bluebeam","com"],
+                "protocol": "https",
+                "path": ["publicapi","api","version"]
+              }
+            },
+            "uid": ""
+          }
+        ]
+      }
+    ]
+  }
+}

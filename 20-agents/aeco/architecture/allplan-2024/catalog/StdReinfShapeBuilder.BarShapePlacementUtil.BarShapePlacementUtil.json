@@ -1,0 +1,146 @@
+{
+  "name": "BarShapePlacementUtil",
+  "namespace": "StdReinfShapeBuilder.BarShapePlacementUtil",
+  "kind": "class",
+  "summary": "Implementation of the bar shape placement utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "add_shape",
+      "signature": "add_shape(shape_id, shape)",
+      "summary": "Add a shape to the shape list",
+      "remarks": "Add a shape to the shape list",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.add_shape"
+    },
+    {
+      "name": "get_placement",
+      "signature": "get_placement(reinf_def, param_dict, diameter, local_angles)",
+      "summary": "Calculate the local placement line inside the local X/Y coordinate system of the shapes",
+      "remarks": "Calculate the local placement line inside the local X/Y coordinate system of the shapes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement"
+    },
+    {
+      "name": "get_placement_at_shape_side",
+      "signature": "get_placement_at_shape_side(shape_id, side_number, ref_pnt_fac, b_above_side, placement_diameter, local_angles)",
+      "summary": "Calculate the local placement line at a shape side inside the local X/Y coordinate system of the shapes",
+      "remarks": "Calculate the local placement line at a shape side inside the local X/Y coordinate system of the shapes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_at_shape_side"
+    },
+    {
+      "name": "get_placement_at_shape_side_intersection",
+      "signature": "get_placement_at_shape_side_intersection(shape_id1, side_number1, shape_id2, side_number2, shape_id3, side_number3, b_above_side3, placement_diameter, local_angles)",
+      "summary": "Calculate exactly the ref_pnt_fac between line intersaction shape 1-3 and shape 2-3 Return: ref_pnt_fac",
+      "remarks": "Calculate exactly the ref_pnt_fac between line intersaction shape 1-3 and shape 2-3 Return: ref_pnt_fac",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_at_shape_side_intersection"
+    },
+    {
+      "name": "get_placement_from_bending_roller",
+      "signature": "get_placement_from_bending_roller(shape_id, side_number, b_roller_start_point, placement_base_line, b_placment_start_point, placement_diameter, local_angles)",
+      "summary": "Get the placement cover from the bending roller of a defined side number Return: Local placement cover to a placement base line",
+      "remarks": "Get the placement cover from the bending roller of a defined side number Return: Local placement cover to a placement base line",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_from_bending_roller"
+    },
+    {
+      "name": "get_placement_from_side_intersection",
+      "signature": "get_placement_from_side_intersection(shape_id1, side_number1, b_above_side1, shape_id2, side_number2, b_above_side2, placement_base_line, b_placment_start_point, placement_diameter, local_angles)",
+      "summary": "Get the placement cover from the side intersection of two defined side numbers. Return: Local placement cover to a placement base line",
+      "remarks": "Get the placement cover from the side intersection of two defined side numbers. Return: Local placement cover to a placement base line",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_from_side_intersection"
+    },
+    {
+      "name": "get_placement_in_corner",
+      "signature": "get_placement_in_corner(shape_id, corner_number, placement_diameter, local_angles)",
+      "summary": "Calculate the local placement point inside the local X/Y coordinate system of the shape corner Return: local position of placement start",
+      "remarks": "Calculate the local placement point inside the local X/Y coordinate system of the shape corner Return: local position of placement start",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_in_corner"
+    },
+    {
+      "name": "get_placement_in_side_corners",
+      "signature": "get_placement_in_side_corners(shape_id, side_number, placement_diameter, local_angles)",
+      "summary": "Calculate the local placement line from the left to the right side corner inside the local X/Y coordinate system of the shapes",
+      "remarks": "Calculate the local placement line from the left to the right side corner inside the local X/Y coordinate system of the shapes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_in_side_corners"
+    },
+    {
+      "name": "get_placement_in_side_intersection",
+      "signature": "get_placement_in_side_intersection(shape_id1, side_number1, b_above_side1, shape_id2, side_number2, b_above_side2, placement_diameter, local_angles)",
+      "summary": "Get the placement point from the side intersection of two defined side numbers. Return: Local placement cover to a placement base line",
+      "remarks": "Get the placement point from the side intersection of two defined side numbers. Return: Local placement cover to a placement base line",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_in_side_intersection"
+    },
+    {
+      "name": "get_placent_line_cover_from_side",
+      "signature": "get_placent_line_cover_from_side(shape_id, side_number, b_above_side)",
+      "summary": "Get the placement line cover from a shape side by side number Return: 3D placement line and the cover",
+      "remarks": "Get the placement line cover from a shape side by side number Return: 3D placement line and the cover",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placent_line_cover_from_side"
+    },
+    {
+      "name": "get_side_length",
+      "signature": "get_side_length(shape_id, side_number)",
+      "summary": "Check for an existing shape by an shape_id Return: Shape exist: True/False",
+      "remarks": "Check for an existing shape by an shape_id Return: Shape exist: True/False",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_side_length"
+    },
+    {
+      "name": "is_shape_created",
+      "signature": "is_shape_created(shape_id)",
+      "summary": "Check for an existing shape by an shape_id Return: Shape exist: True/False Parameter: shape_id ID of the shape",
+      "remarks": "Check for an existing shape by an shape_id Return: Shape exist: True/False Parameter: shape_id ID of the shape",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.is_shape_created"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

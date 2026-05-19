@@ -1,0 +1,235 @@
+{
+  "name": "UserData",
+  "namespace": "Rhino.DocObjects.Custom",
+  "kind": "class",
+  "summary": "Provides a base class for custom classes of information which may be attached to geometry or attribute classes.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Custom_UserData.htm",
+  "constructors": [
+    {
+      "name": "UserData",
+      "signature": "protected UserData()",
+      "summary": "Initializes a new instance of the UserData class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Copy",
+      "signature": "public static void Copy(CommonObject source, CommonObject destination)",
+      "summary": "Expert user tool that copies user data that has a positive CopyCount from the source object to a destination object. Generally speaking you don\u0027t need to use Copy(). Simply rely on things like the copy constructors to do the right thing.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Runtime.CommonObject",
+          "doc": "A source object for the data.",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "Rhino.Runtime.CommonObject",
+          "doc": "A destination object for the data.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_Copy.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_Finalize.htm"
+    },
+    {
+      "name": "MoveUserDataFrom",
+      "signature": "public static Guid MoveUserDataFrom(CommonObject objectWithUserData)",
+      "summary": "Moves the user data from objectWithUserData to a temporary data storage identified by the return Guid. When MoveUserDataFrom returns, the objectWithUserData will not have any user data.",
+      "params": [
+        {
+          "name": "objectWithUserData",
+          "type": "Rhino.Runtime.CommonObject",
+          "doc": "Object with user data attached.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Guid identifier for storage of UserData that is held in a temporary list by this class. This function should be used in conjunction with MoveUserDataTo to transfer the user data to a different object. Returns Guid.Empty if there was no user data to transfer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_MoveUserDataFrom.htm"
+    },
+    {
+      "name": "MoveUserDataTo",
+      "signature": "public static void MoveUserDataTo(CommonObject objectToGetUserData, Guid id, bool append)",
+      "summary": "Moves the user data. See MoveUserDataFrom(CommonObject) for more information.",
+      "params": [
+        {
+          "name": "objectToGetUserData",
+          "type": "Rhino.Runtime.CommonObject",
+          "doc": "Object data source.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Target.",
+          "optional": false
+        },
+        {
+          "name": "append",
+          "type": "System.Boolean",
+          "doc": "If the data should be appended or replaced.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_MoveUserDataTo.htm"
+    },
+    {
+      "name": "OnDuplicate",
+      "signature": "protected virtual void OnDuplicate(UserData source)",
+      "summary": "Is called when the object is being duplicated.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.DocObjects.Custom.UserData",
+          "doc": "The source data.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_OnDuplicate.htm"
+    },
+    {
+      "name": "OnTransform",
+      "signature": "protected virtual void OnTransform(Transform transform)",
+      "summary": "Is called when the object associated with this data is transformed. If you override this function, make sure to call the base class if you want the stored Transform to be updated.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The transform being applied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_OnTransform.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "protected virtual bool Read(BinaryArchiveReader archive)",
+      "summary": "Reads the content of this data from a stream archive.",
+      "params": [
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "An archive.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the data was successfully written. The default implementation always returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "protected virtual bool Write(BinaryArchiveWriter archive)",
+      "summary": "Writes the content of this data to a stream archive.",
+      "params": [
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveWriter",
+          "doc": "An archive.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the data was successfully written. The default implementation always returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserData_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Descriptive name of the user data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_UserData_Description.htm"
+    },
+    {
+      "name": "ShouldWrite",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If you want to save this user data in a 3dm file, override ShouldWrite and return true. If you do support serialization, you must also override the Read and Write functions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_UserData_ShouldWrite.htm"
+    },
+    {
+      "name": "Transform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Updated if user data is attached to a piece of geometry that is transformed and the virtual OnTransform() is not overridden. If you override OnTransform() and want Transform to be updated, then call the base class OnTransform() in your override. The default constructor sets Transform to the identity.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_UserData_Transform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

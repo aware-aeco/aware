@@ -1,0 +1,26 @@
+{
+  "name": "LcUOptionSetWriteFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetWriteFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetWriteFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eWRITE_ALL",
+      "value": 0
+    },
+    {
+      "name": "eWRITE_DEFAULT_AS_NONE",
+      "value": 1
+    },
+    {
+      "name": "eWRITE_IGNORE_DEFAULT",
+      "value": 2
+    }
+  ]
+}

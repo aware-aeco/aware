@@ -1,0 +1,54 @@
+{
+  "name": "DisplayPipelineAttributes.MeshDisplayAttributes",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.MeshDisplayAttributes\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayPipelineAttributes_MeshDisplayAttributes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AllMeshWiresColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color.Empty means that we are NOT using a single color for all mesh wires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_MeshDisplayAttributes_AllMeshWiresColor.htm"
+    },
+    {
+      "name": "HighlightMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_MeshDisplayAttributes_HighlightMeshes.htm"
+    },
+    {
+      "name": "MeshWireThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_MeshDisplayAttributes_MeshWireThickness.htm"
+    },
+    {
+      "name": "ShowMeshVertices",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_MeshDisplayAttributes_ShowMeshVertices.htm"
+    },
+    {
+      "name": "ShowMeshWires",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_MeshDisplayAttributes_ShowMeshWires.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

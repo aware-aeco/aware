@@ -1,0 +1,169 @@
+{
+  "name": "LcUOptionValidator",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUOptionValidator class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetRange",
+      "signature": "bool GetRange(Autodesk.Navisworks.Api.Interop.LcUOptionSet set, int index, Autodesk.Navisworks.Api.VariantData min_valid, Autodesk.Navisworks.Api.VariantData max_valid)",
+      "summary": "GetRange method of LcUOptionValidator.",
+      "params": [
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "min_valid",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "max_valid",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionValidator.GetRange%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%2CSystem.Int32%2CAutodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "IsDisabled",
+      "signature": "bool IsDisabled(Autodesk.Navisworks.Api.Interop.LcUOptionSet set, int index, Autodesk.Navisworks.Api.VariantData display_data)",
+      "summary": "IsDisabled method of LcUOptionValidator.",
+      "params": [
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "display_data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionValidator.IsDisabled%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%2CSystem.Int32%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "IsValidValue",
+      "signature": "bool IsValidValue(Autodesk.Navisworks.Api.Interop.LcUOptionSet set, int index, Autodesk.Navisworks.Api.VariantData data, out string error_msg)",
+      "summary": "IsValidValue method of LcUOptionValidator.",
+      "params": [
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "error_msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionValidator.IsValidValue%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%2CSystem.Int32%2CAutodesk.Navisworks.Api.VariantData%2CSystem.String%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUOptionValidator InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUOptionValidator.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionValidator.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUOptionValidator.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionValidator.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUOptionValidator.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUOptionValidator.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

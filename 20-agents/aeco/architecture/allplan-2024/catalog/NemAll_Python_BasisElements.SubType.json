@@ -1,0 +1,49 @@
+{
+  "name": "SubType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Sub types of the element group property",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SubType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SubType/#NemAll_Python_BasisElements.SubType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMultiLine3D",
+      "value": 1
+    },
+    {
+      "name": "eMultiLine3D_Group",
+      "value": 2
+    },
+    {
+      "name": "eUseNoSpecialSubType",
+      "value": 0
+    }
+  ]
+}

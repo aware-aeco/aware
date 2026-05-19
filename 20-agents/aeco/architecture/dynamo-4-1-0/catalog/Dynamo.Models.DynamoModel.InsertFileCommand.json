@@ -1,0 +1,71 @@
+{
+  "name": "InsertFileCommand",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "class",
+  "summary": "Type InsertFileCommand",
+  "base": "Dynamo.Models.DynamoModel.RecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "InsertFileCommand(string, bool)",
+      "signature": "void InsertFileCommand(string filePath, bool forceManualExecutionMode)",
+      "summary": "Insert Graph or Custom Node from a file path into the current Workspace",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "The path to the file.",
+          "optional": false
+        },
+        {
+          "name": "forceManualExecutionMode",
+          "type": "bool",
+          "doc": "Should the file be opened in manual execution mode?",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "InsertFileCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "InsertFileCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

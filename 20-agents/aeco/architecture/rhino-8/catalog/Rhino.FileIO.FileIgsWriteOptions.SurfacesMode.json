@@ -1,0 +1,26 @@
+{
+  "name": "FileIgsWriteOptions.SurfacesMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileIgsWriteOptions.SurfacesMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileIgsWriteOptions_SurfacesMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Srf143",
+      "value": 143
+    },
+    {
+      "name": "Srf144",
+      "value": 144
+    },
+    {
+      "name": "Srf128",
+      "value": 128
+    }
+  ]
+}

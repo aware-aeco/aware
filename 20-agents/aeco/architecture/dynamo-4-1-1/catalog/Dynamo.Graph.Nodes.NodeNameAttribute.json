@@ -1,0 +1,40 @@
+{
+  "name": "NodeNameAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Type NodeNameAttribute",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "NodeNameAttribute(string)",
+      "signature": "void NodeNameAttribute(string elementName)",
+      "summary": "NodeNameAttribute.NodeNameAttribute",
+      "params": [
+        {
+          "name": "elementName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NodeNameAttribute.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

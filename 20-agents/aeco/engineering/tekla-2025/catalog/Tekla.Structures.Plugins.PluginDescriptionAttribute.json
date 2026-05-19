@@ -1,0 +1,55 @@
+{
+  "name": "PluginDescriptionAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "Not supported at the moment.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3ae73917-956a-f7d8-520c-a60ea15ce79d",
+  "constructors": [
+    {
+      "name": "PluginDescriptionAttribute",
+      "signature": "public PluginDescriptionAttribute(string language, string description)",
+      "summary": "Not supported at the moment.",
+      "params": [
+        {
+          "name": "language",
+          "type": "System.String",
+          "doc": "Not supported at the moment.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "Not supported at the moment.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8894f969-e1e6-d16c-1259-5abe04bb7905"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Not supported at the moment.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e2d8ce3c-5c1b-29fe-c34b-5be90dbf2536"
+    },
+    {
+      "name": "Language",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Not supported at the moment.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c4cf54aa-95d8-7271-fa35-fa97c9d8680c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

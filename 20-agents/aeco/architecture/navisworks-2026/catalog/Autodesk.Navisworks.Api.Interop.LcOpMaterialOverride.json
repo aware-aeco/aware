@@ -1,0 +1,180 @@
+{
+  "name": "LcOpMaterialOverride",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpMaterialOverride class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpMaterialOverride",
+  "constructors": [
+    {
+      "name": "LcOpMaterialOverride()",
+      "signature": "LcOpMaterialOverride()",
+      "summary": "Constructs a new LcOpMaterialOverride.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetColor()",
+      "summary": "GetColor method of LcOpMaterialOverride.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.GetColor"
+    },
+    {
+      "name": "GetItem",
+      "signature": "Autodesk.Navisworks.Api.ModelItem GetItem()",
+      "summary": "GetItem method of LcOpMaterialOverride.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.GetItem"
+    },
+    {
+      "name": "HasColor",
+      "signature": "bool HasColor()",
+      "summary": "HasColor method of LcOpMaterialOverride.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.HasColor"
+    },
+    {
+      "name": "HasTransparency",
+      "signature": "bool HasTransparency()",
+      "summary": "HasTransparency method of LcOpMaterialOverride.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.HasTransparency"
+    },
+    {
+      "name": "GetTransparency",
+      "signature": "double GetTransparency()",
+      "summary": "GetTransparency method of LcOpMaterialOverride.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.GetTransparency"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpMaterialOverride InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpMaterialOverride.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpMaterialOverride",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpMaterialOverride.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SetColor",
+      "signature": "void SetColor(Autodesk.Navisworks.Api.Color col)",
+      "summary": "SetColor method of LcOpMaterialOverride.",
+      "params": [
+        {
+          "name": "col",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.SetColor%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetTransparency",
+      "signature": "void SetTransparency(double trans)",
+      "summary": "SetTransparency method of LcOpMaterialOverride.",
+      "params": [
+        {
+          "name": "trans",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.SetTransparency%28System.Double%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpMaterialOverride.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpMaterialOverride.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

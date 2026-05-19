@@ -1,0 +1,89 @@
+{
+  "name": "GH_ObjectEventType",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Represents common changes which can cause the ObjectChanged event to be raised.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ObjectEventType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "No type is specified."
+    },
+    {
+      "name": "NickName",
+      "value": 1,
+      "summary": "The NickName has been changed."
+    },
+    {
+      "name": "NickNameAccepted",
+      "value": 2,
+      "summary": "The nickname has been changed and the change was accepted. This event is only raised once per a NickName change process."
+    },
+    {
+      "name": "Icon",
+      "value": 3,
+      "summary": "The object icon has been changed."
+    },
+    {
+      "name": "IconDisplayMode",
+      "value": 4,
+      "summary": "The icon display mode of the object has been changed."
+    },
+    {
+      "name": "Layout",
+      "value": 5,
+      "summary": "The layout of the attributes has changed. This usually happens when the pivot is moved, or when the object is resized, but it can also be due to a change in the object structure."
+    },
+    {
+      "name": "Sources",
+      "value": 6,
+      "summary": "A source list of this object has been altered."
+    },
+    {
+      "name": "Selected",
+      "value": 7,
+      "summary": "The object selected state has been toggled."
+    },
+    {
+      "name": "Enabled",
+      "value": 8,
+      "summary": "The object enabled state has been toggled."
+    },
+    {
+      "name": "Preview",
+      "value": 9,
+      "summary": "The preview of this object has been toggled."
+    },
+    {
+      "name": "PersistentData",
+      "value": 10,
+      "summary": "The persistent data inside this object has been changed."
+    },
+    {
+      "name": "DataMatching",
+      "value": 11,
+      "summary": "The Data matching settings of this object have been changed."
+    },
+    {
+      "name": "DataMapping",
+      "value": 12,
+      "summary": "The Data mapping settings of this object have been changed."
+    },
+    {
+      "name": "Options",
+      "value": 13,
+      "summary": "Custom options of this object have been changed."
+    },
+    {
+      "name": "Custom",
+      "value": 2147483647,
+      "summary": "A non-standard change occured. See the Custom property on the GH_ObjectChangedEventArgs for further details."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "GroupStyleItem",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "Group specific style item Note: This class does not contain special property yet comparing to base class",
+  "base": "Dynamo.Configuration.StyleItem",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/GroupStyleItem.cs",
+  "constructors": [
+    {
+      "name": "GroupStyleItem()",
+      "signature": "void GroupStyleItem()",
+      "summary": "GroupStyleItem.GroupStyleItem",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/GroupStyleItem.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

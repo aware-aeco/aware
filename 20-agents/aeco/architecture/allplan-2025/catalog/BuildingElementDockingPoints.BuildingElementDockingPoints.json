@@ -1,0 +1,66 @@
+{
+  "name": "BuildingElementDockingPoints",
+  "namespace": "BuildingElementDockingPoints",
+  "kind": "class",
+  "summary": "Definition of class BuildingElementDockingPoints",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementDockingPoints/",
+  "constructors": [
+    {
+      "name": "BuildingElementDockingPoints",
+      "signature": "BuildingElementDockingPoints(element: BaseElementAdapter, path: str)",
+      "summary": "Initialization of class BuildingElementInput",
+      "remarks": "Initialization of class BuildingElementInput",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "element for the docking points",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "str",
+          "doc": "Python script path",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementDockingPoints/#BuildingElementDockingPoints.BuildingElementDockingPoints.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "get_docking_points",
+      "signature": "get_docking_points(file_name: str, parameter_data: List[str]) -\u003E Tuple[ List[Tuple[str, Point3D]], List[Tuple[str, Point3D]], List[Tuple[str, Point3D]], ]",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "file name of the pyp file",
+          "optional": false
+        },
+        {
+          "name": "parameter_data",
+          "type": "List[str]",
+          "doc": "parameter data of the selected PythonPart",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple[List[Tuple[str, Point3D]], List[Tuple[str, Point3D]], List[Tuple[str, Point3D]]]",
+        "doc": "docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementDockingPoints/#BuildingElementDockingPoints.BuildingElementDockingPoints.get_docking_points"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

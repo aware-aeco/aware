@@ -1,0 +1,72 @@
+{
+  "name": "UnitsAttribute",
+  "namespace": "Tekla.Structural.ExpressoAddIn",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.UnitsAttribute.)",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-expressoaddin-unitsattribute-64133",
+  "constructors": [
+    {
+      "name": "UnitsAttribute(double, string)",
+      "signature": "public UnitsAttribute(double factor, string unit)",
+      "summary": "",
+      "params": [
+        {
+          "name": "factor",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/98cc973975bba6fe5a146aaa1eec3904387b2c6a4d71a7f0267b5cbc33f8a90c"
+    },
+    {
+      "name": "UnitsAttribute(string)",
+      "signature": "public UnitsAttribute(string unit)",
+      "summary": "",
+      "params": [
+        {
+          "name": "unit",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/98cc973975bba6fe5a146aaa1eec3904387b2c6a4d71a7f0267b5cbc33f8a90c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetUnit(IExpresso)",
+      "signature": "protected virtual string GetUnit(IExpresso expresso)",
+      "summary": "",
+      "params": [
+        {
+          "name": "expresso",
+          "type": "IExpresso",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/0fe78571d3d1c2037c8c0c1871c80a6d49c5c15e63b6c9551b041292acade688"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "IDocumentClash",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "interface",
+  "summary": "Discoverable Document Part for Clash Detective",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.IDocumentClash",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

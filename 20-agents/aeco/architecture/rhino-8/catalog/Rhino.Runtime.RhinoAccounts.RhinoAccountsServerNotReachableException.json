@@ -1,0 +1,54 @@
+{
+  "name": "RhinoAccountsServerNotReachableException",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Exception thrown when the Rhino Accounts server cannot be reached due to a network problem.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsServerNotReachableException.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsServerNotReachableException(Exception)",
+      "signature": "public RhinoAccountsServerNotReachableException(Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsServerNotReachableException__ctor.htm"
+    },
+    {
+      "name": "RhinoAccountsServerNotReachableException(String, Exception)",
+      "signature": "public RhinoAccountsServerNotReachableException(string message, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message of the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsServerNotReachableException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

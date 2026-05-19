@@ -1,0 +1,96 @@
+{
+  "name": "GUID",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Utility.GUID.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/GUID/",
+  "constructors": [
+    {
+      "name": "GUID",
+      "signature": "GUID()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/GUID/#NemAll_Python_Utility.GUID.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FromString",
+      "signature": "FromString(strGuid: str) -\u003E GUID",
+      "summary": "Create a GUID from a string",
+      "remarks": "Create a GUID from a string",
+      "params": [
+        {
+          "name": "strGuid",
+          "type": "str",
+          "doc": "GUID as string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GUID",
+        "doc": "GUID from the string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/GUID/#NemAll_Python_Utility.GUID.FromString"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(compGuid: GUID) -\u003E bool",
+      "summary": "Compare a GUID",
+      "remarks": "Compare a GUID",
+      "params": [
+        {
+          "name": "compGuid",
+          "type": "GUID",
+          "doc": "GUID to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "GUIDs are equal: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/GUID/#NemAll_Python_Utility.GUID.__eq__"
+    },
+    {
+      "name": "__hash__",
+      "signature": "__hash__() -\u003E int",
+      "summary": "Create a hash from the GUID",
+      "remarks": "Create a hash from the GUID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "hash from the GUID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/GUID/#NemAll_Python_Utility.GUID.__hash__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Create a string from the GUID",
+      "remarks": "Create a string from the GUID",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "string from the GUID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/GUID/#NemAll_Python_Utility.GUID.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

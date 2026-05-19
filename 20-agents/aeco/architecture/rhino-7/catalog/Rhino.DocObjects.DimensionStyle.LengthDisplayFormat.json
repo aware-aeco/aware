@@ -1,0 +1,34 @@
+{
+  "name": "DimensionStyle.LengthDisplayFormat",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Obsolete format for length display - use ON_DimStyle::DimensionLengthDisplay instead",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle_LengthDisplayFormat.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Decimal",
+      "value": 0,
+      "summary": "Obsolete - use ON_DimStyle::DimensionLengthDisplay::ModelUnits."
+    },
+    {
+      "name": "Fractional",
+      "value": 1,
+      "summary": "Obsolete - use ON_DimStyle::DimensionLengthDisplay::InchesFractional"
+    },
+    {
+      "name": "FeetInches",
+      "value": 2,
+      "summary": "Obsolete - use ON_DimStyle::DimensionLengthDisplay::FeetAndInches"
+    },
+    {
+      "name": "FeetDecimalInches",
+      "value": 3,
+      "summary": "Obsolete - use ON_DimStyle::DimensionLengthDisplay::FeetAndInches enum."
+    }
+  ]
+}

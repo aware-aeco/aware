@@ -1,0 +1,29 @@
+{
+  "name": "Edge.EdgeTypeEnum",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "enum",
+  "summary": "The type of the edge.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3fa7b5f2-2f4b-34cb-2986-25ed0babf382",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "EDGE_TYPE_NORMAL",
+      "value": 0,
+      "summary": "The normal edge type."
+    },
+    {
+      "name": "EDGE_TYPE_CURVED_SURFACE",
+      "value": 1,
+      "summary": "The curved surface edge type."
+    },
+    {
+      "name": "EDGE_TYPE_HIDDEN",
+      "value": 2,
+      "summary": "The hidden edge type."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "DimensionStyle.LeaderCurveStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Type of leader curve",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle_LeaderCurveStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Polyline",
+      "value": 1
+    },
+    {
+      "name": "Spline",
+      "value": 2
+    }
+  ]
+}

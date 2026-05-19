@@ -1,0 +1,121 @@
+{
+  "name": "CursorTooltipSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Cursor tooltips place information at the cursor location. Note: Turning on cursor tooltips turns off object snap cursors.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_CursorTooltipSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentState",
+      "signature": "public static CursorTooltipSettingsState GetCurrentState()",
+      "summary": "Gets the current settings.",
+      "params": [],
+      "returns": {
+        "type": "CursorTooltipSettingsState",
+        "doc": "A new cursor tooltip state with current settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CursorTooltipSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static CursorTooltipSettingsState GetDefaultState()",
+      "summary": "Gets the cursor tooltip factory settings.",
+      "params": [],
+      "returns": {
+        "type": "CursorTooltipSettingsState",
+        "doc": "A new cursor tooltip state with factory settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CursorTooltipSettings_GetDefaultState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoSuppress",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Attempts to display only the most useful tooltip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_AutoSuppress.htm"
+    },
+    {
+      "name": "BackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Tooltip background color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_BackgroundColor.htm"
+    },
+    {
+      "name": "CommandPromptPane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Displays the current command prompt.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_CommandPromptPane.htm"
+    },
+    {
+      "name": "DistancePane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Displays the distance from the last picked point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_DistancePane.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The x and y distances in pixels from the cursor location to the tooltip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_Offset.htm"
+    },
+    {
+      "name": "OsnapPane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Displays the current object snap selection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_OsnapPane.htm"
+    },
+    {
+      "name": "PointPane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Displays the current construction plane coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_PointPane.htm"
+    },
+    {
+      "name": "RelativePointPane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Displays the relative construction plane coordinates and angle from the last picked point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_RelativePointPane.htm"
+    },
+    {
+      "name": "TextColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Tooltip text color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_TextColor.htm"
+    },
+    {
+      "name": "TooltipsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turns on/off cursor tooltips.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CursorTooltipSettings_TooltipsEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

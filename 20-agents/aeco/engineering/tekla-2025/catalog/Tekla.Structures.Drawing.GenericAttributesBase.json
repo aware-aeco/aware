@@ -1,0 +1,35 @@
+{
+  "name": "GenericAttributesBase",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The GenericAttributesBase class is a base class that shared attributes among many classes use.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/07cd6d10-6a6c-93d8-9f20-1f82869159fe",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1fc87d83-33b8-7e4e-7803-dda26a0aa35a"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

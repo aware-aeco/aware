@@ -1,0 +1,141 @@
+{
+  "name": "PackageDownloadHandle",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "View model for the installation of a package",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs",
+  "constructors": [
+    {
+      "name": "PackageDownloadHandle()",
+      "signature": "void PackageDownloadHandle()",
+      "summary": "Creates an empty view model for a package installation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Done(string)",
+      "signature": "void Done(string filePath)",
+      "summary": "Transition the installation to downloaded with a path to the file",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "Path to the file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    },
+    {
+      "name": "Error(string)",
+      "signature": "void Error(string errorString)",
+      "summary": "Transitions the installation to error with an error message",
+      "params": [
+        {
+          "name": "errorString",
+          "type": "string",
+          "doc": "Error message",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    },
+    {
+      "name": "Extract(Dynamo.Models.DynamoModel, string, ref Dynamo.PackageManager.Package)",
+      "signature": "bool Extract(Dynamo.Models.DynamoModel dynamoModel, string installDirectory, ref Dynamo.PackageManager.Package pkg)",
+      "summary": "Extracts and parses the metadata of a downloaded package",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "doc": "Dynamo model",
+          "optional": false
+        },
+        {
+          "name": "installDirectory",
+          "type": "string",
+          "doc": "If specified, overrides Dynamo\u0027s default base folder for packages",
+          "optional": false
+        },
+        {
+          "name": "pkg",
+          "type": "ref Dynamo.PackageManager.Package",
+          "doc": "Metatda parsed from the package",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Whether the operation succeeded or not"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DownloadPath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Path where the package is downloaded to",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    },
+    {
+      "name": "DownloadState",
+      "type": "Dynamo.PackageManager.PackageDownloadHandle.State",
+      "getter": true,
+      "setter": true,
+      "summary": "State of the installation of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    },
+    {
+      "name": "ErrorString",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Error message that resulted from an unsuccessful installation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Identifier of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    },
+    {
+      "name": "VersionName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Version of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

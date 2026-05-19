@@ -1,0 +1,25 @@
+{
+  "name": "RenderEndEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Contains information about why OnRenderEnd was called",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderEndEventArgs.htm",
+  "constructors": [
+    {
+      "name": "RenderEndEventArgs",
+      "signature": "public RenderEndEventArgs()",
+      "summary": "Initializes a new instance of the RenderEndEventArgs class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderEndEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,299 @@
+{
+  "name": "GH_CanvasValidator",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Abstract implementation of IGH_CanvasValidator. Inherit from this class rather than implementing IGH_CanvasValidator from scratch.",
+  "interfaces": [
+    "IGH_CanvasValidator"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasValidator.htm",
+  "constructors": [
+    {
+      "name": "GH_CanvasValidator",
+      "signature": "protected GH_CanvasValidator()",
+      "summary": "Initializes a new instance of the GH_CanvasValidator class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddedToCanvas",
+      "signature": "public virtual void AddedToCanvas(GH_Canvas canvas)",
+      "summary": "Override this method if you want to be informed when this validator gets assigned to a canvas. But *always* call the base class method.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_AddedToCanvas.htm"
+    },
+    {
+      "name": "AppliesToDocument",
+      "signature": "public virtual bool AppliesToDocument(Guid id)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_AppliesToDocument.htm"
+    },
+    {
+      "name": "CanAcceptObject",
+      "signature": "public virtual bool CanAcceptObject(Guid id)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanAcceptObject.htm"
+    },
+    {
+      "name": "CanCreateObject",
+      "signature": "public virtual bool CanCreateObject(Guid id, PointF pt)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanCreateObject.htm"
+    },
+    {
+      "name": "CanCreateWire",
+      "signature": "public virtual bool CanCreateWire(IGH_Param source, IGH_Param target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanCreateWire.htm"
+    },
+    {
+      "name": "CanDeleteObject",
+      "signature": "public virtual bool CanDeleteObject(IGH_DocumentObject object)",
+      "summary": "",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanDeleteObject.htm"
+    },
+    {
+      "name": "CanDeleteWire",
+      "signature": "public virtual bool CanDeleteWire(IGH_Param source, IGH_Param target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanDeleteWire.htm"
+    },
+    {
+      "name": "CanDragObject",
+      "signature": "public virtual bool CanDragObject(IGH_DocumentObject object, PointF dragFromPoint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "dragFromPoint",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanDragObject.htm"
+    },
+    {
+      "name": "CanNavigateCanvas",
+      "signature": "public virtual bool CanNavigateCanvas()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanNavigateCanvas.htm"
+    },
+    {
+      "name": "CanShowCanvasMenu",
+      "signature": "public virtual bool CanShowCanvasMenu(PointF pt)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanShowCanvasMenu.htm"
+    },
+    {
+      "name": "CanShowComponentSearchBox",
+      "signature": "public virtual bool CanShowComponentSearchBox(PointF pt)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanShowComponentSearchBox.htm"
+    },
+    {
+      "name": "CanShowObjectMenu",
+      "signature": "public virtual bool CanShowObjectMenu(IGH_DocumentObject object)",
+      "summary": "",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanShowObjectMenu.htm"
+    },
+    {
+      "name": "RemovedFromCanvas",
+      "signature": "public virtual void RemovedFromCanvas(GH_Canvas canvas)",
+      "summary": "Override this method if you want to be informed when this validator gets removed from a canvas. But *always* call the base class method.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_RemovedFromCanvas.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Canvas",
+      "type": "GH_Canvas",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the canvas this validator is associated with.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasValidator_Canvas.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document (if it exists) that is currently loaded in the canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasValidator_Document.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

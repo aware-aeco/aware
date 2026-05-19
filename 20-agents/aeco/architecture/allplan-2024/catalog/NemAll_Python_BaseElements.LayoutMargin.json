@@ -1,0 +1,58 @@
+{
+  "name": "LayoutMargin",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Margin data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMargin/",
+  "constructors": [
+    {
+      "name": "LayoutMargin",
+      "signature": "LayoutMargin()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMargin/#NemAll_Python_BaseElements.LayoutMargin.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Bottom",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get bottom margin :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMargin/#NemAll_Python_BaseElements.LayoutMargin.Bottom"
+    },
+    {
+      "name": "Left",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the left margin :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMargin/#NemAll_Python_BaseElements.LayoutMargin.Left"
+    },
+    {
+      "name": "Right",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the right margin :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMargin/#NemAll_Python_BaseElements.LayoutMargin.Right"
+    },
+    {
+      "name": "Top",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the top margin :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMargin/#NemAll_Python_BaseElements.LayoutMargin.Top"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "BarShapePointDataList",
+  "namespace": "StdReinfShapeBuilder.BarShapePointDataList",
+  "kind": "class",
+  "summary": "the rows can have the following tuple entries",
+  "base": "List[Union[Tuple[Point2D, float], Tuple[Point2D, float, float], Tuple[Point2D, float, float, float], Tuple[Point3D, float], Tuple[Point3D, float, float], float]]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePointDataList/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

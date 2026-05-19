@@ -1,0 +1,36 @@
+{
+  "name": "eFaceOffsetDirection",
+  "namespace": "NemAll_Python_Geometry.FaceOffset",
+  "kind": "enum",
+  "summary": "Face offset direction",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.eFaceOffsetDirection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: str | int | float) -\u003E eFaceOffsetDirection",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eFaceOffsetDirection",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.eFaceOffsetDirection.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

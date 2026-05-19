@@ -1,0 +1,57 @@
+{
+  "name": "WaitCursor",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.WaitCursor\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_WaitCursor.htm",
+  "constructors": [
+    {
+      "name": "WaitCursor",
+      "signature": "public WaitCursor()",
+      "summary": "Initializes a new instance of the WaitCursor class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_WaitCursor__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_WaitCursor_Clear.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the WaitCursor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_WaitCursor_Dispose.htm"
+    },
+    {
+      "name": "Set",
+      "signature": "public void Set()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_WaitCursor_Set.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

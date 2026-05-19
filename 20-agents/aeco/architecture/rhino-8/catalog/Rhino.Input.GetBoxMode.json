@@ -1,0 +1,39 @@
+{
+  "name": "GetBoxMode",
+  "namespace": "Rhino.Input",
+  "kind": "enum",
+  "summary": "Enumerates all Box getter modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_GetBoxMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "All",
+      "value": 0,
+      "summary": "All modes are allowed."
+    },
+    {
+      "name": "Corner",
+      "value": 1,
+      "summary": "The base rectangle is created by picking the two corner points."
+    },
+    {
+      "name": "ThreePoint",
+      "value": 2,
+      "summary": "The base rectangle is created by picking three points."
+    },
+    {
+      "name": "Vertical",
+      "value": 3,
+      "summary": "The base vertical rectangle is created by picking three points."
+    },
+    {
+      "name": "Center",
+      "value": 4,
+      "summary": "The base rectangle is created by picking a center point and a corner point."
+    }
+  ]
+}

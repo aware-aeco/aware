@@ -1,0 +1,132 @@
+{
+  "name": "DLLFFIHandler",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type DLLFFIHandler",
+  "base": "ProtoFFI.FFIHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetFunctionPointer(string, string, string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, ProtoCore.Type)",
+      "signature": "ProtoFFI.FFIFunctionPointer GetFunctionPointer(string dllModuleName, string className, string functionName, System.Collections.Generic.List\u003CProtoCore.Type\u003E parameterTypes, ProtoCore.Type returnType)",
+      "summary": "DLLFFIHandler.GetFunctionPointer",
+      "params": [
+        {
+          "name": "dllModuleName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "functionName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameterTypes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "returnType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIFunctionPointer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "GetModule(string)",
+      "signature": "ProtoFFI.DLLModule GetModule(string dllModuleName)",
+      "summary": "DLLFFIHandler.GetModule",
+      "params": [
+        {
+          "name": "dllModuleName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.DLLModule",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "GetModuleHelper(ProtoFFI.FFILanguage)",
+      "signature": "ProtoFFI.ModuleHelper GetModuleHelper(ProtoFFI.FFILanguage language)",
+      "summary": "DLLFFIHandler.GetModuleHelper",
+      "params": [
+        {
+          "name": "language",
+          "type": "ProtoFFI.FFILanguage",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.ModuleHelper",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "Register",
+      "signature": "void Register()",
+      "summary": "DLLFFIHandler.Register",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "Register(ProtoFFI.FFILanguage, ProtoFFI.ModuleHelper)",
+      "signature": "void Register(ProtoFFI.FFILanguage type, ProtoFFI.ModuleHelper helper)",
+      "summary": "DLLFFIHandler.Register",
+      "params": [
+        {
+          "name": "type",
+          "type": "ProtoFFI.FFILanguage",
+          "optional": false
+        },
+        {
+          "name": "helper",
+          "type": "ProtoFFI.ModuleHelper",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Env",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": true,
+      "summary": "DLLFFIHandler.Env",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

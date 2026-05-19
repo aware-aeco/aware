@@ -1,0 +1,75 @@
+{
+  "name": "Profile",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Profile class defines the form of a cross section.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ee78af8a-1ea0-65e3-6b75-57945a009dae",
+  "constructors": [
+    {
+      "name": "Profile",
+      "signature": "public Profile()",
+      "summary": "Instantiates an empty profile.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f7afe7eb-9c88-5431-bb40-410b2ea1c417"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FormatProfileString",
+      "signature": "public static string FormatProfileString(string profileString)",
+      "summary": "Formats profile string",
+      "params": [
+        {
+          "name": "profileString",
+          "type": "System.String",
+          "doc": "profile string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Formatted profile string, if not successful returns original string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca9d6a66-2d49-6f5e-ef81-d2688f631207"
+    },
+    {
+      "name": "ParseProfileString",
+      "signature": "public static string ParseProfileString(string profileString)",
+      "summary": "Parses profile string",
+      "params": [
+        {
+          "name": "profileString",
+          "type": "System.String",
+          "doc": "profile string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Parsed profile string, if not successful returns original string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fb92ae16-8054-c8ac-9469-ef01e23ffe0b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ProfileString",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile in human-readable form.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/39c11788-fca0-db81-3c7e-a18505427410"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,156 @@
+{
+  "name": "GridLine.GridLineAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The GridLineAttributes class is the attributes class for the grid line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/00d87eb4-0b57-590a-3618-375be64d212d",
+  "constructors": [
+    {
+      "name": "GridLine.GridLineAttributes()",
+      "signature": "public GridLineAttributes()",
+      "summary": "Creates a new default grid line attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/acf39c54-8741-4f49-fe10-8f01313cbd0e"
+    },
+    {
+      "name": "GridLine.GridLineAttributes(String)",
+      "signature": "public GridLineAttributes(string AttributesFile)",
+      "summary": "Creates a new grid line attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/932acd3c-11b9-ef68-9268-dce73113ef91"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/31a350a0-9c84-12c6-74fa-9c2394fbc007"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/056276ed-908e-fa37-4d76-528c0bcd4a9f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CustomPresentation",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/93dd8cfe-8052-2bcf-a27b-c3877f2ce8c8"
+    },
+    {
+      "name": "DrawOnlyTextLabelsNotGridLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you don\u0027t want to draw the grid lines, only show the grid lines\u0027 text labels.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3b0d3866-4752-d6e1-e256-73ca5ba2413b"
+    },
+    {
+      "name": "DrawTextAtEndOfGridLine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you want to show the grid line\u0027s text label at the end of the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4df869f7-a6fa-7428-4451-ec15d0377057"
+    },
+    {
+      "name": "DrawTextAtStartOfGridLine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you want to show the grid line\u0027s text label at the start of the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/18601c7b-0f4b-e976-03e9-0cc98dbf0e07"
+    },
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid line\u0027s font attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6f8206d5-f66d-708e-0621-ce35de654cf4"
+    },
+    {
+      "name": "Frame",
+      "type": "Frame",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame attributes of the grid line\u0027s label.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fd129626-ab14-5220-6d90-fb94e0d8aac9"
+    },
+    {
+      "name": "Line",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid line\u0027s line attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/775b37da-609c-e1e8-fa0b-13cbef795105"
+    },
+    {
+      "name": "OffsetAtEndOfLine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset for the end of the grid line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74279e1c-776d-7152-9da9-5859eb8e6328"
+    },
+    {
+      "name": "OffsetAtStartOfLine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset for the beginning of the grid line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2cb59aeb-efc1-e07b-c060-d4c0a77513ca"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

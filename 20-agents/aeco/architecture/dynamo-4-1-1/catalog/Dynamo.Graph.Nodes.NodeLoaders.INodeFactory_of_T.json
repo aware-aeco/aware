@@ -1,0 +1,27 @@
+{
+  "name": "INodeFactory\u003CT\u003E",
+  "namespace": "Dynamo.Graph.Nodes.NodeLoaders",
+  "kind": "interface",
+  "summary": "An object which can create a new NodeModel.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeLoaders/NodeFactory.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateNode",
+      "signature": "T CreateNode()",
+      "summary": "Creates a new NodeModel instance.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeLoaders/NodeFactory.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

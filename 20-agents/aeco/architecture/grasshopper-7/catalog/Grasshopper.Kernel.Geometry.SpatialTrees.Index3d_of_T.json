@@ -1,0 +1,90 @@
+{
+  "name": "Index3d\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel.Geometry.SpatialTrees",
+  "kind": "class",
+  "summary": "Represents an element index within a Tree3d instance.",
+  "interfaces": [
+    "IComparable\u003CIndex3d\u003CT\u003E\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Geometry_SpatialTrees_Index3d_1.htm",
+  "constructors": [
+    {
+      "name": "Index3d\u003CT\u003E",
+      "signature": "public Index3d(Node3d\u003CT\u003E node, int nodeIndex)",
+      "summary": "Initializes a new instance of the Index3d\u003CT\u003E class",
+      "params": [
+        {
+          "name": "node",
+          "type": "Grasshopper.Kernel.Geometry.SpatialTrees.Node3d\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "nodeIndex",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Index3d_1__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Index3d\u003CT\u003E other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Geometry.SpatialTrees.Index3d\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Index3d_1_CompareTo.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "GlobalIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the item index within the tree global list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Index3d_1_GlobalIndex.htm"
+    },
+    {
+      "name": "Item",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the actual item.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Index3d_1_Item.htm"
+    },
+    {
+      "name": "LocalIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index within the node index list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Index3d_1_LocalIndex.htm"
+    },
+    {
+      "name": "Node",
+      "type": "Node3d\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the node of the tree in which this element is stored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Index3d_1_Node.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

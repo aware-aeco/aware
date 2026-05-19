@@ -1,0 +1,38 @@
+{
+  "name": "ConAlignedPlate",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConAlignedPlate.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConAlignedPlate.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PlateSide",
+      "type": "ConAlignedPlateSideCodeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConAlignedPlate.plateSide.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConAlignedPlate.md"
+    },
+    {
+      "name": "MemberId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConAlignedPlate.memberId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConAlignedPlate.md"
+    },
+    {
+      "name": "PartType",
+      "type": "ConMemberPlatePartTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConAlignedPlate.partType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConAlignedPlate.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

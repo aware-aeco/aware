@@ -1,0 +1,170 @@
+{
+  "name": "GH_CanvasMouseEvent",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Class used in Canvas UI events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_CanvasMouseEvent.htm",
+  "constructors": [
+    {
+      "name": "GH_CanvasMouseEvent()",
+      "signature": "public GH_CanvasMouseEvent()",
+      "summary": "Blank constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CanvasMouseEvent__ctor.htm"
+    },
+    {
+      "name": "GH_CanvasMouseEvent(GH_Viewport, MouseEventArgs)",
+      "signature": "public GH_CanvasMouseEvent(GH_Viewport vp, MouseEventArgs e_args)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Grasshopper.GUI.Canvas.GH_Viewport",
+          "doc": "The current canvas viewport state.",
+          "optional": false
+        },
+        {
+          "name": "e_args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Original mouse event args.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CanvasMouseEvent__ctor_1.htm"
+    },
+    {
+      "name": "GH_CanvasMouseEvent(Point, PointF, MouseButtons, Int32, Int32)",
+      "signature": "public GH_CanvasMouseEvent(Point pt_control, PointF pt_canvas, MouseButtons mButton, int iClicks = 0, int iDelta = 0)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "pt_control",
+          "type": "System.Drawing.Point",
+          "doc": "Cursor location in control pixel coordinates.",
+          "optional": false
+        },
+        {
+          "name": "pt_canvas",
+          "type": "System.Drawing.PointF",
+          "doc": "Cursor location in canvas unit coordinates.",
+          "optional": false
+        },
+        {
+          "name": "mButton",
+          "type": "System.Windows.Forms.MouseButtons",
+          "doc": "Currently pressed mouse buttons.",
+          "optional": false
+        },
+        {
+          "name": "iClicks",
+          "type": "System.Int32",
+          "doc": "Number of times the buttons were pressed and released.",
+          "optional": true
+        },
+        {
+          "name": "iDelta",
+          "type": "System.Int32",
+          "doc": "A signed count of the number of detents the mouse wheel has rotated.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CanvasMouseEvent__ctor_2.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Button",
+      "type": "MouseButtons",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets which mouse button was pressed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_Button.htm"
+    },
+    {
+      "name": "CanvasLocation",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location of the cursor in canvas unit coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_CanvasLocation.htm"
+    },
+    {
+      "name": "CanvasX",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the x-coordinate of the cursor location in canvas unit coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_CanvasX.htm"
+    },
+    {
+      "name": "CanvasY",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the y-coordinate of the cursor location in canvas unit coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_CanvasY.htm"
+    },
+    {
+      "name": "Clicks",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of times the mouse button was pressed and released.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_Clicks.htm"
+    },
+    {
+      "name": "ControlLocation",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location of the cursor in control pixel coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_ControlLocation.htm"
+    },
+    {
+      "name": "ControlX",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the x-coordinate of the cursor location in control pixel coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_ControlX.htm"
+    },
+    {
+      "name": "ControlY",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the y-coordinate of the cursor location in control pixel coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_ControlY.htm"
+    },
+    {
+      "name": "Delta",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a signed count of the number of detents the mouse wheel has rotated. A detent is one notch of the mouse wheel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_Delta.htm"
+    },
+    {
+      "name": "WinFormsEventArgs",
+      "type": "MouseEventArgs",
+      "getter": true,
+      "setter": false,
+      "summary": "Downcast this data into a Windows.Forms.MouseEventArgs instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasMouseEvent_WinFormsEventArgs.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

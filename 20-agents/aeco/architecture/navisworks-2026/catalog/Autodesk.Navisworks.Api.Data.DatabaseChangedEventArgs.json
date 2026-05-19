@@ -1,0 +1,39 @@
+{
+  "name": "DatabaseChangedEventArgs",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Event arguments when a database changed event.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.DatabaseChangedEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Action",
+      "type": "Autodesk.Navisworks.Api.Data.DatabaseChangedAction",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the action that caused the event",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.DatabaseChangedEventArgs.Action"
+    },
+    {
+      "name": "ActionType",
+      "type": "Autodesk.Navisworks.Api.Data.DatabaseActionType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets action type of database editing.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.DatabaseChangedEventArgs.ActionType"
+    },
+    {
+      "name": "Changes",
+      "type": "Autodesk.Navisworks.Api.Data.DatabaseChangeCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets change collection that were edited, if Action is not Edited, Changes will be null.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.DatabaseChangedEventArgs.Changes"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

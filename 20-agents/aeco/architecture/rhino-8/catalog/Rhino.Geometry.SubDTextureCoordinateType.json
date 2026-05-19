@@ -1,0 +1,49 @@
+{
+  "name": "SubDTextureCoordinateType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubDTextureCoordinateType identifies the way ON_SubDMeshFragment texture coordinates are set from an ON_SubDFace.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDTextureCoordinateType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Texture domains are not set."
+    },
+    {
+      "name": "Unpacked",
+      "value": 1,
+      "summary": "Each SubDFace uses the unit square in texture space."
+    },
+    {
+      "name": "Packed",
+      "value": 2,
+      "summary": "The face\u0027s pack rect is used to set fragment texture coordinates. When possible, adjacent quads with the same ON_SubDFace::PackId() value are assigned adjacent rectangles in texture space."
+    },
+    {
+      "name": "Zero",
+      "value": 3,
+      "summary": "All ON_SubDMeshFragment texture coordinate values are zero."
+    },
+    {
+      "name": "Nan",
+      "value": 4,
+      "summary": "All ON_SubDMeshFragment texture coordinate values are ON_DBL_QNAN."
+    },
+    {
+      "name": "FromFaceTexturePoints",
+      "value": 6,
+      "summary": "All ON_SubDMeshFragment texture coordinate values are set by barycentric interpolation of ON_SubDFace.TexturePoint() values."
+    },
+    {
+      "name": "FromMapping",
+      "value": 7,
+      "summary": "Texture coordinates are set from an ON_TextureMapping and transformation specified by ON_SubD::TextureMappingTag(). In all other cases, ON_SubD::TextureMappingTag() can be set, but is ignored."
+    }
+  ]
+}

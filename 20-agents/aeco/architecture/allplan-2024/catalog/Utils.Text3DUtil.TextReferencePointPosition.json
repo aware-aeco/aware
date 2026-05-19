@@ -1,0 +1,51 @@
+{
+  "name": "TextReferencePointPosition",
+  "namespace": "Utils.Text3DUtil",
+  "kind": "enum",
+  "summary": "Definition of the text reference points",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/Text3DUtil/TextReferencePointPosition/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOTTOM_CENTER",
+      "value": 2
+    },
+    {
+      "name": "BOTTOM_LEFT",
+      "value": 1
+    },
+    {
+      "name": "BOTTOM_RIGHT",
+      "value": 3
+    },
+    {
+      "name": "CENTER_CENTER",
+      "value": 5
+    },
+    {
+      "name": "CENTER_LEFT",
+      "value": 4
+    },
+    {
+      "name": "CENTER_RIGHT",
+      "value": 6
+    },
+    {
+      "name": "TOP_CENTER",
+      "value": 8
+    },
+    {
+      "name": "TOP_LEFT",
+      "value": 7
+    },
+    {
+      "name": "TOP_RIGHT",
+      "value": 9
+    }
+  ]
+}

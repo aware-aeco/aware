@@ -1,0 +1,86 @@
+{
+  "name": "IGH_ZuiAction",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Represents a single action which is only visible on screen above a certain zoom level.",
+  "interfaces": [
+    "IGH_TooltipAwareObject"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_ZuiAction.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsTooltipRegion",
+      "signature": "bool IsTooltipRegion(PointF canvasPoint)",
+      "summary": "Determine whether the specified pixel should result in a tooltip when the cursor hovers over it.",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "Point in Canvas coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_IsTooltipRegion.htm"
+    },
+    {
+      "name": "Perform",
+      "signature": "void Perform()",
+      "summary": "This method will be called when the action needs to be performed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ZuiAction_Perform.htm"
+    },
+    {
+      "name": "SetupTooltip",
+      "signature": "void SetupTooltip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)",
+      "summary": "This function is called when a tooltip it about to be displayed.",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "The pixel coordinate on the canvas of the cursor.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_TooltipDisplayEventArgs",
+          "doc": "Tooltip display arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_SetupTooltip.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the display name for this action. Keep it short and sweet.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ZuiAction_Name.htm"
+    },
+    {
+      "name": "TooltipEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the tooltip enabled value. If False, no further tooltip functions will be called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_TooltipEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

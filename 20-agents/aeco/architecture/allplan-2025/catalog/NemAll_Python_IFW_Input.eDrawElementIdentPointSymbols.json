@@ -1,0 +1,23 @@
+{
+  "name": "eDrawElementIdentPointSymbols",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "If the identification mode allows to select an element (IDENT_...ELEMENT...), it\u0027s possible to draw also the identification point symbol of the identification point (element point, center point, ...) at the element",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eDrawElementIdentPointSymbols/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDRAW_IDENT_ELEMENT_POINT_SYMBOL_NO",
+      "value": 0
+    },
+    {
+      "name": "eDRAW_IDENT_ELEMENT_POINT_SYMBOL_YES",
+      "value": 1
+    }
+  ]
+}

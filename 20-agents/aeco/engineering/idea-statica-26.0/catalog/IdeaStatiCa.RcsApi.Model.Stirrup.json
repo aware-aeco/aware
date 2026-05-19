@@ -1,0 +1,86 @@
+{
+  "name": "Stirrup",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.Stirrup.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Geometry",
+      "type": "PolyLine2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.geometry.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "Diameter",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.diameter.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "Material",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.material.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "AnchorageLenght",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.anchorageLenght.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "DiameterOfMandrel",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.diameterOfMandrel.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "IsClosed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.isClosed.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "Distance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.distance.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "ShearCheck",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.shearCheck.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    },
+    {
+      "name": "TorsionCheck",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Stirrup.torsionCheck.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/Stirrup.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

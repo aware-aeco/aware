@@ -1,0 +1,74 @@
+{
+  "name": "SearchConditionOptions",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Options that modify SearchCondition matching behavior",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SearchConditionOptions",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No additional options"
+    },
+    {
+      "name": "IgnoreCategoryDisplayName",
+      "value": 1,
+      "summary": "Do not compare DisplayName when looking for matching category"
+    },
+    {
+      "name": "IgnoreCategoryName",
+      "value": 2,
+      "summary": "Do not compare Name when looking for matching category"
+    },
+    {
+      "name": "IgnorePropertyDisplayName",
+      "value": 4,
+      "summary": "Do not compare DisplayName when looking for matching property"
+    },
+    {
+      "name": "IgnoreDisplayNames",
+      "value": 5,
+      "summary": "Do not compare DisplayName when looking for matching category or property"
+    },
+    {
+      "name": "IgnorePropertyName",
+      "value": 8,
+      "summary": "Do not compare Name when looking for matching property"
+    },
+    {
+      "name": "IgnoreNames",
+      "value": 10,
+      "summary": "Do not compare Name when looking for matching category or property"
+    },
+    {
+      "name": "IgnoreDisplayStringValueCase",
+      "value": 16,
+      "summary": "Ignore case when comparing DisplayString values"
+    },
+    {
+      "name": "NegateCondition",
+      "value": 32,
+      "summary": "Negate the sense of the condition"
+    },
+    {
+      "name": "StartGroup",
+      "value": 64,
+      "summary": "When used in a SearchConditionCollection, marks the start of a group of conditions. Collection matches if any group of conditions matches."
+    },
+    {
+      "name": "IgnoreDisplayStringValueAccents",
+      "value": 128,
+      "summary": "Ignore accents when comparing DisplayString values"
+    },
+    {
+      "name": "IgnoreDisplayStringCharWidths",
+      "value": 256,
+      "summary": "Ignore character width when comparing DisplayString values"
+    }
+  ]
+}

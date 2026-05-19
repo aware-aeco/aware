@@ -1,0 +1,89 @@
+{
+  "name": "eIdentificationMode",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Type of the identification mode during point input.",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eIdentificationMode/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eIDENT_ARCHPOINT",
+      "value": 10,
+      "summary": "Identify the nearest point at the cursor position. Similar to eIDENT_POINT, but additionally when point was found on an architectural element, a reference 2D line, on which this point is located, is identified. The line can be get with GetReferenceLine."
+    },
+    {
+      "name": "eIDENT_ARCHPOINT_OFFSET",
+      "value": 11,
+      "summary": "Identify the nearest point at the cursor position. As eIDENT_ARCHPOINT, but in case a line is identified, a second input step is activated similar to the in eIDENT_POINT_OFFSET When the point was found in an UVS, the point is returned in the world coordinate system"
+    },
+    {
+      "name": "eIDENT_ARCH_ELEMENTPOINT",
+      "value": 12,
+      "summary": "Identify the nearest element point at an architecture element. Similar to eIDENT_ELEMENTPOINT, but additionally a reference line of an architectural element is identified and can be get with GetReferenceLine"
+    },
+    {
+      "name": "eIDENT_DOCKINGPOINT",
+      "value": 13,
+      "summary": "Identify the nearest docking point at the cursor position"
+    },
+    {
+      "name": "eIDENT_ELEMENTPOINT",
+      "value": 1,
+      "summary": "Identify the nearest element point at the cursor position. Similar to eIDENT_POINT, but input controls for XYZ coordinates are disabled and track tracing is not performed. This implies, that the input point lies on an existing element."
+    },
+    {
+      "name": "eIDENT_POINT",
+      "value": 0,
+      "summary": "Identify the nearest point at the cursor position. Identified are start, end, center or intersection points of all kind of elements. Snapping options set by the user in Allplan settings are considered. This is the default way of point identification."
+    },
+    {
+      "name": "eIDENT_POINT_ASSOC_VIEW_WORLD",
+      "value": 2,
+      "summary": "Identify the nearest point at the cursor position. Similar to eIDENT_POINT, but when the point was found in an UVS, the point is returned in the world coordinate system"
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT",
+      "value": 3,
+      "summary": "Identify the nearest point or element at the cursor position As eIDENT_POINT, but additionally a geometry element (like edge/face of a polyhedron, polygon segment, etc...) is searched during the point input. The found geometry element can be get with GetSelectedGeometryElement. Element is not identified, when a point (start, end, center, intersection, etc...) is found. Filter for the element identification can be set with SetGeometryFilter and SetGeometryElementFilter"
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT_ALWAYS",
+      "value": 5,
+      "summary": "Similar to eIDENT_POINT_ELEMENT, but the element is always identified, even when a point was found"
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT_ALWAYS_CENTER",
+      "value": 6,
+      "summary": "As eIDENT_POINT_ELEMENT_ALWAYS"
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT_CENTER",
+      "value": 4,
+      "summary": "Similar to eIDENT_POINT_ELEMENT, but the element is identified also, when a center point (but not start/end point) is found."
+    },
+    {
+      "name": "eIDENT_POINT_OFFSET",
+      "value": 8,
+      "summary": "Identify the nearest point or element at the cursor position Similar to POINT_ELEMENT, but in case a line is identified (2D or 3D), a second input step is introduced, where the user can provide the offset distance. The resulting point will be located on the line at the given distance from the start or end point (depending, where the line was clicked)"
+    },
+    {
+      "name": "eIDENT_POINT_PERPENDICULAR",
+      "value": 7,
+      "summary": "Identify the nearest point or point perpendicular to a line Similar to eIDENT_POINT, but additionally if a 2D line is identified, the result will be a point calculated by projecting the previously input point onto this line. Works only in ground view!"
+    },
+    {
+      "name": "eIDENT_TEXTPOINT",
+      "value": 9,
+      "summary": "Snapping only to the anchor points of text or label elements"
+    },
+    {
+      "name": "eIDENT_TEXTPOINTER_POINT",
+      "value": 14
+    }
+  ]
+}

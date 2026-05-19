@@ -1,0 +1,46 @@
+{
+  "name": "PourBreakFilterExpressions.CustomString",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomString class represents a custom string filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cff51556-0f60-3635-2fe8-307831930d8a",
+  "constructors": [
+    {
+      "name": "PourBreakFilterExpressions.CustomString",
+      "signature": "public CustomString(string UserAttribute)",
+      "summary": "Initializes a new instance of the CustomString class.",
+      "params": [
+        {
+          "name": "UserAttribute",
+          "type": "System.String",
+          "doc": "The user attribute to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bad92b22-bb7b-32a3-ee53-4adbe79c2094"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

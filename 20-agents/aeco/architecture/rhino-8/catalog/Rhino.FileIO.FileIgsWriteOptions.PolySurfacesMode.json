@@ -1,0 +1,22 @@
+{
+  "name": "FileIgsWriteOptions.PolySurfacesMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileIgsWriteOptions.PolySurfacesMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileIgsWriteOptions_PolySurfacesMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PsrfSeparate",
+      "value": 0
+    },
+    {
+      "name": "PsrfUnorderedGroup",
+      "value": 402
+    }
+  ]
+}

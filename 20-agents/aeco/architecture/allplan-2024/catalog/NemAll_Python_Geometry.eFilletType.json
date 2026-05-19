@@ -1,0 +1,93 @@
+{
+  "name": "eFilletType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Enumeration for the type of Fillet",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eFilletType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eFilletType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eFilletType/#NemAll_Python_Geometry.eFilletType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FT_CC_CONCETRIC",
+      "value": 33
+    },
+    {
+      "name": "FT_CC_NO_INTERSECTION",
+      "value": 32
+    },
+    {
+      "name": "FT_CC_ONE_INTERSECTION",
+      "value": 31
+    },
+    {
+      "name": "FT_CC_TWO_INTERSECTION",
+      "value": 30
+    },
+    {
+      "name": "FT_KK_KURVE_ELEMENTS",
+      "value": 40
+    },
+    {
+      "name": "FT_KK_PARALLEL_KURVE_ELEMENTS",
+      "value": 41
+    },
+    {
+      "name": "FT_LC_NO_INTERSECTION",
+      "value": 22
+    },
+    {
+      "name": "FT_LC_ONE_INTERSECTION",
+      "value": 21
+    },
+    {
+      "name": "FT_LC_TWO_INTERSECTION",
+      "value": 20
+    },
+    {
+      "name": "FT_LL_INTERSECTION_AT_THE_END",
+      "value": 11
+    },
+    {
+      "name": "FT_LL_INTERSECTION_ON_LINE",
+      "value": 10
+    },
+    {
+      "name": "FT_LL_INTERSECTION_OUT_OF_LINES",
+      "value": 12
+    },
+    {
+      "name": "FT_LL_PARALLEL_LINES",
+      "value": 13
+    },
+    {
+      "name": "FT_UNKNOWN",
+      "value": 0
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "name": "LcOpBoolASTCondition",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpBoolASTCondition class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpBoolASTNode",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpBoolASTCondition",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpBoolASTNode Clone()",
+      "summary": "Clone method of LcOpBoolASTCondition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolASTNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.Clone"
+    },
+    {
+      "name": "PushDownNegations",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpBoolASTNode PushDownNegations()",
+      "summary": "PushDownNegations method of LcOpBoolASTCondition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolASTNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.PushDownNegations"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Interop.LcOpBoolASTCondition other)",
+      "summary": "Equals method of LcOpBoolASTCondition.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolASTCondition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.Equals%28Autodesk.Navisworks.Api.Interop.LcOpBoolASTCondition%29"
+    },
+    {
+      "name": "IsNegation",
+      "signature": "bool IsNegation()",
+      "summary": "IsNegation method of LcOpBoolASTCondition.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.IsNegation"
+    },
+    {
+      "name": "IsOperator",
+      "signature": "bool IsOperator()",
+      "summary": "IsOperator method of LcOpBoolASTCondition.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.IsOperator"
+    },
+    {
+      "name": "IsTerminal",
+      "signature": "bool IsTerminal()",
+      "summary": "IsTerminal method of LcOpBoolASTCondition.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.IsTerminal"
+    },
+    {
+      "name": "Normalise",
+      "signature": "bool Normalise()",
+      "summary": "Normalise method of LcOpBoolASTCondition.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.Normalise"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpBoolASTCondition InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpBoolASTCondition.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolASTCondition",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpBoolASTCondition.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpBoolASTCondition.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpBoolASTCondition.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

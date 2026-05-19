@@ -1,0 +1,99 @@
+{
+  "name": "LcOpSwigSimulationSourceNotify",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSwigSimulationSourceNotify class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceNotify",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify",
+  "constructors": [
+    {
+      "name": "LcOpSwigSimulationSourceNotify()",
+      "signature": "LcOpSwigSimulationSourceNotify()",
+      "summary": "Constructs a new LcOpSwigSimulationSourceNotify.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSwigSimulationSourceNotify.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSwigSimulationSourceNotify.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SimulationChanged",
+      "signature": "void SimulationChanged(Autodesk.Navisworks.Api.SimulationType type)",
+      "summary": "SimulationChanged method of LcOpSwigSimulationSourceNotify.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.SimulationType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify.SimulationChanged%28Autodesk.Navisworks.Api.SimulationType%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSwigSimulationSourceNotify.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSwigSimulationSourceNotify.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

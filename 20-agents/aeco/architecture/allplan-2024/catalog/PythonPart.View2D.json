@@ -1,0 +1,48 @@
+{
+  "name": "View2D",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Definition of a 2D view class",
+  "base": "View",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View2D/",
+  "constructors": [
+    {
+      "name": "View2D",
+      "signature": "View2D(elements=None, start_scale=0.0, end_scale=9999.0)",
+      "summary": "Initialization of 2D view class",
+      "remarks": "Initialization of 2D view class",
+      "params": [
+        {
+          "name": "elements",
+          "type": "list[Any] | None",
+          "doc": "elements. Defaults to None.",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "start_scale",
+          "type": "float",
+          "doc": "start scale. Defaults to 0.",
+          "optional": true,
+          "default": "0.0"
+        },
+        {
+          "name": "end_scale",
+          "type": "float",
+          "doc": "end scale. Defaults to 9999.",
+          "optional": true,
+          "default": "9999.0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View2D/#PythonPart.View2D.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

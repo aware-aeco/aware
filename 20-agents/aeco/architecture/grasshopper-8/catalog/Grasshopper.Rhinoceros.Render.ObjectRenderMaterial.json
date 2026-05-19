@@ -1,0 +1,212 @@
+{
+  "name": "ObjectRenderMaterial",
+  "namespace": "Grasshopper.Rhinoceros.Render",
+  "kind": "class",
+  "summary": "Represents a Rhino object material.",
+  "base": "ModelValue",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial.htm",
+  "constructors": [
+    {
+      "name": "ObjectRenderMaterial()",
+      "signature": "public ObjectRenderMaterial()",
+      "summary": "Initializes a new instance of the ObjectRenderMaterial class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial__ctor.htm"
+    },
+    {
+      "name": "ObjectRenderMaterial(ObjectRenderMaterial.Value)",
+      "signature": "public ObjectRenderMaterial(ObjectRenderMaterial.Value value)",
+      "summary": "Initializes a new instance of the ObjectRenderMaterial class",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Render.ObjectRenderMaterial.Value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static ObjectRenderMaterial Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectRenderMaterial",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Overrides ModelValue.CastTo\u003CT\u003E(T).)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_CastTo__1.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides Object.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_GetHashCode.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public virtual string TooltipString()",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_ToString.htm"
+    },
+    {
+      "name": "Implicit(ObjectRenderMaterial to ObjectRenderMaterial.Value)",
+      "signature": "public static implicit operator ObjectRenderMaterial.Value (ObjectRenderMaterial data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Rhinoceros.Render.ObjectRenderMaterial",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectRenderMaterial.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(ObjectRenderMaterial.Value to ObjectRenderMaterial)",
+      "signature": "public static implicit operator ObjectRenderMaterial (ObjectRenderMaterial.Value data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Rhinoceros.Render.ObjectRenderMaterial.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectRenderMaterial",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_op_Implicit_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Material",
+      "type": "ModelRenderMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_Material.htm"
+    },
+    {
+      "name": "Source",
+      "type": "ObjectMaterialSource",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Render_ObjectRenderMaterial_Source.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

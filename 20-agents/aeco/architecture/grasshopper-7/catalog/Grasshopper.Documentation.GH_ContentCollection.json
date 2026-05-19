@@ -1,0 +1,65 @@
+{
+  "name": "GH_ContentCollection",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "class",
+  "summary": "Represents an ordered collection of IGH_Content.",
+  "interfaces": [
+    "IGH_Content"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Documentation_GH_ContentCollection.htm",
+  "constructors": [
+    {
+      "name": "GH_ContentCollection",
+      "signature": "public GH_ContentCollection()",
+      "summary": "Initializes a new instance of the GH_ContentCollection class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_ContentCollection__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_ContentCollection_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Content",
+      "type": "List\u003CIGH_Content\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_ContentCollection_Content.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_ContentCollection_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "IGH_Content",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_ContentCollection_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

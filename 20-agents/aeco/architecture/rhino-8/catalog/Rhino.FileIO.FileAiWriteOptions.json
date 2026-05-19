@@ -1,0 +1,103 @@
+{
+  "name": "FileAiWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for writing a ai file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileAiWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileAiWriteOptions",
+      "signature": "public FileAiWriteOptions()",
+      "summary": "Initializes a new instance of the FileAiWriteOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileAiWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileAiWriteOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileAiWriteOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AIScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_AIScale.htm"
+    },
+    {
+      "name": "AiUnits",
+      "type": "FileAiWriteOptions.Units",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_AiUnits.htm"
+    },
+    {
+      "name": "ExportHatchesAsSolidFills",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_ExportHatchesAsSolidFills.htm"
+    },
+    {
+      "name": "ExportViewBoundary",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_ExportViewBoundary.htm"
+    },
+    {
+      "name": "OrderLayers",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_OrderLayers.htm"
+    },
+    {
+      "name": "PreserveModelScale",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_PreserveModelScale.htm"
+    },
+    {
+      "name": "RhinoScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_RhinoScale.htm"
+    },
+    {
+      "name": "UseCMYK",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileAiWriteOptions_UseCMYK.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

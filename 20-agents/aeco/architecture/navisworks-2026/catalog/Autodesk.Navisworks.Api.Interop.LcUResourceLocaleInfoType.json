@@ -1,0 +1,22 @@
+{
+  "name": "LcUResourceLocaleInfoType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUResourceLocaleInfoType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUResourceLocaleInfoType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOCALE_INFO_TYPE_LANGUAGE_TAGS",
+      "value": 1
+    },
+    {
+      "name": "LOCALE_INFO_TYPE_LOCALE_CODES",
+      "value": 2
+    }
+  ]
+}

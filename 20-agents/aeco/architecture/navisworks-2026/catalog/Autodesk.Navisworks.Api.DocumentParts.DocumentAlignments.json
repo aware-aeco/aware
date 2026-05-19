@@ -1,0 +1,57 @@
+{
+  "name": "DocumentAlignments",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "Stores the Civil Alignment information contained in a Document.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentAlignments",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAlignments",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.CivilAlignment\u003E GetAlignments()",
+      "summary": "Get a list of all of the alignments in the scene",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.CivilAlignment\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentAlignments.GetAlignments"
+    },
+    {
+      "name": "Any",
+      "signature": "bool Any()",
+      "summary": "Are there any alignments in the scene",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentAlignments.Any"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveAlignmentIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the alignment, from the provided list, that is the current alignment used for rendering and everything else.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentAlignments.ActiveAlignmentIndex"
+    },
+    {
+      "name": "Enabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Is rendering of the current alignment enabled",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentAlignments.Enabled"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

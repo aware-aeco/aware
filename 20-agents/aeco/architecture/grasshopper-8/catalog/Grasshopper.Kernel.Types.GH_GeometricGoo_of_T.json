@@ -1,0 +1,397 @@
+{
+  "name": "GH_GeometricGoo\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Abstract base implementation of IGH_GeometricGoo. If you implement IGH_GeometricGoo, use this for a booster.",
+  "base": "GH_Goo\u003CT\u003E",
+  "interfaces": [
+    "IGH_GeometricGoo"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_GeometricGoo_1.htm",
+  "constructors": [
+    {
+      "name": "GH_GeometricGoo\u003CT\u003E()",
+      "signature": "protected GH_GeometricGoo()",
+      "summary": "Blank constructor, m_value will be set to default (null for reference types, zeroes for value types)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1__ctor.htm"
+    },
+    {
+      "name": "GH_GeometricGoo\u003CT\u003E(T)",
+      "signature": "protected GH_GeometricGoo(T internal_data)",
+      "summary": "Data constructor, m_value will be set to internal_data.",
+      "params": [
+        {
+          "name": "internal_data",
+          "type": "T",
+          "doc": "Value to store inside this Goo instance.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CastFrom",
+      "signature": "public override bool CastFrom(Object source)",
+      "summary": "Attempt a cast from generic object.",
+      "remarks": "If False, the contents of this instance are not to be trusted.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "doc": "Reference to source of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public override bool CastTo\u003CQ\u003E(out Q target)",
+      "summary": "Attempt a cast to type T.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public virtual bool CastTo\u003CQ\u003E(ref Q target)",
+      "summary": "Attempt a cast to type Q.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_CastTo__1.htm"
+    },
+    {
+      "name": "ClearCaches",
+      "signature": "public virtual void ClearCaches()",
+      "summary": "Clears all caches. Typically if the geometry is referenced, this will erase the local copy. If your T is a value-type, you must override this function and specifically unset the local value.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_ClearCaches.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public override IGH_Goo Duplicate()",
+      "summary": "Make a complete duplicate of this instance. No shallow copies.",
+      "remarks": "Classes which implement this interface should also provide type specific Duplicate methods",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateGeometry",
+      "signature": "public abstract IGH_GeometricGoo DuplicateGeometry()",
+      "summary": "Make a complete duplicate of this geometry. No shallow copies.",
+      "remarks": "Each class that implements this interface should also provide a type specific duplication method",
+      "params": [],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_DuplicateGeometry.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public override IGH_GooProxy EmitProxy()",
+      "summary": "Create a new proxy for this instance. Return Null if this class does not support proxies.",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_EmitProxy.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public abstract BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "Compute an aligned boundingbox.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "doc": "Transformation to apply to geometry for BoundingBox computation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The world aligned boundingbox of the transformed geometry."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_GetBoundingBox.htm"
+    },
+    {
+      "name": "LoadGeometry()",
+      "signature": "public virtual bool LoadGeometry()",
+      "summary": "If the geometry is referenced and currently unloaded, forces loading of the geometry. Not all IGH_GeometricGoo implementations support referenced geometry.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_LoadGeometry.htm"
+    },
+    {
+      "name": "LoadGeometry(RhinoDoc)",
+      "signature": "public virtual bool LoadGeometry(RhinoDoc doc)",
+      "summary": "If the geometry is referenced and currently unloaded, forces loading of the geometry. Not all IGH_GeometricGoo implementations support referenced geometry. The default is to always return True.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document to use for loading.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_LoadGeometry_1.htm"
+    },
+    {
+      "name": "Morph",
+      "signature": "public abstract IGH_GeometricGoo Morph(SpaceMorph xmorph)",
+      "summary": "Morph the object or a deformable representation of the object.",
+      "params": [
+        {
+          "name": "xmorph",
+          "type": "SpaceMorph",
+          "doc": "Spatial deform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": "Deformed geometry. If the local geometry can be deformed accurately, then the returned instance equals this instance. Not all geometry types can be accurately deformed though, if this is the case, this function will return an instance of another IGH_GeometricGoo derived type which can be deformed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Morph.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public virtual bool Read(GH_IReader reader)",
+      "summary": "Default behaviour is to return True.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public virtual Object ScriptVariable()",
+      "summary": "This function will be called when the local IGH_Goo instance disappears into a user Script. This would be an excellent place to cast your IGH_Goo type to a simple data type.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "The default implementation of this function returns the Value instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_ScriptVariable.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public abstract string ToString()",
+      "summary": "Creates a string description of the current instance value.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_ToString.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public abstract IGH_GeometricGoo Transform(Transform xform)",
+      "summary": "Transforms the object or a deformable representation of the object.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "doc": "Transformation matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": "Transformed geometry. If the local geometry can be transformed accurately, then the returned instance equals this instance. Not all geometry types can be accurately transformed under all circumstances though, if this is the case, this function will return an instance of another IGH_GeometricGoo derived type which can be transformed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Transform.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public virtual bool Write(GH_IWriter writer)",
+      "summary": "Default behaviour is to return True.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boundingbox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the boundingbox for this geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Boundingbox.htm"
+    },
+    {
+      "name": "IsGeometryLoaded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this geometry is currently loaded (assuming it is referenced). Not all IGH_GeometricGoo implementations support referenced geometry. The default is to always return True.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_IsGeometryLoaded.htm"
+    },
+    {
+      "name": "IsReferencedGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this geometry is referenced. Not all IGH_GeometricGoo implementations support referenced geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_IsReferencedGeometry.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the current value is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string describing the state of \u0022invalidness\u0022. If the instance is valid, then this property should return Nothing or String.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Goo_1_IsValidWhyNot.htm"
+    },
+    {
+      "name": "ReferenceID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Guid of the object that is referenced. Not all IGH_GeometricGoo implementations support referenced geometry. The default implementation is to always return Guid.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_ReferenceID.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a description of the type of the implementation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Goo_1_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the type of the implementation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Goo_1_TypeName.htm"
+    },
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value of this type. Note that if the type has a ReferenceID this value might get destroyed in the future.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Value.htm"
+    },
+    {
+      "name": "m_value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Goo\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_Goo_1_m_value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

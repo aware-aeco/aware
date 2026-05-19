@@ -1,0 +1,22 @@
+{
+  "name": "FileObjWriteOptions.GeometryType",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "(trimmed) NURBS surfaces may be exported as either NURBS or meshes",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileObjWriteOptions_GeometryType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Nurbs",
+      "value": 0
+    },
+    {
+      "name": "Mesh",
+      "value": 1
+    }
+  ]
+}

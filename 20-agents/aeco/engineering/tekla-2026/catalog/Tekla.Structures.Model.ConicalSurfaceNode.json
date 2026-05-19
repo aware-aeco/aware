@@ -1,0 +1,80 @@
+{
+  "name": "ConicalSurfaceNode",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ConicalSurfaceNode class represents conical surface geometry tree node.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/73922bd2-0f50-6751-da49-df7948f18e6a",
+  "constructors": [
+    {
+      "name": "ConicalSurfaceNode",
+      "signature": "public ConicalSurfaceNode(ConicalSurface surface)",
+      "summary": "Initializes a new instance of the ConicalSurfaceNode class.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Tekla.Structures.Model.ConicalSurface",
+          "doc": "The contour of the node.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3e70ff2f-e922-edcd-fbe0-f868cf3e294a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AcceptVisitor",
+      "signature": "public override void AcceptVisitor(IGeometryNodeVisitor visitor)",
+      "summary": "Entry method for the visitor pattern.",
+      "remarks": "Does nothing",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "Tekla.Structures.Model.IGeometryNodeVisitor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c4b3e931-c16e-9154-96b5-9c12cb81fd42"
+    },
+    {
+      "name": "Clone",
+      "signature": "public override IGeometryNode Clone()",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "returns": {
+        "type": "IGeometryNode",
+        "doc": "A new object that is a copy of the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3c51f2ca-57da-3ecc-8a08-bba604b4c6b0"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsAutomatic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this geometry node was automatically generated (returns false if it was originally a user-defined part)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e111624-05f3-3f95-51f5-6bedc676a42d"
+    },
+    {
+      "name": "Surface",
+      "type": "ConicalSurface",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the conical surface geometry.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f3e157ea-0794-aee5-9043-9917a46c3919"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

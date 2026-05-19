@@ -1,0 +1,40 @@
+{
+  "name": "ExecutionStateEventArgs",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type ExecutionStateEventArgs",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [
+    {
+      "name": "ExecutionStateEventArgs(ProtoCore.ExecutionStateEventArgs.State)",
+      "signature": "void ExecutionStateEventArgs(ProtoCore.ExecutionStateEventArgs.State state)",
+      "summary": "ExecutionStateEventArgs.ExecutionStateEventArgs",
+      "params": [
+        {
+          "name": "state",
+          "type": "ProtoCore.ExecutionStateEventArgs.State",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ExecutionState",
+      "type": "ProtoCore.ExecutionStateEventArgs.State",
+      "getter": true,
+      "setter": false,
+      "summary": "ExecutionStateEventArgs.ExecutionState",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

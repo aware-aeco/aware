@@ -1,0 +1,1762 @@
+{
+  "name": "LcUOptionSet",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUOptionSet class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Copy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet Copy()",
+      "summary": "Copy method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.Copy"
+    },
+    {
+      "name": "Copy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet Copy(Autodesk.Navisworks.Api.Interop.LcUOptionSetCopyFlag flags)",
+      "summary": "Copy method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetCopyFlag",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.Copy%28Autodesk.Navisworks.Api.Interop.LcUOptionSetCopyFlag%29"
+    },
+    {
+      "name": "GetName",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUNameRefPtr GetName(string path)",
+      "summary": "GetName method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUNameRefPtr",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetName%28System.String%29"
+    },
+    {
+      "name": "FindSubOption",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSet FindSubOption(string path, ref int index)",
+      "summary": "FindSubOption method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.FindSubOption%28System.String%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "GetParent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSet GetParent()",
+      "summary": "GetParent method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetParent"
+    },
+    {
+      "name": "GetSubOptions",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSet GetSubOptions(int index)",
+      "summary": "GetSubOptions method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetSubOptions%28System.Int32%29"
+    },
+    {
+      "name": "GetSubOptions",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSet GetSubOptions(string path)",
+      "summary": "GetSubOptions method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetSubOptions%28System.String%29"
+    },
+    {
+      "name": "GetValue",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSet GetValue(int index, Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "GetValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetValue%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "GetFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag GetFlags(int index)",
+      "summary": "GetFlags method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetFlags%28System.Int32%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus SetValue(int index, Autodesk.Navisworks.Api.Interop.LcUOptionSet from, int from_index)",
+      "summary": "SetValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "from_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValue%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSet%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus SetValue(int index, Autodesk.Navisworks.Api.Interop.LcUOptionSet from, int from_index, Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag flags)",
+      "summary": "SetValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "from_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValue%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSet%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag%29"
+    },
+    {
+      "name": "SetValues",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus SetValues(Autodesk.Navisworks.Api.Interop.LcUOptionSet from)",
+      "summary": "SetValues method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValues%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%29"
+    },
+    {
+      "name": "SetValues",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus SetValues(Autodesk.Navisworks.Api.Interop.LcUOptionSet from, Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag flags)",
+      "summary": "SetValues method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValues%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag%29"
+    },
+    {
+      "name": "Unite",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus Unite(Autodesk.Navisworks.Api.Interop.LcUOptionSet from)",
+      "summary": "Unite method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.Unite%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%29"
+    },
+    {
+      "name": "Unite",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus Unite(Autodesk.Navisworks.Api.Interop.LcUOptionSet from, Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag flags)",
+      "summary": "Unite method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.Unite%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag%29"
+    },
+    {
+      "name": "GetMyFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag GetMyFlags()",
+      "summary": "GetMyFlags method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetMyFlags"
+    },
+    {
+      "name": "GetProfile",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile GetProfile(int index)",
+      "summary": "GetProfile method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetProfile%28System.Int32%29"
+    },
+    {
+      "name": "GetUserFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag GetUserFlags(int index)",
+      "summary": "GetUserFlags method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetUserFlags%28System.Int32%29"
+    },
+    {
+      "name": "GetType",
+      "signature": "Autodesk.Navisworks.Api.VariantDataType GetType(int index)",
+      "summary": "GetType method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantDataType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetType%28System.Int32%29"
+    },
+    {
+      "name": "GetTime",
+      "signature": "System.DateTime GetTime(string path)",
+      "summary": "GetTime method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.DateTime",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetTime%28System.String%29"
+    },
+    {
+      "name": "ArrayInsert",
+      "signature": "bool ArrayInsert(int index)",
+      "summary": "ArrayInsert method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.ArrayInsert%28System.Int32%29"
+    },
+    {
+      "name": "ArrayRemove",
+      "signature": "bool ArrayRemove(int index)",
+      "summary": "ArrayRemove method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.ArrayRemove%28System.Int32%29"
+    },
+    {
+      "name": "GetBoolean",
+      "signature": "bool GetBoolean(string path)",
+      "summary": "GetBoolean method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetBoolean%28System.String%29"
+    },
+    {
+      "name": "GetDataValue",
+      "signature": "bool GetDataValue(int index, Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "GetDataValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetDataValue%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "GetDataValue",
+      "signature": "bool GetDataValue(string path, Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "GetDataValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetDataValue%28System.String%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "GetRange",
+      "signature": "bool GetRange(int index, Autodesk.Navisworks.Api.VariantData min_valid, Autodesk.Navisworks.Api.VariantData max_valid)",
+      "summary": "GetRange method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "min_valid",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "max_valid",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetRange%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "GetWideString",
+      "signature": "bool GetWideString(string path, out string ret)",
+      "summary": "GetWideString method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetWideString%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "HasCustomOption",
+      "signature": "bool HasCustomOption()",
+      "summary": "HasCustomOption method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.HasCustomOption"
+    },
+    {
+      "name": "HasOptionsForProfile",
+      "signature": "bool HasOptionsForProfile(Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "HasOptionsForProfile method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.HasOptionsForProfile%28Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "HasSubOptionsForProfile",
+      "signature": "bool HasSubOptionsForProfile(Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "HasSubOptionsForProfile method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.HasSubOptionsForProfile%28Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "InvokeHelp",
+      "signature": "bool InvokeHelp()",
+      "summary": "InvokeHelp method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.InvokeHelp"
+    },
+    {
+      "name": "IsDisabled",
+      "signature": "bool IsDisabled(int index, Autodesk.Navisworks.Api.VariantData display_data)",
+      "summary": "IsDisabled method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "display_data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.IsDisabled%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "IsEqualValues",
+      "signature": "bool IsEqualValues(Autodesk.Navisworks.Api.Interop.LcUOptionSet p)",
+      "summary": "IsEqualValues method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.IsEqualValues%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%29"
+    },
+    {
+      "name": "SetAngularFloat",
+      "signature": "bool SetAngularFloat(string path, double value)",
+      "summary": "SetAngularFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetAngularFloat%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "SetBoolean",
+      "signature": "bool SetBoolean(string path, bool value)",
+      "summary": "SetBoolean method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetBoolean%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetData",
+      "signature": "bool SetData(string path, Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "SetData method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetData%28System.String%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "SetFloat",
+      "signature": "bool SetFloat(string path, double value)",
+      "summary": "SetFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetFloat%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "SetInt32",
+      "signature": "bool SetInt32(string path, int value)",
+      "summary": "SetInt32 method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetInt32%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetLinearFloat",
+      "signature": "bool SetLinearFloat(string path, double value)",
+      "summary": "SetLinearFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetLinearFloat%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "SetName",
+      "signature": "bool SetName(string path, Autodesk.Navisworks.Api.NamedConstant value)",
+      "summary": "SetName method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetName%28System.String%2CAutodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "SetTime",
+      "signature": "bool SetTime(string path, System.DateTime value)",
+      "summary": "SetTime method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetTime%28System.String%2CSystem.DateTime%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "bool SetValue(int index, Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "SetValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValue%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "bool SetValue(int index, Autodesk.Navisworks.Api.VariantData data, out string error_msg)",
+      "summary": "SetValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "error_msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValue%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%2CSystem.String%40%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "bool SetValue(string path, Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "SetValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValue%28System.String%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "bool SetValue(string path, Autodesk.Navisworks.Api.VariantData data, out string error_msg)",
+      "summary": "SetValue method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "error_msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetValue%28System.String%2CAutodesk.Navisworks.Api.VariantData%2CSystem.String%40%29"
+    },
+    {
+      "name": "SetWideString",
+      "signature": "bool SetWideString(string path, string value)",
+      "summary": "SetWideString method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetWideString%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "TryGetAngularFloat",
+      "signature": "bool TryGetAngularFloat(string path, ref double ret)",
+      "summary": "TryGetAngularFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetAngularFloat%28System.String%2CSystem.Double%40%29"
+    },
+    {
+      "name": "TryGetBoolean",
+      "signature": "bool TryGetBoolean(string path, ref bool ret)",
+      "summary": "TryGetBoolean method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetBoolean%28System.String%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "TryGetData",
+      "signature": "bool TryGetData(string path, Autodesk.Navisworks.Api.VariantData ret)",
+      "summary": "TryGetData method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetData%28System.String%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "TryGetFloat",
+      "signature": "bool TryGetFloat(string path, ref double ret)",
+      "summary": "TryGetFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetFloat%28System.String%2CSystem.Double%40%29"
+    },
+    {
+      "name": "TryGetInt32",
+      "signature": "bool TryGetInt32(string path, ref int ret)",
+      "summary": "TryGetInt32 method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetInt32%28System.String%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "TryGetLinearFloat",
+      "signature": "bool TryGetLinearFloat(string path, ref double ret)",
+      "summary": "TryGetLinearFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetLinearFloat%28System.String%2CSystem.Double%40%29"
+    },
+    {
+      "name": "TryGetTime",
+      "signature": "bool TryGetTime(string path, ref System.DateTime ret)",
+      "summary": "TryGetTime method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetTime%28System.String%2CSystem.DateTime%40%29"
+    },
+    {
+      "name": "TryGetWideString",
+      "signature": "bool TryGetWideString(string path, out string ret)",
+      "summary": "TryGetWideString method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.TryGetWideString%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "WriteRegistry",
+      "signature": "bool WriteRegistry(string section)",
+      "summary": "WriteRegistry method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.WriteRegistry%28System.String%29"
+    },
+    {
+      "name": "WriteRegistry",
+      "signature": "bool WriteRegistry(string section, Autodesk.Navisworks.Api.Interop.LcUOptionSetWriteFlag write_flag)",
+      "summary": "WriteRegistry method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "write_flag",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetWriteFlag",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.WriteRegistry%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetWriteFlag%29"
+    },
+    {
+      "name": "WriteRegistryFromRoot",
+      "signature": "bool WriteRegistryFromRoot(string root_section)",
+      "summary": "WriteRegistryFromRoot method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "root_section",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.WriteRegistryFromRoot%28System.String%29"
+    },
+    {
+      "name": "WriteRegistryFromRoot",
+      "signature": "bool WriteRegistryFromRoot(string root_section, Autodesk.Navisworks.Api.Interop.LcUOptionSetWriteFlag write_flag)",
+      "summary": "WriteRegistryFromRoot method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "root_section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "write_flag",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetWriteFlag",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.WriteRegistryFromRoot%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetWriteFlag%29"
+    },
+    {
+      "name": "GetAngularFloat",
+      "signature": "double GetAngularFloat(string path)",
+      "summary": "GetAngularFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetAngularFloat%28System.String%29"
+    },
+    {
+      "name": "GetFloat",
+      "signature": "double GetFloat(string path)",
+      "summary": "GetFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetFloat%28System.String%29"
+    },
+    {
+      "name": "GetLinearFloat",
+      "signature": "double GetLinearFloat(string path)",
+      "summary": "GetLinearFloat method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetLinearFloat%28System.String%29"
+    },
+    {
+      "name": "EnumerateNameValues",
+      "signature": "int EnumerateNameValues(int index, Autodesk.Navisworks.Api.Interop.LcUNameRefPtrVector values)",
+      "summary": "EnumerateNameValues method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUNameRefPtrVector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.EnumerateNameValues%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcUNameRefPtrVector%29"
+    },
+    {
+      "name": "FindOption",
+      "signature": "int FindOption(string name)",
+      "summary": "FindOption method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.FindOption%28System.String%29"
+    },
+    {
+      "name": "GetInt32",
+      "signature": "int GetInt32(string path)",
+      "summary": "GetInt32 method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetInt32%28System.String%29"
+    },
+    {
+      "name": "GetNumOptions",
+      "signature": "int GetNumOptions()",
+      "summary": "GetNumOptions method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetNumOptions"
+    },
+    {
+      "name": "ReadRegistry",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUExOptionSet ReadRegistry(string section)",
+      "summary": "ReadRegistry method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.ReadRegistry%28System.String%29"
+    },
+    {
+      "name": "ReadRegistry",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUExOptionSet ReadRegistry(string section, Autodesk.Navisworks.Api.Interop.LcUOptionSetReadFlag read_flag)",
+      "summary": "ReadRegistry method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "read_flag",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetReadFlag",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.ReadRegistry%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetReadFlag%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUOptionSet InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetClassName",
+      "signature": "string GetClassName(int index)",
+      "summary": "GetClassName method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetClassName%28System.Int32%29"
+    },
+    {
+      "name": "GetHelpId",
+      "signature": "string GetHelpId()",
+      "summary": "GetHelpId method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetHelpId"
+    },
+    {
+      "name": "GetMyName",
+      "signature": "string GetMyName()",
+      "summary": "GetMyName method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetMyName"
+    },
+    {
+      "name": "GetName",
+      "signature": "string GetName(int index)",
+      "summary": "GetName method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetName%28System.Int32%29"
+    },
+    {
+      "name": "GetUserNameW",
+      "signature": "string GetUserNameW(int index)",
+      "summary": "GetUserNameW method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetUserNameW%28System.Int32%29"
+    },
+    {
+      "name": "GetChangeId",
+      "signature": "uint GetChangeId()",
+      "summary": "GetChangeId method of LcUOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetChangeId"
+    },
+    {
+      "name": "DoCustomOption",
+      "signature": "void DoCustomOption()",
+      "summary": "DoCustomOption method of LcUOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.DoCustomOption"
+    },
+    {
+      "name": "GetData",
+      "signature": "void GetData(string path, Autodesk.Navisworks.Api.VariantData ret)",
+      "summary": "GetData method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetData%28System.String%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "GetPath",
+      "signature": "void GetPath(int index, out string buffer)",
+      "summary": "GetPath method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetPath%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetPath",
+      "signature": "void GetPath(out string buffer)",
+      "summary": "GetPath method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.GetPath%28System.String%40%29"
+    },
+    {
+      "name": "ReapplyNameOverrides",
+      "signature": "void ReapplyNameOverrides()",
+      "summary": "ReapplyNameOverrides method of LcUOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.ReapplyNameOverrides"
+    },
+    {
+      "name": "SetDefaultOnAll",
+      "signature": "void SetDefaultOnAll(bool b)",
+      "summary": "SetDefaultOnAll method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetDefaultOnAll%28System.Boolean%29"
+    },
+    {
+      "name": "SetMyName",
+      "signature": "void SetMyName(string name)",
+      "summary": "SetMyName method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetMyName%28System.String%29"
+    },
+    {
+      "name": "SetParent",
+      "signature": "void SetParent(Autodesk.Navisworks.Api.Interop.LcUOptionSet parent)",
+      "summary": "SetParent method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetParent%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%29"
+    },
+    {
+      "name": "SetUserFlags",
+      "signature": "void SetUserFlags(int index, Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag flags)",
+      "summary": "SetUserFlags method of LcUOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.SetUserFlags%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUOptionSet.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUOptionSet.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

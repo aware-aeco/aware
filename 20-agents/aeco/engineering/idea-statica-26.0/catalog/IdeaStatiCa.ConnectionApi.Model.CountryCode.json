@@ -1,0 +1,54 @@
+{
+  "name": "CountryCode",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.CountryCode.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CountryCode.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "none",
+      "value": "none"
+    },
+    {
+      "name": "ecen",
+      "value": "ecen"
+    },
+    {
+      "name": "india",
+      "value": "india"
+    },
+    {
+      "name": "sia",
+      "value": "sia"
+    },
+    {
+      "name": "american",
+      "value": "american"
+    },
+    {
+      "name": "canada",
+      "value": "canada"
+    },
+    {
+      "name": "australia",
+      "value": "australia"
+    },
+    {
+      "name": "rus",
+      "value": "rus"
+    },
+    {
+      "name": "chn",
+      "value": "chn"
+    },
+    {
+      "name": "hkg",
+      "value": "hkg"
+    }
+  ]
+}

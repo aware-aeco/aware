@@ -1,0 +1,104 @@
+{
+  "name": "DrawingColors",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The colors used in Tekla.Structures.Drawing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/51916278-1622-9c21-d757-f9f8392746e9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Invisible",
+      "value": 152,
+      "summary": "The light gray color: the \u0022invisible color\u0022. Light gray is visible only on the screen and not in printed or exported drawings."
+    },
+    {
+      "name": "Black",
+      "value": 153,
+      "summary": "The black color."
+    },
+    {
+      "name": "NewLine1",
+      "value": 154,
+      "summary": "The brown color."
+    },
+    {
+      "name": "NewLine2",
+      "value": 155,
+      "summary": "The green color."
+    },
+    {
+      "name": "NewLine3",
+      "value": 156,
+      "summary": "The dark blue color."
+    },
+    {
+      "name": "NewLine4",
+      "value": 157,
+      "summary": "The forest green color."
+    },
+    {
+      "name": "NewLine5",
+      "value": 158,
+      "summary": "The orange color."
+    },
+    {
+      "name": "NewLine6",
+      "value": 159,
+      "summary": "The gray color."
+    },
+    {
+      "name": "Red",
+      "value": 160,
+      "summary": "The red color."
+    },
+    {
+      "name": "Green",
+      "value": 161,
+      "summary": "The bright green color."
+    },
+    {
+      "name": "Blue",
+      "value": 162,
+      "summary": "The blue color."
+    },
+    {
+      "name": "Cyan",
+      "value": 163,
+      "summary": "The turquoise color."
+    },
+    {
+      "name": "Yellow",
+      "value": 164,
+      "summary": "The yellow color."
+    },
+    {
+      "name": "Magenta",
+      "value": 165,
+      "summary": "The magenta color."
+    },
+    {
+      "name": "Gray30",
+      "value": 130,
+      "summary": "The Gray30 rgb(0.3, 0.3, 0.3) color."
+    },
+    {
+      "name": "Gray50",
+      "value": 131,
+      "summary": "The Gray50 rgb(0.5, 0.5, 0.5) color."
+    },
+    {
+      "name": "Gray70",
+      "value": 132,
+      "summary": "The Gray70 rgb(0.7, 0.7, 0.7) color."
+    },
+    {
+      "name": "Gray90",
+      "value": 133,
+      "summary": "The Gray90 rgb(0.9, 0.9, 0.9) color."
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "name": "NwdExportOptions",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "NwdExportOptions class in Autodesk.Navisworks.Api.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.NwdExportOptions",
+  "constructors": [
+    {
+      "name": "NwdExportOptions()",
+      "signature": "NwdExportOptions()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NwdExportOptions.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of NwdExportOptions.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NwdExportOptions.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.NwdExportOptions InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of NwdExportOptions.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NwdExportOptions.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EmbedXrefs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should any externally referenced files including ReCap scans and textures be embedded in the exported file?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NwdExportOptions.EmbedXrefs"
+    },
+    {
+      "name": "ExcludeHiddenItems",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should hidden ModelItems be removed from the exported file?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NwdExportOptions.ExcludeHiddenItems"
+    },
+    {
+      "name": "FileVersion",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "File version to write out to.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NwdExportOptions.FileVersion"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NwdExportOptions.IsReadOnly"
+    },
+    {
+      "name": "PreventObjectPropertyExport",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should normal object properties be removed from the exported file?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NwdExportOptions.PreventObjectPropertyExport"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

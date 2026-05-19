@@ -1,0 +1,27 @@
+{
+  "name": "LoadPlugInResult",
+  "namespace": "Rhino.PlugIns",
+  "kind": "enum",
+  "summary": "Result of attempting to load a plug-in",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_LoadPlugInResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Success",
+      "value": 0,
+      "summary": "Successfully loaded"
+    },
+    {
+      "name": "SuccessAlreadyLoaded",
+      "value": 1
+    },
+    {
+      "name": "ErrorUnknown",
+      "value": 2
+    }
+  ]
+}

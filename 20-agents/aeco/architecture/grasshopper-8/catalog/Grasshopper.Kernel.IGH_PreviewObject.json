@@ -1,0 +1,73 @@
+{
+  "name": "IGH_PreviewObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "All IGH_DocumentObjects that wish to participate in Viewport redraws must implement this interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_PreviewObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "void DrawViewportMeshes(IGH_PreviewArgs args)",
+      "summary": "Implement this function to draw all shaded meshes. If the viewport does not support shading, this function will not be called.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.IGH_PreviewArgs",
+          "doc": "Draw operation arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewObject_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "void DrawViewportWires(IGH_PreviewArgs args)",
+      "summary": "Implement this function to draw all wire and point geometry previews.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.IGH_PreviewArgs",
+          "doc": "Draw operation arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewObject_DrawViewportWires.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the clipping box for this object. The clipping box is typically the union of the boundingboxes of all the geometry that is drawn by this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewObject_ClippingBox.htm"
+    },
+    {
+      "name": "Hidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether or not this object is currently drawing preview flags.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewObject_Hidden.htm"
+    },
+    {
+      "name": "IsPreviewCapable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this object (in its current state) can draw geometric previews at all.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewObject_IsPreviewCapable.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,96 @@
+{
+  "name": "ProjectAttributeService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Implementation of the project attribute service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ChangeAttributeFromCurrentProject",
+      "signature": "ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc) | ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc) | ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc)",
+      "summary": "Change a project attribute from the current file",
+      "remarks": "Change a project attribute from the current file",
+      "params": [
+        {
+          "name": "attributeNumber",
+          "type": "int",
+          "doc": "Attribute number",
+          "optional": false
+        },
+        {
+          "name": "newValue",
+          "type": "int",
+          "doc": "Attribute value",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject"
+    },
+    {
+      "name": "ChangeAttributesFromCurrentProject",
+      "signature": "ChangeAttributesFromCurrentProject(attributes, doc)",
+      "summary": "Change attributes from the current project",
+      "remarks": "Change attributes from the current project",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "list[tuple[int, Union[int, float, str]]]",
+          "doc": "Attributes",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributesFromCurrentProject"
+    },
+    {
+      "name": "GetAttributesFromAllProjects",
+      "signature": "GetAttributesFromAllProjects()",
+      "summary": "Get the attributes from all projects",
+      "remarks": "Get the attributes from all projects",
+      "params": [],
+      "returns": {
+        "type": "list[tuple[int, Union[int, float, str]]]",
+        "doc": "Attributes from all projects"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.GetAttributesFromAllProjects"
+    },
+    {
+      "name": "GetAttributesFromCurrentProject",
+      "signature": "GetAttributesFromCurrentProject()",
+      "summary": "Get the attributes from the current project",
+      "remarks": "Get the attributes from the current project",
+      "params": [],
+      "returns": {
+        "type": "list[tuple[int, Union[int, float, str]]]",
+        "doc": "Attributes from the current project"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.GetAttributesFromCurrentProject"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

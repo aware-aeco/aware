@@ -1,0 +1,230 @@
+{
+  "name": "PythonPart",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Definition of class PythonPart",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/",
+  "constructors": [
+    {
+      "name": "PythonPart",
+      "signature": "PythonPart(name, parameter_list, hash_value, python_file, views=None, matrix=Matrix3D(), common_props=None, reinforcement=None, attribute_list=None, library_elements=None, architecture_elements=None, label_elements=None, fixture_elements=None, placement_matrix=None)",
+      "summary": "Initialization of class PythonPart",
+      "remarks": "Initialization of class PythonPart",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "parameter_list",
+          "type": "list[str]",
+          "doc": "list with the parameter",
+          "optional": false
+        },
+        {
+          "name": "hash_value",
+          "type": "str",
+          "doc": "Hash value of the parameter",
+          "optional": false
+        },
+        {
+          "name": "python_file",
+          "type": "str",
+          "doc": "File name of the pyp file",
+          "optional": false
+        },
+        {
+          "name": "views",
+          "type": "list[View2D | View3D | View2D3D] | None",
+          "doc": "Views for PythonPart",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "Local matrix of PythonPart, used for the local geometry transformation",
+          "optional": true,
+          "default": "Matrix3D()"
+        },
+        {
+          "name": "common_props",
+          "type": "CommonProperties | None",
+          "doc": "Common properties of PythonPart",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "reinforcement",
+          "type": "list[Any] | None",
+          "doc": "Reinforcement elements for PythonPart",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "attribute_list",
+          "type": "list[Any] | None",
+          "doc": "Attribute list",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "library_elements",
+          "type": "list[Any] | None",
+          "doc": "Library elements for PythonPart",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "architecture_elements",
+          "type": "list[Any] | None",
+          "doc": "Architecture elements for PythonPart",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "label_elements",
+          "type": "list[Any] | None",
+          "doc": "Label elements",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "fixture_elements",
+          "type": "list[Any] | None",
+          "doc": "Fixture elements for PythonPart",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "placement_matrix",
+          "type": "Matrix3D | None",
+          "doc": "Placement matrix of the PythonPart",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "create the element string",
+      "remarks": "create the element string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "element string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.__repr__"
+    },
+    {
+      "name": "add",
+      "signature": "add(view)",
+      "summary": "Add one view",
+      "remarks": "Add one view",
+      "params": [
+        {
+          "name": "view",
+          "type": "View",
+          "doc": "view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.add"
+    },
+    {
+      "name": "create",
+      "signature": "create()",
+      "summary": "create the PythonPart",
+      "remarks": "create the PythonPart",
+      "params": [],
+      "returns": {
+        "type": "list[Any]",
+        "doc": "created elements for the PythonPart"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.create"
+    },
+    {
+      "name": "distortion_state",
+      "signature": "distortion_state(state)",
+      "summary": "Set distortion state",
+      "remarks": "Set distortion state",
+      "params": [
+        {
+          "name": "state",
+          "type": "bool",
+          "doc": "distortion state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.distortion_state"
+    },
+    {
+      "name": "leading_macro",
+      "signature": "leading_macro(macro_leading)",
+      "summary": "Set leading macro",
+      "remarks": "Set leading macro",
+      "params": [
+        {
+          "name": "macro_leading",
+          "type": "bool",
+          "doc": "leading macro state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.leading_macro"
+    },
+    {
+      "name": "reset",
+      "signature": "reset(views)",
+      "summary": "Reset views",
+      "remarks": "Reset views",
+      "params": [
+        {
+          "name": "views",
+          "type": "list[View]",
+          "doc": "views",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.reset"
+    }
+  ],
+  "properties": [
+    {
+      "name": "views",
+      "type": "list[View]",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the views",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/#PythonPart.PythonPart.views"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,67 @@
+{
+  "name": "SectionDefinitionProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Section definition properties",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/",
+  "constructors": [
+    {
+      "name": "SectionDefinitionProperties",
+      "signature": "SectionDefinitionProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/#NemAll_Python_BasisElements.SectionDefinitionProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ClippingPathProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/Get the clipping path properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/#NemAll_Python_BasisElements.SectionDefinitionProperties.ClippingPathProperties"
+    },
+    {
+      "name": "IsAdvancedOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for type of section architecture= OFF /Engineering = ON :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/#NemAll_Python_BasisElements.SectionDefinitionProperties.IsAdvancedOn"
+    },
+    {
+      "name": "IsSectionBodyOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for show the section body :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/#NemAll_Python_BasisElements.SectionDefinitionProperties.IsSectionBodyOn"
+    },
+    {
+      "name": "RefMode",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the reference mode :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/#NemAll_Python_BasisElements.SectionDefinitionProperties.RefMode"
+    },
+    {
+      "name": "ViewInputType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the view input type :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/#NemAll_Python_BasisElements.SectionDefinitionProperties.ViewInputType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,74 @@
+{
+  "name": "Position",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Position class defines how a part is positioned relative to the input.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4fd3fb0d-31ad-371e-d499-4b623d412b61",
+  "constructors": [
+    {
+      "name": "Position",
+      "signature": "public Position()",
+      "summary": "Creates a new position instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/834fc08c-1fae-ea4d-5a97-108e50750571"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "Position.DepthEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the positioning in the depth sense.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ecc66600-a12b-a8bd-0b91-894067c566c8"
+    },
+    {
+      "name": "DepthOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset away from the Depth value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/77498ade-9b96-5e06-d929-07bfe5c2226d"
+    },
+    {
+      "name": "Plane",
+      "type": "Position.PlaneEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the positioning in the plane sense.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4574f68c-1434-3c94-d564-c11b99edd33a"
+    },
+    {
+      "name": "PlaneOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset away from the Plane value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ddecf3e4-7ad8-a684-bf3f-0a1476c3b2ae"
+    },
+    {
+      "name": "Rotation",
+      "type": "Position.RotationEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the positioning in the rotational sense.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cdef2dc4-7c4b-bcda-7d4e-e064683bbbb0"
+    },
+    {
+      "name": "RotationOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset away from the Rotation value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5cf11e92-937c-3867-a99e-66e204510f1f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

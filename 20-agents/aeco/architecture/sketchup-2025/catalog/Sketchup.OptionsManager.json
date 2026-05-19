@@ -1,0 +1,106 @@
+{
+  "name": "OptionsManager",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The OptionsManager class manages various kinds of OptionsProviders on a Model. To get the OptionsProvider key list, run the following code in the ruby console:",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsManager.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index) =\u003E Object | [](name) =\u003E Object",
+      "summary": "The [] method is used to get an option provider by name or index.",
+      "remarks": "The [] method is used to get an option provider by name or index. For example, to get the UnitsOptions on the Model, you could use the command:",
+      "params": [
+        {
+          "name": "index",
+          "type": "Object",
+          "doc": "The index of the OptionsProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "optionprovider - an OptionsProvider object if successful, otherwise nil."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsManager.html#[]-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Object",
+      "summary": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module.",
+      "remarks": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module. Prior to that the #count method is an alias for #length. Returns integer - number of OptionsProvider objects if successful.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "integer - number of OptionsProvider objects if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsManager.html#count-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|provider| ... } =\u003E nil",
+      "summary": "The #each method is used to iterate through options providers.",
+      "remarks": "The #each method is used to iterate through options providers.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsManager.html#each-instance_method"
+    },
+    {
+      "name": "keys",
+      "signature": "keys =\u003E Object",
+      "summary": "The keys method is used to get a list of keys in the OptionsManager.",
+      "remarks": "The keys method is used to get a list of keys in the OptionsManager.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "keys - Array of string keys"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsManager.html#keys-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method is an alias of #size.",
+      "remarks": "The #length method is an alias of #size.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsManager.html#length-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method returns the number of Sketchup::OptionsProvider objects inside this Sketchup::OptionsManager.",
+      "remarks": "The #size method returns the number of Sketchup::OptionsProvider objects inside this Sketchup::OptionsManager.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsManager.html#size-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

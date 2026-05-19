@@ -1,0 +1,14 @@
+{
+  "name": "LockedLayerError",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "This is raised whenever a method attempts to modify any Entity that resides on a locked Layer, or when attempting to change the shared attribute of a locked Layer.",
+  "base": "ArgumentError",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/LockedLayerError.html",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,242 @@
+{
+  "name": "AnalysisModelSpectrumProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelSpectrumProperties class contains information related to analysis model spectrum properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/25c416a5-cb07-6343-4334-8e85a092f6d5",
+  "constructors": [
+    {
+      "name": "AnalysisModelSpectrumProperties",
+      "signature": "public AnalysisModelSpectrumProperties()",
+      "summary": "Initializes a new instance of the AnalysisModelSpectrumProperties class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e0ba12b-f754-2748-3f67-f775bb1a05ca"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SpectrumAcceleration",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the accelerations of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e525708-3b69-8a91-3576-ea959b95d5ca"
+    },
+    {
+      "name": "SpectrumASCEf1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The ASCEf1 value of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/30b3b6a6-4c01-935c-056a-714836150412"
+    },
+    {
+      "name": "SpectrumASCEf2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The ASCEf2 value of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c32cc80c-f627-0a11-10cf-456a18cdfbdc"
+    },
+    {
+      "name": "SpectrumCombination",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The spectrum combination.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b48fc05-3c36-ea61-db48-30c2b17f9e1a"
+    },
+    {
+      "name": "SpectrumCompositeDampingRatioX",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the composite damping rations in the X direction of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4bd9299a-f0c2-c4a4-e772-0f4cb74cf5da"
+    },
+    {
+      "name": "SpectrumCompositeDampingRatioY",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the composite damping rations in the Y direction of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a7ec4143-2212-fd66-75ce-e6c8adca6ecf"
+    },
+    {
+      "name": "SpectrumCompositeDampingRatioZ",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the composite damping rations in the Z direction of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/34bfd276-c094-16e7-ac4e-4f1bc424ebc2"
+    },
+    {
+      "name": "SpectrumDampingFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The damping factor of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e8c37ea0-5fdc-821e-cf0b-6494806512db"
+    },
+    {
+      "name": "SpectrumDampingPointID",
+      "type": "List\u003CIdentifier\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the damping point identifiers of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9120d653-fab3-ac87-ff96-8580bdd27914"
+    },
+    {
+      "name": "SpectrumDampingType",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the spectrum damping.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca560cbf-3e4d-00ce-623d-e724e1d24548"
+    },
+    {
+      "name": "SpectrumInterpolation",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The interpolation of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/34fe6d24-dd59-2243-9ec7-7dc8b41522c4"
+    },
+    {
+      "name": "SpectrumMaximumDampingRatio",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The maximum damping ratio of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8de2b6cf-792e-e0cd-20d6-72f83a6dc8f0"
+    },
+    {
+      "name": "SpectrumMinimumDampingRatio",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The minimum damping ratio of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b081740e-ed29-271f-44b3-354be24955f1"
+    },
+    {
+      "name": "SpectrumMissingMass",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The missing mass of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/60b2c789-0c16-1222-42f7-8a4014c29b2a"
+    },
+    {
+      "name": "SpectrumMissingMassEnable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the missing mass of the spectrum is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0404b559-6740-fd02-bb49-a6e5e3d84cc7"
+    },
+    {
+      "name": "SpectrumModalDampingRatio",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the modal damping ratios of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6490cdeb-8cd3-1e1d-a1bf-f1ddbe130c1e"
+    },
+    {
+      "name": "SpectrumModalDampingRatioEnable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the damping ratio of the spectrum is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/adf77210-9076-e421-5b88-74fbe401a197"
+    },
+    {
+      "name": "SpectrumModeCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The count of the spectrum mode.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/575f6c59-8e4c-70b7-f1be-9d58c9f2bac2"
+    },
+    {
+      "name": "SpectrumPeriod",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the periods of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2d493cd7-47fe-69d2-d37e-232a1ff012cc"
+    },
+    {
+      "name": "SpectrumScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/38e66fc3-4590-015a-bf23-3f895fb255a2"
+    },
+    {
+      "name": "SpectrumType",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e7d5f57b-2c37-57da-db51-09530b05e47e"
+    },
+    {
+      "name": "SpectrumXdirection",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The X direction of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f0366d4-62e2-55ae-a93c-b92c02e05e06"
+    },
+    {
+      "name": "SpectrumXdirectionEnable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the X direction of the spectrum is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce13e2e1-dbc3-81ab-dedb-971c45e1cdad"
+    },
+    {
+      "name": "SpectrumYdirection",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The Y direction of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e2354a92-ea7b-984c-d8d6-3d0264b4036b"
+    },
+    {
+      "name": "SpectrumYdirectionEnable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the Y direction of the spectrum is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dc0e5e5a-e6dd-183e-b62a-694a1f152101"
+    },
+    {
+      "name": "SpectrumZdirection",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The Z direction of the spectrum.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/91b0e4b9-6670-bc5b-f63c-bfb1024dae8a"
+    },
+    {
+      "name": "SpectrumZdirectionEnable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the Z direction of the spectrum is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/faf189dc-e2fe-eb65-3b6f-3547c4092255"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

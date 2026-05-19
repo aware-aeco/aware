@@ -1,0 +1,94 @@
+{
+  "name": "ApplicationVersion",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "class",
+  "summary": "Provides information about the version of the currently running API and Runtime",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.ApplicationVersion",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ApiMajor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Major version number for the Navisworks API. Changes when a non-backwards compatible change is made to a stable version of the API. Always less than or equal to RuntimeMajor.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.ApiMajor"
+    },
+    {
+      "name": "ApiMinor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Minor version number for the Navisworks API. Changes when there is a behavioral or minor change to a stable version of the API that may have an impact on backwards compatibility. Always less than or equal to RuntimeMinor.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.ApiMinor"
+    },
+    {
+      "name": "Build",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Build number for Api and Runtime. Changes on every build (and hence every release).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.Build"
+    },
+    {
+      "name": "IsApiStable",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this version of the API stable ? If false, breaking changes may be made at any time and client code must be recompiled for every build. Api will be unstable for alpha and early beta releases.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.IsApiStable"
+    },
+    {
+      "name": "IsRuntimeBeta",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this an alpha or beta version of the runtime ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.IsRuntimeBeta"
+    },
+    {
+      "name": "Runtime",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifies the Navisworks runtime that is providing this implementation of the API. Will typically be an installed Navisworks product.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.Runtime"
+    },
+    {
+      "name": "RuntimeLanguage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the language code corresponding to the one Navisworks is using.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.RuntimeLanguage"
+    },
+    {
+      "name": "RuntimeMajor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Major version number for the current Navisworks Runtime. This changes with every major (annual) release of Navisworks products.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.RuntimeMajor"
+    },
+    {
+      "name": "RuntimeMinor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Minor version number for the current Navisworks Runtime. This changes with every minor (service pack or subscription release) update of Navisworks products.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.RuntimeMinor"
+    },
+    {
+      "name": "RuntimeProductName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The complete product name for the Navisworks runtime that is providing this implementation of the API.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationVersion.RuntimeProductName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

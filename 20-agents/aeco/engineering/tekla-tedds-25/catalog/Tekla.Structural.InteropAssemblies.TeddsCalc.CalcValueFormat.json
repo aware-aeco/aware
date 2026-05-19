@@ -1,0 +1,44 @@
+{
+  "name": "CalcValueFormat",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "enum",
+  "summary": "Formats for converting numeric values to a string",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcvalueformat-41849",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Engineering",
+      "value": 3,
+      "summary": "Engineering format"
+    },
+    {
+      "name": "Fixed",
+      "value": 0,
+      "summary": "Fixed format"
+    },
+    {
+      "name": "General",
+      "value": 2,
+      "summary": "General format"
+    },
+    {
+      "name": "InputOutput",
+      "value": 4,
+      "summary": "Data Input/Output format for interoperability with other software"
+    },
+    {
+      "name": "Scientific",
+      "value": 1,
+      "summary": "Scientific format"
+    },
+    {
+      "name": "UserInput",
+      "value": 5,
+      "summary": "User interface input format"
+    }
+  ]
+}

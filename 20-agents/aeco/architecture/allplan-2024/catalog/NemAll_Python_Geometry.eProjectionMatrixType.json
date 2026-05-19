@@ -1,0 +1,65 @@
+{
+  "name": "eProjectionMatrixType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Type of projection in Matrix3D",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eProjectionMatrixType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eProjectionMatrixType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eProjectionMatrixType/#NemAll_Python_Geometry.eProjectionMatrixType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOTTOM_2D",
+      "value": 5
+    },
+    {
+      "name": "FREE_3D",
+      "value": 6
+    },
+    {
+      "name": "FRONT_2D",
+      "value": 2
+    },
+    {
+      "name": "LEFT_2D",
+      "value": 0
+    },
+    {
+      "name": "REAR_2D",
+      "value": 3
+    },
+    {
+      "name": "RIGHT_2D",
+      "value": 1
+    },
+    {
+      "name": "TOP_2D",
+      "value": 4
+    }
+  ]
+}

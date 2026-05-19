@@ -1,0 +1,651 @@
+{
+  "name": "BarPlacement",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the bar placement element",
+  "base": "ReinfElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/",
+  "constructors": [
+    {
+      "name": "BarPlacement",
+      "signature": "BarPlacement() | BarPlacement(placement: BarPlacement) | BarPlacement( positionNumber: int, barCount: int, distVec: Vector3D, startPnt: Point3D, endPnt: Point3D, bendingShape: BendingShape, ) | BarPlacement( positionNumber: int, barCount: int, startBendingShape: BendingShape, endBendingShape: BendingShape, ) | BarPlacement( positionNumber: int, barCount: int, rotationAxis: Line3D, rotationAngle: Angle, bendingShape: BendingShape, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBarCount",
+      "signature": "GetBarCount() -\u003E int",
+      "summary": "Get the bar count",
+      "remarks": "Get the bar count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Bar count"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetBarCount"
+    },
+    {
+      "name": "GetBendingShape",
+      "signature": "GetBendingShape() -\u003E BendingShape",
+      "summary": "Get the shape polyline",
+      "remarks": "Get the shape polyline",
+      "params": [],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Shape polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetBendingShape"
+    },
+    {
+      "name": "GetBendingShapeMatrix",
+      "signature": "GetBendingShapeMatrix() -\u003E Matrix3D",
+      "summary": "Get the bending shape matrix",
+      "remarks": "Get the bending shape matrix",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Bending shape matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetBendingShapeMatrix"
+    },
+    {
+      "name": "GetCommonProperties",
+      "signature": "GetCommonProperties() -\u003E CommonProperties",
+      "summary": "Get the common properties",
+      "remarks": "Get the common properties",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Common properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetCommonProperties"
+    },
+    {
+      "name": "GetDistanceVector",
+      "signature": "GetDistanceVector() -\u003E Vector3D",
+      "summary": "Get the distance vector",
+      "remarks": "Get the distance vector",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Distance vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetDistanceVector"
+    },
+    {
+      "name": "GetEndBendingShape",
+      "signature": "GetEndBendingShape() -\u003E BendingShape",
+      "summary": "Get the shape polyline at the end of a polygonal placement",
+      "remarks": "Get the shape polyline at the end of a polygonal placement",
+      "params": [],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Shape polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetEndBendingShape"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint() -\u003E Point3D",
+      "summary": "Get the end point of the placement at the placement line",
+      "remarks": "Get the end point of the placement at the placement line",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "End point of the placement at the placement line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetEndPoint"
+    },
+    {
+      "name": "GetLabel",
+      "signature": "GetLabel() -\u003E ReinforcementLabel",
+      "summary": "Get the label",
+      "remarks": "Get the label",
+      "params": [],
+      "returns": {
+        "type": "ReinforcementLabel",
+        "doc": "Label"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetLabel"
+    },
+    {
+      "name": "GetLengthFactor",
+      "signature": "GetLengthFactor() -\u003E float",
+      "summary": "Get the length factor",
+      "remarks": "Get the length factor",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Length factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetLengthFactor"
+    },
+    {
+      "name": "GetPlacementMatrix",
+      "signature": "GetPlacementMatrix() -\u003E Matrix3D",
+      "summary": "Get the placement matrix of the first bar",
+      "remarks": "Get the placement matrix of the first bar",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Placement matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetPlacementMatrix"
+    },
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber() -\u003E int",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetPositionNumber"
+    },
+    {
+      "name": "GetRotationAngle",
+      "signature": "GetRotationAngle() -\u003E Angle",
+      "summary": "Get the rotation angle",
+      "remarks": "Get the rotation angle",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Rotation angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetRotationAngle"
+    },
+    {
+      "name": "GetRotationAxis",
+      "signature": "GetRotationAxis() -\u003E Line3D",
+      "summary": "Get the rotation axis",
+      "remarks": "Get the rotation axis",
+      "params": [],
+      "returns": {
+        "type": "Line3D",
+        "doc": "Rotation axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetRotationAxis"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point3D",
+      "summary": "Get start point of the placement at the placement line",
+      "remarks": "Get start point of the placement at the placement line",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Start point of the placement at the placement line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.GetStartPoint"
+    },
+    {
+      "name": "IsPlacePerLinearMeter",
+      "signature": "IsPlacePerLinearMeter() -\u003E bool",
+      "summary": "Get the place per linear meter state",
+      "remarks": "Get the place per linear meter state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Place per linear meter: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.IsPlacePerLinearMeter"
+    },
+    {
+      "name": "IsPolygonalPlacement",
+      "signature": "IsPolygonalPlacement() -\u003E bool",
+      "summary": "Get the polygonal placement state",
+      "remarks": "Get the polygonal placement state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Polygonal placement: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.IsPolygonalPlacement"
+    },
+    {
+      "name": "IsRotationalPlacement",
+      "signature": "IsRotationalPlacement() -\u003E bool",
+      "summary": "Get the rotational placement state",
+      "remarks": "Get the rotational placement state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Rotational placement: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.IsRotationalPlacement"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(transVec: Vector3D)",
+      "summary": "Move the placement",
+      "remarks": "Move the placement",
+      "params": [
+        {
+          "name": "transVec",
+          "type": "Vector3D",
+          "doc": "Move vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.Move"
+    },
+    {
+      "name": "SetBarCount",
+      "signature": "SetBarCount(barCount: int)",
+      "summary": "Set the bar count",
+      "remarks": "Set the bar count",
+      "params": [
+        {
+          "name": "barCount",
+          "type": "int",
+          "doc": "Bar count",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetBarCount"
+    },
+    {
+      "name": "SetBendingShape",
+      "signature": "SetBendingShape(shape: BendingShape)",
+      "summary": "Set the reinforcement shape",
+      "remarks": "Set the reinforcement shape",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Reinforcement shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetBendingShape"
+    },
+    {
+      "name": "SetBendingShapeMatrix",
+      "signature": "SetBendingShapeMatrix(bendingShapeMat: Matrix3D)",
+      "summary": "Set the bending shape matrix",
+      "remarks": "Set the bending shape matrix",
+      "params": [
+        {
+          "name": "bendingShapeMat",
+          "type": "Matrix3D",
+          "doc": "Bending shape matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetBendingShapeMatrix"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp: CommonProperties)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetCommonProperties"
+    },
+    {
+      "name": "SetDistanceVector",
+      "signature": "SetDistanceVector(distVec: Vector3D)",
+      "summary": "Set the distance vector",
+      "remarks": "Set the distance vector",
+      "params": [
+        {
+          "name": "distVec",
+          "type": "Vector3D",
+          "doc": "Distance vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetDistanceVector"
+    },
+    {
+      "name": "SetEndBendingShape",
+      "signature": "SetEndBendingShape(shape: BendingShape)",
+      "summary": "Set the reinforcement shape at the end",
+      "remarks": "Set the reinforcement shape at the end",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Reinforcement shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetEndBendingShape"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(label: ReinforcementLabel, labelAssocView: AssocViewElementAdapter)",
+      "summary": "Set the label",
+      "remarks": "Set the label",
+      "params": [
+        {
+          "name": "label",
+          "type": "ReinforcementLabel",
+          "doc": "Label",
+          "optional": false
+        },
+        {
+          "name": "labelAssocView",
+          "type": "AssocViewElementAdapter",
+          "doc": "Associative view for the label",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetLabel"
+    },
+    {
+      "name": "SetLengthFactor",
+      "signature": "SetLengthFactor(lengthFactor: float)",
+      "summary": "Set the length factor",
+      "remarks": "Set the length factor",
+      "params": [
+        {
+          "name": "lengthFactor",
+          "type": "float",
+          "doc": "Length factor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetLengthFactor"
+    },
+    {
+      "name": "SetPlacePerLinearMeter",
+      "signature": "SetPlacePerLinearMeter(bPlacePerLinearMeter: bool)",
+      "summary": "Set the place per linear meter state",
+      "remarks": "Set the place per linear meter state",
+      "params": [
+        {
+          "name": "bPlacePerLinearMeter",
+          "type": "bool",
+          "doc": "Place per linear meter: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetPlacePerLinearMeter"
+    },
+    {
+      "name": "SetPositionNumber",
+      "signature": "SetPositionNumber(positionNumber: int)",
+      "summary": "Set the position number",
+      "remarks": "Set the position number",
+      "params": [
+        {
+          "name": "positionNumber",
+          "type": "int",
+          "doc": "Position number",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetPositionNumber"
+    },
+    {
+      "name": "SetRotationAngle",
+      "signature": "SetRotationAngle(rotationAngle: float)",
+      "summary": "Set the rotation angle",
+      "remarks": "Set the rotation angle",
+      "params": [
+        {
+          "name": "rotationAngle",
+          "type": "float",
+          "doc": "Rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetRotationAngle"
+    },
+    {
+      "name": "SetRotationAxis",
+      "signature": "SetRotationAxis(rotationAxis: Line3D)",
+      "summary": "Set the rotation axis",
+      "remarks": "Set the rotation axis",
+      "params": [
+        {
+          "name": "rotationAxis",
+          "type": "Line3D",
+          "doc": "Rotation axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetRotationAxis"
+    },
+    {
+      "name": "SetRotationalPlacement",
+      "signature": "SetRotationalPlacement(bRotationalPlacement: bool)",
+      "summary": "Set the rotational placement state",
+      "remarks": "Set the rotational placement state",
+      "params": [
+        {
+          "name": "bRotationalPlacement",
+          "type": "bool",
+          "doc": "Rotational placement state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.SetRotationalPlacement"
+    },
+    {
+      "name": "Transform",
+      "signature": "Transform(transMat: Matrix3D)",
+      "summary": "Transform the placement",
+      "remarks": "Transform the placement",
+      "params": [
+        {
+          "name": "transMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.Transform"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BarCount",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bar count",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.BarCount"
+    },
+    {
+      "name": "BendingShape",
+      "type": "BendingShape",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the shape polyline",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.BendingShape"
+    },
+    {
+      "name": "BendingShapeMatrix",
+      "type": "Matrix3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bending shape matrix",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.BendingShapeMatrix"
+    },
+    {
+      "name": "CommonProperties",
+      "type": "CommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the common properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.CommonProperties"
+    },
+    {
+      "name": "DistanceVector",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the distance vector",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.DistanceVector"
+    },
+    {
+      "name": "EndBendingShape",
+      "type": "BendingShape",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the shape polyline at the end of a polygonal placement",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.EndBendingShape"
+    },
+    {
+      "name": "LengthFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the length factor",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.LengthFactor"
+    },
+    {
+      "name": "PlacePerLinearMeter",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the place per linear meter state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.PlacePerLinearMeter"
+    },
+    {
+      "name": "PositionNumber",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.PositionNumber"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.RotationAngle"
+    },
+    {
+      "name": "RotationAxis",
+      "type": "Line3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation axis",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.RotationAxis"
+    },
+    {
+      "name": "RotationalPlacement",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotational placement state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/#NemAll_Python_Reinforcement.BarPlacement.RotationalPlacement"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

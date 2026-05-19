@@ -1,0 +1,29 @@
+{
+  "name": "GH_DataComparison",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible Data Matching algorithms for Components.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DataComparison.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ShortestList",
+      "value": 0,
+      "summary": "Matches data in all lists until the shortest list runs dry. This flag will omit data entries if lists have a different length"
+    },
+    {
+      "name": "LongestList",
+      "value": 1,
+      "summary": "Matches data in all lists until the longest list runs dry. This is the default behaviour"
+    },
+    {
+      "name": "CrossReference",
+      "value": 2,
+      "summary": "Matches data in all lists in all possible combinations. Careful, since this might results in stupendous amounts of data"
+    }
+  ]
+}

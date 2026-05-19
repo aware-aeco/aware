@@ -1,0 +1,538 @@
+{
+  "name": "BoundingBox3D",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Axis aligned 3D bounding box. Immutable.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.BoundingBox3D",
+  "constructors": [
+    {
+      "name": "BoundingBox3D()",
+      "signature": "BoundingBox3D()",
+      "summary": "Create an empty bounding box",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.%23ctor"
+    },
+    {
+      "name": "BoundingBox3D(Autodesk.Navisworks.Api.Point3D, Autodesk.Navisworks.Api.Point3D)",
+      "signature": "BoundingBox3D(Autodesk.Navisworks.Api.Point3D minPoint, Autodesk.Navisworks.Api.Point3D maxPoint)",
+      "summary": "Create a bounding box from a min and max point that define the opposite corners of the box",
+      "params": [
+        {
+          "name": "minPoint",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "maxPoint",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027minPoint\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027minPoint\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "A component of minPosition is greater than the corresponding component of maxPosition"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027maxPoint\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027maxPoint\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.%23ctor%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Extend",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D Extend(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "Return box that represents union of this with another box",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027box\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027box\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Extend%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "Extend",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D Extend(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "Return box that represents union of this with another point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Extend%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "Intersect",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D Intersect(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "Return box that represents intersection of this with another box",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027box\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027box\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Intersect%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "Translate",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D Translate(Autodesk.Navisworks.Api.Vector3D offset)",
+      "summary": "Return this box translated by an offset",
+      "params": [
+        {
+          "name": "offset",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027offset\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027offset\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Translate%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "Autodesk.Navisworks.Api.Point3D ClosestPoint(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "Computes closest point in box to a given point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.ClosestPoint%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "True if this completely contains box",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027box\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027box\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Contains%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "True if this contains point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Contains%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Equals%28System.Object%29"
+    },
+    {
+      "name": "Intersects",
+      "signature": "bool Intersects(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "True if this intersects box",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027box\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027box\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Intersects%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "Intersects",
+      "signature": "bool Intersects(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "True if this intersects point (same as Contains() for a point)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.Intersects%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.GetHashCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.BoundingBox3D InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of BoundingBox3D.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of BoundingBox3D.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.BoundingBox3D.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Center",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Center of bounding box",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.Center"
+    },
+    {
+      "name": "Empty",
+      "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an empty bounding box",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.Empty"
+    },
+    {
+      "name": "HasSurfaceArea",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does bounding box have a non-zero surface area ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.HasSurfaceArea"
+    },
+    {
+      "name": "HasVolume",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does bounding box have a non-zero volume ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.HasVolume"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is bounding box empty ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.IsEmpty"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.IsReadOnly"
+    },
+    {
+      "name": "Max",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Return max point that defines corner of box with largest values for all components",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.Max"
+    },
+    {
+      "name": "Min",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Return min point that defines corner of box with smallest values for all components",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.Min"
+    },
+    {
+      "name": "Size",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Extents of bounding box from min point to max point",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.Size"
+    },
+    {
+      "name": "SurfaceArea",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Sum of the areas of the faces of the bounding box, 0 if empty",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.SurfaceArea"
+    },
+    {
+      "name": "Volume",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Volume of bounding box, 0 if empty",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.BoundingBox3D.Volume"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "GeometrySectionEnumerator",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The GeometrySectionEnumerator class is used to enumerate the geometry sections of a bent plate geometry.",
+  "base": "System.Object",
+  "interfaces": [
+    "IEnumerator"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fabaac2a-bb59-e3d1-b60d-38f638e7bf6e",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3a5139a-f5d1-c283-d58a-21d2403b9624"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2735ca0c-35d3-991b-c53b-d3ea666301b8"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "GeometrySection",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current geometry section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ea522b6-5174-3bce-576c-f0a0b5d18c06"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

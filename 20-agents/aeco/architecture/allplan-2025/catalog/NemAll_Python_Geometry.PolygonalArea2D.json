@@ -1,0 +1,309 @@
+{
+  "name": "PolygonalArea2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "2D polygonal area class for 2D polygonal area geometry",
+  "base": "PolygonalArea",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/",
+  "constructors": [
+    {
+      "name": "PolygonalArea2D",
+      "signature": "PolygonalArea2D() | PolygonalArea2D(verticesCount: int, edgesCount: int) | PolygonalArea2D(refPoint: Point2D, verticesCount: int, edgesCount: int) | PolygonalArea2D(polygon: PolygonalArea2D)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendRelVertex",
+      "signature": "AppendRelVertex(vertex: Point2D) -\u003E tuple",
+      "summary": "Append vertex in local coordinate system. Warning: method does not update edges.",
+      "remarks": "Append vertex in local coordinate system. Warning: method does not update edges.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Point2D",
+          "doc": "vertex in local coordinate system which will be appended.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.AppendRelVertex"
+    },
+    {
+      "name": "AppendVertex",
+      "signature": "AppendVertex(vertex: Point2D) -\u003E tuple",
+      "summary": "Append vertex in World coordinate system. Warning: method does not update edges.",
+      "remarks": "Append vertex in World coordinate system. Warning: method does not update edges.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Point2D",
+          "doc": "vertex in world coordinate system which will be appended.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.AppendVertex"
+    },
+    {
+      "name": "EqualRef",
+      "signature": "EqualRef(polygon: PolygonalArea2D) -\u003E bool",
+      "summary": "Test for equal reference points.",
+      "remarks": "Test for equal reference points.",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "PolygonalArea2D",
+          "doc": "polygon for comparision.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if reference points are equal else return false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.EqualRef"
+    },
+    {
+      "name": "GetEdgeVertices",
+      "signature": "GetEdgeVertices(edgeIndex: int) -\u003E tuple",
+      "summary": "Get edge vertices.",
+      "remarks": "Get edge vertices.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "edge index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.GetEdgeVertices"
+    },
+    {
+      "name": "GetPolygon",
+      "signature": "GetPolygon() -\u003E tuple",
+      "summary": "Get polygon. Old interface: pgon_to_punkte",
+      "remarks": "Get polygon. Old interface: pgon_to_punkte",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.GetPolygon"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point2D",
+      "summary": "Get the reference point.",
+      "remarks": "Get the reference point.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "constant reference to point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.GetRefPoint"
+    },
+    {
+      "name": "GetRelVertex",
+      "signature": "GetRelVertex(vertexIndex: int) -\u003E tuple",
+      "summary": "Get vertex in Local coordinate system.",
+      "remarks": "Get vertex in Local coordinate system.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.GetRelVertex"
+    },
+    {
+      "name": "GetVertex",
+      "signature": "GetVertex(vertexIndex: int) -\u003E tuple",
+      "summary": "Get vertex in World coordinate system.",
+      "remarks": "Get vertex in World coordinate system.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.GetVertex"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point2D) -\u003E eGeometryErrorCode",
+      "summary": "Set reference point in world coordinate system. Coordinates of points will be recalculated with new reference point.",
+      "remarks": "Set reference point in world coordinate system. Coordinates of points will be recalculated with new reference point.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "new reference point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.SetRefPoint"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(polygonalArea: PolygonalArea2D) -\u003E object",
+      "summary": "Comparison of polygonalAreas without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of polygonalAreas without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "polygonalArea",
+          "type": "PolygonalArea2D",
+          "doc": "Compared polygonalArea.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when polygonalAreas are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__eq__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(vertexIndex: int) -\u003E Point2D",
+      "summary": "Get point at position from index. Used world coordinates.",
+      "remarks": "Get point at position from index. Used world coordinates.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Copy of vertex[vertexIndex] in world coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__getitem__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(polygonalarea: PolygonalArea2D) -\u003E object | __iadd__(polygon: Polygon2D) -\u003E object",
+      "summary": "Append polygon.",
+      "remarks": "Append polygon.",
+      "params": [
+        {
+          "name": "polygonalarea",
+          "type": "PolygonalArea2D",
+          "doc": "polygonal area which will be appended.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Reference to PolygonalArea2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__iadd__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E object",
+      "summary": "Matrix transformation.",
+      "remarks": "Matrix transformation.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "point index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Transformed 2D polygonal area."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "RefPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the reference point in world coordinate system as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.RefPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

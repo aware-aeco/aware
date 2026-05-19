@@ -1,0 +1,27 @@
+{
+  "name": "IPlatformServiceLocator",
+  "namespace": "Rhino.Runtime",
+  "kind": "interface",
+  "summary": "Get platform specific services that are used internally for general cross platform funtions in RhinoCommon. This includes services like localization and GUI components that have concrete implementations in the RhinoWindows or RhinoMac assemblies",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_IPlatformServiceLocator.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetService\u003CT\u003E",
+      "signature": "T GetService\u003CT\u003E() where T : class",
+      "summary": "Used to get service of a specific type",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IPlatformServiceLocator.GetService\u0060\u00601\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_IPlatformServiceLocator_GetService__1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

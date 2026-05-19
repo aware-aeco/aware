@@ -1,0 +1,22 @@
+{
+  "name": "SubCompilePass",
+  "namespace": "ProtoCore.CompilerDefinitions",
+  "kind": "enum",
+  "summary": "Type SubCompilePass",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CompilerOptions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "UnboundIdentifier",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Picker.PickPointEnum",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The possible point pick types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6ffaab17-269a-80be-16f4-efb03354d6f4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PICK_ONE_POINT",
+      "value": 0,
+      "summary": "Pick one point (x,y,z)."
+    },
+    {
+      "name": "PICK_TWO_POINTS",
+      "value": 1,
+      "summary": "Pick two points."
+    },
+    {
+      "name": "PICK_POLYGON",
+      "value": 2,
+      "summary": "Pick multiple points."
+    },
+    {
+      "name": "PICK_LINE",
+      "value": 3,
+      "summary": "Pick one line."
+    },
+    {
+      "name": "PICK_FACE",
+      "value": 4,
+      "summary": "Pick one face."
+    }
+  ]
+}

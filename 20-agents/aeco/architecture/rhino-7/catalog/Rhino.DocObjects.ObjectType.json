@@ -1,0 +1,164 @@
+{
+  "name": "ObjectType",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines binary mask values for each object type that can be found in a document.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_ObjectType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Nothing."
+    },
+    {
+      "name": "Point",
+      "value": 1,
+      "summary": "A point."
+    },
+    {
+      "name": "PointSet",
+      "value": 2,
+      "summary": "A point set or cloud."
+    },
+    {
+      "name": "Curve",
+      "value": 4,
+      "summary": "A curve."
+    },
+    {
+      "name": "Surface",
+      "value": 8,
+      "summary": "A surface."
+    },
+    {
+      "name": "Brep",
+      "value": 16,
+      "summary": "A brep."
+    },
+    {
+      "name": "Mesh",
+      "value": 32,
+      "summary": "A mesh."
+    },
+    {
+      "name": "Light",
+      "value": 256,
+      "summary": "A rendering light."
+    },
+    {
+      "name": "Annotation",
+      "value": 512,
+      "summary": "An annotation."
+    },
+    {
+      "name": "InstanceDefinition",
+      "value": 2048,
+      "summary": "A block definition."
+    },
+    {
+      "name": "InstanceReference",
+      "value": 4096,
+      "summary": "A block reference."
+    },
+    {
+      "name": "TextDot",
+      "value": 8192,
+      "summary": "A text dot."
+    },
+    {
+      "name": "Grip",
+      "value": 16384,
+      "summary": "Selection filter value - not a real object type."
+    },
+    {
+      "name": "Detail",
+      "value": 32768,
+      "summary": "A detail."
+    },
+    {
+      "name": "Hatch",
+      "value": 65536,
+      "summary": "A hatch."
+    },
+    {
+      "name": "MorphControl",
+      "value": 131072,
+      "summary": "A morph control."
+    },
+    {
+      "name": "SubD",
+      "value": 262144,
+      "summary": "A SubD object."
+    },
+    {
+      "name": "BrepLoop",
+      "value": 524288,
+      "summary": "A brep loop."
+    },
+    {
+      "name": "BrepVertex",
+      "value": 1048576,
+      "summary": "a brep vertex."
+    },
+    {
+      "name": "PolysrfFilter",
+      "value": 2097152,
+      "summary": "Selection filter value - not a real object type."
+    },
+    {
+      "name": "EdgeFilter",
+      "value": 4194304,
+      "summary": "Selection filter value - not a real object type."
+    },
+    {
+      "name": "PolyedgeFilter",
+      "value": 8388608,
+      "summary": "Selection filter value - not a real object type."
+    },
+    {
+      "name": "MeshVertex",
+      "value": 16777216,
+      "summary": "A mesh vertex."
+    },
+    {
+      "name": "MeshEdge",
+      "value": 33554432,
+      "summary": "A mesh edge."
+    },
+    {
+      "name": "MeshFace",
+      "value": 67108864,
+      "summary": "A mesh face."
+    },
+    {
+      "name": "Cage",
+      "value": 134217728,
+      "summary": "A cage."
+    },
+    {
+      "name": "Phantom",
+      "value": 268435456,
+      "summary": "A phantom object."
+    },
+    {
+      "name": "ClipPlane",
+      "value": 536870912,
+      "summary": "A clipping plane."
+    },
+    {
+      "name": "Extrusion",
+      "value": 1073741824,
+      "summary": "An extrusion."
+    },
+    {
+      "name": "AnyObject",
+      "value": "4294967295",
+      "summary": "All bits set."
+    }
+  ]
+}

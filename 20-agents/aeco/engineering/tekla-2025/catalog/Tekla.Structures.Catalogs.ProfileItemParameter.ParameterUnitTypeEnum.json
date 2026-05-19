@@ -1,0 +1,294 @@
+{
+  "name": "ProfileItemParameter.ParameterUnitTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Defines the different unit types of the profile item parameter.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/80be683f-4f20-cda9-044b-b1d5336794f0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INPUT_BOOLEAN",
+      "value": -3,
+      "summary": "The input boolean."
+    },
+    {
+      "name": "INPUT_INTEGER",
+      "value": -2,
+      "summary": "The input integer."
+    },
+    {
+      "name": "INPUT_STRING",
+      "value": -1,
+      "summary": "The input string."
+    },
+    {
+      "name": "INPUT_NONE",
+      "value": 0,
+      "summary": "The input none."
+    },
+    {
+      "name": "INPUT_RATIO_UNIT",
+      "value": 1,
+      "summary": "The input ratio unit."
+    },
+    {
+      "name": "INPUT_STRAIN_UNIT",
+      "value": 2,
+      "summary": "The input strain unit."
+    },
+    {
+      "name": "INPUT_ANGLE_UNIT",
+      "value": 5,
+      "summary": "The input angle unit."
+    },
+    {
+      "name": "OUTPUT_ANGLE_UNIT",
+      "value": 6,
+      "summary": "The output angle unit."
+    },
+    {
+      "name": "INPUT_SECTION_ANGLE_UNIT",
+      "value": 7,
+      "summary": "The input section angle unit."
+    },
+    {
+      "name": "INPUT_LENGTH_UNIT",
+      "value": 10,
+      "summary": "The input length unit."
+    },
+    {
+      "name": "OUTPUT_LENGTH_UNIT",
+      "value": 11,
+      "summary": "The output length unit."
+    },
+    {
+      "name": "INPUT_DEFORMATION_UNIT",
+      "value": 12,
+      "summary": "The input deformation unit."
+    },
+    {
+      "name": "OUTPUT_DEFORMATION_UNIT",
+      "value": 13,
+      "summary": "The output deformation unit."
+    },
+    {
+      "name": "INPUT_DIMENSION_UNIT",
+      "value": 14,
+      "summary": "The input dimension unit."
+    },
+    {
+      "name": "INPUT_RADIUSOFINERTIA_UNIT",
+      "value": 16,
+      "summary": "The input radius of inertia unit."
+    },
+    {
+      "name": "INPUT_AREA_UNIT",
+      "value": 20,
+      "summary": "The input area unit."
+    },
+    {
+      "name": "OUTPUT_REINFAREA_UNIT",
+      "value": 21,
+      "summary": "The output reinforced area unit."
+    },
+    {
+      "name": "OUTPUT_TRANSVREINF_UNIT",
+      "value": 22,
+      "summary": "The output transverse reinforcement unit."
+    },
+    {
+      "name": "INPUT_AREAPERLENGTH_UNIT",
+      "value": 23,
+      "summary": "The input area per length unit."
+    },
+    {
+      "name": "OUTPUT_VOLUME_UNIT",
+      "value": 30,
+      "summary": "The output volume unit."
+    },
+    {
+      "name": "INPUT_SECTIONMODULUS_UNIT",
+      "value": 31,
+      "summary": "The input section modulus unit."
+    },
+    {
+      "name": "INPUT_VOLUME_UNIT",
+      "value": 32,
+      "summary": "The input volume unit."
+    },
+    {
+      "name": "INPUT_MOMENTOFINERTIA_UNIT",
+      "value": 40,
+      "summary": "The input moment of inertia unit."
+    },
+    {
+      "name": "INPUT_TORSIONCONSTANT_UNIT",
+      "value": 41,
+      "summary": "The input torsion constant unit."
+    },
+    {
+      "name": "INPUT_WARPINGCONSTANT_UNIT",
+      "value": 60,
+      "summary": "The input warping constant unit."
+    },
+    {
+      "name": "INPUT_FORCE_UNIT",
+      "value": 100,
+      "summary": "The input force unit."
+    },
+    {
+      "name": "OUTPUT_FORCE_UNIT",
+      "value": 101,
+      "summary": "The output force unit."
+    },
+    {
+      "name": "INPUT_WEIGHT_UNIT",
+      "value": 102,
+      "summary": "The input weight unit."
+    },
+    {
+      "name": "OUTPUT_WEIGHT_UNIT",
+      "value": 103,
+      "summary": "The output weight unit."
+    },
+    {
+      "name": "INPUT_DISTRIBLOAD_UNIT",
+      "value": 110,
+      "summary": "The input distributed load unit."
+    },
+    {
+      "name": "OUTPUT_DISTRIBLOAD_UNIT",
+      "value": 111,
+      "summary": "The output distributed load unit."
+    },
+    {
+      "name": "INPUT_SPRINGCONSTANT_UNIT",
+      "value": 112,
+      "summary": "The input spring constant unit."
+    },
+    {
+      "name": "OUTPUT_MASSPERLENGTH_UNIT",
+      "value": 113,
+      "summary": "The output mass per length unit."
+    },
+    {
+      "name": "INPUT_SURFACELOAD_UNIT",
+      "value": 120,
+      "summary": "The input surface load unit."
+    },
+    {
+      "name": "OUTPUT_SURFACELOAD_UNIT",
+      "value": 121,
+      "summary": "The output surface load unit."
+    },
+    {
+      "name": "INPUT_STRENGTH_UNIT",
+      "value": 122,
+      "summary": "The input strength unit."
+    },
+    {
+      "name": "OUTPUT_STRESS_UNIT",
+      "value": 123,
+      "summary": "The output stress unit."
+    },
+    {
+      "name": "INPUT_MODULUS_UNIT",
+      "value": 124,
+      "summary": "The input modulus unit."
+    },
+    {
+      "name": "INPUT_DENSITY_UNIT",
+      "value": 131,
+      "summary": "The input density unit."
+    },
+    {
+      "name": "INPUT_MOMENT_UNIT",
+      "value": 200,
+      "summary": "The input moment unit."
+    },
+    {
+      "name": "OUTPUT_MOMENT_UNIT",
+      "value": 201,
+      "summary": "The output moment unit."
+    },
+    {
+      "name": "INPUT_DISTRIBMOMENT_UNIT",
+      "value": 205,
+      "summary": "The input distributed moment unit."
+    },
+    {
+      "name": "INPUT_ROTSPRINGCONST_UNIT",
+      "value": 210,
+      "summary": "The input rotation spring constant unit."
+    },
+    {
+      "name": "INPUT_TEMPERATURE_UNIT",
+      "value": 300,
+      "summary": "The input temperature unit."
+    },
+    {
+      "name": "OUTPUT_TEMPERATURE_UNIT",
+      "value": 301,
+      "summary": "The output temperature unit."
+    },
+    {
+      "name": "INPUT_THERMDILATCOEFF_UNIT",
+      "value": 310,
+      "summary": "The input thermal dilatation coefficient unit."
+    },
+    {
+      "name": "INPUT_FACTOR_UNIT",
+      "value": 400,
+      "summary": "The input factor unit."
+    },
+    {
+      "name": "INPUT_DATE_UNIT",
+      "value": 401,
+      "summary": "The input date unit."
+    },
+    {
+      "name": "INPUT_DATE_TIME_MIN_UNIT",
+      "value": 402,
+      "summary": "The input date time minutes unit."
+    },
+    {
+      "name": "INPUT_DATE_TIME_SEC_UNIT",
+      "value": 403,
+      "summary": "The input date time seconds unit."
+    },
+    {
+      "name": "INPUT_LENGTH_FRACTIONAL_IMPERIAL",
+      "value": 1005,
+      "summary": "The input length, fractional imperial."
+    },
+    {
+      "name": "INPUT_DEFORMATION_FRACTIONAL_IMPERIAL",
+      "value": 1305,
+      "summary": "The input deformation, fractional imperial."
+    },
+    {
+      "name": "INPUT_DIMENSION_FRACTIONAL_IMPERIAL",
+      "value": 1405,
+      "summary": "The input dimension, fractional imperial."
+    },
+    {
+      "name": "INPUT_RADIUSOFINERTIA_FRACTIONAL_IMPERIAL",
+      "value": 1605,
+      "summary": "The radius of inertia, fractional imperial."
+    },
+    {
+      "name": "OUTPUT_LENGTH_FRACTIONAL_IMPERIAL",
+      "value": 1105,
+      "summary": "The output length, fractional imperial."
+    },
+    {
+      "name": "OUTPUT_DEFORMATION_FRACTIONAL_IMPERIAL",
+      "value": 1305,
+      "summary": "The output deformation, fractional imperial."
+    }
+  ]
+}

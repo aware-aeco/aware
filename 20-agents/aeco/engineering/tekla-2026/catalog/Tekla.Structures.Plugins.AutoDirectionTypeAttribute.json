@@ -1,0 +1,58 @@
+{
+  "name": "AutoDirectionTypeAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The AutoDirectionTypeAttribute class is used for storing the auto direction type. Based on the type the system will then calculate the up direction of the connection/detail if the \u0022Auto\u0022 up direction is chosen in the dialog. The attribute is initialized from the custom attribute [AutoDirectionType(AutoDirectionTypeEnum.AUTODIR_DETAIL)] in the connection/detail source.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6319f80e-cec4-116d-6232-c66ff4de6101",
+  "constructors": [
+    {
+      "name": "AutoDirectionTypeAttribute(Int32)",
+      "signature": "public AutoDirectionTypeAttribute(int Type)",
+      "summary": "The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The auto direction type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0c04832-4ad6-3068-8670-6789aa1eada2"
+    },
+    {
+      "name": "AutoDirectionTypeAttribute(AutoDirectionTypeEnum)",
+      "signature": "public AutoDirectionTypeAttribute(AutoDirectionTypeEnum Type)",
+      "summary": "The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.AutoDirectionTypeEnum",
+          "doc": "The auto direction type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a5da30dd-f786-115d-b68c-16c8e9913572"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "AutoDirectionTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3c291c0c-9878-0263-6c68-530a6f22fa24"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

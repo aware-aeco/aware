@@ -1,0 +1,36 @@
+{
+  "name": "ModelDataPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop.Plugins",
+  "kind": "class",
+  "summary": "ModelDataPlugin class in Autodesk.Navisworks.Api.Interop.Plugins.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.Plugins.ModelDataPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ImportData",
+      "signature": "void ImportData(Autodesk.Navisworks.Api.Interop.LcOpModel m, string filename)",
+      "summary": "ImportData method of ModelDataPlugin.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpModel",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.Plugins.ModelDataPlugin.ImportData%28Autodesk.Navisworks.Api.Interop.LcOpModel%2CSystem.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

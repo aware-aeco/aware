@@ -1,0 +1,24 @@
+{
+  "name": "DimensionSetBaseAttributes.CurvedDimensionTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The type of the curved dimension.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/39532c2f-a5f7-6501-f040-7d65feaf3235",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Distance",
+      "value": 0,
+      "summary": "The distance of the points is displayed."
+    },
+    {
+      "name": "Angle",
+      "value": 1,
+      "summary": "The angle is displayed."
+    }
+  ]
+}

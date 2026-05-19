@@ -1,0 +1,33 @@
+{
+  "name": "DynamoModelExtensions",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "static-class",
+  "summary": "Type DynamoModelExtensions",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerExtension.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPackageManagerExtension(Dynamo.Models.DynamoModel)",
+      "signature": "Dynamo.PackageManager.PackageManagerExtension GetPackageManagerExtension(Dynamo.Models.DynamoModel model)",
+      "summary": "DynamoModelExtensions.GetPackageManagerExtension",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.PackageManagerExtension",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerExtension.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

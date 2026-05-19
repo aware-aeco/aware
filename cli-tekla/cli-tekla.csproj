@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- .NET Framework 4.8: required to load Tekla.Structures.Model.dll
+         which targets v4.0.30319 IL. Modern .NET (Core / 5+) can't reliably
+         load Tekla's classic-framework assemblies because Tekla's COM
+         interop and .NET Remoting paths don't survive the transition. -->
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>AwareTekla</RootNamespace>
+    <AssemblyName>aware-tekla</AssemblyName>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>0.29.0</Version>
+
+    <!-- Single-file publish via ILMerge / merge isn't standard for net48;
+         we'll just ship aware-tekla.exe alongside its (minimal) .dll deps
+         in the publish dir. -->
+  </PropertyGroup>
+
+  <!-- System.Text.Json for net48 — JSON parsing without writing a parser. -->
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+</Project>

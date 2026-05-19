@@ -1,0 +1,34 @@
+{
+  "name": "FileResolutionResponse",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "User response from request for file resolution",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileResolutionResponse",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OK",
+      "value": 0,
+      "summary": "User has supplied an updated file reference"
+    },
+    {
+      "name": "Cancel",
+      "value": 1,
+      "summary": "User wants to cancel the entire operation"
+    },
+    {
+      "name": "Ignore",
+      "value": 2,
+      "summary": "User wants to ignore this unresolved file"
+    },
+    {
+      "name": "IgnoreAll",
+      "value": 3,
+      "summary": "User wants to ignore this and any other unresolved files"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "name": "VerticalOpeningTierOffsetProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the vertical opening tier offset properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/",
+  "constructors": [
+    {
+      "name": "VerticalOpeningTierOffsetProperties",
+      "signature": "VerticalOpeningTierOffsetProperties(element: VerticalOpeningTierOffsetProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "VerticalOpeningTierOffsetProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFacingProperties",
+      "signature": "GetFacingProperties() -\u003E VerticalOpeningFacingProperties",
+      "summary": "Get the facing properties",
+      "remarks": "Get the facing properties",
+      "params": [],
+      "returns": {
+        "type": "VerticalOpeningFacingProperties",
+        "doc": "Facing properties reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.GetFacingProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BottomOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bottom offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.BottomOffset"
+    },
+    {
+      "name": "BottomOffsets",
+      "type": "list[float]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bottom offsets",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.BottomOffsets"
+    },
+    {
+      "name": "LeftOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the left offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.LeftOffset"
+    },
+    {
+      "name": "LeftOffsets",
+      "type": "list[float]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the left offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.LeftOffsets"
+    },
+    {
+      "name": "RightOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the right offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.RightOffset"
+    },
+    {
+      "name": "RightOffsets",
+      "type": "list[float]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the right offsets",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.RightOffsets"
+    },
+    {
+      "name": "TopOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.TopOffset"
+    },
+    {
+      "name": "TopOffsets",
+      "type": "list[float]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top offsets",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.TopOffsets"
+    },
+    {
+      "name": "Type",
+      "type": "VerticalOpeningTierOffsetType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the tier offset type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/#NemAll_Python_ArchElements.VerticalOpeningTierOffsetProperties.Type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,150 @@
+{
+  "name": "UTM",
+  "namespace": "Geom",
+  "kind": "class",
+  "summary": "Note: Valid ranges for #zone_number and #zone_letter are 1-60 and C-X (omitting I and O). Valid ranges for #x and #y are 100000-899999. The UTM class lets you work with UTM map coordinates.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Geom/UTM.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "UTM(zone_number, zone_letter, x, y)",
+      "summary": "The #initialize method is used to create a new UTM coordinate. You will often create UTM objects by calling the method Sketchup::Model#point_to_utm instead of calling this method.",
+      "remarks": "The #initialize method is used to create a new UTM coordinate. You will often create UTM objects by calling the method Sketchup::Model#point_to_utm instead of calling this method.",
+      "params": [
+        {
+          "name": "zone_number",
+          "type": "Integer",
+          "doc": "A zone number or a UTM object.",
+          "optional": false
+        },
+        {
+          "name": "zone_letter",
+          "type": "String",
+          "doc": "A zone letter.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "Float",
+          "doc": "The x position.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Float",
+          "doc": "The y position.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "to_a",
+      "signature": "to_a =\u003E Array(Integer, String, Float, Float)",
+      "summary": "The #to_a method returns a UTM coordinate as a 4 element array.",
+      "remarks": "The #to_a method returns a UTM coordinate as a 4 element array. The Array elements are the zone number, the zone letter, the x coordinate and the y coordinate.",
+      "params": [],
+      "returns": {
+        "type": "Array(Integer, String, Float, Float)",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#to_a-instance_method"
+    },
+    {
+      "name": "to_latlong",
+      "signature": "to_latlong =\u003E Geom::LatLong",
+      "summary": "The #to_latlong method is used to convert UTM coordinates to latitude and longitude.",
+      "remarks": "The #to_latlong method is used to convert UTM coordinates to latitude and longitude. See the LatLong class for more information.",
+      "params": [],
+      "returns": {
+        "type": "Geom::LatLong",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#to_latlong-instance_method"
+    },
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The #to_s method is used to retrieve a string representation of a UTM.",
+      "remarks": "The #to_s method is used to retrieve a string representation of a UTM.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#to_s-instance_method"
+    },
+    {
+      "name": "x",
+      "signature": "x =\u003E Float",
+      "summary": "The #x method returns the UTM x coordinate.",
+      "remarks": "The #x method returns the UTM x coordinate.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#x-instance_method"
+    },
+    {
+      "name": "y",
+      "signature": "y =\u003E Float",
+      "summary": "The #y method returns the UTM y coordinate.",
+      "remarks": "The #y method returns the UTM y coordinate.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#y-instance_method"
+    },
+    {
+      "name": "zone_letter",
+      "signature": "zone_letter =\u003E String",
+      "summary": "The #zone_letter method returns the UTM zone letter.",
+      "remarks": "The #zone_letter method returns the UTM zone letter.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#zone_letter-instance_method"
+    },
+    {
+      "name": "zone_number",
+      "signature": "zone_number =\u003E Integer",
+      "summary": "The #zone_number method returns the UTM zone number.",
+      "remarks": "The #zone_number method returns the UTM zone number.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/UTM.html#zone_number-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

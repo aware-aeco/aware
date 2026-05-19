@@ -1,0 +1,98 @@
+{
+  "name": "LcOpElementFlags",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpElementFlags enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpElementFlags",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eELEMENT_UNDO",
+      "value": 1
+    },
+    {
+      "name": "eELEMENT_UNDO_OPTIONAL",
+      "value": 2
+    },
+    {
+      "name": "eELEMENT_UNDO_DEF_OFF",
+      "value": 4
+    },
+    {
+      "name": "eELEMENT_UNDO_BARRIER",
+      "value": 8
+    },
+    {
+      "name": "eELEMENT_NWD",
+      "value": 16
+    },
+    {
+      "name": "eELEMENT_NWD_OPTIONAL",
+      "value": 32
+    },
+    {
+      "name": "eELEMENT_NWD_DEF_OFF",
+      "value": 64
+    },
+    {
+      "name": "eELEMENT_NWF",
+      "value": 256
+    },
+    {
+      "name": "eELEMENT_NWF_OPTIONAL",
+      "value": 512
+    },
+    {
+      "name": "eELEMENT_NWF_DEF_OFF",
+      "value": 1024
+    },
+    {
+      "name": "eELEMENT_PROMPT_MOD",
+      "value": 4096
+    },
+    {
+      "name": "eELEMENT_COMBINE_UNDO",
+      "value": 8192
+    },
+    {
+      "name": "eELEMENT_SAVE_SCENE",
+      "value": 12336
+    },
+    {
+      "name": "eELEMENT_SAVE_SET",
+      "value": 13056
+    },
+    {
+      "name": "eELEMENT_PARTITION",
+      "value": 16384
+    },
+    {
+      "name": "eELEMENT_DELTA",
+      "value": 32768
+    },
+    {
+      "name": "eELEMENT_COPY",
+      "value": 65536
+    },
+    {
+      "name": "eELEMENT_OVERLAY",
+      "value": 131072
+    },
+    {
+      "name": "eELEMENT_XREF",
+      "value": 262144
+    },
+    {
+      "name": "eELEMENT_PER_FILE",
+      "value": 524288
+    },
+    {
+      "name": "eELEMENT_DISABLED",
+      "value": 1048576
+    }
+  ]
+}

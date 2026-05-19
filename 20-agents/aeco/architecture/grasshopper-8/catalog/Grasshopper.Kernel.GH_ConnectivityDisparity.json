@@ -1,0 +1,151 @@
+{
+  "name": "GH_ConnectivityDisparity",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Maintains two connectivity diagrams, one of which is a subset of the other.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ConnectivityDisparity.htm",
+  "constructors": [
+    {
+      "name": "GH_ConnectivityDisparity",
+      "signature": "public GH_ConnectivityDisparity(GH_ConnectivityDiagram topset, GH_ConnectivityDiagram subset)",
+      "summary": "Create a new instance of the Connectivity Disparity utility class.",
+      "params": [
+        {
+          "name": "topset",
+          "type": "Grasshopper.Kernel.GH_ConnectivityDiagram",
+          "doc": "Overarching connectivity diagram.",
+          "optional": false
+        },
+        {
+          "name": "subset",
+          "type": "Grasshopper.Kernel.GH_ConnectivityDiagram",
+          "doc": "Partial connectivity diagram.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDisparity__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExternalInputs",
+      "signature": "public List\u003CGuid\u003E ExternalInputs(Guid id)",
+      "summary": "Find all external sources for a given id in the subset.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "A list containing all sources that are not present in the subset topology."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDisparity_ExternalInputs.htm"
+    },
+    {
+      "name": "ExternalOutputs",
+      "signature": "public List\u003CGuid\u003E ExternalOutputs(Guid id)",
+      "summary": "Find all external recipients for a given id in the subset.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "A list containing all recipients that are not present in the subset topology."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDisparity_ExternalOutputs.htm"
+    },
+    {
+      "name": "InternalInputs",
+      "signature": "public List\u003CGuid\u003E InternalInputs(Guid id)",
+      "summary": "Find all internal sources for a given id in the subset.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "A list containing all sources that are present in the subset topology."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDisparity_InternalInputs.htm"
+    },
+    {
+      "name": "InternalOutputs",
+      "signature": "public List\u003CGuid\u003E InternalOutputs(Guid id)",
+      "summary": "Find all external recipients for a given id in the subset.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "A list containing all recipients that are present in the subset topology."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDisparity_InternalOutputs.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SubNodes",
+      "type": "ReadOnlyCollection\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a proxy for all the Nodes in the Subset diagram.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityDisparity_SubNodes.htm"
+    },
+    {
+      "name": "SubSet",
+      "type": "GH_ConnectivityDiagram",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the subset diagram stored in this disparity class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityDisparity_SubSet.htm"
+    },
+    {
+      "name": "TopNodes",
+      "type": "ReadOnlyCollection\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a proxy for all the Nodes in the Top Level diagram.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityDisparity_TopNodes.htm"
+    },
+    {
+      "name": "TopSet",
+      "type": "GH_ConnectivityDiagram",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the complete diagram stored in this disparity class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityDisparity_TopSet.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

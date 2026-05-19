@@ -1,0 +1,14 @@
+{
+  "name": "Events.ViewCreatedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for view created event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7f435389-1a11-f034-7ff3-9908aec2ea86",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ViewCreatedDelegate( int viewId )"
+}

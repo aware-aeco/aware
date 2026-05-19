@@ -1,0 +1,93 @@
+{
+  "name": "PreferredTextPlacingTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PreferredTextPlacingTypes class contains the available preferred text placing types. These are allowed to be used for texts.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0bc47111-6564-81c1-ad98-fc364b505948",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AlongLinePlacingType",
+      "signature": "public static PreferredPlacingTypeBase AlongLinePlacingType()",
+      "summary": "The object is placed using the along line placing.",
+      "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new along line placing type instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9ead849f-1453-42a5-0f13-5e9f8df3ac74"
+    },
+    {
+      "name": "BaseLinePlacingType",
+      "signature": "public static PreferredPlacingTypeBase BaseLinePlacingType()",
+      "summary": "The object is placed using the base line placing.",
+      "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new base line placing type instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2b53974c-ff30-db37-1ba7-52e9c809fb38"
+    },
+    {
+      "name": "BaseLineWithArrowAtEndPointPlacingType",
+      "signature": "public static PreferredPlacingTypeBase BaseLineWithArrowAtEndPointPlacingType()",
+      "summary": "The object is placed using the base line placing. The line is drawn and will have an arrow at the end point.",
+      "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new base line with arrow at end point placing type instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b92c2238-7348-9bb3-75ff-2387f54b4bbe"
+    },
+    {
+      "name": "BaseLineWithArrowAtStartPointPlacingType",
+      "signature": "public static PreferredPlacingTypeBase BaseLineWithArrowAtStartPointPlacingType()",
+      "summary": "The object is placed using the base line placing. The line is drawn and will have an arrow at the start point.",
+      "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new base line with arrow at start point placing type instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ee8b2d0d-35bb-9776-0997-a63d6ce56fce"
+    },
+    {
+      "name": "LeaderLinePlacingType",
+      "signature": "public static PreferredPlacingTypeBase LeaderLinePlacingType()",
+      "summary": "The object is placed with a leader line.",
+      "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new leader line placing type instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d4eda65a-3cb9-3867-d7ce-14a885a7a730"
+    },
+    {
+      "name": "PointPlacingType",
+      "signature": "public static PreferredPlacingTypeBase PointPlacingType()",
+      "summary": "The object is placed at one point (the insertion point) without any additional placing options.",
+      "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new point placing type instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf401d7e-1f2c-f14b-b6e6-717c99b594c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

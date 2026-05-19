@@ -1,0 +1,51 @@
+{
+  "name": "ModifyPropertyID",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Property ID for the modification",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ModifyPropertyID/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Color",
+      "value": 8
+    },
+    {
+      "name": "ColorByLayer",
+      "value": 1003
+    },
+    {
+      "name": "FaceStyle",
+      "value": 19
+    },
+    {
+      "name": "Hatching",
+      "value": 1
+    },
+    {
+      "name": "Layer",
+      "value": 14
+    },
+    {
+      "name": "Pen",
+      "value": 6
+    },
+    {
+      "name": "PenByLayer",
+      "value": 1001
+    },
+    {
+      "name": "Stroke",
+      "value": 7
+    },
+    {
+      "name": "StrokeByLayer",
+      "value": 1002
+    }
+  ]
+}

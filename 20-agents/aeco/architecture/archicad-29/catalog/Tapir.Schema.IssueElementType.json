@@ -1,0 +1,30 @@
+{
+  "name": "IssueElementType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The attachment type of an element component of an issue.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#IssueElementType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Creation",
+      "value": "Creation"
+    },
+    {
+      "name": "Highlight",
+      "value": "Highlight"
+    },
+    {
+      "name": "Deletion",
+      "value": "Deletion"
+    },
+    {
+      "name": "Modification",
+      "value": "Modification"
+    }
+  ]
+}

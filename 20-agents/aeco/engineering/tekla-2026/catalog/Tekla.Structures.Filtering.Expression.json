@@ -1,0 +1,28 @@
+{
+  "name": "Expression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The Expression class represents an expression. This is a base class for other expressions and cannot be used directly.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0f6107cc-f4dc-2d5b-2160-8a8912965187",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

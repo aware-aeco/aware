@@ -1,0 +1,46 @@
+{
+  "name": "TemplateFilterExpressions.CustomDateTime",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomDateTime class represents a custom DateTime filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3f6d9fd1-72cf-f436-c407-597cee0b25c9",
+  "constructors": [
+    {
+      "name": "TemplateFilterExpressions.CustomDateTime",
+      "signature": "public CustomDateTime(string UserAttribute)",
+      "summary": "Initializes a new instance of the CustomDateTime class.",
+      "params": [
+        {
+          "name": "UserAttribute",
+          "type": "System.String",
+          "doc": "The user attribute to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/66872b22-4daf-7446-fbdb-07c486a6977f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "PropertyTypeEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The type of property: int/double/string.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d70b9e6f-c199-2166-82a9-46fb8d3d6c16",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "TYPE_INT",
+      "value": 0,
+      "summary": "The integer property type."
+    },
+    {
+      "name": "TYPE_DOUBLE",
+      "value": 1,
+      "summary": "The double property type."
+    },
+    {
+      "name": "TYPE_STRING",
+      "value": 2,
+      "summary": "The string property type."
+    }
+  ]
+}

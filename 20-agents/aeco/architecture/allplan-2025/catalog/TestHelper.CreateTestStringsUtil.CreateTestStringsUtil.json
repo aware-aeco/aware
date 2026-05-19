@@ -1,0 +1,110 @@
+{
+  "name": "CreateTestStringsUtil",
+  "namespace": "TestHelper.CreateTestStringsUtil",
+  "kind": "class",
+  "summary": "Implementation of the model element string utils",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/CreateTestStringsUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "copy_element_and_parameter_strings_to_clipboard",
+      "signature": "copy_element_and_parameter_strings_to_clipboard(model_ele_list: list[Any])",
+      "summary": "create a string from the model elements and parameters and copy it the to clipboard",
+      "remarks": "create a string from the model elements and parameters and copy it the to clipboard",
+      "params": [
+        {
+          "name": "model_ele_list",
+          "type": "list[Any]",
+          "doc": "model elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/CreateTestStringsUtil/#TestHelper.CreateTestStringsUtil.CreateTestStringsUtil.copy_element_and_parameter_strings_to_clipboard"
+    },
+    {
+      "name": "copy_element_strings_to_clipboard",
+      "signature": "copy_element_strings_to_clipboard(model_ele_list: list[Any])",
+      "summary": "create a string from the model elements and copy it the to clipboard",
+      "remarks": "create a string from the model elements and copy it the to clipboard",
+      "params": [
+        {
+          "name": "model_ele_list",
+          "type": "list[Any]",
+          "doc": "model elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/CreateTestStringsUtil/#TestHelper.CreateTestStringsUtil.CreateTestStringsUtil.copy_element_strings_to_clipboard"
+    },
+    {
+      "name": "copy_parameter_strings_to_clipboard",
+      "signature": "copy_parameter_strings_to_clipboard(model_ele_list: list[Any])",
+      "summary": "create a string from the parameters and copy it the to clipboard",
+      "remarks": "create a string from the parameters and copy it the to clipboard",
+      "params": [
+        {
+          "name": "model_ele_list",
+          "type": "list[Any]",
+          "doc": "model elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/CreateTestStringsUtil/#TestHelper.CreateTestStringsUtil.CreateTestStringsUtil.copy_parameter_strings_to_clipboard"
+    },
+    {
+      "name": "get_geometry_elements_text",
+      "signature": "get_geometry_elements_text(model_elements: list[Any]) -\u003E str",
+      "summary": "get the element text from the geometry elements",
+      "remarks": "get the element text from the geometry elements",
+      "params": [
+        {
+          "name": "model_elements",
+          "type": "list[Any]",
+          "doc": "model elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "string of the geometry from the model elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/CreateTestStringsUtil/#TestHelper.CreateTestStringsUtil.CreateTestStringsUtil.get_geometry_elements_text"
+    },
+    {
+      "name": "get_model_elements_data",
+      "signature": "get_model_elements_data( model_ele_list: list[Any], ) -\u003E tuple[list[Any], list[Any], list[Any]]",
+      "summary": "get the exploded model elements and the parameter list Explodes the PythonPart/PythonPartGroup and gets the model objects from the slides",
+      "remarks": "get the exploded model elements and the parameter list Explodes the PythonPart/PythonPartGroup and gets the model objects from the slides",
+      "params": [
+        {
+          "name": "model_ele_list",
+          "type": "list[Any]",
+          "doc": "list with the created model elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[list[Any], list[Any], list[Any]]",
+        "doc": "list with the model elements contained in the PythonPart, parameters of the PythonPart"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/CreateTestStringsUtil/#TestHelper.CreateTestStringsUtil.CreateTestStringsUtil.get_model_elements_data"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

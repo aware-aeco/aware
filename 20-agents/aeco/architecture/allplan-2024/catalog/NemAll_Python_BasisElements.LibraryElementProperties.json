@@ -1,0 +1,254 @@
+{
+  "name": "LibraryElementProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the library element properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/",
+  "constructors": [
+    {
+      "name": "LibraryElementProperties",
+      "signature": "LibraryElementProperties() | LibraryElementProperties(fullPathName, elementType, placementMatrix) | LibraryElementProperties(fullPathName, elementType, placementMatrices) | LibraryElementProperties(path, group, element, elementType, placementMatrix) | LibraryElementProperties(path, group, element, elementType, placementMatrices) | LibraryElementProperties(arg2, path, group, element, elementType, placementMatrix) | LibraryElementProperties(arg2, path, group, element, elementType, placementMatrices)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetElement",
+      "signature": "GetElement()",
+      "summary": "Get the element",
+      "remarks": "Get the element",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetElement"
+    },
+    {
+      "name": "GetElementType",
+      "signature": "GetElementType()",
+      "summary": "Get the element type",
+      "remarks": "Get the element type",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetElementType"
+    },
+    {
+      "name": "GetGroup",
+      "signature": "GetGroup()",
+      "summary": "Get the group",
+      "remarks": "Get the group",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Group"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetGroup"
+    },
+    {
+      "name": "GetPath",
+      "signature": "GetPath()",
+      "summary": "Get the path",
+      "remarks": "Get the path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetPath"
+    },
+    {
+      "name": "GetPlacementMatrices",
+      "signature": "GetPlacementMatrices()",
+      "summary": "Get the placement matrices",
+      "remarks": "Get the placement matrices",
+      "params": [],
+      "returns": {
+        "type": "Matrix3DList",
+        "doc": "Placement matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetPlacementMatrices"
+    },
+    {
+      "name": "GetPlacementMatrix",
+      "signature": "GetPlacementMatrix()",
+      "summary": "Get the placement matrix",
+      "remarks": "Get the placement matrix",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Placement matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetPlacementMatrix"
+    },
+    {
+      "name": "GetPolyline",
+      "signature": "GetPolyline()",
+      "summary": "Get the polygon points in case of a line fixture",
+      "remarks": "Get the polygon points in case of a line fixture",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "Polyline points of the line fixture"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetPolyline"
+    },
+    {
+      "name": "GetProducer",
+      "signature": "GetProducer()",
+      "summary": "Get the producer",
+      "remarks": "Get the producer",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Producer"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetProducer"
+    },
+    {
+      "name": "GetSingleFilePath",
+      "signature": "GetSingleFilePath()",
+      "summary": "Get the Single File Path",
+      "remarks": "Get the Single File Path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "SingleFilePath"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.GetSingleFilePath"
+    },
+    {
+      "name": "SetPlacementMatrices",
+      "signature": "SetPlacementMatrices(placementMatrices)",
+      "summary": "Set the placement matrices",
+      "remarks": "Set the placement matrices",
+      "params": [
+        {
+          "name": "placementMatrices",
+          "type": "Matrix3DList",
+          "doc": "Placement matrices",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.SetPlacementMatrices"
+    },
+    {
+      "name": "SetPlacementMatrix",
+      "signature": "SetPlacementMatrix(placementMatrix)",
+      "summary": "Set the placement matrix",
+      "remarks": "Set the placement matrix",
+      "params": [
+        {
+          "name": "placementMatrix",
+          "type": "Matrix3D",
+          "doc": "Placement matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.SetPlacementMatrix"
+    },
+    {
+      "name": "SetPolyline",
+      "signature": "SetPolyline(polyline)",
+      "summary": "Set the polygon points in case of a line fixture",
+      "remarks": "Set the polygon points in case of a line fixture",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline3D",
+          "doc": "Polyline of a line fixture",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.SetPolyline"
+    },
+    {
+      "name": "SetProducer",
+      "signature": "SetProducer(producer)",
+      "summary": "Set the producer",
+      "remarks": "Set the producer",
+      "params": [
+        {
+          "name": "producer",
+          "type": "str",
+          "doc": "Producer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.SetProducer"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PlacementMatrices",
+      "type": "NemAll_Python_Geometry.Matrix3DList",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the placement matrices",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.PlacementMatrices"
+    },
+    {
+      "name": "PlacementMatrix",
+      "type": "NemAll_Python_Geometry.Matrix3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the placement matrix",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.PlacementMatrix"
+    },
+    {
+      "name": "Polyline",
+      "type": "NemAll_Python_Geometry.Polyline3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the polygon points in case of a line fixture",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.Polyline"
+    },
+    {
+      "name": "Producer",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the producer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/#NemAll_Python_BasisElements.LibraryElementProperties.Producer"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,47 @@
+{
+  "name": "GH_RotationalFrame",
+  "namespace": "Grasshopper.GUI",
+  "kind": "struct",
+  "summary": "Represents a single frame in a rotational tuning history.",
+  "remarks": "See AlsoReferenceGrasshopper.GUI Namespace",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_RotationalFrame.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the local angle of the rotation event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalFrame_Angle.htm"
+    },
+    {
+      "name": "Pivot",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the pivot of the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalFrame_Pivot.htm"
+    },
+    {
+      "name": "Point",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the location of the rotation event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalFrame_Point.htm"
+    },
+    {
+      "name": "Time",
+      "type": "DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the time when the event was recorded.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalFrame_Time.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "GH_RuleResult",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "enum",
+  "summary": "Enumerates the possible opinions a rule can have.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_RuleResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoOpinion",
+      "value": 0,
+      "summary": "The rule does not prohibit or enforce any behaviour."
+    },
+    {
+      "name": "Include",
+      "value": 1,
+      "summary": "The rule claims a certain index ought to be included."
+    },
+    {
+      "name": "Exclude",
+      "value": -1,
+      "summary": "The rule claims a certain index ought to be exluded."
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "ICommonComponentTable\u003CT\u003E",
+  "namespace": "Rhino.FileIO",
+  "kind": "interface",
+  "summary": "Provides methods to use all File3dm and RhinoDoc tables under the same contract. Do not derive from this interface. This is to ensure all tables can be used with the same method list.",
+  "interfaces": [
+    "IReadOnlyCollection\u003CT\u003E",
+    "IEnumerable\u003CT\u003E",
+    "IEnumerable",
+    "ICollection\u003CT\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_ICommonComponentTable_1.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindId",
+      "signature": "T FindId(Guid id)",
+      "summary": "Retrieves an object based on ID. You should prefer ID search over Index search.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The id to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "A model component, or null if none was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ICommonComponentTable_1_FindId.htm"
+    },
+    {
+      "name": "FindNameHash",
+      "signature": "T FindNameHash(NameHash nameHash)",
+      "summary": "Retrieves an object based on Name.",
+      "params": [
+        {
+          "name": "nameHash",
+          "type": "Rhino.FileIO.NameHash",
+          "doc": "The name hash for which to search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.ICommonComponentTable\u00601.FindNameHash(Rhino.FileIO.NameHash)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ICommonComponentTable_1_FindNameHash.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the model component type the table handles.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_ICommonComponentTable_1_ComponentType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

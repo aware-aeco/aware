@@ -1,0 +1,29 @@
+{
+  "name": "RenderMaterial.AssignToBlockChoices",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderMaterial.AssignToBlockChoices\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderMaterial_AssignToBlockChoices.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Always",
+      "value": 0,
+      "summary": "Always assign to blocks recursively."
+    },
+    {
+      "name": "Never",
+      "value": 1,
+      "summary": "Never assign to blocks recursively."
+    },
+    {
+      "name": "Ask",
+      "value": 2,
+      "summary": "Ask the user what to do."
+    }
+  ]
+}

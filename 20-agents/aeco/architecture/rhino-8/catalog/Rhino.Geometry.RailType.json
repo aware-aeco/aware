@@ -1,0 +1,29 @@
+{
+  "name": "RailType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Rail types used for creating filleted Brep edges",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_RailType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DistanceFromEdge",
+      "value": 0,
+      "summary": "The distance from the edge curves determines the intersection."
+    },
+    {
+      "name": "RollingBall",
+      "value": 1,
+      "summary": "The radius of a rolling ball determines the intersection."
+    },
+    {
+      "name": "DistanceBetweenRails",
+      "value": 2,
+      "summary": "The distance between the edge rails determines the intersection."
+    }
+  ]
+}

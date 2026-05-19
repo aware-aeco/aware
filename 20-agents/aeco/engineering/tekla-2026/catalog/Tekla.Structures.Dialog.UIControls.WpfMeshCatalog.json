@@ -1,0 +1,98 @@
+{
+  "name": "WpfMeshCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The WpfMeshCatalog class represents a group of controls to select meshes using the mesh catalog.",
+  "base": "System.Windows.Controls.UserControl",
+  "interfaces": [
+    "IComponentConnector"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c4e9da66-f927-b2d4-39c4-88086a35be0b",
+  "constructors": [
+    {
+      "name": "WpfMeshCatalog",
+      "signature": "public WpfMeshCatalog()",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c0bdcb7-c172-2a09-a993-5ee5573e160f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InitializeComponent",
+      "signature": "public void InitializeComponent()",
+      "summary": "InitializeComponent",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cd0c4661-c259-a999-918b-24a5bbb524a0"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ButtonHeight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the height of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/107530a8-91dd-076a-566a-f05c77239fd1"
+    },
+    {
+      "name": "ButtonText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the text of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/29fa4eb6-f775-689d-279e-d936f76c3051"
+    },
+    {
+      "name": "ButtonWidth",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the width of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/80d37921-cd76-0b2c-7708-164458e000ca"
+    },
+    {
+      "name": "SelectedMeshGrade",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh grade in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7da69c0-4748-81bf-8a46-79fd8892ff81"
+    },
+    {
+      "name": "SelectedMeshName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh name in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0f423e1-af30-8e5d-86af-668b069e927f"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a69ef90-5c7d-15b9-3e4f-54cc6aa0a0ab",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2643be87-58d7-16c8-3ad5-fb99f8ab604e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,140 @@
+{
+  "name": "LcOpRenderHandlerNotify",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpRenderHandlerNotify class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpRenderHandler",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify",
+  "constructors": [
+    {
+      "name": "LcOpRenderHandlerNotify(Autodesk.Navisworks.Api.Interop.LcOpKernelTool)",
+      "signature": "LcOpRenderHandlerNotify(Autodesk.Navisworks.Api.Interop.LcOpKernelTool kernel)",
+      "summary": "Constructs a new LcOpRenderHandlerNotify.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelTool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpKernelTool%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "MakeRenderBoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D MakeRenderBoundingBox(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer)",
+      "summary": "MakeRenderBoundingBox method of LcOpRenderHandlerNotify.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify.MakeRenderBoundingBox%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpRenderHandlerNotify.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpRenderHandlerNotify.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "OpenGLDrawModelSpace",
+      "signature": "void OpenGLDrawModelSpace(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer)",
+      "summary": "OpenGLDrawModelSpace method of LcOpRenderHandlerNotify.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify.OpenGLDrawModelSpace%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%29"
+    },
+    {
+      "name": "OpenGLOverlayDraw",
+      "signature": "void OpenGLOverlayDraw(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer)",
+      "summary": "OpenGLOverlayDraw method of LcOpRenderHandlerNotify.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify.OpenGLOverlayDraw%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpRenderHandlerNotify.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpRenderHandlerNotify.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

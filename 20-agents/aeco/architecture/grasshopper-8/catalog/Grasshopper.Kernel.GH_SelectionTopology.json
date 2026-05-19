@@ -1,0 +1,29 @@
+{
+  "name": "GH_SelectionTopology",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible selection topologies.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_SelectionTopology.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No selected objects."
+    },
+    {
+      "name": "Convex",
+      "value": 1,
+      "summary": "Selection set is convex, meaning unselected objects are not sandwiched between selected objects."
+    },
+    {
+      "name": "Concave",
+      "value": 2,
+      "summary": "Selection set is concave, meaning unselected objects are sandwiched between selected objects."
+    }
+  ]
+}

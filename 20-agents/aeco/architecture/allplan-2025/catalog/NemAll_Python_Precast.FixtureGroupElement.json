@@ -1,0 +1,89 @@
+{
+  "name": "FixtureGroupElement",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "FixtureGroupElement class",
+  "base": "PrecastElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/",
+  "constructors": [
+    {
+      "name": "FixtureGroupElement",
+      "signature": "FixtureGroupElement() | FixtureGroupElement(FixtureGroupProp: FixtureGroupProperties, slideList: list) | FixtureGroupElement( commonProp: CommonProperties, FixtureGroupProp: FixtureGroupProperties, slideList: list, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFixtureGroupProperties",
+      "signature": "GetFixtureGroupProperties() -\u003E FixtureGroupProperties",
+      "summary": "Get the FixtureGroup properties",
+      "remarks": "Get the FixtureGroup properties",
+      "params": [],
+      "returns": {
+        "type": "FixtureGroupProperties",
+        "doc": "FixtureGroup properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.GetFixtureGroupProperties"
+    },
+    {
+      "name": "GetFixtureList",
+      "signature": "GetFixtureList() -\u003E list",
+      "summary": "Get the fixture object list",
+      "remarks": "Get the fixture object list",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Fixture object list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.GetFixtureList"
+    },
+    {
+      "name": "SetFixtureGroupProperties",
+      "signature": "SetFixtureGroupProperties(FixtureGroupProp: FixtureGroupProperties)",
+      "summary": "Set the FixtureGroup properties",
+      "remarks": "Set the FixtureGroup properties",
+      "params": [
+        {
+          "name": "FixtureGroupProp",
+          "type": "FixtureGroupProperties",
+          "doc": "FixtureGroup properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.SetFixtureGroupProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

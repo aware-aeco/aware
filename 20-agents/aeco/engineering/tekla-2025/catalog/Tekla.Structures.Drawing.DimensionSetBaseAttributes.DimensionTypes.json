@@ -1,0 +1,54 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The dimension types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e83fe43a-91d6-39aa-cd37-17afd7d57023",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Relative",
+      "value": 1,
+      "summary": "The point to point dimensions."
+    },
+    {
+      "name": "Absolute",
+      "value": 2,
+      "summary": "The dimensions from a common starting point."
+    },
+    {
+      "name": "RelativeAndAbsolute",
+      "value": 3,
+      "summary": "The combination of point to point and a common start point."
+    },
+    {
+      "name": "USAbsolute",
+      "value": 4,
+      "summary": "The dimensions from a common starting point, which includes a running dimension mark (RD)."
+    },
+    {
+      "name": "USAbsolute2",
+      "value": 16,
+      "summary": "The dimensions from a common starting point, which includes a running dimension mark (RD), but short dimensions are changed to point to point dimensions."
+    },
+    {
+      "name": "AbsoluteWithShortRelatives",
+      "value": 35,
+      "summary": "The dimensions from a common starting point, but short dimensions are changed to point to point dimensions."
+    },
+    {
+      "name": "AbsoluteWithAllRelativesAbove",
+      "value": 99,
+      "summary": "The combination of point to point and a common start point, but the point to point dimensions are placed above the absolute."
+    },
+    {
+      "name": "Elevation",
+      "value": 8,
+      "summary": "Creates an elevation dimension at a picked point."
+    }
+  ]
+}

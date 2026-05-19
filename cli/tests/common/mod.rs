@@ -32,10 +32,23 @@ fn populate() -> TempDir {
 
     // Walk 20-agents/ looking for manifest.yaml; for each, copy the agent
     // folder (manifest + skills + commands subdirs) into <tmp>/agents/<id>/.
+    //
+    // The substrate currently has a handful of agent directories with colliding final
+    // segments (e.g. `aeco/architecture/navisworks-2026` and `aeco/construction/navisworks-2026`
+    // both declare `agent: navisworks-2026`). Pre-v0.30 the directory copy MERGED them — the
+    // second copy added files but didn't remove orphans from the first — which surfaced as
+    // spurious `W_SKILL_ORPHAN` warnings in `aware doctor`. To keep the fixture deterministic
+    // and the integrity check meaningful, we now skip the duplicate: first source under the
+    // walk wins, subsequent ones are ignored. This mirrors the install precedence the runtime
+    // would apply on `aware agent install` collisions.
+    let mut installed = std::collections::HashSet::<std::ffi::OsString>::new();
     for manifest_path in find_manifests(&repo_root.join("20-agents"), "manifest.yaml") {
         let src_dir = manifest_path.parent().unwrap();
-        let agent_id = src_dir.file_name().unwrap();
-        let dst_dir = tmp.path().join("agents").join(agent_id);
+        let agent_id = src_dir.file_name().unwrap().to_owned();
+        if !installed.insert(agent_id.clone()) {
+            continue;
+        }
+        let dst_dir = tmp.path().join("agents").join(&agent_id);
         copy_dir_recursive(src_dir, &dst_dir).unwrap();
     }
 

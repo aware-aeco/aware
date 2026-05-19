@@ -1,0 +1,13 @@
+{
+  "name": "Environment",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "ChangeQueue environment",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_Environment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

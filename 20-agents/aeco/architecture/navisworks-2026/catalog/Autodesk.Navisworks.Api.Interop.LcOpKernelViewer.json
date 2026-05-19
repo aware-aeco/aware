@@ -1,0 +1,347 @@
+{
+  "name": "LcOpKernelViewer",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpKernelViewer class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PickBoxWC",
+      "signature": "Autodesk.Navisworks.Api.ModelItem PickBoxWC(int x, int y, int width, int height, bool as_rendered, Autodesk.Navisworks.Api.Point3D pt, int pick_flags, ref int pick_results, Autodesk.Navisworks.Api.UnitVector3D picked_normal)",
+      "summary": "PickBoxWC method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "as_rendered",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "pick_flags",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pick_results",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "picked_normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.PickBoxWC%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Point3D%2CSystem.Int32%2CSystem.Int32%40%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "PickPixelWC",
+      "signature": "Autodesk.Navisworks.Api.ModelItem PickPixelWC(int x, int y, double pick_width, bool as_rendered, Autodesk.Navisworks.Api.Point3D pt, int pick_flags, ref int pick_results, Autodesk.Navisworks.Api.UnitVector3D picked_normal)",
+      "summary": "PickPixelWC method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pick_width",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "as_rendered",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "pick_flags",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pick_results",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "picked_normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.PickPixelWC%28System.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Point3D%2CSystem.Int32%2CSystem.Int32%40%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "MakeAnonView",
+      "signature": "Autodesk.Navisworks.Api.Viewpoint MakeAnonView()",
+      "summary": "MakeAnonView method of LcOpKernelViewer.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Viewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.MakeAnonView"
+    },
+    {
+      "name": "GetCursorPos",
+      "signature": "bool GetCursorPos(ref int x, ref int y)",
+      "summary": "GetCursorPos method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.GetCursorPos%28System.Int32%40%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "ProjectPointWC",
+      "signature": "bool ProjectPointWC(Autodesk.Navisworks.Api.Point3D pnt, Autodesk.Navisworks.Api.Point3D result, bool section_clip, bool frustum_clip)",
+      "summary": "ProjectPointWC method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "section_clip",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "frustum_clip",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.ProjectPointWC%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetCursorPos",
+      "signature": "bool SetCursorPos(int x, int y)",
+      "summary": "SetCursorPos method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.SetCursorPos%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpKernelViewer InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "PickBoxIntersectingWC",
+      "signature": "void PickBoxIntersectingWC(int x, int y, int width, int height, bool contained_only, bool as_rendered, Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "PickBoxIntersectingWC method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "contained_only",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "as_rendered",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.PickBoxIntersectingWC%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%2CSystem.Boolean%2CAutodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "UpdateFromAnonView",
+      "signature": "void UpdateFromAnonView(Autodesk.Navisworks.Api.Viewpoint anon_view, bool is_navigating)",
+      "summary": "UpdateFromAnonView method of LcOpKernelViewer.",
+      "params": [
+        {
+          "name": "anon_view",
+          "type": "Autodesk.Navisworks.Api.Viewpoint",
+          "optional": false
+        },
+        {
+          "name": "is_navigating",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.UpdateFromAnonView%28Autodesk.Navisworks.Api.Viewpoint%2CSystem.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpKernelViewer.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpKernelViewer.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

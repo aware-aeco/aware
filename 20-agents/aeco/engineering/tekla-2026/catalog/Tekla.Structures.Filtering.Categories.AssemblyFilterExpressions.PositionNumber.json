@@ -1,0 +1,39 @@
+{
+  "name": "AssemblyFilterExpressions.PositionNumber",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The PositionNumber class represents the position number filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/66d85238-b19b-579b-b635-ad17f2a13ca6",
+  "constructors": [
+    {
+      "name": "AssemblyFilterExpressions.PositionNumber",
+      "signature": "public PositionNumber()",
+      "summary": "Initializes a new instance of the PositionNumber class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d96d9d31-5909-cbee-ef18-c32f99eef9fd"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

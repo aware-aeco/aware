@@ -1,0 +1,153 @@
+{
+  "name": "HiddenLineDrawing",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a hidden line drawing object. A hidden line drawing consists of curves generated from source objects. The curves correspond to edges, and silhouettes of source objects and intersections with cutting planes.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_HiddenLineDrawing.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BoundingBox",
+      "signature": "public BoundingBox BoundingBox(bool includeHidden)",
+      "summary": "Get tight bounding box of the hidden line drawing.",
+      "params": [
+        {
+          "name": "includeHidden",
+          "type": "System.Boolean",
+          "doc": "Include hidden objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The tight bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawing_BoundingBox.htm"
+    },
+    {
+      "name": "Compute(HiddenLineDrawingParameters, Boolean)",
+      "signature": "public static HiddenLineDrawing Compute(HiddenLineDrawingParameters parameters, bool multipleThreads)",
+      "summary": "Perform the hidden line drawing calculation based on input parameters",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.HiddenLineDrawingParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawing.Compute(Rhino.Geometry.HiddenLineDrawingParameters,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "multipleThreads",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022multipleThreads\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawing.Compute(Rhino.Geometry.HiddenLineDrawingParameters,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HiddenLineDrawing",
+        "doc": "Results of calculation on success, null on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawing_Compute.htm"
+    },
+    {
+      "name": "Compute(HiddenLineDrawingParameters, Boolean, IProgress\u003CDouble\u003E, CancellationToken)",
+      "signature": "public static HiddenLineDrawing Compute(HiddenLineDrawingParameters parameters, bool multipleThreads, IProgress\u003Cdouble\u003E progress, CancellationToken cancelToken)",
+      "summary": "Perform the hidden line drawing calculation based on input parameters",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.HiddenLineDrawingParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawing.Compute(Rhino.Geometry.HiddenLineDrawingParameters,System.Boolean,System.IProgress{System.Double},System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "multipleThreads",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022multipleThreads\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawing.Compute(Rhino.Geometry.HiddenLineDrawingParameters,System.Boolean,System.IProgress{System.Double},System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "System.IProgress\u003CDouble\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022progress\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawing.Compute(Rhino.Geometry.HiddenLineDrawingParameters,System.Boolean,System.IProgress{System.Double},System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cancelToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "[Missing \u003Cparam name=\u0022cancelToken\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawing.Compute(Rhino.Geometry.HiddenLineDrawingParameters,System.Boolean,System.IProgress{System.Double},System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HiddenLineDrawing",
+        "doc": "Results of calculation on success, null on failure or cancellation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawing_Compute_1.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawing_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawing_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Points",
+      "type": "IEnumerable\u003CHiddenLineDrawingPoint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Point objects calculated by the hidden line drawing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawing_Points.htm"
+    },
+    {
+      "name": "Segments",
+      "type": "IEnumerable\u003CHiddenLineDrawingSegment\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Sub-curve objects calculated by the hidden line drawing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawing_Segments.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "ViewportInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the ViewportInfo used by the hidden line drawing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawing_Viewport.htm"
+    },
+    {
+      "name": "WorldToHiddenLine",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the world-coordinate system to HLD-coordinate system transformation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawing_WorldToHiddenLine.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

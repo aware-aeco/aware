@@ -1,0 +1,68 @@
+{
+  "name": "IGH_EventConsumer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface if you want to inter-operate with a GH_EventServer.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_EventConsumer.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsRelevantEvent",
+      "signature": "bool IsRelevantEvent(RhinoObject obj)",
+      "summary": "Whenever a new object event is handled, this function will be called to determine whether it will cause an update.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "RhinoObject",
+          "doc": "Object that is the pivot of the event.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the object should cause an update, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_EventConsumer_IsRelevantEvent.htm"
+    },
+    {
+      "name": "PartialExpiration",
+      "signature": "void PartialExpiration(GH_CustomEventServer server)",
+      "summary": "This method will be called by the GH_CustomEventServer to indicate one or more interesting object events can now be processed.",
+      "params": [
+        {
+          "name": "server",
+          "type": "Grasshopper.Kernel.GH_CustomEventServer",
+          "doc": "Server that called this method.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_EventConsumer_PartialExpiration.htm"
+    },
+    {
+      "name": "TotalExpiration",
+      "signature": "void TotalExpiration(GH_CustomEventServer server)",
+      "summary": "This method will be called by the GH_CustomEventServer to indicate all interesting object events can now be processed.",
+      "params": [
+        {
+          "name": "server",
+          "type": "Grasshopper.Kernel.GH_CustomEventServer",
+          "doc": "Server that called this method.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_EventConsumer_TotalExpiration.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

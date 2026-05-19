@@ -1,0 +1,143 @@
+{
+  "name": "FileObj",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for obj file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileObj.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "public static bool Read(string filename, RhinoDoc doc, FileObjReadOptions options)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Read(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjReadOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Read(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjReadOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileObjReadOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Read(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjReadOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Read(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjReadOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileObj_Read.htm"
+    },
+    {
+      "name": "Write(StreamWriter, RhinoDoc, FileObjWriteOptions)",
+      "signature": "public static WriteFileResult Write(StreamWriter stream, RhinoDoc doc, FileObjWriteOptions options)",
+      "summary": "Write an obj stream based on the contents of a RhinoDoc",
+      "remarks": "No .mtl file is written, hence no materials, when the WriteFile that takes a StreamWriter is called directly. If you need materials call the WriteFile that takes a string for the obj file path.",
+      "params": [
+        {
+          "name": "stream",
+          "type": "System.IO.StreamWriter",
+          "doc": "[Missing \u003Cparam name=\u0022stream\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.IO.StreamWriter,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.IO.StreamWriter,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileObjWriteOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.IO.StreamWriter,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "WriteFileResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.IO.StreamWriter,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileObj_Write.htm"
+    },
+    {
+      "name": "Write(String, Mesh[], FileObjWriteOptions)",
+      "signature": "public static WriteFileResult Write(string filename, Mesh[] meshes, FileObjWriteOptions options)",
+      "summary": "Write an obj file with an array of meshes",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "path to write to",
+          "optional": false
+        },
+        {
+          "name": "meshes",
+          "type": "Rhino.Geometry.Mesh[]",
+          "doc": "meshes to write as obj format",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileObjWriteOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.String,Rhino.Geometry.Mesh[],Rhino.FileIO.FileObjWriteOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "WriteFileResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.String,Rhino.Geometry.Mesh[],Rhino.FileIO.FileObjWriteOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileObj_Write_1.htm"
+    },
+    {
+      "name": "Write(String, RhinoDoc, FileObjWriteOptions)",
+      "signature": "public static WriteFileResult Write(string filename, RhinoDoc doc, FileObjWriteOptions options)",
+      "summary": "Write an obj file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileObjWriteOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "WriteFileResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileObj.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FileObjWriteOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileObj_Write_2.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

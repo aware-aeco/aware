@@ -1,0 +1,195 @@
+{
+  "name": "AnalysisNodeLink",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisNodeLink class contains information related to analysis node links.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d633193f-9412-06da-c274-9b02cac9186f",
+  "constructors": [
+    {
+      "name": "AnalysisNodeLink",
+      "signature": "public AnalysisNodeLink()",
+      "summary": "Initializes a new instance of the AnalysisNodeLink class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e022a2d-ecf3-f0e2-9379-8ddc1f864515"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public void Delete()",
+      "summary": "Deletes a user analysis node link. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fad6764e-4f78-b6e3-335a-11d701e5ac43"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert()",
+      "summary": "Inserts a user analysis node link. The AnalysisModelName has to be set. The StartNodeID has to be set. The EndNodeID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a6f7596c-cf99-b230-4184-fdd8692c8522"
+    },
+    {
+      "name": "Modify",
+      "signature": "public void Modify()",
+      "summary": "Modifies an analysis node link. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ea9ed3b-10e2-94bf-43ee-4d899bdb8371"
+    },
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis node link. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ff1a838-95ce-325d-1630-0783a93ecd60"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "CoordinateSystem",
+      "type": "CoordinateSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinate system of the analysis node link.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f65e61ce-e939-ca29-b214-5e31c849dd05"
+    },
+    {
+      "name": "Disabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the analysis node link is disabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/94bf1796-fd82-3597-951d-0f2e676db526"
+    },
+    {
+      "name": "EndConnectivity",
+      "type": "AnalysisConnectivity",
+      "getter": true,
+      "setter": true,
+      "summary": "The end connectivity of the analysis node link.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/83b34880-ceb7-f773-8ed2-6f15426492af"
+    },
+    {
+      "name": "EndNode",
+      "type": "AnalysisNode",
+      "getter": true,
+      "setter": true,
+      "summary": "The end node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/003a8c90-1431-fa0d-973b-33a824fda9cb"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "IsUserConnectivity",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the analysis node has a user defined connectivity.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/96376f06-f3e7-65bd-3a0d-1a06209c875d"
+    },
+    {
+      "name": "IsUserNodeLink",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the analysis node is a user node link.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d8d606da-4e07-2656-145d-2d33db4fdc10"
+    },
+    {
+      "name": "OwnerPartIDs",
+      "type": "List\u003CIdentifier\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of the identifiers of the owner parts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f88353eb-dbe9-eb8b-1674-7c1762e26eba"
+    },
+    {
+      "name": "StartConnectivity",
+      "type": "AnalysisConnectivity",
+      "getter": true,
+      "setter": true,
+      "summary": "The start connectivity of the analysis node link.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8015d666-2213-40f7-7a38-be23dfe954ab"
+    },
+    {
+      "name": "StartNode",
+      "type": "AnalysisNode",
+      "getter": true,
+      "setter": true,
+      "summary": "The start node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/611ac002-4d8d-405c-39be-f294fb252c3f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

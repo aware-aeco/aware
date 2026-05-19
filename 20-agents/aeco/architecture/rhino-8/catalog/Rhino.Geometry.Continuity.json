@@ -1,0 +1,79 @@
+{
+  "name": "Continuity",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Provides enumerated values for continuity along geometry, such as continuous first derivative or continuous unit tangent and curvature.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Continuity.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "There is no continuity."
+    },
+    {
+      "name": "C0_continuous",
+      "value": 1,
+      "summary": "Continuous Function : Test for parametric continuity. In particular, all types of curves are considered infinitely continuous at the start/end of the evaluation domain."
+    },
+    {
+      "name": "C1_continuous",
+      "value": 2,
+      "summary": "Continuous first derivative : Test for parametric continuity. In particular, all types of curves are considered infinitely continuous at the start/end of the evaluation domain."
+    },
+    {
+      "name": "C2_continuous",
+      "value": 3,
+      "summary": "Continuous first derivative and second derivative : Test for parametric continuity. In particular, all types of curves are considered infinitely continuous at the start/end of the evaluation domain."
+    },
+    {
+      "name": "G1_continuous",
+      "value": 4,
+      "summary": "Continuous unit tangent : Test for parametric continuity. In particular, all types of curves are considered infinitely continuous at the start/end of the evaluation domain."
+    },
+    {
+      "name": "G2_continuous",
+      "value": 5,
+      "summary": "Continuous unit tangent and curvature : Test for parametric continuity. In particular, all types of curves are considered infinitely continuous at the start/end of the evaluation domain."
+    },
+    {
+      "name": "C0_locus_continuous",
+      "value": 6,
+      "summary": "Locus continuous function : Continuity tests using the following enum values are identical to tests using the preceding enum values on the INTERIOR of a curve\u0027s domain. At the END of a curve a \u0022locus\u0022 test is performed in place of a parametric test. In particular, at the END of a domain, all open curves are locus discontinuous. At the END of a domain, all closed curves are at least C0_locus_continuous. By convention all Curves are considered locus continuous at the START of the evaluation domain. This convention is not strictly correct, but it was adopted to make iterative kink finding tools easier to use and so that locus discontinuities are reported once at the end parameter of a curve rather than twice."
+    },
+    {
+      "name": "C1_locus_continuous",
+      "value": 7,
+      "summary": "Locus continuous first derivative : Continuity tests using the following enum values are identical to tests using the preceding enum values on the INTERIOR of a curve\u0027s domain. At the END of a curve a \u0022locus\u0022 test is performed in place of a parametric test. In particular, at the END of a domain, all open curves are locus discontinuous. At the END of a domain, all closed curves are at least C0_locus_continuous. By convention all Curves are considered locus continuous at the START of the evaluation domain. This convention is not strictly correct, but it was adopted to make iterative kink finding tools easier to use and so that locus discontinuities are reported once at the end parameter of a curve rather than twice."
+    },
+    {
+      "name": "C2_locus_continuous",
+      "value": 8,
+      "summary": "Locus continuous first and second derivative : Continuity tests using the following enum values are identical to tests using the preceding enum values on the INTERIOR of a curve\u0027s domain. At the END of a curve a \u0022locus\u0022 test is performed in place of a parametric test. In particular, at the END of a domain, all open curves are locus discontinuous. At the END of a domain, all closed curves are at least C0_locus_continuous. By convention all Curves are considered locus continuous at the START of the evaluation domain. This convention is not strictly correct, but it was adopted to make iterative kink finding tools easier to use and so that locus discontinuities are reported once at the end parameter of a curve rather than twice."
+    },
+    {
+      "name": "G1_locus_continuous",
+      "value": 9,
+      "summary": "Locus continuous unit tangent : Continuity tests using the following enum values are identical to tests using the preceding enum values on the INTERIOR of a curve\u0027s domain. At the END of a curve a \u0022locus\u0022 test is performed in place of a parametric test. In particular, at the END of a domain, all open curves are locus discontinuous. At the END of a domain, all closed curves are at least C0_locus_continuous. By convention all Curves are considered locus continuous at the START of the evaluation domain. This convention is not strictly correct, but it was adopted to make iterative kink finding tools easier to use and so that locus discontinuities are reported once at the end parameter of a curve rather than twice."
+    },
+    {
+      "name": "G2_locus_continuous",
+      "value": 10,
+      "summary": "Locus continuous unit tangent and curvature : Continuity tests using the following enum values are identical to tests using the preceding enum values on the INTERIOR of a curve\u0027s domain. At the END of a curve a \u0022locus\u0022 test is performed in place of a parametric test. In particular, at the END of a domain, all open curves are locus discontinuous. At the END of a domain, all closed curves are at least C0_locus_continuous. By convention all Curves are considered locus continuous at the START of the evaluation domain. This convention is not strictly correct, but it was adopted to make iterative kink finding tools easier to use and so that locus discontinuities are reported once at the end parameter of a curve rather than twice."
+    },
+    {
+      "name": "Cinfinity_continuous",
+      "value": 11,
+      "summary": "Analytic discontinuity. Cinfinity_continuous is a euphemism for \u0022at a knot\u0022."
+    },
+    {
+      "name": "Gsmooth_continuous",
+      "value": 12,
+      "summary": "Aesthetic discontinuity"
+    }
+  ]
+}

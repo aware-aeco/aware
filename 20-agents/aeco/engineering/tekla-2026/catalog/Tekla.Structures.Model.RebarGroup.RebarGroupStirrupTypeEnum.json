@@ -1,0 +1,29 @@
+{
+  "name": "RebarGroup.RebarGroupStirrupTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different stirrup types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/74460d20-c421-c309-9d21-aa5fc3feb0a0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "STIRRUP_TYPE_POLYGONAL",
+      "value": 0,
+      "summary": "The polygonal type of stirrup."
+    },
+    {
+      "name": "STIRRUP_TYPE_SPIRAL",
+      "value": 1,
+      "summary": "The spiral type of stirrup."
+    },
+    {
+      "name": "STIRRUP_TYPE_TAPERED_CURVED",
+      "value": 2,
+      "summary": "The tapered curved type of stirrup. Three polygons have to be defined."
+    }
+  ]
+}

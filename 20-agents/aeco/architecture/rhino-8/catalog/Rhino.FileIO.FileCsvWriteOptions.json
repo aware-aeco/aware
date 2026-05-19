@@ -1,0 +1,247 @@
+{
+  "name": "FileCsvWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for writing a Csv file. Set any value you want included in the output to true. With the exception of Header and CumulativeMassProperties, all checked items apply to each and every object exported.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileCsvWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileCsvWriteOptions",
+      "signature": "public FileCsvWriteOptions()",
+      "summary": "Initializes a new instance of the FileCsvWriteOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileCsvWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Export function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileCsvWriteOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileCsvWriteOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Area",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_Area.htm"
+    },
+    {
+      "name": "AreaCentroid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_AreaCentroid.htm"
+    },
+    {
+      "name": "AreaMoments",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_AreaMoments.htm"
+    },
+    {
+      "name": "AttributesKeys",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "User text",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_AttributesKeys.htm"
+    },
+    {
+      "name": "AttributesTexts",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_AttributesTexts.htm"
+    },
+    {
+      "name": "CumulativeMassProperties",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_CumulativeMassProperties.htm"
+    },
+    {
+      "name": "GroupIndexes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_GroupIndexes.htm"
+    },
+    {
+      "name": "GroupName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Group information",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_GroupName.htm"
+    },
+    {
+      "name": "Header",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "General",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_Header.htm"
+    },
+    {
+      "name": "LayerColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_LayerColor.htm"
+    },
+    {
+      "name": "LayerHierarchy",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_LayerHierarchy.htm"
+    },
+    {
+      "name": "LayerIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_LayerIndex.htm"
+    },
+    {
+      "name": "LayerName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Layer information",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_LayerName.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Mass properties",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_Length.htm"
+    },
+    {
+      "name": "ObjectColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_ObjectColor.htm"
+    },
+    {
+      "name": "ObjectDescription",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_ObjectDescription.htm"
+    },
+    {
+      "name": "ObjectID",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_ObjectID.htm"
+    },
+    {
+      "name": "ObjectKeys",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_ObjectKeys.htm"
+    },
+    {
+      "name": "ObjectMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_ObjectMaterial.htm"
+    },
+    {
+      "name": "ObjectName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Object information",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_ObjectName.htm"
+    },
+    {
+      "name": "ObjectsTexts",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_ObjectsTexts.htm"
+    },
+    {
+      "name": "Perimeter",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_Perimeter.htm"
+    },
+    {
+      "name": "SurroundPointsWithDoubleQuotes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_SurroundPointsWithDoubleQuotes.htm"
+    },
+    {
+      "name": "Volume",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_Volume.htm"
+    },
+    {
+      "name": "VolumeCentroid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_VolumeCentroid.htm"
+    },
+    {
+      "name": "VolumeMoments",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileCsvWriteOptions_VolumeMoments.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

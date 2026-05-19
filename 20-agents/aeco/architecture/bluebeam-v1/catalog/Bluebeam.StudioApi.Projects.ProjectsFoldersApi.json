@@ -1,0 +1,189 @@
+{
+  "name": "ProjectsFoldersApi",
+  "namespace": "Bluebeam.StudioApi.Projects",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Projects / Folders endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ListFolderItems",
+      "signature": "Task ListFolderItems(Guid projectId, Guid id)",
+      "summary": "Get files and/or folders contained within specified folder. Use 0 to get the project\u0027s root folder items",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/folders/{id}/items\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}/items\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}/items\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetFolder",
+      "signature": "Task GetFolder(Guid projectId, Guid id)",
+      "summary": "Get project folder metadata. Use 0 to get the project\u0027s root folder",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateFolder",
+      "signature": "Task UpdateFolder(Guid projectId, Guid id, UpdateFolderRequest request)",
+      "summary": "Update project folder. To move the folder, change its parent folder id",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateFolderRequest",
+          "doc": "Request body. JSON object with fields: Name, ParentFolderId.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "DeleteFolder",
+      "signature": "Task DeleteFolder(Guid projectId, Guid id)",
+      "summary": "Delete a project folder",
+      "remarks": "HTTP DELETE \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CreateProjectFolder",
+      "signature": "Task CreateProjectFolder(Guid projectId, CreateProjectFolderRequest request)",
+      "summary": "Create a new empty project folder",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/folders\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CreateProjectFolderRequest",
+          "doc": "Request body. JSON object with fields: Comment, Name, ParentFolderId.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListProjectFolders",
+      "signature": "Task ListProjectFolders(Guid projectId)",
+      "summary": "Get all files in a project",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/folders\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

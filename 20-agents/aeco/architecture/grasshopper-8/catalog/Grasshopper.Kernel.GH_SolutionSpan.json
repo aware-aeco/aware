@@ -1,0 +1,54 @@
+{
+  "name": "GH_SolutionSpan",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "struct",
+  "summary": "Represents the time interval for a GH_Document solution.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_SolutionSpan.htm",
+  "constructors": [
+    {
+      "name": "GH_SolutionSpan",
+      "signature": "public GH_SolutionSpan(DateTime t0, DateTime t1)",
+      "summary": "Creates a new instance of the GH_SolutionSpan structure.",
+      "params": [
+        {
+          "name": "t0",
+          "type": "System.DateTime",
+          "doc": "Time of solution start.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.DateTime",
+          "doc": "Time of solution end.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SolutionSpan__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EndTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the time at which this solution was finished.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SolutionSpan_EndTime.htm"
+    },
+    {
+      "name": "StartTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the time at which this solution was started.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SolutionSpan_StartTime.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

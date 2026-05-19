@@ -1,0 +1,148 @@
+{
+  "name": "DoubleConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The DoubleConverter class converts types to and from the double datatype.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/30f3a075-d5b1-6d35-de48-d8fa193902db",
+  "constructors": [
+    {
+      "name": "DoubleConverter",
+      "signature": "public DoubleConverter()",
+      "summary": "Initializes a new instance of the DoubleConverter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d7d56fa3-5452-79fe-7a16-8f227a63b9f9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "public virtual bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)",
+      "summary": "Checks whether the conversion can be made from the source type to the double datatype.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "sourceType",
+          "type": "System.Type",
+          "doc": "The type to convert from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74518166-0416-0497-a7a5-288b483a03fc"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "public virtual bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)",
+      "summary": "Checks whether the conversion can be made from the double datatype to the destination type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The type to convert to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9a810f2-8ce1-3433-84b9-172a5a4e404f"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "public virtual Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)",
+      "summary": "Converts an object from the given culture to the Tekla.Structures.Datatype.Double type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The object to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The new double datatype object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed867658-ddc3-7673-ad31-67e255099ac7"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "public virtual Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)",
+      "summary": "Converts an object from the double datatype to the given destination type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The target culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The double datatype object to be converted.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The destination type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The given double datatype object converted to the new type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/53a8a97e-d5a8-0aee-6090-39a9c125dbe7"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "SubDCreationOptions.ConcaveCornerOption",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines how concave corners are treated.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDCreationOptions_ConcaveCornerOption.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "The option is not set."
+    },
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "No concave coners. In general, this is the best choice."
+    },
+    {
+      "name": "AtMeshCorner",
+      "value": 2,
+      "summary": "A concave subd corner will appear at input mesh boundary vertices where the corner angle \u003E= MinimumConcaveCornerAngleRadians() and the number of edges the end at the vertex is \u003E= MinimumConcaveCornerEdgeCount()."
+    }
+  ]
+}

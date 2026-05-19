@@ -1,0 +1,14 @@
+{
+  "name": "ValidateProductKeyDelegate",
+  "namespace": "Rhino.PlugIns",
+  "kind": "delegate",
+  "summary": "Validates a product key or license.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_ValidateProductKeyDelegate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate ValidateResult ValidateProductKeyDelegate( string productKey, out LicenseData licenseData )"
+}

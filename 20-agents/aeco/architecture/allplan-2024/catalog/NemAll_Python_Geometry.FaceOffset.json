@@ -1,0 +1,138 @@
+{
+  "name": "FaceOffset",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Face offset",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/",
+  "constructors": [
+    {
+      "name": "FaceOffset",
+      "signature": "FaceOffset(inputPolyhedron) | FaceOffset(inputPolyhedron, faceIndices) | FaceOffset(inputBRep) | FaceOffset(inputBRep, faceIndices)",
+      "summary": "Constructor with polyhedron input geometry",
+      "remarks": "Constructor with polyhedron input geometry",
+      "params": [
+        {
+          "name": "inputPolyhedron",
+          "type": "Polyhedron3D",
+          "doc": "polyhedron to execute face offset/shell on",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsResultBrep",
+      "signature": "IsResultBrep()",
+      "summary": "returns if selected object has brep geometry",
+      "remarks": "returns if selected object has brep geometry",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if brep"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.IsResultBrep"
+    },
+    {
+      "name": "Offset",
+      "signature": "Offset(offsetDistance, direction, useOffsetStepPierce, useOrthoVXSplit, punchDirection)",
+      "summary": "Execute face offset",
+      "remarks": "Execute face offset",
+      "params": [
+        {
+          "name": "offsetDistance",
+          "type": "float",
+          "doc": "distance for offset",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "eFaceOffsetDirection",
+          "doc": "offset direction 0 - in face normal direction, 1 - in both directions, 2 - opposite to face normal",
+          "optional": false
+        },
+        {
+          "name": "useOffsetStepPierce",
+          "type": "bool",
+          "doc": "if to use offset step pierce",
+          "optional": false
+        },
+        {
+          "name": "useOrthoVXSplit",
+          "type": "bool",
+          "doc": "if to use OrthoVXSplit option",
+          "optional": false
+        },
+        {
+          "name": "punchDirection",
+          "type": "Vector3D",
+          "doc": "defined direction for offset (optional)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eOK if success,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.Offset"
+    },
+    {
+      "name": "Shell",
+      "signature": "Shell(offsetDistance, direction, useOffsetStepPierce, useOrthoVXSplit, punchDirection)",
+      "summary": "Execute face shell",
+      "remarks": "Execute face shell",
+      "params": [
+        {
+          "name": "offsetDistance",
+          "type": "float",
+          "doc": "distance for offset",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "eFaceOffsetDirection",
+          "doc": "offset direction 0 - in face normal direction, 1 - in both directions, 2 - opposite to face normal",
+          "optional": false
+        },
+        {
+          "name": "useOffsetStepPierce",
+          "type": "bool",
+          "doc": "if to use offset step pierce",
+          "optional": false
+        },
+        {
+          "name": "useOrthoVXSplit",
+          "type": "bool",
+          "doc": "if to use OrthoVXSplit option",
+          "optional": false
+        },
+        {
+          "name": "punchDirection",
+          "type": "Vector3D",
+          "doc": "defined direction for shell (optional)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eOK if success,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.Shell"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

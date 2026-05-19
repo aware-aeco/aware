@@ -1,0 +1,107 @@
+{
+  "name": "RebarLegFace",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "Defines a rebar leg face that is used in a RebarSet. Rebar leg faces control how the RebarSet generates the reinforcing bars.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dbf1e225-bc2c-43a3-2487-427fa0d12224",
+  "constructors": [
+    {
+      "name": "RebarLegFace()",
+      "signature": "public RebarLegFace()",
+      "summary": "Initializes a new instance of the RebarLegFace class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0509fcd1-a376-c525-794e-678476d75f54"
+    },
+    {
+      "name": "RebarLegFace(Contour)",
+      "signature": "public RebarLegFace(Contour contour)",
+      "summary": "Initializes a new instance of the RebarLegFace class using the specified Contour.",
+      "params": [
+        {
+          "name": "contour",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "The primary contour.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aac881d3-8ec1-8230-5b74-71a33a1ac624"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AdditonalOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the user defined offset of the rebars from the rebar leg face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17401ca5-b80f-14ea-b450-76278136f151"
+    },
+    {
+      "name": "Contour",
+      "type": "Contour",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the outer Contour of the rebar leg face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2dfa7efe-a480-ebf2-4944-e5cb655dab78"
+    },
+    {
+      "name": "Frozen",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the leg face is frozen or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ab48f94d-1b38-c974-11dc-1e18a0fa571e"
+    },
+    {
+      "name": "Id",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an identifier that may be used to identify instances of the same rebar leg face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f13f98d9-1911-0863-d11d-c05136b61d73"
+    },
+    {
+      "name": "LayerOrderNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the layer order number of the rebar leg face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e9687a8-8b64-76f9-2ddd-24ab93e7c9a5"
+    },
+    {
+      "name": "Offset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the user defined offset of the rebars from the rebar leg face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/203d43e0-6087-ef83-211e-487685de4b9d"
+    },
+    {
+      "name": "OffsetType",
+      "type": "RebarLegFace.OffsetTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of offset used to apply the offset value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f79154ff-1791-50a0-f75e-d9fb8bc44267"
+    },
+    {
+      "name": "Reversed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the cover thickness is opposite to the coordinate system Z direction for the rebar leg face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74d4bd2f-d1d5-f9c3-6e01-3bbfc5ac6ccd"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,41 @@
+{
+  "name": "ElementPropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A property value with the identifiers of the property and its owner element.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementPropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "elementId",
+      "type": "ElementId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060elementId\u0060 of type \u0060ElementId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementPropertyValue"
+    },
+    {
+      "name": "propertyId",
+      "type": "PropertyId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyId\u0060 of type \u0060PropertyId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementPropertyValue"
+    },
+    {
+      "name": "propertyValue",
+      "type": "PropertyValue",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyValue\u0060 of type \u0060PropertyValue\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementPropertyValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

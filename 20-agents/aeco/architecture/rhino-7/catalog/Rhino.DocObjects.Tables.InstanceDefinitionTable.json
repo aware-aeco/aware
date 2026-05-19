@@ -1,0 +1,1007 @@
+{
+  "name": "InstanceDefinitionTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.InstanceDefinitionTable\u0022]",
+  "base": "RhinoDocCommonTable\u003CInstanceDefinition\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_InstanceDefinitionTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(String, String, Point3d, IEnumerable\u003CGeometryBase\u003E)",
+      "signature": "public int Add(string name, string description, Point3d basePoint, IEnumerable\u003CGeometryBase\u003E geometry)",
+      "summary": "Adds an instance definition to the instance definition table.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The definition name.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The definition description.",
+          "optional": false
+        },
+        {
+          "name": "basePoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A base point.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "An array, a list or any enumerable set of geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of instance definition in the instance definition table. -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Add_1.htm"
+    },
+    {
+      "name": "Add(String, String, Point3d, GeometryBase, ObjectAttributes)",
+      "signature": "public int Add(string name, string description, Point3d basePoint, GeometryBase geometry, ObjectAttributes attributes)",
+      "summary": "Adds an instance definition to the instance definition table.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The definition name.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The definition description.",
+          "optional": false
+        },
+        {
+          "name": "basePoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A base point.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "An element.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "An attribute.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of instance definition in the instance definition table. -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Add.htm"
+    },
+    {
+      "name": "Add(String, String, Point3d, IEnumerable\u003CGeometryBase\u003E, IEnumerable\u003CObjectAttributes\u003E)",
+      "signature": "public int Add(string name, string description, Point3d basePoint, IEnumerable\u003CGeometryBase\u003E geometry, IEnumerable\u003CObjectAttributes\u003E attributes)",
+      "summary": "Adds an instance definition to the instance definition table.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The definition name.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The definition description.",
+          "optional": false
+        },
+        {
+          "name": "basePoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A base point.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "An array, a list or any enumerable set of geometry.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "System.Collections.Generic.IEnumerable\u003CObjectAttributes\u003E",
+          "doc": "An array, a list or any enumerable set of attributes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of instance definition in the instance definition table. -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Add_2.htm"
+    },
+    {
+      "name": "Add(String, String, String, String, Point3d, IEnumerable\u003CGeometryBase\u003E, IEnumerable\u003CObjectAttributes\u003E)",
+      "signature": "public int Add(string name, string description, string url, string urlTag, Point3d basePoint, IEnumerable\u003CGeometryBase\u003E geometry, IEnumerable\u003CObjectAttributes\u003E attributes)",
+      "summary": "Adds an instance definition to the instance definition table.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The definition name.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The definition description.",
+          "optional": false
+        },
+        {
+          "name": "url",
+          "type": "System.String",
+          "doc": "A URL or hyperlink.",
+          "optional": false
+        },
+        {
+          "name": "urlTag",
+          "type": "System.String",
+          "doc": "A description of the URL or hyperlink.",
+          "optional": false
+        },
+        {
+          "name": "basePoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A base point.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "An array, a list or any enumerable set of geometry.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "System.Collections.Generic.IEnumerable\u003CObjectAttributes\u003E",
+          "doc": "An array, a list or any enumerable set of attributes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of instance definition in the instance definition table. -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Add_3.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Marks all items as deleted.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_CommonComponentTable_1_Clear.htm"
+    },
+    {
+      "name": "Compact",
+      "signature": "public void Compact(bool ignoreUndoReferences)",
+      "summary": "Purge deleted instance definition information that is not in use. This function is time consuming and should be used in a thoughtful manner.",
+      "params": [
+        {
+          "name": "ignoreUndoReferences",
+          "type": "System.Boolean",
+          "doc": "If false, then deleted instance definition information that could possibly be undeleted by the Undo command will not be deleted. If true, then all deleted instance definition information is deleted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Compact.htm"
+    },
+    {
+      "name": "Delete(InstanceDefinition)",
+      "signature": "public override bool Delete(InstanceDefinition item)",
+      "summary": "Deletes the instance definition. This deletes all references too.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.InstanceDefinition",
+          "doc": "The item to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Delete.htm"
+    },
+    {
+      "name": "Delete(Int32, Boolean, Boolean)",
+      "signature": "public bool Delete(int idefIndex, bool deleteReferences, bool quiet)",
+      "summary": "Deletes the instance definition.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "zero based index of instance definition to delete. This must be in the range 0 \u003C= idefIndex \u003C InstanceDefinitionTable.Count.",
+          "optional": false
+        },
+        {
+          "name": "deleteReferences",
+          "type": "System.Boolean",
+          "doc": "true to delete all references to this definition. false to delete definition only if there are no references.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, no warning message box appears if an instance definition cannot be deleted because it is the current layer or it contains active geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if the instance definition has active references and bDeleteReferences is false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Delete_1.htm"
+    },
+    {
+      "name": "DestroySourceArchive",
+      "signature": "public bool DestroySourceArchive(InstanceDefinition definition, bool quiet)",
+      "summary": "Destroys all source archive information. Specifically: * SourceArchive is set to the empty string. * SourceRelativePath is set to false * The alternative source archive path is set to the empty string. * Checksum.Zero() is used to private destroy all checksum information. * UpdateType is set to Static.",
+      "params": [
+        {
+          "name": "definition",
+          "type": "Rhino.DocObjects.InstanceDefinition",
+          "doc": "The instance definition to be modified.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, then message boxes about erroneous parameters will not be shown.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the definition was successfully modified otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_DestroySourceArchive.htm"
+    },
+    {
+      "name": "Find(String)",
+      "signature": "public InstanceDefinition Find(string instanceDefinitionName)",
+      "summary": "Finds the instance definition with a given name.",
+      "params": [
+        {
+          "name": "instanceDefinitionName",
+          "type": "System.String",
+          "doc": "name of instance definition to search for (ignores case)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "InstanceDefinition",
+        "doc": "The specified instance definition, or null if nothing matching was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Find_1.htm"
+    },
+    {
+      "name": "Find(Guid, Boolean)",
+      "signature": "public InstanceDefinition Find(Guid instanceId, bool ignoreDeletedInstanceDefinitions)",
+      "summary": "Finds the instance definition with a given id.",
+      "params": [
+        {
+          "name": "instanceId",
+          "type": "System.Guid",
+          "doc": "Unique id of the instance definition to search for.",
+          "optional": false
+        },
+        {
+          "name": "ignoreDeletedInstanceDefinitions",
+          "type": "System.Boolean",
+          "doc": "true means don\u0027t search deleted instance definitions.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "InstanceDefinition",
+        "doc": "The specified instance definition, or null if nothing matching was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Find.htm"
+    },
+    {
+      "name": "Find(String, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022ignoreDeletedInstanceDefinitions is now redundant. Remove the second argument. Definitions are now always deleted permanently.\u0022)] public InstanceDefinition Find(string instanceDefinitionName, bool ignoreDeletedInstanceDefinitions)",
+      "summary": "Finds the instance definition with a given name.",
+      "params": [
+        {
+          "name": "instanceDefinitionName",
+          "type": "System.String",
+          "doc": "name of instance definition to search for (ignores case)",
+          "optional": false
+        },
+        {
+          "name": "ignoreDeletedInstanceDefinitions",
+          "type": "System.Boolean",
+          "doc": "true means don\u0027t search deleted instance definitions.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "InstanceDefinition",
+        "doc": "The specified instance definition, or null if nothing matching was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Find_2.htm"
+    },
+    {
+      "name": "FindId",
+      "signature": "public virtual T FindId(Guid id)",
+      "summary": "Uses the guid to find a model component. Deleted objects cannot be found by id. The guid is the value that is stored in the .Id property. In a single document, no two active objects have the same guid. If an object is replaced with a new object, then the guid persists. For example, if the _Move command moves an object, then the moved object inherits its guid from the starting object. If the Copy command copies an object, then the copy gets a new guid. This guid persists through file saving/opening operations. This function will not find grip objects.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of model component to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Reference to the rhino object with the objectId or null if no such object could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_CommonComponentTable_1_FindId.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public override IEnumerator\u003CInstanceDefinition\u003E GetEnumerator()",
+      "summary": "(Overrides CommonComponentTable\u003CT\u003E.GetEnumerator().)",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CInstanceDefinition\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_GetEnumerator.htm"
+    },
+    {
+      "name": "GetList",
+      "signature": "public InstanceDefinition[] GetList(bool ignoreDeleted)",
+      "summary": "Gets an array of instance definitions.",
+      "params": [
+        {
+          "name": "ignoreDeleted",
+          "type": "System.Boolean",
+          "doc": "If true then deleted instance definitions are filtered out.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "InstanceDefinition[]",
+        "doc": "An array of instance definitions. This can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_GetList.htm"
+    },
+    {
+      "name": "GetUnusedInstanceDefinitionName()",
+      "signature": "public string GetUnusedInstanceDefinitionName()",
+      "summary": "Gets unused instance definition name used as default when creating new instance definitions.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "An unused instance definition name string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_GetUnusedInstanceDefinitionName.htm"
+    },
+    {
+      "name": "GetUnusedInstanceDefinitionName(String)",
+      "signature": "public string GetUnusedInstanceDefinitionName(string root)",
+      "summary": "Gets unused instance definition name used as default when creating new instance definitions.",
+      "params": [
+        {
+          "name": "root",
+          "type": "System.String",
+          "doc": "The returned name is \u0027root nn\u0027 If root is empty, then \u0027Block\u0027 (localized) is used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "An unused instance definition name string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_GetUnusedInstanceDefinitionName_1.htm"
+    },
+    {
+      "name": "GetUnusedInstanceDefinitionName(String, UInt32)",
+      "signature": "[ObsoleteAttribute(\u0022The defaultSuffix parameter is now ignored. Remove the second argument.\u0022)] public string GetUnusedInstanceDefinitionName(string root, uint defaultSuffix)",
+      "summary": "Gets unused instance definition name used as default when creating new instance definitions.",
+      "params": [
+        {
+          "name": "root",
+          "type": "System.String",
+          "doc": "The returned name is \u0027root nn\u0027 If root is empty, then \u0027Block\u0027 (localized) is used.",
+          "optional": false
+        },
+        {
+          "name": "defaultSuffix",
+          "type": "System.UInt32",
+          "doc": "Unique names are created by appending a decimal number to the localized term for \u0022Block\u0022 as in \u0022Block 01\u0022, \u0022Block 02\u0022, and so on. When defaultSuffix is supplied, the search for an unused name begins at \u0022Block suffix\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "An unused instance definition name string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_GetUnusedInstanceDefinitionName_2.htm"
+    },
+    {
+      "name": "InstanceDefinitionIndex",
+      "signature": "public int InstanceDefinitionIndex(Guid instanceId, bool ignoreDeletedInstanceDefinitions)",
+      "summary": "Get the index of the instance definition with a given id.",
+      "params": [
+        {
+          "name": "instanceId",
+          "type": "System.Guid",
+          "doc": "Unique id of the instance definition to search for",
+          "optional": false
+        },
+        {
+          "name": "ignoreDeletedInstanceDefinitions",
+          "type": "System.Boolean",
+          "doc": "true means don\u0027t search deleted instance definitions.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "index \u003E -1 if instance definition was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_InstanceDefinitionIndex.htm"
+    },
+    {
+      "name": "MakeSourcePathRelative",
+      "signature": "[ObsoleteAttribute(\u0022Source paths are always absolute at runtime. They cannot be changed.\u0022)] public bool MakeSourcePathRelative(InstanceDefinition idef, bool relative, bool quiet)",
+      "summary": "Obsolete method that always returns false. Marks the source path for a linked instance definition as relative or absolute.",
+      "params": [
+        {
+          "name": "idef",
+          "type": "Rhino.DocObjects.InstanceDefinition",
+          "doc": "The instance definition to be marked.",
+          "optional": false
+        },
+        {
+          "name": "relative",
+          "type": "System.Boolean",
+          "doc": "If true, the path should be considered as relative.If false, the path should be considered as absolute.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, then message boxes about erroneous parameters will not be shown.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the instance definition could be modified."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_MakeSourcePathRelative.htm"
+    },
+    {
+      "name": "Modify(Int32, String, String, Boolean)",
+      "signature": "public bool Modify(int idefIndex, string newName, string newDescription, bool quiet)",
+      "summary": "Modifies the instance definition name and description. Does not change instance definition ID or geometry.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "The index of the instance definition to be modified.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name.",
+          "optional": false
+        },
+        {
+          "name": "newDescription",
+          "type": "System.String",
+          "doc": "The new description string.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, information message boxes pop up when illegal changes are attempted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Modify_2.htm"
+    },
+    {
+      "name": "Modify(InstanceDefinition, String, String, Boolean)",
+      "signature": "public bool Modify(InstanceDefinition idef, string newName, string newDescription, bool quiet)",
+      "summary": "Modifies the instance definition name and description. Does not change instance definition ID or geometry.",
+      "params": [
+        {
+          "name": "idef",
+          "type": "Rhino.DocObjects.InstanceDefinition",
+          "doc": "The instance definition to be modified.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name.",
+          "optional": false
+        },
+        {
+          "name": "newDescription",
+          "type": "System.String",
+          "doc": "The new description string.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, information message boxes pop up when illegal changes are attempted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Modify.htm"
+    },
+    {
+      "name": "Modify(Int32, String, String, String, String, Boolean)",
+      "signature": "public bool Modify(int idefIndex, string newName, string newDescription, string newUrl, string newUrlTag, bool quiet)",
+      "summary": "Modifies the instance definition name, description, and url. Does not change instance definition ID or geometry.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "The index of the instance definition to be modified.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name.",
+          "optional": false
+        },
+        {
+          "name": "newDescription",
+          "type": "System.String",
+          "doc": "The new description string.",
+          "optional": false
+        },
+        {
+          "name": "newUrl",
+          "type": "System.String",
+          "doc": "The new URL or hyperlink.",
+          "optional": false
+        },
+        {
+          "name": "newUrlTag",
+          "type": "System.String",
+          "doc": "The new description of the URL or hyperlink.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, information message boxes pop up when illegal changes are attempted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Modify_3.htm"
+    },
+    {
+      "name": "Modify(InstanceDefinition, String, String, String, String, Boolean)",
+      "signature": "public bool Modify(InstanceDefinition idef, string newName, string newDescription, string newUrl, string newUrlTag, bool quiet)",
+      "summary": "Modifies the instance definition name, description, and url. Does not change instance definition ID or geometry.",
+      "params": [
+        {
+          "name": "idef",
+          "type": "Rhino.DocObjects.InstanceDefinition",
+          "doc": "The instance definition to be modified.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name.",
+          "optional": false
+        },
+        {
+          "name": "newDescription",
+          "type": "System.String",
+          "doc": "The new description string.",
+          "optional": false
+        },
+        {
+          "name": "newUrl",
+          "type": "System.String",
+          "doc": "The new URL or hyperlink.",
+          "optional": false
+        },
+        {
+          "name": "newUrlTag",
+          "type": "System.String",
+          "doc": "The new description of the URL or hyperlink.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, information message boxes pop up when illegal changes are attempted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Modify_1.htm"
+    },
+    {
+      "name": "ModifyGeometry(Int32, IEnumerable\u003CGeometryBase\u003E)",
+      "signature": "public bool ModifyGeometry(int idefIndex, IEnumerable\u003CGeometryBase\u003E newGeometry)",
+      "summary": "",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022idefIndex\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifyGeometry(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "newGeometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022newGeometry\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifyGeometry(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifyGeometry(System.Int32,System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_ModifyGeometry_1.htm"
+    },
+    {
+      "name": "ModifyGeometry(Int32, GeometryBase, ObjectAttributes)",
+      "signature": "public bool ModifyGeometry(int idefIndex, GeometryBase newGeometry, ObjectAttributes newAttributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022idefIndex\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifyGeometry(System.Int32,Rhino.Geometry.GeometryBase,Rhino.DocObjects.ObjectAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "newGeometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "[Missing \u003Cparam name=\u0022newGeometry\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifyGeometry(System.Int32,Rhino.Geometry.GeometryBase,Rhino.DocObjects.ObjectAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "newAttributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022newAttributes\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifyGeometry(System.Int32,Rhino.Geometry.GeometryBase,Rhino.DocObjects.ObjectAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifyGeometry(System.Int32,Rhino.Geometry.GeometryBase,Rhino.DocObjects.ObjectAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_ModifyGeometry.htm"
+    },
+    {
+      "name": "ModifyGeometry(Int32, IEnumerable\u003CGeometryBase\u003E, IEnumerable\u003CObjectAttributes\u003E)",
+      "signature": "public bool ModifyGeometry(int idefIndex, IEnumerable\u003CGeometryBase\u003E newGeometry, IEnumerable\u003CObjectAttributes\u003E newAttributes)",
+      "summary": "Modifies the instance definition geometry and replaces all references to the current definition with references to the new definition.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "The index of the instance definition to be modified.",
+          "optional": false
+        },
+        {
+          "name": "newGeometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "The new geometry.",
+          "optional": false
+        },
+        {
+          "name": "newAttributes",
+          "type": "System.Collections.Generic.IEnumerable\u003CObjectAttributes\u003E",
+          "doc": "The new attributes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_ModifyGeometry_2.htm"
+    },
+    {
+      "name": "ModifySourceArchive",
+      "signature": "public bool ModifySourceArchive(int idefIndex, FileReference sourceArchive, InstanceDefinitionUpdateType updateType, bool quiet)",
+      "summary": "If the instance definition is linked or embedded, use SetSource to specify the source archive.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "The index of the instance definition to be modified.",
+          "optional": false
+        },
+        {
+          "name": "sourceArchive",
+          "type": "Rhino.FileIO.FileReference",
+          "doc": "The new source archive file name.",
+          "optional": false
+        },
+        {
+          "name": "updateType",
+          "type": "Rhino.DocObjects.InstanceDefinitionUpdateType",
+          "doc": "[Missing \u003Cparam name=\u0022updateType\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.ModifySourceArchive(System.Int32,Rhino.FileIO.FileReference,Rhino.DocObjects.InstanceDefinitionUpdateType,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, then message boxes about erroneous parameters will not be shown.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the definition was successfully modified otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_ModifySourceArchive.htm"
+    },
+    {
+      "name": "Purge",
+      "signature": "public bool Purge(int idefIndex)",
+      "summary": "Purges an instance definition and its definition geometry.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "zero based index of instance definition to delete. This must be in the range 0 \u003C= idefIndex \u003C InstanceDefinitionTable.Count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if the instance definition cannot be purged because it is in use by reference objects or undo information."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Purge.htm"
+    },
+    {
+      "name": "RefreshLinkedBlock",
+      "signature": "public bool RefreshLinkedBlock(InstanceDefinition definition)",
+      "summary": "Reload linked block definitions and update the Rhino display.",
+      "params": [
+        {
+          "name": "definition",
+          "type": "Rhino.DocObjects.InstanceDefinition",
+          "doc": "Instance definition to reload.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the linked file was successfully read and updated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_RefreshLinkedBlock.htm"
+    },
+    {
+      "name": "Undelete",
+      "signature": "public bool Undelete(int idefIndex)",
+      "summary": "Undeletes an instance definition that has been deleted by Delete()",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "zero based index of instance definition to delete. This must be in the range 0 \u003C= idefIndex \u003C InstanceDefinitionTable.Count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_Undelete.htm"
+    },
+    {
+      "name": "UndoModify",
+      "signature": "public bool UndoModify(int idefIndex)",
+      "summary": "Restores the instance definition to its previous state, if the instance definition has been modified and the modification can be undone.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "The index of the instance definition to be restored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_UndoModify.htm"
+    },
+    {
+      "name": "UpdateLinkedInstanceDefinition",
+      "signature": "public bool UpdateLinkedInstanceDefinition(int idefIndex, string filename, bool updateNestedLinks, bool quiet)",
+      "summary": "Read the objects from a file and use them as the instance\u0027s definition geometry.",
+      "params": [
+        {
+          "name": "idefIndex",
+          "type": "System.Int32",
+          "doc": "zero based index of instance definition to delete. This must be in the range 0 \u003C= idefIndex \u003C InstanceDefinitionTable.Count.",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "name of file (can be any type of file that Rhino or a plug-in can read)",
+          "optional": false
+        },
+        {
+          "name": "updateNestedLinks",
+          "type": "System.Boolean",
+          "doc": "If true and the instance definition references to a linked instance definition, that needs to be updated, then the nested definition is also updated. If false, nested updates are skipped.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022quiet\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.UpdateLinkedInstanceDefinition(System.Int32,System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.InstanceDefinitionTable.UpdateLinkedInstanceDefinition(System.Int32,System.String,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_InstanceDefinitionTable_UpdateLinkedInstanceDefinition.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of items in the instance definitions table, excluding deleted definitions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_InstanceDefinitionTable_ActiveCount.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides CommonComponentTable\u003CT\u003E.ComponentType.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_InstanceDefinitionTable_ComponentType.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of items in the instance definitions table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_InstanceDefinitionTable_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_InstanceDefinitionTable_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "InstanceDefinition",
+      "getter": true,
+      "setter": false,
+      "summary": "Conceptually, the InstanceDefinition table is an array of Instance definitions. The operator[] can be used to get individual instance definition. An instance definition is either active or deleted and this state is reported by IsDeleted or will be null if it has been purged from the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_InstanceDefinitionTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

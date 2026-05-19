@@ -1,0 +1,29 @@
+{
+  "name": "TdsWindowState",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "enum",
+  "summary": "Window state",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-tdswindowstate-64148",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Maximize",
+      "value": 1,
+      "summary": "Maximize"
+    },
+    {
+      "name": "Minimize",
+      "value": 2,
+      "summary": "Minimize"
+    },
+    {
+      "name": "Normal",
+      "value": 0,
+      "summary": "Normal"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "name": "FileFbxReadOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for reading a Fbx file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileFbxReadOptions.htm",
+  "constructors": [
+    {
+      "name": "FileFbxReadOptions",
+      "signature": "public FileFbxReadOptions()",
+      "summary": "Initializes a new instance of the FileFbxReadOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileFbxReadOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Export function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileFbxReadOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileFbxReadOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ImportCameras",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileFbxReadOptions_ImportCameras.htm"
+    },
+    {
+      "name": "ImportLights",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileFbxReadOptions_ImportLights.htm"
+    },
+    {
+      "name": "ImportMeshesAsSubD",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileFbxReadOptions_ImportMeshesAsSubD.htm"
+    },
+    {
+      "name": "MapFbxYtoRhinoZ",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileFbxReadOptions_MapFbxYtoRhinoZ.htm"
+    },
+    {
+      "name": "Unweld",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileFbxReadOptions_Unweld.htm"
+    },
+    {
+      "name": "UnweldAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileFbxReadOptions_UnweldAngle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

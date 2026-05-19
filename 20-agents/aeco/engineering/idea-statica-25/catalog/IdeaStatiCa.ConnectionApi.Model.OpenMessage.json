@@ -1,0 +1,30 @@
+{
+  "name": "OpenMessage",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.OpenMessage.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OpenMessage.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Number",
+      "type": "MessageNumber",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for OpenMessage.number.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OpenMessage.md"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for OpenMessage.description.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OpenMessage.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,705 @@
+{
+  "name": "PreviewSymbolBuilder",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the preview symbol builder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ArrowSymbol",
+      "signature": "ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant, rotationAngle, allWindows=True) | ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, rotationAngle, allWindows=True)",
+      "summary": "Create an arrow symbol",
+      "remarks": "Create an arrow symbol",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Arrowhead point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the arrow symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        },
+        {
+          "name": "rotationAngle",
+          "type": "float",
+          "doc": "Rotation angle of the rectangle",
+          "optional": false
+        },
+        {
+          "name": "allWindows",
+          "type": "bool",
+          "doc": "Show symbol in all windows",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.ArrowSymbol"
+    },
+    {
+      "name": "CoordCrossSymbol",
+      "signature": "CoordCrossSymbol(plane, armLength, viewProj) | CoordCrossSymbol(axisPlacement, armLength, viewProj)",
+      "summary": "Draw the coordinate cross symbol",
+      "remarks": "Draw the coordinate cross symbol",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Plane",
+          "optional": false
+        },
+        {
+          "name": "armLength",
+          "type": "int",
+          "doc": "Length of the symbol arms",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.CoordCrossSymbol"
+    },
+    {
+      "name": "Polyline3DSymbol",
+      "signature": "Polyline3DSymbol(polyline, viewProj, colorVariant, linePattern) | Polyline3DSymbol(refPnt, polyline, viewProj, colorVariant, linePattern)",
+      "summary": "Create a 3D polyline symbol preview",
+      "remarks": "Create a 3D polyline symbol preview",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline3D",
+          "doc": "3D Polyline",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "linePattern",
+          "type": "int",
+          "doc": "Line pattern",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.Polyline3DSymbol"
+    },
+    {
+      "name": "Circle3DSymbol",
+      "signature": "Circle3DSymbol(refPnt, circle, viewProj, colorVariant, linePattern, lineWidth)",
+      "summary": "Create a 3D circle symbol preview",
+      "remarks": "Create a 3D circle symbol preview",
+      "params": [
+        {
+          "name": "refPnt",
+          "type": "Point3D",
+          "doc": "Reference point",
+          "optional": false
+        },
+        {
+          "name": "circle",
+          "type": "Arc3D",
+          "doc": "3D circle",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "linePattern",
+          "type": "int",
+          "doc": "Line pattern",
+          "optional": false
+        },
+        {
+          "name": "lineWidth",
+          "type": "float",
+          "doc": "Width of the line",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.Circle3DSymbol"
+    },
+    {
+      "name": "CircleSymbol",
+      "signature": "CircleSymbol(pnt, bDrawIso, viewProj, colorVariant, radius)",
+      "summary": "Create a circle symbol",
+      "remarks": "Create a circle symbol",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the circle symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "int",
+          "doc": "Radius of the circle in pixel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.CircleSymbol"
+    },
+    {
+      "name": "CrossSymbol",
+      "signature": "CrossSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant)",
+      "summary": "Create a cross symbol",
+      "remarks": "Create a cross symbol",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Cross center point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the cross symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.CrossSymbol"
+    },
+    {
+      "name": "FilledRectangleSymbol",
+      "signature": "FilledRectangleSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant, rotationAngle)",
+      "summary": "Create a filled rectangle symbol",
+      "remarks": "Create a filled rectangle symbol",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Rectangle center point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the rectangle symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        },
+        {
+          "name": "rotationAngle",
+          "type": "float",
+          "doc": "Rotation angle of the rectangle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.FilledRectangleSymbol"
+    },
+    {
+      "name": "Line3DSymbol",
+      "signature": "Line3DSymbol(refPnt, line, viewProj, colorVariant, linePattern, lineWidth)",
+      "summary": "Create a 3D line symbol preview",
+      "remarks": "Create a 3D line symbol preview",
+      "params": [
+        {
+          "name": "refPnt",
+          "type": "Point3D",
+          "doc": "Reference point",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "3D line",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "linePattern",
+          "type": "int",
+          "doc": "Line pattern",
+          "optional": false
+        },
+        {
+          "name": "lineWidth",
+          "type": "int",
+          "doc": "Line width",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.Line3DSymbol"
+    },
+    {
+      "name": "LocalCoordinateSystem",
+      "signature": "LocalCoordinateSystem(coordSystemMatrix, flags, maxSize)",
+      "summary": "Create a symbol for a local coordinate system",
+      "remarks": "Create a symbol for a local coordinate system",
+      "params": [
+        {
+          "name": "coordSystemMatrix",
+          "type": "Matrix3D",
+          "doc": "Matrix of the coordinate system",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "LCS_Flags",
+          "doc": "Coordinate system flags",
+          "optional": false
+        },
+        {
+          "name": "maxSize",
+          "type": "float",
+          "doc": "Max size of the coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.LocalCoordinateSystem"
+    },
+    {
+      "name": "MarkSymbol",
+      "signature": "MarkSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant)",
+      "summary": "Create a mark symbol (drawn an x)",
+      "remarks": "Create a mark symbol (drawn an x)",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Mark center point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the mark symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.MarkSymbol"
+    },
+    {
+      "name": "OffsetPointSymbols",
+      "signature": "OffsetPointSymbols(refPnt, offPnt, bDrawIso, viewProj, colorVariant, widthVariant, refPntAngle, offPntAngle)",
+      "summary": "Create the symbols for an offset point",
+      "remarks": "Create the symbols for an offset point",
+      "params": [
+        {
+          "name": "refPnt",
+          "type": "Point3D",
+          "doc": "Reference point",
+          "optional": false
+        },
+        {
+          "name": "offPnt",
+          "type": "Point3D",
+          "doc": "Offset point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the arrow symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        },
+        {
+          "name": "refPntAngle",
+          "type": "float",
+          "doc": "Angle at the reference point",
+          "optional": false
+        },
+        {
+          "name": "offPntAngle",
+          "type": "float",
+          "doc": "Angle at the offset point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.OffsetPointSymbols"
+    },
+    {
+      "name": "OrthogonalSymbol",
+      "signature": "OrthogonalSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant)",
+      "summary": "Create an orthogonal symbol",
+      "remarks": "Create an orthogonal symbol",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the circle symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.OrthogonalSymbol"
+    },
+    {
+      "name": "ParallelSymbol",
+      "signature": "ParallelSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant)",
+      "summary": "Create a parallel symbol",
+      "remarks": "Create a parallel symbol",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the circle symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.ParallelSymbol"
+    },
+    {
+      "name": "Polyline2DSymbol",
+      "signature": "Polyline2DSymbol(refPnt, polyline, viewProj, colorVariant, linePattern)",
+      "summary": "Create a 2D polyline symbol preview",
+      "remarks": "Create a 2D polyline symbol preview",
+      "params": [
+        {
+          "name": "refPnt",
+          "type": "Point3D",
+          "doc": "Reference point",
+          "optional": false
+        },
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "Polyline",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "linePattern",
+          "type": "int",
+          "doc": "Line pattern",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.Polyline2DSymbol"
+    },
+    {
+      "name": "TrackLine",
+      "signature": "TrackLine(line, bDrawIso, viewProj, colorVariant, trackLineType)",
+      "summary": "Create a track line",
+      "remarks": "Create a track line",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "Track line",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the circle symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "trackLineType",
+          "type": "eTrackLineType",
+          "doc": "Type of the track line",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.TrackLine"
+    },
+    {
+      "name": "TrackMarkSymbol",
+      "signature": "TrackMarkSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant)",
+      "summary": "Create a track mark symbol",
+      "remarks": "Create a track mark symbol",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "bDrawIso",
+          "type": "bool",
+          "doc": "Draw the circle symbol inside the isometric view: true/false",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection data",
+          "optional": false
+        },
+        {
+          "name": "colorVariant",
+          "type": "ARGB",
+          "doc": "Color of the preview",
+          "optional": false
+        },
+        {
+          "name": "widthVariant",
+          "type": "int",
+          "doc": "Width of the symbol",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.TrackMarkSymbol"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

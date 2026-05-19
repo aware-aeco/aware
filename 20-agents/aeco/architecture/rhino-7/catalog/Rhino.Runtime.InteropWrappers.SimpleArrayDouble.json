@@ -1,0 +1,112 @@
+{
+  "name": "SimpleArrayDouble",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Wrapper for ON_SimpleArray\u003Cdouble\u003E. If you are not writing C\u002B\u002B code, then this class is not for you.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InteropWrappers_SimpleArrayDouble.htm",
+  "constructors": [
+    {
+      "name": "SimpleArrayDouble()",
+      "signature": "public SimpleArrayDouble()",
+      "summary": "Initializes a new SimpleArrayDouble instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayDouble__ctor.htm"
+    },
+    {
+      "name": "SimpleArrayDouble(IEnumerable\u003CDouble\u003E)",
+      "signature": "public SimpleArrayDouble(IEnumerable\u003Cdouble\u003E items)",
+      "summary": "Initializes a new SimpleArrayDouble instance, with items.",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.SimpleArrayDouble.#ctor(System.Collections.Generic.IEnumerable{System.Double})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayDouble__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "Gets the constant (immutable) pointer of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayDouble_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayDouble_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayDouble_Finalize.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "Gets the non-constant pointer (for modification) of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The non-constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayDouble_NonConstPointer.htm"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public double[] ToArray()",
+      "summary": "Returns the managed counterpart of the unmanaged array.",
+      "params": [],
+      "returns": {
+        "type": "Double[]",
+        "doc": "The managed array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayDouble_ToArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of elements in this array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_SimpleArrayDouble_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

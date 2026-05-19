@@ -1,0 +1,25 @@
+{
+  "name": "InitTkinter",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Utility.InitTkinter.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/InitTkinter/",
+  "constructors": [
+    {
+      "name": "InitTkinter",
+      "signature": "InitTkinter()",
+      "summary": "Initialize the use of tkinter in Allplan",
+      "remarks": "Initialize the use of tkinter in Allplan",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/InitTkinter/#NemAll_Python_Utility.InitTkinter.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,90 @@
+{
+  "name": "ProfileItemParameter",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The ProfileItemParameter class contains the information of one profile parameter (property name, symbol, unit and unit type). A profile item can contain a maximum of 50 profile parameters.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1f0dd6fa-80fc-e491-3232-a2ab83cbd1c8",
+  "constructors": [
+    {
+      "name": "ProfileItemParameter",
+      "signature": "public ProfileItemParameter()",
+      "summary": "Initializes a new instance of the ProfileItemParameter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e2b2a7cb-c914-1ac1-f0b5-1f8480b6ca93"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AlblString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a translated albl string.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3feb25aa-39c2-fae6-5432-f681ccfcb296"
+    },
+    {
+      "name": "CrossSectionNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of the cross section the parameter belongs to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e7849635-6ff1-0eb2-9513-583d60a09a21"
+    },
+    {
+      "name": "IntegerValue",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The integer value of the profile item parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dda9aedb-e289-b943-e86f-8791ca185ef9"
+    },
+    {
+      "name": "ParameterUnitType",
+      "type": "ProfileItemParameter.ParameterUnitTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Defines the parameter unit type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/62d46828-01d0-a601-7950-14d87b7a6598"
+    },
+    {
+      "name": "Property",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The description of the profile item parameter. Corresponds to the \u0027Property\u0027 in the Tekla Structures profile catalog dialog, and the \u0027Label in dialog box\u0027 in the variable dialog in the Sketch Editor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/994d06b4-778e-e657-dda7-f79de5bf6288"
+    },
+    {
+      "name": "StringValue",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The string value of the profile item parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/281fbf74-e81f-1409-e67b-b0f18ff4d3d0"
+    },
+    {
+      "name": "Symbol",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The symbol of the profile item parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0df0731-e573-58b3-3608-016a621b4cac"
+    },
+    {
+      "name": "Value",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The value of the profile item parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a5cedc5a-c620-0e09-124f-0dfe5bacde65"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

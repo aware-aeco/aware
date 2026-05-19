@@ -1,0 +1,1348 @@
+{
+  "name": "AstFactory",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type AstFactory",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "AstFactory()",
+      "signature": "void AstFactory()",
+      "summary": "AstFactory.AstFactory",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAtLevel(ProtoCore.AST.AssociativeAST.AssociativeNode, int, bool)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode AddAtLevel(ProtoCore.AST.AssociativeAST.AssociativeNode node, int level, bool shouldKeepListStructure)",
+      "summary": "Create a copy of node with at-level. E.g., xs@-2",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "shouldKeepListStructure",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "AddReplicationGuide(ProtoCore.AST.AssociativeAST.AssociativeNode, System.Collections.Generic.List\u003Cint\u003E, bool)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode AddReplicationGuide(ProtoCore.AST.AssociativeAST.AssociativeNode node, System.Collections.Generic.List\u003Cint\u003E guides, bool isLongest)",
+      "summary": "Create a copy of the node with replication guide added.",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "Associative AST node.",
+          "optional": false
+        },
+        {
+          "name": "guides",
+          "type": "System.Collections.Generic.List\u003Cint\u003E",
+          "doc": "Replication guide.",
+          "optional": false
+        },
+        {
+          "name": "isLongest",
+          "type": "bool",
+          "doc": "If use the Longest replication strategy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildAssignment(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode BuildAssignment(ProtoCore.AST.AssociativeAST.AssociativeNode lhs, ProtoCore.AST.AssociativeAST.AssociativeNode rhs)",
+      "summary": "AstFactory.BuildAssignment",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildBinaryExpression(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.DSASM.Operator)",
+      "signature": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode BuildBinaryExpression(ProtoCore.AST.AssociativeAST.AssociativeNode lhs, ProtoCore.AST.AssociativeAST.AssociativeNode rhs, ProtoCore.DSASM.Operator op)",
+      "summary": "AstFactory.BuildBinaryExpression",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.Operator",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildBooleanNode(bool)",
+      "signature": "ProtoCore.AST.AssociativeAST.BooleanNode BuildBooleanNode(bool value)",
+      "summary": "AstFactory.BuildBooleanNode",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.BooleanNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildConditionalNode(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.InlineConditionalNode BuildConditionalNode(ProtoCore.AST.AssociativeAST.AssociativeNode condition, ProtoCore.AST.AssociativeAST.AssociativeNode trueExpr, ProtoCore.AST.AssociativeAST.AssociativeNode falseExpr)",
+      "summary": "AstFactory.BuildConditionalNode",
+      "params": [
+        {
+          "name": "condition",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "trueExpr",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "falseExpr",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.InlineConditionalNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildDoubleNode(double)",
+      "signature": "ProtoCore.AST.AssociativeAST.DoubleNode BuildDoubleNode(double value)",
+      "summary": "AstFactory.BuildDoubleNode",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.DoubleNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildExprList(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.ExprListNode BuildExprList(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E nodes)",
+      "summary": "AstFactory.BuildExprList",
+      "params": [
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.ExprListNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildExprList(System.Collections.Generic.List\u003Cstring\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.ExprListNode BuildExprList(System.Collections.Generic.List\u003Cstring\u003E exprs)",
+      "summary": "AstFactory.BuildExprList",
+      "params": [
+        {
+          "name": "exprs",
+          "type": "System.Collections.Generic.List\u003Cstring\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.ExprListNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall(System.Action a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12\u003E(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11\u003E(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10\u003E(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9\u003E(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E(System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5, T6, T7\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7\u003E(System.Action\u003CT1, T2, T3, T4, T5, T6, T7\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5, T6\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6\u003E(System.Action\u003CT1, T2, T3, T4, T5, T6\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4, T5\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5\u003E(System.Action\u003CT1, T2, T3, T4, T5\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3, T4\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4\u003E(System.Action\u003CT1, T2, T3, T4\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3, T4\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2, T3\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3\u003E(System.Action\u003CT1, T2, T3\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2, T3\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1, T2\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2\u003E(System.Action\u003CT1, T2\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1, T2\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Action\u003CT1\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1\u003E(System.Action\u003CT1\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action\u003CT1\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, T8, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, T7, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, T5, T6, T7, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, T5, T6, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, T6, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, T5, T6, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, T5, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, T5, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, T5, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, T4, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, T4, TRetType\u003E(System.Func\u003CT1, T2, T3, T4, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, T4, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, T3, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, T3, TRetType\u003E(System.Func\u003CT1, T2, T3, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, T3, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, T2, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, T2, TRetType\u003E(System.Func\u003CT1, T2, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, T2, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CT1, TRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CT1, TRetType\u003E(System.Func\u003CT1, TRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CT1, TRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(System.Func\u003CTRetType\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall\u003CTRetType\u003E(System.Func\u003CTRetType\u003E a, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Func\u003CTRetType\u003E",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(string, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall(string functionName, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "functionName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(string, string, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionCall(string className, string functionName, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E arguments, ProtoCore.Core core)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "functionName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionObject(ProtoCore.AST.AssociativeAST.AssociativeNode, int, System.Collections.Generic.IEnumerable\u003Cint\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionObject(ProtoCore.AST.AssociativeAST.AssociativeNode functionNode, int numParams, System.Collections.Generic.IEnumerable\u003Cint\u003E connectedIndices, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputs)",
+      "summary": "AstFactory.BuildFunctionObject",
+      "params": [
+        {
+          "name": "functionNode",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "numParams",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "connectedIndices",
+          "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+          "optional": false
+        },
+        {
+          "name": "inputs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionObject(string, int, System.Collections.Generic.IEnumerable\u003Cint\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildFunctionObject(string functionName, int numParams, System.Collections.Generic.IEnumerable\u003Cint\u003E connectedIndices, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputs)",
+      "summary": "AstFactory.BuildFunctionObject",
+      "params": [
+        {
+          "name": "functionName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "numParams",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "connectedIndices",
+          "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+          "optional": false
+        },
+        {
+          "name": "inputs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildIdentList(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.IdentifierListNode BuildIdentList(ProtoCore.AST.AssociativeAST.AssociativeNode leftNode, ProtoCore.AST.AssociativeAST.AssociativeNode rightNode)",
+      "summary": "AstFactory.BuildIdentList",
+      "params": [
+        {
+          "name": "leftNode",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "rightNode",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IdentifierListNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildIdentifier(string)",
+      "signature": "ProtoCore.AST.AssociativeAST.IdentifierNode BuildIdentifier(string name)",
+      "summary": "AstFactory.BuildIdentifier",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildIdentifier(string, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.IdentifierNode BuildIdentifier(string name, ProtoCore.AST.AssociativeAST.AssociativeNode arrayIndex)",
+      "summary": "AstFactory.BuildIdentifier",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildIndexExpression(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildIndexExpression(ProtoCore.AST.AssociativeAST.AssociativeNode value, ProtoCore.AST.AssociativeAST.AssociativeNode index)",
+      "summary": "AstFactory.BuildIndexExpression",
+      "params": [
+        {
+          "name": "value",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildIntNode(int)",
+      "signature": "ProtoCore.AST.AssociativeAST.IntNode BuildIntNode(int value)",
+      "summary": "Build a DesignScript Int AST node from a 32 bit int input value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IntNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildIntNode(long)",
+      "signature": "ProtoCore.AST.AssociativeAST.IntNode BuildIntNode(long value)",
+      "summary": "Build a DesignScript Int AST node from a long input value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "long",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IntNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildNullNode",
+      "signature": "ProtoCore.AST.AssociativeAST.NullNode BuildNullNode()",
+      "summary": "AstFactory.BuildNullNode",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.NullNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildParamNode(string)",
+      "signature": "ProtoCore.AST.AssociativeAST.VarDeclNode BuildParamNode(string paramName)",
+      "summary": "AstFactory.BuildParamNode",
+      "params": [
+        {
+          "name": "paramName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.VarDeclNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildParamNode(string, ProtoCore.Type)",
+      "signature": "ProtoCore.AST.AssociativeAST.VarDeclNode BuildParamNode(string paramName, ProtoCore.Type type)",
+      "summary": "AstFactory.BuildParamNode",
+      "params": [
+        {
+          "name": "paramName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.VarDeclNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildPrimitiveNodeFromObject(object)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode BuildPrimitiveNodeFromObject(object value)",
+      "summary": "Builds a integer, double, string, boolean or null node depending on input value type.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "Input value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": "AssociativeNode"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildReturnStatement(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode BuildReturnStatement(ProtoCore.AST.AssociativeAST.AssociativeNode rhs)",
+      "summary": "AstFactory.BuildReturnStatement",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildStringNode(string)",
+      "signature": "ProtoCore.AST.AssociativeAST.StringNode BuildStringNode(string str)",
+      "summary": "AstFactory.BuildStringNode",
+      "params": [
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.StringNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

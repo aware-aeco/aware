@@ -1,0 +1,236 @@
+{
+  "name": "BendSpaceMorph",
+  "namespace": "Rhino.Geometry.Morphs",
+  "kind": "class",
+  "summary": "Deforms objects by bending along a spine arc.",
+  "base": "SpaceMorph",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Morphs_BendSpaceMorph.htm",
+  "constructors": [
+    {
+      "name": "BendSpaceMorph(Point3d, Point3d, Point3d, Boolean, Boolean)",
+      "signature": "public BendSpaceMorph(Point3d start, Point3d end, Point3d point, bool straight, bool symmetric)",
+      "summary": "Constructs a bend space morph.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start of spine that represents the original orientation of the object.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "End of spine.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to bend through.",
+          "optional": false
+        },
+        {
+          "name": "straight",
+          "type": "System.Boolean",
+          "doc": "If false, then point determines the region to bend. If true, only the spine region is bent.",
+          "optional": false
+        },
+        {
+          "name": "symmetric",
+          "type": "System.Boolean",
+          "doc": "If false, then only one end of the object bends. If true, then the object will bend symmetrically around the center if you start the spine in the middle of the object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Morphs_BendSpaceMorph__ctor.htm"
+    },
+    {
+      "name": "BendSpaceMorph(Point3d, Point3d, Point3d, Double, Boolean, Boolean)",
+      "signature": "public BendSpaceMorph(Point3d start, Point3d end, Point3d point, double angle, bool straight, bool symmetric)",
+      "summary": "Constructs a bend space morph.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start of spine that represents the original orientation of the object.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "End of spine.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Used for bend direction.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Bend angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "straight",
+          "type": "System.Boolean",
+          "doc": "If false, then point determines the region to bend. If true, only the spine region is bent.",
+          "optional": false
+        },
+        {
+          "name": "symmetric",
+          "type": "System.Boolean",
+          "doc": "If false, then only one end of the object bends. If true, then the object will bend symmetrically around the center if you start the spine in the middle of the object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Morphs_BendSpaceMorph__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Morphs_BendSpaceMorph_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Morphs_BendSpaceMorph_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Morphs_BendSpaceMorph_Finalize.htm"
+    },
+    {
+      "name": "Morph(GeometryBase)",
+      "signature": "public bool Morph(GeometryBase geometry)",
+      "summary": "Apply the space morph to geometry.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry to morph.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SpaceMorph_Morph.htm"
+    },
+    {
+      "name": "Morph(Plane)",
+      "signature": "public bool Morph(ref Plane plane)",
+      "summary": "Apply the space morph to a plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to morph.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SpaceMorph_Morph_1.htm"
+    },
+    {
+      "name": "MorphPoint",
+      "signature": "public override Point3d MorphPoint(Point3d point)",
+      "summary": "Morphs an Euclidean point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point that will be morphed by this object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Resulting morphed point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Morphs_BendSpaceMorph_MorphPoint.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the space morph definition is valid, false otherwise.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Morphs_BendSpaceMorph_IsValid.htm"
+    },
+    {
+      "name": "PreserveStructure",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true if the morph should be done in a way that preserves the structure of the geometry. In particular, for NURBS objects, true means that only the control points are moved. The PreserveStructure value does not affect the way meshes and points are morphed. The default is false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SpaceMorph_PreserveStructure.htm"
+    },
+    {
+      "name": "QuickPreview",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true if the morph should be done as quickly as possible because the result is being used for some type of dynamic preview. If QuickPreview is true, the tolerance may be ignored. The QuickPreview value does not affect the way meshes and points are morphed. The default is false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SpaceMorph_QuickPreview.htm"
+    },
+    {
+      "name": "Tolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The desired accuracy of the morph. This value is primarily used for deforming surfaces and breps. The default is 0.0 and any value \u003C= 0.0 is ignored by morphing functions. The Tolerance value does not affect the way meshes and points are morphed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SpaceMorph_Tolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

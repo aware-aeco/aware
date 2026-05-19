@@ -1,4 +1,5 @@
-namespace FixtureAssembly.Demo;
+namespace FixtureAssembly.Demo
+{
 
 /// <summary>A demo class with a few public methods, used by sidecar reflection tests.</summary>
 public class Greeter
@@ -25,4 +26,78 @@ public interface ISerializable
 {
     /// <summary>Serializes the object to a string.</summary>
     string Serialize();
+}
+
+} // namespace FixtureAssembly.Demo
+
+// ── Fixtures for the Navisworks-style coverage extractor ──────────────────────
+//
+// These types exist solely to exercise the MetadataReflector + XmlDocLoader +
+// Navisworks PageParser / MemberPageParser pipeline. They mirror the Sandcastle
+// XML doc patterns the Autodesk.Navisworks.Api ships, without depending on that
+// (proprietary) assembly at test-time.
+
+namespace FixtureAssembly.NavisworksLike
+{
+    /// <summary>Demo enumeration with integer-backed values and per-value docs.</summary>
+    public enum AnimationBehavior
+    {
+        /// <summary>The animation duration is scaled to be same as task duration.</summary>
+        Scale = 0,
+        /// <summary>The animation starts when the task starts.</summary>
+        Start = 1,
+        /// <summary>The animation starts so that it ends when the task ends.</summary>
+        End = 2,
+    }
+
+    /// <summary>The singleton object that represents the application.</summary>
+    public class Application
+    {
+        private Application() { }
+
+        /// <summary>Gets a reference to the current Document being displayed in a View.</summary>
+        public string ActiveDocument { get; private set; } = "(none)";
+
+        /// <summary>
+        /// Provides an instance of the <see cref="DemoProgress"/> class which starts
+        /// reporting of progress of an operation.
+        /// </summary>
+        /// <returns>A new progress bar instance.</returns>
+        public DemoProgress BeginProgress() => new DemoProgress();
+
+        /// <summary>
+        /// Provides an instance of the <see cref="DemoProgress"/> class with a title.
+        /// </summary>
+        /// <param name="title">Title for the overall progress operation.</param>
+        /// <returns>A new progress bar instance.</returns>
+        public DemoProgress BeginProgress(string title) => new DemoProgress();
+
+        /// <summary>
+        /// Provides an instance of the <see cref="DemoProgress"/> class with a title and message.
+        /// </summary>
+        /// <param name="title">Title for the overall progress operation.</param>
+        /// <param name="message">Message describing the current operation.</param>
+        /// <returns>A new progress bar instance.</returns>
+        /// <exception cref="System.ArgumentNullException">title is null.</exception>
+        public DemoProgress BeginProgress(string title, string message) => new DemoProgress();
+
+        /// <summary>Occurs when the active document has changed.</summary>
+#pragma warning disable CS0067  // Event used by reflection tests, not raised in fixture.
+        public event System.EventHandler? ActiveDocumentChanged;
+#pragma warning restore CS0067
+    }
+
+    /// <summary>Reports progress of an operation.</summary>
+    public class DemoProgress : System.IDisposable
+    {
+        /// <summary>Initializes a new DemoProgress with no title.</summary>
+        public DemoProgress() { }
+
+        /// <summary>Initializes a new DemoProgress with the given title.</summary>
+        /// <param name="title">Title shown to the user.</param>
+        public DemoProgress(string title) { }
+
+        /// <summary>Releases any resources held by the progress bar.</summary>
+        public void Dispose() { }
+    }
 }

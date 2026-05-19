@@ -1,0 +1,66 @@
+{
+  "name": "LayoutSize",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Data class containing information about the sheet size of a print layout.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/",
+  "constructors": [
+    {
+      "name": "LayoutSize",
+      "signature": "LayoutSize()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Height",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Layout height",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Height"
+    },
+    {
+      "name": "Index",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Index",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Index"
+    },
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the layout size, e.g. \u0027DIN A4\u0027",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Name"
+    },
+    {
+      "name": "UserDefined",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the size of the print layout should be defined freely by width \u0026 height, or to use predefined size defined in the property name.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.UserDefined"
+    },
+    {
+      "name": "Width",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Layout width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

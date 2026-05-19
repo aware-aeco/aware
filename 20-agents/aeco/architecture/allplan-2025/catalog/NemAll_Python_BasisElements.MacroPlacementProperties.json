@@ -1,0 +1,251 @@
+{
+  "name": "MacroPlacementProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of the macro placement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/",
+  "constructors": [
+    {
+      "name": "MacroPlacementProperties",
+      "signature": "MacroPlacementProperties() | MacroPlacementProperties(element: MacroPlacementProperties)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: MacroPlacementProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "MacroPlacementProperties",
+          "doc": "MacroPlacementProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BillingCategory",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Billing category",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.BillingCategory"
+    },
+    {
+      "name": "ConsiderType",
+      "type": "ConsiderType",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of adaptation behavior of the smart symbol relative to finishing surfaces",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.ConsiderType"
+    },
+    {
+      "name": "Craft",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Craft",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Craft"
+    },
+    {
+      "name": "DistortionState",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to allow the resize of the smart symbol",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.DistortionState"
+    },
+    {
+      "name": "DomainType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Domain type?",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.DomainType"
+    },
+    {
+      "name": "HasParentModificationBehaviour",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Specific behavior for modification",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.HasParentModificationBehaviour"
+    },
+    {
+      "name": "HeightDefinitionType",
+      "type": "HeightDefinitionType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height definition type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.HeightDefinitionType"
+    },
+    {
+      "name": "InOpeningState",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is the macro placement inside opening ?",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.InOpeningState"
+    },
+    {
+      "name": "LeadingMacro",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Is the macro placement a leading macro",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.LeadingMacro"
+    },
+    {
+      "name": "LinkType",
+      "type": "LinkType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Link type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.LinkType"
+    },
+    {
+      "name": "Mass_V6",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Mass attribute V6",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Mass_V6"
+    },
+    {
+      "name": "Mass_V7",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Mass attribute V7",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Mass_V7"
+    },
+    {
+      "name": "Mass_V8",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Mass attribute V8",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Mass_V8"
+    },
+    {
+      "name": "Mass_V9",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Mass attribute V9",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Mass_V9"
+    },
+    {
+      "name": "Matrix",
+      "type": "Matrix3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Matrix for location in world coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Matrix"
+    },
+    {
+      "name": "MirrorState",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Was the macro placement mirrored ?",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.MirrorState"
+    },
+    {
+      "name": "Name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Name",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Name"
+    },
+    {
+      "name": "PositionNr",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Unit factor",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.PositionNr"
+    },
+    {
+      "name": "SubType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Subtype?",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.SubType"
+    },
+    {
+      "name": "Type",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Type?",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.Type"
+    },
+    {
+      "name": "UnitFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Unit factor",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.UnitFactor"
+    },
+    {
+      "name": "UseAlways2DRepInGroundView",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Use always 2D representation in ground view",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.UseAlways2DRepInGroundView"
+    },
+    {
+      "name": "UseDrawOrder",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to True to use the draw order (sequence) setting of the smart symbol\u0027s instance. Set to False to use the setting of elements included in the macro slide",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.UseDrawOrder"
+    },
+    {
+      "name": "UseFormat",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to True to use the format setting (pen, stroke, color) of the smart symbol\u0027s instance. Set to False to use the settings of the elements included in the macro slide.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.UseFormat"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

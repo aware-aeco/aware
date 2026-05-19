@@ -1,0 +1,29 @@
+{
+  "name": "RebarLengthAdjustmentDataNullable.LengthAdjustmentTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The length adjustment type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/615c6899-28ab-0be7-6a9c-be73d79184eb",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NO_ADJUSTMENT",
+      "value": 0,
+      "summary": "No adjustment."
+    },
+    {
+      "name": "END_OFFSET",
+      "value": 1,
+      "summary": "End offset."
+    },
+    {
+      "name": "LEG_LENGTH",
+      "value": 2,
+      "summary": "Leg length."
+    }
+  ]
+}

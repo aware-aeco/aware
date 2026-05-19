@@ -1,0 +1,203 @@
+{
+  "name": "GH_TextDot.GH_TextDotProxy",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Types.GH_TextDot.GH_TextDotProxy.)",
+  "base": "GH_GooProxy\u003CGH_TextDot\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_TextDot_GH_TextDotProxy.htm",
+  "constructors": [
+    {
+      "name": "GH_TextDot.GH_TextDotProxy",
+      "signature": "public GH_TextDotProxy(GH_TextDot Value)",
+      "summary": "Initializes a new instance of the GH_TextDot.GH_TextDotProxy class",
+      "params": [
+        {
+          "name": "Value",
+          "type": "Grasshopper.Kernel.Types.GH_TextDot",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_TextDot_GH_TextDotProxy__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Construct",
+      "signature": "public override void Construct()",
+      "summary": "(Overrides GH_GooProxy\u003CT\u003E.Construct().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_TextDot_GH_TextDotProxy_Construct.htm"
+    },
+    {
+      "name": "FormatInstance",
+      "signature": "public virtual string FormatInstance()",
+      "summary": "Returns a String description of the current value.",
+      "remarks": "If the implementation IsParsable(), then this representation must be in parsable format.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_FormatInstance.htm"
+    },
+    {
+      "name": "FromString",
+      "signature": "public virtual bool FromString(string in)",
+      "summary": "If IsParsable(), then attempts to convert the string to a generic type value",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "doc": "The String to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure. This method should not throw exceptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_FromString.htm"
+    },
+    {
+      "name": "MutateString",
+      "signature": "public virtual string MutateString(string in)",
+      "summary": "Munge a string to remove obvious errors on account of the user.",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_MutateString.htm"
+    },
+    {
+      "name": "NumberToString",
+      "signature": "protected string NumberToString(double number)",
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_NumberToString.htm"
+    },
+    {
+      "name": "StringToNumber",
+      "signature": "protected double StringToNumber(string text)",
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_StringToNumber.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ObjectID",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_TextDot_GH_TextDotProxy_ObjectID.htm"
+    },
+    {
+      "name": "Point",
+      "type": "GH_Point3d_Wrapper",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_TextDot_GH_TextDotProxy_Point.htm"
+    },
+    {
+      "name": "SecondaryText",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_TextDot_GH_TextDotProxy_SecondaryText.htm"
+    },
+    {
+      "name": "Text",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_TextDot_GH_TextDotProxy_Text.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_TypeName.htm"
+    },
+    {
+      "name": "Valid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this proxy represents valid data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_Valid.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

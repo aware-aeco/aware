@@ -1,0 +1,29 @@
+{
+  "name": "Reinforcement.RebarGeometrySimplificationTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The rebar geometry simplification type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9138fa19-1a9b-02bc-4710-a8856a76edc3",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NONE",
+      "value": 0,
+      "summary": "No simplification."
+    },
+    {
+      "name": "RATIONALIZED",
+      "value": 1,
+      "summary": "Rationalized geometry - includes segmented arcs converted to true arcs by Rebar Shape Recognition."
+    },
+    {
+      "name": "FABRICATION",
+      "value": 2,
+      "summary": "Fabrication geometry - includes arcs recognized as straight by Rebar Shape Recognition."
+    }
+  ]
+}

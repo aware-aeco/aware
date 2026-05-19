@@ -1,0 +1,732 @@
+{
+  "name": "BuildingElement",
+  "namespace": "BuildingElement",
+  "kind": "class",
+  "summary": "Definition of class BuildingElement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/",
+  "constructors": [
+    {
+      "name": "BuildingElement",
+      "signature": "BuildingElement()",
+      "summary": "Initialization of class BuildingElement",
+      "remarks": "Initialization of class BuildingElement",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "get the string from the object member",
+      "remarks": "get the string from the object member",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "data string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.__repr__"
+    },
+    {
+      "name": "add_constant",
+      "signature": "add_constant(name, value)",
+      "summary": "Add a new constant to class",
+      "remarks": "Add a new constant to class",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the constant",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "the value of the constant",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.add_constant"
+    },
+    {
+      "name": "add_material_string_table",
+      "signature": "add_material_string_table(global_material_str_table)",
+      "summary": "Sets the global material string table",
+      "remarks": "Sets the global material string table",
+      "params": [
+        {
+          "name": "global_material_str_table",
+          "type": "BuildingElementMaterialStringTable",
+          "doc": "global material string table",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.add_material_string_table"
+    },
+    {
+      "name": "add_page",
+      "signature": "add_page(name, text, visible_condition, enable_condition)",
+      "summary": "Add pages for property dialog",
+      "remarks": "Add pages for property dialog",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the page.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the page",
+          "optional": false
+        },
+        {
+          "name": "visible_condition",
+          "type": "str",
+          "doc": "visible condition of the page",
+          "optional": false
+        },
+        {
+          "name": "enable_condition",
+          "type": "str",
+          "doc": "enable condition of the page",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.add_page"
+    },
+    {
+      "name": "add_property",
+      "signature": "add_property(name, value)",
+      "summary": "Add a new property to class",
+      "remarks": "Add a new property to class",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ParameterProperty",
+          "doc": "the value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.add_property"
+    },
+    {
+      "name": "add_string_tables",
+      "signature": "add_string_tables(local_str_table, global_str_table)",
+      "summary": "Sets the local and global string table",
+      "remarks": "Sets the local and global string table",
+      "params": [
+        {
+          "name": "local_str_table",
+          "type": "BuildingElementStringTable",
+          "doc": "local string table",
+          "optional": false
+        },
+        {
+          "name": "global_str_table",
+          "type": "BuildingElementStringTable",
+          "doc": "global string table",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.add_string_tables"
+    },
+    {
+      "name": "change_property",
+      "signature": "change_property(handle_prop, input_pnt)",
+      "summary": "Change property value",
+      "remarks": "Change property value",
+      "params": [
+        {
+          "name": "handle_prop",
+          "type": "HandleProperties",
+          "doc": "handle property",
+          "optional": false
+        },
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "update palette state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.change_property"
+    },
+    {
+      "name": "deep_copy",
+      "signature": "deep_copy()",
+      "summary": "deep copy of the object member",
+      "remarks": "deep copy of the object member",
+      "params": [],
+      "returns": {
+        "type": "BuildingElement",
+        "doc": "copied building element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.deep_copy"
+    },
+    {
+      "name": "get_constant",
+      "signature": "get_constant(name)",
+      "summary": "get the constant by name",
+      "remarks": "get the constant by name",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the constant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[Any]",
+        "doc": "constant value, None if not exist"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_constant"
+    },
+    {
+      "name": "get_constant_dict",
+      "signature": "get_constant_dict()",
+      "summary": "Get constants dictionary",
+      "remarks": "Get constants dictionary",
+      "params": [],
+      "returns": {
+        "type": "Dict[str, Any]",
+        "doc": "dictionary of constants"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_constant_dict"
+    },
+    {
+      "name": "get_existing_property",
+      "signature": "get_existing_property(name)",
+      "summary": "Get a mandatory property parameter by name. If the property doesn\u0027t exist, a message box is shown and an exception is thrown",
+      "remarks": "Get a mandatory property parameter by name. If the property doesn\u0027t exist, a message box is shown and an exception is thrown",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ParameterProperty",
+        "doc": "property"
+      },
+      "throws": [
+        {
+          "type": "ValueError",
+          "when": "raised in case of missing parameter"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_existing_property"
+    },
+    {
+      "name": "get_float_version",
+      "signature": "get_float_version()",
+      "summary": "Get the version as float number from the string",
+      "remarks": "Get the version as float number from the string",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "version number as float value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_float_version"
+    },
+    {
+      "name": "get_hash",
+      "signature": "get_hash()",
+      "summary": "Calculate a hash value for script name and parameter list",
+      "remarks": "Calculate a hash value for script name and parameter list",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Calculated hash string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_hash"
+    },
+    {
+      "name": "get_insert_matrix",
+      "signature": "get_insert_matrix()",
+      "summary": "Get matrix for macro/ macro group update",
+      "remarks": "Get matrix for macro/ macro group update",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "tuple matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_insert_matrix"
+    },
+    {
+      "name": "get_material_string_table",
+      "signature": "get_material_string_table()",
+      "summary": "Get the global material string table",
+      "remarks": "Get the global material string table",
+      "params": [],
+      "returns": {
+        "type": "BuildingElementMaterialStringTable",
+        "doc": "global material string table"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_material_string_table"
+    },
+    {
+      "name": "get_model_parameter_dict",
+      "signature": "get_model_parameter_dict(exclude_identical=False)",
+      "summary": "Get parameters dictionary for the model parameter",
+      "remarks": "Get parameters dictionary for the model parameter",
+      "params": [
+        {
+          "name": "exclude_identical",
+          "type": "bool",
+          "doc": "exclude the parameter which should not be used for the identical check",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": {
+        "type": "Dict[str, ParameterProperty]",
+        "doc": "dictionary of parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_model_parameter_dict"
+    },
+    {
+      "name": "get_modified_properties",
+      "signature": "get_modified_properties()",
+      "summary": "Get an iterator for the modified properties",
+      "remarks": "Get an iterator for the modified properties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_modified_properties"
+    },
+    {
+      "name": "get_pages",
+      "signature": "get_pages()",
+      "summary": "Get pages for property dialog",
+      "remarks": "Get pages for property dialog",
+      "params": [],
+      "returns": {
+        "type": "List[PageData]",
+        "doc": "list of the pages."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_pages"
+    },
+    {
+      "name": "get_parameter_dict",
+      "signature": "get_parameter_dict()",
+      "summary": "Get parameters dictionary",
+      "remarks": "Get parameters dictionary",
+      "params": [],
+      "returns": {
+        "type": "Dict[str, Any]",
+        "doc": "dictionary of parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_parameter_dict"
+    },
+    {
+      "name": "get_params_list",
+      "signature": "get_params_list()",
+      "summary": "Get the list with the parameter values",
+      "remarks": "Get the list with the parameter values",
+      "params": [],
+      "returns": {
+        "type": "List[str]",
+        "doc": "list with the parameter values"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_params_list"
+    },
+    {
+      "name": "get_properties",
+      "signature": "get_properties()",
+      "summary": "Get an iterator for the properties",
+      "remarks": "Get an iterator for the properties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_properties"
+    },
+    {
+      "name": "get_property",
+      "signature": "get_property(name)",
+      "summary": "Get property parameter by name",
+      "remarks": "Get property parameter by name",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[ParameterProperty]",
+        "doc": "property parameter, None if not exist"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_property"
+    },
+    {
+      "name": "get_reinforcement_definition_list",
+      "signature": "get_reinforcement_definition_list()",
+      "summary": "Get reinforcement list",
+      "remarks": "Get reinforcement list",
+      "params": [],
+      "returns": {
+        "type": "List[ReinforcementDefinition]",
+        "doc": "list of reinforcement."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_reinforcement_definition_list"
+    },
+    {
+      "name": "get_string_tables",
+      "signature": "get_string_tables()",
+      "summary": "Get the local and global string tables",
+      "remarks": "Get the local and global string tables",
+      "params": [],
+      "returns": {
+        "type": "Tuple[BuildingElementStringTable, BuildingElementStringTable]",
+        "doc": "tuple of local and global string table"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.get_string_tables"
+    },
+    {
+      "name": "is_parameter_property",
+      "signature": "is_parameter_property(name)",
+      "summary": "Check for a parameter property",
+      "remarks": "Check for a parameter property",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the parameter property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "name has parameter property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.is_parameter_property"
+    },
+    {
+      "name": "modify_value_type",
+      "signature": "modify_value_type(value_type, value)",
+      "summary": "Modify the value of a value type",
+      "remarks": "Modify the value of a value type",
+      "params": [
+        {
+          "name": "value_type",
+          "type": "str",
+          "doc": "Value type",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "Value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.modify_value_type"
+    },
+    {
+      "name": "reset_page",
+      "signature": "reset_page(name, text, visible_condition, enable_condition)",
+      "summary": "Reset pages for property dialog",
+      "remarks": "Reset pages for property dialog",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the page.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the page",
+          "optional": false
+        },
+        {
+          "name": "visible_condition",
+          "type": "str",
+          "doc": "visible condition",
+          "optional": false
+        },
+        {
+          "name": "enable_condition",
+          "type": "str",
+          "doc": "enable condition",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.reset_page"
+    },
+    {
+      "name": "reset_property_modified",
+      "signature": "reset_property_modified()",
+      "summary": "Reset the modified state of the properties",
+      "remarks": "Reset the modified state of the properties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.reset_property_modified"
+    },
+    {
+      "name": "set_insert_matrix",
+      "signature": "set_insert_matrix(matrix)",
+      "summary": "Sets matrix for insertion",
+      "remarks": "Sets matrix for insertion",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "insertion matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.set_insert_matrix"
+    },
+    {
+      "name": "set_property",
+      "signature": "set_property(name, value)",
+      "summary": "Set property value by name",
+      "remarks": "Set property value by name",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "new value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.set_property"
+    },
+    {
+      "name": "set_reinforcement_definition_list",
+      "signature": "set_reinforcement_definition_list(reinf_list)",
+      "summary": "Set reinforcement list",
+      "remarks": "Set reinforcement list",
+      "params": [
+        {
+          "name": "reinf_list",
+          "type": "List[ReinforcementDefinition]",
+          "doc": "list of reinforcement.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.set_reinforcement_definition_list"
+    }
+  ],
+  "properties": [
+    {
+      "name": "data_column_width",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get data column width",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.data_column_width"
+    },
+    {
+      "name": "element_id",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the element id",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.element_id"
+    },
+    {
+      "name": "geometry_expand",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get geometry expand state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.geometry_expand"
+    },
+    {
+      "name": "is_interactor",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the interactor state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.is_interactor"
+    },
+    {
+      "name": "node_index",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the node_index for VS",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.node_index"
+    },
+    {
+      "name": "pyp_file_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get corresponding pyp file name",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.pyp_file_name"
+    },
+    {
+      "name": "pyp_file_path",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get corresponding pyp file path",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.pyp_file_path"
+    },
+    {
+      "name": "read_last_input",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get read last input state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.read_last_input"
+    },
+    {
+      "name": "script_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get corresponding script name",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.script_name"
+    },
+    {
+      "name": "script_uuid",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the UUID of the pyp file",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.script_uuid"
+    },
+    {
+      "name": "skip_eval",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get corresponding skip_eval",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.skip_eval"
+    },
+    {
+      "name": "title",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the property palette title",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.title"
+    },
+    {
+      "name": "version",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the version number as string",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.version"
+    },
+    {
+      "name": "vs_multi_placement",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the VS multi placement state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.vs_multi_placement"
+    },
+    {
+      "name": "vs_placement_point_input",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the VS placement point input state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.vs_placement_point_input"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

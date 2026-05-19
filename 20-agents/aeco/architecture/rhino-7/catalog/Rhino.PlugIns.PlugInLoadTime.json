@@ -1,0 +1,44 @@
+{
+  "name": "PlugInLoadTime",
+  "namespace": "Rhino.PlugIns",
+  "kind": "enum",
+  "summary": "Rhino plug-in load time enumeration.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_PlugInLoadTime.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Disabled",
+      "value": 0,
+      "summary": "never load plug-in."
+    },
+    {
+      "name": "AtStartup",
+      "value": 1,
+      "summary": "Load when Rhino starts."
+    },
+    {
+      "name": "WhenNeeded",
+      "value": 2,
+      "summary": "(default) Load the first time a plug-in command used."
+    },
+    {
+      "name": "WhenNeededIgnoreDockingBars",
+      "value": 6,
+      "summary": "Load the first time a plug-in command used NOT when restoring docking control bars."
+    },
+    {
+      "name": "WhenNeededOrOptionsDialog",
+      "value": 10,
+      "summary": "When a plug-in command is used or the options dialog is shown."
+    },
+    {
+      "name": "WhenNeededOrTabbedDockBar",
+      "value": 18,
+      "summary": "When a plug-in command is used or when a tabbed dockbar is loaded."
+    }
+  ]
+}

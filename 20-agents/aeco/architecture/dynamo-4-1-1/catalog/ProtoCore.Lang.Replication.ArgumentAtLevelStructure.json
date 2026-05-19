@@ -1,0 +1,52 @@
+{
+  "name": "ArgumentAtLevelStructure",
+  "namespace": "ProtoCore.Lang.Replication",
+  "kind": "class",
+  "summary": "Type ArgumentAtLevelStructure",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs",
+  "constructors": [
+    {
+      "name": "ArgumentAtLevelStructure(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.Lang.Replication.DominantListStructure)",
+      "signature": "void ArgumentAtLevelStructure(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments, ProtoCore.Lang.Replication.DominantListStructure dominantStructure)",
+      "summary": "ArgumentAtLevelStructure.ArgumentAtLevelStructure",
+      "params": [
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "dominantStructure",
+          "type": "ProtoCore.Lang.Replication.DominantListStructure",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Arguments",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ArgumentAtLevelStructure.Arguments",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    },
+    {
+      "name": "DominantStructure",
+      "type": "ProtoCore.Lang.Replication.DominantListStructure",
+      "getter": true,
+      "setter": false,
+      "summary": "ArgumentAtLevelStructure.DominantStructure",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

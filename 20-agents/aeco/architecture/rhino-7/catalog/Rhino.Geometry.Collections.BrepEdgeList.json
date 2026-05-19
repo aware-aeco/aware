@@ -1,0 +1,377 @@
+{
+  "name": "BrepEdgeList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to all the Edges in a Brep object.",
+  "interfaces": [
+    "IEnumerable\u003CBrepEdge\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_BrepEdgeList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(Int32)",
+      "signature": "public BrepEdge Add(int curve3dIndex)",
+      "summary": "Create and add a new edge to this list",
+      "params": [
+        {
+          "name": "curve3dIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022curve3dIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_Add_2.htm"
+    },
+    {
+      "name": "Add(Int32, Int32, Int32, Double)",
+      "signature": "public BrepEdge Add(int startVertexIndex, int endVertexIndex, int curve3dIndex, double edgeTolerance)",
+      "summary": "Create and add a new edge to this list",
+      "params": [
+        {
+          "name": "startVertexIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022startVertexIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "endVertexIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022endVertexIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "curve3dIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022curve3dIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "edgeTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022edgeTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_Add_4.htm"
+    },
+    {
+      "name": "Add(BrepVertex, BrepVertex, Int32, Double)",
+      "signature": "public BrepEdge Add(BrepVertex startVertex, BrepVertex endVertex, int curve3dIndex, double edgeTolerance)",
+      "summary": "Create and add a new edge to this list",
+      "params": [
+        {
+          "name": "startVertex",
+          "type": "Rhino.Geometry.BrepVertex",
+          "doc": "[Missing \u003Cparam name=\u0022startVertex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "endVertex",
+          "type": "Rhino.Geometry.BrepVertex",
+          "doc": "[Missing \u003Cparam name=\u0022endVertex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "curve3dIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022curve3dIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "edgeTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022edgeTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_Add_1.htm"
+    },
+    {
+      "name": "Add(Int32, Int32, Int32, Interval, Double)",
+      "signature": "public BrepEdge Add(int startVertexIndex, int endVertexIndex, int curve3dIndex, Interval subDomain, double edgeTolerance)",
+      "summary": "Create and add a new edge to this list",
+      "params": [
+        {
+          "name": "startVertexIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022startVertexIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "endVertexIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022endVertexIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "curve3dIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022curve3dIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "subDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022subDomain\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "edgeTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022edgeTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(System.Int32,System.Int32,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_Add_3.htm"
+    },
+    {
+      "name": "Add(BrepVertex, BrepVertex, Int32, Interval, Double)",
+      "signature": "public BrepEdge Add(BrepVertex startVertex, BrepVertex endVertex, int curve3dIndex, Interval subDomain, double edgeTolerance)",
+      "summary": "Create and add a new edge to this list",
+      "params": [
+        {
+          "name": "startVertex",
+          "type": "Rhino.Geometry.BrepVertex",
+          "doc": "[Missing \u003Cparam name=\u0022startVertex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "endVertex",
+          "type": "Rhino.Geometry.BrepVertex",
+          "doc": "[Missing \u003Cparam name=\u0022endVertex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "curve3dIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022curve3dIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "subDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022subDomain\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "edgeTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022edgeTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepEdgeList.Add(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepVertex,System.Int32,Rhino.Geometry.Interval,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_Add.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CBrepEdge\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that visits all edges.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CBrepEdge\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_GetEnumerator.htm"
+    },
+    {
+      "name": "MergeAllEdges",
+      "signature": "public int MergeAllEdges(double angleTolerance)",
+      "summary": "Merges all possible Brep edges. Edges across kinks cannot be merged. A pair of adjacent edges in a Brep are mergeable if the angle between them is less than tolerance and the valence of the shared vertex is 2.",
+      "params": [
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "The maximum allowable difference of angle in radian between adjacent edges that can be merged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of edges merged."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_MergeAllEdges.htm"
+    },
+    {
+      "name": "MergeEdge",
+      "signature": "public int MergeEdge(int edgeIndex, double angleTolerance)",
+      "summary": "Merge adjacent edges to a specified edge recursively. A pair of adjacent edges in a Brep are mergeable if the angle between them is less than tolerance and the valence of the shared vertex is 2.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "System.Int32",
+          "doc": "\u003EIndex of edge to merge.",
+          "optional": false
+        },
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "The maximum allowable difference of angle in radian between adjacent edges that can be merged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of edges merged."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_MergeEdge.htm"
+    },
+    {
+      "name": "RemoveNakedMicroEdges(Double)",
+      "signature": "public int RemoveNakedMicroEdges(double tolerance)",
+      "summary": "Finds any naked edges with the same start and end vertex and an arc-length less than tolerance and attempts to remove them by removing trims and extending the adjacent to meet.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The tolerance. When in doubt, use the document\u0027s model absolute tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of naked micro edges that were removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_RemoveNakedMicroEdges.htm"
+    },
+    {
+      "name": "RemoveNakedMicroEdges(Double, Boolean)",
+      "signature": "public int RemoveNakedMicroEdges(double tolerance, bool cleanUp)",
+      "summary": "Finds any naked edges with the same start and end vertex and an arc-length less than tolerance and attempts to remove them by removing trims and extending the adjacent to meet.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The tolerance. When in doubt, use the document\u0027s model absolute tolerance.",
+          "optional": false
+        },
+        {
+          "name": "cleanUp",
+          "type": "System.Boolean",
+          "doc": "If true, then the method cleans up the Brep by setting tolerances, boxes, flags, and then compacts. If false, then the caller should do this at some point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of naked micro edges that were removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_RemoveNakedMicroEdges_1.htm"
+    },
+    {
+      "name": "SplitEdgeAtParameters",
+      "signature": "public int SplitEdgeAtParameters(int edgeIndex, IEnumerable\u003Cdouble\u003E edgeParameters)",
+      "summary": "Splits an edge at the specified parameters.",
+      "remarks": "This function leaves deleted stuff in the brep. Call Brep.Compact() to remove deleted stuff.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "System.Int32",
+          "doc": "The index of the edge to be addressed.",
+          "optional": false
+        },
+        {
+          "name": "edgeParameters",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "The parameter along that edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of splits applied to the edge."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_SplitEdgeAtParameters.htm"
+    },
+    {
+      "name": "SplitKinkyEdge",
+      "signature": "public bool SplitKinkyEdge(int edgeIndex, double kinkToleranceRadians)",
+      "summary": "Splits the edge into G1 pieces.",
+      "remarks": "This function leaves deleted stuff in the brep. Call Brep.Compact() to remove deleted stuff.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "System.Int32",
+          "doc": "Index of edge to test and split.",
+          "optional": false
+        },
+        {
+          "name": "kinkToleranceRadians",
+          "type": "System.Double",
+          "doc": "The split tolerance in radians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepEdgeList_SplitKinkyEdge.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of brep edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepEdgeList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "BrepEdge",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the BrepEdge at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepEdgeList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

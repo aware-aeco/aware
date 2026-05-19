@@ -1,0 +1,48 @@
+{
+  "host": "demo",
+  "host_version": "1.0",
+  "source": {
+    "kind": "scrape",
+    "urls": ["https://example.com/api"],
+    "extracted_at": "2026-05-18T00:00:00Z"
+  },
+  "types": [
+    {
+      "name": "Foo",
+      "namespace": "Example.Api",
+      "kind": "class",
+      "summary": "An example class.",
+      "remarks": "Behavioral notes go here.",
+      "base": null,
+      "interfaces": [],
+      "doc_url": "https://example.com/api/Foo",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "DoThing",
+          "signature": "void DoThing(int x)",
+          "summary": "Does a thing.",
+          "remarks": null,
+          "params": [{"name": "x", "type": "int", "doc": "The thing-id."}],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://example.com/api/Foo.DoThing",
+          "since": null,
+          "deprecated": null
+        }
+      ],
+      "properties": [],
+      "events": [],
+      "enum_values": [],
+      "delegate_signature": null
+    }
+  ],
+  "metadata": {
+    "page_count": 1,
+    "type_count": 1,
+    "method_count": 1,
+    "event_count": 0,
+    "property_count": 0
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "name": "HandleService",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.HandleService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/",
+  "constructors": [
+    {
+      "name": "HandleService",
+      "signature": "HandleService()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/#NemAll_Python_IFW_Input.HandleService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddHandles",
+      "signature": "AddHandles(doc, handlePropList, insertionMat, assoRefObj)",
+      "summary": "Add the handles",
+      "remarks": "Add the handles",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "handlePropList",
+          "type": "object",
+          "doc": "Handle properties list",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        },
+        {
+          "name": "assoRefObj",
+          "type": "object",
+          "doc": "Reference element for the drawing inside the associative views",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/#NemAll_Python_IFW_Input.HandleService.AddHandles"
+    },
+    {
+      "name": "DeleteToolTipText",
+      "signature": "DeleteToolTipText()",
+      "summary": "Delete the tool tip text",
+      "remarks": "Delete the tool tip text",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/#NemAll_Python_IFW_Input.HandleService.DeleteToolTipText"
+    },
+    {
+      "name": "DrawHandles",
+      "signature": "DrawHandles()",
+      "summary": "Draw the handles",
+      "remarks": "Draw the handles",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/#NemAll_Python_IFW_Input.HandleService.DrawHandles"
+    },
+    {
+      "name": "RemoveHandles",
+      "signature": "RemoveHandles()",
+      "summary": "Remove the handles",
+      "remarks": "Remove the handles",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/#NemAll_Python_IFW_Input.HandleService.RemoveHandles"
+    },
+    {
+      "name": "SelectHandle",
+      "signature": "SelectHandle(pnt, viewProj)",
+      "summary": "Select a handle",
+      "remarks": "Select a handle",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Cursor point",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Handle index (-1 = no selection) , world to associative view matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/#NemAll_Python_IFW_Input.HandleService.SelectHandle"
+    },
+    {
+      "name": "ShowToolTipText",
+      "signature": "ShowToolTipText(text)",
+      "summary": "Show the tool tip text",
+      "remarks": "Show the tool tip text",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HandleService/#NemAll_Python_IFW_Input.HandleService.ShowToolTipText"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

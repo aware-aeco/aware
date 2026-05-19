@@ -1,0 +1,847 @@
+{
+  "name": "LcOpLightItem",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpLightItem class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.SavedItem",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetFilterColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetFilterColor()",
+      "summary": "GetFilterColor method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetFilterColor"
+    },
+    {
+      "name": "GetKelvinRGBColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetKelvinRGBColor(double temperature)",
+      "summary": "GetKelvinRGBColor method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetKelvinRGBColor%28System.Double%29"
+    },
+    {
+      "name": "GetLightRGBColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetLightRGBColor()",
+      "summary": "GetLightRGBColor method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetLightRGBColor"
+    },
+    {
+      "name": "GetPresetColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetPresetColor(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets preset)",
+      "summary": "GetPresetColor method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "preset",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetPresetColor%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets%29"
+    },
+    {
+      "name": "GetResultColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetResultColor()",
+      "summary": "GetResultColor method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetResultColor"
+    },
+    {
+      "name": "GetColorUnits",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightColorUnits GetColorUnits()",
+      "summary": "GetColorUnits method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightColorUnits",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetColorUnits"
+    },
+    {
+      "name": "GetDecayType",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDecayType GetDecayType()",
+      "summary": "GetDecayType method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDecayType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetDecayType"
+    },
+    {
+      "name": "GetDistribution",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDistribution GetDistribution()",
+      "summary": "GetDistribution method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDistribution",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetDistribution"
+    },
+    {
+      "name": "GetIntensityUnits",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits GetIntensityUnits()",
+      "summary": "GetIntensityUnits method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetIntensityUnits"
+    },
+    {
+      "name": "GetLightType",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightItemType GetLightType()",
+      "summary": "GetLightType method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightItemType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetLightType"
+    },
+    {
+      "name": "GetTempPresets",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets GetTempPresets()",
+      "summary": "GetTempPresets method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetTempPresets"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "Autodesk.Navisworks.Api.Point3D GetPosition()",
+      "summary": "GetPosition method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetPosition"
+    },
+    {
+      "name": "GetTarget",
+      "signature": "Autodesk.Navisworks.Api.Point3D GetTarget()",
+      "summary": "GetTarget method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetTarget"
+    },
+    {
+      "name": "GetWebOffsets",
+      "signature": "Autodesk.Navisworks.Api.Point3D GetWebOffsets()",
+      "summary": "GetWebOffsets method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetWebOffsets"
+    },
+    {
+      "name": "GetDirection",
+      "signature": "Autodesk.Navisworks.Api.Vector3D GetDirection()",
+      "summary": "GetDirection method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetDirection"
+    },
+    {
+      "name": "GetGlyphDisplay",
+      "signature": "bool GetGlyphDisplay()",
+      "summary": "GetGlyphDisplay method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetGlyphDisplay"
+    },
+    {
+      "name": "GetLightOn",
+      "signature": "bool GetLightOn()",
+      "summary": "GetLightOn method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetLightOn"
+    },
+    {
+      "name": "GetPlotGlyph",
+      "signature": "bool GetPlotGlyph()",
+      "summary": "GetPlotGlyph method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetPlotGlyph"
+    },
+    {
+      "name": "Gettargeted",
+      "signature": "bool Gettargeted()",
+      "summary": "Gettargeted method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.Gettargeted"
+    },
+    {
+      "name": "GetElectricalEfficiency",
+      "signature": "double GetElectricalEfficiency()",
+      "summary": "GetElectricalEfficiency method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetElectricalEfficiency"
+    },
+    {
+      "name": "GetFalloffAngle",
+      "signature": "double GetFalloffAngle()",
+      "summary": "GetFalloffAngle method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetFalloffAngle"
+    },
+    {
+      "name": "GetHotspotAngle",
+      "signature": "double GetHotspotAngle()",
+      "summary": "GetHotspotAngle method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetHotspotAngle"
+    },
+    {
+      "name": "GetIntensity",
+      "signature": "double GetIntensity()",
+      "summary": "GetIntensity method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetIntensity"
+    },
+    {
+      "name": "GetIntensityByUnits",
+      "signature": "double GetIntensityByUnits(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits units)",
+      "summary": "GetIntensityByUnits method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetIntensityByUnits%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits%29"
+    },
+    {
+      "name": "GetLightTemperature",
+      "signature": "double GetLightTemperature()",
+      "summary": "GetLightTemperature method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetLightTemperature"
+    },
+    {
+      "name": "GetLuxDistance",
+      "signature": "double GetLuxDistance()",
+      "summary": "GetLuxDistance method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetLuxDistance"
+    },
+    {
+      "name": "GetMultiplier",
+      "signature": "double GetMultiplier()",
+      "summary": "GetMultiplier method of LcOpLightItem.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetMultiplier"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightItem InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetSavedItemPart",
+      "signature": "static Autodesk.Navisworks.Api.SavedItemParts GetSavedItemPart(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightParts light_part)",
+      "summary": "GetSavedItemPart method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "light_part",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightParts",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemParts",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetSavedItemPart%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightParts%29"
+    },
+    {
+      "name": "GetPresetString",
+      "signature": "string GetPresetString(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets preset)",
+      "summary": "GetPresetString method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "preset",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetPresetString%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets%29"
+    },
+    {
+      "name": "GetWebFile",
+      "signature": "void GetWebFile(out string uri)",
+      "summary": "GetWebFile method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.GetWebFile%28System.String%40%29"
+    },
+    {
+      "name": "SetColorUnits",
+      "signature": "void SetColorUnits(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightColorUnits light_unit)",
+      "summary": "SetColorUnits method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "light_unit",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightColorUnits",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetColorUnits%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightColorUnits%29"
+    },
+    {
+      "name": "SetDecayType",
+      "signature": "void SetDecayType(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDecayType decay_type)",
+      "summary": "SetDecayType method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "decay_type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDecayType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetDecayType%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDecayType%29"
+    },
+    {
+      "name": "SetDistribution",
+      "signature": "void SetDistribution(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDistribution distribution)",
+      "summary": "SetDistribution method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "distribution",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDistribution",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetDistribution%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDistribution%29"
+    },
+    {
+      "name": "SetElectricalEfficiency",
+      "signature": "void SetElectricalEfficiency(double efficiency)",
+      "summary": "SetElectricalEfficiency method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "efficiency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetElectricalEfficiency%28System.Double%29"
+    },
+    {
+      "name": "SetFalloffAngle",
+      "signature": "void SetFalloffAngle(double angle)",
+      "summary": "SetFalloffAngle method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetFalloffAngle%28System.Double%29"
+    },
+    {
+      "name": "SetFilterColor",
+      "signature": "void SetFilterColor(Autodesk.Navisworks.Api.Color color)",
+      "summary": "SetFilterColor method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetFilterColor%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetGlyphDisplay",
+      "signature": "void SetGlyphDisplay(bool enabled)",
+      "summary": "SetGlyphDisplay method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetGlyphDisplay%28System.Boolean%29"
+    },
+    {
+      "name": "SetHotspotAngle",
+      "signature": "void SetHotspotAngle(double angle)",
+      "summary": "SetHotspotAngle method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetHotspotAngle%28System.Double%29"
+    },
+    {
+      "name": "SetIntensity",
+      "signature": "void SetIntensity(double intensity)",
+      "summary": "SetIntensity method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "intensity",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetIntensity%28System.Double%29"
+    },
+    {
+      "name": "SetIntensityUnits",
+      "signature": "void SetIntensityUnits(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits inten_units)",
+      "summary": "SetIntensityUnits method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "inten_units",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetIntensityUnits%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightIntensityUnits%29"
+    },
+    {
+      "name": "SetLightOn",
+      "signature": "void SetLightOn(bool on)",
+      "summary": "SetLightOn method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetLightOn%28System.Boolean%29"
+    },
+    {
+      "name": "SetLightRGBColor",
+      "signature": "void SetLightRGBColor(Autodesk.Navisworks.Api.Color color)",
+      "summary": "SetLightRGBColor method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetLightRGBColor%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetLightTemperature",
+      "signature": "void SetLightTemperature(double temperature)",
+      "summary": "SetLightTemperature method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetLightTemperature%28System.Double%29"
+    },
+    {
+      "name": "SetLuxDistance",
+      "signature": "void SetLuxDistance(double distant)",
+      "summary": "SetLuxDistance method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "distant",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetLuxDistance%28System.Double%29"
+    },
+    {
+      "name": "SetMultiplier",
+      "signature": "void SetMultiplier(double multiplier)",
+      "summary": "SetMultiplier method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "multiplier",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetMultiplier%28System.Double%29"
+    },
+    {
+      "name": "SetPlotGlyph",
+      "signature": "void SetPlotGlyph(bool enabled)",
+      "summary": "SetPlotGlyph method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetPlotGlyph%28System.Boolean%29"
+    },
+    {
+      "name": "SetPosition",
+      "signature": "void SetPosition(Autodesk.Navisworks.Api.Point3D pos)",
+      "summary": "SetPosition method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "pos",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetPosition%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetTarget",
+      "signature": "void SetTarget(Autodesk.Navisworks.Api.Point3D target)",
+      "summary": "SetTarget method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetTarget%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetTargeted",
+      "signature": "void SetTargeted(bool targeted)",
+      "summary": "SetTargeted method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "targeted",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetTargeted%28System.Boolean%29"
+    },
+    {
+      "name": "SetTempPresets",
+      "signature": "void SetTempPresets(Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets preset)",
+      "summary": "SetTempPresets method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "preset",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetTempPresets%28Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets%29"
+    },
+    {
+      "name": "SetWebFile",
+      "signature": "void SetWebFile(string file_name)",
+      "summary": "SetWebFile method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetWebFile%28System.String%29"
+    },
+    {
+      "name": "SetWebOffsets",
+      "signature": "void SetWebOffsets(Autodesk.Navisworks.Api.Point3D offset)",
+      "summary": "SetWebOffsets method of LcOpLightItem.",
+      "params": [
+        {
+          "name": "offset",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.SetWebOffsets%28Autodesk.Navisworks.Api.Point3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpLightItem.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpLightItem.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,119 @@
+{
+  "name": "ApplicationTrace",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "ApplicationTrace class in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.ApplicationTrace",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Enter",
+      "signature": "static void Enter(int level)",
+      "summary": "Enter method of ApplicationTrace.",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ApplicationTrace.Enter%28System.Int32%29"
+    },
+    {
+      "name": "Exit",
+      "signature": "static void Exit(int level, object obj)",
+      "summary": "Exit method of ApplicationTrace.",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ApplicationTrace.Exit%28System.Int32%2CSystem.Object%29"
+    },
+    {
+      "name": "Trace",
+      "signature": "static void Trace(int level, Autodesk.Navisworks.Api.Interop.ApplicationTrace.TraceHandler handler)",
+      "summary": "Trace method of ApplicationTrace.",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "handler",
+          "type": "Autodesk.Navisworks.Api.Interop.ApplicationTrace.TraceHandler",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ApplicationTrace.Trace%28System.Int32%2CAutodesk.Navisworks.Api.Interop.ApplicationTrace.TraceHandler%29"
+    },
+    {
+      "name": "Trace",
+      "signature": "static void Trace(int level, string format, object[] args)",
+      "summary": "Trace method of ApplicationTrace.",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ApplicationTrace.Trace%28System.Int32%2CSystem.String%2CSystem.Object%5B%5D%29"
+    },
+    {
+      "name": "Trace",
+      "signature": "static void Trace(int level, string info)",
+      "summary": "Trace method of ApplicationTrace.",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ApplicationTrace.Trace%28System.Int32%2CSystem.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

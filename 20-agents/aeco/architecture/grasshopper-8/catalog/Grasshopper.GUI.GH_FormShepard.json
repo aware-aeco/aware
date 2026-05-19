@@ -1,0 +1,75 @@
+{
+  "name": "GH_FormShepard",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "A Form shepard is used to herde a bunch of floating forms. Important forms that potentially spout child forms might choose to implement one.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_FormShepard.htm",
+  "constructors": [
+    {
+      "name": "GH_FormShepard",
+      "signature": "public GH_FormShepard(Form nOwner)",
+      "summary": "Create a new form shepard.",
+      "params": [
+        {
+          "name": "nOwner",
+          "type": "System.Windows.Forms.Form",
+          "doc": "Owner form.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FormShepard__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "RegisterForm",
+      "signature": "public void RegisterForm(Form dialog)",
+      "summary": "Add a sheep form to the flock. This form will be affected by the location and size of the main form.",
+      "params": [
+        {
+          "name": "dialog",
+          "type": "System.Windows.Forms.Form",
+          "doc": "Form to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FormShepard_RegisterForm.htm"
+    },
+    {
+      "name": "UnregisterForm",
+      "signature": "public void UnregisterForm(Form dialog)",
+      "summary": "Remove a sheep from the flock.",
+      "params": [
+        {
+          "name": "dialog",
+          "type": "System.Windows.Forms.Form",
+          "doc": "Form to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FormShepard_UnregisterForm.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Sheep",
+      "type": "IEnumerable\u003CForm\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FormShepard_Sheep.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

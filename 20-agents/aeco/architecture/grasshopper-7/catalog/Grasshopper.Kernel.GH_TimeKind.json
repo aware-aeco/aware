@@ -1,0 +1,39 @@
+{
+  "name": "GH_TimeKind",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible kinds that a System.DateTime value can imply.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_TimeKind.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Unset kind."
+    },
+    {
+      "name": "Mixed",
+      "value": 1,
+      "summary": "Mixed indicates there isn\u0027t a single clear answer."
+    },
+    {
+      "name": "PureTime",
+      "value": 2,
+      "summary": "DateTime value implies a pure time (no date part)."
+    },
+    {
+      "name": "PureDate",
+      "value": 3,
+      "summary": "DateTime value implies a pute date (no time part)."
+    },
+    {
+      "name": "DateAndTime",
+      "value": 4,
+      "summary": "DateTime value implies both a date and a time component."
+    }
+  ]
+}

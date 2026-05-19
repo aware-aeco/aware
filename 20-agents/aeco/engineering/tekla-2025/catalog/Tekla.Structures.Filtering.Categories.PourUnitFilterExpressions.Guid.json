@@ -1,0 +1,39 @@
+{
+  "name": "PourUnitFilterExpressions.Guid",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Guid class represents the GUID filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a1a0640e-e7fb-b219-469c-d15872aa91b0",
+  "constructors": [
+    {
+      "name": "PourUnitFilterExpressions.Guid",
+      "signature": "public Guid()",
+      "summary": "Initializes a new instance of the Guid class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5a840c0b-1011-24c3-3ee8-2bbee795cb98"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

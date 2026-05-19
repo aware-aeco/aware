@@ -1,0 +1,184 @@
+{
+  "name": "PolygonInteractor",
+  "namespace": "ScriptObjectInteractors.PolygonInteractor",
+  "kind": "class",
+  "summary": "implementation of the interactor for the polygon input",
+  "base": "BaseScriptObjectInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/",
+  "constructors": [
+    {
+      "name": "PolygonInteractor",
+      "signature": "PolygonInteractor( interactor_result: PolygonInteractorResult, common_prop: CommonProperties = GetCurrentCommonProperties(), z_coord_input: bool = True, multi_polygon_input: bool = True, preview_function: Callable[[Polygon3D], list] | PolygonInteractor()",
+      "summary": "Create the interactor",
+      "remarks": "Create the interactor",
+      "params": [
+        {
+          "name": "interactor_result",
+          "type": "PolygonInteractorResult",
+          "doc": "result of the interactor",
+          "optional": false
+        },
+        {
+          "name": "common_prop",
+          "type": "CommonProperties",
+          "doc": "common properties for the polygon preview",
+          "optional": false
+        },
+        {
+          "name": "z_coord_input",
+          "type": "bool",
+          "doc": "allow input of a 3d polygon",
+          "optional": false
+        },
+        {
+          "name": "multi_polygon_input",
+          "type": "bool",
+          "doc": "multi polygon input",
+          "optional": false
+        },
+        {
+          "name": "preview_function",
+          "type": "Callable[[Polygon3D], list] | None",
+          "doc": "function for generating preview elements during the input",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "draw_preview",
+      "signature": "draw_preview(polygon: Polygon3D)",
+      "summary": "draw the preview",
+      "remarks": "draw the preview",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon3D",
+          "doc": "polygon",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.draw_preview"
+    },
+    {
+      "name": "flatten_polygon",
+      "signature": "flatten_polygon(polygon: Polygon3D) -\u003E Polygon3D",
+      "summary": "Removes the Z coordinate from all vertices of the polygon",
+      "remarks": "Removes the Z coordinate from all vertices of the polygon",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon3D",
+          "doc": "3d polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "flattened polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.flatten_polygon"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E OnCancelFunctionResult",
+      "summary": "Handles the cancel function event (triggered e.g. by hitting ESC, ...)",
+      "remarks": "Handles the cancel function event (triggered e.g. by hitting ESC, ...)",
+      "params": [],
+      "returns": {
+        "type": "OnCancelFunctionResult",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.on_cancel_function"
+    },
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the mouse leave event",
+      "remarks": "Handles the mouse leave event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event",
+      "remarks": "Handles the preview draw event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.on_preview_draw"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: Any) -\u003E bool",
+      "summary": "Process the mouse message event",
+      "remarks": "Process the mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "Any",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.process_mouse_msg"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "start the input",
+      "remarks": "start the input",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractor.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

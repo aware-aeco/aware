@@ -1,0 +1,14 @@
+{
+  "name": "ViewCaptureWriter.VectorArcProc",
+  "namespace": "Rhino.Runtime",
+  "kind": "delegate",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.ViewCaptureWriter.VectorArcProc\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_ViewCaptureWriter_VectorArcProc.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void VectorArcProc( int argb, float thickness, int dashed, ref Arc arc )"
+}

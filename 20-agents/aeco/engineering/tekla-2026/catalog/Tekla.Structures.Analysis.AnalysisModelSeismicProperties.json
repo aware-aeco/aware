@@ -1,0 +1,58 @@
+{
+  "name": "AnalysisModelSeismicProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelSeismicProperties class contains information related to analysis model seismic properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6262ad0b-b2cc-6daa-334b-64ae23fd6c44",
+  "constructors": [
+    {
+      "name": "AnalysisModelSeismicProperties",
+      "signature": "public AnalysisModelSeismicProperties()",
+      "summary": "Initializes a new instance of the AnalysisModelSeismicProperties class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8bf756f3-24ea-1e79-c042-c4cccc617ab0"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SeismicIncludeSelfWeightMass",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the selfweight is included.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5e9a18e8-d25c-8de6-4fac-d3d55d673d76"
+    },
+    {
+      "name": "SeismicMassLoadGroupFactors",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The factors of the mass load group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/96dfa632-a01c-fd4f-f7b4-18c333dade3f"
+    },
+    {
+      "name": "SeismicMassLoadGroupIds",
+      "type": "List\u003CIdentifier\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the mass load group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/886d2e6a-1d6e-8b29-a7b0-737bac5a88d2"
+    },
+    {
+      "name": "SeismicParameters",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The seismic parameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e8144d0-5fbd-6f04-ff03-b4ff7a9da5f5"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

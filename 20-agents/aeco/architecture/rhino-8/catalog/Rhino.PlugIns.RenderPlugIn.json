@@ -1,0 +1,1346 @@
+{
+  "name": "RenderPlugIn",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "A Rhino rendering plugin; applies materials, textures, and lights to a scene to produce rendered images.",
+  "base": "PlugIn",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_RenderPlugIn.htm",
+  "constructors": [
+    {
+      "name": "RenderPlugIn",
+      "signature": "protected RenderPlugIn()",
+      "summary": "Initializes a new instance of the RenderPlugIn class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AllowChooseContent",
+      "signature": "protected virtual bool AllowChooseContent(RenderContent content)",
+      "summary": "Default implementation returns true which means the content can be picked from the content browser by the user. Override this method and return false if you don\u0027t want to allow a certain content contentType to be picked from the content browser while your render engine is current.",
+      "params": [
+        {
+          "name": "content",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "A render context.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_AllowChooseContent.htm"
+    },
+    {
+      "name": "AskUserForLicense",
+      "signature": "protected bool AskUserForLicense(LicenseBuildType productBuildType, bool standAlone, string textMask, Object parentWindow, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate onLeaseChangedDelegate)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "productBuildType",
+          "type": "Rhino.PlugIns.LicenseBuildType",
+          "doc": "[Missing \u003Cparam name=\u0022productBuildType\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "standAlone",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022standAlone\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022parentWindow\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022validateProductKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onLeaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022onLeaseChangedDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_AskUserForLicense.htm"
+    },
+    {
+      "name": "CommandSettings",
+      "signature": "public PersistentSettings CommandSettings(string name)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.CommandSettings(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PersistentSettings",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.CommandSettings(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_CommandSettings.htm"
+    },
+    {
+      "name": "CreateCommands",
+      "signature": "protected virtual void CreateCommands()",
+      "summary": "Called right after plug-in is created and is responsible for creating all of the commands in a given plug-in. The base class implementation Constructs an instance of every publicly exported command class in your plug-in\u0027s assembly.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_CreateCommands.htm"
+    },
+    {
+      "name": "CreatePreview",
+      "signature": "protected virtual void CreatePreview(CreatePreviewEventArgs args)",
+      "summary": "Creates the preview bitmap that will appear in the content editor\u0027s thumbnail display when previewing materials and environments. If this function is not overridden or the PreviewImage is not set on the arguments, then the internal OpenGL renderer will generate a simulation of the content. This function is called with four different preview quality settings. The first quality level of RealtimeQuick is called on the main thread and needs to be drawn as fast as possible. This function is called with the other three quality settings on a separate thread and are meant for generating progressively refined preview.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Rhino.Render.CreatePreviewEventArgs",
+          "doc": "Event argument with several preview option state properties.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_CreatePreview.htm"
+    },
+    {
+      "name": "CreateTexture2dPreview",
+      "signature": "protected virtual void CreateTexture2dPreview(CreateTexture2dPreviewEventArgs args)",
+      "summary": "Creates the preview bitmap that will appear in the content editor\u0027s thumbnail display when previewing textures in 2d (UV) mode. If this function is not overridden or the PreviewImage is not set on the arguments, then the internal OpenGL renderer will generate a simulation.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Rhino.Render.CreateTexture2dPreviewEventArgs",
+          "doc": "Event argument with several preview option state properties.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_CreateTexture2dPreview.htm"
+    },
+    {
+      "name": "CurrentRendererSupportsFeature",
+      "signature": "public static bool CurrentRendererSupportsFeature(RenderPlugIn.RenderFeature feature)",
+      "summary": "",
+      "params": [
+        {
+          "name": "feature",
+          "type": "Rhino.PlugIns.RenderPlugIn.RenderFeature",
+          "doc": "[Missing \u003Cparam name=\u0022feature\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.CurrentRendererSupportsFeature(Rhino.PlugIns.RenderPlugIn.RenderFeature)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.CurrentRendererSupportsFeature(Rhino.PlugIns.RenderPlugIn.RenderFeature)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_CurrentRendererSupportsFeature.htm"
+    },
+    {
+      "name": "CustomChannelName",
+      "signature": "protected virtual string CustomChannelName(Guid id)",
+      "summary": "Return the localized name of your custom channel.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.CustomChannelName(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.CustomChannelName(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_CustomChannelName.htm"
+    },
+    {
+      "name": "DisplayHelp",
+      "signature": "public virtual bool DisplayHelp(IntPtr windowHandle)",
+      "summary": "Called by Rhino if AddToHelpMenu is true and menu item associated with this plug-in is selected.",
+      "params": [
+        {
+          "name": "windowHandle",
+          "type": "System.IntPtr",
+          "doc": "Native Window handle of the active Rhino interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true = Help displayed successfully, false = Error displaying help"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_DisplayHelp.htm"
+    },
+    {
+      "name": "DocumentPropertiesDialogPages",
+      "signature": "protected virtual void DocumentPropertiesDialogPages(RhinoDoc doc, List\u003COptionsDialogPage\u003E pages)",
+      "summary": "Override this function if you want to extend the document properties sections of the options dialog. This function is called whenever the user brings up the Options dialog.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document that the pages are set up for",
+          "optional": false
+        },
+        {
+          "name": "pages",
+          "type": "System.Collections.Generic.List\u003COptionsDialogPage\u003E",
+          "doc": "list of pages to add your custom options dialog page(s) to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_DocumentPropertiesDialogPages.htm"
+    },
+    {
+      "name": "EnableAssignMaterialButton",
+      "signature": "public virtual bool EnableAssignMaterialButton()",
+      "summary": "Called to enable/disable the \u0022Material\u0022 button located on the \u0022Material\u0022 tab in the Properties and Layer dialog boxes. The default return value is false which will disable the button. If the button is disabled then the OnAssignMaterial function is never called.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.EnableAssignMaterialButton\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_EnableAssignMaterialButton.htm"
+    },
+    {
+      "name": "EnableCreateMaterialButton",
+      "signature": "public virtual bool EnableCreateMaterialButton()",
+      "summary": "Called to enable/disable the \u0022New\u0022 button located on the \u0022Material\u0022 in the Properties and Layer dialog boxes. The default return value is false which will disable the button. If the button is disabled then the OnEditMaterial function is never called.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.EnableCreateMaterialButton\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_EnableCreateMaterialButton.htm"
+    },
+    {
+      "name": "EnableEditMaterialButton",
+      "signature": "public virtual bool EnableEditMaterialButton(RhinoDoc doc, Material material)",
+      "summary": "Called to enable/disable the \u0022Edit\u0022 button located on the \u0022Material\u0022 in the Properties and Layer dialog boxes. The default return value is false which will disable the button. If the button is disabled then the OnEditMaterial function is never called.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.EnableEditMaterialButton(Rhino.RhinoDoc,Rhino.DocObjects.Material)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.DocObjects.Material",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.EnableEditMaterialButton(Rhino.RhinoDoc,Rhino.DocObjects.Material)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.EnableEditMaterialButton(Rhino.RhinoDoc,Rhino.DocObjects.Material)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_EnableEditMaterialButton.htm"
+    },
+    {
+      "name": "GetCommands",
+      "signature": "public Command[] GetCommands()",
+      "summary": "All of the commands associated with this plug-in.",
+      "params": [],
+      "returns": {
+        "type": "Command[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetCommands\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_GetCommands.htm"
+    },
+    {
+      "name": "GetLicense(LicenseBuildType, ValidateProductKeyDelegate, OnLeaseChangedDelegate)",
+      "signature": "protected bool GetLicense(LicenseBuildType productBuildType, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate leaseChangedDelegate)",
+      "summary": "Verifies that there is a valid product license for your plug-in, using the Rhino licensing system. If the plug-in is installed as a standalone node, the locally installed license will be validated. If the plug-in is installed as a network node, a loaner license will be requested by the system\u0027s assigned Zoo server. If the Zoo server finds and returns a license, then this license will be validated. If no license is found, then the user will be prompted to provide a license key, which will be validated.",
+      "params": [
+        {
+          "name": "productBuildType",
+          "type": "Rhino.PlugIns.LicenseBuildType",
+          "doc": "The product build contentType required by your plug-in.",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "Since the Rhino licensing system knows nothing about your product license, you will need to validate the product license provided by the Rhino licensing system. This is done by supplying a callback function, or delegate, that can be called to perform the validation.",
+          "optional": false
+        },
+        {
+          "name": "leaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "Called by the ZooClient when the cloud zoo lease is changed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a valid license was found. false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_GetLicense.htm"
+    },
+    {
+      "name": "GetLicense(LicenseCapabilities, String, ValidateProductKeyDelegate, OnLeaseChangedDelegate)",
+      "signature": "protected bool GetLicense(LicenseCapabilities licenseCapabilities, string textMask, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate leaseChangedDelegate)",
+      "summary": "Verifies that there is a valid product license for your plug-in, using the Rhino licensing system. If the plug-in is installed as a standalone node, the locally installed license will be validated. If the plug-in is installed as a network node, a loaner license will be requested by the system\u0027s assigned Zoo server. If the Zoo server finds and returns a license, then this license will be validated. If no license is found, then the user will be prompted to provide a license key, which will be validated.",
+      "params": [
+        {
+          "name": "licenseCapabilities",
+          "type": "Rhino.PlugIns.LicenseCapabilities",
+          "doc": "In the event that a license was not found, or if the user wants to change the way your plug-in is licenses, then provide what capabilities your license has by using this enumeration flag.",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "In the event that the user needs to be asked for a license, then you can provide a text mask, which helps the user to distinguish between proper and improper user input of your license code. Note, if you do not want to use a text mask, then pass in a null value for this parameter. For more information on text masks, search MSDN for the System.Windows.Forms.MaskedTextBox class.",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "Since the Rhino licensing system knows nothing about your product license, you will need to validate the product license provided by the Rhino licensing system. This is done by supplying a callback function, or delegate, that can be called to perform the validation.",
+          "optional": false
+        },
+        {
+          "name": "leaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "Called by the ZooClient when the cloud zoo lease is changed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a valid license was found. false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_GetLicense_1.htm"
+    },
+    {
+      "name": "GetLicenseOwner",
+      "signature": "protected bool GetLicenseOwner(out string registeredOwner, out string registeredOrganization)",
+      "summary": "Get the customer name and organization used when entering the product license.",
+      "params": [
+        {
+          "name": "registeredOwner",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022registeredOwner\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetLicenseOwner(System.String@,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "registeredOrganization",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022registeredOrganization\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetLicenseOwner(System.String@,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetLicenseOwner(System.String@,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_GetLicenseOwner.htm"
+    },
+    {
+      "name": "GetPlugInObject",
+      "signature": "public virtual Object GetPlugInObject()",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetPlugInObject\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_GetPlugInObject.htm"
+    },
+    {
+      "name": "GetRenderSettingsSections",
+      "signature": "public List\u003CGuid\u003E GetRenderSettingsSections()",
+      "summary": "This function returns a list of Guids for the render settings pages that should be displayed.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "Return a Id list of the Render settings sections that will be displayed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_GetRenderSettingsSections.htm"
+    },
+    {
+      "name": "Icon",
+      "signature": "public Bitmap Icon(Size size)",
+      "summary": "Returns the plug-in\u0027s icon in bitmap form.",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "The desired size in pixels.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The icon if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_Icon.htm"
+    },
+    {
+      "name": "InitializeDecalProperties",
+      "signature": "protected virtual void InitializeDecalProperties(ref List\u003CNamedValue\u003E properties)",
+      "summary": "Initialize your custom decal properties here. The input list will be empty - add your default named property values and return.",
+      "params": [
+        {
+          "name": "properties",
+          "type": "System.Collections.Generic.List\u003CNamedValue\u003E",
+          "doc": "A list of named values that will be stored on the object the input values are the current ones, you should modify the values after the dialog closes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_InitializeDecalProperties.htm"
+    },
+    {
+      "name": "IsTextureSupported",
+      "signature": "public virtual bool IsTextureSupported(RenderTexture texture)",
+      "summary": "Returns true if this renderer can render the texture natively without needing it to be baked into a bitmap, false otherwise. By default, returns false for all textures.",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.Render.RenderTexture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.IsTextureSupported(Rhino.Render.RenderTexture)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.IsTextureSupported(Rhino.Render.RenderTexture)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_IsTextureSupported.htm"
+    },
+    {
+      "name": "ObjectPropertiesPages(List\u003CObjectPropertiesPage\u003E)",
+      "signature": "[ObsoleteAttribute(\u0022Use ObjectPropertiesPages(ObjectPropertiesPageCollection collection) instead\u0022)] protected virtual void ObjectPropertiesPages(List\u003CObjectPropertiesPage\u003E pages)",
+      "summary": "Override this function is you want to extend the object properties dialog",
+      "params": [
+        {
+          "name": "pages",
+          "type": "System.Collections.Generic.List\u003CObjectPropertiesPage\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022pages\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.ObjectPropertiesPages(System.Collections.Generic.List{Rhino.UI.ObjectPropertiesPage})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_ObjectPropertiesPages_1.htm"
+    },
+    {
+      "name": "ObjectPropertiesPages(ObjectPropertiesPageCollection)",
+      "signature": "protected virtual void ObjectPropertiesPages(ObjectPropertiesPageCollection collection)",
+      "summary": "Override this function is you want to extend the object properties dialog. This method will be called each time a new document is created for each instance of a object properties panel. On Windows there will be a single panel per document but on Mac there may be many properties panel per document.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "Rhino.UI.ObjectPropertiesPageCollection",
+          "doc": "Add custom pages by calling collection.Add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_ObjectPropertiesPages.htm"
+    },
+    {
+      "name": "OnAssignMaterial",
+      "signature": "public virtual bool OnAssignMaterial(IntPtr parent, RhinoDoc doc, ref Material material)",
+      "summary": "This function is called by the Object Properties and Layer Control dialogs when the \u0022Material\u0022 button is pressed in the \u0022Render\u0022 tab. This is only called if EnableAssignMaterialButton returns true.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022parent\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnAssignMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnAssignMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.DocObjects.Material",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnAssignMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnAssignMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_OnAssignMaterial.htm"
+    },
+    {
+      "name": "OnCreateMaterial",
+      "signature": "public virtual bool OnCreateMaterial(IntPtr parent, RhinoDoc doc, ref Material material)",
+      "summary": "This function is called by the Object Properties and Layer Control dialogs when the \u0022New\u0022 button is pressed in the \u0022Material\u0022 tab. This is only called if EnableCreateMaterialButton returns true.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022parent\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnCreateMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnCreateMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.DocObjects.Material",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnCreateMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnCreateMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_OnCreateMaterial.htm"
+    },
+    {
+      "name": "OnEditMaterial",
+      "signature": "public virtual bool OnEditMaterial(IntPtr parent, RhinoDoc doc, ref Material material)",
+      "summary": "This function is called by the Object Properties and Layer Control dialogs when the \u0022Edit\u0022 button is pressed in the \u0022Material\u0022 tab. This is only called if EnableEditMaterialButton returns true. A return value of true means the material has been updated.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022parent\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnEditMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnEditMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.DocObjects.Material",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnEditMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.OnEditMaterial(System.IntPtr,Rhino.RhinoDoc,Rhino.DocObjects.Material@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_OnEditMaterial.htm"
+    },
+    {
+      "name": "OnLoad",
+      "signature": "protected virtual LoadReturnCode OnLoad(ref string errorMessage)",
+      "summary": "Is called when the plug-in is being loaded.",
+      "params": [
+        {
+          "name": "errorMessage",
+          "type": "System.String",
+          "doc": "If a load error is returned and this string is set. This string is the error message that will be reported back to the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LoadReturnCode",
+        "doc": "An appropriate load return code. The default implementation returns Success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_OnLoad.htm"
+    },
+    {
+      "name": "OnSetCurrent",
+      "signature": "protected virtual void OnSetCurrent(bool current)",
+      "summary": "This plug-in (has become)/(is no longer) the current render plug-in",
+      "params": [
+        {
+          "name": "current",
+          "type": "System.Boolean",
+          "doc": "If true then this plug-in is now the current render plug-in otherwise it is no longer the current render plug-in.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_OnSetCurrent.htm"
+    },
+    {
+      "name": "OnShutdown",
+      "signature": "protected virtual void OnShutdown()",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_OnShutdown.htm"
+    },
+    {
+      "name": "OptionsDialogPages",
+      "signature": "protected virtual void OptionsDialogPages(List\u003COptionsDialogPage\u003E pages)",
+      "summary": "Override this function if you want to extend the options dialog. This function is called whenever the user brings up the Options dialog.",
+      "params": [
+        {
+          "name": "pages",
+          "type": "System.Collections.Generic.List\u003COptionsDialogPage\u003E",
+          "doc": "list of pages to add your custom options dialog page(s) to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_OptionsDialogPages.htm"
+    },
+    {
+      "name": "PreviewRenderType",
+      "signature": "protected virtual RenderPlugIn.PreviewRenderTypes PreviewRenderType()",
+      "summary": "Tell what kind of preview rendering your renderer supports.",
+      "params": [],
+      "returns": {
+        "type": "RenderPlugIn.PreviewRenderTypes",
+        "doc": "One of PreviewRenderTypes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_PreviewRenderType.htm"
+    },
+    {
+      "name": "ReadDocument",
+      "signature": "protected virtual void ReadDocument(RhinoDoc doc, BinaryArchiveReader archive, FileReadOptions options)",
+      "summary": "Called whenever a Rhino document is being loaded and plug-in user data was encountered written by a plug-in with this plug-in\u0027s GUID.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document that is being loaded.",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "OpenNURBS file archive object Rhino is using to read this file. Use BinaryArchiveReader.Read*() functions to read plug-in data. If any BinaryArchive.Read*() functions throws an exception then archive.ReadErrorOccurve will be true and you should immediately return.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileReadOptions",
+          "doc": "Describes what is being written.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_ReadDocument.htm"
+    },
+    {
+      "name": "RegisterCommand",
+      "signature": "protected bool RegisterCommand(Command command)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "command",
+          "type": "Rhino.Commands.Command",
+          "doc": "[Missing \u003Cparam name=\u0022command\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.RegisterCommand(Rhino.Commands.Command)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.RegisterCommand(Rhino.Commands.Command)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_RegisterCommand.htm"
+    },
+    {
+      "name": "RegisterCustomRenderSaveFileTypes",
+      "signature": "protected virtual void RegisterCustomRenderSaveFileTypes(CustomRenderSaveFileTypes saveFileTypes)",
+      "summary": "Override this method to add custom file types to the render window save file dialog.",
+      "params": [
+        {
+          "name": "saveFileTypes",
+          "type": "Rhino.PlugIns.CustomRenderSaveFileTypes",
+          "doc": "[Missing \u003Cparam name=\u0022saveFileTypes\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RegisterCustomRenderSaveFileTypes(Rhino.PlugIns.CustomRenderSaveFileTypes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RegisterCustomRenderSaveFileTypes.htm"
+    },
+    {
+      "name": "RegisterRenderPanels",
+      "signature": "protected virtual void RegisterRenderPanels(RenderPanels panels)",
+      "summary": "Override this method and call RegisterPanel(PlugIn, RenderPanelType, Type, String, Boolean, Boolean) to add custom render UI to the render output window.",
+      "params": [
+        {
+          "name": "panels",
+          "type": "Rhino.Render.RenderPanels",
+          "doc": "[Missing \u003Cparam name=\u0022panels\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RegisterRenderPanels(Rhino.Render.RenderPanels)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RegisterRenderPanels.htm"
+    },
+    {
+      "name": "RegisterRenderTabs",
+      "signature": "protected virtual void RegisterRenderTabs(RenderTabs tabs)",
+      "summary": "Override this method and call RegisterTab(PlugIn, Type, Guid, String, Icon) to add custom tabs to the render output window",
+      "params": [
+        {
+          "name": "tabs",
+          "type": "Rhino.Render.RenderTabs",
+          "doc": "[Missing \u003Cparam name=\u0022tabs\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RegisterRenderTabs(Rhino.Render.RenderTabs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RegisterRenderTabs.htm"
+    },
+    {
+      "name": "Render",
+      "signature": "protected abstract Result Render(RhinoDoc doc, RunMode mode, bool fastPreview)",
+      "summary": "Called by Render and RenderPreview commands if this plug-in is set as the default render engine.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A document.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.Commands.RunMode",
+          "doc": "A command running mode.",
+          "optional": false
+        },
+        {
+          "name": "fastPreview",
+          "type": "System.Boolean",
+          "doc": "If true, lower quality faster render expected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "If true, then the renderer is required to construct a rapid preview and not the high-quality final result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_Render.htm"
+    },
+    {
+      "name": "RenderContentSerializers",
+      "signature": "protected virtual IEnumerable\u003CRenderContentSerializer\u003E RenderContentSerializers()",
+      "summary": "Called by Rhino when it is time to register RenderContentSerializer derived classes. Override this method and return an array of an instance of each serialize custom content object you wish to add.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerable\u003CRenderContentSerializer\u003E",
+        "doc": "List of RenderContentSerializer objects to register with the Rhino render content browsers."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RenderContentSerializers.htm"
+    },
+    {
+      "name": "RenderOptionsDialogPage",
+      "signature": "protected virtual OptionsDialogPage RenderOptionsDialogPage(RhinoDoc doc)",
+      "summary": "Override this method to replace the render properties page in the Rhino document properties dialog. The default implementation returns null which means just use the default Rhino page.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The document properties to edit.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "OptionsDialogPage",
+        "doc": "Return null to use the default Rhino page or return a page derived from OptionsDialogPage to replace the default page."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RenderOptionsDialogPage.htm"
+    },
+    {
+      "name": "RenderSettingsCustomSections",
+      "signature": "public virtual void RenderSettingsCustomSections(List\u003CICollapsibleSection\u003E sections)",
+      "summary": "Override this function to provide custom sections for the render settings panel that are displayed when your plug-in is the current render plug-in.",
+      "params": [
+        {
+          "name": "sections",
+          "type": "System.Collections.Generic.List\u003CICollapsibleSection\u003E",
+          "doc": "Create your sections and return a list of them",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RenderSettingsCustomSections.htm"
+    },
+    {
+      "name": "RenderSettingsSections",
+      "signature": "protected virtual List\u003CGuid\u003E RenderSettingsSections()",
+      "summary": "Override this method to provide the UUIDs of all sections that should be displayed in the Render Settings tab when this is the current renderer.The default implementation adds all the RDK\u0027s built-in Render Settings sections. These UUIDs start with the prefix uuidRenderSettingsSection\u0027. They can be found in RhRdkUuids.h",
+      "remarks": "You should add \\e all sections you would want to appear in any context.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "Return a Id list of content types to display in content browsers"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RenderSettingsSections.htm"
+    },
+    {
+      "name": "RenderWindow(RhinoDoc, RunMode, Boolean, RhinoView, Rectangle, Boolean)",
+      "signature": "protected virtual Result RenderWindow(RhinoDoc doc, RunMode modes, bool fastPreview, RhinoView view, Rectangle rect, bool inWindow)",
+      "summary": "This function is obsolete and only exists for legacy purposes. Do not override this function - prefer overriding the version with the blowup parameter.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "modes",
+          "type": "Rhino.Commands.RunMode",
+          "doc": "[Missing \u003Cparam name=\u0022modes\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fastPreview",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022fastPreview\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rect",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "inWindow",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022inWindow\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RenderWindow.htm"
+    },
+    {
+      "name": "RenderWindow(RhinoDoc, RunMode, Boolean, RhinoView, Rectangle, Boolean, Boolean)",
+      "signature": "protected virtual Result RenderWindow(RhinoDoc doc, RunMode modes, bool fastPreview, RhinoView view, Rectangle rect, bool inWindow, bool blowup)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "modes",
+          "type": "Rhino.Commands.RunMode",
+          "doc": "[Missing \u003Cparam name=\u0022modes\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fastPreview",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022fastPreview\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rect",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "inWindow",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022inWindow\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "blowup",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022blowup\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.RenderPlugIn.RenderWindow(Rhino.RhinoDoc,Rhino.Commands.RunMode,System.Boolean,Rhino.Display.RhinoView,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_RenderWindow_1.htm"
+    },
+    {
+      "name": "ResetMessageBoxes",
+      "signature": "protected virtual void ResetMessageBoxes()",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_ResetMessageBoxes.htm"
+    },
+    {
+      "name": "ReturnLicense",
+      "signature": "protected bool ReturnLicense()",
+      "summary": "Returns, or releases, a product license that was obtained from the Rhino licensing system. Note, most plug-ins do not need to call this as the Rhino licensing system will return all licenses when Rhino shuts down.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.ReturnLicense\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_ReturnLicense.htm"
+    },
+    {
+      "name": "SaveSettings",
+      "signature": "public void SaveSettings()",
+      "summary": "Write settings to disk which will raise a SettingsSaved event.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_SaveSettings.htm"
+    },
+    {
+      "name": "SetLicenseCapabilities",
+      "signature": "protected void SetLicenseCapabilities(string textMask, LicenseCapabilities capabilities, Guid licenseId)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.SetLicenseCapabilities(System.String,Rhino.PlugIns.LicenseCapabilities,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capabilities",
+          "type": "Rhino.PlugIns.LicenseCapabilities",
+          "doc": "[Missing \u003Cparam name=\u0022capabilities\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.SetLicenseCapabilities(System.String,Rhino.PlugIns.LicenseCapabilities,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "licenseId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022licenseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.SetLicenseCapabilities(System.String,Rhino.PlugIns.LicenseCapabilities,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_SetLicenseCapabilities.htm"
+    },
+    {
+      "name": "ShouldCallWriteDocument",
+      "signature": "protected virtual bool ShouldCallWriteDocument(FileWriteOptions options)",
+      "summary": "Called whenever a Rhino is about to save a .3dm file. If you want to save plug-in document data when a model is saved in a version 5 .3dm file, then you must override this function to return true and you must override WriteDocument().",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "The file write options, such as \u0022include preview image\u0022 and \u0022include render meshes\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the plug-in wants to save document user data in the version 5 .3dm file. The default returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_ShouldCallWriteDocument.htm"
+    },
+    {
+      "name": "ShowDecalProperties",
+      "signature": "protected virtual bool ShowDecalProperties(ref List\u003CNamedValue\u003E properties)",
+      "summary": "Override this function to handle showing a modal dialog with your plug-in\u0027s custom decal properties. You will be passed the current properties for the object being edited. The defaults will be set in InitializeDecalProperties.",
+      "params": [
+        {
+          "name": "properties",
+          "type": "System.Collections.Generic.List\u003CNamedValue\u003E",
+          "doc": "A list of named values that will be stored on the object the input values are the current ones, you should modify the values after the dialog closes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the user pressed \u0022OK\u0022, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_ShowDecalProperties.htm"
+    },
+    {
+      "name": "SunCustomSections",
+      "signature": "public virtual void SunCustomSections(List\u003CICollapsibleSection\u003E sections)",
+      "summary": "Override this function to provide custom sections for the sun panel that are displayed when your plug-in is the current render plug-in.",
+      "params": [
+        {
+          "name": "sections",
+          "type": "System.Collections.Generic.List\u003CICollapsibleSection\u003E",
+          "doc": "Create your sections and return a list of them",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_SunCustomSections.htm"
+    },
+    {
+      "name": "SupportedOutputTypes",
+      "signature": "protected virtual List\u003CFileType\u003E SupportedOutputTypes()",
+      "summary": "Returns a list of output types which your renderer can write. The default implementation returns BMP, JPG, PNG, TIF, TGA, HDR, EXR and RIMAGE.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CFileType\u003E",
+        "doc": "A list of file types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_SupportedOutputTypes.htm"
+    },
+    {
+      "name": "SupportsFeature",
+      "signature": "protected virtual bool SupportsFeature(RenderPlugIn.RenderFeature feature)",
+      "summary": "Determines if your renderer supports a specific feature.",
+      "params": [
+        {
+          "name": "feature",
+          "type": "Rhino.PlugIns.RenderPlugIn.RenderFeature",
+          "doc": "A feature to be controlled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the renderer indeed supports the feature."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_SupportsFeature.htm"
+    },
+    {
+      "name": "UiContentTypes",
+      "signature": "protected virtual List\u003CGuid\u003E UiContentTypes()",
+      "summary": "Override this method to provide the UUIDs of all content types that should be presented to the user in the types combo box or the[\u002B] button types menu.The default implementation adds only RDK\u0027s built-in types. Rhino automatically adds types in the most efficient way to minimize the list length. If you override this method, you may call the base class first to add the built-in types, a separator will be inserted at the end of the standard list followed by your own types. You may omit the base class call and only chosen types yourself, followed by a separator and your own types. A \u0027More Types...\u0027 item is automatically added when needed by Rhino. Specify a separator by adding uuidUiContentType_Separator.",
+      "remarks": "You should add \\e all types you would want to appear in any context, regardless of their content kind. Rhino ensures that only types that make sense will actually be presented to the user in a given context.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "Return a Id list of content types to display in content browsers"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_RenderPlugIn_UiContentTypes.htm"
+    },
+    {
+      "name": "WriteDocument",
+      "signature": "protected virtual void WriteDocument(RhinoDoc doc, BinaryArchiveWriter archive, FileWriteOptions options)",
+      "summary": "Called when Rhino is saving a .3dm file to allow the plug-in to save document user data.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document instance that is being saved.",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveWriter",
+          "doc": "OpenNURBS file archive object Rhino is using to write the file. Use BinaryArchiveWriter.Write*() functions to write plug-in data. OR use the ArchivableDictionary If any BinaryArchiveWriter.Write*() functions throw an exception, then archive.WriteErrorOccured will be true and you should immediately return. Setting archive.WriteErrorOccured to true will cause Rhino to stop saving the file.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "The file write options, such as \u0022include preview image\u0022 and \u0022include render meshes\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugIn_WriteDocument.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AddToHelpMenu",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Called by Rhino to determine if the plug-in name should be added to the Rhino Help/Plug-ins menu.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_AddToHelpMenu.htm"
+    },
+    {
+      "name": "Assembly",
+      "type": "Assembly",
+      "getter": true,
+      "setter": false,
+      "summary": "Source assembly for this plug-in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_Assembly.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the description of the plug-in, as found in the plug-in\u0027s assembly attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_Description.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Guid, or unique Id, of the plug-in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_Id.htm"
+    },
+    {
+      "name": "InitialChannelToDisplay",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_RenderPlugIn_InitialChannelToDisplay.htm"
+    },
+    {
+      "name": "LicenseId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from PlugIn.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_LicenseId.htm"
+    },
+    {
+      "name": "LoadAtStartup",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete. (Inherited from PlugIn.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_LoadAtStartup.htm"
+    },
+    {
+      "name": "LoadTime",
+      "type": "PlugInLoadTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Plug-ins are typically loaded on demand when they are first needed. You can change this behavior to load the plug-in at during different stages in time by overriding this property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_LoadTime.htm"
+    },
+    {
+      "name": "LocalPlugInName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Optionally override this to provide a localized plug-in name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_LocalPlugInName.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the plug-in, as found in the plug-in\u0027s assembly attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_Name.htm"
+    },
+    {
+      "name": "PerferBasicContent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to true if you would like Rhino to quickly create a basic render content in response to \u0027Create New\u0027 commands. Set to false if you would prefer Rhino to display the render content chooser dialog.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_RenderPlugIn_PerferBasicContent.htm"
+    },
+    {
+      "name": "Settings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Persistent plug-in settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_Settings.htm"
+    },
+    {
+      "name": "SettingsDirectory",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the plug-in\u0027s settings directory. This is the directory where the plug-in\u0027s persistent settings files are saved. This directory will be located in the user\u0027s profile folder. Note, this does not verify the directory exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_SettingsDirectory.htm"
+    },
+    {
+      "name": "SettingsDirectoryAllUsers",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the plug-in\u0027s \u0022all users\u0022 settings directory. This directory will be located in the system\u0027s program data folder. Note, this does not verify the directory exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_SettingsDirectoryAllUsers.htm"
+    },
+    {
+      "name": "SupportedChannels",
+      "type": "Guid[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Override to communicate that the renderer supports more channels beside the default channels RGBA, Depth, Normal, Albedo. See RenderWindow.StandardChannels. RenderWindow.ChannelId can be used to get the GUIDs for the channels to support",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_RenderPlugIn_SupportedChannels.htm"
+    },
+    {
+      "name": "SupportsEditProperties",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Override this property and return true if your plug-in supports decals and overrides ShowDecalProperties(List\u003CNamedValue\u003E)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_RenderPlugIn_SupportsEditProperties.htm"
+    },
+    {
+      "name": "Version",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the version of the plug-in, as found in the plug-in\u0027s assembly attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_Version.htm"
+    },
+    {
+      "name": "WindowPositionSettings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from PlugIn.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_WindowPositionSettings.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "SettingsSaved",
+      "delegate": "System.EventHandler\u003CPersistentSettingsSavedEventArgs\u003E",
+      "signature": "public event EventHandler\u003CPersistentSettingsSavedEventArgs\u003E SettingsSaved",
+      "summary": "This event is raised when an instance of Rhino has modified the external settings file associated with this plug-in\u0027s Settings property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_PlugIns_PlugIn_SettingsSaved.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

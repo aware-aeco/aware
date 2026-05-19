@@ -1,0 +1,222 @@
+{
+  "name": "PostEffectCollection",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "Represents the collection of post effects in render settings.",
+  "base": "DocumentOrFreeFloatingBase",
+  "interfaces": [
+    "IEnumerable\u003CPostEffectData\u003E",
+    "IEnumerable",
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PostEffects_PostEffectCollection.htm",
+  "constructors": [
+    {
+      "name": "PostEffectCollection()",
+      "signature": "public PostEffectCollection()",
+      "summary": "Create a utility object not associated with any document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection__ctor.htm"
+    },
+    {
+      "name": "PostEffectCollection(PostEffectCollection)",
+      "signature": "public PostEffectCollection(PostEffectCollection c)",
+      "summary": "Create a utility object not associated with any document from another object",
+      "params": [
+        {
+          "name": "c",
+          "type": "Rhino.Render.PostEffects.PostEffectCollection",
+          "doc": "The other collection.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts cc)",
+      "summary": "(Inherited from DocumentOrFreeFloatingBase.)",
+      "params": [
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022cc\u0022/\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.BeginChange(Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_BeginChange.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public override void CopyFrom(FreeFloatingBase src)",
+      "summary": "(Overrides FreeFloatingBase.CopyFrom(FreeFloatingBase).)",
+      "params": [
+        {
+          "name": "src",
+          "type": "Rhino.Render.FreeFloatingBase",
+          "doc": "[Missing \u003Cparam name=\u0022src\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.CopyFrom(Rhino.Render.FreeFloatingBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_CopyFrom.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectCollection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_Dispose.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public bool EndChange()",
+      "summary": "(Inherited from DocumentOrFreeFloatingBase.)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.EndChange\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_EndChange.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides FreeFloatingBase.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_Finalize.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CPostEffectData\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CPostEffectData\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_GetEnumerator.htm"
+    },
+    {
+      "name": "GetSelectedPostEffect",
+      "signature": "public bool GetSelectedPostEffect(PostEffectType type, out Guid id)",
+      "summary": "Gets the selected post effect for a certain type into \u0027id\u0027. Returns true if successful or false if the selection information could not be found.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Rhino.Render.PostEffects.PostEffectType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.GetSelectedPostEffect(Rhino.Render.PostEffects.PostEffectType,System.Guid@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.GetSelectedPostEffect(Rhino.Render.PostEffects.PostEffectType,System.Guid@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.GetSelectedPostEffect(Rhino.Render.PostEffects.PostEffectType,System.Guid@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_GetSelectedPostEffect.htm"
+    },
+    {
+      "name": "MovePostEffectBefore",
+      "signature": "public bool MovePostEffectBefore(Guid id_move, Guid id_before)",
+      "summary": "Move a post effect before another post effect in the list. Param \u0027id_move\u0027 is the id of the post effect to move. Param \u0027id_before\u0027 is the id of a post effect before which the post effect should be moved. If this is Guid.Empty, the post effect is moved to the end of the list. If the post effect identified by \u0027id_before\u0027 is not found, the method will fail. Returns true if successful, else false.",
+      "params": [
+        {
+          "name": "id_move",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id_move\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.MovePostEffectBefore(System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "id_before",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id_before\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.MovePostEffectBefore(System.Guid,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.MovePostEffectBefore(System.Guid,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_MovePostEffectBefore.htm"
+    },
+    {
+      "name": "PostEffectDataFromId",
+      "signature": "public PostEffectData PostEffectDataFromId(Guid id)",
+      "summary": "Get a post effect data for an id.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.PostEffectDataFromId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PostEffectData",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.PostEffectDataFromId(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_PostEffectDataFromId.htm"
+    },
+    {
+      "name": "SetSelectedPostEffect",
+      "signature": "public void SetSelectedPostEffect(PostEffectType type, Guid id)",
+      "summary": "Sets the selected post effect for a certain type.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Rhino.Render.PostEffects.PostEffectType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.SetSelectedPostEffect(Rhino.Render.PostEffects.PostEffectType,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectCollection.SetSelectedPostEffect(Rhino.Render.PostEffects.PostEffectType,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectCollection_SetSelectedPostEffect.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

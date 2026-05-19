@@ -1,0 +1,38 @@
+{
+  "name": "LcOpLightItemLightAreaType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLightItemLightAreaType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItemLightAreaType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAREA_NONE",
+      "value": 0
+    },
+    {
+      "name": "eAREA_RECTANGLE",
+      "value": 1
+    },
+    {
+      "name": "eAREA_DISC",
+      "value": 2
+    },
+    {
+      "name": "eAREA_SPHERE",
+      "value": 3
+    },
+    {
+      "name": "eAREA_CYLINDER",
+      "value": 4
+    },
+    {
+      "name": "eAREA_LINE",
+      "value": 5
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "name": "MacroPlacementElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the macro placement element",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/",
+  "constructors": [
+    {
+      "name": "MacroPlacementElement",
+      "signature": "MacroPlacementElement() | MacroPlacementElement(commonProp, macroPlacementProp, macro, reinforcementList, libraryElementList=[], architectureElementsList=[], fixtureElementsList=[]) | MacroPlacementElement(placement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetArchitectureElementsList",
+      "signature": "GetArchitectureElementsList()",
+      "summary": "Get the architecture elements",
+      "remarks": "Get the architecture elements",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Architecture elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.GetArchitectureElementsList"
+    },
+    {
+      "name": "GetAttributesList",
+      "signature": "GetAttributesList()",
+      "summary": "Get the attributes list",
+      "remarks": "Get the attributes list",
+      "params": [],
+      "returns": {
+        "type": "List[AttributeSet]",
+        "doc": "Attributes list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.GetAttributesList"
+    },
+    {
+      "name": "GetFixtureElementsList",
+      "signature": "GetFixtureElementsList()",
+      "summary": "Get the fixture elements",
+      "remarks": "Get the fixture elements",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Fixture elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.GetFixtureElementsList"
+    },
+    {
+      "name": "GetLibraryElementsList",
+      "signature": "GetLibraryElementsList()",
+      "summary": "Get the library elements",
+      "remarks": "Get the library elements",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Library elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.GetLibraryElementsList"
+    },
+    {
+      "name": "GetMacro",
+      "signature": "GetMacro()",
+      "summary": "Get the corresponding macro definition",
+      "remarks": "Get the corresponding macro definition",
+      "params": [],
+      "returns": {
+        "type": "MacroElement",
+        "doc": "Macro definition element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.GetMacro"
+    },
+    {
+      "name": "GetMacroPlacementProperties",
+      "signature": "GetMacroPlacementProperties()",
+      "summary": "Get the macro placement properties",
+      "remarks": "Get the macro placement properties",
+      "params": [],
+      "returns": {
+        "type": "MacroPlacementProperties",
+        "doc": "MacroPlacement properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.GetMacroPlacementProperties"
+    },
+    {
+      "name": "GetReinforcementList",
+      "signature": "GetReinforcementList()",
+      "summary": "Get the reinforcement elements",
+      "remarks": "Get the reinforcement elements",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Reinforcement elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.GetReinforcementList"
+    },
+    {
+      "name": "SetMacroPlacementProperties",
+      "signature": "SetMacroPlacementProperties(macroPlacementProp)",
+      "summary": "Set the macro placement properties",
+      "remarks": "Set the macro placement properties",
+      "params": [
+        {
+          "name": "macroPlacementProp",
+          "type": "MacroPlacementProperties",
+          "doc": "MacroPlacement properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.SetMacroPlacementProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MacroPlacementProperties",
+      "type": "MacroPlacementProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the macro placement properties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.MacroPlacementProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

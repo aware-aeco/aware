@@ -1,0 +1,29 @@
+{
+  "name": "GH_DocumentRank",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible document rankings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentRank.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Indicates no rank. Documents with unset rank are invalid."
+    },
+    {
+      "name": "TopLevel",
+      "value": 1,
+      "summary": "Top level ranking."
+    },
+    {
+      "name": "Subsidiary",
+      "value": 2,
+      "summary": "Subsidiary ranking indicates this document is part of another document."
+    }
+  ]
+}

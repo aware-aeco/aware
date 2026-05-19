@@ -1,0 +1,80 @@
+{
+  "name": "PropertyElement.PropertyElementType.SectionViewLabelMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SectionViewLabelMarkPropertyElementTypes class represents the available property element types for section view label marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1d48c8b5-a2c0-d9d0-2631-24b8da41f12e",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DrawingName",
+      "signature": "public static PropertyElement.PropertyElementType DrawingName()",
+      "summary": "Returns the drawing name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c11fef10-152f-340a-e90d-c5d0e1eac26e"
+    },
+    {
+      "name": "Scale",
+      "signature": "public static PropertyElement.PropertyElementType Scale()",
+      "summary": "Returns the scale property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d7004d07-3aed-741d-dc7f-a0e5aa16e285"
+    },
+    {
+      "name": "SectionName",
+      "signature": "public static PropertyElement.PropertyElementType SectionName()",
+      "summary": "Returns the section name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e76335b-275e-81d3-7fa7-bb5dd5086eed"
+    },
+    {
+      "name": "SourceDrawingName",
+      "signature": "public static PropertyElement.PropertyElementType SourceDrawingName()",
+      "summary": "Returns the source drawing name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/18a04dac-66be-9b22-7c96-c92dd80ada06"
+    },
+    {
+      "name": "SourceDrawingNameWhenMoved",
+      "signature": "public static PropertyElement.PropertyElementType SourceDrawingNameWhenMoved()",
+      "summary": "Returns the source drawing name when moved property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c4366fbd-79a1-d3ff-5b7d-8e57960943e5"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

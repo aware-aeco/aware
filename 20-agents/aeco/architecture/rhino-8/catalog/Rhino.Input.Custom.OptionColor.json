@@ -1,0 +1,88 @@
+{
+  "name": "OptionColor",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.OptionColor\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_OptionColor.htm",
+  "constructors": [
+    {
+      "name": "OptionColor",
+      "signature": "public OptionColor(Color initialValue)",
+      "summary": "Initializes a new instance of the OptionColor class",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022initialValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionColor.#ctor(System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionColor__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the OptionColor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionColor_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the OptionColor and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionColor_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionColor_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentValue",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_OptionColor_CurrentValue.htm"
+    },
+    {
+      "name": "InitialValue",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_OptionColor_InitialValue.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

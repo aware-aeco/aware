@@ -1,0 +1,408 @@
+{
+  "name": "BezierSurface",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a Bezier surface.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_BezierSurface.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ControlVertexCount",
+      "signature": "public int ControlVertexCount(int direction)",
+      "summary": "Number of control vertices in this surface",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 for first parameter\u0027s domain, 1 for second parameter\u0027s domain.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.BezierSurface.ControlVertexCount(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_ControlVertexCount.htm"
+    },
+    {
+      "name": "CreateLoftedBezier",
+      "signature": "public static BezierSurface CreateLoftedBezier(IEnumerable\u003CBezierCurve\u003E curves)",
+      "summary": "Loft a bezier surface through a list of bezier curves.",
+      "params": [
+        {
+          "name": "curves",
+          "type": "System.Collections.Generic.IEnumerable\u003CBezierCurve\u003E",
+          "doc": "list of curves that have the same degree",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierSurface",
+        "doc": "new bezier curve if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_CreateLoftedBezier.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Dispose_1.htm"
+    },
+    {
+      "name": "Domain",
+      "signature": "public Interval Domain(int direction)",
+      "summary": "Gets the domain in a direction.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 gets first parameter, 1 gets second parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "An interval value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Domain.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Finalize.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public BoundingBox GetBoundingBox(bool accurate)",
+      "summary": "Bounding box solver. Gets the world axis aligned bounding box for the surface.",
+      "params": [
+        {
+          "name": "accurate",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022accurate\u0022/\u003E documentation for \u0022M:Rhino.Geometry.BezierSurface.GetBoundingBox(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The bounding box of the geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetControlVertex2d",
+      "signature": "public Point2d GetControlVertex2d(int i, int j)",
+      "summary": "Get location of a control vertex.",
+      "params": [
+        {
+          "name": "i",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount)",
+          "optional": false
+        },
+        {
+          "name": "j",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "If the bezier is rational, the euclidean location is returned."
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "when i or j is out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_GetControlVertex2d.htm"
+    },
+    {
+      "name": "GetControlVertex3d",
+      "signature": "public Point3d GetControlVertex3d(int i, int j)",
+      "summary": "Get location of a control vertex.",
+      "params": [
+        {
+          "name": "i",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount)",
+          "optional": false
+        },
+        {
+          "name": "j",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "If the bezier is rational, the euclidean location is returned."
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "when i or j is out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_GetControlVertex3d.htm"
+    },
+    {
+      "name": "GetControlVertex4d",
+      "signature": "public Point4d GetControlVertex4d(int i, int j)",
+      "summary": "Get location of a control vertex.",
+      "params": [
+        {
+          "name": "i",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount)",
+          "optional": false
+        },
+        {
+          "name": "j",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "Homogeneous value of control vertex. If the bezier is not rational, the weight is 1."
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "when index is out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_GetControlVertex4d.htm"
+    },
+    {
+      "name": "MakeNonRational",
+      "signature": "public bool MakeNonRational()",
+      "summary": "Make bezier non-rational",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_MakeNonRational.htm"
+    },
+    {
+      "name": "MakeRational",
+      "signature": "public bool MakeRational()",
+      "summary": "Make bezier rational",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_MakeRational.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double u, double v)",
+      "summary": "Evaluates point at a surface parameter.",
+      "remarks": "No error handling.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "evaluation parameters.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "evaluation parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Point (location of surface at the parameter u,v)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_PointAt.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public BezierSurface Reverse(int direction)",
+      "summary": "Reverses parameterization Domain changes from [a,b] to [-b,-a]",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 for first parameter\u0027s domain, 1 for second parameter\u0027s domain.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierSurface",
+        "doc": "a new reversed surface on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Reverse.htm"
+    },
+    {
+      "name": "Split",
+      "signature": "public bool Split(int direction, double t, out BezierSurface left, out BezierSurface right)",
+      "summary": "Divides the Bezier surface at the specified parameter.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 is split along u and 1 is split along v",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "parameter must satisfy 0 \u003C t \u003C 1",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "Rhino.Geometry.BezierSurface",
+          "doc": "[Missing \u003Cparam name=\u0022left\u0022/\u003E documentation for \u0022M:Rhino.Geometry.BezierSurface.Split(System.Int32,System.Double,Rhino.Geometry.BezierSurface@,Rhino.Geometry.BezierSurface@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Rhino.Geometry.BezierSurface",
+          "doc": "[Missing \u003Cparam name=\u0022right\u0022/\u003E documentation for \u0022M:Rhino.Geometry.BezierSurface.Split(System.Int32,System.Double,Rhino.Geometry.BezierSurface@,Rhino.Geometry.BezierSurface@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Split.htm"
+    },
+    {
+      "name": "ToNurbsSurface",
+      "signature": "public NurbsSurface ToNurbsSurface()",
+      "summary": "Constructs a NURBS surface representation of this surface.",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "NURBS representation of the surface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_ToNurbsSurface.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms the surface",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully transformed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Transform.htm"
+    },
+    {
+      "name": "Transpose",
+      "signature": "public BezierSurface Transpose()",
+      "summary": "Transposes surface parameterization (swap U and V)",
+      "params": [],
+      "returns": {
+        "type": "BezierSurface",
+        "doc": "New transposed surface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BezierSurface_Transpose.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Dimension",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Dimension of Bezier",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BezierSurface_Dimension.htm"
+    },
+    {
+      "name": "IsRational",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the surface is rational. Rational surfaces have control-points with custom weights.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BezierSurface_IsRational.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BezierSurface_IsValid.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "BentPlate.BendShape",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Enumerator to define different possibilities for bend shapes.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b5343f3c-931a-194b-ccc5-e1c29895b276",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Cylindrical",
+      "value": 0,
+      "summary": "Cylindrical bend."
+    },
+    {
+      "name": "Conical",
+      "value": 1,
+      "summary": "Conical bend."
+    }
+  ]
+}

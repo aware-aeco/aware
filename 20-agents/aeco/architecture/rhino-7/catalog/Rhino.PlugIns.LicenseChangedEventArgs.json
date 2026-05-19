@@ -1,0 +1,25 @@
+{
+  "name": "LicenseChangedEventArgs",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.PlugIns.LicenseChangedEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_LicenseChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "LicenseChangedEventArgs",
+      "signature": "public LicenseChangedEventArgs()",
+      "summary": "Initializes a new instance of the LicenseChangedEventArgs class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "DictionaryExpressionBuilder",
+  "namespace": "ProtoCore.AST.ImperativeAST",
+  "kind": "class",
+  "summary": "Type DictionaryExpressionBuilder",
+  "base": "ProtoCore.AST.DictionaryExpressionBuilderBase\u003CProtoCore.AST.ImperativeAST.ImperativeNode\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs",
+  "constructors": [
+    {
+      "name": "DictionaryExpressionBuilder()",
+      "signature": "void DictionaryExpressionBuilder()",
+      "summary": "DictionaryExpressionBuilder.DictionaryExpressionBuilder",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToFunctionCall",
+      "signature": "ProtoCore.AST.ImperativeAST.ImperativeNode ToFunctionCall()",
+      "summary": "DictionaryExpressionBuilder.ToFunctionCall",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

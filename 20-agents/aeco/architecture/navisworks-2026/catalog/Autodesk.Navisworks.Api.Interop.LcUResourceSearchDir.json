@@ -1,0 +1,54 @@
+{
+  "name": "LcUResourceSearchDir",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUResourceSearchDir enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUResourceSearchDir",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDIR_USER",
+      "value": 0
+    },
+    {
+      "name": "eDIR_LOCAL",
+      "value": 1
+    },
+    {
+      "name": "eDIR_PROJECT",
+      "value": 2
+    },
+    {
+      "name": "eDIR_SITE",
+      "value": 3
+    },
+    {
+      "name": "eDIR_APP",
+      "value": 4
+    },
+    {
+      "name": "eDIR_INSTALL",
+      "value": 5
+    },
+    {
+      "name": "eDIR_USER_APP_SHARED",
+      "value": 6
+    },
+    {
+      "name": "eDIR_USER_INHERIT",
+      "value": 7
+    },
+    {
+      "name": "eDIR_LOCAL_INHERIT",
+      "value": 8
+    },
+    {
+      "name": "eNUM_DIRS",
+      "value": 9
+    }
+  ]
+}

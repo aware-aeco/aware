@@ -1,0 +1,417 @@
+{
+  "name": "ExtrudeBarPlacement",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the extrude bar placement element",
+  "base": "ReinfElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/",
+  "constructors": [
+    {
+      "name": "ExtrudeBarPlacement",
+      "signature": "ExtrudeBarPlacement() | ExtrudeBarPlacement(placement: ExtrudeBarPlacement) | ExtrudeBarPlacement( positionNumber: int, path: Path3D, profileRotation: eProfileRotation, breakElimination: bool, maxBreakAngle: float, crossBarDistance: float, concreteCoverStart: float, concreteCoverEnd: float, edgeOffsetType: eEdgeOffsetType, edgeOffsetStart: float, edgeOffsetEnd: float, barOffset: float, bendingShapeViewVector: Vector3D, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddCrossBendingShape",
+      "signature": "AddCrossBendingShape(shape: BendingShape)",
+      "summary": "Add a cross bending shape",
+      "remarks": "Add a cross bending shape",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Reinforcement shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.AddCrossBendingShape"
+    },
+    {
+      "name": "AddLongitudinalBarProp",
+      "signature": "AddLongitudinalBarProp(longitudinalBarProp: LongitudinalBarProperties)",
+      "summary": "Add the longitudinal bar properties",
+      "remarks": "Add the longitudinal bar properties",
+      "params": [
+        {
+          "name": "longitudinalBarProp",
+          "type": "LongitudinalBarProperties",
+          "doc": "longitudinal bar properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.AddLongitudinalBarProp"
+    },
+    {
+      "name": "AddPlacementSection",
+      "signature": "AddPlacementSection(placementSection: BarPlacementSection) -\u003E bool",
+      "summary": "Add a placement section",
+      "remarks": "Add a placement section",
+      "params": [
+        {
+          "name": "placementSection",
+          "type": "BarPlacementSection",
+          "doc": "Section",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Section is added: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.AddPlacementSection"
+    },
+    {
+      "name": "Extrude",
+      "signature": "Extrude()",
+      "summary": "Extrude the bars",
+      "remarks": "Extrude the bars",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.Extrude"
+    },
+    {
+      "name": "GetBarOffset",
+      "signature": "GetBarOffset() -\u003E float",
+      "summary": "Get the bar offset",
+      "remarks": "Get the bar offset",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Bar offset"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetBarOffset"
+    },
+    {
+      "name": "GetBendingShapeViewVector",
+      "signature": "GetBendingShapeViewVector() -\u003E Vector3D",
+      "summary": "Get the view vector of the bending shape",
+      "remarks": "Get the view vector of the bending shape",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "View vector of the bending shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetBendingShapeViewVector"
+    },
+    {
+      "name": "GetCommonProperties",
+      "signature": "GetCommonProperties() -\u003E CommonProperties",
+      "summary": "Get the common properties",
+      "remarks": "Get the common properties",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Common properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetCommonProperties"
+    },
+    {
+      "name": "GetConcreteCoverEnd",
+      "signature": "GetConcreteCoverEnd() -\u003E float",
+      "summary": "Get the concrete cover at the end of the path",
+      "remarks": "Get the concrete cover at the end of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Concrete cover at the end of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetConcreteCoverEnd"
+    },
+    {
+      "name": "GetConcreteCoverStart",
+      "signature": "GetConcreteCoverStart() -\u003E float",
+      "summary": "Get the concrete cover at the start of the path",
+      "remarks": "Get the concrete cover at the start of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Concrete cover at the start of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetConcreteCoverStart"
+    },
+    {
+      "name": "GetCrossBarDistance",
+      "signature": "GetCrossBarDistance() -\u003E float",
+      "summary": "Get the cross bar distance",
+      "remarks": "Get the cross bar distance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Cross bar distance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetCrossBarDistance"
+    },
+    {
+      "name": "GetCrossBendingShapes",
+      "signature": "GetCrossBendingShapes() -\u003E BendingShapeList",
+      "summary": "Get the cross bending shapes",
+      "remarks": "Get the cross bending shapes",
+      "params": [],
+      "returns": {
+        "type": "BendingShapeList",
+        "doc": "Cross bending shapes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetCrossBendingShapes"
+    },
+    {
+      "name": "GetEdgeOffsetEnd",
+      "signature": "GetEdgeOffsetEnd() -\u003E float",
+      "summary": "Get the edge offset at the end of the path",
+      "remarks": "Get the edge offset at the end of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Edge offset at the end of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetEdgeOffsetEnd"
+    },
+    {
+      "name": "GetEdgeOffsetStart",
+      "signature": "GetEdgeOffsetStart() -\u003E float",
+      "summary": "Get the edge offset at the start of the path",
+      "remarks": "Get the edge offset at the start of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Edge offset at the start of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetEdgeOffsetStart"
+    },
+    {
+      "name": "GetEdgeOffsetType",
+      "signature": "GetEdgeOffsetType() -\u003E eEdgeOffsetType",
+      "summary": "Get the edge offset type",
+      "remarks": "Get the edge offset type",
+      "params": [],
+      "returns": {
+        "type": "eEdgeOffsetType",
+        "doc": "Edge offset type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetEdgeOffsetType"
+    },
+    {
+      "name": "GetEdgeOffsets",
+      "signature": "GetEdgeOffsets() -\u003E tuple",
+      "summary": "Get the edge offsets",
+      "remarks": "Get the edge offsets",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "Edge offsets"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetEdgeOffsets"
+    },
+    {
+      "name": "GetMaxBreakAngle",
+      "signature": "GetMaxBreakAngle() -\u003E float",
+      "summary": "Get the maximal break angle",
+      "remarks": "Get the maximal break angle",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Maximal break angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetMaxBreakAngle"
+    },
+    {
+      "name": "GetPlacementPath",
+      "signature": "GetPlacementPath() -\u003E Path3D",
+      "summary": "Get the placement path",
+      "remarks": "Get the placement path",
+      "params": [],
+      "returns": {
+        "type": "Path3D",
+        "doc": "Placement path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetPlacementPath"
+    },
+    {
+      "name": "GetPlacementSections",
+      "signature": "GetPlacementSections() -\u003E object",
+      "summary": "Get the placement sections",
+      "remarks": "Get the placement sections",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Placement sections"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetPlacementSections"
+    },
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber() -\u003E int",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetPositionNumber"
+    },
+    {
+      "name": "GetProfileRoation",
+      "signature": "GetProfileRoation() -\u003E eProfileRotation",
+      "summary": "Get the profile rotation",
+      "remarks": "Get the profile rotation",
+      "params": [],
+      "returns": {
+        "type": "eProfileRotation",
+        "doc": "Profile rotation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.GetProfileRoation"
+    },
+    {
+      "name": "IsBreakElimination",
+      "signature": "IsBreakElimination() -\u003E bool",
+      "summary": "Get the break eliminination state",
+      "remarks": "Get the break eliminination state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Break elimination state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.IsBreakElimination"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(transVec: Vector3D)",
+      "summary": "Move the placement",
+      "remarks": "Move the placement",
+      "params": [
+        {
+          "name": "transVec",
+          "type": "Vector3D",
+          "doc": "Move vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.Move"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp: CommonProperties)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.SetCommonProperties"
+    },
+    {
+      "name": "Transform",
+      "signature": "Transform(transMat: Matrix3D)",
+      "summary": "Transform the placement",
+      "remarks": "Transform the placement",
+      "params": [
+        {
+          "name": "transMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.Transform"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommonProperties",
+      "type": "CommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the common properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.CommonProperties"
+    },
+    {
+      "name": "PositionNumber",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.PositionNumber"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,102 @@
+{
+  "name": "GeneralSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Represents a snapshot of GeneralSettings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_GeneralSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AutoUpdateCommandHelp",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the command help dialog auto-update feature.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_AutoUpdateCommandHelp.htm"
+    },
+    {
+      "name": "ContextMenuDelay",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the time to wait before permitting context menu display.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_ContextMenuDelay.htm"
+    },
+    {
+      "name": "EnableContextMenu",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true if right mouse down \u002B delay will pop up context menu on a mouse up if no move happens.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_EnableContextMenu.htm"
+    },
+    {
+      "name": "MaximumPopupMenuLines",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum number of popup menu lines.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_MaximumPopupMenuLines.htm"
+    },
+    {
+      "name": "MaximumUndoMemoryMb",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum undo memory Mb. Undo records will be purged if there are more than MinimumUndoSteps and they use more than MaximumUndoMemoryMb.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_MaximumUndoMemoryMb.htm"
+    },
+    {
+      "name": "MiddleMouseMacro",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the toolbar to popup when the middle mouse is clicked on a view, this value is only used when MiddleMouseMode is set to PopupToolbar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_MiddleMouseMacro.htm"
+    },
+    {
+      "name": "MiddleMouseMode",
+      "type": "MiddleMouseMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets what happens when the user clicks the middle mouse.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_MiddleMouseMode.htm"
+    },
+    {
+      "name": "MiddleMousePopupToolbar",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the toolbar to popup when the middle mouse is clicked on a view, this value is only used when MiddleMouseMode is set to PopupToolbar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_MiddleMousePopupToolbar.htm"
+    },
+    {
+      "name": "MinimumUndoSteps",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum undo steps. Undo records will be purged if there are more than MinimumUndoSteps and they use more than MaximumUndoMemoryMb.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_MinimumUndoSteps.htm"
+    },
+    {
+      "name": "MouseSelectMode",
+      "type": "MouseSelectMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the current selection mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_MouseSelectMode.htm"
+    },
+    {
+      "name": "NewObjectIsoparmCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of isoparm curves to show on new objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_GeneralSettingsState_NewObjectIsoparmCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,119 @@
+{
+  "name": "FavoritesCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Favorites Commands\u0027 command group \u2014 4 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetFavoritesByType",
+      "signature": "GetFavoritesByType(elementType: ElementType): FavoritesOrError",
+      "summary": "Returns a list of the names of all favorites with the given element type",
+      "params": [
+        {
+          "name": "elementType",
+          "type": "ElementType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FavoritesOrError",
+        "doc": "Returns a \u0060FavoritesOrError\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetFavoritesByType",
+      "since": "1.2.2"
+    },
+    {
+      "name": "GetFavoritePreviewImage",
+      "signature": "GetFavoritePreviewImage(favorite: string, imageType?: string, format?: string, width?: integer, height?: integer): object",
+      "summary": "Returns the preview image of the given favorite.",
+      "params": [
+        {
+          "name": "favorite",
+          "type": "string",
+          "doc": "The name of the favorite.",
+          "optional": false
+        },
+        {
+          "name": "imageType",
+          "type": "string",
+          "doc": "The type of the preview image. Default is 3D.",
+          "optional": true
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "doc": "The image format. Default is png.",
+          "optional": true
+        },
+        {
+          "name": "width",
+          "type": "integer",
+          "doc": "The width of the preview image in pixels. Default is 128.",
+          "optional": true
+        },
+        {
+          "name": "height",
+          "type": "integer",
+          "doc": "The height of the preview image in pixels. Default is 128.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: previewImage."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetFavoritePreviewImage",
+      "since": "1.2.7"
+    },
+    {
+      "name": "ApplyFavoritesToElementDefaults",
+      "signature": "ApplyFavoritesToElementDefaults(favorites: Favorites): object",
+      "summary": "Apply the given favorites to element defaults.",
+      "params": [
+        {
+          "name": "favorites",
+          "type": "Favorites",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ApplyFavoritesToElementDefaults",
+      "since": "1.1.2"
+    },
+    {
+      "name": "CreateFavoritesFromElements",
+      "signature": "CreateFavoritesFromElements(favoritesFromElements: object[]): object",
+      "summary": "Create favorites from the given elements.",
+      "params": [
+        {
+          "name": "favoritesFromElements",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateFavoritesFromElements",
+      "since": "1.1.2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

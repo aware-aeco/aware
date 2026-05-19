@@ -1,0 +1,568 @@
+{
+  "name": "GH_ColourCube",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "Maintains a collection of graphical shapes and coordinates that specify important features of the Colour Space Cube graphics.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_ColourCube.htm",
+  "constructors": [
+    {
+      "name": "GH_ColourCube",
+      "signature": "public GH_ColourCube(Rectangle box, GH_ColourSpace space, Point4d color)",
+      "summary": "Create a new instance of this class.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle containing entire colour cube. Should be square.",
+          "optional": false
+        },
+        {
+          "name": "space",
+          "type": "Grasshopper.GUI.Base.GH_ColourSpace",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Point4d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Average(Color, Color)",
+      "signature": "public Color Average(Color A, Color B)",
+      "summary": "Compute the average of two colours.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Color",
+          "doc": "First colour for average.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Color",
+          "doc": "Second colour for average.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The average of A and B."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_Average.htm"
+    },
+    {
+      "name": "Average(Color, Color, Color, Color)",
+      "signature": "public Color Average(Color A, Color B, Color C, Color D)",
+      "summary": "Compute the average of four colours.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Color",
+          "doc": "First colour for average.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Color",
+          "doc": "Second colour for average.",
+          "optional": false
+        },
+        {
+          "name": "C",
+          "type": "System.Drawing.Color",
+          "doc": "Third colour for average.",
+          "optional": false
+        },
+        {
+          "name": "D",
+          "type": "System.Drawing.Color",
+          "doc": "Fourth colour for average.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The average of A, B, C and D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_Average_1.htm"
+    },
+    {
+      "name": "Blend",
+      "signature": "public Color Blend(Color A, Color B, double t)",
+      "summary": "Inteprolate between two colours.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Color",
+          "doc": "First colour.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Color",
+          "doc": "Second colour.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Interpolation parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "Interpolated colour."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_Blend.htm"
+    },
+    {
+      "name": "ColorAtRail",
+      "signature": "public Point4d ColorAtRail(PointF pt)",
+      "summary": "Get the color at a position along the depth rail.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Point along rail (will be projected into rail limits)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "Point4d structure representing the colour in the current space."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_ColorAtRail.htm"
+    },
+    {
+      "name": "ColorAtSlice",
+      "signature": "public Point4d ColorAtSlice(PointF pt)",
+      "summary": "Get the color at a position on the slice.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Point on slice (will be projected into slice limits)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "Point4d structure representing the colour in the current space."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_ColorAtSlice.htm"
+    },
+    {
+      "name": "RenderAll",
+      "signature": "public void RenderAll(Graphics G)",
+      "summary": "Call all render methods in the correct order.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderAll.htm"
+    },
+    {
+      "name": "RenderBackEdges",
+      "signature": "public void RenderBackEdges(Graphics G)",
+      "summary": "Render the edges of the back face creases.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderBackEdges.htm"
+    },
+    {
+      "name": "RenderBackFaces",
+      "signature": "public void RenderBackFaces(Graphics G)",
+      "summary": "Render the fills of the backfaces.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderBackFaces.htm"
+    },
+    {
+      "name": "RenderDropShadow",
+      "signature": "public void RenderDropShadow(Graphics G)",
+      "summary": "Render the drop shadow of the cube.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderDropShadow.htm"
+    },
+    {
+      "name": "RenderEdgeShadows",
+      "signature": "public void RenderEdgeShadows(Graphics G)",
+      "summary": "Render the edge shadows of the cube due to GI.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderEdgeShadows.htm"
+    },
+    {
+      "name": "RenderForeEdges",
+      "signature": "public void RenderForeEdges(Graphics G)",
+      "summary": "Render the edges of the fore face creases.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderForeEdges.htm"
+    },
+    {
+      "name": "RenderGrip",
+      "signature": "public void RenderGrip(Graphics G)",
+      "summary": "Render the slice grip.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderGrip.htm"
+    },
+    {
+      "name": "RenderPivot",
+      "signature": "public void RenderPivot(Graphics G)",
+      "summary": "Render the colour pivot on the current slice.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderPivot.htm"
+    },
+    {
+      "name": "RenderSilhouetteEdges",
+      "signature": "public void RenderSilhouetteEdges(Graphics G)",
+      "summary": "Render the edges of the cube silhouettes.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderSilhouetteEdges.htm"
+    },
+    {
+      "name": "RenderSlice",
+      "signature": "public void RenderSlice(Graphics G)",
+      "summary": "Render the square slice with colour gradients.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderSlice.htm"
+    },
+    {
+      "name": "RenderSliceDropShadow",
+      "signature": "public void RenderSliceDropShadow(Graphics G)",
+      "summary": "Render the drop shadow onto the slice.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderSliceDropShadow.htm"
+    },
+    {
+      "name": "RenderSliceEdgeShadows",
+      "signature": "public void RenderSliceEdgeShadows(Graphics G)",
+      "summary": "Render the edge shadows of the slice due to GI.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderSliceEdgeShadows.htm"
+    },
+    {
+      "name": "RenderSliceSilhouetteEdges",
+      "signature": "public void RenderSliceSilhouetteEdges(Graphics G)",
+      "summary": "Render the silhouette edges of the slice.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourCube_RenderSliceSilhouetteEdges.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackFace",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a graphics path describing the back face of the cube. Caller is responsible for disposing of this path instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_BackFace.htm"
+    },
+    {
+      "name": "BottomFace",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a graphics path describing the bottom face of the cube. Caller is responsible for disposing of this path instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_BottomFace.htm"
+    },
+    {
+      "name": "C0",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the first point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C0.htm"
+    },
+    {
+      "name": "C1",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the second point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C1.htm"
+    },
+    {
+      "name": "C2",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the third point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C2.htm"
+    },
+    {
+      "name": "C3",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the fourth point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C3.htm"
+    },
+    {
+      "name": "C4",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the fifth point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C4.htm"
+    },
+    {
+      "name": "C5",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the sixth point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C5.htm"
+    },
+    {
+      "name": "C6",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the seventh point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C6.htm"
+    },
+    {
+      "name": "C7",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the eighth point in the corner point list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_C7.htm"
+    },
+    {
+      "name": "Grip",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rectangle that describes the slice grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_Grip.htm"
+    },
+    {
+      "name": "LeftFace",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a graphics path describing the left face of the cube. Caller is responsible for disposing of this path instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_LeftFace.htm"
+    },
+    {
+      "name": "Pivot",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point that describes the center of the pivot on the slice.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_Pivot.htm"
+    },
+    {
+      "name": "S0",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the first point in the shadow point list. This point is coincident with C0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_S0.htm"
+    },
+    {
+      "name": "S1",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the second point in the shadow point list. This is the corner of the drop-shadow on the bottom face.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_S1.htm"
+    },
+    {
+      "name": "S2",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the third point in the shadow point list. This point is the kink of the drop-shadow on the edge connecting C2 and C3.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_S2.htm"
+    },
+    {
+      "name": "S3",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the fourth point in the shadow point list. This point is coincident with C7.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_S3.htm"
+    },
+    {
+      "name": "S4",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the fifth point in the shadow point list. This point is coincident with C4.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_S4.htm"
+    },
+    {
+      "name": "Shadow",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a graphics path describing the outline of the drop shadow. Caller is responsible for disposing of this path instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_Shadow.htm"
+    },
+    {
+      "name": "Silhouette",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a graphics path describing the silhouette of the cube. Caller is responsible for disposing of this path instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_Silhouette.htm"
+    },
+    {
+      "name": "Slice",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rectangle that describes the cutting slide through the current colour space.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourCube_Slice.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

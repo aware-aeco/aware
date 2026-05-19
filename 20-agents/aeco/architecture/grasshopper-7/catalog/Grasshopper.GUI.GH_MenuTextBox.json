@@ -1,0 +1,106 @@
+{
+  "name": "GH_MenuTextBox",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Utility control for putting textboxes into menus.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_MenuTextBox.htm",
+  "constructors": [
+    {
+      "name": "GH_MenuTextBox",
+      "signature": "public GH_MenuTextBox(ToolStripDropDown dropDown, string text, bool lockFocus)",
+      "summary": "Constructor for TextBox collection.",
+      "params": [
+        {
+          "name": "dropDown",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "The menu dropdown into which to embed this textbox control.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The original text to be displayed in the textbox.",
+          "optional": false
+        },
+        {
+          "name": "lockFocus",
+          "type": "System.Boolean",
+          "doc": "If True, the control will disable the other menu items when it gets focus.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_MenuTextBox__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CloseEntireMenuStructure",
+      "signature": "public void CloseEntireMenuStructure()",
+      "summary": "Call this function to close the ENTIRE menu structure.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_MenuTextBox_CloseEntireMenuStructure.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "OriginalText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the original text that was visible when the control was first displayed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_MenuTextBox_OriginalText.htm"
+    },
+    {
+      "name": "Text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the current text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_MenuTextBox_Text.htm"
+    },
+    {
+      "name": "TextBoxItem",
+      "type": "ToolStripTextBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the text box control embedded in the menu.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_MenuTextBox_TextBoxItem.htm"
+    },
+    {
+      "name": "Width",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the width of the control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_MenuTextBox_Width.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "KeyDown",
+      "delegate": "Grasshopper.GUI.GH_MenuTextBox.KeyDownEventHandler",
+      "signature": "public event GH_MenuTextBox.KeyDownEventHandler KeyDown",
+      "summary": "Raised whenever a key is pressed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_MenuTextBox_KeyDown.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TextChanged",
+      "delegate": "Grasshopper.GUI.GH_MenuTextBox.TextChangedEventHandler",
+      "signature": "public event GH_MenuTextBox.TextChangedEventHandler TextChanged",
+      "summary": "Raised whenever the text in the textbox changes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_MenuTextBox_TextChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

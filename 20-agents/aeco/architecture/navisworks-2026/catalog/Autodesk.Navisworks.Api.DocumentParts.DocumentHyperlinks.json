@@ -1,0 +1,115 @@
+{
+  "name": "DocumentHyperlinks",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "Stores the Hyperlinks information contained in a Document.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetHyperlinks",
+      "signature": "Autodesk.Navisworks.Api.HyperlinkCollection GetHyperlinks(Autodesk.Navisworks.Api.ModelItem modelItem)",
+      "summary": "Gets hyperlinks for a ModelItem.",
+      "params": [
+        {
+          "name": "modelItem",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.HyperlinkCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks.GetHyperlinks%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "DeleteHyperlinks",
+      "signature": "void DeleteHyperlinks(Autodesk.Navisworks.Api.ModelItem modelItem)",
+      "summary": "Deletes all hyperlinks from a ModelItem.",
+      "params": [
+        {
+          "name": "modelItem",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks.DeleteHyperlinks%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "ResetAllHyperlinks",
+      "signature": "void ResetAllHyperlinks()",
+      "summary": "Resets hyperlinks on all ModelItems.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks.ResetAllHyperlinks"
+    },
+    {
+      "name": "ResetHyperlinks",
+      "signature": "void ResetHyperlinks(Autodesk.Navisworks.Api.ModelItem modelItem)",
+      "summary": "Resets hyperlinks on a ModelItem back to their original state.",
+      "params": [
+        {
+          "name": "modelItem",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks.ResetHyperlinks%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "SetHyperlinks",
+      "signature": "void SetHyperlinks(Autodesk.Navisworks.Api.ModelItem modelItem, Autodesk.Navisworks.Api.HyperlinkCollection links)",
+      "summary": "Sets hyperlinks for a ModelItem from a list of hyperlinks.",
+      "params": [
+        {
+          "name": "modelItem",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "links",
+          "type": "Autodesk.Navisworks.Api.HyperlinkCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks.SetHyperlinks%28Autodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.HyperlinkCollection%29"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changed",
+      "summary": "Occurs when the document hyperlinks have changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the document hyperlinks are about to change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

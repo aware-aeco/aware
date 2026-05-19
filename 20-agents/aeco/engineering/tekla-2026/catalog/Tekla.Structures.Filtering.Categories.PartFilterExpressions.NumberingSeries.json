@@ -1,0 +1,39 @@
+{
+  "name": "PartFilterExpressions.NumberingSeries",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The NumberingSeries class represents the numbering series filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/01f8517f-1301-f1d6-5456-4f721f222e9e",
+  "constructors": [
+    {
+      "name": "PartFilterExpressions.NumberingSeries",
+      "signature": "public NumberingSeries()",
+      "summary": "Initializes a new instance of the NumberingSeries class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5e66bc80-b8fd-1809-b9e7-cd10db1fd2f2"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

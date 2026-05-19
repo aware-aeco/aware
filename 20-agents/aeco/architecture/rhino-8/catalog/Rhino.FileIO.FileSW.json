@@ -1,0 +1,46 @@
+{
+  "name": "FileSW",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileSW\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileSW.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "public static bool Read(string path, RhinoDoc doc, FileSwReadOptions options)",
+      "summary": "Read a .sldprt or .sldasm file into a RhinoDoc",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to read a file from",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to import geometry into",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileSwReadOptions",
+          "doc": "options used for importing the SW file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileSW_Read.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

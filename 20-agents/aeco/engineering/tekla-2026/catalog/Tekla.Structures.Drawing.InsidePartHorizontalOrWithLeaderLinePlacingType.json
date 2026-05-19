@@ -1,0 +1,25 @@
+{
+  "name": "InsidePartHorizontalOrWithLeaderLinePlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The InsidePartHorizontalOrWithLeaderLinePlacingType class defines a placing type that places the object using the base line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line. The base line used is in the middle of the part, aligned with the part. In addition the object will be rotated to be horizontal in the drawing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0746e3cd-c2cf-6fef-b019-e19d35518c7f",
+  "constructors": [
+    {
+      "name": "InsidePartHorizontalOrWithLeaderLinePlacingType",
+      "signature": "public InsidePartHorizontalOrWithLeaderLinePlacingType()",
+      "summary": "Creates a new inside part horizontal or with leader line placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/08d14acc-76eb-f0c9-d3a3-1b4d1c34311e"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

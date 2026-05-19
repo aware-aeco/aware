@@ -1,0 +1,270 @@
+{
+  "name": "ColorLAB",
+  "namespace": "Rhino.Display",
+  "kind": "struct",
+  "summary": "Represents a LAB (Lightness, A, B) color with double precision floating point channels. LAB colors are based on nonlinearly compressed CIE XYZ color space coordinates. The A and B parameters of a LAB color represent the opponents.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ColorLAB.htm",
+  "constructors": [
+    {
+      "name": "ColorLAB(Color)",
+      "signature": "public ColorLAB(Color rgb)",
+      "summary": "Constructs a new instance of ColorLAB that is equivalent to an ARGB color.",
+      "remarks": "Exact conversions between color spaces are often not possible.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "System.Drawing.Color",
+          "doc": "ARGB color to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB__ctor_2.htm"
+    },
+    {
+      "name": "ColorLAB(Double, Double, Double)",
+      "signature": "public ColorLAB(double lightness, double a, double b)",
+      "summary": "Constructs a new instance of ColorLAB with custom channel values.",
+      "params": [
+        {
+          "name": "lightness",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022lightness\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorLAB.#ctor(System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorLAB.#ctor(System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorLAB.#ctor(System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB__ctor.htm"
+    },
+    {
+      "name": "ColorLAB(Double, Double, Double, Double)",
+      "signature": "public ColorLAB(double alpha, double lightness, double a, double b)",
+      "summary": "Constructs a new instance of ColorLAB with custom channel values.",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022alpha\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorLAB.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "lightness",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022lightness\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorLAB.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorLAB.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorLAB.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFromCMYK",
+      "signature": "public static ColorLAB CreateFromCMYK(ColorCMYK cmyk)",
+      "summary": "Create the nearest LAB equivalent of a CMYK color.",
+      "params": [
+        {
+          "name": "cmyk",
+          "type": "Rhino.Display.ColorCMYK",
+          "doc": "Target color in CMYK space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLAB",
+        "doc": "The LAB equivalent of the CMYK color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB_CreateFromCMYK.htm"
+    },
+    {
+      "name": "CreateFromHSL",
+      "signature": "public static ColorLAB CreateFromHSL(ColorHSL hsl)",
+      "summary": "Create the nearest LAB equivalent of an HSL color.",
+      "params": [
+        {
+          "name": "hsl",
+          "type": "Rhino.Display.ColorHSL",
+          "doc": "Target color in HSL space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLAB",
+        "doc": "The LAB equivalent of the HSL color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB_CreateFromHSL.htm"
+    },
+    {
+      "name": "CreateFromHSV",
+      "signature": "public static ColorLAB CreateFromHSV(ColorHSV hsv)",
+      "summary": "Constructs the nearest LAB equivalent of an HSV color.",
+      "params": [
+        {
+          "name": "hsv",
+          "type": "Rhino.Display.ColorHSV",
+          "doc": "Target color in HSV space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLAB",
+        "doc": "The LAB equivalent of the HSV color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB_CreateFromHSV.htm"
+    },
+    {
+      "name": "CreateFromLCH",
+      "signature": "public static ColorLAB CreateFromLCH(ColorLCH lch)",
+      "summary": "Create the nearest LAB equivalent of an LCH color.",
+      "params": [
+        {
+          "name": "lch",
+          "type": "Rhino.Display.ColorLCH",
+          "doc": "Target color in LCH space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLAB",
+        "doc": "The LAB equivalent of the LCH color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB_CreateFromLCH.htm"
+    },
+    {
+      "name": "CreateFromRGBA",
+      "signature": "public static ColorLAB CreateFromRGBA(ColorRGBA rgb)",
+      "summary": "Create the nearest LAB equivalent of an RGBA color.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "Target color in RGBA space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLAB",
+        "doc": "The LAB equivalent of the RGBA color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB_CreateFromRGBA.htm"
+    },
+    {
+      "name": "CreateFromXYZ",
+      "signature": "public static ColorLAB CreateFromXYZ(ColorXYZ xyz)",
+      "summary": "Create the nearest LAB equivalent of an XYZ color.",
+      "params": [
+        {
+          "name": "xyz",
+          "type": "Rhino.Display.ColorXYZ",
+          "doc": "Target color in XYZ space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLAB",
+        "doc": "The LAB equivalent of the XYZ color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB_CreateFromXYZ.htm"
+    },
+    {
+      "name": "Implicit(ColorLAB to Color)",
+      "signature": "public static implicit operator Color (ColorLAB lab)",
+      "summary": "Implicitly converts a LAB color into a .Net library color.",
+      "params": [
+        {
+          "name": "lab",
+          "type": "Rhino.Display.ColorLAB",
+          "doc": "A LAB color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "A ARGB .Net library color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLAB_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Base channel. The channel is limited to -1~\u002B1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLAB_A.htm"
+    },
+    {
+      "name": "Alpha",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Alpha channel. The channel is limited to 0~1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLAB_Alpha.htm"
+    },
+    {
+      "name": "B",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Opponent channel. The channel is limited to -1~\u002B1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLAB_B.htm"
+    },
+    {
+      "name": "L",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lightness channel. The channel is limited to 0~1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLAB_L.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

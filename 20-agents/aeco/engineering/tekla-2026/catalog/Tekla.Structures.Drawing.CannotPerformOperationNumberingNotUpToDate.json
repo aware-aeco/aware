@@ -1,0 +1,32 @@
+{
+  "name": "CannotPerformOperationNumberingNotUpToDate",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotPerformOperationNumberingNotUpToDate class defines the exception that is thrown when a user tries to do an operation which requires that numbering is up to date.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6cb682bc-5f77-e0e0-7573-25d4e40122a8",
+  "constructors": [
+    {
+      "name": "CannotPerformOperationNumberingNotUpToDate",
+      "signature": "public CannotPerformOperationNumberingNotUpToDate(string Message)",
+      "summary": "Creates a new cannot perform operation numbering not up to date exception instance.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fb014bc2-b4de-5582-4f04-58a2d2270dfe"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

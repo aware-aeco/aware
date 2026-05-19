@@ -1,0 +1,39 @@
+{
+  "name": "RebarGeometry",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarGeometry class represents a single physical reinforcing bar - the building block of a mesh, a rebar group and even a single rebar. It contains the physical reinforcing bar points in 3D space.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fbcee9dc-d383-f540-0cf3-ec991d935127",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BendingRadiuses",
+      "type": "ArrayList",
+      "getter": true,
+      "setter": false,
+      "summary": "The bending radiuses of the wire.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/65148c8e-74d5-defa-1d65-3244c8292050"
+    },
+    {
+      "name": "Diameter",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The diameter of the wire.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/80568bca-4b5b-fe25-746a-a84be228be28"
+    },
+    {
+      "name": "Shape",
+      "type": "PolyLine",
+      "getter": true,
+      "setter": false,
+      "summary": "The physical points of the reinforcing bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/078bcdfe-c45c-d6dd-8850-8979a9dec903"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

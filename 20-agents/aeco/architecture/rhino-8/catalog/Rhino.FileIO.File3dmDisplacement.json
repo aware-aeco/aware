@@ -1,0 +1,440 @@
+{
+  "name": "File3dmDisplacement",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents the displacement attached to file3dm object attributes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmDisplacement.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddSubItem",
+      "signature": "public bool AddSubItem(int face_index, bool on, Guid texture, int mapping_channel, double black_point, double white_point)",
+      "summary": "Adds a new sub-item to the displacement. face_index is the index of the face on the polysurface/SubD.on is the override for File3dmDisplacement.On.texture is the override for File3dmDisplacement.TextureId.mapping_channel is the override for File3dmDisplacement.MappingChannel.black_point is the override for File3dmDisplacement.BlackPoint.white_point is the override for File3dmDisplacement.WhitePoint.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.AddSubItem(System.Int32,System.Boolean,System.Guid,System.Int32,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.AddSubItem(System.Int32,System.Boolean,System.Guid,System.Int32,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "texture",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.AddSubItem(System.Int32,System.Boolean,System.Guid,System.Int32,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "mapping_channel",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022mapping_channel\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.AddSubItem(System.Int32,System.Boolean,System.Guid,System.Int32,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "black_point",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022black_point\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.AddSubItem(System.Int32,System.Boolean,System.Guid,System.Int32,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "white_point",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022white_point\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.AddSubItem(System.Int32,System.Boolean,System.Guid,System.Int32,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.AddSubItem(System.Int32,System.Boolean,System.Guid,System.Int32,System.Double,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_AddSubItem.htm"
+    },
+    {
+      "name": "DeleteAllSubItems",
+      "signature": "public void DeleteAllSubItems()",
+      "summary": "Deletes all the sub-items from the displacement.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_DeleteAllSubItems.htm"
+    },
+    {
+      "name": "DeleteSubItem",
+      "signature": "public void DeleteSubItem(int face_index)",
+      "summary": "Deletes a sub-item by its face index. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.DeleteSubItem(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_DeleteSubItem.htm"
+    },
+    {
+      "name": "GetSubItemFaceIndexes",
+      "signature": "public int[] GetSubItemFaceIndexes()",
+      "summary": "Gets all the sub-items on the displacement. Sub-items can exist to override the top-level parameters for polysurface/SubD faces. Sub-items are identified by the face index that they apply to. An array of the face indexes of each sub-item on the displacement.",
+      "params": [],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.GetSubItemFaceIndexes\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_GetSubItemFaceIndexes.htm"
+    },
+    {
+      "name": "SetSubItemBlackPoint",
+      "signature": "public void SetSubItemBlackPoint(int face_index, double black_point)",
+      "summary": "Sets the override for displacement \u0027black-point\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemBlackPoint(System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "black_point",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022black_point\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemBlackPoint(System.Int32,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SetSubItemBlackPoint.htm"
+    },
+    {
+      "name": "SetSubItemMappingChannel",
+      "signature": "public void SetSubItemMappingChannel(int face_index, int chan)",
+      "summary": "Sets the override for displacement \u0027mapping channel\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemMappingChannel(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "chan",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022chan\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemMappingChannel(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SetSubItemMappingChannel.htm"
+    },
+    {
+      "name": "SetSubItemOn",
+      "signature": "public void SetSubItemOn(int face_index, bool on)",
+      "summary": "Sets the override for displacement \u0027on\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemOn(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemOn(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SetSubItemOn.htm"
+    },
+    {
+      "name": "SetSubItemTexture",
+      "signature": "public void SetSubItemTexture(int face_index, Guid texture_id)",
+      "summary": "Sets the override for displacement \u0027texture\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemTexture(System.Int32,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "texture_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022texture_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemTexture(System.Int32,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SetSubItemTexture.htm"
+    },
+    {
+      "name": "SetSubItemWhitePoint",
+      "signature": "public void SetSubItemWhitePoint(int face_index, double white_point)",
+      "summary": "Sets the override for displacement \u0027white-point\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemWhitePoint(System.Int32,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "white_point",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022white_point\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SetSubItemWhitePoint(System.Int32,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SetSubItemWhitePoint.htm"
+    },
+    {
+      "name": "SubItemBlackPoint",
+      "signature": "public double SubItemBlackPoint(int face_index)",
+      "summary": "Gets the override for displacement \u0027black-point\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemBlackPoint(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemBlackPoint(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SubItemBlackPoint.htm"
+    },
+    {
+      "name": "SubItemMappingChannel",
+      "signature": "public int SubItemMappingChannel(int face_index)",
+      "summary": "Gets the override for displacement \u0027mapping channel\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemMappingChannel(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemMappingChannel(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SubItemMappingChannel.htm"
+    },
+    {
+      "name": "SubItemOn",
+      "signature": "public bool SubItemOn(int face_index)",
+      "summary": "Gets the override for displacement \u0027on\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemOn(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemOn(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SubItemOn.htm"
+    },
+    {
+      "name": "SubItemTexture",
+      "signature": "public Guid SubItemTexture(int face_index)",
+      "summary": "Gets the override for displacement \u0027texture\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemTexture(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemTexture(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SubItemTexture.htm"
+    },
+    {
+      "name": "SubItemWhitePoint",
+      "signature": "public double SubItemWhitePoint(int face_index)",
+      "summary": "Gets the override for displacement \u0027white-point\u0027. face_index is the index of the face on the polysurface/SubD.",
+      "params": [
+        {
+          "name": "face_index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022face_index\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemWhitePoint(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmDisplacement.SubItemWhitePoint(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmDisplacement_SubItemWhitePoint.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BlackPoint",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the amount of displacement for the black color in the texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_BlackPoint.htm"
+    },
+    {
+      "name": "Fairing",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the number of steps for the fairing process. Fairing straightens rough feature edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_Fairing.htm"
+    },
+    {
+      "name": "FairingOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether or not to perform a fairing step. Fairing straightens rough feature edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_FairingOn.htm"
+    },
+    {
+      "name": "FinalMaxFaces",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how many faces the reduction post process should target.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_FinalMaxFaces.htm"
+    },
+    {
+      "name": "FinalMaxFacesOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether to perform a mesh reduction as a post process to simplify the result of displacement.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_FinalMaxFacesOn.htm"
+    },
+    {
+      "name": "InitialQuality",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how densely the object is initially subdivided. The lower the value, the higher the resolution of the displaced mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_InitialQuality.htm"
+    },
+    {
+      "name": "MappingChannel",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies which texture mapping channel is used for the displacement texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_MappingChannel.htm"
+    },
+    {
+      "name": "MeshMemoryLimit",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies in megabytes how much memory can be allocated for use by the displacement mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_MeshMemoryLimit.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether the displacement feature is enabled or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_On.htm"
+    },
+    {
+      "name": "PostWeldAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the maximum angle between face normals of adjacent faces that will get welded together.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_PostWeldAngle.htm"
+    },
+    {
+      "name": "RefineSensitivity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how sensitive the divider for contrasts is on the displacement texture. Specify 1 to split all mesh edges on each refine step. Specify 0.99 to make even slight contrasts on the displacement texture cause edges to be split. Specifying 0.01 only splits edges where heavy contrast exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_RefineSensitivity.htm"
+    },
+    {
+      "name": "RefineSteps",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the number of refinement passes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_RefineSteps.htm"
+    },
+    {
+      "name": "SweepResolutionFormula",
+      "type": "File3dmDisplacement.SweepResolutionFormulas",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies which formula is used to calculate sweep resolution from initial quality.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_SweepResolutionFormula.htm"
+    },
+    {
+      "name": "TextureId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies which texture is used for computing the displacement amount.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_TextureId.htm"
+    },
+    {
+      "name": "WhitePoint",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the amount of displacement for the white color in the texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmDisplacement_WhitePoint.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

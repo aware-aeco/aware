@@ -1,0 +1,258 @@
+{
+  "name": "IShrinkWrapService",
+  "namespace": "Rhino.Runtime",
+  "kind": "interface",
+  "summary": "Internal interface used by ShrinkWrap functions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_IShrinkWrapService.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ShrinkWrap(IEnumerable\u003CMesh\u003E, ShrinkWrapParameters)",
+      "signature": "Mesh ShrinkWrap(IEnumerable\u003CMesh\u003E meshes, ShrinkWrapParameters parameters)",
+      "summary": "Create mesh from input meshes. Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022meshes\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Geometry.ShrinkWrapParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Geometry.ShrinkWrapParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Geometry.ShrinkWrapParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap_6.htm"
+    },
+    {
+      "name": "ShrinkWrap(Mesh, ShrinkWrapParameters)",
+      "signature": "Mesh ShrinkWrap(Mesh mesh, ShrinkWrapParameters parameters)",
+      "summary": "Create a shrinkwrap from a single mesh Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "[Missing \u003Cparam name=\u0022mesh\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.Mesh,Rhino.Geometry.ShrinkWrapParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.Mesh,Rhino.Geometry.ShrinkWrapParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.Mesh,Rhino.Geometry.ShrinkWrapParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap.htm"
+    },
+    {
+      "name": "ShrinkWrap(PointCloud, ShrinkWrapParameters)",
+      "signature": "Mesh ShrinkWrap(PointCloud pointCloud, ShrinkWrapParameters parameters)",
+      "summary": "Create mesh from point cloud input. Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "pointCloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "[Missing \u003Cparam name=\u0022pointCloud\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.PointCloud,Rhino.Geometry.ShrinkWrapParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.PointCloud,Rhino.Geometry.ShrinkWrapParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.PointCloud,Rhino.Geometry.ShrinkWrapParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap_2.htm"
+    },
+    {
+      "name": "ShrinkWrap(IEnumerable\u003CGeometryBase\u003E, ShrinkWrapParameters, MeshingParameters)",
+      "signature": "Mesh ShrinkWrap(IEnumerable\u003CGeometryBase\u003E geometryBases, ShrinkWrapParameters parameters, MeshingParameters meshingParameters)",
+      "summary": "Create a mesh from a collection of geometry base objects Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "geometryBases",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022geometryBases\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "meshingParameters",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "[Missing \u003Cparam name=\u0022meshingParameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap_4.htm"
+    },
+    {
+      "name": "ShrinkWrap(IEnumerable\u003CMesh\u003E, ShrinkWrapParameters, CancellationToken)",
+      "signature": "Mesh ShrinkWrap(IEnumerable\u003CMesh\u003E meshes, ShrinkWrapParameters parameters, CancellationToken cancellationToken)",
+      "summary": "Create mesh from input meshes. Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022meshes\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "[Missing \u003Cparam name=\u0022cancellationToken\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap_7.htm"
+    },
+    {
+      "name": "ShrinkWrap(Mesh, ShrinkWrapParameters, CancellationToken)",
+      "signature": "Mesh ShrinkWrap(Mesh mesh, ShrinkWrapParameters parameters, CancellationToken cancellationToken)",
+      "summary": "Create a shrinkwrap from a single mesh Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "[Missing \u003Cparam name=\u0022mesh\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.Mesh,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.Mesh,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "[Missing \u003Cparam name=\u0022cancellationToken\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.Mesh,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.Mesh,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap_1.htm"
+    },
+    {
+      "name": "ShrinkWrap(PointCloud, ShrinkWrapParameters, CancellationToken)",
+      "signature": "Mesh ShrinkWrap(PointCloud pointCloud, ShrinkWrapParameters parameters, CancellationToken cancellationToken)",
+      "summary": "Create mesh from point cloud input. Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "pointCloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "[Missing \u003Cparam name=\u0022pointCloud\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.PointCloud,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.PointCloud,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "[Missing \u003Cparam name=\u0022cancellationToken\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.PointCloud,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(Rhino.Geometry.PointCloud,Rhino.Geometry.ShrinkWrapParameters,System.Threading.CancellationToken)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap_3.htm"
+    },
+    {
+      "name": "ShrinkWrap(IEnumerable\u003CGeometryBase\u003E, ShrinkWrapParameters, MeshingParameters, CancellationToken)",
+      "signature": "Mesh ShrinkWrap(IEnumerable\u003CGeometryBase\u003E geometryBases, ShrinkWrapParameters parameters, MeshingParameters meshingParameters, CancellationToken cancellationToken)",
+      "summary": "Create a mesh from a collection of geometry base objects Null on error or incompatible settings",
+      "params": [
+        {
+          "name": "geometryBases",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022geometryBases\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.ShrinkWrapParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "meshingParameters",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "[Missing \u003Cparam name=\u0022meshingParameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "[Missing \u003Cparam name=\u0022cancellationToken\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters,System.Threading.CancellationToken)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IShrinkWrapService.ShrinkWrap(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},Rhino.Geometry.ShrinkWrapParameters,Rhino.Geometry.MeshingParameters,System.Threading.CancellationToken)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IShrinkWrapService_ShrinkWrap_5.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "RenderSettings.EnvironmentPurpose",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "The purpose a render environment is being used for.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderSettings_EnvironmentPurpose.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Standard",
+      "value": 0,
+      "summary": "Used to directly get and set the environment instance id."
+    },
+    {
+      "name": "ForRendering",
+      "value": 1,
+      "summary": "Used to get the environment instance id to be used for actual rendering."
+    }
+  ]
+}

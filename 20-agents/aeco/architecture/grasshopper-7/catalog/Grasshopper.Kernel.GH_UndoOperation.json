@@ -1,0 +1,44 @@
+{
+  "name": "GH_UndoOperation",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible types of undo operation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_UndoOperation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ClearUndoStack",
+      "value": 0,
+      "summary": "The stack with all undo records has been cleared."
+    },
+    {
+      "name": "ClearRedoStack",
+      "value": 1,
+      "summary": "The stack with all redo records has been cleared. This always happens when a new undo record is added."
+    },
+    {
+      "name": "RecordAdded",
+      "value": 2,
+      "summary": "A new undo record is added to the list. There will be a ClearRedoStack event after this one."
+    },
+    {
+      "name": "RecordRemoved",
+      "value": 3,
+      "summary": "A specific record has been deleted. This is not a typical operation and is usually due to user intervention. Removal can occur from both the undo and the redo stack."
+    },
+    {
+      "name": "Undo",
+      "value": 4,
+      "summary": "An undo operation was successfully completed. This means a record has been moved from the undo stack to the redo stack."
+    },
+    {
+      "name": "Redo",
+      "value": 5,
+      "summary": "A redo operation was successfully completed. This means a record has been moved from the redo stack back onto the undo stack. This does not count as a RecordAdded operation."
+    }
+  ]
+}

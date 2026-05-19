@@ -1,0 +1,80 @@
+{
+  "name": "ContinueNode",
+  "namespace": "ProtoCore.AST.ImperativeAST",
+  "kind": "class",
+  "summary": "Type ContinueNode",
+  "base": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeGraph.cs",
+  "constructors": [
+    {
+      "name": "ContinueNode()",
+      "signature": "void ContinueNode()",
+      "summary": "ContinueNode.ContinueNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeGraph.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Accept(ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E)",
+      "signature": "TResult Accept\u003CTResult\u003E(ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E visitor)",
+      "summary": "ContinueNode.Accept",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeGraph.cs"
+    },
+    {
+      "name": "Children",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Children()",
+      "summary": "ContinueNode.Children",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeGraph.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ContinueNode.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeGraph.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "ProtoCore.AST.ImperativeAST.AstKind",
+      "getter": true,
+      "setter": false,
+      "summary": "ContinueNode.Kind",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeGraph.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

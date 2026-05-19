@@ -1,0 +1,189 @@
+{
+  "name": "LcOpAnimationObserver",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAnimationObserver class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimationObserver",
+  "constructors": [
+    {
+      "name": "LcOpAnimationObserver()",
+      "signature": "LcOpAnimationObserver()",
+      "summary": "Constructs a new LcOpAnimationObserver.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimationObserver InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationObserver",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "OnEndAnimation",
+      "signature": "void OnEndAnimation(Autodesk.Navisworks.Api.Interop.LcOpAnimation anim, double anim_end_time, double engine_end_time)",
+      "summary": "OnEndAnimation method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "anim",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+          "optional": false
+        },
+        {
+          "name": "anim_end_time",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "engine_end_time",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.OnEndAnimation%28Autodesk.Navisworks.Api.Interop.LcOpAnimation%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "OnStartAnimSet",
+      "signature": "void OnStartAnimSet(Autodesk.Navisworks.Api.Interop.LcOpAnimSet set)",
+      "summary": "OnStartAnimSet method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.OnStartAnimSet%28Autodesk.Navisworks.Api.Interop.LcOpAnimSet%29"
+    },
+    {
+      "name": "OnStartAnimation",
+      "signature": "void OnStartAnimation(Autodesk.Navisworks.Api.Interop.LcOpAnimation anim)",
+      "summary": "OnStartAnimation method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "anim",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.OnStartAnimation%28Autodesk.Navisworks.Api.Interop.LcOpAnimation%29"
+    },
+    {
+      "name": "OnStopAnimSet",
+      "signature": "void OnStopAnimSet(Autodesk.Navisworks.Api.Interop.LcOpAnimSet set)",
+      "summary": "OnStopAnimSet method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.OnStopAnimSet%28Autodesk.Navisworks.Api.Interop.LcOpAnimSet%29"
+    },
+    {
+      "name": "OnStopAnimation",
+      "signature": "void OnStopAnimation(Autodesk.Navisworks.Api.Interop.LcOpAnimation anim)",
+      "summary": "OnStopAnimation method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "anim",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.OnStopAnimation%28Autodesk.Navisworks.Api.Interop.LcOpAnimation%29"
+    },
+    {
+      "name": "OnUpdateTime",
+      "signature": "void OnUpdateTime(double time)",
+      "summary": "OnUpdateTime method of LcOpAnimationObserver.",
+      "params": [
+        {
+          "name": "time",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.OnUpdateTime%28System.Double%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAnimationObserver.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationObserver.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

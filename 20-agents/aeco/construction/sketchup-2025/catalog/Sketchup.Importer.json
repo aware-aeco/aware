@@ -1,0 +1,145 @@
+{
+  "name": "Importer",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The Importer interface lets you build your own importers for SketchUp. To use this, you create a subclass of Importer and implement all of the methods described below. This will make your importer appear in the list that users see under File \u003E Import, and you can use Ruby to do all of the work of opening the file and creating whatever you need inside SketchUp. Here is an example of a complete script that imports a .txt file and displays its contents in a messagebox.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "description",
+      "signature": "description =\u003E Object",
+      "summary": "This method is called by SketchUp to determine the description that appears in the File \u003E Import dialog\u0027s pulldown list of valid importers.",
+      "remarks": "This method is called by SketchUp to determine the description that appears in the File \u003E Import dialog\u0027s pulldown list of valid importers. Though it is common for the description to include the file extension supported by the importer (such as \u201CText Importer (.txt)\u201D), the actual extension is defined in the file_extension method.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "description - a brief string description"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#description-instance_method"
+    },
+    {
+      "name": "do_options",
+      "signature": "do_options =\u003E Object",
+      "summary": "This method is called by SketchUp when the user clicks on the \u201COptions\u201D button inside the File \u003E Import dialog.",
+      "remarks": "This method is called by SketchUp when the user clicks on the \u201COptions\u201D button inside the File \u003E Import dialog. You can use it to gather and store settings for your importer. Only applicable if the importer supports options, meaning its supports_options method returns true.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "id - an id string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#do_options-instance_method"
+    },
+    {
+      "name": "file_extension",
+      "signature": "file_extension =\u003E Object",
+      "summary": "This method is called by SketchUp to determine a single file extension is associated with your importer.",
+      "remarks": "This method is called by SketchUp to determine a single file extension is associated with your importer. Only files that match this extension will be shown to the user as they browse their harddrive for things to import. Ruby importers are only allowed to support a single extension.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "extension - typically a 3-letter string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#file_extension-instance_method"
+    },
+    {
+      "name": "id",
+      "signature": "id =\u003E Object",
+      "summary": "This method is called by SketchUp to determine a unique identifier for your importer, typically something like \u201Ccom.",
+      "remarks": "This method is called by SketchUp to determine a unique identifier for your importer, typically something like \u201Ccom.sketchup.importers.dxf\u201D.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "id - an id string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#id-instance_method"
+    },
+    {
+      "name": "load_file",
+      "signature": "load_file(file_path, status) =\u003E Object",
+      "summary": "This method is called by SketchUp after the user has selected a file to import.",
+      "remarks": "This method is called by SketchUp after the user has selected a file to import. This is where you do the real work by opening the file via Ruby\u0027s File object and processing it in whatever way you need. You must return an integer success code to SketchUp when you are done. These are the codes that SketchUp understands:",
+      "params": [
+        {
+          "name": "file_path",
+          "type": "Object",
+          "doc": "Absolute path to the file the user selected",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "Object",
+          "doc": "The status of the import so far. Contains true.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "success - an integer status code. See above."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#load_file-instance_method"
+    },
+    {
+      "name": "supports_options?",
+      "signature": "supports_options? =\u003E Boolean",
+      "summary": "This method is called by SketchUp to determine if the \u201COptions\u201D button inside the File \u003E Import dialog should be enabled while your importer is selected.",
+      "remarks": "This method is called by SketchUp to determine if the \u201COptions\u201D button inside the File \u003E Import dialog should be enabled while your importer is selected.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "supports_options - a boolean"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#supports_options?-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ImportSuccess",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#ImportSuccess-constant"
+    },
+    {
+      "name": "ImportFail",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#ImportFail-constant"
+    },
+    {
+      "name": "ImportCanceled",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#ImportCanceled-constant"
+    },
+    {
+      "name": "ImportFileNotFound",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Importer.html#ImportFileNotFound-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

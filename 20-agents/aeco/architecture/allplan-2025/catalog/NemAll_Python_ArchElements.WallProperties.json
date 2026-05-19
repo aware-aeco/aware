@@ -1,0 +1,219 @@
+{
+  "name": "WallProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of properties of a multi layer wall",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/",
+  "constructors": [
+    {
+      "name": "WallProperties",
+      "signature": "WallProperties() | WallProperties(wallProp: WallProperties)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAxis",
+      "signature": "GetAxis() -\u003E AxisProperties",
+      "summary": "Get the axis properties",
+      "remarks": "Get the axis properties",
+      "params": [],
+      "returns": {
+        "type": "AxisProperties",
+        "doc": "Axis properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.GetAxis"
+    },
+    {
+      "name": "GetPathElementAxisType",
+      "signature": "GetPathElementAxisType() -\u003E int",
+      "summary": "Get the axis type of the path element",
+      "remarks": "Get the axis type of the path element",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Axis type of the path element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.GetPathElementAxisType"
+    },
+    {
+      "name": "GetThickness",
+      "signature": "GetThickness() -\u003E float",
+      "summary": "Get the thickness",
+      "remarks": "Get the thickness",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Thickness"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.GetThickness"
+    },
+    {
+      "name": "GetTierCount",
+      "signature": "GetTierCount() -\u003E int",
+      "summary": "Get the tier count",
+      "remarks": "Get the tier count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Tier count"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.GetTierCount"
+    },
+    {
+      "name": "GetWallTierProperties",
+      "signature": "GetWallTierProperties(tierIndex: int) -\u003E WallTierProperties",
+      "summary": "Get the properties of a specified wall tier",
+      "remarks": "Get the properties of a specified wall tier",
+      "params": [
+        {
+          "name": "tierIndex",
+          "type": "int",
+          "doc": "Tier index. First tier has the index 1!",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "WallTierProperties",
+        "doc": "Wall tier properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.GetWallTierProperties"
+    },
+    {
+      "name": "LoadFromFavoriteFile",
+      "signature": "LoadFromFavoriteFile(doc: DocumentAdapter)",
+      "summary": "Load the properties from the favorite file",
+      "remarks": "Load the properties from the favorite file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.LoadFromFavoriteFile"
+    },
+    {
+      "name": "SetAxis",
+      "signature": "SetAxis(axis: AxisProperties)",
+      "summary": "Set the axis",
+      "remarks": "Set the axis",
+      "params": [
+        {
+          "name": "axis",
+          "type": "AxisProperties",
+          "doc": "Axis properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.SetAxis"
+    },
+    {
+      "name": "SetPathElementAxisType",
+      "signature": "SetPathElementAxisType(pathEleAxisType: int)",
+      "summary": "Set the axis type of the path element",
+      "remarks": "Set the axis type of the path element",
+      "params": [
+        {
+          "name": "pathEleAxisType",
+          "type": "int",
+          "doc": "Axis type of the path element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.SetPathElementAxisType"
+    },
+    {
+      "name": "SetTierCount",
+      "signature": "SetTierCount(tierCount: int)",
+      "summary": "Set the tier count",
+      "remarks": "Set the tier count",
+      "params": [
+        {
+          "name": "tierCount",
+          "type": "int",
+          "doc": "Tier count",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.SetTierCount"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Axis",
+      "type": "AxisProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the axis properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.Axis"
+    },
+    {
+      "name": "PathElementAxisType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the axis type of the path element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.PathElementAxisType"
+    },
+    {
+      "name": "StartNewJoinedWallGroup",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the state for starting a new joined wall group All walls in a group are used for to create a continues join between the walls.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.StartNewJoinedWallGroup"
+    },
+    {
+      "name": "TierCount",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the tier count",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/#NemAll_Python_ArchElements.WallProperties.TierCount"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

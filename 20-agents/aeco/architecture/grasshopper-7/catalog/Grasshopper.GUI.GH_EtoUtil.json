@@ -1,0 +1,111 @@
+{
+  "name": "GH_EtoUtil",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_EtoUtil.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_EtoUtil.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CenterFormOnCursor",
+      "signature": "public static void CenterFormOnCursor(this Window F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered around the cursor",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_EtoUtil_CenterFormOnCursor.htm"
+    },
+    {
+      "name": "CenterFormOnEditor",
+      "signature": "public static void CenterFormOnEditor(this Window F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the active editor. If the editor doesn\u0027t exist or is hidden, the form will be centered on the screen instead.",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_EtoUtil_CenterFormOnEditor.htm"
+    },
+    {
+      "name": "CenterFormOnScreen",
+      "signature": "public static void CenterFormOnScreen(this Window F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the current screen. The current screen being defined as the screen containing the cursor.",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the active screen.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_EtoUtil_CenterFormOnScreen.htm"
+    },
+    {
+      "name": "CenterFormOnWindow",
+      "signature": "public static void CenterFormOnWindow(this Window F, Window parentWindow, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the supplied window. If the window doesn\u0027t exist or is hidden, the form will be centered on the screen instead.",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "Window",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_EtoUtil_CenterFormOnWindow.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,182 @@
+{
+  "name": "LcOpSavedItemTypesType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSavedItemTypesType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemTypesType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eTYPE_VIEW",
+      "value": 0
+    },
+    {
+      "name": "eTYPE_ANIM",
+      "value": 1
+    },
+    {
+      "name": "eTYPE_CUT",
+      "value": 2
+    },
+    {
+      "name": "eTYPE_NONE",
+      "value": 3
+    },
+    {
+      "name": "eTYPE_FOLDER",
+      "value": 4
+    },
+    {
+      "name": "eTYPE_SELECTION_SET",
+      "value": 5
+    },
+    {
+      "name": "eTYPE_ANIM_SCENE",
+      "value": 32
+    },
+    {
+      "name": "eTYPE_ANIM_FOLDER",
+      "value": 33
+    },
+    {
+      "name": "eTYPE_ANIM_ROOT_FOLDER",
+      "value": 34
+    },
+    {
+      "name": "eTYPE_ANIM_SCENE_FOLDER",
+      "value": 35
+    },
+    {
+      "name": "eTYPE_ANIM_CAMERA_AN",
+      "value": 36
+    },
+    {
+      "name": "eTYPE_ANIM_SELECTION_AN",
+      "value": 37
+    },
+    {
+      "name": "eTYPE_ANIM_SECTION_AN",
+      "value": 38
+    },
+    {
+      "name": "eTYPE_ANIM_KEYFRAME_CAMERA",
+      "value": 39
+    },
+    {
+      "name": "eTYPE_ANIM_KEYFRAME_SELECTION",
+      "value": 40
+    },
+    {
+      "name": "eTYPE_ANIM_KEYFRAME_SECTION",
+      "value": 41
+    },
+    {
+      "name": "eTYPE_ANIM_SCRIPT",
+      "value": 48
+    },
+    {
+      "name": "eTYPE_CLASH_TEST",
+      "value": 50
+    },
+    {
+      "name": "eTYPE_CLASH_RESULT",
+      "value": 51
+    },
+    {
+      "name": "eTYPE_CLASH_RESULT_GROUP",
+      "value": 52
+    },
+    {
+      "name": "eTYPE_CLASH_TEST_FOLDER",
+      "value": 53
+    },
+    {
+      "name": "eTYPE_CLASH_FIELD_FOLDER",
+      "value": 54
+    },
+    {
+      "name": "eTYPE_CLASH_STATUS_FOLDER",
+      "value": 55
+    },
+    {
+      "name": "eTYPE_CLASH_STATUS",
+      "value": 56
+    },
+    {
+      "name": "eTYPE_CLASH_FIELD",
+      "value": 57
+    },
+    {
+      "name": "eTYPE_CLASH_VALIDATION_ITEM",
+      "value": 58
+    },
+    {
+      "name": "eTYPE_TIMELINER_DATASOURCE",
+      "value": 60
+    },
+    {
+      "name": "eTYPE_TIMELINER_TASK",
+      "value": 61
+    },
+    {
+      "name": "eTYPE_TIMELINER_SIMULATIONTASKTYPE",
+      "value": 62
+    },
+    {
+      "name": "eTYPE_TIMELINER_SIMULATIONAPPEARANCE",
+      "value": 63
+    },
+    {
+      "name": "eTYPE_TIMELINER_SIMULATIONSTATUS",
+      "value": 64
+    },
+    {
+      "name": "eTYPE_FILE_INFO",
+      "value": 70
+    },
+    {
+      "name": "eTYPE_SHEET_INFO",
+      "value": 71
+    },
+    {
+      "name": "eTYPE_AUTODESK_MATERIAL",
+      "value": 80
+    },
+    {
+      "name": "eTYPE_AUTODESK_LIGHT",
+      "value": 81
+    },
+    {
+      "name": "eTYPE_AUTODESK_LIGHT_POINT",
+      "value": 82
+    },
+    {
+      "name": "eTYPE_AUTODESK_LIGHT_DISTANT",
+      "value": 83
+    },
+    {
+      "name": "eTYPE_AUTODESK_LIGHT_SPOT",
+      "value": 84
+    },
+    {
+      "name": "eTYPE_AUTODESK_LIGHT_WEB",
+      "value": 85
+    },
+    {
+      "name": "eTYPE_ZONE",
+      "value": 86
+    },
+    {
+      "name": "eTYPE_MFG_FIRST",
+      "value": 100
+    },
+    {
+      "name": "eTYPE_MFG_LAST",
+      "value": 150
+    }
+  ]
+}

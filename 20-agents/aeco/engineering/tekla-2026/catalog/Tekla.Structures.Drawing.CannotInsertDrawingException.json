@@ -1,0 +1,32 @@
+{
+  "name": "CannotInsertDrawingException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotInsertDrawingException class defines the exception that is thrown when a user tries to insert a drawing when another drawing is active.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/82d206f5-b423-ee30-ab9e-012751862593",
+  "constructors": [
+    {
+      "name": "CannotInsertDrawingException",
+      "signature": "public CannotInsertDrawingException(string Message)",
+      "summary": "Creates a new cannot insert drawing exception instance.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/06cb21b0-fed0-74bc-7f7e-6a8ea16d89f3"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

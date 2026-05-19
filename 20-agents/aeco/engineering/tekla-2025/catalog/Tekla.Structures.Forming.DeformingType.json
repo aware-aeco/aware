@@ -1,0 +1,29 @@
+{
+  "name": "DeformingType",
+  "namespace": "Tekla.Structures.Forming",
+  "kind": "enum",
+  "summary": "Enumeration for deforming type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/568a687f-8617-ffc0-3fa4-e41a3704a231",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_SPECIFIED",
+      "value": 0,
+      "summary": "Not specified, default value."
+    },
+    {
+      "name": "DEFORMED",
+      "value": 1,
+      "summary": "Indiactes deformed item."
+    },
+    {
+      "name": "UNDEFORMED",
+      "value": 2,
+      "summary": "Indicates undeformed item."
+    }
+  ]
+}

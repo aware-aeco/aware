@@ -1,0 +1,14 @@
+{
+  "name": "AssemblyFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The AssemblyFilterExpressions class contains all the assembly filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0ff93cb9-1ee5-699d-0499-cb3694169399",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

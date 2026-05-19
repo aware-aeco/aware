@@ -1,0 +1,224 @@
+{
+  "name": "CreateAnnotationCommand",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "class",
+  "summary": "Type CreateAnnotationCommand",
+  "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "CreateAnnotationCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, string, double, double, bool)",
+      "signature": "void CreateAnnotationCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E annotationId, string annotationText, double x, double y, bool defaultPosition)",
+      "summary": "Recordable command to create a new AnnotationModel",
+      "params": [
+        {
+          "name": "annotationId",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "annotationText",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "CreateAnnotationCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, string, string, double, double, bool)",
+      "signature": "void CreateAnnotationCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E annotationId, string annotationText, string annotationDescriptionText, double x, double y, bool defaultPosition)",
+      "summary": "Recordable command to create a new AnnotationModel",
+      "params": [
+        {
+          "name": "annotationId",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "Collection of ids",
+          "optional": false
+        },
+        {
+          "name": "annotationText",
+          "type": "string",
+          "doc": "Header text",
+          "optional": false
+        },
+        {
+          "name": "annotationDescriptionText",
+          "type": "string",
+          "doc": "Description text",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "X location",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "Y location",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "The default position",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "CreateAnnotationCommand(System.Guid, string, double, double, bool)",
+      "signature": "void CreateAnnotationCommand(System.Guid annotationId, string annotationText, double x, double y, bool defaultPosition)",
+      "summary": "",
+      "params": [
+        {
+          "name": "annotationId",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "annotationText",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "CreateAnnotationCommand(System.Guid, string, string, double, double, bool)",
+      "signature": "void CreateAnnotationCommand(System.Guid annotationId, string annotationText, string annotationDescriptionText, double x, double y, bool defaultPosition)",
+      "summary": "Recordable command to create a new AnnotationModel",
+      "params": [
+        {
+          "name": "annotationId",
+          "type": "System.Guid",
+          "doc": "Id of the new AnnotationModel",
+          "optional": false
+        },
+        {
+          "name": "annotationText",
+          "type": "string",
+          "doc": "Header text",
+          "optional": false
+        },
+        {
+          "name": "annotationDescriptionText",
+          "type": "string",
+          "doc": "Description text",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "X location",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "Y location",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "The default position",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "CreateAnnotationCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "CreateAnnotationCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

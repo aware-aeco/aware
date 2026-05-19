@@ -1,0 +1,29 @@
+{
+  "name": "BaseWeld.WeldIntermittentTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Weld intermittent types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fb0677a7-651a-7a60-af8b-8c9be1e73b29",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CONTINUOUS",
+      "value": 0,
+      "summary": "Continuous."
+    },
+    {
+      "name": "CHAIN_INTERMITTENT",
+      "value": 1,
+      "summary": "Chain intermittent."
+    },
+    {
+      "name": "STAGGERED_INTERMITTENT",
+      "value": 2,
+      "summary": "Staggered intermittent."
+    }
+  ]
+}

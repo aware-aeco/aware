@@ -1,0 +1,47 @@
+{
+  "name": "FileInteractiveResolvingEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::FileInteractiveResolving event",
+  "base": "Autodesk.Navisworks.Api.FileResolutionEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileInteractiveResolvingEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayString",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get string to display to the end user explaining what sort of file is being resolved",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileInteractiveResolvingEventArgs.DisplayString"
+    },
+    {
+      "name": "Handled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Set whether event handler has handled interactive file resolution. If set to true, default interactive file resolution will not occur.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileInteractiveResolvingEventArgs.Handled"
+    },
+    {
+      "name": "ResolvedFileReference",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Set file reference that FileReference has been resolved to by interactively asking user. Leave as null if file can\u2019t be resolved.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileInteractiveResolvingEventArgs.ResolvedFileReference"
+    },
+    {
+      "name": "Response",
+      "type": "Autodesk.Navisworks.Api.FileResolutionResponse",
+      "getter": true,
+      "setter": true,
+      "summary": "Set user\u0027s response from interactive dialog.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileInteractiveResolvingEventArgs.Response"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

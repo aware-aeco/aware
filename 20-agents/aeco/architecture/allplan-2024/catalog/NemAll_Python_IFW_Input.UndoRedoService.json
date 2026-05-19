@@ -1,0 +1,144 @@
+{
+  "name": "UndoRedoService",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the undo/redo service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/",
+  "constructors": [
+    {
+      "name": "UndoRedoService",
+      "signature": "UndoRedoService(doc, isPassivateAll=False, isLockPreviewDraw=False, collectEleForMultipleTransactions=False) | UndoRedoService(element)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Current document",
+          "optional": false
+        },
+        {
+          "name": "isPassivateAll",
+          "type": "bool",
+          "doc": "if true -\u003E call esapas_2(), default is false",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "isLockPreviewDraw",
+          "type": "bool",
+          "doc": "Lock the preview drawing during the undo step creation",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "collectEleForMultipleTransactions",
+          "type": "bool",
+          "doc": "Collect the elements, if the UndoRedoService is included in multiple transactions",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateUndoStep",
+      "signature": "CreateUndoStep(eventID) | CreateUndoStep()",
+      "summary": "Create an undo step",
+      "remarks": "Create an undo step",
+      "params": [
+        {
+          "name": "eventID",
+          "type": "int",
+          "doc": "Event ID of the undo step",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.CreateUndoStep"
+    },
+    {
+      "name": "ActivateCollectedElementsForFinishUpdate",
+      "signature": "ActivateCollectedElementsForFinishUpdate()",
+      "summary": "activate collected elements from undo step, important for next finish update",
+      "remarks": "activate collected elements from undo step, important for next finish update",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.ActivateCollectedElementsForFinishUpdate"
+    },
+    {
+      "name": "CollectElementsForMultipleTransactions",
+      "signature": "CollectElementsForMultipleTransactions()",
+      "summary": "Collect the elements for adding multiple transactions to one undo step",
+      "remarks": "Collect the elements for adding multiple transactions to one undo step",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.CollectElementsForMultipleTransactions"
+    },
+    {
+      "name": "IsInUndoService",
+      "signature": "IsInUndoService()",
+      "summary": "Check if an active undo service is present",
+      "remarks": "Check if an active undo service is present",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Active undo service is present"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.IsInUndoService"
+    },
+    {
+      "name": "SetUndoDescription",
+      "signature": "SetUndoDescription(textID)",
+      "summary": "Set the undo step description independent from menu event text",
+      "remarks": "Set the undo step description independent from menu event text",
+      "params": [
+        {
+          "name": "textID",
+          "type": "int",
+          "doc": "Text ID of the undo step",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.SetUndoDescription"
+    },
+    {
+      "name": "SetUndoStepEvent",
+      "signature": "SetUndoStepEvent(eventID)",
+      "summary": "Set the undo step event",
+      "remarks": "Set the undo step event",
+      "params": [
+        {
+          "name": "eventID",
+          "type": "int",
+          "doc": "Event ID of the undo step",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.SetUndoStepEvent"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

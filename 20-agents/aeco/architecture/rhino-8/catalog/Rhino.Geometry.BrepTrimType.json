@@ -1,0 +1,53 @@
+{
+  "name": "BrepTrimType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Each brep trim has a defined type.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_BrepTrimType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0,
+      "summary": "Unknown type"
+    },
+    {
+      "name": "Boundary",
+      "value": 1,
+      "summary": "Trim is connected to an edge, is part of an outer, inner or slit loop, and is the only trim connected to the edge."
+    },
+    {
+      "name": "Mated",
+      "value": 2,
+      "summary": "Trim is connected to an edge, is part of an outer, inner or slit loop, no other trim from the same loop is connected to the edge, and at least one trim from a different loop is connected to the edge."
+    },
+    {
+      "name": "Seam",
+      "value": 3,
+      "summary": "trim is connected to an edge, is part of an outer, inner or slit loop, and one other trim from the same loop is connected to the edge. (There can be other mated trims that are also connected to the edge. For example, the non-manifold edge that results when a surface edge lies in the middle of another surface.) Non-manifold \u0022cuts\u0022 have seam trims too."
+    },
+    {
+      "name": "Singular",
+      "value": 4,
+      "summary": "Trim is part of an outer loop, the trim\u0027s 2d curve runs along the singular side of a surface, and the trim is NOT connected to an edge. (There is no 3d edge because the surface side is singular.)"
+    },
+    {
+      "name": "CurveOnSurface",
+      "value": 5,
+      "summary": "Trim is connected to an edge, is the only trim in a curve-on-surface loop, and is the only trim connected to the edge."
+    },
+    {
+      "name": "PointOnSurface",
+      "value": 6,
+      "summary": "Trim is a point on a surface, trim.m_pbox is records surface parameters, and is the only trim in a point-on-surface loop. This trim is not connected to an edge and has no 2d curve."
+    },
+    {
+      "name": "Slit",
+      "value": 7
+    }
+  ]
+}

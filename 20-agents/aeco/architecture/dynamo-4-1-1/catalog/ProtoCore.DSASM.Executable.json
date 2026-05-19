@@ -1,0 +1,164 @@
+{
+  "name": "Executable",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Executable holds the body of code that will be executed along with associated meta-information",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs",
+  "constructors": [
+    {
+      "name": "Executable()",
+      "signature": "void Executable()",
+      "summary": "Executable.Executable",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Reset",
+      "signature": "void Reset()",
+      "summary": "Executable.Reset",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CodeBlocks",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.CodeBlock\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.CodeBlocks",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "CodeToLocation",
+      "type": "System.Collections.Generic.Dictionary\u003Culong, ulong\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.CodeToLocation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "Configurations",
+      "type": "System.Collections.Generic.IDictionary\u003Cstring, object\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.Configurations",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "CurrentDSFileName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.CurrentDSFileName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "DynamicFuncTable",
+      "type": "ProtoCore.DSASM.DynamicFunctionTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.DynamicFuncTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "DynamicVarTable",
+      "type": "ProtoCore.DSASM.DynamicVariableTable",
+      "getter": true,
+      "setter": true,
+      "summary": "This is a mapping of the current guid and number of callsites that appear within that guid. Language only execution contains only 1 guid for the entire program. Execution within a visual programming host means 1 guid per node, where 1 node contains a set of DS code. Each of the callsite instances are mapped to a guid and an instance count.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "ExecutingGraphnode",
+      "type": "ProtoCore.AssociativeGraph.GraphNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.ExecutingGraphnode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "FuncPointerTable",
+      "type": "ProtoCore.DSASM.FunctionPointerTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.FuncPointerTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "FunctionTable",
+      "type": "ProtoCore.Lang.FunctionTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.FunctionTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "TypeSystem",
+      "type": "ProtoCore.TypeSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.TypeSystem",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "UpdatedSymbols",
+      "type": "System.Collections.Generic.HashSet\u003CProtoCore.DSASM.SymbolNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "These are the list of symbols updated by the VM after an execution cycle",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "classTable",
+      "type": "ProtoCore.DSASM.ClassTable",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeData is set in the executable to isolate data passed to the runtime VM The RuntimeData will eventually be integrated completely into executable, this means moving RuntimeData properties to Executable and deprecating the RuntimeData object",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "iStreamCanvas",
+      "type": "ProtoCore.DSASM.InstructionStream",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.iStreamCanvas",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "instrStreamList",
+      "type": "ProtoCore.DSASM.InstructionStream[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.instrStreamList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "procedureTable",
+      "type": "ProtoCore.DSASM.ProcedureTable[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.procedureTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "runtimeSymbols",
+      "type": "ProtoCore.DSASM.SymbolTable[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Executable.runtimeSymbols",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

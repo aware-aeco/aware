@@ -1,0 +1,31 @@
+{
+  "name": "ReplicationCaseNotCurrentlySupported",
+  "namespace": "ProtoCore.Exceptions",
+  "kind": "class",
+  "summary": "Type ReplicationCaseNotCurrentlySupported",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Exceptions/ReplicationException.cs",
+  "constructors": [
+    {
+      "name": "ReplicationCaseNotCurrentlySupported(string)",
+      "signature": "void ReplicationCaseNotCurrentlySupported(string message)",
+      "summary": "ReplicationCaseNotCurrentlySupported.ReplicationCaseNotCurrentlySupported",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Exceptions/ReplicationException.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

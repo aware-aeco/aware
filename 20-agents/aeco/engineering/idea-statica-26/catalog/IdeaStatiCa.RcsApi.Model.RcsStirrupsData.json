@@ -1,0 +1,78 @@
+{
+  "name": "RcsStirrupsData",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsStirrupsData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Diameter",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.diameter.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    },
+    {
+      "name": "MaterialName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.materialName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    },
+    {
+      "name": "DiameterOfMandrel",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.diameterOfMandrel.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    },
+    {
+      "name": "IsClosed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.isClosed.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    },
+    {
+      "name": "ShearCheck",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.shearCheck.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    },
+    {
+      "name": "TorsionCheck",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.torsionCheck.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    },
+    {
+      "name": "Distance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.distance.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    },
+    {
+      "name": "Geometry",
+      "type": "PolyLine2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsStirrupsData.geometry.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsStirrupsData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

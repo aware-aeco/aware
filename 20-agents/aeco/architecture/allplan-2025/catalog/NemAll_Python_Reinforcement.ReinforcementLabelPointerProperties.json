@@ -1,0 +1,25 @@
+{
+  "name": "ReinforcementLabelPointerProperties",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.ReinforcementLabelPointerProperties.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelPointerProperties/",
+  "constructors": [
+    {
+      "name": "ReinforcementLabelPointerProperties",
+      "signature": "ReinforcementLabelPointerProperties() | ReinforcementLabelPointerProperties(combLineAngle: float, bCombLineByLength: bool, combLineValue: float)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelPointerProperties/#NemAll_Python_Reinforcement.ReinforcementLabelPointerProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "LoadingForm",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The LoadingForm class creates a dialog that is shown while something is being loaded by the main window and that needs the process to finish.",
+  "base": "System.Windows.Forms.Form",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4efab7b6-d829-72d2-48d7-abdcc7c3ac0c",
+  "constructors": [
+    {
+      "name": "LoadingForm",
+      "signature": "public LoadingForm()",
+      "summary": "Creates a new instance of the form.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7d0ae714-9a25-6672-bacc-d8e57ebc3ec5"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AllowClosing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Allows the closing of the dialog. By default disabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/58397d6c-be17-5707-b0e6-0acaeb880592"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

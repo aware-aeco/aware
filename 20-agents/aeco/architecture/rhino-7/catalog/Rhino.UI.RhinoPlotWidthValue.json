@@ -1,0 +1,39 @@
+{
+  "name": "RhinoPlotWidthValue",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Default width values used by UI objects to represent different states",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_RhinoPlotWidthValue.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0,
+      "summary": "Use default plot width"
+    },
+    {
+      "name": "None",
+      "value": -1,
+      "summary": "Don\u0027t print"
+    },
+    {
+      "name": "ByLayer",
+      "value": -10,
+      "summary": "Plot width from layer"
+    },
+    {
+      "name": "ByParent",
+      "value": -15,
+      "summary": "Plot width from parent object"
+    },
+    {
+      "name": "Varies",
+      "value": -20,
+      "summary": "Multiple objects selected with different types/widths"
+    }
+  ]
+}

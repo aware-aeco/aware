@@ -1,0 +1,23 @@
+{
+  "name": "FileObjWriteOptions.CurveType",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Type of curve used for trimmed surfaces",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileObjWriteOptions_CurveType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Polyline",
+      "value": 0,
+      "summary": "Polyline approximation, see comments for AngleTolRadians"
+    },
+    {
+      "name": "Nurbs",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "name": "AxisPlacement2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for orthogonal axis placement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/",
+  "constructors": [
+    {
+      "name": "AxisPlacement2D",
+      "signature": "AxisPlacement2D() | AxisPlacement2D(placement: AxisPlacement2D) | AxisPlacement2D(refPoint: Point2D, dirvector: Vector2D)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDirection",
+      "signature": "GetDirection() -\u003E Vector2D",
+      "summary": "Get direction",
+      "remarks": "Get direction",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Vector2D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.GetDirection"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point2D",
+      "summary": "Get the reference point",
+      "remarks": "Get the reference point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Reference point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.GetRefPoint"
+    },
+    {
+      "name": "GetYDirection",
+      "signature": "GetYDirection() -\u003E Vector2D",
+      "summary": "Get direction of local y-axis",
+      "remarks": "Get direction of local y-axis",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Vector2D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.GetYDirection"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Check if the placement is valid",
+      "remarks": "Check if the placement is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if it is a valid placement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.IsValid"
+    },
+    {
+      "name": "SetDirection",
+      "signature": "SetDirection(dir: Vector2D)",
+      "summary": "Set direction",
+      "remarks": "Set direction",
+      "params": [
+        {
+          "name": "dir",
+          "type": "Vector2D",
+          "doc": "Vector2D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.SetDirection"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point2D)",
+      "summary": "Set reference point",
+      "remarks": "Set reference point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "New reference point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.SetRefPoint"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(axis_placement: AxisPlacement2D) -\u003E bool",
+      "summary": "Comparison of axis placements. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of axis placements. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "axis_placement",
+          "type": "AxisPlacement2D",
+          "doc": "axis placement to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when axis placements are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Direction",
+      "type": "Vector2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get direction",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.Direction"
+    },
+    {
+      "name": "RefPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.RefPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

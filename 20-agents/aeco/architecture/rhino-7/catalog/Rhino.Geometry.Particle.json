@@ -1,0 +1,84 @@
+{
+  "name": "Particle",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a simple particle. This base class only defines position and display properties (size, color, bitmap id). You will most likely create a class that derives from this particle class to perform some sort of physical simulation (movement over time or frames).",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Particle.htm",
+  "constructors": [
+    {
+      "name": "Particle",
+      "signature": "public Particle()",
+      "summary": "Initializes a new instance of the Particle class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Particle__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Update",
+      "signature": "public virtual void Update()",
+      "summary": "Base class implementation does nothing.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Particle_Update.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Particle_Color.htm"
+    },
+    {
+      "name": "DisplayBitmapIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Particle_DisplayBitmapIndex.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index in ParentSystem for this Particle. Can change when the particle system is modified.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Particle_Index.htm"
+    },
+    {
+      "name": "Location",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "3d Location of the Particle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Particle_Location.htm"
+    },
+    {
+      "name": "ParentSystem",
+      "type": "ParticleSystem",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the parent particle system of this particle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Particle_ParentSystem.htm"
+    },
+    {
+      "name": "Size",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Particle_Size.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,242 @@
+{
+  "name": "BuildingElementListService",
+  "namespace": "BuildingElementListService",
+  "kind": "class",
+  "summary": "Implementation of functions for managing the data in a list of BuildingElements",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_hash",
+      "signature": "get_hash(build_ele_list: list[BuildingElement]) -\u003E str",
+      "summary": "Calculate a hash value for script name and parameter list",
+      "remarks": "Calculate a hash value for script name and parameter list",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Calculated hash string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.get_hash"
+    },
+    {
+      "name": "get_params_list",
+      "signature": "get_params_list( build_ele_list: list[BuildingElement], persistence: Persistent = MODEL, exclude_parameter_names: list[str] | None = None, ) -\u003E list[str]",
+      "summary": "Get the parameter list of the building elements",
+      "remarks": "Get the parameter list of the building elements",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        },
+        {
+          "name": "persistence",
+          "type": "Persistent",
+          "doc": "persistence to check",
+          "optional": false
+        },
+        {
+          "name": "exclude_parameter_names",
+          "type": "list[str] | None",
+          "doc": "excluded parameter names from the list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[str]",
+        "doc": "Parameter list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.get_params_list"
+    },
+    {
+      "name": "migrate_fav_data",
+      "signature": "migrate_fav_data( fav_param_list: list[str], build_ele_list: list[BuildingElement], script: Any, )",
+      "summary": "Migrate the favorite data",
+      "remarks": "Migrate the favorite data",
+      "params": [
+        {
+          "name": "fav_param_list",
+          "type": "list[str]",
+          "doc": "list with the parameter data",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        },
+        {
+          "name": "script",
+          "type": "Any",
+          "doc": "script",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.migrate_fav_data"
+    },
+    {
+      "name": "read_fav_data",
+      "signature": "read_fav_data( fav_param_list: list[str], build_ele_list: list[BuildingElement], persistence: Persistent = MODEL, is_modification_mode: bool = True, script: Any = None, )",
+      "summary": "Read the data from a favorite parameter list",
+      "remarks": "Read the data from a favorite parameter list",
+      "params": [
+        {
+          "name": "fav_param_list",
+          "type": "list[str]",
+          "doc": "list with the favorite parameter",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        },
+        {
+          "name": "persistence",
+          "type": "Persistent",
+          "doc": "Parameter persistency, for which the data should be read",
+          "optional": false
+        },
+        {
+          "name": "is_modification_mode",
+          "type": "bool",
+          "doc": "Read the data for the PythonPart modification, True/False",
+          "optional": false
+        },
+        {
+          "name": "script",
+          "type": "Any",
+          "doc": "script",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.read_fav_data"
+    },
+    {
+      "name": "read_from_default_favorite_file",
+      "signature": "read_from_default_favorite_file(build_ele_list: list[BuildingElement])",
+      "summary": "The parameter values are read from the default favorite file and assigned to the parameters in build_ele_list. The file is located in the Allplan \u0022.../usr/local/tmp\u0022 directory and the extension of the file is \u0022pyv\u0022",
+      "remarks": "The parameter values are read from the default favorite file and assigned to the parameters in build_ele_list. The file is located in the Allplan \u0022.../usr/local/tmp\u0022 directory and the extension of the file is \u0022pyv\u0022",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.read_from_default_favorite_file"
+    },
+    {
+      "name": "read_from_file",
+      "signature": "read_from_file(file_name: str, build_ele_list: list[BuildingElement])",
+      "summary": "Read the properties from a file",
+      "remarks": "Read the properties from a file",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "Name of the file",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.read_from_file"
+    },
+    {
+      "name": "reset_param_values",
+      "signature": "reset_param_values(build_ele_list: list[BuildingElement])",
+      "summary": "Reset to original parameter values from pyp file",
+      "remarks": "Reset to original parameter values from pyp file",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.reset_param_values"
+    },
+    {
+      "name": "write_to_default_favorite_file",
+      "signature": "write_to_default_favorite_file(build_ele_list: list[BuildingElement])",
+      "summary": "The parameter values are taken from build_ele_list and written to the default favorite file. The file is located in the Allplan \u0022.../usr/local/tmp\u0022 directory and the extension of the file is \u0022pyv\u0022",
+      "remarks": "The parameter values are taken from build_ele_list and written to the default favorite file. The file is located in the Allplan \u0022.../usr/local/tmp\u0022 directory and the extension of the file is \u0022pyv\u0022",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.write_to_default_favorite_file"
+    },
+    {
+      "name": "write_to_file",
+      "signature": "write_to_file(file_name: str, build_ele_list: list[BuildingElement])",
+      "summary": "Write the properties to a file",
+      "remarks": "Write the properties to a file",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "Name of the file",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementListService/#BuildingElementListService.BuildingElementListService.write_to_file"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

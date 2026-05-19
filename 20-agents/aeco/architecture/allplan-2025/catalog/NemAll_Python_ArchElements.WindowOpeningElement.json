@@ -1,0 +1,49 @@
+{
+  "name": "WindowOpeningElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of window opening",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WindowOpeningElement/",
+  "constructors": [
+    {
+      "name": "WindowOpeningElement",
+      "signature": "WindowOpeningElement() | WindowOpeningElement( openingProp: WindowOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, ) | WindowOpeningElement(element: WindowOpeningElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WindowOpeningElement/#NemAll_Python_ArchElements.WindowOpeningElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WindowOpeningElement/#NemAll_Python_ArchElements.WindowOpeningElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "WindowOpeningProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Window opening properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WindowOpeningElement/#NemAll_Python_ArchElements.WindowOpeningElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

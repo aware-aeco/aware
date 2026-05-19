@@ -1,0 +1,25 @@
+{
+  "name": "InvalidFacePointsException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The InvalidFacePointsException class represents an error when, cannot create geometry from requested face points.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/aec29813-439a-ea77-34ae-d2c1c3db7ef7",
+  "constructors": [
+    {
+      "name": "InvalidFacePointsException",
+      "signature": "public InvalidFacePointsException()",
+      "summary": "Initializes a new instance of the InvalidFacePointsException class with \u0022Cannot create geometry from requested face points\u0022 error message.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa230784-c80a-40e0-34bd-93ba8ee26c96"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

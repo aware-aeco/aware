@@ -1,0 +1,558 @@
+{
+  "name": "RenderWindow",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderWindow\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderWindow.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddChannel",
+      "signature": "public bool AddChannel(RenderWindow.StandardChannels channel)",
+      "summary": "Add a channel to the frame buffer in addition to the fixed Red, Green, Blue and Alpha channels.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Rhino.Render.RenderWindow.StandardChannels",
+          "doc": "Channel to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If the channel existed then true is returned otherwise; returns true if the channel was added or false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_AddChannel.htm"
+    },
+    {
+      "name": "AddWireframeChannel",
+      "signature": "public bool AddWireframeChannel(RhinoDoc doc, ViewportInfo viewport, Size size, Rectangle region)",
+      "summary": "This method sets the frame buffer size and adds all the necessary wireframe channels automatically. It also creates the wireframe channel data automatically so that your renderer doesn\u0027t have to. You typically call this method only when your renderer does not support wireframe rendering itself. If you call this method, then you should not add any wireframe channels returned by GetRenderChannels(). If your renderer is capable of rendering the wireframe channels itself, you should not call this method. Instead, you must make sure you add the wireframe channels if GetRenderChannels() requests them. See IRhRdkRenderWindow::GetRenderChannels(). After the wires are rendered, the wireframe post effects will composite them into the final rendered image. Note: This method should really be called AddWireframeChannels(). [SDK_UNFREEZE] */",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The document to display",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The view to display",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "The size of the image without clipping (i.e., if you have a region, it is the size of the image before you cut the region out.",
+          "optional": false
+        },
+        {
+          "name": "region",
+          "type": "System.Drawing.Rectangle",
+          "doc": "The area of the rendering you want to display. This should match the size of the render window itself (i.e, - the one set using SetSize)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if all of the wireframe channels were added successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_AddWireframeChannel.htm"
+    },
+    {
+      "name": "ChannelId",
+      "signature": "public static Guid ChannelId(RenderWindow.StandardChannels ch)",
+      "summary": "",
+      "params": [
+        {
+          "name": "ch",
+          "type": "Rhino.Render.RenderWindow.StandardChannels",
+          "doc": "[Missing \u003Cparam name=\u0022ch\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelId(Rhino.Render.RenderWindow.StandardChannels)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelId(Rhino.Render.RenderWindow.StandardChannels)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_ChannelId.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public static RenderWindow Create(Size szSize)",
+      "summary": "",
+      "params": [
+        {
+          "name": "szSize",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022szSize\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Create(System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Create(System.Drawing.Size)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Create.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RenderWindow",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Dispose.htm"
+    },
+    {
+      "name": "EndAsyncRender",
+      "signature": "public void EndAsyncRender(RenderWindow.RenderSuccessCode successCode)",
+      "summary": "Must be called when an asynchronous render has finished or ended for any reason.",
+      "params": [
+        {
+          "name": "successCode",
+          "type": "Rhino.Render.RenderWindow.RenderSuccessCode",
+          "doc": "Completed for a correct or canceled render, Failed for errors.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_EndAsyncRender.htm"
+    },
+    {
+      "name": "FromSessionId",
+      "signature": "public static RenderWindow FromSessionId(Guid sessionId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022sessionId\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.FromSessionId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.FromSessionId(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_FromSessionId.htm"
+    },
+    {
+      "name": "GetAdjust",
+      "signature": "[ObsoleteAttribute(\u0022The Render Window UI uses post effects for gamma, tone mapping etc. now.\u0022)] public RenderWindow.ImageAdjust GetAdjust()",
+      "summary": "Get an ImageAdjust instance containing current image adjusting settings for this RenderWindow",
+      "params": [],
+      "returns": {
+        "type": "RenderWindow.ImageAdjust",
+        "doc": "ImageAdjust"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_GetAdjust.htm"
+    },
+    {
+      "name": "GetBitmap",
+      "signature": "public Bitmap GetBitmap()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.GetBitmap\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_GetBitmap.htm"
+    },
+    {
+      "name": "GetRequestedRenderChannels",
+      "signature": "public Guid[] GetRequestedRenderChannels()",
+      "summary": "Get array of Guids representing the channels requested by the post effect pipeline for this RenderWindow.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "Array of Guid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_GetRequestedRenderChannels.htm"
+    },
+    {
+      "name": "GetRequestedRenderChannelsAsStandardChannels",
+      "signature": "public RenderWindow.StandardChannels[] GetRequestedRenderChannelsAsStandardChannels()",
+      "summary": "Get array of StandardChannels enum values representing the channels requested by the post effect pipeline for this RenderWindow.",
+      "params": [],
+      "returns": {
+        "type": "RenderWindow.StandardChannels[]",
+        "doc": "Array of StandardChannels"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_GetRequestedRenderChannelsAsStandardChannels.htm"
+    },
+    {
+      "name": "Invalidate",
+      "signature": "public void Invalidate()",
+      "summary": "Invalidate the entire view window so that the pixels get painted.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Invalidate.htm"
+    },
+    {
+      "name": "InvalidateArea",
+      "signature": "public void InvalidateArea(Rectangle rect)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rect",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.InvalidateArea(System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_InvalidateArea.htm"
+    },
+    {
+      "name": "IsChannelAvailable",
+      "signature": "public bool IsChannelAvailable(Guid id)",
+      "summary": "Query if a channel is available.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.IsChannelAvailable(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the channel is available."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_IsChannelAvailable.htm"
+    },
+    {
+      "name": "IsChannelShown",
+      "signature": "public bool IsChannelShown(Guid id)",
+      "summary": "Query if a channel is being shown.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.IsChannelShown(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the channel is being shown."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_IsChannelShown.htm"
+    },
+    {
+      "name": "OpenChannel",
+      "signature": "public RenderWindow.Channel OpenChannel(RenderWindow.StandardChannels id)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "Rhino.Render.RenderWindow.StandardChannels",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.OpenChannel(Rhino.Render.RenderWindow.StandardChannels)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow.Channel",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.OpenChannel(Rhino.Render.RenderWindow.StandardChannels)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_OpenChannel.htm"
+    },
+    {
+      "name": "SaveDibAsBitmap",
+      "signature": "public void SaveDibAsBitmap(string filename)",
+      "summary": "Save current Dib of RenderWindow as file Helper function for debugging purposes.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.SaveDibAsBitmap(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SaveDibAsBitmap.htm"
+    },
+    {
+      "name": "SaveRenderImageAs(String, Boolean)",
+      "signature": "public void SaveRenderImageAs(string filename, bool saveAlpha)",
+      "summary": "Like RenderWindow.SaveRenderImageAs(string,Guid,bool), but with Guid set to Guid.Empty.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Filename of image file to be created",
+          "optional": false
+        },
+        {
+          "name": "saveAlpha",
+          "type": "System.Boolean",
+          "doc": "True if alpha channel should be saved.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SaveRenderImageAs.htm"
+    },
+    {
+      "name": "SaveRenderImageAs(String, Guid, Boolean)",
+      "signature": "public void SaveRenderImageAs(string filename, Guid renderEngineGuid, bool saveAlpha)",
+      "summary": "Save current RenderWindow contents as an image file with the given name. The filetype will be determine. Pass in render engine Guid if an engine implements saving to a format that is not supported by Rhino. Guid.Empty if there is no need for that.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Filename of image file to be created",
+          "optional": false
+        },
+        {
+          "name": "renderEngineGuid",
+          "type": "System.Guid",
+          "doc": "render engine ID",
+          "optional": false
+        },
+        {
+          "name": "saveAlpha",
+          "type": "System.Boolean",
+          "doc": "True if alpha channel should be saved.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SaveRenderImageAs_1.htm"
+    },
+    {
+      "name": "SetAdjust",
+      "signature": "[ObsoleteAttribute(\u0022The Render Window UI uses post effects for gamma, tone mapping etc. now.\u0022)] public void SetAdjust(RenderWindow.ImageAdjust imageAdjust)",
+      "summary": "Set new ImageAdjust to use. An ImageAdjust instance can be obtained by first querying for one using GetAdjust()",
+      "params": [
+        {
+          "name": "imageAdjust",
+          "type": "Rhino.Render.RenderWindow.ImageAdjust",
+          "doc": "ImageAdjust",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SetAdjust.htm"
+    },
+    {
+      "name": "SetIsRendering",
+      "signature": "public void SetIsRendering(bool is_rendering)",
+      "summary": "Set whether or not rendering is in progress. Added to support raytraced mode.",
+      "params": [
+        {
+          "name": "is_rendering",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_rendering\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.SetIsRendering(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SetIsRendering.htm"
+    },
+    {
+      "name": "SetProgress",
+      "signature": "public void SetProgress(string text, float progress)",
+      "summary": "Accepts a rendering progress value to inform the user of the rendering advances.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The progress text.",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "System.Single",
+          "doc": "A progress value in the domain [0.0f; 1.0f].",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SetProgress.htm"
+    },
+    {
+      "name": "SetRGBAChannelColors(Rectangle, Color4f[])",
+      "signature": "public void SetRGBAChannelColors(Rectangle rectangle, Color4f[] colors)",
+      "summary": "Call this method to open the RenderWindow.StandardChannels.RGBA channel and set a block of color values",
+      "params": [
+        {
+          "name": "rectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "rectangle.X is the horizontal pixel position of the left edge. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer. rectangle.Y is the vertical pixel position of the top edge. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer. rectangle.Width is the width of the rectangle in pixels. No validation is done on this value. rectangle.Height is the height of the rectangle in pixels. No validation is done on this value.",
+          "optional": false
+        },
+        {
+          "name": "colors",
+          "type": "Rhino.Display.Color4f[]",
+          "doc": "Array of Color4f values used to set the RenderWindow.StandardChannels.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SetRGBAChannelColors.htm"
+    },
+    {
+      "name": "SetRGBAChannelColors(Size, Color4f[])",
+      "signature": "public void SetRGBAChannelColors(Size size, Color4f[] colors)",
+      "summary": "Call this method to open the RenderWindow.StandardChannels.RGBA channel and set a block of color values",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "Size of the area to set. No validation is done on this value",
+          "optional": false
+        },
+        {
+          "name": "colors",
+          "type": "Rhino.Display.Color4f[]",
+          "doc": "Array of Color4f values used to set the RenderWindow.StandardChannels.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SetRGBAChannelColors_1.htm"
+    },
+    {
+      "name": "SetSize",
+      "signature": "public void SetSize(Size size)",
+      "summary": "",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.SetSize(System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SetSize.htm"
+    },
+    {
+      "name": "SetView",
+      "signature": "public void SetView(ViewInfo view)",
+      "summary": "",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.SetView(Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_SetView.htm"
+    },
+    {
+      "name": "Size",
+      "signature": "public Size Size()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Size",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Size\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Size.htm"
+    },
+    {
+      "name": "StandardChannelForGuid",
+      "signature": "public static RenderWindow.StandardChannels StandardChannelForGuid(Guid id)",
+      "summary": "Get the StandardChannels for the given Guid",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.StandardChannelForGuid(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderWindow.StandardChannels",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.StandardChannelForGuid(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_StandardChannelForGuid.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SessionId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderWindow_SessionId.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "Cloned",
+      "delegate": "System.EventHandler\u003CRenderWindowClonedEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRenderWindowClonedEventArgs\u003E Cloned",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RenderWindow_Cloned.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

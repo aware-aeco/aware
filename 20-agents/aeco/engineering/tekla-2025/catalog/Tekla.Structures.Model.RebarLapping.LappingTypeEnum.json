@@ -1,0 +1,24 @@
+{
+  "name": "RebarLapping.LappingTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The lapping type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1ac21790-4121-b56e-1d33-6be04b81dfe7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CUSTOM_LAPPING",
+      "value": 0,
+      "summary": "Custom lapping."
+    },
+    {
+      "name": "STANDARD_LAPPING",
+      "value": 1,
+      "summary": "Standard lapping."
+    }
+  ]
+}

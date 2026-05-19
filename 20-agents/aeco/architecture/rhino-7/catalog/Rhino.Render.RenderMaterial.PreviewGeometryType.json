@@ -1,0 +1,42 @@
+{
+  "name": "RenderMaterial.PreviewGeometryType",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Geometry that appears in preview panes",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderMaterial_PreviewGeometryType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Cone",
+      "value": 2
+    },
+    {
+      "name": "Cube",
+      "value": 1
+    },
+    {
+      "name": "Plane",
+      "value": 5
+    },
+    {
+      "name": "Pyramid",
+      "value": 3
+    },
+    {
+      "name": "Sphere",
+      "value": 0
+    },
+    {
+      "name": "Torus",
+      "value": 4
+    },
+    {
+      "name": "Scene",
+      "value": 7
+    }
+  ]
+}

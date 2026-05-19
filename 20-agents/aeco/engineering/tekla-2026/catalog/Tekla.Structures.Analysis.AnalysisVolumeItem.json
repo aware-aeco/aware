@@ -1,0 +1,101 @@
+{
+  "name": "AnalysisVolumeItem",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisVolumeItem class contains information related to analysis volume items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/58d014f3-6271-0881-a461-46fde0f2514e",
+  "constructors": [
+    {
+      "name": "AnalysisVolumeItem",
+      "signature": "public AnalysisVolumeItem()",
+      "summary": "Initializes a new instance of the AnalysisVolumeItem class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa7cfef1-68c2-c526-b3b6-d850b6a6bcb3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis volume item. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/300d85e1-7dc5-a134-95ad-d7fc147c0fbe"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "Faces",
+      "type": "AnalysisObjectEnumerator",
+      "getter": true,
+      "setter": true,
+      "summary": "The faces of the analysis volume item.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b02df69-4879-17b0-1480-04fd5f15c9f8"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

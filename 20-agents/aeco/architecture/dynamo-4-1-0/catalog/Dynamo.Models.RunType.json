@@ -1,0 +1,26 @@
+{
+  "name": "RunType",
+  "namespace": "Dynamo.Models",
+  "kind": "enum",
+  "summary": "The RunType enumeration provides values for specifying the type of run that will be conducted.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RunSettings.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Automatic",
+      "value": 1
+    },
+    {
+      "name": "Manual",
+      "value": 0
+    },
+    {
+      "name": "Periodic",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "DesignMemberApi",
+  "namespace": "IdeaStatiCa.RcsApi.Api",
+  "kind": "class",
+  "summary": "RCS Rest API 1.0 \u2014 DesignMember endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/1/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/DesignMemberApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MembersAsync",
+      "signature": "Task\u003CList\u003CRcsCheckMember\u003E\u003E MembersAsync(Guid projectId)",
+      "summary": "Get members",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CRcsCheckMember\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/DesignMemberApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

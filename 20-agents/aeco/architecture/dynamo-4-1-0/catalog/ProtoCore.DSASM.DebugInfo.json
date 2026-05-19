@@ -1,0 +1,59 @@
+{
+  "name": "DebugInfo",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type DebugInfo",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/InstructionSet.cs",
+  "constructors": [
+    {
+      "name": "DebugInfo(int, int, int, int, string)",
+      "signature": "void DebugInfo(int line, int col, int eline, int ecol, string file)",
+      "summary": "DebugInfo.DebugInfo",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "ProtoCore.CodeModel.CodeRange",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugInfo.Location",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,119 @@
+{
+  "name": "FileDwgReadOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for reading a DWG file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileDwgReadOptions.htm",
+  "constructors": [
+    {
+      "name": "FileDwgReadOptions",
+      "signature": "public FileDwgReadOptions()",
+      "summary": "Initializes a new instance of the FileDwgReadOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileDwgReadOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Export function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileDwgReadOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileDwgReadOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ConvertRegionsToCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_ConvertRegionsToCurves.htm"
+    },
+    {
+      "name": "ConvertWidePolylinesToSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_ConvertWidePolylinesToSurfaces.htm"
+    },
+    {
+      "name": "IgnoreThickness",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_IgnoreThickness.htm"
+    },
+    {
+      "name": "ImportUnreferencedBlocks",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_ImportUnreferencedBlocks.htm"
+    },
+    {
+      "name": "ImportUnreferencedLayers",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_ImportUnreferencedLayers.htm"
+    },
+    {
+      "name": "ImportUnreferencedLinetypes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_ImportUnreferencedLinetypes.htm"
+    },
+    {
+      "name": "LayoutUnits",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_LayoutUnits.htm"
+    },
+    {
+      "name": "MeshPrecision",
+      "type": "FileDwgReadOptions.MeshPrecisionMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_MeshPrecision.htm"
+    },
+    {
+      "name": "ModelUnits",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_ModelUnits.htm"
+    },
+    {
+      "name": "SetLayerMaterialToLayerColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgReadOptions_SetLayerMaterialToLayerColor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

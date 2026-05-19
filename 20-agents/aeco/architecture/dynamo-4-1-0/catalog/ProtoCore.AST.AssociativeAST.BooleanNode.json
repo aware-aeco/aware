@@ -1,0 +1,142 @@
+{
+  "name": "BooleanNode",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type BooleanNode",
+  "base": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "BooleanNode(ProtoCore.AST.AssociativeAST.BooleanNode)",
+      "signature": "void BooleanNode(ProtoCore.AST.AssociativeAST.BooleanNode rhs)",
+      "summary": "BooleanNode.BooleanNode",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.BooleanNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BooleanNode(bool)",
+      "signature": "void BooleanNode(bool value)",
+      "summary": "BooleanNode.BooleanNode",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Accept(ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E)",
+      "signature": "TResult Accept\u003CTResult\u003E(ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E visitor)",
+      "summary": "BooleanNode.Accept",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Children",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Children()",
+      "summary": "BooleanNode.Children",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object other)",
+      "summary": "BooleanNode.Equals",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "BooleanNode.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "BooleanNode.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "ProtoCore.AST.AssociativeAST.AstKind",
+      "getter": true,
+      "setter": false,
+      "summary": "BooleanNode.Kind",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Value",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "BooleanNode.Value",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

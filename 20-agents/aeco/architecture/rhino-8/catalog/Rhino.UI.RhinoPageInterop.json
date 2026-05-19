@@ -1,0 +1,60 @@
+{
+  "name": "RhinoPageInterop",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "For internal use only, provides access to unmanaged core Rhino.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_RhinoPageInterop.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "NewPropertiesPanelPagePointer",
+      "signature": "public static IntPtr NewPropertiesPanelPagePointer(ObjectPropertiesPage page, uint rhinoDocRuntimeSn)",
+      "summary": "For internal use only, provides access to unmanaged core",
+      "params": [
+        {
+          "name": "page",
+          "type": "Rhino.UI.ObjectPropertiesPage",
+          "doc": "[Missing \u003Cparam name=\u0022page\u0022/\u003E documentation for \u0022M:Rhino.UI.RhinoPageInterop.NewPropertiesPanelPagePointer(Rhino.UI.ObjectPropertiesPage,System.UInt32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rhinoDocRuntimeSn",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022rhinoDocRuntimeSn\u0022/\u003E documentation for \u0022M:Rhino.UI.RhinoPageInterop.NewPropertiesPanelPagePointer(Rhino.UI.ObjectPropertiesPage,System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.RhinoPageInterop.NewPropertiesPanelPagePointer(Rhino.UI.ObjectPropertiesPage,System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_RhinoPageInterop_NewPropertiesPanelPagePointer.htm"
+    },
+    {
+      "name": "StackedDialogPageFromUnmanagedPointer",
+      "signature": "public static StackedDialogPage StackedDialogPageFromUnmanagedPointer(IntPtr pointer)",
+      "summary": "For internal use only, provides access to unmanaged core",
+      "params": [
+        {
+          "name": "pointer",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pointer\u0022/\u003E documentation for \u0022M:Rhino.UI.RhinoPageInterop.StackedDialogPageFromUnmanagedPointer(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StackedDialogPage",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.RhinoPageInterop.StackedDialogPageFromUnmanagedPointer(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_RhinoPageInterop_StackedDialogPageFromUnmanagedPointer.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,568 @@
+{
+  "name": "paths",
+  "namespace": "Solibri.Rest.Api",
+  "kind": "class",
+  "summary": "Solibri REST API \u2014 paths endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /shutdown. Source: https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "shutdownAsync",
+      "signature": "Task shutdownAsync(bool force)",
+      "summary": "Shutdown the application",
+      "params": [
+        {
+          "name": "force",
+          "type": "bool",
+          "doc": "Forceful shutdown or not",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "pingAsync",
+      "signature": "Task\u003CPingResponse\u003E pingAsync()",
+      "summary": "GET /ping",
+      "params": [],
+      "returns": {
+        "type": "PingResponse",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "aboutAsync",
+      "signature": "Task\u003CAboutResponse\u003E aboutAsync()",
+      "summary": "Get information about running product",
+      "params": [],
+      "returns": {
+        "type": "AboutResponse",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "openSMCProjectAsync",
+      "signature": "Task\u003CModelInfo\u003E openSMCProjectAsync(string name, Stream stream)",
+      "summary": "Open a Solibri project",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the project",
+          "optional": false
+        },
+        {
+          "name": "stream",
+          "type": "Stream",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModelInfo",
+        "doc": "Information of the project that was opened"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "saveSMCProjectAsync",
+      "signature": "Task\u003CModelInfo\u003E saveSMCProjectAsync(string destination)",
+      "summary": "Save a Solibri project",
+      "params": [
+        {
+          "name": "destination",
+          "type": "string",
+          "doc": "The target filepath for the project",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelInfo",
+        "doc": "Information of the project that was saved."
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "closeSMCProjectAsync",
+      "signature": "Task closeSMCProjectAsync(bool force)",
+      "summary": "Close a Solibri project",
+      "params": [
+        {
+          "name": "force",
+          "type": "bool",
+          "doc": "Forceful close or not",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getModelsAsync",
+      "signature": "Task\u003CModelInfoList\u003E getModelsAsync()",
+      "summary": "Get current models",
+      "params": [],
+      "returns": {
+        "type": "ModelInfoList",
+        "doc": "Information of all models currently open"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "openIFCModelAsync",
+      "signature": "Task\u003CModelInfo\u003E openIFCModelAsync(string name, Stream stream)",
+      "summary": "Open IFC Model",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the model",
+          "optional": false
+        },
+        {
+          "name": "stream",
+          "type": "Stream",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModelInfo",
+        "doc": "Information of the model that was opened"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "updateIFCModelAsync",
+      "signature": "Task\u003CModelInfo\u003E updateIFCModelAsync(Stream stream)",
+      "summary": "Update IFC Model",
+      "params": [
+        {
+          "name": "stream",
+          "type": "Stream",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModelInfo",
+        "doc": " Information of the model that was updated"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "partialUpdateIFCModelAsync",
+      "signature": "Task\u003CModelInfo\u003E partialUpdateIFCModelAsync(Stream stream)",
+      "summary": "Partial Update IFC Model",
+      "params": [
+        {
+          "name": "stream",
+          "type": "Stream",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModelInfo",
+        "doc": "Information of the model that was partially updated"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getStatusAsync",
+      "signature": "Task\u003CStatus\u003E getStatusAsync()",
+      "summary": "Get server status information",
+      "params": [],
+      "returns": {
+        "type": "Status",
+        "doc": "Information about the server status"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "showInfoAsync",
+      "signature": "Task showInfoAsync()",
+      "summary": "Show component\u0027s info in the Info view of the user interface.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getInformationAsync",
+      "signature": "Task\u003Cstring\u003E getInformationAsync()",
+      "summary": "Get the information for given component.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "Information of the component."
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getParametricInformationAsync",
+      "signature": "Task\u003Cstring\u003E getParametricInformationAsync(Dictionary\u003Cstring, string\u003E dictionary\u003Cstring, string\u003E)",
+      "summary": "Get the parametric information of the component",
+      "params": [
+        {
+          "name": "dictionary\u003Cstring, string\u003E",
+          "type": "Dictionary\u003Cstring, string\u003E",
+          "doc": "Parameter values as JSON object where parameter values are in String format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Parametric information of the component"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getComponentGuidsAsync",
+      "signature": "Task\u003CIfcGuidList\u003E getComponentGuidsAsync()",
+      "summary": "Get a list of IFC Global Unique ID (Guid) of the components",
+      "params": [],
+      "returns": {
+        "type": "IfcGuidList",
+        "doc": "List of IFC GUIDs of the components in the model."
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getMetadataAsync",
+      "signature": "Task getMetadataAsync()",
+      "summary": "Get metadata value of specified key",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "setMetadataAsync",
+      "signature": "Task setMetadataAsync(string value)",
+      "summary": "Set metadata value for specified key",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "Value of the metadata",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getSelectionAsync",
+      "signature": "Task\u003CIfcGuidList\u003E getSelectionAsync()",
+      "summary": "Get IFC guids of the selected components",
+      "params": [],
+      "returns": {
+        "type": "IfcGuidList",
+        "doc": "List of IFC GUIDs of the components that are selected"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "setSelectionAsync",
+      "signature": "Task setSelectionAsync(IfcGuidList ifcGuidList)",
+      "summary": "Select components matching the given IFC guids",
+      "params": [
+        {
+          "name": "ifcGuidList",
+          "type": "IfcGuidList",
+          "doc": "List of IFC GUIDs of the components to be selected",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "deleteComponentsAsync",
+      "signature": "Task deleteComponentsAsync(IfcGuidList ifcGuidList)",
+      "summary": "Delete components matching the given IFC guids",
+      "params": [
+        {
+          "name": "ifcGuidList",
+          "type": "IfcGuidList",
+          "doc": "List of IFC GUIDs to be deleted",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getBCFAsync",
+      "signature": "Task\u003CEncodedBinary\u003E getBCFAsync()",
+      "summary": "Access to all, selected or marked issues based on the scope. If no scope is set the scope is all issues. Returns content of a BCF file.",
+      "params": [],
+      "returns": {
+        "type": "EncodedBinary",
+        "doc": "BFC file content"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "runCheckingAsync",
+      "signature": "Task\u003CCheckingResultList\u003E runCheckingAsync(bool checkSelected)",
+      "summary": "Runs checking and returns checking results",
+      "params": [
+        {
+          "name": "checkSelected",
+          "type": "bool",
+          "doc": "Run in seected mode or not",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CheckingResultList",
+        "doc": "Checking results"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "getCameraStateAsync",
+      "signature": "Task getCameraStateAsync()",
+      "summary": "Get Camera State",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "setCameraStateAsync",
+      "signature": "Task setCameraStateAsync(CameraState cameraState)",
+      "summary": "Sets Camera State",
+      "params": [
+        {
+          "name": "cameraState",
+          "type": "CameraState",
+          "doc": "Camera State",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "addPresentationAsync",
+      "signature": "Task\u003CPresentationResponse\u003E addPresentationAsync(PresentationRequest presentationRequest)",
+      "summary": "Adds a new presentation",
+      "remarks": "Adds a new presentation to the current project.",
+      "params": [
+        {
+          "name": "presentationRequest",
+          "type": "PresentationRequest",
+          "doc": "Presentation details",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PresentationResponse",
+        "doc": "Presentation added to the current project"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    },
+    {
+      "name": "addSlideAsync",
+      "signature": "Task addSlideAsync(SlideRequest slideRequest)",
+      "summary": "Adds a new slide to the presentation",
+      "remarks": "Adds a new slide to the presentaion identified by presentationId.",
+      "params": [
+        {
+          "name": "slideRequest",
+          "type": "SlideRequest",
+          "doc": "Slide details",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?api=paths"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

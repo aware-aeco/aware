@@ -1,0 +1,220 @@
+{
+  "name": "MaterialItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The MaterialItem class contains information about the materials in the Tekla Structures catalog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/adea6e3d-a5cf-27f5-aea9-53028a0a7abb",
+  "constructors": [
+    {
+      "name": "MaterialItem",
+      "signature": "public MaterialItem()",
+      "summary": "Creates a new material item instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a2c6cf9-5d78-1ffb-618f-70f3875831ac"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public bool Delete()",
+      "summary": "Delete this material from material database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if operation failed. Possible reasons: a material with the name of this does not exist in database."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c54db24c-0052-6fd7-cc44-feed0faf2d2d"
+    },
+    {
+      "name": "Export",
+      "signature": "public virtual bool Export(ref string filename)",
+      "summary": "Exports the material item in the material database to given file name. Materials are exported to *.lis format. If path is not given material is exported to model folder. If filename is empty material name is used as filename.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the material item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e25a642c-02df-a2d3-78a7-fb5de8f07c73"
+    },
+    {
+      "name": "Insert",
+      "signature": "public bool Insert()",
+      "summary": "Inserts this material item to material database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if operation failed. Possible reasons: material name is invalid; a material with the same name already exists in database."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c11e69a1-d29a-1037-0978-5fd05dd09fd8"
+    },
+    {
+      "name": "MaterialNameMaxLength",
+      "signature": "public static int MaterialNameMaxLength()",
+      "summary": "Returns the maximum length a material name can be.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The maximum length."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e969d307-0de6-76ca-1a04-615718bb1a8a"
+    },
+    {
+      "name": "Modify",
+      "signature": "public bool Modify()",
+      "summary": "Modifies the material in material database that has the same name as this instance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if operation failed. Possible reasons: a material with the name of this does not exist in database."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a966994-dbf3-f876-01b4-24a2ce3a609a"
+    },
+    {
+      "name": "Select()",
+      "signature": "public bool Select()",
+      "summary": "Selects the material item from the database based on the material name and alias name in this instance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if the material was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0068c882-b486-2d60-27e7-d9f3a15b48d5"
+    },
+    {
+      "name": "Select(String)",
+      "signature": "public bool Select(string materialName)",
+      "summary": "Selects the material item based on the name from the material database. The material name can also be an alias name.",
+      "params": [
+        {
+          "name": "materialName",
+          "type": "System.String",
+          "doc": "The name or alias name of the material.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if the material was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24928801-2e7f-f555-08c4-ba2f32d14410"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AliasName1",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The material item\u0027s alias name 1.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/658cd238-2a7c-2b9e-0f4c-e47f9a7a48e9"
+    },
+    {
+      "name": "AliasName2",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The material item\u0027s alias name 2.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/75ae11fc-ddfb-e512-3411-628913d15a29"
+    },
+    {
+      "name": "AliasName3",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The material item\u0027s alias name 3.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/412c2459-d588-6f71-e7d5-329ee419a9c8"
+    },
+    {
+      "name": "DesignCode",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c38506a0-0a74-187f-8e73-cf163af560fe"
+    },
+    {
+      "name": "MaterialName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The material item\u0027s name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/47d411ee-4bbe-3d52-3ded-4909c5b9e202"
+    },
+    {
+      "name": "ModulusOfElasticity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Thte modulus of elasticity in unit N/m2.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/76f32ed1-2597-c060-7b6a-e0337c64431a"
+    },
+    {
+      "name": "PlateDensity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The plate density in unit kg/m3.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aec40c55-99c6-db38-c47d-329b9b513392"
+    },
+    {
+      "name": "PoissonsRatio",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The poissons ratio",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d65eeb8-61b7-826d-24a2-736a2860c5b3"
+    },
+    {
+      "name": "ProfileDensity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile density in unit kg/m3.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/951c94b8-871c-8abd-dd0b-9f67307d6544"
+    },
+    {
+      "name": "ThermalDilatation",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The thermal dilatation in unit 1/K.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b6566560-bedd-04f1-c2e5-50d0466716b9"
+    },
+    {
+      "name": "Type",
+      "type": "MaterialItem.MaterialItemTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The material item\u0027s type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fd8e5833-f4b5-80a8-46fb-f16ef784d07c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

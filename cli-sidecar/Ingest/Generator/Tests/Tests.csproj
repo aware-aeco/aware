@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="JsonSchema.Net" Version="7.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Copy the schema next to the test binary so tests can read it via AppContext.BaseDirectory -->
+    <None Include="..\..\Schema\host-coverage.schema.json">
+      <Link>host-coverage.schema.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Schema\host-coverage-type.schema.json">
+      <Link>host-coverage-type.schema.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Link Models.cs + IRReader.cs into the test assembly without using a
+      ProjectReference to cli-sidecar.csproj — pulling in the main project would
+      drag along the NativeAOT publishing config and slow the test build down.
+      The main project's default Compile glob still includes these files, so
+      they end up in both assemblies as plain managed code.
+    -->
+    <Compile Include="..\Models.cs" Link="Models.cs" />
+    <Compile Include="..\IRReader.cs" Link="IRReader.cs" />
+    <Compile Include="..\IrJsonContext.cs" Link="IrJsonContext.cs" />
+    <Compile Include="..\ManifestWriter.cs" Link="ManifestWriter.cs" />
+    <Compile Include="..\SkillWriter.cs" Link="SkillWriter.cs" />
+    <Compile Include="..\CatalogWriter.cs" Link="CatalogWriter.cs" />
+    <!--
+      IRBuilder is dependency-free (only references the IR records in Models.cs)
+      so we can link it directly into the test assembly without pulling in
+      Microsoft.Playwright. Scraper.cs is intentionally NOT linked — it depends on
+      Playwright and is exercised end-to-end by Phase B vendor extractors, not by
+      these generator-level unit tests.
+
+      ChmParser only depends on System.Diagnostics + System.IO, so it's linked in
+      the same way as IRBuilder. The test suite exercises only the dependency-free
+      surface (constructor validation + the non-Windows skip path); a Windows runner
+      with hh.exe will also exercise the missing-file negative path.
+    -->
+    <Compile Include="..\..\Extractors\Common\IRBuilder.cs" Link="IRBuilder.cs" />
+    <Compile Include="..\..\Extractors\Common\ChmParser.cs" Link="ChmParser.cs" />
+  </ItemGroup>
+</Project>

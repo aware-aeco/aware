@@ -1,0 +1,38 @@
+{
+  "name": "RcsCrossSectionData",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsCrossSectionData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsCrossSectionData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsCrossSectionData.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsCrossSectionData.md"
+    },
+    {
+      "name": "CrossSectionRotation",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsCrossSectionData.crossSectionRotation.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsCrossSectionData.md"
+    },
+    {
+      "name": "Components",
+      "type": "List\u003CRcsCssComponentData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsCrossSectionData.components.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsCrossSectionData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,2185 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_Geometry",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddToMinMax",
+      "signature": "AddToMinMax(minMax, point) | AddToMinMax(minMax, point) | AddToMinMax(minMax, point) | AddToMinMax(minMax, point)",
+      "summary": "Calculate 2D-Min- and Max Point of an 2D point Calculates the MinMax2D volume by the Point2D given in parameter point.",
+      "remarks": "Calculate 2D-Min- and Max Point of an 2D point Calculates the MinMax2D volume by the Point2D given in parameter point.",
+      "params": [
+        {
+          "name": "minMax",
+          "type": "MinMax2D",
+          "doc": "where to ad min max box",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D to be added",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.AddToMinMax"
+    },
+    {
+      "name": "CalcAngle",
+      "signature": "CalcAngle(l1) | CalcAngle(point1, point2)",
+      "summary": "compute angle of 2D line and x axis",
+      "remarks": "compute angle of 2D line and x axis",
+      "params": [
+        {
+          "name": "l1",
+          "type": "Line2D",
+          "doc": "2D Line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "result angle (normalized 2pi),"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcAngle"
+    },
+    {
+      "name": "CalcArea",
+      "signature": "CalcArea(p1, p2, p3) | CalcArea(polygon) | CalcArea(polygon) | CalcArea(polygonalArea) | CalcArea(areaGeo, arcSegmentation, useArcSegmentation, armLength, riseValue) | CalcArea(areaGeo, arcSegmentation, useArcSegmentation, armLength, riseValue)",
+      "summary": "compute area of a triangle",
+      "remarks": "compute area of a triangle",
+      "params": [
+        {
+          "name": "p1",
+          "type": "Point2D",
+          "doc": "Point",
+          "optional": false
+        },
+        {
+          "name": "p2",
+          "type": "Point2D",
+          "doc": "Point",
+          "optional": false
+        },
+        {
+          "name": "p3",
+          "type": "Point2D",
+          "doc": "Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "area result area,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcArea"
+    },
+    {
+      "name": "CalcLength",
+      "signature": "CalcLength(el) | CalcLength(vec) | CalcLength(polyline) | CalcLength(polygon) | CalcLength(polygon) | CalcLength(arc) | CalcLength(clothoid) | CalcLength(spline) | CalcLength(path) | CalcLength(line) | CalcLength(vec) | CalcLength(polyline) | CalcLength(arc) | CalcLength(path) | CalcLength(poly) | CalcLength(spline) | CalcLength(spline) | CalcLength(spline)",
+      "summary": "calculate length of a 2D line.",
+      "remarks": "calculate length of a 2D line.",
+      "params": [
+        {
+          "name": "el",
+          "type": "Line2D",
+          "doc": "2D line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "double result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength"
+    },
+    {
+      "name": "CalcMass",
+      "signature": "CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem)",
+      "summary": "Calculate mass values",
+      "remarks": "Calculate mass values",
+      "params": [
+        {
+          "name": "elem",
+          "type": "Polyhedron3D",
+          "doc": "Polyhedron3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass"
+    },
+    {
+      "name": "CalcMinMax",
+      "signature": "CalcMinMax(point) | CalcMinMax(line) | CalcMinMax(polyline) | CalcMinMax(polygon) | CalcMinMax(arc) | CalcMinMax(spline) | CalcMinMax(spline) | CalcMinMax(spline) | CalcMinMax(spline) | CalcMinMax(clothoid) | CalcMinMax(path) | CalcMinMax(area) | CalcMinMax(area) | CalcMinMax(point) | CalcMinMax(line) | CalcMinMax(polyline) | CalcMinMax(pointCloud) | CalcMinMax(polygon) | CalcMinMax(arc) | CalcMinMax(polyhedron) | CalcMinMax(cuboid) | CalcMinMax(cylinder) | CalcMinMax(cone) | CalcMinMax(ellipsoid) | CalcMinMax(area) | CalcMinMax(solid) | CalcMinMax(solid) | CalcMinMax(geo) | CalcMinMax(geo)",
+      "summary": "Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Point2D given in parameter point",
+      "remarks": "Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Point2D given in parameter point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D to be calculated",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax2D",
+        "doc": "tuple(MinMax2D,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax"
+    },
+    {
+      "name": "Colliding",
+      "signature": "Colliding(polygon1, polygon2) | Colliding(polygon, line) | Colliding(minMax, polygon) | Colliding(brep1, brep2)",
+      "summary": "Test for collision between 2 geometry objects",
+      "remarks": "Test for collision between 2 geometry objects",
+      "params": [
+        {
+          "name": "polygon1",
+          "type": "Polygon2D",
+          "doc": "the first polygon",
+          "optional": false
+        },
+        {
+          "name": "polygon2",
+          "type": "Polygon2D",
+          "doc": "the second polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when colliding, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Colliding"
+    },
+    {
+      "name": "ConvertTo2D",
+      "signature": "ConvertTo2D(line3D) | ConvertTo2D(polyline3D) | ConvertTo2D(axis3D) | ConvertTo2D(point3D) | ConvertTo2D(polygon3D) | ConvertTo2D(arc3D) | ConvertTo2D(spline3D) | ConvertTo2D(bspline3D) | ConvertTo2D(points3D) | ConvertTo2D(path3D) | ConvertTo2D(geo_object)",
+      "summary": "Converts Line3D to Line2D",
+      "remarks": "Converts Line3D to Line2D",
+      "params": [
+        {
+          "name": "line3D",
+          "type": "Line3D",
+          "doc": "Line3D to convert",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(line2D is valid: true/false,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D"
+    },
+    {
+      "name": "ConvertTo3D",
+      "signature": "ConvertTo3D(line2D, zPlane=0) | ConvertTo3D(polyline2D, zPlane=0) | ConvertTo3D(axis2D, zPlane=0) | ConvertTo3D(spline2D, zPlane=0) | ConvertTo3D(arc2D, zPlane=0) | ConvertTo3D(bspline2D, zPlane=0) | ConvertTo3D(path2D, zPlane=0) | ConvertTo3D(points2D, zPlane=0) | ConvertTo3D(polygon, zPlane=0) | ConvertTo3D(clothoid2D, zPlane=0)",
+      "summary": "Converts Line2D to Line3D",
+      "remarks": "Converts Line2D to Line3D",
+      "params": [
+        {
+          "name": "line2D",
+          "type": "Line2D",
+          "doc": "Line2D to convert",
+          "optional": false
+        },
+        {
+          "name": "zPlane",
+          "type": "float",
+          "doc": "Z value",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(line3D is valid: true/false,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D"
+    },
+    {
+      "name": "ConvertToBSpline2D",
+      "signature": "ConvertToBSpline2D(arc3D) | ConvertToBSpline2D(spline3D)",
+      "summary": "Converts Arc3D to BSpline2D",
+      "remarks": "Converts Arc3D to BSpline2D",
+      "params": [
+        {
+          "name": "arc3D",
+          "type": "Arc3D",
+          "doc": "Arc3D to convert",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(bspline2D is valid: true/false,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertToBSpline2D"
+    },
+    {
+      "name": "CreateBRep3D",
+      "signature": "CreateBRep3D(polyhedron) | CreateBRep3D(brep, faceindex)",
+      "summary": "Create BRep3D by converting a polyhedron",
+      "remarks": "Create BRep3D by converting a polyhedron",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "polyhedron to convert",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateBRep3D"
+    },
+    {
+      "name": "CreatePlanarBRep3D",
+      "signature": "CreatePlanarBRep3D(profiles_object) | CreatePlanarBRep3D(icurve_object)",
+      "summary": "Create brep as planar surface",
+      "remarks": "Create brep as planar surface",
+      "params": [
+        {
+          "name": "profiles_object",
+          "type": "list",
+          "doc": "border of planar surface ( must be closed )",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePlanarBRep3D"
+    },
+    {
+      "name": "CreatePolygon3D",
+      "signature": "CreatePolygon3D(polyhedron, faceIndex) | CreatePolygon3D(polygon2D, plane) | CreatePolygon3D(polyline)",
+      "summary": "Creates a Polygon3D element from a Polyhedron face",
+      "remarks": "Creates a Polygon3D element from a Polyhedron face",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "Polyhedron to get face from",
+          "optional": false
+        },
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "Index of the face in polyhedron",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eOK if successful, else eError,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolygon3D"
+    },
+    {
+      "name": "CreatePolyhedron",
+      "signature": "CreatePolyhedron(polyhedronType, verticesCount, edgeCount, faceCount, negativeOrientation) | CreatePolyhedron(solid) | CreatePolyhedron(solid) | CreatePolyhedron(cylinder, countOfSegments) | CreatePolyhedron(igeo, options) | CreatePolyhedron(brep, options) | CreatePolyhedron(polygon) | CreatePolyhedron(line) | CreatePolyhedron(lines) | CreatePolyhedron(polyline) | CreatePolyhedron(base, path) | CreatePolyhedron(base, refPoint, path) | CreatePolyhedron(polygon, bottomPlane, topPlane) | CreatePolyhedron(baseOutline, leftOffset, rightOffset, frontOffset, backOffset, bottomPlane, topPlane) | CreatePolyhedron(startPolygon, endPolygon)",
+      "summary": "Create and initialize new Polyhedron3D",
+      "remarks": "Create and initialize new Polyhedron3D",
+      "params": [
+        {
+          "name": "polyhedronType",
+          "type": "PolyhedronType",
+          "doc": "Polyhedron type - edges, faces or volume.",
+          "optional": false
+        },
+        {
+          "name": "verticesCount",
+          "type": "int",
+          "doc": "Count of expected vertices.",
+          "optional": false
+        },
+        {
+          "name": "edgeCount",
+          "type": "int",
+          "doc": "Count of expected edges.",
+          "optional": false
+        },
+        {
+          "name": "faceCount",
+          "type": "int",
+          "doc": "Count of expected faces.",
+          "optional": false
+        },
+        {
+          "name": "negativeOrientation",
+          "type": "bool",
+          "doc": "True for negative orientation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron"
+    },
+    {
+      "name": "CreatePolyline3D",
+      "signature": "CreatePolyline3D(polyhedron) | CreatePolyline3D(polyline2D) | CreatePolyline3D(polygon)",
+      "summary": "Creates a Polyline3D element from a Polyhedron",
+      "remarks": "Creates a Polyline3D element from a Polyhedron",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "Polyhedron to create line from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eOK if converted successful, else eError,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyline3D"
+    },
+    {
+      "name": "CreateRailSweptBRep3D",
+      "signature": "CreateRailSweptBRep3D(profiles_object, rails_object, closecaps, uniformScaling, railrotation) | CreateRailSweptBRep3D(profiles_object, rails_object, path_object, closecaps, uniformScaling, railrotation, proportionalVertexMatch)",
+      "summary": "Create BRep3D by rail sweeping of profiles. Rails must start/ends on profiles start/end points",
+      "remarks": "Create BRep3D by rail sweeping of profiles. Rails must start/ends on profiles start/end points",
+      "params": [
+        {
+          "name": "profiles_object",
+          "type": "list",
+          "doc": "profiles to sweep",
+          "optional": false
+        },
+        {
+          "name": "rails_object",
+          "type": "list",
+          "doc": "rails to control sweeping",
+          "optional": false
+        },
+        {
+          "name": "closecaps",
+          "type": "bool",
+          "doc": "if true, create closed solid if possible, if false just surface(s) will be created",
+          "optional": false
+        },
+        {
+          "name": "uniformScaling",
+          "type": "bool",
+          "doc": "use uniform scaling for profiles along the rails",
+          "optional": false
+        },
+        {
+          "name": "railrotation",
+          "type": "bool",
+          "doc": "use rotation the shape to maintain a constant angle with the rail",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateRailSweptBRep3D"
+    },
+    {
+      "name": "CreateSweptBRep3D",
+      "signature": "CreateSweptBRep3D(profiles_object, path_object, closecaps, railrotation, rotAxis=None, numprofiles=0) | CreateSweptBRep3D(profiles_object, path_object, closecaps, railrotation, rotAxis=None, numprofiles=0) | CreateSweptBRep3D(profile_object, path_object, railrotation, rotAxis=None)",
+      "summary": "Create BRep3D by means of a vector of profiles extrusion along a path",
+      "remarks": "Create BRep3D by means of a vector of profiles extrusion along a path",
+      "params": [
+        {
+          "name": "profiles_object",
+          "type": "list",
+          "doc": "profiles to extrude, if closed solid will be created, otherwise a surface only",
+          "optional": false
+        },
+        {
+          "name": "path_object",
+          "type": "object",
+          "doc": "path to extrude along",
+          "optional": false
+        },
+        {
+          "name": "closecaps",
+          "type": "bool",
+          "doc": "if true, create closed solid if possible, if false just surface(s) will be created",
+          "optional": false
+        },
+        {
+          "name": "railrotation",
+          "type": "SweepRotationType",
+          "doc": "if true, rotate profile along the path",
+          "optional": false
+        },
+        {
+          "name": "rotAxis",
+          "type": "Optional[Vector3D]",
+          "doc": "if set, profile will be rotated along this axis along the path",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "numprofiles",
+          "type": "int",
+          "doc": "number of control profiles created along the created surfaces (divisionn of surface parameter)",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateSweptBRep3D"
+    },
+    {
+      "name": "FindMinDistancePoint",
+      "signature": "FindMinDistancePoint(point, bspline) | FindMinDistancePoint(point, brep)",
+      "summary": "Find minimal distance point between Point3D and BSpline3D",
+      "remarks": "Find minimal distance point between Point3D and BSpline3D",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point3D",
+          "optional": false
+        },
+        {
+          "name": "bspline",
+          "type": "BSpline3D",
+          "doc": "BSpline3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.FindMinDistancePoint"
+    },
+    {
+      "name": "GetRotationMatrix",
+      "signature": "GetRotationMatrix(zeroPoint, angle) | GetRotationMatrix(axis, angle) | GetRotationMatrix(line, angle)",
+      "summary": "Creates 2D rotation matrix",
+      "remarks": "Creates 2D rotation matrix",
+      "params": [
+        {
+          "name": "zeroPoint",
+          "type": "Point2D",
+          "doc": "Rotation point",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "2D rotation matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetRotationMatrix"
+    },
+    {
+      "name": "GroundViewHiddenCalculation",
+      "signature": "GroundViewHiddenCalculation(brep) | GroundViewHiddenCalculation(poly)",
+      "summary": "Hidden calculation with ground view of BRep",
+      "remarks": "Hidden calculation with ground view of BRep",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "BRep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GroundViewHiddenCalculation"
+    },
+    {
+      "name": "Intersect",
+      "signature": "Intersect(bodies1_list, bodies2_list) | Intersect(el1, el2) | Intersect(el1, el2) | Intersect(brep1, brep2) | Intersect(brep, polyhedron)",
+      "summary": "compute intersection of set of bodies",
+      "remarks": "compute intersection of set of bodies",
+      "params": [
+        {
+          "name": "bodies1_list",
+          "type": "PolyhedronTypesList",
+          "doc": "list of bodies",
+          "optional": false
+        },
+        {
+          "name": "bodies2_list",
+          "type": "PolyhedronTypesList",
+          "doc": "list of bodies",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(true when intersecting, otherwise false.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersect"
+    },
+    {
+      "name": "Intersecting",
+      "signature": "Intersecting(el1, el2) | Intersecting(el1, el2, tol) | Intersecting(el1, el2, tol) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2)",
+      "summary": "test 2 2D minmaxes for intersection",
+      "remarks": "test 2 2D minmaxes for intersection",
+      "params": [
+        {
+          "name": "el1",
+          "type": "MinMax2D",
+          "doc": "element",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "MinMax2D",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when intersecting, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting"
+    },
+    {
+      "name": "IntersectingRel",
+      "signature": "IntersectingRel(el1, el2) | IntersectingRel(el1, el2)",
+      "summary": "test 2 geo 2D minmaxes for intersection using built-in relative tolerance",
+      "remarks": "test 2 geo 2D minmaxes for intersection using built-in relative tolerance",
+      "params": [
+        {
+          "name": "el1",
+          "type": "MinMax2D",
+          "doc": "element",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "MinMax2D",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when intersecting, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectingRel"
+    },
+    {
+      "name": "IntersectionCalculus",
+      "signature": "IntersectionCalculus(el1, el2) | IntersectionCalculus(axis, line) | IntersectionCalculus(axis2D, axis3D) | IntersectionCalculus(axis2D, arc2D, eps) | IntersectionCalculus(axis2D, polyline) | IntersectionCalculus(axis2D, polygon) | IntersectionCalculus(axis2D, spline, eps, maxSolutions) | IntersectionCalculus(axis2D, bspline, eps, maxSolutions) | IntersectionCalculus(axis1, axis2) | IntersectionCalculus(axis, line) | IntersectionCalculus(axis, arc, eps) | IntersectionCalculus(axis, polyline) | IntersectionCalculus(axis, polygon) | IntersectionCalculus(axis, spline, eps, maxSolutions) | IntersectionCalculus(axis, spline, eps, maxSolutions) | IntersectionCalculus(axis, spline, eps, maxSolutions) | IntersectionCalculus(axis, plane, eps) | IntersectionCalculus(line, plane, eps) | IntersectionCalculus(axis, arc, eps) | IntersectionCalculus(line, arc, eps) | IntersectionCalculus(el1, el2) | IntersectionCalculus(line2D, line3D) | IntersectionCalculus(line2D, arc2D, eps) | IntersectionCalculus(line2D, polyline) | IntersectionCalculus(line2D, polygon) | IntersectionCalculus(line, bspline, eps, maxSolutions) | IntersectionCalculus(line2D, spline, eps, maxSolutions) | IntersectionCalculus(line1, line2) | IntersectionCalculus(line, arc, eps) | IntersectionCalculus(line, polyline) | IntersectionCalculus(line, polygon) | IntersectionCalculus(line, spline, eps, maxSolutions) | IntersectionCalculus(line, spline, eps, maxSolutions) | IntersectionCalculus(line, bspline, eps, maxSolutions) | IntersectionCalculus(arc1, arc2) | IntersectionCalculus(arc, polyline, eps) | IntersectionCalculus(arc, polygon, intersectionPnts) | IntersectionCalculus(arc, spline, eps, maxSolutions) | IntersectionCalculus(arc, bspline, eps, maxSolutions) | IntersectionCalculus(arc, arc2, eps, maxSolutions) | IntersectionCalculus(arc, spline, eps, maxSolutions) | IntersectionCalculus(arc, bspline, eps, maxSolutions) | IntersectionCalculus(polyline1, polyline2) | IntersectionCalculus(polyline, polygon) | IntersectionCalculus(polygon1, polygon2) | IntersectionCalculus(polyline, spline, eps, maxSolutions) | IntersectionCalculus(polyline, spline, eps, maxSolutions) | IntersectionCalculus(polyline, spline, eps, maxSolutions) | IntersectionCalculus(polygon, spline, eps, maxSolutions) | IntersectionCalculus(plane, line, eps) | IntersectionCalculus(plane, line, eps) | IntersectionCalculus(plane, arc, eps) | IntersectionCalculus(plane, spline, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(ele1, ele2, eps, maxSolutions)",
+      "summary": "compute intersection of 2 2D axis",
+      "remarks": "compute intersection of 2 2D axis",
+      "params": [
+        {
+          "name": "el1",
+          "type": "Axis2D",
+          "doc": "element",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "Axis2D",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "true when intersecting, otherwise false.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus"
+    },
+    {
+      "name": "IntersectionCalculusEx",
+      "signature": "IntersectionCalculusEx(axis2D, arc2D, eps) | IntersectionCalculusEx(axis2D, polyline) | IntersectionCalculusEx(axis2D, polygon) | IntersectionCalculusEx(axis2D, clothoid2D, eps, maxSolutions) | IntersectionCalculusEx(axis, arc, eps) | IntersectionCalculusEx(axis, polyline) | IntersectionCalculusEx(axis, polygon) | IntersectionCalculusEx(line1, line2) | IntersectionCalculusEx(line2D, line3D) | IntersectionCalculusEx(line2D, arc2D, eps) | IntersectionCalculusEx(line2D, clothoid2D, eps, maxSolutions) | IntersectionCalculusEx(line2D, polyline) | IntersectionCalculusEx(line2D, polygon) | IntersectionCalculusEx(line2D, spline, eps, maxSolutions) | IntersectionCalculusEx(line2D, spline, eps, maxSolutions) | IntersectionCalculusEx(line2D, bspline, eps, maxSolutions) | IntersectionCalculusEx(line1, line2) | IntersectionCalculusEx(line, arc, eps) | IntersectionCalculusEx(line, arc, eps) | IntersectionCalculusEx(line, clothoid, eps, maxSolutions) | IntersectionCalculusEx(line, polyline) | IntersectionCalculusEx(line, polygon) | IntersectionCalculusEx(line, spline, eps, maxSolutions) | IntersectionCalculusEx(line, spline, eps, maxSolutions) | IntersectionCalculusEx(line, spline, eps, maxSolutions) | IntersectionCalculusEx(arc1, arc2) | IntersectionCalculusEx(arc, clothoid, eps, maxSolutions) | IntersectionCalculusEx(arc, polyline, eps) | IntersectionCalculusEx(arc, polygon, intersectionPnts) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(arc1, arc2, eps, maxSolutions) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(clothoid, polyline, eps, maxSolutions) | IntersectionCalculusEx(clothoid, polygon, eps, maxSolutions) | IntersectionCalculusEx(polyline1, polyline2) | IntersectionCalculusEx(polygon1, polygon2) | IntersectionCalculusEx(polyline, spline, eps, maxSolutions) | IntersectionCalculusEx(polygon, spline, eps, maxSolutions) | IntersectionCalculusEx(geoObject1, geoObject2, eps, maxSolutions, bOnlyInsidePoints)",
+      "summary": "Calculate the intersection between a 2D axis and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk",
+      "remarks": "Calculate the intersection between a 2D axis and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx"
+    },
+    {
+      "name": "IsCoplanar",
+      "signature": "IsCoplanar(geoVector_object) | IsCoplanar(igeo1_object, igeo2_object) | IsCoplanar(plane, geo_object) | IsCoplanar(plane, point) | IsCoplanar(plane, line) | IsCoplanar(plane1, plane2) | IsCoplanar(point1, point2, point3, point4) | IsCoplanar(line1, line2) | IsCoplanar(line1, line2)",
+      "summary": "Check if the 3D geometry objects are coplanar and calculate plane",
+      "remarks": "Check if the 3D geometry objects are coplanar and calculate plane",
+      "params": [
+        {
+          "name": "geoVector_object",
+          "type": "list",
+          "doc": "vector of object geometries",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(True if objects are coplanar, false otherwise.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar"
+    },
+    {
+      "name": "MakeBoolean",
+      "signature": "MakeBoolean(el1, el2) | MakeBoolean(el1, el2) | MakeBoolean(el1, el2)",
+      "summary": "make boolean operation between line and polygon",
+      "remarks": "make boolean operation between line and polygon",
+      "params": [
+        {
+          "name": "el1",
+          "type": "Line2D",
+          "doc": "Line2D",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "Polygon2D",
+          "doc": "Polygon2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(GeoErrorCode,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeBoolean"
+    },
+    {
+      "name": "MakeIntersection",
+      "signature": "MakeIntersection(brep1, breps) | MakeIntersection(brep1, brep2) | MakeIntersection(brep, polyhedron) | MakeIntersection(el1, el2)",
+      "summary": "Compute intersection of 2 breps",
+      "remarks": "Compute intersection of 2 breps",
+      "params": [
+        {
+          "name": "brep1",
+          "type": "BRep3D",
+          "doc": "first brep",
+          "optional": false
+        },
+        {
+          "name": "breps",
+          "type": "BRep3DList",
+          "doc": "second brep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(eOK if intersection was successful,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeIntersection"
+    },
+    {
+      "name": "MakeSubtraction",
+      "signature": "MakeSubtraction(body_object, voidbodies_list) | MakeSubtraction(poly1, poly2) | MakeSubtraction(polyhed1, polyhed2) | MakeSubtraction(brep1, brep2) | MakeSubtraction(brep1, breps) | MakeSubtraction(poly1, poly2, intersection)",
+      "summary": "make subtraction of 3D bodies from given body",
+      "remarks": "make subtraction of 3D bodies from given body",
+      "params": [
+        {
+          "name": "body_object",
+          "type": "Union[Polyhedron3D, Cylinder3D, ExtrudedAreaSolid3D, Line3D, Polyline3D, Polygon3D, ClippedSweptSolid3D]",
+          "doc": "input body",
+          "optional": false
+        },
+        {
+          "name": "voidbodies_list",
+          "type": "PolyhedronTypesList",
+          "doc": "list of 3D bodies to subtract",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(GeoErrorCode,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSubtraction"
+    },
+    {
+      "name": "MakeUnion",
+      "signature": "MakeUnion(bodies_list, voidbodies_list) | MakeUnion(poly1, poly2) | MakeUnion(polyhed1, polyhed2) | MakeUnion(bodies) | MakeUnion(brep1, brep2) | MakeUnion(brep1, breps) | MakeUnion(breps)",
+      "summary": "make union of 3D bodies As input arbitrary elements which represents 3D is possible.",
+      "remarks": "make union of 3D bodies As input arbitrary elements which represents 3D is possible.",
+      "params": [
+        {
+          "name": "bodies_list",
+          "type": "PolyhedronTypesList",
+          "doc": "list of 3D bodies",
+          "optional": false
+        },
+        {
+          "name": "voidbodies_list",
+          "type": "PolyhedronTypesList",
+          "doc": "list of 3D bodies to subtract",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(GeoErrorCode,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion"
+    },
+    {
+      "name": "Mirror",
+      "signature": "Mirror(point, plane) | Mirror(point, axis) | Mirror(vec, plane) | Mirror(vec, axis) | Mirror(point, plane) | Mirror(point, axis) | Mirror(vec, plane) | Mirror(vec, axis) | Mirror(line, plane) | Mirror(line, axis) | Mirror(line, plane) | Mirror(line, axis) | Mirror(polyline, plane) | Mirror(polyline, axis) | Mirror(polygon, plane) | Mirror(polygon, axis) | Mirror(plane, axis) | Mirror(pla, plane) | Mirror(polygon, axis) | Mirror(polygon, axis) | Mirror(polygon, plane) | Mirror(polyline, plane) | Mirror(polyline, axis) | Mirror(polygon, plane) | Mirror(polygon, axis) | Mirror(spline, plane) | Mirror(spline, axis) | Mirror(spline, plane) | Mirror(spline, axis) | Mirror(bSpline, plane) | Mirror(bSpline, axis) | Mirror(bSpline, plane) | Mirror(bSpline, axis) | Mirror(arc, plane) | Mirror(arc, axis) | Mirror(arc, plane) | Mirror(arc, axis) | Mirror(path, plane) | Mirror(path, axis) | Mirror(path, plane) | Mirror(path, axis) | Mirror(area, plane) | Mirror(area, axis) | Mirror(area, plane) | Mirror(area, axis) | Mirror(angle, plane) | Mirror(angle, axis) | Mirror(polyhedron, plane) | Mirror(polyhedron, axis) | Mirror(solid, axis) | Mirror(solid, plane) | Mirror(solid, axis) | Mirror(clothoid, plane) | Mirror(clothoid, axis) | Mirror(placement, axis) | Mirror(placement, plane) | Mirror(placement, axis) | Mirror(placement, plane) | Mirror(cylinder, plane) | Mirror(cylinder, axis) | Mirror(cone, plane) | Mirror(cone, axis) | Mirror(ellipsoid, plane) | Mirror(ellipsoid, axis) | Mirror(brep, plane)",
+      "summary": "Mirror point 3D",
+      "remarks": "Mirror point 3D",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "mirroring point",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "mirror plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "mirrored point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(box, translation) | Move(area, translation) | Move(plane, translation) | Move(arc2D, moveVector) | Move(arc3D, moveVector) | Move(axis2D, moveVector) | Move(axis3D, moveVector) | Move(axisPlacement2D, moveVector) | Move(axisPlacement3D, moveVector) | Move(clippedSweptSolid3D, vec) | Move(clothoid2D, moveVector) | Move(cuboid3D, moveVector) | Move(extrudedAreaSolid3D, moveVector) | Move(line2D, moveVector) | Move(line3D, moveVector) | Move(path2D, moveVector) | Move(path3D, moveVector) | Move(point2D, moveVector) | Move(point3D, moveVector) | Move(polygon2D, moveVector) | Move(polygon3D, moveVector) | Move(polygonalArea3D, moveVector) | Move(polyhedron3D, moveVector) | Move(polyline2D, moveVector) | Move(polyline3D, moveVector) | Move(area, moveVector) | Move(area, moveVector) | Move(cylinder3D, moveVector) | Move(ellipsoid3D, moveVector) | Move(cone3D, moveVector) | Move(spline2D, moveVector) | Move(spline3D, moveVector) | Move(bspline3D, moveVector) | Move(brep, moveVector)",
+      "summary": "Move bounding box",
+      "remarks": "Move bounding box",
+      "params": [
+        {
+          "name": "box",
+          "type": "BoundingBox2D",
+          "doc": "Moving bounding box",
+          "optional": false
+        },
+        {
+          "name": "translation",
+          "type": "Vector2D",
+          "doc": "Vector of translation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox2D",
+        "doc": "Moved bounding box"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move"
+    },
+    {
+      "name": "Offset",
+      "signature": "Offset(dist, lineSrc) | Offset(point, lineSrc) | Offset(point, pathSrc) | Offset(dist, pathSrc, checkSegmentsOrientation) | Offset(point, arc2DSrc) | Offset(dist, arc2DSrc) | Offset(dist, spline2DSrc, checkSegmentsOrientation) | Offset(point, spline2DSrc) | Offset(rDistance, polyline2D, checkSegmentsOrientation) | Offset(point, polyline2DSrc) | Offset(point, dist, lineSrc, offsetPlane) | Offset(dist, offsetPlane, parallelsCount, polySrc) | Offset(point, offsetPlane, parallelsCount, polySrc) | Offset(point, arc3DSrc) | Offset(dist, arc3DSrc) | Offset(dist, spline3DSrc, plane, checkSegmentsOrientation) | Offset(point, spline3DSrc, plane) | Offset(inputPath, normVector, offsetDistance) | Offset(inputPath, inputPoint, rayVector, plane)",
+      "summary": "Counts parallel to 2D-Line",
+      "remarks": "Counts parallel to 2D-Line",
+      "params": [
+        {
+          "name": "dist",
+          "type": "float",
+          "doc": "Distance from the source",
+          "optional": false
+        },
+        {
+          "name": "lineSrc",
+          "type": "Line2D",
+          "doc": "Source element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eOK if successful,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset"
+    },
+    {
+      "name": "Polygonize",
+      "signature": "Polygonize(geometry_object, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(geometry_object, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(path, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(line, fromPoint, toPoint, eps) | Polygonize(polyline, fromPoint, toPoint, eps) | Polygonize(polygon, fromPoint, toPoint, eps) | Polygonize(arc, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(arc, fromPoint, toPoint, count, bInscribed) | Polygonize(arc, countOfSegments) | Polygonize(spline, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(bspline, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(clothoid, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(arc, countOfSegments) | Polygonize(arc, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(path, countOfSegments) | Polygonize(path, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(spline, linesPerSegment) | Polygonize(spline, minmaxRadius, pixelSize) | Polygonize(spline, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(spline, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(line) | Polygonize(line, fromOffset, toOffset) | Polygonize(clothoid, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(polyline, fromOffset, toOffset, eps) | Polygonize(polygon, fromOffset, toOffset, eps) | Polygonize(arc, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(arc, fromOffset, toOffset, count, bInscribed) | Polygonize(spline, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(path, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(area, eps, arcSegmentation=360, useArcSegmentation=0, armLength=0.0, riseValue=0.0) | Polygonize(geometry_object, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)",
+      "summary": "Polygonize whole curve",
+      "remarks": "Polygonize whole curve",
+      "params": [
+        {
+          "name": "geometry_object",
+          "type": "object",
+          "doc": "Geometry object which will be polygonized",
+          "optional": false
+        },
+        {
+          "name": "arcSegmentation",
+          "type": "int",
+          "doc": "segment number",
+          "optional": false
+        },
+        {
+          "name": "useArcSegmentation",
+          "type": "int",
+          "doc": "if use segment polygonization, set to 0",
+          "optional": false
+        },
+        {
+          "name": "armLength",
+          "type": "float",
+          "doc": "max length of calculated segment, for rise value polygonization only",
+          "optional": false
+        },
+        {
+          "name": "riseValue",
+          "type": "float",
+          "doc": "rise value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(bool true = success,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize"
+    },
+    {
+      "name": "Rotate",
+      "signature": "Rotate(point, angle) | Rotate(point, zeroPoint, angle) | Rotate(line, angle) | Rotate(line, zeroPoint, angle) | Rotate(arc, angle) | Rotate(arc, zeroPoint, angle) | Rotate(vec, angle) | Rotate(vec, axis, angle) | Rotate(polyline, zeroPoint, angle) | Rotate(polyline, angle) | Rotate(axis, angle) | Rotate(axis, zeroPoint, angle) | Rotate(axis, angle) | Rotate(axis, zeroPoint, angle) | Rotate(placement, angle) | Rotate(placement, rotAxis, angle) | Rotate(placement, zeroPoint, angle) | Rotate(clothoid, angle) | Rotate(clothoid, zeroPoint, angle) | Rotate(polygon, angle) | Rotate(polygon, zeroPoint, angle) | Rotate(area, angle) | Rotate(area, zeroPoint, angle) | Rotate(spline, angle) | Rotate(spline, zeroPoint, angle) | Rotate(point, angle) | Rotate(point, zeroPoint, angle) | Rotate(point, axis, angle) | Rotate(line, zeroPoint, angle) | Rotate(cylinder, angle) | Rotate(cylinder, zeroPoint, angle) | Rotate(cylinder, axis, angle) | Rotate(ellipsoid, angle) | Rotate(ellipsoid, zeroPoint, angle) | Rotate(ellipsoid, axis, angle) | Rotate(cone, angle) | Rotate(cone, zeroPoint, angle) | Rotate(cone, axis, angle) | Rotate(minmax, angle) | Rotate(brep, axis, angle) | Rotate(polyhedron, axis, angle)",
+      "summary": "Rotate a point around zero point by an angle.",
+      "remarks": "Rotate a point around zero point by an angle.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "2D Point",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Resulting 2D Point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate"
+    },
+    {
+      "name": "Split",
+      "signature": "Split(line2D, splitPoints, posTol) | Split(line3D, splitPoints, posTol) | Split(polyline2D, splitPoints, posTol) | Split(polyline3D, splitPoints, posTol) | Split(arc2D, splitPoints, posTol) | Split(arc3D, splitPoints, posTol) | Split(spline2D, splitPoints, posTol) | Split(spline3D, splitPoints, posTol) | Split(bspline2D, splitPoints, posTol) | Split(bspline3D, splitPoints, posTol) | Split(polyline2D, polygon2D, posTol) | Split(polygon, polyline, posTol, divideComponents) | Split(polygon, axis, posTol, divideComponents)",
+      "summary": "Split a Line2D into multiple Line2D geometries by given split points",
+      "remarks": "Split a Line2D into multiple Line2D geometries by given split points",
+      "params": [
+        {
+          "name": "line2D",
+          "type": "Line2D",
+          "doc": "The line to split",
+          "optional": false
+        },
+        {
+          "name": "splitPoints",
+          "type": "Point3DList",
+          "doc": "The given split points (e.g. intersection points onto the line)",
+          "optional": false
+        },
+        {
+          "name": "posTol",
+          "type": "float",
+          "doc": "Tolerance being used to determine the position of split points on the input curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eSplitResult, SPLIT_OK on success,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split"
+    },
+    {
+      "name": "Tesselate",
+      "signature": "Tesselate(brep, density, maxAngle, minEdge, maxEdge) | Tesselate(brep, density, chord, maxAngle, minEdge, maxEdge)",
+      "summary": "Tesselate b-rep with mesh triangles",
+      "remarks": "Tesselate b-rep with mesh triangles",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "brep to be tesselated",
+          "optional": false
+        },
+        {
+          "name": "density",
+          "type": "float",
+          "doc": "density of resulting mesh (when 0, not used)",
+          "optional": false
+        },
+        {
+          "name": "maxAngle",
+          "type": "float",
+          "doc": "maximal angle between neighbor triangles in degrees (when 0, not used)",
+          "optional": false
+        },
+        {
+          "name": "minEdge",
+          "type": "float",
+          "doc": "minimal edge length (when 0, not used)",
+          "optional": false
+        },
+        {
+          "name": "maxEdge",
+          "type": "float",
+          "doc": "maximal edge length (when 0, not used)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Tesselate"
+    },
+    {
+      "name": "Touching",
+      "signature": "Touching(line1, line2) | Touching(polygon1, polygon2) | Touching(polygon, polyline)",
+      "summary": "Test for collision between 2 line2D objects",
+      "remarks": "Test for collision between 2 line2D objects",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Line2D",
+          "doc": "the first geometry object",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Line2D",
+          "doc": "the second geometry object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when in touch, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Touching"
+    },
+    {
+      "name": "Transform",
+      "signature": "Transform(point, matrix) | Transform(line, matrix) | Transform(vec, matrix) | Transform(arc, matrix) | Transform(clothoid, matrix) | Transform(spline, matrix) | Transform(axis, matrix) | Transform(polyline, matrix) | Transform(path, matrix) | Transform(area, matrix) | Transform(area, matrix) | Transform(area, matrix) | Transform(point, matrix) | Transform(point, matrix) | Transform(el, matrix) | Transform(el, matrix) | Transform(vec, matrix) | Transform(vec, matrix) | Transform(arc, matrix) | Transform(arc, matrix) | Transform(cuboid, matrix) | Transform(cuboid, matrix) | Transform(plane, matrix) | Transform(plane, matrix) | Transform(polygon, matrix) | Transform(polygon, matrix) | Transform(polygon, matrix) | Transform(polyline, matrix) | Transform(polyline, matrix) | Transform(spline, matrix) | Transform(polyhedron, matrix) | Transform(polyhedron, matrix) | Transform(axis, matrix) | Transform(axis, matrix) | Transform(path, matrix) | Transform(path, matrix) | Transform(area, matrix) | Transform(area, matrix) | Transform(solid, matrix) | Transform(solid, matrix) | Transform(cylinder, matrix) | Transform(cylinder, matrix) | Transform(ellipsoid, matrix) | Transform(ellipsoid, matrix) | Transform(brep, matrix) | Transform(brep, matrix) | Transform(spline, matrix) | Transform(spline, matrix) | Transform(cone, matrix) | Transform(cone, matrix)",
+      "summary": "Point2D matrix transformation.",
+      "remarks": "Point2D matrix transformation.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "2D point to transform.",
+          "optional": false
+        },
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "Transformation Matrix.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform"
+    },
+    {
+      "name": "CalcProjectedMinMax",
+      "signature": "CalcProjectedMinMax(geo, matrix)",
+      "summary": "Calculate minmax of brep in given projection",
+      "remarks": "Calculate minmax of brep in given projection",
+      "params": [
+        {
+          "name": "geo",
+          "type": "BRep3D",
+          "doc": "BRep3D to calculate minmax for",
+          "optional": false
+        },
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "projection minmax",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax3D",
+        "doc": "tuple(minmax 3D,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcProjectedMinMax"
+    },
+    {
+      "name": "CalcSurface",
+      "signature": "CalcSurface(elem)",
+      "summary": "Calculate surface of BRep3D",
+      "remarks": "Calculate surface of BRep3D",
+      "params": [
+        {
+          "name": "elem",
+          "type": "BRep3D",
+          "doc": "input BRep3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcSurface"
+    },
+    {
+      "name": "CalcVolume",
+      "signature": "CalcVolume(elem)",
+      "summary": "Calculate volume of BRep3D",
+      "remarks": "Calculate volume of BRep3D",
+      "params": [
+        {
+          "name": "elem",
+          "type": "BRep3D",
+          "doc": "input BRep3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcVolume"
+    },
+    {
+      "name": "CalculateNormal",
+      "signature": "CalculateNormal(brep, inputPnt)",
+      "summary": "Calculate normal vector of BRep at point",
+      "remarks": "Calculate normal vector of BRep at point",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "BRep",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "normal vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalculateNormal"
+    },
+    {
+      "name": "CalculateSplineLengthToPoint",
+      "signature": "CalculateSplineLengthToPoint(spline, splinePointIndex)",
+      "summary": "Calculate spline length from spline start to defined spline point. This function returns correct result even if the various points of the spline have the same coordinates ( PointLocal(.....) function fails in that case ).",
+      "remarks": "Calculate spline length from spline start to defined spline point. This function returns correct result even if the various points of the spline have the same coordinates ( PointLocal(.....) function fails in that case ).",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline2D",
+          "doc": "2D Spline",
+          "optional": false
+        },
+        {
+          "name": "splinePointIndex",
+          "type": "int",
+          "doc": "Spline point index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Length if everything is OK. -1.0 in case of error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalculateSplineLengthToPoint"
+    },
+    {
+      "name": "Clipping",
+      "signature": "Clipping(el1, el2)",
+      "summary": "test 2D line and minmax box for clipping",
+      "remarks": "test 2D line and minmax box for clipping",
+      "params": [
+        {
+          "name": "el1",
+          "type": "Line2D",
+          "doc": "2D line",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "MinMax2D",
+          "doc": "2D minmax",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eBoolOpResult",
+        "doc": "eInside (line inside the box), eOutside (line outside the box), eClip"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Clipping"
+    },
+    {
+      "name": "Convert3DRotation",
+      "signature": "Convert3DRotation(axis, angle)",
+      "summary": "Convert a 3D Rotation to series of 2D operations: scale, rotation, scale, rotation.",
+      "remarks": "Convert a 3D Rotation to series of 2D operations: scale, rotation, scale, rotation.",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Axis3D",
+          "doc": "3D axis",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle of 3D rotation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "The first scale in X axis,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Convert3DRotation"
+    },
+    {
+      "name": "CreateFrustumOfPyramid",
+      "signature": "CreateFrustumOfPyramid(length, width, height, offset, bottomPlane)",
+      "summary": ") -\u003E tuple : Create a frustum of pyramid",
+      "remarks": ") -\u003E tuple : Create a frustum of pyramid",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the bottom",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the bottom",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "Height of the bottom",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "float",
+          "doc": "Offset of the top",
+          "optional": false
+        },
+        {
+          "name": "bottomPlane",
+          "type": "Plane3D",
+          "doc": "Bottom plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateFrustumOfPyramid"
+    },
+    {
+      "name": "CreateLoftedBRep3D",
+      "signature": "CreateLoftedBRep3D(outerProfiles_object, innerProfiles_object, closecaps, createprofileedges, linear, periodic)",
+      "summary": "Create BRep3D by means of lofting through a set of profiles (incl. hole)",
+      "remarks": "Create BRep3D by means of lofting through a set of profiles (incl. hole)",
+      "params": [
+        {
+          "name": "outerProfiles_object",
+          "type": "list",
+          "doc": "outer profiles to loft",
+          "optional": false
+        },
+        {
+          "name": "innerProfiles_object",
+          "type": "list",
+          "doc": "inner profiles to loft (represents hole in outer profile)",
+          "optional": false
+        },
+        {
+          "name": "closecaps",
+          "type": "bool",
+          "doc": "close brep if possible (all profiles are closed)",
+          "optional": false
+        },
+        {
+          "name": "createprofileedges",
+          "type": "bool",
+          "doc": "create profile edges and more surfaces or just create one surface",
+          "optional": false
+        },
+        {
+          "name": "linear",
+          "type": "bool",
+          "doc": "linear or cubic interpolation",
+          "optional": false
+        },
+        {
+          "name": "periodic",
+          "type": "bool",
+          "doc": "if the start profile is also to be the end profile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateLoftedBRep3D"
+    },
+    {
+      "name": "CreatePatchBRep3D",
+      "signature": "CreatePatchBRep3D(curves_object)",
+      "summary": "Create breps as patch from given closed 3D-curves",
+      "remarks": "Create breps as patch from given closed 3D-curves",
+      "params": [
+        {
+          "name": "curves_object",
+          "type": "list",
+          "doc": "vector of 3D-curves",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eCreatePatchResult",
+        "doc": "tuple(Result of patch creation,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePatchBRep3D"
+    },
+    {
+      "name": "CreatePlanarSurface",
+      "signature": "CreatePlanarSurface(geometries_object)",
+      "summary": "create planar brep",
+      "remarks": "create planar brep",
+      "params": [
+        {
+          "name": "geometries_object",
+          "type": "list",
+          "doc": "input geometries pointers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ePlanarSurfaceError",
+        "doc": "tuple(surface error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePlanarSurface"
+    },
+    {
+      "name": "CreatePolygon3DFromIndex",
+      "signature": "CreatePolygon3DFromIndex(arg2, arg3, arg4)",
+      "summary": "Create a 3D polygon from a start and end polygon, an index and a division count",
+      "remarks": "Create a 3D polygon from a start and end polygon, an index and a division count",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolygon3DFromIndex"
+    },
+    {
+      "name": "CreatePolyline3DFromIndex",
+      "signature": "CreatePolyline3DFromIndex(startPol, endPol, index, count)",
+      "summary": "Create a 3D polyline from a start and end polyline, an index and a division count Args: startPol: Start polyline endPol: End polyline index: Division index count: Division count",
+      "remarks": "Create a 3D polyline from a start and end polyline, an index and a division count Args: startPol: Start polyline endPol: End polyline index: Division index count: Division count",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "eOK if converted successful, else eError,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyline3DFromIndex"
+    },
+    {
+      "name": "CreateRevolvedBRep3D",
+      "signature": "CreateRevolvedBRep3D(profiles_object, axis, rotationAngle, closecaps, numprofiles)",
+      "summary": "Create brep as revolved body.",
+      "remarks": "Create brep as revolved body.",
+      "params": [
+        {
+          "name": "profiles_object",
+          "type": "list",
+          "doc": "vector of profile curves",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Axis3D",
+          "doc": "axis of rotation",
+          "optional": false
+        },
+        {
+          "name": "rotationAngle",
+          "type": "Angle",
+          "doc": "angle of rotation",
+          "optional": false
+        },
+        {
+          "name": "closecaps",
+          "type": "bool",
+          "doc": "if true, create closed solid if possible, if false just surface(s) will be created",
+          "optional": false
+        },
+        {
+          "name": "numprofiles",
+          "type": "int",
+          "doc": "number of control profiles created along the created surfaces (division of surface parameter)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateRevolvedBRep3D"
+    },
+    {
+      "name": "CreateSweptPolyhedron3D",
+      "signature": "CreateSweptPolyhedron3D(profiles, path, closecaps, railrotation, rotAxis)",
+      "summary": "Create translation polyhedron from base polygon and path",
+      "remarks": "Create translation polyhedron from base polygon and path",
+      "params": [
+        {
+          "name": "profiles",
+          "type": "Polyline3DList",
+          "doc": "profiles to sweep",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Polyline3D",
+          "doc": "translation path",
+          "optional": false
+        },
+        {
+          "name": "closecaps",
+          "type": "bool",
+          "doc": "create closed volume (in case of closed profiles) or open shell only",
+          "optional": false
+        },
+        {
+          "name": "railrotation",
+          "type": "bool",
+          "doc": "rotate profiles along path - standard rotation = true (keep angle between profile and a path), rotation along z-axis vector = false",
+          "optional": false
+        },
+        {
+          "name": "rotAxis",
+          "type": "Vector3D",
+          "doc": "if set, profile will be rotated along this axis along the path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateSweptPolyhedron3D"
+    },
+    {
+      "name": "CutBrepWithPlane",
+      "signature": "CutBrepWithPlane(original, plane)",
+      "summary": "Cut Brep with plane - create two independent BReps",
+      "remarks": "Cut Brep with plane - create two independent BReps",
+      "params": [
+        {
+          "name": "original",
+          "type": "BRep3D",
+          "doc": "original brep",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "cutting plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(true if plane cuts the brep. If the plane is above or below brep, it returns false, but one of the result brep is filled with original according to plane position - use brep.IsValid() to check.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CutBrepWithPlane"
+    },
+    {
+      "name": "CutPolyhedronWithPlane",
+      "signature": "CutPolyhedronWithPlane(original, plane)",
+      "summary": "Cut polyhedron with plane - create two independent polyhedra",
+      "remarks": "Cut polyhedron with plane - create two independent polyhedra",
+      "params": [
+        {
+          "name": "original",
+          "type": "Polyhedron3D",
+          "doc": "original polyhedron",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "cutting plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(true if there is a cut, otherwise false, one of polyhedron above/below is filled when whole body is above/below the plane,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CutPolyhedronWithPlane"
+    },
+    {
+      "name": "DeletePolyhedronLastFace",
+      "signature": "DeletePolyhedronLastFace(polyhedron)",
+      "summary": "Delete the last face of given polyhedron",
+      "remarks": "Delete the last face of given polyhedron",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "Polyhedron3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.DeletePolyhedronLastFace"
+    },
+    {
+      "name": "GetAbsoluteTolerance",
+      "signature": "GetAbsoluteTolerance()",
+      "summary": "get absolute tolerance",
+      "remarks": "get absolute tolerance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "absolute tolerance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetAbsoluteTolerance"
+    },
+    {
+      "name": "GetAllIntersections",
+      "signature": "GetAllIntersections(geoObject1, geoObject2, eps, maxSolutions)",
+      "summary": "Calculate all intersections of two geometry objects Intersection point must not be located on the elements, it can be outside",
+      "remarks": "Calculate all intersections of two geometry objects Intersection point must not be located on the elements, it can be outside",
+      "params": [
+        {
+          "name": "geoObject1",
+          "type": "object",
+          "doc": "First object",
+          "optional": false
+        },
+        {
+          "name": "geoObject2",
+          "type": "object",
+          "doc": "Second object",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Tolerance",
+          "optional": false
+        },
+        {
+          "name": "maxSolutions",
+          "type": "int",
+          "doc": "Maximum number of solution (especially for splines and clothoids)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "true, if an intersection was found, otherwise false,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetAllIntersections"
+    },
+    {
+      "name": "GetAngleTolerance",
+      "signature": "GetAngleTolerance()",
+      "summary": "Get angle tolerance This tolerance is using for angle comparison. Use it with Comparison::Equal(value, value, GetAngleTolerance())",
+      "remarks": "Get angle tolerance This tolerance is using for angle comparison. Use it with Comparison::Equal(value, value, GetAngleTolerance())",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Tolerance using for angle comparison [rad]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetAngleTolerance"
+    },
+    {
+      "name": "GetClosestIntersection",
+      "signature": "GetClosestIntersection(geometrie1, geometrie2, inputPoint, eps, bOnlyInsidePoints)",
+      "summary": "Function to calculate the nearest intersection between two geometries to a reference point Intersection point must not be located on the elements, it can be outside",
+      "remarks": "Function to calculate the nearest intersection between two geometries to a reference point Intersection point must not be located on the elements, it can be outside",
+      "params": [
+        {
+          "name": "geometrie1",
+          "type": "object",
+          "doc": "First object",
+          "optional": false
+        },
+        {
+          "name": "geometrie2",
+          "type": "object",
+          "doc": "Second object",
+          "optional": false
+        },
+        {
+          "name": "inputPoint",
+          "type": "Point3D",
+          "doc": "Reference Point / Cursor point",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Tolerance",
+          "optional": false
+        },
+        {
+          "name": "bOnlyInsidePoints",
+          "type": "bool",
+          "doc": "Return point must be on both objects",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "true, if an intersection was found, otherwise false,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetClosestIntersection"
+    },
+    {
+      "name": "GetCurvatureTolerance",
+      "signature": "GetCurvatureTolerance()",
+      "summary": "Get curvature tolerance This tolerance is using for curvature comparison. Use it with Comparison::Equal(value, value, GetCurvatureTolerance())",
+      "remarks": "Get curvature tolerance This tolerance is using for curvature comparison. Use it with Comparison::Equal(value, value, GetCurvatureTolerance())",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Tolerance using for curvature comparison"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetCurvatureTolerance"
+    },
+    {
+      "name": "GetCurveLengthTolerance",
+      "signature": "GetCurveLengthTolerance()",
+      "summary": "Get tolerance for curve length comparison This tolerance is using for length of curve comparison. Use it with Comparison::Equal(value, value, GetCurveLengthTolerance())",
+      "remarks": "Get tolerance for curve length comparison This tolerance is using for length of curve comparison. Use it with Comparison::Equal(value, value, GetCurveLengthTolerance())",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Tolerance using for length of curve comparison [mm]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetCurveLengthTolerance"
+    },
+    {
+      "name": "GetIntersectionPoints",
+      "signature": "GetIntersectionPoints(geoObject1, geoObject2, eps)",
+      "summary": "Function to calculate the nearest intersection between two geometries to a reference point Intersection point must not be located on the elements, it can be outside",
+      "remarks": "Function to calculate the nearest intersection between two geometries to a reference point Intersection point must not be located on the elements, it can be outside",
+      "params": [
+        {
+          "name": "geoObject1",
+          "type": "object",
+          "doc": "First object",
+          "optional": false
+        },
+        {
+          "name": "geoObject2",
+          "type": "object",
+          "doc": "Second object",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Tolerance (optional)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "true, if an intersection was found, otherwise false,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetIntersectionPoints"
+    },
+    {
+      "name": "GetRelativeTolerance",
+      "signature": "GetRelativeTolerance()",
+      "summary": "get relative tolerance",
+      "remarks": "get relative tolerance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "relative tolerance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetRelativeTolerance"
+    },
+    {
+      "name": "ImprintProfileOnFaces",
+      "signature": "ImprintProfileOnFaces(brep, targetFaces, profile_object)",
+      "summary": "Imprint edges on brep",
+      "remarks": "Imprint edges on brep",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "Brep",
+          "optional": false
+        },
+        {
+          "name": "targetFaces",
+          "type": "[list[int] | VecUIntList]",
+          "doc": "faces where to imprint edges",
+          "optional": false
+        },
+        {
+          "name": "profile_object",
+          "type": "Union[Arc3D, BSpline3D, Line3D, Path3D, Polyline3D, Polygon3D, Spline3D]",
+          "doc": "imprinted profile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(eOK if successful otherwise eError,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ImprintProfileOnFaces"
+    },
+    {
+      "name": "IntersectRayBRep",
+      "signature": "IntersectRayBRep(rayPoint, rayVector, brep, bNegativPrefered)",
+      "summary": "Intersection of Ray and BRep",
+      "remarks": "Intersection of Ray and BRep",
+      "params": [
+        {
+          "name": "rayPoint",
+          "type": "Point3D",
+          "doc": "ray Point",
+          "optional": false
+        },
+        {
+          "name": "rayVector",
+          "type": "Vector3D",
+          "doc": "direction vector of ray",
+          "optional": false
+        },
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "BRep",
+          "optional": false
+        },
+        {
+          "name": "bNegativPrefered",
+          "type": "bool",
+          "doc": "if true -\u003E return first solution when ray point is out of object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "tuple(0 if no error occurs,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectRayBRep"
+    },
+    {
+      "name": "IntersectRayPolyhedron",
+      "signature": "IntersectRayPolyhedron(rayPoint, rayVector, polyhedron, flag, selFaces=None)",
+      "summary": "Intersection of Ray and Polyhedron",
+      "remarks": "Intersection of Ray and Polyhedron",
+      "params": [
+        {
+          "name": "rayPoint",
+          "type": "Point3D",
+          "doc": "ray Point",
+          "optional": false
+        },
+        {
+          "name": "rayVector",
+          "type": "Vector3D",
+          "doc": "direction vector of ray",
+          "optional": false
+        },
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "polyhedron",
+          "optional": false
+        },
+        {
+          "name": "flag",
+          "type": "IntersectRayPolyhedronFlag",
+          "doc": "flag for determining the \u0022best\u0022 intersection",
+          "optional": false
+        },
+        {
+          "name": "selFaces",
+          "type": "Optional[[list[int] | VecIntList]]",
+          "doc": "optional list of faces used for intersection, if default value is used, all faces are checked",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "tuple(0 if no error occured,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectRayPolyhedron"
+    },
+    {
+      "name": "MakeSectionWithSurfaces",
+      "signature": "MakeSectionWithSurfaces(brep1, brep2)",
+      "summary": "Compute section of brep and surface brep",
+      "remarks": "Compute section of brep and surface brep",
+      "params": [
+        {
+          "name": "brep1",
+          "type": "BRep3D",
+          "doc": "first brep",
+          "optional": false
+        },
+        {
+          "name": "brep2",
+          "type": "BRep3D",
+          "doc": "section brep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSectionWithSurfaces"
+    },
+    {
+      "name": "MoveArc3DToZ0Plane",
+      "signature": "MoveArc3DToZ0Plane(arc3D)",
+      "summary": "Move the given 3D arc on the z = 0 plane and create a 2D fromn it",
+      "remarks": "Move the given 3D arc on the z = 0 plane and create a 2D fromn it",
+      "params": [
+        {
+          "name": "arc3D",
+          "type": "Arc3D",
+          "doc": "Arc 3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eServiceResult",
+        "doc": "tuple(NO_ERR or INVALID_GEOOBJECT,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MoveArc3DToZ0Plane"
+    },
+    {
+      "name": "MoveSpline3DToZ0Plane",
+      "signature": "MoveSpline3DToZ0Plane(spline3D)",
+      "summary": "Move the given 3D arc on the z = 0 plane and create a 2D from it",
+      "remarks": "Move the given 3D arc on the z = 0 plane and create a 2D from it",
+      "params": [
+        {
+          "name": "spline3D",
+          "type": "Spline3D",
+          "doc": "Spline 3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eServiceResult",
+        "doc": "tuple(NO_ERR or INVALID_GEOOBJECT,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MoveSpline3DToZ0Plane"
+    },
+    {
+      "name": "OffsetCurve",
+      "signature": "OffsetCurve(inputCurves, normVector, offsetDistance, sortEdges)",
+      "summary": "Offset 3D curves with given distance",
+      "remarks": "Offset 3D curves with given distance",
+      "params": [
+        {
+          "name": "inputCurves",
+          "type": "list",
+          "doc": "input curves",
+          "optional": false
+        },
+        {
+          "name": "normVector",
+          "type": "Vector3D",
+          "doc": "normal vector of plane in that the offset will be calculated",
+          "optional": false
+        },
+        {
+          "name": "offsetDistance",
+          "type": "float",
+          "doc": "offset distance",
+          "optional": false
+        },
+        {
+          "name": "sortEdges",
+          "type": "bool",
+          "doc": "flag if to sort edges to original order",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.OffsetCurve"
+    },
+    {
+      "name": "PolygonizeEqually",
+      "signature": "PolygonizeEqually(arc, fromPoint, toPoint, count)",
+      "summary": "Polygonize given arc always equally",
+      "remarks": "Polygonize given arc always equally",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Source arc",
+          "optional": false
+        },
+        {
+          "name": "fromPoint",
+          "type": "Point2D",
+          "doc": "Start point for polygonization",
+          "optional": false
+        },
+        {
+          "name": "toPoint",
+          "type": "Point2D",
+          "doc": "End point for polygonization",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "doc": "Count of segments",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(bool (true = polygonization possible),"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.PolygonizeEqually"
+    },
+    {
+      "name": "SetAbsoluteTolerance",
+      "signature": "SetAbsoluteTolerance(value)",
+      "summary": "set absolute tolerance",
+      "remarks": "set absolute tolerance",
+      "params": [
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "new value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SetAbsoluteTolerance"
+    },
+    {
+      "name": "SetAngleTolerance",
+      "signature": "SetAngleTolerance(value)",
+      "summary": "Set angle tolerance This tolerance is using for angle comparison.",
+      "remarks": "Set angle tolerance This tolerance is using for angle comparison.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Angle",
+          "doc": "New tolerance using for angle comparison [rad]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SetAngleTolerance"
+    },
+    {
+      "name": "SetCurvatureTolerance",
+      "signature": "SetCurvatureTolerance(value)",
+      "summary": "Set curvature tolerance This tolerance is using for curvature comparison.",
+      "remarks": "Set curvature tolerance This tolerance is using for curvature comparison.",
+      "params": [
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "New tolerance using for curvature comparison",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SetCurvatureTolerance"
+    },
+    {
+      "name": "SetCurveLengthTolerance",
+      "signature": "SetCurveLengthTolerance(value)",
+      "summary": "Set curve length tolerance This tolerance is using for length of curve comparison.",
+      "remarks": "Set curve length tolerance This tolerance is using for length of curve comparison.",
+      "params": [
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "New tolerance using for length of curve comparison [mm]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SetCurveLengthTolerance"
+    },
+    {
+      "name": "SetRelativeTolerance",
+      "signature": "SetRelativeTolerance(value)",
+      "summary": "set relative tolerance",
+      "remarks": "set relative tolerance",
+      "params": [
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "new value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SetRelativeTolerance"
+    },
+    {
+      "name": "SetZValue",
+      "signature": "SetZValue(zValue, line)",
+      "summary": "Set the the z value of a line",
+      "remarks": "Set the the z value of a line",
+      "params": [
+        {
+          "name": "zValue",
+          "type": "float",
+          "doc": "zValue",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "true, if the calculation was correct"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SetZValue"
+    },
+    {
+      "name": "SplitPolygon3DToParts",
+      "signature": "SplitPolygon3DToParts(polygon)",
+      "summary": "Splits normalized Polygon3D into parts",
+      "remarks": "Splits normalized Polygon3D into parts",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon3D",
+          "doc": "Normalized 3D polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eOK if converted successful, else eError,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SplitPolygon3DToParts"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

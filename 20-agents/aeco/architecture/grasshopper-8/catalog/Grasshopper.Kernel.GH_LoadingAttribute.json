@@ -1,0 +1,31 @@
+{
+  "name": "GH_LoadingAttribute",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Assembly loading behaviour attribute.",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_LoadingAttribute.htm",
+  "constructors": [
+    {
+      "name": "GH_LoadingAttribute",
+      "signature": "public GH_LoadingAttribute(GH_LoadingDemand demand)",
+      "summary": "Initializes a new instance of the GH_LoadingAttribute class",
+      "params": [
+        {
+          "name": "demand",
+          "type": "Grasshopper.Kernel.GH_LoadingDemand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_LoadingAttribute__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

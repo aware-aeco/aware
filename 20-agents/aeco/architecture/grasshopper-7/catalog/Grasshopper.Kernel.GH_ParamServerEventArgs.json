@@ -1,0 +1,55 @@
+{
+  "name": "GH_ParamServerEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Arguments used in events for the GH_ComponentParamServer type.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParamServerEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "OriginalArguments",
+      "type": "GH_ObjectChangedEventArgs",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets access to the original parameter event arguments.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParamServerEventArgs_OriginalArguments.htm"
+    },
+    {
+      "name": "Parameter",
+      "type": "IGH_Param",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the parameter that caused the original event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParamServerEventArgs_Parameter.htm"
+    },
+    {
+      "name": "ParameterIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of the parameter that caused the original event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParamServerEventArgs_ParameterIndex.htm"
+    },
+    {
+      "name": "ParameterSide",
+      "type": "GH_ParameterSide",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the side of the parameter that caused the original event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParamServerEventArgs_ParameterSide.htm"
+    },
+    {
+      "name": "Server",
+      "type": "GH_ComponentParamServer",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the GH_ComponentParamServer object that raised the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParamServerEventArgs_Server.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

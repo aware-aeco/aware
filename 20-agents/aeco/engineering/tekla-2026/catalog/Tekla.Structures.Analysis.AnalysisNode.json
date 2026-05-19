@@ -1,0 +1,197 @@
+{
+  "name": "AnalysisNode",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisNode class contains information related to analysis nodes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ec555e9b-0b3d-d1e4-efe5-f3340b40f0c0",
+  "constructors": [
+    {
+      "name": "AnalysisNode",
+      "signature": "public AnalysisNode()",
+      "summary": "Initializes a new instance of the AnalysisNode class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fc72b503-0b14-4f68-4630-5a097e34a608"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public void Delete()",
+      "summary": "Deletes an analysis node. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e14c3f5-c191-c336-7c80-370d3e1ee686"
+    },
+    {
+      "name": "GetAnalysisNodeLinks",
+      "signature": "public AnalysisObjectEnumerator GetAnalysisNodeLinks()",
+      "summary": "Get analysis nodelinks connected to node.",
+      "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "Enumerator of analysis nodelinks connected to node."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9e08ff95-60a7-6ae3-4404-5661aff5d2e4"
+    },
+    {
+      "name": "GetAnalysisParts",
+      "signature": "public AnalysisObjectEnumerator GetAnalysisParts()",
+      "summary": "Get analysis parts connected to node.",
+      "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "Enumerator of analysis parts connected to node."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ff69f4e7-472f-acac-5ee8-1841d45eb90d"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert()",
+      "summary": "Inserts an analysis node. The AnalysisModelName has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3364bda8-1d4c-4308-3e31-744335f93688"
+    },
+    {
+      "name": "Modify",
+      "signature": "public void Modify()",
+      "summary": "Modifies an analysis node. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c2c1f970-d078-3fc8-f139-3c8ef67bfd81"
+    },
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis node. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c6487ef-01ee-e6d1-4dd6-7aececbc8f5c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "CoordinateSystem",
+      "type": "CoordinateSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinate system of the analysis node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7bd496fc-a90a-a1c0-3339-94aa6a0ec579"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "IsUserNode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the analysis node is a user node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ea4338bc-8872-b251-8117-b1a1283eb203"
+    },
+    {
+      "name": "IsUserSupport",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the analysis node has a user node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d519b15f-6dc0-9f3e-1f43-b6cc42644b89"
+    },
+    {
+      "name": "Label",
+      "type": "AnalysisLabel",
+      "getter": true,
+      "setter": true,
+      "summary": "The label of the analysis node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ca80486-3f4a-963c-3980-0cc3da4acaad"
+    },
+    {
+      "name": "Position",
+      "type": "Vector",
+      "getter": true,
+      "setter": true,
+      "summary": "The position of the analysis node (in the global coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7bab0d4e-18bb-f454-54a6-9f358ca2dc20"
+    },
+    {
+      "name": "Support",
+      "type": "AnalysisSupport",
+      "getter": true,
+      "setter": true,
+      "summary": "The support of the analysis node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/351e263e-fe53-4d26-37c2-3efea015fe0f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

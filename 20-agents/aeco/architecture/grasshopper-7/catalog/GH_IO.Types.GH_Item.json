@@ -1,0 +1,2252 @@
+{
+  "name": "GH_Item",
+  "namespace": "GH_IO.Types",
+  "kind": "class",
+  "summary": "Represents a single data item in a chunk.",
+  "base": "GH_IBinarySupport",
+  "interfaces": [
+    "GH_IXmlSupport"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_Types_GH_Item.htm",
+  "constructors": [
+    {
+      "name": "GH_Item(String, GH_BoundingBox)",
+      "signature": "public GH_Item(string item_name, GH_BoundingBox item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_BoundingBox",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Interval1D)",
+      "signature": "public GH_Item(string item_name, GH_Interval1D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_1.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Interval2D)",
+      "signature": "public GH_Item(string item_name, GH_Interval2D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Interval2D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_2.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Line)",
+      "signature": "public GH_Item(string item_name, GH_Line item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Line",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_3.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Plane)",
+      "signature": "public GH_Item(string item_name, GH_Plane item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Plane",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_4.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Point2D)",
+      "signature": "public GH_Item(string item_name, GH_Point2D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Point2D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_5.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Point3D)",
+      "signature": "public GH_Item(string item_name, GH_Point3D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_6.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Point4D)",
+      "signature": "public GH_Item(string item_name, GH_Point4D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Point4D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_7.htm"
+    },
+    {
+      "name": "GH_Item(String, GH_Version)",
+      "signature": "public GH_Item(string item_name, GH_Version item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_8.htm"
+    },
+    {
+      "name": "GH_Item(String, Boolean)",
+      "signature": "public GH_Item(string item_name, bool item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Boolean",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_9.htm"
+    },
+    {
+      "name": "GH_Item(String, Byte)",
+      "signature": "public GH_Item(string item_name, byte item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Byte",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_10.htm"
+    },
+    {
+      "name": "GH_Item(String, Byte[])",
+      "signature": "public GH_Item(string item_name, byte[] item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Byte[]",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_11.htm"
+    },
+    {
+      "name": "GH_Item(String, DateTime)",
+      "signature": "public GH_Item(string item_name, DateTime item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.DateTime",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_12.htm"
+    },
+    {
+      "name": "GH_Item(String, Decimal)",
+      "signature": "public GH_Item(string item_name, decimal item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Decimal",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_13.htm"
+    },
+    {
+      "name": "GH_Item(String, Double)",
+      "signature": "public GH_Item(string item_name, double item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Double",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_14.htm"
+    },
+    {
+      "name": "GH_Item(String, Double[])",
+      "signature": "public GH_Item(string item_name, double[] item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Double[]",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_15.htm"
+    },
+    {
+      "name": "GH_Item(String, Bitmap)",
+      "signature": "public GH_Item(string item_name, Bitmap item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_16.htm"
+    },
+    {
+      "name": "GH_Item(String, Color)",
+      "signature": "public GH_Item(string item_name, Color item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Color",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_17.htm"
+    },
+    {
+      "name": "GH_Item(String, Point)",
+      "signature": "public GH_Item(string item_name, Point item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Point",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_18.htm"
+    },
+    {
+      "name": "GH_Item(String, PointF)",
+      "signature": "public GH_Item(string item_name, PointF item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.PointF",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_19.htm"
+    },
+    {
+      "name": "GH_Item(String, Rectangle)",
+      "signature": "public GH_Item(string item_name, Rectangle item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_20.htm"
+    },
+    {
+      "name": "GH_Item(String, RectangleF)",
+      "signature": "public GH_Item(string item_name, RectangleF item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_21.htm"
+    },
+    {
+      "name": "GH_Item(String, Size)",
+      "signature": "public GH_Item(string item_name, Size item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Size",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_22.htm"
+    },
+    {
+      "name": "GH_Item(String, SizeF)",
+      "signature": "public GH_Item(string item_name, SizeF item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.SizeF",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_23.htm"
+    },
+    {
+      "name": "GH_Item(String, Guid)",
+      "signature": "public GH_Item(string item_name, Guid item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Guid",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_24.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32)",
+      "signature": "public GH_Item(string item_name, int item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Int32",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_25.htm"
+    },
+    {
+      "name": "GH_Item(String, Int64)",
+      "signature": "public GH_Item(string item_name, long item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Int64",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_55.htm"
+    },
+    {
+      "name": "GH_Item(String, Single)",
+      "signature": "public GH_Item(string item_name, float item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Single",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_56.htm"
+    },
+    {
+      "name": "GH_Item(String, String)",
+      "signature": "public GH_Item(string item_name, string item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.String",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_57.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_BoundingBox)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_BoundingBox item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_BoundingBox",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_26.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Interval1D)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Interval1D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_27.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Interval2D)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Interval2D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Interval2D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_28.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Line)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Line item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Line",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_29.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Plane)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Plane item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Plane",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_30.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Point2D)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Point2D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Point2D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_31.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Point3D)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Point3D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_32.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Point4D)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Point4D item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Point4D",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_33.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, GH_Version)",
+      "signature": "public GH_Item(string item_name, int item_index, GH_Version item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_34.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Boolean)",
+      "signature": "public GH_Item(string item_name, int item_index, bool item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Boolean",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_35.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Byte)",
+      "signature": "public GH_Item(string item_name, int item_index, byte item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Byte",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_36.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Byte[])",
+      "signature": "public GH_Item(string item_name, int item_index, byte[] item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Byte[]",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_37.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, DateTime)",
+      "signature": "public GH_Item(string item_name, int item_index, DateTime item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.DateTime",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_38.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Decimal)",
+      "signature": "public GH_Item(string item_name, int item_index, decimal item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Decimal",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_39.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Double)",
+      "signature": "public GH_Item(string item_name, int item_index, double item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Double",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_40.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Double[])",
+      "signature": "public GH_Item(string item_name, int item_index, double[] item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Double[]",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_41.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Bitmap)",
+      "signature": "public GH_Item(string item_name, int item_index, Bitmap item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_42.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Color)",
+      "signature": "public GH_Item(string item_name, int item_index, Color item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Color",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_43.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Point)",
+      "signature": "public GH_Item(string item_name, int item_index, Point item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Point",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_44.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, PointF)",
+      "signature": "public GH_Item(string item_name, int item_index, PointF item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.PointF",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_45.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Rectangle)",
+      "signature": "public GH_Item(string item_name, int item_index, Rectangle item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_46.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, RectangleF)",
+      "signature": "public GH_Item(string item_name, int item_index, RectangleF item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_47.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Size)",
+      "signature": "public GH_Item(string item_name, int item_index, Size item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.Size",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_48.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, SizeF)",
+      "signature": "public GH_Item(string item_name, int item_index, SizeF item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Drawing.SizeF",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_49.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Guid)",
+      "signature": "public GH_Item(string item_name, int item_index, Guid item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Guid",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_50.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Int32)",
+      "signature": "public GH_Item(string item_name, int item_index, int item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Int32",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_51.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Int64)",
+      "signature": "public GH_Item(string item_name, int item_index, long item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Int64",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_52.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, Single)",
+      "signature": "public GH_Item(string item_name, int item_index, float item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.Single",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_53.htm"
+    },
+    {
+      "name": "GH_Item(String, Int32, String)",
+      "signature": "public GH_Item(string item_name, int item_index, string item_data)",
+      "summary": "Construct a new instance of GH_Item with the specified name, index and value.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of new item.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of new item. Any index less than zero will be clamped to -1.",
+          "optional": false
+        },
+        {
+          "name": "item_data",
+          "type": "System.String",
+          "doc": "Value of new item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the specified name string is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item__ctor_54.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFrom(BinaryReader)",
+      "signature": "public static GH_Item CreateFrom(BinaryReader reader)",
+      "summary": "Creates a new instance of GH_Item and sets the fields from a reader object.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "doc": "Reader object that defines the field data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Item",
+        "doc": "The constructed and read item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item_CreateFrom.htm"
+    },
+    {
+      "name": "CreateFrom(XmlNode)",
+      "signature": "public static GH_Item CreateFrom(XmlNode node)",
+      "summary": "Creates a new instance of GH_Item and sets the fields from an Xml node object.",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Xml.XmlNode",
+          "doc": "Xml node object that defines the field data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Item",
+        "doc": "The constructed and read item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item_CreateFrom_1.htm"
+    },
+    {
+      "name": "Read(BinaryReader)",
+      "signature": "public void Read(BinaryReader reader)",
+      "summary": "Deserialize this item from a binary stream.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "doc": "Reader to deserialize with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item_Read.htm"
+    },
+    {
+      "name": "Read(XmlNode)",
+      "signature": "public void Read(XmlNode node)",
+      "summary": "Deserialize this item from an Xml node.",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Xml.XmlNode",
+          "doc": "Xml node to serialize from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item_Read_1.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Converts the struct into a human readable format.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item_ToString.htm"
+    },
+    {
+      "name": "Write(BinaryWriter)",
+      "signature": "public void Write(BinaryWriter writer)",
+      "summary": "Serialize this item into a binary stream.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "doc": "Writer to serialize with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if !HasName."
+        },
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if !HasType."
+        },
+        {
+          "type": "IOException",
+          "when": "Thrown if the internal data could not be serialized."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item_Write.htm"
+    },
+    {
+      "name": "Write(XmlWriter)",
+      "signature": "public void Write(XmlWriter writer)",
+      "summary": "Serialize this item into an Xml stream.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "doc": "Writer to serialize with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if !HasName."
+        },
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if !HasType."
+        },
+        {
+          "type": "IOException",
+          "when": "Thrown if the internal data could not be serialized."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Item_Write_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "_bool",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Boolean. If the data is not stored as a Boolean, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__bool.htm"
+    },
+    {
+      "name": "_boundingbox",
+      "type": "GH_BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a BoundingBox. If the data is not stored as a BoundingBox, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__boundingbox.htm"
+    },
+    {
+      "name": "_byte",
+      "type": "Byte",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Byte. If the data is not stored as a Byte, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__byte.htm"
+    },
+    {
+      "name": "_bytearray",
+      "type": "Byte[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Byte array. If the data is not stored as a Byte array, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__bytearray.htm"
+    },
+    {
+      "name": "_date",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a DateTime. If the data is not stored as a DateTime, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__date.htm"
+    },
+    {
+      "name": "_decimal",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Decimal. If the data is not stored as a Decimal, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__decimal.htm"
+    },
+    {
+      "name": "_double",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Double. If the data is not stored as a Double, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__double.htm"
+    },
+    {
+      "name": "_doublearray",
+      "type": "Double[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Byte array. If the data is not stored as a Byte array, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__doublearray.htm"
+    },
+    {
+      "name": "_drawing_bitmap",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Bitmap. If the data is not stored as a Bitmap, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_bitmap.htm"
+    },
+    {
+      "name": "_drawing_color",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Color. If the data is not stored as a Color, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_color.htm"
+    },
+    {
+      "name": "_drawing_point",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Point. If the data is not stored as a Point, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_point.htm"
+    },
+    {
+      "name": "_drawing_pointf",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a PointF. If the data is not stored as a PointF, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_pointf.htm"
+    },
+    {
+      "name": "_drawing_rectangle",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Rectangle. If the data is not stored as a Rectangle, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_rectangle.htm"
+    },
+    {
+      "name": "_drawing_rectanglef",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a RectangleF. If the data is not stored as a RectangleF, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_rectanglef.htm"
+    },
+    {
+      "name": "_drawing_size",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Size. If the data is not stored as a Size, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_size.htm"
+    },
+    {
+      "name": "_drawing_sizef",
+      "type": "SizeF",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a SizeF. If the data is not stored as a SizeF, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__drawing_sizef.htm"
+    },
+    {
+      "name": "_guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Guid. If the data is not stored as a Guid, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__guid.htm"
+    },
+    {
+      "name": "_int32",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to an Int32. If the data is not stored as an Int32, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__int32.htm"
+    },
+    {
+      "name": "_int64",
+      "type": "Int64",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to an Int64. If the data is not stored as an Int64, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__int64.htm"
+    },
+    {
+      "name": "_interval1d",
+      "type": "GH_Interval1D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to an Interval1D. If the data is not stored as an Interval1D, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__interval1d.htm"
+    },
+    {
+      "name": "_interval2d",
+      "type": "GH_Interval2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to an Interval2D. If the data is not stored as an Interval2D, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__interval2d.htm"
+    },
+    {
+      "name": "_line",
+      "type": "GH_Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Line. If the data is not stored as a Line, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__line.htm"
+    },
+    {
+      "name": "_plane",
+      "type": "GH_Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Plane. If the data is not stored as a Plane, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__plane.htm"
+    },
+    {
+      "name": "_point2d",
+      "type": "GH_Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Point2D. If the data is not stored as a Point2D, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__point2d.htm"
+    },
+    {
+      "name": "_point3d",
+      "type": "GH_Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Point3D. If the data is not stored as a Point3D, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__point3d.htm"
+    },
+    {
+      "name": "_point4d",
+      "type": "GH_Point4D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Point4D. If the data is not stored as a Point4D, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__point4d.htm"
+    },
+    {
+      "name": "_single",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Single. If the data is not stored as a Single, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__single.htm"
+    },
+    {
+      "name": "_string",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a String. If the data is not stored as a String, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__string.htm"
+    },
+    {
+      "name": "_version",
+      "type": "GH_Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal data of this item cast to a Version. If the data is not stored as a Version, a conversion exception might be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item__version.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index existence implication. The item is considered to have an index qualifier if the index value is larger than or equal to zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name validity of this item. The item is considered to have an invalid name if string.IsNullOrEmpty(name)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item_HasName.htm"
+    },
+    {
+      "name": "HasType",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type set validity of this item. The item is considered to have a type if type != GH_Types.unset",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item_HasType.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the index of an item. Typically, indices are set at construction and do not change. If you change indices after construction, you could corrupt an archive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item_Index.htm"
+    },
+    {
+      "name": "InternalData",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Retrieves the internal data of this item. No type casting is performed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item_InternalData.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of this item. Typically, names are set at construction and do not change. If you change names after construction, you could corrupt an archive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item_Name.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_Types",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of this item. Type flags are set during construction and cannot be altered.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Types_GH_Item_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

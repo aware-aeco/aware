@@ -1,0 +1,13 @@
+{
+  "name": "Utilities",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "static-class",
+  "summary": "Service class for formatting node text data",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeCategories.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

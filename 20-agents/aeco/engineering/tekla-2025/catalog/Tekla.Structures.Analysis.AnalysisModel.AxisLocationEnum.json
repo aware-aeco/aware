@@ -1,0 +1,34 @@
+{
+  "name": "AnalysisModel.AxisLocationEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The axis location.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bcbb854f-2310-7356-8706-f5eb9389867e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "REFERENCE_AXIS_WITH_ECCENTRICITY",
+      "value": 0,
+      "summary": "The axis location is the reference axis with eccentricity."
+    },
+    {
+      "name": "REFERENCE_AXIS",
+      "value": 1,
+      "summary": "The axis location is the reference axis."
+    },
+    {
+      "name": "MODEL_PART",
+      "value": 2,
+      "summary": "The axis location setting of each part is used."
+    },
+    {
+      "name": "NEUTRAL_AXIS",
+      "value": 3,
+      "summary": "The axis location is the neutral axis."
+    }
+  ]
+}

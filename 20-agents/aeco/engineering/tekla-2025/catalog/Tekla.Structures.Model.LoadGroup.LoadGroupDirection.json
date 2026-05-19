@@ -1,0 +1,44 @@
+{
+  "name": "LoadGroup.LoadGroupDirection",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The possible directions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b0c729c6-cfde-f097-72c0-1ca150c956e9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DIR_X",
+      "value": 1,
+      "summary": "The X direction."
+    },
+    {
+      "name": "DIR_Y",
+      "value": 2,
+      "summary": "The Y direction."
+    },
+    {
+      "name": "DIR_Z",
+      "value": 3,
+      "summary": "The Z direction."
+    },
+    {
+      "name": "DIR_NEG_X",
+      "value": 4,
+      "summary": "The negative X direction."
+    },
+    {
+      "name": "DIR_NEG_Y",
+      "value": 5,
+      "summary": "The negative Y direction."
+    },
+    {
+      "name": "DIR_NEG_Z",
+      "value": 6,
+      "summary": "The negative Z direction."
+    }
+  ]
+}

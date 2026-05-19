@@ -1,0 +1,69 @@
+{
+  "name": "BooleanConstantFilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The BooleanConstantFilterExpression class represents a constant Boolean filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9fb6ce1a-0e8e-c0d0-fcc8-54b3f6a334cc",
+  "constructors": [
+    {
+      "name": "BooleanConstantFilterExpression(Boolean)",
+      "signature": "public BooleanConstantFilterExpression(bool Value)",
+      "summary": "Initializes a new instance of the BooleanConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Boolean",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/04b315c1-9446-8dcb-c972-67b23621dac3"
+    },
+    {
+      "name": "BooleanConstantFilterExpression(Boolean, IFormatProvider)",
+      "signature": "public BooleanConstantFilterExpression(bool Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the BooleanConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Boolean",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2fb83234-2427-808a-1bd6-e17c75ce5649"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

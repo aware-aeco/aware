@@ -1,0 +1,511 @@
+{
+  "name": "Part",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The Part class contains methods related to parts. A part is a drawing object derived from a model object. It represents a drawing part that has a reference to the actual part in the model database.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/85faee90-0121-460f-f6fe-65d1f54a33d3",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public override bool Delete()",
+      "summary": "Calls the system to delete the object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c212a075-6030-fcde-99ad-6fca006f705f"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "public Drawing GetDrawing()",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "Drawing",
+        "doc": "The drawing where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetRelatedObjects()",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type[])",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [
+        {
+          "name": "typeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object that are of certain types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "public bool GetUserProperty(string Name, ref double Value)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "public bool GetUserProperty(string Name, ref int Value)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "public bool GetUserProperty(string Name, ref string Value)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "public ViewBase GetView()",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "ViewBase",
+        "doc": "The view where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "public override bool Insert()",
+      "summary": "NOT YET IMPLEMENTED.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/14dab0e5-3935-9c07-8007-7a4851b7a8e7"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3b5d86d1-728b-2e32-3188-2ebb793d03f8"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "public virtual bool IsSameDatabaseObject(DatabaseObject Object)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Drawing.DatabaseObject",
+          "doc": "The other object to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the objects are referencing the same database object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "public override bool Modify()",
+      "summary": "Calls the system to update/modify the object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c3c5d362-caef-6f42-756e-a0536e23cccc"
+    },
+    {
+      "name": "Select",
+      "signature": "public override bool Select()",
+      "summary": "Calls the system to select and retrieve the object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/440ce9f7-d175-ada6-626e-974336f53952"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "public bool SetUserProperty(string Name, double Value)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "public bool SetUserProperty(string Name, int Value)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "public bool SetUserProperty(string Name, string Value)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Throws an exception if property name or value have larger than supported length."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The name of the current drawing object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "Part.PartAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The attributes of the part. For more information see Part.PartAttributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b49d2d1f-8b62-a138-66f4-9c146ead71bf"
+    },
+    {
+      "name": "Hideable",
+      "type": "Hideable",
+      "getter": true,
+      "setter": false,
+      "summary": "Accesses the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a4c3821-6ee4-093f-50c5-10ace731522e"
+    },
+    {
+      "name": "ModelIdentifier",
+      "type": "Identifier",
+      "getter": true,
+      "setter": false,
+      "summary": "The database identifier of the model object in the model database. By using this identifier, it is possible to select the actual object in the Tekla Structures model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f2edb80-6aed-3589-5b5f-81eb4aa13829"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "ReturnValuesEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

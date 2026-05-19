@@ -1,0 +1,25 @@
+{
+  "name": "LeaderLineAndParentObjectAlongPartPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LeaderLineAndParentObjectAlongPartPlacingType class defines a placing type that places the object with a leader line and rotated to be at the same angle as the connected part.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/91b99dcd-589f-a08c-b38a-6aa79c43ff21",
+  "constructors": [
+    {
+      "name": "LeaderLineAndParentObjectAlongPartPlacingType",
+      "signature": "public LeaderLineAndParentObjectAlongPartPlacingType()",
+      "summary": "Creates a new leader line and parent object along part placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/427d643f-8e14-0a8a-2f96-6421a78a9115"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

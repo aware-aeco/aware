@@ -1,0 +1,146 @@
+{
+  "name": "BendingRollerService",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Service class for the bending roller calculation",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingRollerService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetBendBendingRollerFactor",
+      "signature": "GetBendBendingRollerFactor( diameter: float, steelGrade: int, concreteGrade: int ) -\u003E float",
+      "summary": "Get the bend bending roller factor",
+      "remarks": "Get the bend bending roller factor",
+      "params": [
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Bending roller factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingRollerService/#NemAll_Python_Reinforcement.BendingRollerService.GetBendBendingRollerFactor"
+    },
+    {
+      "name": "GetBendingRoller",
+      "signature": "GetBendingRoller( diameter: float, steelGrade: int, concreteGrade: int, bStirrup: bool ) -\u003E float",
+      "summary": "Get the bending roller",
+      "remarks": "Get the bending roller",
+      "params": [
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade",
+          "optional": false
+        },
+        {
+          "name": "bStirrup",
+          "type": "bool",
+          "doc": "Shape is a stirrup: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Bending roller factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingRollerService/#NemAll_Python_Reinforcement.BendingRollerService.GetBendingRoller"
+    },
+    {
+      "name": "GetBendingRollerFactor",
+      "signature": "GetBendingRollerFactor( diameter: float, steelGrade: int, concreteGrade: int, bStirrup: bool ) -\u003E float",
+      "summary": "Get the bending roller factor",
+      "remarks": "Get the bending roller factor",
+      "params": [
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade",
+          "optional": false
+        },
+        {
+          "name": "bStirrup",
+          "type": "bool",
+          "doc": "Shape is a stirrup: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Bending roller factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingRollerService/#NemAll_Python_Reinforcement.BendingRollerService.GetBendingRollerFactor"
+    },
+    {
+      "name": "GetDefaultBendingRollers",
+      "signature": "GetDefaultBendingRollers(norm: NormType) -\u003E VecDoubleList",
+      "summary": "Get the default bending rollers",
+      "remarks": "Get the default bending rollers",
+      "params": [
+        {
+          "name": "norm",
+          "type": "NormType",
+          "doc": "Norm",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "Default bending rollers"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingRollerService/#NemAll_Python_Reinforcement.BendingRollerService.GetDefaultBendingRollers"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

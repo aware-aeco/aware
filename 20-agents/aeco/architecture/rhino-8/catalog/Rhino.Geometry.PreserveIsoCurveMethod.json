@@ -1,0 +1,34 @@
+{
+  "name": "PreserveIsoCurveMethod",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "The way the surface iso-lines align with the target",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_PreserveIsoCurveMethod.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Automatic",
+      "value": 0,
+      "summary": "If the trim is on an iso direction use MatchTarget, else use Perpendicular"
+    },
+    {
+      "name": "MatchTarget",
+      "value": 1,
+      "summary": "The surface tangent will be parallel to the surface derivative in U- or V-direction"
+    },
+    {
+      "name": "Perpendicular",
+      "value": 2,
+      "summary": "The surface tangent will be perpendicular to the target edge"
+    },
+    {
+      "name": "Preserve",
+      "value": 3,
+      "summary": "The surface tangent will not change"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "LibraryMirror",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "The LibraryMirror reflects upon an assembly or DS file to return assembly specific information such as imported classes, global methods, etc.",
+  "base": "ProtoCore.Mirror.StaticMirror",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs",
+  "constructors": [
+    {
+      "name": "LibraryMirror(ProtoCore.Core, string, System.Collections.Generic.IList\u003CProtoCore.DSASM.ClassNode\u003E)",
+      "signature": "void LibraryMirror(ProtoCore.Core core, string libName, System.Collections.Generic.IList\u003CProtoCore.DSASM.ClassNode\u003E classNodes)",
+      "summary": "LibraryMirror.LibraryMirror",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "libName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classNodes",
+          "type": "System.Collections.Generic.IList\u003CProtoCore.DSASM.ClassNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "LibraryMirror(string, ProtoCore.Core)",
+      "signature": "void LibraryMirror(string libName, ProtoCore.Core core)",
+      "summary": "LibraryMirror.LibraryMirror",
+      "params": [
+        {
+          "name": "libName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetClasses",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.Mirror.ClassMirror\u003E GetClasses()",
+      "summary": "Returns list of classes imported from a given assembly",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.Mirror.ClassMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LibraryName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "LibraryMirror.LibraryName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

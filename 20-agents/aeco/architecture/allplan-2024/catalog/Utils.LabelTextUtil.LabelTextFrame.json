@@ -1,0 +1,39 @@
+{
+  "name": "LabelTextFrame",
+  "namespace": "Utils.LabelTextUtil",
+  "kind": "enum",
+  "summary": "definition of the label text frame types",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextFrame/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CIRCLE",
+      "value": 4
+    },
+    {
+      "name": "FILLET_RECTANGLE",
+      "value": 3
+    },
+    {
+      "name": "NO",
+      "value": 0
+    },
+    {
+      "name": "OCTAGON",
+      "value": 5
+    },
+    {
+      "name": "RECTANGLE",
+      "value": 2
+    },
+    {
+      "name": "UNDERLINE",
+      "value": 1
+    }
+  ]
+}

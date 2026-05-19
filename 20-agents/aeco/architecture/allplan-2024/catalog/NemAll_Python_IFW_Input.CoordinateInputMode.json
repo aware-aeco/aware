@@ -1,0 +1,25 @@
+{
+  "name": "CoordinateInputMode",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.CoordinateInputMode.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/",
+  "constructors": [
+    {
+      "name": "CoordinateInputMode",
+      "signature": "CoordinateInputMode() | CoordinateInputMode(identMode, drawPointSymbol)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

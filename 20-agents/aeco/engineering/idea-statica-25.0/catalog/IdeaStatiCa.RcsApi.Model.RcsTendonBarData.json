@@ -1,0 +1,54 @@
+{
+  "name": "RcsTendonBarData",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsTendonBarData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonBarData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Point",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonBarData.point.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonBarData.md"
+    },
+    {
+      "name": "MaterialName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonBarData.materialName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonBarData.md"
+    },
+    {
+      "name": "NumStrandsInTendon",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonBarData.numStrandsInTendon.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonBarData.md"
+    },
+    {
+      "name": "PrestressingOrder",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonBarData.prestressingOrder.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonBarData.md"
+    },
+    {
+      "name": "TendonDuct",
+      "type": "RcsTendonDuctData",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonBarData.tendonDuct.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonBarData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

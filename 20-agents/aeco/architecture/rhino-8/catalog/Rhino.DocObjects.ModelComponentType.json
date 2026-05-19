@@ -1,0 +1,119 @@
+{
+  "name": "ModelComponentType",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "The ON_ModelComponent::Type enum has a value for each explicit component type and two special values, Unset and Mixed. Use an ON_ModelComponentTypeIterator instance to iterate over the ON_ModelComponent::Type values.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ModelComponentType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "No value set."
+    },
+    {
+      "name": "Image",
+      "value": 1,
+      "summary": "Embedded image (bitmap) components."
+    },
+    {
+      "name": "TextureMapping",
+      "value": 2,
+      "summary": "Texture mapping."
+    },
+    {
+      "name": "Material",
+      "value": 3,
+      "summary": "Material."
+    },
+    {
+      "name": "RenderMaterial",
+      "value": 3,
+      "summary": "Render material. Deprecated in favor of Material."
+    },
+    {
+      "name": "LinePattern",
+      "value": 4,
+      "summary": "Line pattern (linetype)."
+    },
+    {
+      "name": "Layer",
+      "value": 5,
+      "summary": "Layer."
+    },
+    {
+      "name": "Group",
+      "value": 6,
+      "summary": "Group."
+    },
+    {
+      "name": "TextStyle",
+      "value": 7,
+      "summary": "Text style."
+    },
+    {
+      "name": "DimStyle",
+      "value": 8,
+      "summary": "AnnotationDimension style."
+    },
+    {
+      "name": "RenderLight",
+      "value": 9,
+      "summary": "Render light."
+    },
+    {
+      "name": "HatchPattern",
+      "value": 10,
+      "summary": "Hatch pattern."
+    },
+    {
+      "name": "InstanceDefinition",
+      "value": 11,
+      "summary": "Instance definition."
+    },
+    {
+      "name": "ModelGeometry",
+      "value": 12,
+      "summary": "Model objects (points, curves, surfaces, ..., annotation, page details, ...), including objects referenced by instance definitions."
+    },
+    {
+      "name": "HistoryRecord",
+      "value": 13,
+      "summary": "History record."
+    },
+    {
+      "name": "RenderContent",
+      "value": 14,
+      "summary": "Render content."
+    },
+    {
+      "name": "EmbeddedFile",
+      "value": 15,
+      "summary": "Embedded file for render texture."
+    },
+    {
+      "name": "ObsoleteValue",
+      "value": 16,
+      "summary": "This value was never used and is now obsolete."
+    },
+    {
+      "name": "SectionStyle",
+      "value": 17,
+      "summary": "Section style attributes"
+    },
+    {
+      "name": "NumOf",
+      "value": 18,
+      "summary": "Number of items above."
+    },
+    {
+      "name": "Mixed",
+      "value": 254,
+      "summary": "Multiple component types. Used when a component type filter must include all explicit component types."
+    }
+  ]
+}

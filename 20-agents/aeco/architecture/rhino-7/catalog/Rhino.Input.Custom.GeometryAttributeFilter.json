@@ -1,0 +1,168 @@
+{
+  "name": "GeometryAttributeFilter",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "enum",
+  "summary": "If an object passes the geometry TYPE filter, then the geometry ATTRIBUTE filter is applied.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GeometryAttributeFilter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WireCurve",
+      "value": 1,
+      "summary": "3d wire curve If you want to accept only wire or edge curves, then specify wire_curve or edge_curve, otherwise both wire and edge curves will pass the attribute filter."
+    },
+    {
+      "name": "EdgeCurve",
+      "value": 2,
+      "summary": "3d curve of a surface edge If you want to accept only wire or edge curves, then specify wire_curve or edge_curve, otherwise both wire and edge curves will pass the attribute filter."
+    },
+    {
+      "name": "ClosedCurve",
+      "value": 4,
+      "summary": "Closed Curves and Edges are acceptable If you want to accept only closed or open curves, then specify either closed_curve or open_curve. Otherwise both closed and open curves will pass the attribute filter."
+    },
+    {
+      "name": "OpenCurve",
+      "value": 8,
+      "summary": "Open Curves and Edges are acceptable If you want to accept only closed or open curves, then specify either closed_curve or open_curve. Otherwise both closed and open curves will pass the attribute filter."
+    },
+    {
+      "name": "SeamEdge",
+      "value": 16,
+      "summary": "seam edges are acceptable attributes of acceptable trimming edge objects (associated with an ON_BrepTrim). If none of these attributes are explicitly specified, then any kind of trimming edge will pass the attribute filter."
+    },
+    {
+      "name": "ManifoldEdge",
+      "value": 32,
+      "summary": "edges with 2 different surfaces pass attributes of acceptable trimming edge objects (associated with an ON_BrepTrim). If none of these attributes are explicitly specified, then any kind of trimming edge will pass the attribute filter."
+    },
+    {
+      "name": "NonmanifoldEdge",
+      "value": 64,
+      "summary": "edges with 3 or more surfaces pass attributes of acceptable trimming edge objects (associated with an ON_BrepTrim). If none of these attributes are explicitly specified, then any kind of trimming edge will pass the attribute filter."
+    },
+    {
+      "name": "MatedEdge",
+      "value": 112,
+      "summary": "any mated edge passes attributes of acceptable trimming edge objects (associated with an ON_BrepTrim). If none of these attributes are explicitly specified, then any kind of trimming edge will pass the attribute filter."
+    },
+    {
+      "name": "SurfaceBoundaryEdge",
+      "value": 128,
+      "summary": "boundary edges on surface sides pass attributes of acceptable trimming edge objects (associated with an ON_BrepTrim). If none of these attributes are explicitly specified, then any kind of trimming edge will pass the attribute filter."
+    },
+    {
+      "name": "TrimmingBoundaryEdge",
+      "value": 256,
+      "summary": "boundary edges that trim a surface pass attributes of acceptable trimming edge objects (associated with an ON_BrepTrim). If none of these attributes are explicitly specified, then any kind of trimming edge will pass the attribute filter."
+    },
+    {
+      "name": "BoundaryEdge",
+      "value": 384,
+      "summary": "ant boundary edge passes attributes of acceptable trimming edge objects (associated with an ON_BrepTrim). If none of these attributes are explicitly specified, then any kind of trimming edge will pass the attribute filter."
+    },
+    {
+      "name": "ClosedSurface",
+      "value": 512,
+      "summary": "If you want to accept only closed or open surfaces, then specify either closed_surface or open_surface. Otherwise both closed and open surfaces will pass the attribute filter."
+    },
+    {
+      "name": "OpenSurface",
+      "value": 1024,
+      "summary": "If you want to accept only closed or open surfaces, then specify either closed_surface or open_surface. Otherwise both closed and open surfaces will pass the attribute filter."
+    },
+    {
+      "name": "TrimmedSurface",
+      "value": 2048,
+      "summary": "If you want to accept only trimmed or untrimmed surfaces, then specify either trimmed_surface or untrimmed_surface. Otherwise both trimmed and untrimmed surfaces will pass the attribute filter."
+    },
+    {
+      "name": "UntrimmedSurface",
+      "value": 4096,
+      "summary": "If you want to accept only trimmed or untrimmed surfaces, then specify either trimmed_surface or untrimmed_surface. Otherwise both trimmed and untrimmed surfaces will pass the attribute filter."
+    },
+    {
+      "name": "SubSurface",
+      "value": 8192,
+      "summary": "If you want to accept only sub-surfaces of (multi-surface) polysurface, then specify sub_surface. If you do not want to accept sub-surfaces, then specify top_surface. Otherwise sub-surfaces and top surfaces will pass the attribute filter."
+    },
+    {
+      "name": "TopSurface",
+      "value": 16384,
+      "summary": "If you want to accept only sub-surfaces of (multi-surface) polysurface, then specify sub_surface. If you do not want to accept sub-surfaces, then specify top_surface. Otherwise sub-surfaces and top surfaces will pass the attribute filter."
+    },
+    {
+      "name": "ManifoldPolysrf",
+      "value": 32768,
+      "summary": "If you want to accept only manifold or non-manifold polysurfaces, then specify manifold_polysrf or nonmanifold_polysrf. Otherwise both manifold and non-manifold polysurfaces will pass the attribute filter."
+    },
+    {
+      "name": "NonmanifoldPolysrf",
+      "value": 65536,
+      "summary": "If you want to accept only manifold or non-manifold polysurfaces, then specify manifold_polysrf or nonmanifold_polysrf. Otherwise both manifold and non-manifold polysurfaces will pass the attribute filter."
+    },
+    {
+      "name": "ClosedPolysrf",
+      "value": 131072,
+      "summary": "If you want to accept only closed or open polysurfaces, then specify either closed_polysrf or open_polysrf. Otherwise both closed and open polysurfaces will pass the attribute filter."
+    },
+    {
+      "name": "OpenPolysrf",
+      "value": 262144,
+      "summary": "If you want to accept only closed or open polysurfaces, then specify either closed_polysrf or open_polysrf. Otherwise both closed and open polysurfaces will pass the attribute filter."
+    },
+    {
+      "name": "ClosedMesh",
+      "value": 524288,
+      "summary": "If you want to accept only closed or open meshes, then specify either closed_mesh or open_mesh. Otherwise both closed and open meshes will pass the attribute filter."
+    },
+    {
+      "name": "OpenMesh",
+      "value": 1048576,
+      "summary": "If you want to accept only closed or open meshes, then specify either closed_mesh or open_mesh. Otherwise both closed and open meshes will pass the attribute filter."
+    },
+    {
+      "name": "BoundaryInnerLoop",
+      "value": 2097152,
+      "summary": "all trimming edges are boundary edges."
+    },
+    {
+      "name": "MatedInnerLoop",
+      "value": 4194304,
+      "summary": "all trimming edges are mated."
+    },
+    {
+      "name": "InnerLoop",
+      "value": 6291456,
+      "summary": "any inner loop is acceptable."
+    },
+    {
+      "name": "BoundaryOuterLoop",
+      "value": 8388608,
+      "summary": "all trimming edges are boundary edges."
+    },
+    {
+      "name": "MatedOuterLoop",
+      "value": 16777216,
+      "summary": "all trimming edges are mated."
+    },
+    {
+      "name": "OuterLoop",
+      "value": 25165824,
+      "summary": "any outer loop is acceptable."
+    },
+    {
+      "name": "SpecialLoop",
+      "value": 33554432,
+      "summary": "slit, curve-on-surface, point-on-surface, etc."
+    },
+    {
+      "name": "AcceptAllAttributes",
+      "value": "4294967295"
+    }
+  ]
+}

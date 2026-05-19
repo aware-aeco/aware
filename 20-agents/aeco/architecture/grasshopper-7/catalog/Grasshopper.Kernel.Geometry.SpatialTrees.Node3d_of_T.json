@@ -1,0 +1,944 @@
+{
+  "name": "Node3d\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel.Geometry.SpatialTrees",
+  "kind": "class",
+  "summary": "Basic node in a Tree3d structure. Nodes in tree structures maintain a local region and either a list of content indices or a list of up to 8 child nodes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1.htm",
+  "constructors": [
+    {
+      "name": "Node3d\u003CT\u003E(Coordinates3d\u003CT\u003E, BoundingBox)",
+      "signature": "public Node3d(Coordinates3d\u003CT\u003E converter, BoundingBox region)",
+      "summary": "Create a new spatial tree root.",
+      "params": [
+        {
+          "name": "converter",
+          "type": "Grasshopper.Kernel.Geometry.SpatialTrees.Coordinates3d\u003CT\u003E",
+          "doc": "Converter delegate.",
+          "optional": false
+        },
+        {
+          "name": "region",
+          "type": "BoundingBox",
+          "doc": "Bounding box for this node. The region should be big enough to contain all items you\u0027re going to insert.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1__ctor.htm"
+    },
+    {
+      "name": "Node3d\u003CT\u003E(Coordinates3d\u003CT\u003E, BoundingBox, Int32)",
+      "signature": "public Node3d(Coordinates3d\u003CT\u003E converter, BoundingBox region, int limit)",
+      "summary": "Create a new spatial tree root.",
+      "params": [
+        {
+          "name": "converter",
+          "type": "Grasshopper.Kernel.Geometry.SpatialTrees.Coordinates3d\u003CT\u003E",
+          "doc": "Converter delegate.",
+          "optional": false
+        },
+        {
+          "name": "region",
+          "type": "BoundingBox",
+          "doc": "Bounding box for this node. The region should be big enough to contain all items you\u0027re going to insert.",
+          "optional": false
+        },
+        {
+          "name": "limit",
+          "type": "System.Int32",
+          "doc": "Node subdivision limit.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(T item)",
+      "summary": "Insert another item into the tree. The item should be within the region of this node.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "Item to insert.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_Add.htm"
+    },
+    {
+      "name": "AddRange",
+      "signature": "public void AddRange(IEnumerable\u003CT\u003E items)",
+      "summary": "Insert a collection of items into the tree. The items should all be within the region of this node.",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "Items to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_AddRange.htm"
+    },
+    {
+      "name": "AddToRhinoDocument",
+      "signature": "public void AddToRhinoDocument(RhinoDoc doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_AddToRhinoDocument.htm"
+    },
+    {
+      "name": "CollapseNodes",
+      "signature": "public Node3d\u003CT\u003E CollapseNodes()",
+      "summary": "Collapse the (sub)tree rooted at this node. Collapsing happens when a node only has a single child, in which case the child usurps the position previously held by the parent. Do not collapse a (sub)tree if you still plan to add items later.",
+      "params": [],
+      "returns": {
+        "type": "Node3d\u003CT\u003E",
+        "doc": "The new root for this (sub)tree. May well be an instance of this node if it cannot be collapsed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_CollapseNodes.htm"
+    },
+    {
+      "name": "FurthestItem(Point3d)",
+      "signature": "public Index3d\u003CT\u003E FurthestItem(Point3d locus)",
+      "summary": "Find the furtest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "Point3d",
+          "doc": "Location to search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the furtest item or null if no furtest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_FurthestItem.htm"
+    },
+    {
+      "name": "FurthestItem(T)",
+      "signature": "public Index3d\u003CT\u003E FurthestItem(T locus)",
+      "summary": "Find the furtest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "T",
+          "doc": "Location to search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the furtest item or null if no furtest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_FurthestItem_4.htm"
+    },
+    {
+      "name": "FurthestItem(Point3d, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E FurthestItem(Point3d locus, double minimumDistance, double maximumDistance)",
+      "summary": "Find the furtest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "Point3d",
+          "doc": "Location to search from.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for furtest item. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for furtest item. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the furtest item or null if no furtest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_FurthestItem_1.htm"
+    },
+    {
+      "name": "FurthestItem(Double, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E FurthestItem(double x, double y, double z)",
+      "summary": "Find the furtest item.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "x coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "y coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "z coordinate to search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the furtest item or null if no furtest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_FurthestItem_2.htm"
+    },
+    {
+      "name": "FurthestItem(T, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E FurthestItem(T locus, double minimumDistance, double maximumDistance)",
+      "summary": "Find the furtest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "T",
+          "doc": "Location to search from.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for furtest item. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for furtest item. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the furtest item or null if no furtest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_FurthestItem_5.htm"
+    },
+    {
+      "name": "FurthestItem(Double, Double, Double, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E FurthestItem(double x, double y, double z, double minimumDistance, double maximumDistance)",
+      "summary": "Find the furtest item.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "x coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "y coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "z coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for furtest item. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for furtest item. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the furtest item or null if no furtest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_FurthestItem_3.htm"
+    },
+    {
+      "name": "NearestItem(Point3d)",
+      "signature": "public Index3d\u003CT\u003E NearestItem(Point3d locus)",
+      "summary": "Find the nearest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "Point3d",
+          "doc": "Location to search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the nearest item or null if no nearest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItem.htm"
+    },
+    {
+      "name": "NearestItem(T)",
+      "signature": "public Index3d\u003CT\u003E NearestItem(T locus)",
+      "summary": "Find the nearest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "T",
+          "doc": "Location to search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the nearest item or null if no nearest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItem_5.htm"
+    },
+    {
+      "name": "NearestItem(Point3d, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E NearestItem(Point3d locus, double minimumDistance, double maximumDistance)",
+      "summary": "Find the nearest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "Point3d",
+          "doc": "Location to search from.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for nearest item. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for nearest item. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the nearest item or null if no nearest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItem_1.htm"
+    },
+    {
+      "name": "NearestItem(Double, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E NearestItem(double x, double y, double z)",
+      "summary": "Find the nearest item.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "x coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "y coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "z coordinate to search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the nearest item or null if no nearest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItem_2.htm"
+    },
+    {
+      "name": "NearestItem(T, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E NearestItem(T locus, double minimumDistance, double maximumDistance)",
+      "summary": "Find the nearest item.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "T",
+          "doc": "Location to search from.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for nearest item. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for nearest item. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the nearest item or null if no nearest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItem_6.htm"
+    },
+    {
+      "name": "NearestItem(Double, Double, Double, Validation3d\u003CT\u003E)",
+      "signature": "public Index3d\u003CT\u003E NearestItem(double x, double y, double z, Validation3d\u003CT\u003E validationDelegate)",
+      "summary": "Find the nearest item using custom validation criteria.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "x coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "y coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "z coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "validationDelegate",
+          "type": "Grasshopper.Kernel.Geometry.SpatialTrees.Validation3d\u003CT\u003E",
+          "doc": "Item validation delegate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the nearest item or null if no nearest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItem_3.htm"
+    },
+    {
+      "name": "NearestItem(Double, Double, Double, Double, Double)",
+      "signature": "public Index3d\u003CT\u003E NearestItem(double x, double y, double z, double minimumDistance, double maximumDistance)",
+      "summary": "Find the nearest item.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "x coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "y coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "z coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for nearest item. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for nearest item. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Index3d\u003CT\u003E",
+        "doc": "The index of the nearest item or null if no nearest item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItem_4.htm"
+    },
+    {
+      "name": "NearestItems(T, Int32)",
+      "signature": "public List\u003CIndex3d\u003CT\u003E\u003E NearestItems(T locus, int groupSize)",
+      "summary": "Find the N nearest items.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "T",
+          "doc": "Search locus.",
+          "optional": false
+        },
+        {
+          "name": "groupSize",
+          "type": "System.Int32",
+          "doc": "Number of nearest items to return.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CIndex3d\u003CT\u003E\u003E",
+        "doc": "A list of nearest items, sorted from nearest to furthest."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItems_2.htm"
+    },
+    {
+      "name": "NearestItems(Double, Double, Double, Int32)",
+      "signature": "public List\u003CIndex3d\u003CT\u003E\u003E NearestItems(double x, double y, double z, int groupSize)",
+      "summary": "Find the N nearest items.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "x coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "y coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "z coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "groupSize",
+          "type": "System.Int32",
+          "doc": "Number of nearest items to return.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CIndex3d\u003CT\u003E\u003E",
+        "doc": "A list of nearest items, sorted from nearest to furthest."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItems.htm"
+    },
+    {
+      "name": "NearestItems(T, Int32, Double, Double)",
+      "signature": "public List\u003CIndex3d\u003CT\u003E\u003E NearestItems(T locus, int groupSize, double minimumDistance, double maximumDistance)",
+      "summary": "Find the N nearest items.",
+      "params": [
+        {
+          "name": "locus",
+          "type": "T",
+          "doc": "Search locus.",
+          "optional": false
+        },
+        {
+          "name": "groupSize",
+          "type": "System.Int32",
+          "doc": "Number of nearest items to return.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for nearest items. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for nearest items. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CIndex3d\u003CT\u003E\u003E",
+        "doc": "A list of nearest items, sorted from nearest to furthest."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItems_3.htm"
+    },
+    {
+      "name": "NearestItems(Double, Double, Double, Int32, Double, Double)",
+      "signature": "public List\u003CIndex3d\u003CT\u003E\u003E NearestItems(double x, double y, double z, int groupSize, double minimumDistance, double maximumDistance)",
+      "summary": "Find the N nearest items.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "x coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "y coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "z coordinate to search from.",
+          "optional": false
+        },
+        {
+          "name": "groupSize",
+          "type": "System.Int32",
+          "doc": "Number of nearest items to return.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum distance for nearest items. Items closer than minimumDistance will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "System.Double",
+          "doc": "Maximum distance for nearest items. Items further than maximumDistance will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CIndex3d\u003CT\u003E\u003E",
+        "doc": "A list of nearest items, sorted from nearest to furthest."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NearestItems_1.htm"
+    },
+    {
+      "name": "OptimizeTree",
+      "signature": "public Node3d\u003CT\u003E OptimizeTree()",
+      "summary": "Optimize this tree for fast searches. Do not call this method if you still plan to add items in the future. You can no longer modify this tree once it has been optimized.",
+      "params": [],
+      "returns": {
+        "type": "Node3d\u003CT\u003E",
+        "doc": "The new root of the optimized tree. If the root could not be optimized an instance of this node will be returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_OptimizeTree.htm"
+    },
+    {
+      "name": "Remove(Int32)",
+      "signature": "public void Remove(int index)",
+      "summary": "Remove the item with the given index from the entire tree. It doesn\u0027t matter on which node you call this function, it is a tree-wide operation.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of item to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_Remove_1.htm"
+    },
+    {
+      "name": "Remove(Index3d\u003CT\u003E)",
+      "signature": "public void Remove(Index3d\u003CT\u003E index)",
+      "summary": "Remove the item with the given index from the entire tree. It doesn\u0027t matter on which node you call this function, it is a tree-wide operation.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Grasshopper.Kernel.Geometry.SpatialTrees.Index3d\u003CT\u003E",
+          "doc": "Index of item to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_Remove.htm"
+    },
+    {
+      "name": "ShrinkRegions",
+      "signature": "public void ShrinkRegions()",
+      "summary": "Shrink the region for this node and all child nodes. Do not use this method if you intend to add more items later as it creates spatial gaps in the tree structure. You can shrink nodes if you\u0027re done adding items and want to start searching the tree.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ShrinkRegions.htm"
+    },
+    {
+      "name": "SubTree",
+      "signature": "public IEnumerator\u003CNode3d\u003CT\u003E\u003E SubTree(bool omitStructuralNodes)",
+      "summary": "Gets an iterator for all nodes in this (sub)tree.",
+      "params": [
+        {
+          "name": "omitStructuralNodes",
+          "type": "System.Boolean",
+          "doc": "If true, nodes that contain other nodes will be skipped. Only nodes containing items will be included.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerator\u003CNode3d\u003CT\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_SubTree.htm"
+    },
+    {
+      "name": "TrimExcess",
+      "signature": "public void TrimExcess()",
+      "summary": "Trim the excess space on all index lists. You can call this method to reduce memory usage. It will not modify the tree in any functional way.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_TrimExcess.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the center of the spatial region of this node. If the node contains no children the center is always in the middle of the Region. If the node does contain child-nodes, the center may be anywhere within the region.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_Center.htm"
+    },
+    {
+      "name": "ChildCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of defined child nodes. Leaf nodes have no children. Root and twig nodes can have anywhere between 1 and 8 children.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ChildCount.htm"
+    },
+    {
+      "name": "ChildNode",
+      "type": "Node3d\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the child node at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ChildNode.htm"
+    },
+    {
+      "name": "ContentAverage",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the average coordinate of all items in this node. If this node does not contain any items, Point3d.Unset is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ContentAverage.htm"
+    },
+    {
+      "name": "ContentBoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the boundingbox of all items in this node. If this node does not contain any items, BoundingBox.Empty is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ContentBoundingBox.htm"
+    },
+    {
+      "name": "IndicesLocal",
+      "type": "List\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of item indices that are contained within this node.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_IndicesLocal.htm"
+    },
+    {
+      "name": "IndicesRecursive",
+      "type": "List\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of item indices that are contained within this node and any child nodes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_IndicesRecursive.htm"
+    },
+    {
+      "name": "IsLeaf",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this node is a leaf node. Leaf nodes have no child nodes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_IsLeaf.htm"
+    },
+    {
+      "name": "IsMutable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this tree is mutable. You can only add items to mutable trees. We don\u0027t recommend removing items from unmutable trees, though that shouldn\u0027t necessarily lead to problems. Trees become unmutable after a call to ShrinkRegions(), CollapseNodes() or OptimizeTree().",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_IsMutable.htm"
+    },
+    {
+      "name": "IsRoot",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this node is a root node. Root nodes have no parent node and depth zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_IsRoot.htm"
+    },
+    {
+      "name": "IsTwig",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this node is a twig node. Twig nodes have both parents and at least one child.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_IsTwig.htm"
+    },
+    {
+      "name": "ItemCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total number of items stored directly in this node.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ItemCount.htm"
+    },
+    {
+      "name": "ItemsGlobal",
+      "type": "List\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of all items stored inside this entire tree. Do not modify this collection unless you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ItemsGlobal.htm"
+    },
+    {
+      "name": "ItemsLocal",
+      "type": "List\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the items stored directly in this node. This list is constructed every time you access this property, so keep it down to a minimum.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ItemsLocal.htm"
+    },
+    {
+      "name": "Limit",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the subdivision limit for this tree. This limit can only be set once when you create a new tree. It is fixed forever after.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_Limit.htm"
+    },
+    {
+      "name": "MemoryConsumption",
+      "type": "Int64",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the estimated memory consumption of the (sub)tree structure. Items inside the global list are not included in this estimate.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_MemoryConsumption.htm"
+    },
+    {
+      "name": "NextNode",
+      "type": "Node3d\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the logical neighbour to the right of this node. There is no spatial relationships between logical neighbours, this is purely an iteration aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NextNode.htm"
+    },
+    {
+      "name": "NodeDepth",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the recursive depth of this node. The tree root is at depth zero. The first subdivision is at depth one, and so on and so forth.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_NodeDepth.htm"
+    },
+    {
+      "name": "ParentNode",
+      "type": "Node3d\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the immediate parent of this node. Root nodes have no parent.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_ParentNode.htm"
+    },
+    {
+      "name": "Region",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the spatial region of this node.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_Region.htm"
+    },
+    {
+      "name": "RootNode",
+      "type": "Node3d\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ultimate root node for this tree.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_RootNode.htm"
+    },
+    {
+      "name": "WeightedSubdivision",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether subdivision is weighted based on content averages. Setting this value will only affect future subdivisions, not existing ones.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Geometry_SpatialTrees_Node3d_1_WeightedSubdivision.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

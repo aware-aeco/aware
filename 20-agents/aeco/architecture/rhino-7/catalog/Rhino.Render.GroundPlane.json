@@ -1,0 +1,198 @@
+{
+  "name": "GroundPlane",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Represents an infinite plane for implementation by renderers. See SupportsFeature.",
+  "base": "DocumentOrFreeFloatingBase",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_GroundPlane.htm",
+  "constructors": [
+    {
+      "name": "GroundPlane()",
+      "signature": "public GroundPlane()",
+      "summary": "Create an utility object not associated with any document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_GroundPlane__ctor.htm"
+    },
+    {
+      "name": "GroundPlane(GroundPlane)",
+      "signature": "public GroundPlane(GroundPlane g)",
+      "summary": "Create an utility object not associated with any document from another object",
+      "params": [
+        {
+          "name": "g",
+          "type": "Rhino.Render.GroundPlane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_GroundPlane__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts cc)",
+      "summary": "Call this function before making any change to this object (calling a setter) otherwise undo will not work correctly. Calls to BeginChange must be paired with a call to EndChange.",
+      "params": [
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "Change context",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DocumentOrFreeFloatingBase_BeginChange.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public override void CopyFrom(FreeFloatingBase src)",
+      "summary": "(Overrides FreeFloatingBase.CopyFrom(FreeFloatingBase).)",
+      "params": [
+        {
+          "name": "src",
+          "type": "Rhino.Render.FreeFloatingBase",
+          "doc": "[Missing \u003Cparam name=\u0022src\u0022/\u003E documentation for \u0022M:Rhino.Render.GroundPlane.CopyFrom(Rhino.Render.FreeFloatingBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_GroundPlane_CopyFrom.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public bool EndChange()",
+      "summary": "See BeginChange",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the object has returned to no-changes mode."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DocumentOrFreeFloatingBase_EndChange.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Handle destruction of the un-managed CPP object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_FreeFloatingBase_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Altitude",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Height above world XY plane in model units.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_Altitude.htm"
+    },
+    {
+      "name": "AutoAltitude",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether the ground plane is fixed by the Altitude property, or whether it is automatically placed at the lowest point in the model.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_AutoAltitude.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether the document ground plane is enabled.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_Enabled.htm"
+    },
+    {
+      "name": "MaterialInstanceId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Id of material in material table for this ground plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_MaterialInstanceId.htm"
+    },
+    {
+      "name": "ShadowOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether the ground plane shows the material assigned, or whether it is transparent, but captures shadows.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_ShadowOnly.htm"
+    },
+    {
+      "name": "ShowUnderside",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If this is off, the ground plane will not be visible when seen from below.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_ShowUnderside.htm"
+    },
+    {
+      "name": "TextureOffset",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture mapping offset in world units.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_TextureOffset.htm"
+    },
+    {
+      "name": "TextureOffsetLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture offset locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_TextureOffsetLocked.htm"
+    },
+    {
+      "name": "TextureRotation",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture mapping rotation around world origin \u002B offset in degrees.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_TextureRotation.htm"
+    },
+    {
+      "name": "TextureSize",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture mapping single UV span size in world units.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_TextureSize.htm"
+    },
+    {
+      "name": "TextureSizeLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture size locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_GroundPlane_TextureSizeLocked.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CRenderPropertyChangedEvent\u003E",
+      "signature": "public static event EventHandler\u003CRenderPropertyChangedEvent\u003E Changed",
+      "summary": "This event is raised when a GroundPlane property value is changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_GroundPlane_Changed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

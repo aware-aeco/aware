@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "ScriptObjectInteractors.ArchPointInteractor",
+  "kind": "static-class",
+  "summary": "Module-level functions of ScriptObjectInteractors.ArchPointInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

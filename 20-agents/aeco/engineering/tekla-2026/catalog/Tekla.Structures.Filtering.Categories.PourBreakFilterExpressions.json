@@ -1,0 +1,14 @@
+{
+  "name": "PourBreakFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The PourBreakFilterExpressions class contains all the pour break filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/257a75d0-e1ce-9c24-6f06-2928abebf0f1",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

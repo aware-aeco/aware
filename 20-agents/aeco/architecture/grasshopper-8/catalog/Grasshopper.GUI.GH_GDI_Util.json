@@ -1,0 +1,234 @@
+{
+  "name": "GH_GDI_Util",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Contains some global function for filleting corners of GDI objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_GDI_Util.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BoxUnion",
+      "signature": "public static List\u003CPoint[]\u003E BoxUnion(IEnumerable\u003CRectangle\u003E rectangles)",
+      "summary": "Create the outline of a set of boxes.",
+      "params": [
+        {
+          "name": "rectangles",
+          "type": "System.Collections.Generic.IEnumerable\u003CRectangle\u003E",
+          "doc": "Boxes to union.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CPoint[]\u003E",
+        "doc": "A list of Point arrays, where each array describes the corners of each silhouette."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_BoxUnion.htm"
+    },
+    {
+      "name": "FilletBoxOutline",
+      "signature": "public static GraphicsPath FilletBoxOutline(IEnumerable\u003CRectangle\u003E boxes, int radius)",
+      "summary": "Fillet all the corners of the combined outline of a set of rectangles.",
+      "params": [
+        {
+          "name": "boxes",
+          "type": "System.Collections.Generic.IEnumerable\u003CRectangle\u003E",
+          "doc": "Rectangles to outline.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of corner fillets.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "GraphicsPath describing the filleted outline or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_FilletBoxOutline.htm"
+    },
+    {
+      "name": "FilletPolyline(Point[], Int32)",
+      "signature": "public static GraphicsPath FilletPolyline(Point[] corners, int radius)",
+      "summary": "Fillet all the corners of a freeform outline.",
+      "params": [
+        {
+          "name": "corners",
+          "type": "System.Drawing.Point[]",
+          "doc": "A list of corner points.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Fillet to apply to all corners.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "A graphics path describing the filleted shape, or Nothing on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_FilletPolyline.htm"
+    },
+    {
+      "name": "FilletPolyline(PointF[], Single)",
+      "signature": "public static GraphicsPath FilletPolyline(PointF[] corners, float radius)",
+      "summary": "Fillet all the corners of a freeform outline.",
+      "params": [
+        {
+          "name": "corners",
+          "type": "System.Drawing.PointF[]",
+          "doc": "A list of corner points.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Single",
+          "doc": "Fillet to apply to all corners.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "A graphics path describing the filleted shape, or Nothing on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_FilletPolyline_1.htm"
+    },
+    {
+      "name": "FilletRectangle",
+      "signature": "public static GraphicsPath FilletRectangle(Rectangle box, int radius)",
+      "summary": "Create a rectangle with filleted corners.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle to fillet.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Fillet radius, radius will be limited if too large.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "GraphicsPath describing filletted rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_FilletRectangle.htm"
+    },
+    {
+      "name": "Freeform_Blob(IEnumerable\u003CRectangleF\u003E, Int32, Double)",
+      "signature": "public static GraphicsPath Freeform_Blob(IEnumerable\u003CRectangleF\u003E content, int padding, double accuracy)",
+      "summary": "Create a meta-ball outline for a set of rectangles.",
+      "params": [
+        {
+          "name": "content",
+          "type": "System.Collections.Generic.IEnumerable\u003CRectangleF\u003E",
+          "doc": "Rectangles to encompass.",
+          "optional": false
+        },
+        {
+          "name": "padding",
+          "type": "System.Int32",
+          "doc": "Number of units to add to each box.",
+          "optional": false
+        },
+        {
+          "name": "accuracy",
+          "type": "System.Double",
+          "doc": "Pixel accuracy for isosurface outlines. 3 is a good value for 1:1 UI.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "A graphics path describing all iso-surfaces."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_Freeform_Blob.htm"
+    },
+    {
+      "name": "Freeform_Blob(IEnumerable\u003CRectangleF\u003E, Int32, Double, FieldSolver, Double)",
+      "signature": "public static GraphicsPath Freeform_Blob(IEnumerable\u003CRectangleF\u003E content, int padding, double accuracy, FieldSolver solver, double section)",
+      "summary": "Create a meta-ball outline for a set of rectangles.",
+      "params": [
+        {
+          "name": "content",
+          "type": "System.Collections.Generic.IEnumerable\u003CRectangleF\u003E",
+          "doc": "Rectangles to encompass.",
+          "optional": false
+        },
+        {
+          "name": "padding",
+          "type": "System.Int32",
+          "doc": "Number of units to add to each box.",
+          "optional": false
+        },
+        {
+          "name": "accuracy",
+          "type": "System.Double",
+          "doc": "Pixel accuracy for isosurface outlines. 3 is a good value for 1:1 UI.",
+          "optional": false
+        },
+        {
+          "name": "solver",
+          "type": "FieldSolver",
+          "doc": "The falloff solver to use. GH_Util.MetaBall.GH_Context contains a bunch of predefined solvers.",
+          "optional": false
+        },
+        {
+          "name": "section",
+          "type": "System.Double",
+          "doc": "Elevation of section plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "A graphics path describing all iso-surfaces"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_Freeform_Blob_1.htm"
+    },
+    {
+      "name": "SimplifyBoxes",
+      "signature": "public static Rectangle[] SimplifyBoxes(IEnumerable\u003CRectangle\u003E boxes)",
+      "summary": "Create a simplified collection of Rectangles that describe the same union space as the supplied rectangles.",
+      "params": [
+        {
+          "name": "boxes",
+          "type": "System.Collections.Generic.IEnumerable\u003CRectangle\u003E",
+          "doc": "Rectangles to simplify.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle[]",
+        "doc": "An ordered collection of non-intersecting rectangles or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GDI_Util_SimplifyBoxes.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

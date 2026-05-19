@@ -1,0 +1,260 @@
+{
+  "name": "ColorLCH",
+  "namespace": "Rhino.Display",
+  "kind": "struct",
+  "summary": "Represents an LCH (Lightness, A, B) color with double precision floating point channels. LCH colors (also sometimes called CIELUV) are transformation of the 1931 CIE XYZ color space, in order to approach perceptual uniformity. They are primarily used in computer graphics which deal with colored lights.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ColorLCH.htm",
+  "constructors": [
+    {
+      "name": "ColorLCH(Color)",
+      "signature": "public ColorLCH(Color rgb)",
+      "summary": "Constructs a new instance of ColorLCH that is equivalent to an ARGB color.",
+      "remarks": "Exact conversions between color spaces are often not possible.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "System.Drawing.Color",
+          "doc": "ARGB color to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH__ctor_2.htm"
+    },
+    {
+      "name": "ColorLCH(Double, Double, Double)",
+      "signature": "public ColorLCH(double lightness, double chroma, double hue)",
+      "summary": "Constructs a new instance of ColorLCH with custom channel values.",
+      "params": [
+        {
+          "name": "lightness",
+          "type": "System.Double",
+          "doc": "Value of lightness channel. This channel is limited to 0~1.",
+          "optional": false
+        },
+        {
+          "name": "chroma",
+          "type": "System.Double",
+          "doc": "Value of chroma channel. This channel is limited to -1~1.",
+          "optional": false
+        },
+        {
+          "name": "hue",
+          "type": "System.Double",
+          "doc": "Value of chroma channel. This channel is limited to 0~360.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH__ctor.htm"
+    },
+    {
+      "name": "ColorLCH(Double, Double, Double, Double)",
+      "signature": "public ColorLCH(double alpha, double lightness, double chroma, double hue)",
+      "summary": "Constructs a new instance of ColorLCH with custom channel values.",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Value of Alpha channel. This channel is limited to 0~1.",
+          "optional": false
+        },
+        {
+          "name": "lightness",
+          "type": "System.Double",
+          "doc": "Value of Lightness channel. This channel is limited to 0~1.",
+          "optional": false
+        },
+        {
+          "name": "chroma",
+          "type": "System.Double",
+          "doc": "Value of Chroma channel. This channel is limited to -1~1.",
+          "optional": false
+        },
+        {
+          "name": "hue",
+          "type": "System.Double",
+          "doc": "Value of Hue channel. This channel is limited to 0~360.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFromCMYK",
+      "signature": "public static ColorLCH CreateFromCMYK(ColorCMYK cmyk)",
+      "summary": "Create the nearest LCH equivalent of a CMYK color.",
+      "params": [
+        {
+          "name": "cmyk",
+          "type": "Rhino.Display.ColorCMYK",
+          "doc": "Target color in CMYK space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLCH",
+        "doc": "The LCH equivalent of the CMYK color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH_CreateFromCMYK.htm"
+    },
+    {
+      "name": "CreateFromHSL",
+      "signature": "public static ColorLCH CreateFromHSL(ColorHSL hsl)",
+      "summary": "Create the nearest LCH equivalent of an HSL color.",
+      "params": [
+        {
+          "name": "hsl",
+          "type": "Rhino.Display.ColorHSL",
+          "doc": "Target color in HSL space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLCH",
+        "doc": "The LCH equivalent of the HSL color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH_CreateFromHSL.htm"
+    },
+    {
+      "name": "CreateFromLAB",
+      "signature": "public static ColorLCH CreateFromLAB(ColorLAB lab)",
+      "summary": "Create the nearest LCH equivalent of a LAB color.",
+      "params": [
+        {
+          "name": "lab",
+          "type": "Rhino.Display.ColorLAB",
+          "doc": "Target color in LAB space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLCH",
+        "doc": "The LCH equivalent of the LAB color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH_CreateFromLAB.htm"
+    },
+    {
+      "name": "CreateFromRGBA",
+      "signature": "public static ColorLCH CreateFromRGBA(ColorRGBA rgb)",
+      "summary": "Create the nearest LCH equivalent of an RGBA color.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "Target color in RGBA space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLCH",
+        "doc": "The LCH equivalent of the RGBA color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH_CreateFromRGBA.htm"
+    },
+    {
+      "name": "CreateFromXYZ",
+      "signature": "public static ColorLCH CreateFromXYZ(ColorXYZ xyz)",
+      "summary": "Create the nearest LCH equivalent of an XYZ color.",
+      "params": [
+        {
+          "name": "xyz",
+          "type": "Rhino.Display.ColorXYZ",
+          "doc": "Target color in XYZ space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorLCH",
+        "doc": "The LCH equivalent of the XYZ color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH_CreateFromXYZ.htm"
+    },
+    {
+      "name": "MakePositive",
+      "signature": "public void MakePositive()",
+      "summary": "Ensure the Chromaticity of this color is positive.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH_MakePositive.htm"
+    },
+    {
+      "name": "Implicit(ColorLCH to Color)",
+      "signature": "public static implicit operator Color (ColorLCH lch)",
+      "summary": "Implicitly converts a LCH color into a .Net library color.",
+      "params": [
+        {
+          "name": "lch",
+          "type": "Rhino.Display.ColorLCH",
+          "doc": "A LCH color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "A ARGB .Net library color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorLCH_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Alpha channel. The Alpha channel is limited to the 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLCH_A.htm"
+    },
+    {
+      "name": "C",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Chroma channel. Chroma is defined from -1.0 to \u002B1.0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLCH_C.htm"
+    },
+    {
+      "name": "H",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Hue channel. The hue channel is limited to the 0~360 degree range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLCH_H.htm"
+    },
+    {
+      "name": "L",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Lightness channel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorLCH_L.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

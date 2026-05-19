@@ -1,0 +1,44 @@
+{
+  "name": "View.HorizontalLabelPosition",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The horizontal label position types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2b927757-222e-2465-f880-2410862df005",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CenteredByViewFrame",
+      "value": 1,
+      "summary": "The label is centered by the view frame."
+    },
+    {
+      "name": "CenteredByViewRestrictionBox",
+      "value": 2,
+      "summary": "The label is centered by the view restriction box."
+    },
+    {
+      "name": "LeftAlignedByViewFrame",
+      "value": 3,
+      "summary": "The label is left aligned by the view frame."
+    },
+    {
+      "name": "RightAlignedByViewFrame",
+      "value": 4,
+      "summary": "The label is right aligned by the view frame."
+    },
+    {
+      "name": "LeftAlignByViewRestrictionBox",
+      "value": 5,
+      "summary": "The label is left aligned by the view restriction box."
+    },
+    {
+      "name": "RightAlignByViewRestrictionBox",
+      "value": 6,
+      "summary": "The label is right aligned by the view restriction box."
+    }
+  ]
+}

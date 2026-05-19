@@ -1,0 +1,22 @@
+{
+  "name": "GH_WireDirection",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Identifies a wire direction.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_WireDirection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "left",
+      "value": 0
+    },
+    {
+      "name": "right",
+      "value": 1
+    }
+  ]
+}

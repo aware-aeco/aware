@@ -1,0 +1,193 @@
+{
+  "name": "RenderPrimitive",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderPrimitive\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderPrimitive.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RenderPrimitive",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected void Dispose(bool isDisposing)",
+      "summary": "Releases the unmanaged resources used by the RenderPrimitive and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_Finalize.htm"
+    },
+    {
+      "name": "Mesh",
+      "signature": "public Mesh Mesh()",
+      "summary": "Returns the mesh associated with the object, this will mesh primitives and always return a mesh.",
+      "params": [],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPrimitive.Mesh\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_Mesh.htm"
+    },
+    {
+      "name": "TryGetBox",
+      "signature": "public bool TryGetBox(out Box box)",
+      "summary": "Call this method to get a Box primitive for this mesh. If this meshes PrimitiveType is not a Box then the box parameter is set to Empty.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Gets set to the box primitive for this object on success or Empty on error.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if PrimitiveType is Box and the box parameter was initialized otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_TryGetBox.htm"
+    },
+    {
+      "name": "TryGetCone",
+      "signature": "public bool TryGetCone(out Cone cone, out Plane truncation)",
+      "summary": "Call this method to get a Cone primitive for this mesh. If this meshes PrimitiveType is not a Cone then the cone parameter is set to Unset and the truncation parameter is set to Unset.",
+      "params": [
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "Gets set to the cone primitive for this object on success or Unset on error.",
+          "optional": false
+        },
+        {
+          "name": "truncation",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Gets set to the truncation plane for this object on success or Unset on error.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if PrimitiveType is Cone and the cone and truncation parameters were initialized otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_TryGetCone.htm"
+    },
+    {
+      "name": "TryGetPlane",
+      "signature": "public bool TryGetPlane(out PlaneSurface plane)",
+      "summary": "Call this method to get a Plane primitive for this mesh. If this meshes PrimitiveType is not a Plane then the plane parameter is set to null.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.PlaneSurface",
+          "doc": "Gets set to the plane primitive for this object on success or null on error.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if PrimitiveType is Plane and the plane parameter was initialized otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_TryGetPlane.htm"
+    },
+    {
+      "name": "TryGetSphere",
+      "signature": "public bool TryGetSphere(out Sphere sphere)",
+      "summary": "Call this method to get a sphere primitive for this mesh. If this meshes PrimitiveType is not a Sphere then the sphere parameter is set to Unset.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "Gets set to the primitive sphere for this object on success.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if PrimitiveType is Sphere and the sphere parameter was initialized otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPrimitive_TryGetSphere.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "The bounding box for this primitive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPrimitive_BoundingBox.htm"
+    },
+    {
+      "name": "InstanceTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Instance reference transform or Identity if not an instance reference.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPrimitive_InstanceTransform.htm"
+    },
+    {
+      "name": "PrimitiveType",
+      "type": "RenderPrimitiveType",
+      "getter": true,
+      "setter": false,
+      "summary": "Call this before extracting meshes if you support render primitives to get the RenderPrimitiveType of this mesh then call the associated TryGetSphere(Sphere), TryGetPlane(PlaneSurface), TryGetCone(Cone, Plane), or TryGetBox(Box) method. Calling the Mesh() property will mesh the primitive and return a mesh always.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPrimitive_PrimitiveType.htm"
+    },
+    {
+      "name": "RenderMaterial",
+      "type": "RenderMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "The RenderMaterial associated with this mesh or null if there is not one.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPrimitive_RenderMaterial.htm"
+    },
+    {
+      "name": "RhinoObject",
+      "type": "RhinoObject",
+      "getter": true,
+      "setter": false,
+      "summary": "The Rhino object associated with this render primitive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderPrimitive_RhinoObject.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

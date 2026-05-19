@@ -1,0 +1,417 @@
+{
+  "name": "BuildingElementAttributeList",
+  "namespace": "BuildingElementAttributeList",
+  "kind": "class",
+  "summary": "Implementation of the attribute list",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/",
+  "constructors": [
+    {
+      "name": "BuildingElementAttributeList",
+      "signature": "BuildingElementAttributeList()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(other)",
+      "summary": "implement the \u002B= operator",
+      "remarks": "implement the \u002B= operator",
+      "params": [
+        {
+          "name": "other",
+          "type": "BuildingElementAttributeList",
+          "doc": "attribute list to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BuildingElementAttributeList",
+        "doc": "attribute list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__iadd__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "create the data as string",
+      "remarks": "create the data as string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "data string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__repr__"
+    },
+    {
+      "name": "__visit_ByteVec",
+      "signature": "__visit_ByteVec(attribute_id, attribute_value)",
+      "summary": "add a byte vector attribute to the list",
+      "remarks": "add a byte vector attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_ByteVec"
+    },
+    {
+      "name": "__visit_Date",
+      "signature": "__visit_Date(attribute_id, attribute_value)",
+      "summary": "add a date attribute to the list",
+      "remarks": "add a date attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_Date"
+    },
+    {
+      "name": "__visit_Double",
+      "signature": "__visit_Double(attribute_id, attribute_value)",
+      "summary": "add a double attribute to the list",
+      "remarks": "add a double attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_Double"
+    },
+    {
+      "name": "__visit_DoubleVec",
+      "signature": "__visit_DoubleVec(attribute_id, attribute_value)",
+      "summary": "add an double vector attribute to the list",
+      "remarks": "add an double vector attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_DoubleVec"
+    },
+    {
+      "name": "__visit_Enum",
+      "signature": "__visit_Enum(attribute_id, attribute_value)",
+      "summary": "add an enum attribute to the list",
+      "remarks": "add an enum attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_Enum"
+    },
+    {
+      "name": "__visit_Integer",
+      "signature": "__visit_Integer(attribute_id, attribute_value)",
+      "summary": "add an integer attribute to the list",
+      "remarks": "add an integer attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_Integer"
+    },
+    {
+      "name": "__visit_IntegerVec",
+      "signature": "__visit_IntegerVec(attribute_id, attribute_value)",
+      "summary": "add an integer vector attribute to the list",
+      "remarks": "add an integer vector attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_IntegerVec"
+    },
+    {
+      "name": "__visit_String",
+      "signature": "__visit_String(attribute_id, attribute_value)",
+      "summary": "add a string attribute to the list",
+      "remarks": "add a string attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_String"
+    },
+    {
+      "name": "__visit_StringVec",
+      "signature": "__visit_StringVec(attribute_id, attribute_value)",
+      "summary": "add a string vector attribute to the list",
+      "remarks": "add a string vector attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_StringVec"
+    },
+    {
+      "name": "__visit_Undef",
+      "signature": "__visit_Undef(attribute_id, _attribute_value)",
+      "summary": "undefined attribute",
+      "remarks": "undefined attribute",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "_attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_Undef"
+    },
+    {
+      "name": "__visit_WString",
+      "signature": "__visit_WString(attribute_id, attribute_value)",
+      "summary": "add a wstring attribute to the list",
+      "remarks": "add a wstring attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.__visit_WString"
+    },
+    {
+      "name": "add_attribute",
+      "signature": "add_attribute(attribute_id, attribute_value)",
+      "summary": "add an attribute to the list",
+      "remarks": "add an attribute to the list",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "attribute_value",
+          "type": "Any",
+          "doc": "attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.add_attribute"
+    },
+    {
+      "name": "add_attribute_list",
+      "signature": "add_attribute_list(attribute_list)",
+      "summary": "add an attribute list",
+      "remarks": "add an attribute list",
+      "params": [
+        {
+          "name": "attribute_list",
+          "type": "List[Attribute]",
+          "doc": "attribute list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.add_attribute_list"
+    },
+    {
+      "name": "add_attributes",
+      "signature": "add_attributes(attributes)",
+      "summary": "add attributes to the list",
+      "remarks": "add attributes to the list",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "List[Tuple[int, Any]]",
+          "doc": "attribute list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.add_attributes"
+    },
+    {
+      "name": "add_attributes_from_parameters",
+      "signature": "add_attributes_from_parameters(build_ele)",
+      "summary": "add the attributes from the parameter attributes",
+      "remarks": "add the attributes from the parameter attributes",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.add_attributes_from_parameters"
+    },
+    {
+      "name": "get_attribute_list",
+      "signature": "get_attribute_list()",
+      "summary": "get the attribute list",
+      "remarks": "get the attribute list",
+      "params": [],
+      "returns": {
+        "type": "List[Attribute]",
+        "doc": "attribute list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementAttributeList/BuildingElementAttributeList/#BuildingElementAttributeList.BuildingElementAttributeList.get_attribute_list"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

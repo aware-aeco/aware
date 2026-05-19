@@ -1,0 +1,34 @@
+{
+  "name": "SearchLocations",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Which items within a Search Selection should be searched",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SearchLocations",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No items"
+    },
+    {
+      "name": "Self",
+      "value": 1,
+      "summary": "Direct contents of the selection"
+    },
+    {
+      "name": "Descendants",
+      "value": 2,
+      "summary": "Descendants of the items in the selection"
+    },
+    {
+      "name": "DescendantsAndSelf",
+      "value": 3,
+      "summary": "Direct contents of the selection and their descendants"
+    }
+  ]
+}

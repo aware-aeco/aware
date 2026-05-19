@@ -1,0 +1,24 @@
+{
+  "name": "FileObjWriteOptions.SubDMeshing",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Determines whether the surface or control net of a SubD object is used to generate a mesh",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileObjWriteOptions_SubDMeshing.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Surface",
+      "value": 0,
+      "summary": "The SubD surface is used"
+    },
+    {
+      "name": "ControlNet",
+      "value": 1,
+      "summary": "The SubD control net is used"
+    }
+  ]
+}

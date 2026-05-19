@@ -1,0 +1,30 @@
+{
+  "name": "NonConformity",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.NonConformity.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/NonConformity.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for NonConformity.guid.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/NonConformity.md"
+    },
+    {
+      "name": "Severity",
+      "type": "NonConformitySeverity",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for NonConformity.severity.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/NonConformity.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,743 @@
+{
+  "name": "ClipPlane",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A representation of a clipping plane.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ClipPlane",
+  "constructors": [
+    {
+      "name": "ClipPlane()",
+      "signature": "ClipPlane()",
+      "summary": "Constructs a new ClipPlane.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.%23ctor"
+    },
+    {
+      "name": "ClipPlane(Autodesk.Navisworks.Api.ClipPlane)",
+      "signature": "ClipPlane(Autodesk.Navisworks.Api.ClipPlane other)",
+      "summary": "Constructs a new ClipPlane.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.ClipPlane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027other\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027other\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.%23ctor%28Autodesk.Navisworks.Api.ClipPlane%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Initialize",
+      "signature": "bool Initialize(Autodesk.Navisworks.Api.ClipPlaneAlignment align, Autodesk.Navisworks.Api.Point3D origin, Autodesk.Navisworks.Api.UnitVector3D up, Autodesk.Navisworks.Api.UnitVector3D front)",
+      "summary": "Initialize method of ClipPlane.",
+      "params": [
+        {
+          "name": "align",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "up",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027up\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027front\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.Initialize%28Autodesk.Navisworks.Api.ClipPlaneAlignment%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "Initialize",
+      "signature": "bool Initialize(Autodesk.Navisworks.Api.ClipPlaneAlignment align, Autodesk.Navisworks.Api.Point3D origin, Autodesk.Navisworks.Api.UnitVector3D up, Autodesk.Navisworks.Api.UnitVector3D front, Autodesk.Navisworks.Api.UnitVector3D normal)",
+      "summary": "Initialize method of ClipPlane.",
+      "params": [
+        {
+          "name": "align",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "up",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027up\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027front\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.Initialize%28Autodesk.Navisworks.Api.ClipPlaneAlignment%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "Initialize",
+      "signature": "bool Initialize(Autodesk.Navisworks.Api.ClipPlaneAlignment align, Autodesk.Navisworks.Api.Point3D origin, Autodesk.Navisworks.Api.UnitVector3D up, Autodesk.Navisworks.Api.UnitVector3D front, Autodesk.Navisworks.Api.UnitVector3D normal, Autodesk.Navisworks.Api.UnitVector3D xAxis)",
+      "summary": "Initialize method of ClipPlane.",
+      "params": [
+        {
+          "name": "align",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "up",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "xAxis",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027up\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027front\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027xAxis\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.Initialize%28Autodesk.Navisworks.Api.ClipPlaneAlignment%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "Initialize",
+      "signature": "bool Initialize(Autodesk.Navisworks.Api.ClipPlaneAlignment align, Autodesk.Navisworks.Api.UnitVector3D normal, double distance)",
+      "summary": "Initialize method of ClipPlane.",
+      "params": [
+        {
+          "name": "align",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027normal\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.Initialize%28Autodesk.Navisworks.Api.ClipPlaneAlignment%2CAutodesk.Navisworks.Api.UnitVector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.ClipPlane InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of ClipPlane.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ClipPlane",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of ClipPlane.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AlignToOrientation",
+      "signature": "void AlignToOrientation(Autodesk.Navisworks.Api.ClipPlaneAlignment align, Autodesk.Navisworks.Api.UnitVector3D up, Autodesk.Navisworks.Api.UnitVector3D front)",
+      "summary": "AlignToOrientation method of ClipPlane.",
+      "params": [
+        {
+          "name": "align",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+          "optional": false
+        },
+        {
+          "name": "up",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027up\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027up\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027front\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027front\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.AlignToOrientation%28Autodesk.Navisworks.Api.ClipPlaneAlignment%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "AlignToPick",
+      "signature": "void AlignToPick(Autodesk.Navisworks.Api.ClipPlaneAlignment align, Autodesk.Navisworks.Api.Point3D origin, Autodesk.Navisworks.Api.UnitVector3D normal)",
+      "summary": "AlignToPick method of ClipPlane.",
+      "params": [
+        {
+          "name": "align",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027normal\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.AlignToPick%28Autodesk.Navisworks.Api.ClipPlaneAlignment%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "AlignToPick",
+      "signature": "void AlignToPick(Autodesk.Navisworks.Api.ClipPlaneAlignment align, Autodesk.Navisworks.Api.Point3D origin, Autodesk.Navisworks.Api.UnitVector3D normal, Autodesk.Navisworks.Api.UnitVector3D xAxis)",
+      "summary": "AlignToPick method of ClipPlane.",
+      "params": [
+        {
+          "name": "align",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "xAxis",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027normal\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027xAxis\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.AlignToPick%28Autodesk.Navisworks.Api.ClipPlaneAlignment%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "ApplyTransform",
+      "signature": "void ApplyTransform(Autodesk.Navisworks.Api.Transform3D trans)",
+      "summary": "Transforms the clip plane.",
+      "params": [
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027trans\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027trans\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.ApplyTransform%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.ClipPlane from)",
+      "summary": "CopyFrom method of ClipPlane.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.ClipPlane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027from\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027from\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.CopyFrom%28Autodesk.Navisworks.Api.ClipPlane%29"
+    },
+    {
+      "name": "Move",
+      "signature": "void Move(double dist)",
+      "summary": "Move method of ClipPlane.",
+      "params": [
+        {
+          "name": "dist",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.Move%28System.Double%29"
+    },
+    {
+      "name": "Reset",
+      "signature": "void Reset()",
+      "summary": "Reset method of ClipPlane.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.Reset"
+    },
+    {
+      "name": "Translate",
+      "signature": "void Translate(Autodesk.Navisworks.Api.Vector3D offset)",
+      "summary": "Translate method of ClipPlane.",
+      "params": [
+        {
+          "name": "offset",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027offset\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027offset\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlane.Translate%28Autodesk.Navisworks.Api.Vector3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alignment",
+      "type": "Autodesk.Navisworks.Api.ClipPlaneAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "The clip plane alignment.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Alignment"
+    },
+    {
+      "name": "Default",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this clip plane in the default (uninitialized) state.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Default"
+    },
+    {
+      "name": "Distance",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "The distance of the plane from the world origin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Distance"
+    },
+    {
+      "name": "Enabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Enabled property of ClipPlane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Enabled"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.IsReadOnly"
+    },
+    {
+      "name": "Normal",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The normal of the plane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Normal"
+    },
+    {
+      "name": "Origin",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The origin of the plane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Origin"
+    },
+    {
+      "name": "Plane",
+      "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+      "getter": true,
+      "setter": false,
+      "summary": "Plane property of ClipPlane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Plane"
+    },
+    {
+      "name": "State",
+      "type": "Autodesk.Navisworks.Api.ClipPlaneState",
+      "getter": true,
+      "setter": true,
+      "summary": "State property of ClipPlane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.State"
+    },
+    {
+      "name": "Transform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The transform of this plane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.Transform"
+    },
+    {
+      "name": "XAxis",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the X axis for the clip plane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlane.XAxis"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

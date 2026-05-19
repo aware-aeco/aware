@@ -1,0 +1,206 @@
+{
+  "name": "RhinoCore",
+  "namespace": "Rhino.Runtime.InProcess",
+  "kind": "class",
+  "summary": "Represents an instance of RhinoCore.DLL.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InProcess_RhinoCore.htm",
+  "constructors": [
+    {
+      "name": "RhinoCore()",
+      "signature": "public RhinoCore()",
+      "summary": "Initializes a new instance of the RhinoCore class.",
+      "remarks": "This constructor creates a headless instance of Rhino. No Rhino UI will be created at all.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore__ctor.htm"
+    },
+    {
+      "name": "RhinoCore(String[])",
+      "signature": "public RhinoCore(string[] args)",
+      "summary": "Initializes a new instance of the RhinoCore class.",
+      "remarks": "For args documentation see \u0022https://developer.rhino3d.com/guides/cpp/running-rhino-from-command-line/\u0022",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.String[]",
+          "doc": "Rhino command line parameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore__ctor_1.htm"
+    },
+    {
+      "name": "RhinoCore(String[], WindowStyle)",
+      "signature": "public RhinoCore(string[] args, WindowStyle windowStyle)",
+      "summary": "Initializes a new instance of the RhinoCore class.",
+      "remarks": "For args documentation see \u0022https://developer.rhino3d.com/guides/cpp/running-rhino-from-command-line/\u0022",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.String[]",
+          "doc": "Rhino command line parameters",
+          "optional": false
+        },
+        {
+          "name": "windowStyle",
+          "type": "Rhino.Runtime.InProcess.WindowStyle",
+          "doc": "Rhino main window initial style",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore__ctor_2.htm"
+    },
+    {
+      "name": "RhinoCore(String[], WindowStyle, IntPtr)",
+      "signature": "public RhinoCore(string[] args, WindowStyle windowStyle, IntPtr hostWnd)",
+      "summary": "Initializes a new instance of the RhinoCore class.",
+      "remarks": "For args documentation see \u0022https://developer.rhino3d.com/guides/cpp/running-rhino-from-command-line/\u0022",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.String[]",
+          "doc": "Rhino command line parameters",
+          "optional": false
+        },
+        {
+          "name": "windowStyle",
+          "type": "Rhino.Runtime.InProcess.WindowStyle",
+          "doc": "Rhino main window initial style",
+          "optional": false
+        },
+        {
+          "name": "hostWnd",
+          "type": "System.IntPtr",
+          "doc": "Host main window OS native handle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "IDisposable implementation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_Dispose.htm"
+    },
+    {
+      "name": "DoEvents",
+      "signature": "public bool DoEvents()",
+      "summary": "If a Rhino owned window is active processes all Windows messages currently in the message queue.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if a Rhino owned window is still active or Idle tasks are pending."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_DoEvents.htm"
+    },
+    {
+      "name": "DoIdle",
+      "signature": "public bool DoIdle()",
+      "summary": "Processes all Rhino Idle tasks.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if Idle tasks are still pending."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_DoIdle.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "IDisposable implementation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_Finalize.htm"
+    },
+    {
+      "name": "InvokeInHostContext(Action)",
+      "signature": "public void InvokeInHostContext(Action action)",
+      "summary": "Invokes action in Host context",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "doc": "[Missing \u003Cparam name=\u0022action\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InProcess.RhinoCore.InvokeInHostContext(System.Action)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_InvokeInHostContext.htm"
+    },
+    {
+      "name": "InvokeInHostContext\u003CT\u003E(Func\u003CT\u003E)",
+      "signature": "public T InvokeInHostContext\u003CT\u003E(Func\u003CT\u003E func)",
+      "summary": "Invokes function in Host context",
+      "params": [
+        {
+          "name": "func",
+          "type": "System.Func\u003CT\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022func\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InProcess.RhinoCore.InvokeInHostContext\u0060\u00601(System.Func{\u0060\u00600})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Returns argument function return value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_InvokeInHostContext__1.htm"
+    },
+    {
+      "name": "RaiseIdle",
+      "signature": "public void RaiseIdle()",
+      "summary": "Raises the Idle event.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_RaiseIdle.htm"
+    },
+    {
+      "name": "Run",
+      "signature": "public int Run()",
+      "summary": "Runs RhinoApp Message loop",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InProcess.RhinoCore.Run\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InProcess_RhinoCore_Run.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

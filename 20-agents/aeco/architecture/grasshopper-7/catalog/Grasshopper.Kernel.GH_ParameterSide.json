@@ -1,0 +1,24 @@
+{
+  "name": "GH_ParameterSide",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates possible sides for variable parameters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParameterSide.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Input",
+      "value": 0,
+      "summary": "Indicates parameters along the left edge of the component."
+    },
+    {
+      "name": "Output",
+      "value": 1,
+      "summary": "Indicates parameters along the right edge of the component."
+    }
+  ]
+}

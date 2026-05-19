@@ -1,0 +1,48 @@
+{
+  "name": "ViewCode",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Definition of a code view class",
+  "base": "View",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/ViewCode/",
+  "constructors": [
+    {
+      "name": "ViewCode",
+      "signature": "ViewCode(hash_value)",
+      "summary": "Initialization of code view class",
+      "remarks": "Initialization of code view class",
+      "params": [
+        {
+          "name": "hash_value",
+          "type": "str",
+          "doc": "hash value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/ViewCode/#PythonPart.ViewCode.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "create",
+      "signature": "create()",
+      "summary": "Create code view",
+      "remarks": "Create code view",
+      "params": [],
+      "returns": {
+        "type": "MacroSlideElement",
+        "doc": "macro slide element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/ViewCode/#PythonPart.ViewCode.create"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

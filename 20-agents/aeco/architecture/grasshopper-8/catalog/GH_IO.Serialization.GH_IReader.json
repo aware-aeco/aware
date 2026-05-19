@@ -1,0 +1,4038 @@
+{
+  "name": "GH_IReader",
+  "namespace": "GH_IO.Serialization",
+  "kind": "interface",
+  "summary": "Provides access to a subset of GH_Chunk methods used for reading archives.",
+  "interfaces": [
+    "GH_IChunk",
+    "GH_IBinarySupport",
+    "GH_IXmlSupport"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Serialization_GH_IReader.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddMessage",
+      "signature": "void AddMessage(string m, GH_Message_Type t)",
+      "summary": "Log a new message with the top-level archive. Messages are collected during read/write operations, and can be displayed to the user upon completion using GH_Archive.ShowMessageLog().",
+      "params": [
+        {
+          "name": "m",
+          "type": "System.String",
+          "doc": "Message text.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "GH_IO.Serialization.GH_Message_Type",
+          "doc": "Message type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IChunk_AddMessage.htm"
+    },
+    {
+      "name": "ChunkExists(String)",
+      "signature": "bool ChunkExists(string name)",
+      "summary": "Checks whether a chunk with the specified name exists in the litter. Only chunks without index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of chunk to test for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a chunk with the specified name exists, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_ChunkExists.htm"
+    },
+    {
+      "name": "ChunkExists(String, Int32)",
+      "signature": "bool ChunkExists(string name, int index)",
+      "summary": "Checks whether a chunk with the specified name and index exists in the litter. Only chunks with index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of chunk to test for.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of chunk to test for. If less than zero, ChunkExists(string chunk_name) is called instead.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a chunk with the specified name and index exists, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_ChunkExists_1.htm"
+    },
+    {
+      "name": "FindChunk(String)",
+      "signature": "GH_IReader FindChunk(string name)",
+      "summary": "Finds the first chunk in the litter that matches the given name. Only chunks without index qualifiers are considered.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of chunk to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_IReader",
+        "doc": "The child chunk that matches the given name, or null of no matching chunk could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_FindChunk.htm"
+    },
+    {
+      "name": "FindChunk(String, Int32)",
+      "signature": "GH_IReader FindChunk(string name, int index)",
+      "summary": "Finds the first chunk in the list that matches the given name and index. Only chunks with index qualifiers are considered.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of chunk to search for.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of chunk to search for. If less than zero, FindChunk(string chunk_name) is called instead.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_IReader",
+        "doc": "The child chunk that matches the given name and index, or null of no matching chunk could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_FindChunk_1.htm"
+    },
+    {
+      "name": "FindItem(String)",
+      "signature": "GH_Item FindItem(string name)",
+      "summary": "Finds the first item that matches the given name. Only items without index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of item to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Item",
+        "doc": "The item that matches the given name, or null of no matching item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_FindItem.htm"
+    },
+    {
+      "name": "FindItem(String, Int32)",
+      "signature": "GH_Item FindItem(string name, int index)",
+      "summary": "Finds the first item that matches the given name and index. Only items with index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of item to search for.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of item to search for. If less than zero, then FindItem(string name) is called instead.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Item",
+        "doc": "The item that matches the given name and index, or null of no matching item could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_FindItem_1.htm"
+    },
+    {
+      "name": "GetBoolean(String)",
+      "signature": "bool GetBoolean(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetBoolean.htm"
+    },
+    {
+      "name": "GetBoolean(String, Int32)",
+      "signature": "bool GetBoolean(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetBoolean_1.htm"
+    },
+    {
+      "name": "GetBoundingBox(String)",
+      "signature": "GH_BoundingBox GetBoundingBox(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_BoundingBox",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetBoundingBox(String, Int32)",
+      "signature": "GH_BoundingBox GetBoundingBox(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_BoundingBox",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetBoundingBox_1.htm"
+    },
+    {
+      "name": "GetByte(String)",
+      "signature": "byte GetByte(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetByte.htm"
+    },
+    {
+      "name": "GetByte(String, Int32)",
+      "signature": "byte GetByte(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetByte_1.htm"
+    },
+    {
+      "name": "GetByteArray(String)",
+      "signature": "byte[] GetByteArray(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetByteArray.htm"
+    },
+    {
+      "name": "GetByteArray(String, Int32)",
+      "signature": "byte[] GetByteArray(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetByteArray_1.htm"
+    },
+    {
+      "name": "GetDate(String)",
+      "signature": "DateTime GetDate(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTime",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDate.htm"
+    },
+    {
+      "name": "GetDate(String, Int32)",
+      "signature": "DateTime GetDate(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTime",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDate_1.htm"
+    },
+    {
+      "name": "GetDecimal(String)",
+      "signature": "decimal GetDecimal(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Decimal",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDecimal.htm"
+    },
+    {
+      "name": "GetDecimal(String, Int32)",
+      "signature": "decimal GetDecimal(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Decimal",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDecimal_1.htm"
+    },
+    {
+      "name": "GetDouble(String)",
+      "signature": "double GetDouble(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDouble.htm"
+    },
+    {
+      "name": "GetDouble(String, Int32)",
+      "signature": "double GetDouble(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDouble_1.htm"
+    },
+    {
+      "name": "GetDoubleArray(String)",
+      "signature": "double[] GetDoubleArray(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double[]",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDoubleArray.htm"
+    },
+    {
+      "name": "GetDoubleArray(String, Int32)",
+      "signature": "double[] GetDoubleArray(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double[]",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDoubleArray_1.htm"
+    },
+    {
+      "name": "GetDrawingBitmap(String)",
+      "signature": "Bitmap GetDrawingBitmap(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingBitmap.htm"
+    },
+    {
+      "name": "GetDrawingBitmap(String, Int32)",
+      "signature": "Bitmap GetDrawingBitmap(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingBitmap_1.htm"
+    },
+    {
+      "name": "GetDrawingColor(String)",
+      "signature": "Color GetDrawingColor(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingColor.htm"
+    },
+    {
+      "name": "GetDrawingColor(String, Int32)",
+      "signature": "Color GetDrawingColor(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingColor_1.htm"
+    },
+    {
+      "name": "GetDrawingPoint(String)",
+      "signature": "Point GetDrawingPoint(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingPoint.htm"
+    },
+    {
+      "name": "GetDrawingPoint(String, Int32)",
+      "signature": "Point GetDrawingPoint(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingPoint_1.htm"
+    },
+    {
+      "name": "GetDrawingPointF(String)",
+      "signature": "PointF GetDrawingPointF(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingPointF.htm"
+    },
+    {
+      "name": "GetDrawingPointF(String, Int32)",
+      "signature": "PointF GetDrawingPointF(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingPointF_1.htm"
+    },
+    {
+      "name": "GetDrawingRectangle(String)",
+      "signature": "Rectangle GetDrawingRectangle(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingRectangle.htm"
+    },
+    {
+      "name": "GetDrawingRectangle(String, Int32)",
+      "signature": "Rectangle GetDrawingRectangle(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingRectangle_1.htm"
+    },
+    {
+      "name": "GetDrawingRectangleF(String)",
+      "signature": "RectangleF GetDrawingRectangleF(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RectangleF",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingRectangleF.htm"
+    },
+    {
+      "name": "GetDrawingRectangleF(String, Int32)",
+      "signature": "RectangleF GetDrawingRectangleF(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RectangleF",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingRectangleF_1.htm"
+    },
+    {
+      "name": "GetDrawingSize(String)",
+      "signature": "Size GetDrawingSize(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingSize.htm"
+    },
+    {
+      "name": "GetDrawingSize(String, Int32)",
+      "signature": "Size GetDrawingSize(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingSize_1.htm"
+    },
+    {
+      "name": "GetDrawingSizeF(String)",
+      "signature": "SizeF GetDrawingSizeF(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SizeF",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingSizeF.htm"
+    },
+    {
+      "name": "GetDrawingSizeF(String, Int32)",
+      "signature": "SizeF GetDrawingSizeF(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SizeF",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetDrawingSizeF_1.htm"
+    },
+    {
+      "name": "GetGuid(String)",
+      "signature": "Guid GetGuid(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetGuid.htm"
+    },
+    {
+      "name": "GetGuid(String, Int32)",
+      "signature": "Guid GetGuid(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetGuid_1.htm"
+    },
+    {
+      "name": "GetInt32(String)",
+      "signature": "int GetInt32(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInt32.htm"
+    },
+    {
+      "name": "GetInt32(String, Int32)",
+      "signature": "int GetInt32(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInt32_1.htm"
+    },
+    {
+      "name": "GetInt64(String)",
+      "signature": "long GetInt64(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int64",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInt64.htm"
+    },
+    {
+      "name": "GetInt64(String, Int32)",
+      "signature": "long GetInt64(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int64",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInt64_1.htm"
+    },
+    {
+      "name": "GetInterval1D(String)",
+      "signature": "GH_Interval1D GetInterval1D(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Interval1D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInterval1D.htm"
+    },
+    {
+      "name": "GetInterval1D(String, Int32)",
+      "signature": "GH_Interval1D GetInterval1D(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Interval1D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInterval1D_1.htm"
+    },
+    {
+      "name": "GetInterval2D(String)",
+      "signature": "GH_Interval2D GetInterval2D(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Interval2D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInterval2D.htm"
+    },
+    {
+      "name": "GetInterval2D(String, Int32)",
+      "signature": "GH_Interval2D GetInterval2D(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Interval2D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetInterval2D_1.htm"
+    },
+    {
+      "name": "GetLine(String)",
+      "signature": "GH_Line GetLine(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Line",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetLine.htm"
+    },
+    {
+      "name": "GetLine(String, Int32)",
+      "signature": "GH_Line GetLine(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Line",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetLine_1.htm"
+    },
+    {
+      "name": "GetPath(String, String)",
+      "signature": "string[] GetPath(string item_name, string basePath)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "basePath",
+          "type": "System.String",
+          "doc": "Base path for relative path resolution.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "An array of path strings. If the resolved relative path is different from the stored absolute path, two strings will be returned."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPath_1.htm"
+    },
+    {
+      "name": "GetPath(String, Int32, String)",
+      "signature": "string[] GetPath(string item_name, int item_index, string basePath)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "basePath",
+          "type": "System.String",
+          "doc": "Base path for relative path resolution.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "An array of path strings. If the resolved relative path is different from the stored absolute path, two strings will be returned."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPath.htm"
+    },
+    {
+      "name": "GetPlane(String)",
+      "signature": "GH_Plane GetPlane(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Plane",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPlane.htm"
+    },
+    {
+      "name": "GetPlane(String, Int32)",
+      "signature": "GH_Plane GetPlane(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Plane",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPlane_1.htm"
+    },
+    {
+      "name": "GetPoint2D(String)",
+      "signature": "GH_Point2D GetPoint2D(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Point2D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPoint2D.htm"
+    },
+    {
+      "name": "GetPoint2D(String, Int32)",
+      "signature": "GH_Point2D GetPoint2D(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Point2D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPoint2D_1.htm"
+    },
+    {
+      "name": "GetPoint3D(String)",
+      "signature": "GH_Point3D GetPoint3D(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Point3D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPoint3D.htm"
+    },
+    {
+      "name": "GetPoint3D(String, Int32)",
+      "signature": "GH_Point3D GetPoint3D(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Point3D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPoint3D_1.htm"
+    },
+    {
+      "name": "GetPoint4D(String)",
+      "signature": "GH_Point4D GetPoint4D(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Point4D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPoint4D.htm"
+    },
+    {
+      "name": "GetPoint4D(String, Int32)",
+      "signature": "GH_Point4D GetPoint4D(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Point4D",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetPoint4D_1.htm"
+    },
+    {
+      "name": "GetSingle(String)",
+      "signature": "float GetSingle(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetSingle.htm"
+    },
+    {
+      "name": "GetSingle(String, Int32)",
+      "signature": "float GetSingle(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetSingle_1.htm"
+    },
+    {
+      "name": "GetString(String)",
+      "signature": "string GetString(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetString.htm"
+    },
+    {
+      "name": "GetString(String, Int32)",
+      "signature": "string GetString(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetString_1.htm"
+    },
+    {
+      "name": "GetVersion(String)",
+      "signature": "GH_Version GetVersion(string item_name)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Version",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetVersion.htm"
+    },
+    {
+      "name": "GetVersion(String, Int32)",
+      "signature": "GH_Version GetVersion(string item_name, int item_index)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Version",
+        "doc": "The inner value of the item."
+      },
+      "throws": [
+        {
+          "type": "OverflowException",
+          "when": "Thrown if the type conversion fails."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown if the type conversion is invalid."
+        },
+        {
+          "type": "NullReferenceException",
+          "when": "Thrown if the item with the specified name and index does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_GetVersion_1.htm"
+    },
+    {
+      "name": "ItemExists(String)",
+      "signature": "bool ItemExists(string name)",
+      "summary": "Checks whether an item with the specified name exists. Only items without index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of item to test for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if an item with the specified name exists, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_ItemExists.htm"
+    },
+    {
+      "name": "ItemExists(String, Int32)",
+      "signature": "bool ItemExists(string name, int index)",
+      "summary": "Checks whether an item with the specified name and index exists. Only items with index qualifiers are considered. Name comparisons are not case-sensitive.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of item to test for.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of item to test for. If index is less than zero, then ItemExists(string name) is called instead.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if an item with the specified name and index exists, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_ItemExists_1.htm"
+    },
+    {
+      "name": "Read(BinaryReader)",
+      "signature": "void Read(BinaryReader reader)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "doc": "Reader object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Read.htm"
+    },
+    {
+      "name": "Read(XmlNode)",
+      "signature": "void Read(XmlNode node)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Xml.XmlNode",
+          "doc": "Node object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Read.htm"
+    },
+    {
+      "name": "TryGetBoolean(String, Boolean)",
+      "signature": "bool TryGetBoolean(string item_name, ref bool value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetBoolean.htm"
+    },
+    {
+      "name": "TryGetBoolean(String, Int32, Boolean)",
+      "signature": "bool TryGetBoolean(string item_name, int item_index, ref bool value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetBoolean_1.htm"
+    },
+    {
+      "name": "TryGetBoundingBox(String, GH_BoundingBox)",
+      "signature": "bool TryGetBoundingBox(string item_name, ref GH_BoundingBox value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_BoundingBox",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetBoundingBox.htm"
+    },
+    {
+      "name": "TryGetBoundingBox(String, Int32, GH_BoundingBox)",
+      "signature": "bool TryGetBoundingBox(string item_name, int item_index, ref GH_BoundingBox value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_BoundingBox",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetBoundingBox_1.htm"
+    },
+    {
+      "name": "TryGetByte(String, Byte)",
+      "signature": "bool TryGetByte(string item_name, ref byte value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetByte.htm"
+    },
+    {
+      "name": "TryGetByte(String, Int32, Byte)",
+      "signature": "bool TryGetByte(string item_name, int item_index, ref byte value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetByte_1.htm"
+    },
+    {
+      "name": "TryGetDate(String, DateTime)",
+      "signature": "bool TryGetDate(string item_name, ref DateTime value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDate.htm"
+    },
+    {
+      "name": "TryGetDate(String, Int32, DateTime)",
+      "signature": "bool TryGetDate(string item_name, int item_index, ref DateTime value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDate_1.htm"
+    },
+    {
+      "name": "TryGetDecimal(String, Decimal)",
+      "signature": "bool TryGetDecimal(string item_name, ref decimal value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Decimal",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDecimal.htm"
+    },
+    {
+      "name": "TryGetDecimal(String, Int32, Decimal)",
+      "signature": "bool TryGetDecimal(string item_name, int item_index, ref decimal value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Decimal",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDecimal_1.htm"
+    },
+    {
+      "name": "TryGetDouble(String, Double)",
+      "signature": "bool TryGetDouble(string item_name, ref double value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDouble.htm"
+    },
+    {
+      "name": "TryGetDouble(String, Int32, Double)",
+      "signature": "bool TryGetDouble(string item_name, int item_index, ref double value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDouble_1.htm"
+    },
+    {
+      "name": "TryGetDrawingColor(String, Color)",
+      "signature": "bool TryGetDrawingColor(string item_name, ref Color value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingColor.htm"
+    },
+    {
+      "name": "TryGetDrawingColor(String, Int32, Color)",
+      "signature": "bool TryGetDrawingColor(string item_name, int item_index, ref Color value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingColor_1.htm"
+    },
+    {
+      "name": "TryGetDrawingPoint(String, Point)",
+      "signature": "bool TryGetDrawingPoint(string item_name, ref Point value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingPoint.htm"
+    },
+    {
+      "name": "TryGetDrawingPoint(String, Int32, Point)",
+      "signature": "bool TryGetDrawingPoint(string item_name, int item_index, ref Point value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingPoint_1.htm"
+    },
+    {
+      "name": "TryGetDrawingPointF(String, PointF)",
+      "signature": "bool TryGetDrawingPointF(string item_name, ref PointF value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.PointF",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingPointF.htm"
+    },
+    {
+      "name": "TryGetDrawingPointF(String, Int32, PointF)",
+      "signature": "bool TryGetDrawingPointF(string item_name, int item_index, ref PointF value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.PointF",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingPointF_1.htm"
+    },
+    {
+      "name": "TryGetDrawingRectangle(String, Rectangle)",
+      "signature": "bool TryGetDrawingRectangle(string item_name, ref Rectangle value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingRectangle.htm"
+    },
+    {
+      "name": "TryGetDrawingRectangle(String, Int32, Rectangle)",
+      "signature": "bool TryGetDrawingRectangle(string item_name, int item_index, ref Rectangle value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingRectangle_1.htm"
+    },
+    {
+      "name": "TryGetDrawingRectangleF(String, RectangleF)",
+      "signature": "bool TryGetDrawingRectangleF(string item_name, ref RectangleF value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingRectangleF.htm"
+    },
+    {
+      "name": "TryGetDrawingRectangleF(String, Int32, RectangleF)",
+      "signature": "bool TryGetDrawingRectangleF(string item_name, int item_index, ref RectangleF value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingRectangleF_1.htm"
+    },
+    {
+      "name": "TryGetDrawingSize(String, Size)",
+      "signature": "bool TryGetDrawingSize(string item_name, ref Size value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingSize.htm"
+    },
+    {
+      "name": "TryGetDrawingSize(String, Int32, Size)",
+      "signature": "bool TryGetDrawingSize(string item_name, int item_index, ref Size value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingSize_1.htm"
+    },
+    {
+      "name": "TryGetDrawingSizeF(String, SizeF)",
+      "signature": "bool TryGetDrawingSizeF(string item_name, ref SizeF value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.SizeF",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingSizeF.htm"
+    },
+    {
+      "name": "TryGetDrawingSizeF(String, Int32, SizeF)",
+      "signature": "bool TryGetDrawingSizeF(string item_name, int item_index, ref SizeF value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.SizeF",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetDrawingSizeF_1.htm"
+    },
+    {
+      "name": "TryGetGuid(String, Guid)",
+      "signature": "bool TryGetGuid(string item_name, ref Guid value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetGuid.htm"
+    },
+    {
+      "name": "TryGetGuid(String, Int32, Guid)",
+      "signature": "bool TryGetGuid(string item_name, int item_index, ref Guid value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetGuid_1.htm"
+    },
+    {
+      "name": "TryGetInt32(String, Int32)",
+      "signature": "bool TryGetInt32(string item_name, ref int value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInt32_1.htm"
+    },
+    {
+      "name": "TryGetInt32(String, Int32, Int32)",
+      "signature": "bool TryGetInt32(string item_name, int item_index, ref int value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInt32.htm"
+    },
+    {
+      "name": "TryGetInt64(String, Int64)",
+      "signature": "bool TryGetInt64(string item_name, ref long value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int64",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInt64_1.htm"
+    },
+    {
+      "name": "TryGetInt64(String, Int32, Int64)",
+      "signature": "bool TryGetInt64(string item_name, int item_index, ref long value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int64",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInt64.htm"
+    },
+    {
+      "name": "TryGetInterval1D(String, GH_Interval1D)",
+      "signature": "bool TryGetInterval1D(string item_name, ref GH_Interval1D value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInterval1D.htm"
+    },
+    {
+      "name": "TryGetInterval1D(String, Int32, GH_Interval1D)",
+      "signature": "bool TryGetInterval1D(string item_name, int item_index, ref GH_Interval1D value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInterval1D_1.htm"
+    },
+    {
+      "name": "TryGetInterval2D(String, GH_Interval2D)",
+      "signature": "bool TryGetInterval2D(string item_name, ref GH_Interval2D value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Interval2D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInterval2D.htm"
+    },
+    {
+      "name": "TryGetInterval2D(String, Int32, GH_Interval2D)",
+      "signature": "bool TryGetInterval2D(string item_name, int item_index, ref GH_Interval2D value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Interval2D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetInterval2D_1.htm"
+    },
+    {
+      "name": "TryGetLine(String, GH_Line)",
+      "signature": "bool TryGetLine(string item_name, ref GH_Line value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Line",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetLine.htm"
+    },
+    {
+      "name": "TryGetLine(String, Int32, GH_Line)",
+      "signature": "bool TryGetLine(string item_name, int item_index, ref GH_Line value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Line",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetLine_1.htm"
+    },
+    {
+      "name": "TryGetPlane(String, GH_Plane)",
+      "signature": "bool TryGetPlane(string item_name, ref GH_Plane value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Plane",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPlane.htm"
+    },
+    {
+      "name": "TryGetPlane(String, Int32, GH_Plane)",
+      "signature": "bool TryGetPlane(string item_name, int item_index, ref GH_Plane value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Plane",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPlane_1.htm"
+    },
+    {
+      "name": "TryGetPoint2D(String, GH_Point2D)",
+      "signature": "bool TryGetPoint2D(string item_name, ref GH_Point2D value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Point2D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPoint2D.htm"
+    },
+    {
+      "name": "TryGetPoint2D(String, Int32, GH_Point2D)",
+      "signature": "bool TryGetPoint2D(string item_name, int item_index, ref GH_Point2D value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Point2D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPoint2D_1.htm"
+    },
+    {
+      "name": "TryGetPoint3D(String, GH_Point3D)",
+      "signature": "bool TryGetPoint3D(string item_name, ref GH_Point3D value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPoint3D.htm"
+    },
+    {
+      "name": "TryGetPoint3D(String, Int32, GH_Point3D)",
+      "signature": "bool TryGetPoint3D(string item_name, int item_index, ref GH_Point3D value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPoint3D_1.htm"
+    },
+    {
+      "name": "TryGetPoint4D(String, GH_Point4D)",
+      "signature": "bool TryGetPoint4D(string item_name, ref GH_Point4D value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Point4D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPoint4D.htm"
+    },
+    {
+      "name": "TryGetPoint4D(String, Int32, GH_Point4D)",
+      "signature": "bool TryGetPoint4D(string item_name, int item_index, ref GH_Point4D value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Point4D",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetPoint4D_1.htm"
+    },
+    {
+      "name": "TryGetSingle(String, Single)",
+      "signature": "bool TryGetSingle(string item_name, ref float value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetSingle_1.htm"
+    },
+    {
+      "name": "TryGetSingle(String, Int32, Single)",
+      "signature": "bool TryGetSingle(string item_name, int item_index, ref float value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetSingle.htm"
+    },
+    {
+      "name": "TryGetString(String, String)",
+      "signature": "bool TryGetString(string item_name, ref string value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetString_1.htm"
+    },
+    {
+      "name": "TryGetString(String, Int32, String)",
+      "signature": "bool TryGetString(string item_name, int item_index, ref string value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetString.htm"
+    },
+    {
+      "name": "TryGetVersion(String, GH_Version)",
+      "signature": "bool TryGetVersion(string item_name, ref GH_Version value)",
+      "summary": "Gets the value of the item with the specified name. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetVersion.htm"
+    },
+    {
+      "name": "TryGetVersion(String, Int32, GH_Version)",
+      "signature": "bool TryGetVersion(string item_name, int item_index, ref GH_Version value)",
+      "summary": "Gets the value of the item with the specified name and index. Name comparison is not case-sensitive.",
+      "params": [
+        {
+          "name": "item_name",
+          "type": "System.String",
+          "doc": "Name of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "item_index",
+          "type": "System.Int32",
+          "doc": "Index of item to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Target of assignment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IReader_TryGetVersion_1.htm"
+    },
+    {
+      "name": "Write(BinaryWriter)",
+      "signature": "void Write(BinaryWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Write.htm"
+    },
+    {
+      "name": "Write(XmlWriter)",
+      "signature": "void Write(XmlWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Archive",
+      "type": "GH_Archive",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the archive that owns the Root of the tree this chunk belongs to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Archive.htm"
+    },
+    {
+      "name": "ArchiveLocation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string representing the URI with which the archive is associated. The location may be a null string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ArchiveLocation.htm"
+    },
+    {
+      "name": "ChunkCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of child chunks contained in this chunk. The set of all child chunks is referred to as a \u0027litter\u0027.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ChunkCount.htm"
+    },
+    {
+      "name": "Chunks",
+      "type": "List\u003CGH_IChunk\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the internal list of child chunks. Do not access this list unless you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Chunks.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of this chunk. The index is set by the owner of this chunk. Indices smaller than zero imply no index has been set. The combination of name\u002Bindex is always unique among a set of chunks in the same litter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Index.htm"
+    },
+    {
+      "name": "ItemCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of items contained in this chunk.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ItemCount.htm"
+    },
+    {
+      "name": "Items",
+      "type": "List\u003CGH_Item\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the internal list of items. Do not access this list unless you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Items.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of this chunk. The name is set by the owner of this chunk. Names must be at least 1 character long. The combination of name\u002Bindex is always unique among a set of chunks in a single litter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

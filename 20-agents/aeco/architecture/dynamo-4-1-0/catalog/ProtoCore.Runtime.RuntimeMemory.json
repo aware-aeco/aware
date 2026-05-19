@@ -1,0 +1,460 @@
+{
+  "name": "RuntimeMemory",
+  "namespace": "ProtoCore.Runtime",
+  "kind": "class",
+  "summary": "Type RuntimeMemory",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs",
+  "constructors": [
+    {
+      "name": "RuntimeMemory(ProtoCore.DSASM.Heap)",
+      "signature": "void RuntimeMemory(ProtoCore.DSASM.Heap heap)",
+      "summary": "RuntimeMemory.RuntimeMemory",
+      "params": [
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AlignStackForExprInterpreter",
+      "signature": "void AlignStackForExprInterpreter()",
+      "summary": "RuntimeMemory.AlignStackForExprInterpreter",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "GetAtRelative(int)",
+      "signature": "ProtoCore.DSASM.StackValue GetAtRelative(int relativeOffset)",
+      "summary": "RuntimeMemory.GetAtRelative",
+      "params": [
+        {
+          "name": "relativeOffset",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "GetMemberData(int, int, ProtoCore.DSASM.Executable)",
+      "signature": "ProtoCore.DSASM.StackValue GetMemberData(int symbolindex, int scope, ProtoCore.DSASM.Executable exe)",
+      "summary": "RuntimeMemory.GetMemberData",
+      "params": [
+        {
+          "name": "symbolindex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "scope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "exe",
+          "type": "ProtoCore.DSASM.Executable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "GetRelative(int)",
+      "signature": "int GetRelative(int index)",
+      "summary": "RuntimeMemory.GetRelative",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "GetStackIndex(int)",
+      "signature": "int GetStackIndex(int offset)",
+      "summary": "Returns stack index of symbol for specified frame.",
+      "params": [
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "GetSymbolValue(ProtoCore.DSASM.SymbolNode)",
+      "signature": "ProtoCore.DSASM.StackValue GetSymbolValue(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "Returns the value of symbol on current stack frame.",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "GetSymbolValueOnFrame(ProtoCore.DSASM.SymbolNode, int)",
+      "signature": "ProtoCore.DSASM.StackValue GetSymbolValueOnFrame(ProtoCore.DSASM.SymbolNode symbol, int framePointer)",
+      "summary": "Returns the value of symbol on specified frame.",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "framePointer",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "Pop",
+      "signature": "ProtoCore.DSASM.StackValue Pop()",
+      "summary": "RuntimeMemory.Pop",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "PopConstructBlockId",
+      "signature": "void PopConstructBlockId()",
+      "summary": "RuntimeMemory.PopConstructBlockId",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "PopFrame(int)",
+      "signature": "void PopFrame(int size)",
+      "summary": "Remove the specified number of items from the stack.",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "Push(ProtoCore.DSASM.StackValue)",
+      "signature": "void Push(ProtoCore.DSASM.StackValue data)",
+      "summary": "RuntimeMemory.Push",
+      "params": [
+        {
+          "name": "data",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "PushConstructBlockId(int)",
+      "signature": "void PushConstructBlockId(int id)",
+      "summary": "Push the block ID of the block that will be executed",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "PushFrameForGlobals(int)",
+      "signature": "void PushFrameForGlobals(int size)",
+      "summary": "Reserve stack for global variables.",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "PushFrameForLocals(int)",
+      "signature": "void PushFrameForLocals(int size)",
+      "summary": "Reserve specified number of stack slots for local variables and initialize them to Null.",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "PushStackFrame(ProtoCore.DSASM.StackFrame)",
+      "signature": "void PushStackFrame(ProtoCore.DSASM.StackFrame stackFrame)",
+      "summary": "RuntimeMemory.PushStackFrame",
+      "params": [
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "RestoreStackForExprInterpreter",
+      "signature": "void RestoreStackForExprInterpreter()",
+      "summary": "RuntimeMemory.RestoreStackForExprInterpreter",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "SetAtRelative(int, ProtoCore.DSASM.StackValue)",
+      "signature": "void SetAtRelative(int offset, ProtoCore.DSASM.StackValue data)",
+      "summary": "RuntimeMemory.SetAtRelative",
+      "params": [
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "SetSymbolValue(ProtoCore.DSASM.SymbolNode, ProtoCore.DSASM.StackValue)",
+      "signature": "void SetSymbolValue(ProtoCore.DSASM.SymbolNode symbol, ProtoCore.DSASM.StackValue data)",
+      "summary": "Set the value for symbol on current stack frame.",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "ValidateStackFrame",
+      "signature": "bool ValidateStackFrame()",
+      "summary": "RuntimeMemory.ValidateStackFrame",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ConstructBlockIds",
+      "type": "System.Collections.Generic.List\u003Cint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeMemory.ConstructBlockIds",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "CurrentConstructBlockId",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeMemory.CurrentConstructBlockId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "CurrentStackFrame",
+      "type": "ProtoCore.DSASM.StackFrame",
+      "getter": true,
+      "setter": false,
+      "summary": "Current stack frame.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "CurrentStackFrameClassScope",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Current stack frame ClassScope.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "CurrentStackFrameFunctionBlock",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Current stack frame FunctionScope.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "CurrentStackFrameFunctionScope",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Current stack frame FunctionScope.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "CurrentStackFrameThisPtr",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": false,
+      "summary": "Current stack frame ClassScope.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "FramePointer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeMemory.FramePointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "GlobOffset",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeMemory.GlobOffset",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "Heap",
+      "type": "ProtoCore.DSASM.Heap",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeMemory.Heap",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "IsCurrentStackFrameNull",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeMemory.IsCurrentStackFrameNull",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    },
+    {
+      "name": "Stack",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeMemory.Stack",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeMemory.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,55 @@
+{
+  "name": "GetPointDrawEventArgs",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Arguments for drawing during point getting.",
+  "base": "DrawEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetPointDrawEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurrentPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointDrawEventArgs_CurrentPoint.htm"
+    },
+    {
+      "name": "Display",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_Display.htm"
+    },
+    {
+      "name": "RhinoDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_RhinoDoc.htm"
+    },
+    {
+      "name": "Source",
+      "type": "GetPoint",
+      "getter": true,
+      "setter": false,
+      "summary": "GetPoint class that this draw event originated from.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointDrawEventArgs_Source.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

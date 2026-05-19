@@ -1,0 +1,34 @@
+{
+  "name": "Position.RotationEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The position in the rotational sense.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fae3579c-28af-3001-0871-db7105a8daa3",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FRONT",
+      "value": 0,
+      "summary": "The front option."
+    },
+    {
+      "name": "TOP",
+      "value": 1,
+      "summary": "The top option."
+    },
+    {
+      "name": "BACK",
+      "value": 2,
+      "summary": "The back option."
+    },
+    {
+      "name": "BELOW",
+      "value": 3,
+      "summary": "The below option."
+    }
+  ]
+}

@@ -1,0 +1,678 @@
+{
+  "name": "Arc",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the value of a plane, two angles and a radius in a sub-curve of a three-dimensional circle. The curve is parameterized by an angle expressed in radians. For an IsValid arc the total subtended angle AngleRadians() = Domain()(1) - Domain()(0) must satisfy 0 \u003C AngleRadians() \u003C 2*PiThe parameterization of the Arc is inherited from the Circle it is derived from. In particulart -\u003E center \u002B cos(t)*radius*xaxis \u002B sin(t)*radius*yaxiswhere xaxis and yaxis, (part of Circle.Plane) form an orthonormal frame of the plane containing the circle.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Arc.htm",
+  "constructors": [
+    {
+      "name": "Arc(Circle, Interval)",
+      "signature": "public Arc(Circle circle, Interval angleIntervalRadians)",
+      "summary": "Initializes a new instance of an arc from a base circle and an interval of angles.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Circle to base arc upon.",
+          "optional": false
+        },
+        {
+          "name": "angleIntervalRadians",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Increasing angle interval in radians with angleIntervalRadians.Length() \u003C= 2.0*Math.PI.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc__ctor.htm"
+    },
+    {
+      "name": "Arc(Circle, Double)",
+      "signature": "public Arc(Circle circle, double angleRadians)",
+      "summary": "Initializes a new instance of an arc from a base circle and an angle.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Circle to base arc upon.",
+          "optional": false
+        },
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Sweep angle of arc (in radians)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc__ctor_1.htm"
+    },
+    {
+      "name": "Arc(Plane, Double, Double)",
+      "signature": "public Arc(Plane plane, double radius, double angleRadians)",
+      "summary": "Initializes a new arc from a base plane, a radius value and an angle.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane of the arc (arc center will be located at plane origin)",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of arc.",
+          "optional": false
+        },
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Sweep angle of arc (in radians)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc__ctor_3.htm"
+    },
+    {
+      "name": "Arc(Point3d, Point3d, Point3d)",
+      "signature": "public Arc(Point3d startPoint, Point3d pointOnInterior, Point3d endPoint)",
+      "summary": "Initializes a new arc through three points. If the points are coincident or co-linear, this will result in an Invalid arc.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start point of arc.",
+          "optional": false
+        },
+        {
+          "name": "pointOnInterior",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point on arc interior.",
+          "optional": false
+        },
+        {
+          "name": "endPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "End point of arc.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc__ctor_4.htm"
+    },
+    {
+      "name": "Arc(Point3d, Vector3d, Point3d)",
+      "signature": "public Arc(Point3d pointA, Vector3d tangentA, Point3d pointB)",
+      "summary": "Initializes a new arc from end points and a tangent vector. If the tangent is parallel with the line segment between the two endpoints this will result in an Invalid arc.",
+      "params": [
+        {
+          "name": "pointA",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start point of arc.",
+          "optional": false
+        },
+        {
+          "name": "tangentA",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Tangent at start of arc.",
+          "optional": false
+        },
+        {
+          "name": "pointB",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "End point of arc.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc__ctor_5.htm"
+    },
+    {
+      "name": "Arc(Point3d, Double, Double)",
+      "signature": "public Arc(Point3d center, double radius, double angleRadians)",
+      "summary": "Initializes a new horizontal arc at the given center point, with a custom radius and angle.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center point of arc.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of arc.",
+          "optional": false
+        },
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Sweep angle of arc (in radians)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc__ctor_6.htm"
+    },
+    {
+      "name": "Arc(Plane, Point3d, Double, Double)",
+      "signature": "public Arc(Plane plane, Point3d center, double radius, double angleRadians)",
+      "summary": "Initializes a new aligned arc at the given center point, with a custom radius and angle.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Alignment plane for arc. The arc will be parallel to this plane.",
+          "optional": false
+        },
+        {
+          "name": "center",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center point for arc.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of arc.",
+          "optional": false
+        },
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Sweep angle of arc (in radians)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BoundingBox",
+      "signature": "public BoundingBox BoundingBox()",
+      "summary": "Computes the 3D axis aligned bounding box for this arc.",
+      "params": [],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "Bounding box of arc."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_BoundingBox.htm"
+    },
+    {
+      "name": "ClosestParameter",
+      "signature": "public double ClosestParameter(Point3d testPoint)",
+      "summary": "Gets parameter on the arc closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to get close to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Parameter (in radians) of the point on the arc that is closest to the test point. If testPoint is the center of the arc, then the starting point of the arc is (arc.Domain()[0]) returned. If no parameter could be found, RhinoMath.UnsetValue is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_ClosestParameter.htm"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "public Point3d ClosestPoint(Point3d testPoint)",
+      "summary": "Computes the point on an arc that is closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to get close to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the arc that is closest to testPoint. If testPoint is the center of the arc, then the starting point of the arc is returned. UnsetPoint on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_ClosestPoint.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Arc other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Arc.EpsilonEquals(Rhino.Geometry.Arc,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Arc.EpsilonEquals(Rhino.Geometry.Arc,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Arc.EpsilonEquals(Rhino.Geometry.Arc,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Arc)",
+      "signature": "public bool Equals(Arc other)",
+      "summary": "Determines whether another arc has the same value as this arc.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "An arc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is equal to this arc; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether another object is an arc and has the same value as this arc.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "An object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is an arc and is exactly equal to this arc; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes a hash code for the present arc.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique integer that represents this arc."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_GetHashCode.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double t)",
+      "summary": "Gets the point at the given arc parameter.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Arc parameter to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point at the given parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_PointAt.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public void Reverse()",
+      "summary": "Reverses the orientation of the arc. Changes the domain from [a,b] to [-b,-a].",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_Reverse.htm"
+    },
+    {
+      "name": "TangentAt",
+      "signature": "public Vector3d TangentAt(double t)",
+      "summary": "Gets the tangent at the given parameter.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter of tangent to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The tangent at the arc at the given parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_TangentAt.htm"
+    },
+    {
+      "name": "ToNurbsCurve()",
+      "signature": "public NurbsCurve ToNurbsCurve()",
+      "summary": "Initializes a nurbs curve representation of this arc. This amounts to the same as calling NurbsCurve.CreateFromArc().",
+      "params": [],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A nurbs curve representation of this arc or null if no such representation could be made."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_ToNurbsCurve.htm"
+    },
+    {
+      "name": "ToNurbsCurve(Int32, Int32)",
+      "signature": "public NurbsCurve ToNurbsCurve(int degree, int cvCount)",
+      "summary": "Create a uniform non-rational cubic NURBS approximation of an arc.",
+      "params": [
+        {
+          "name": "degree",
+          "type": "System.Int32",
+          "doc": "\u003E=1",
+          "optional": false
+        },
+        {
+          "name": "cvCount",
+          "type": "System.Int32",
+          "doc": "cv count \u003E=5",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "NURBS curve approximation of an arc on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_ToNurbsCurve_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms the arc using a Transformation matrix.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformations to apply. Note that arcs cannot handle non-euclidean transformations.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_Transform.htm"
+    },
+    {
+      "name": "Trim",
+      "signature": "public bool Trim(Interval domain)",
+      "summary": "Sets the arc\u0027s angle domain (in radians) to the specified interval, provided it is increasing and its length does not exceed 2.0 * Math.PI (plus a small tolerance). If the interval length exceeds 2.0 * Math.PI it will be clamped to exactly 2.0 * Math.PI. Returns true if the domain was set successfully, false otherwise.",
+      "params": [
+        {
+          "name": "domain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The desired angle domain in radians. Must satisfy domain[0] \u003C domain[1] and domain[1] - domain[0] \u003C= 2.0 * Math.PI \u002B tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the domain was set successfully; false if the interval is not increasing or exceeds the allowed length."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_Trim.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Arc a, Arc b)",
+      "summary": "Determines whether two arcs have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "The first arc.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "The second arc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if all values of the two arcs are exactly equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Arc a, Arc b)",
+      "summary": "Determines whether two arcs have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "The first arc.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "The second arc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if any value of the two arcs differ; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Arc_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the sweep -or subtended- angle (in Radians) for this arc segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Angle.htm"
+    },
+    {
+      "name": "AngleDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the sweep -or subtended- angle (in Degrees) for this arc segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_AngleDegrees.htm"
+    },
+    {
+      "name": "AngleDomain",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the angle domain (in Radians) of this arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_AngleDomain.htm"
+    },
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the center point for this arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Center.htm"
+    },
+    {
+      "name": "Circumference",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the circumference of the circle that is coincident with this arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Circumference.htm"
+    },
+    {
+      "name": "Diameter",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Diameter of this arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Diameter.htm"
+    },
+    {
+      "name": "EndAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the end angle (in Radians) for this arc segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_EndAngle.htm"
+    },
+    {
+      "name": "EndAngleDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the end angle (in Degrees) for this arc segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_EndAngleDegrees.htm"
+    },
+    {
+      "name": "EndPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end point of the arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_EndPoint.htm"
+    },
+    {
+      "name": "IsCircle",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this arc is a complete circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_IsCircle.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this arc is valid. Detail: Radius\u003E0 and 0\u003CAngleRadians()\u003C=2*Math.Pi.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_IsValid.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the length of the arc. (Length = Radius * (subtended angle in radians)).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Length.htm"
+    },
+    {
+      "name": "MidPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the mid-point of the arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_MidPoint.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the plane in which this arc lies.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Plane.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of this arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Radius.htm"
+    },
+    {
+      "name": "StartAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the start angle (in Radians) for this arc segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_StartAngle.htm"
+    },
+    {
+      "name": "StartAngleDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the start angle (in Degrees) for this arc segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_StartAngleDegrees.htm"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the start point of the arc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_StartPoint.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Arc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an Arc with Unset components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Arc_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,33 @@
+{
+  "name": "IGH_IndexRule",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "interface",
+  "summary": "Interface for index rules. An index rule is a way to determine whether a specific integer is considered valid, invalid or neutral. Index rules are used for selecting elements in DataTrees.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_IGH_IndexRule.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Evaluate",
+      "signature": "GH_RuleResult Evaluate(int index)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_RuleResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_IGH_IndexRule_Evaluate.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

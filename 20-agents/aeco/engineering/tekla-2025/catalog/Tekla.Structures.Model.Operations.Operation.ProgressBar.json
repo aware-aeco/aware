@@ -1,0 +1,116 @@
+{
+  "name": "Operation.ProgressBar",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "class",
+  "summary": "The ProgressBar class implements progress bar with cancel button.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0f2ddcb2-4dc5-597a-4ed6-237543023362",
+  "constructors": [
+    {
+      "name": "Operation.ProgressBar",
+      "signature": "public ProgressBar()",
+      "summary": "Initializes a new instance of the Operation.ProgressBar class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/82421948-7edb-858d-bb33-899ac171f34f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Canceled",
+      "signature": "public bool Canceled()",
+      "summary": "Check if cancel has been pressed.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if cancel has been pressed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65b92871-fd3b-0b78-8047-52a5973e9271"
+    },
+    {
+      "name": "Close",
+      "signature": "public void Close()",
+      "summary": "Close progress bar. Can be called even if Display was not successful.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b0de203c-dfc1-a501-a91b-29428d25567a"
+    },
+    {
+      "name": "Display",
+      "signature": "public bool Display(int SleepTime, string Title, string Message, string CancelButtonLabel, string ProgressLabel)",
+      "summary": "Display progress bar dialog with cancel button. Display will fail if progress bar is already displayed.",
+      "params": [
+        {
+          "name": "SleepTime",
+          "type": "System.Int32",
+          "doc": "Time (ms) to wait until bar is displayed.",
+          "optional": false
+        },
+        {
+          "name": "Title",
+          "type": "System.String",
+          "doc": "Title of the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "Message to be displayed on the dialog above progress bar.",
+          "optional": false
+        },
+        {
+          "name": "CancelButtonLabel",
+          "type": "System.String",
+          "doc": "Label of cancel button.",
+          "optional": false
+        },
+        {
+          "name": "ProgressLabel",
+          "type": "System.String",
+          "doc": "Initial progress label (updated with SetProgress). If empty of null no bar exists.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if bar was displayed successfully (meaning bar must be closed later)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6758e312-e9fb-ddeb-9631-20faa288a575"
+    },
+    {
+      "name": "SetProgress",
+      "signature": "public void SetProgress(string ProgressLabel, int Progress)",
+      "summary": "Update status information on the progress bar.",
+      "params": [
+        {
+          "name": "ProgressLabel",
+          "type": "System.String",
+          "doc": "Bar label text.",
+          "optional": false
+        },
+        {
+          "name": "Progress",
+          "type": "System.Int32",
+          "doc": "Progess, number between 0..100",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4868a504-d0dd-c456-1f41-48eb4ebf8443"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

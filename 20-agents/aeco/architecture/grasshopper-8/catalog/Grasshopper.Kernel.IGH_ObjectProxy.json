@@ -1,0 +1,121 @@
+{
+  "name": "IGH_ObjectProxy",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Provides proxy data for all Grasshopper components and parameters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_ObjectProxy.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateInstance",
+      "signature": "IGH_DocumentObject CreateInstance()",
+      "summary": "Create a new instance from the target object.",
+      "params": [],
+      "returns": {
+        "type": "IGH_DocumentObject",
+        "doc": "An IGH_DocumentObject instance on success or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ObjectProxy_CreateInstance.htm"
+    },
+    {
+      "name": "DuplicateProxy",
+      "signature": "IGH_ObjectProxy DuplicateProxy()",
+      "summary": "Create a duplicate of this proxy.",
+      "params": [],
+      "returns": {
+        "type": "IGH_ObjectProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ObjectProxy_DuplicateProxy.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Desc",
+      "type": "IGH_InstanceDescription",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Instance Description associated with this proxy.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Desc.htm"
+    },
+    {
+      "name": "Exposure",
+      "type": "GH_Exposure",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Exposure of the target object. Only set the exposure if you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Exposure.htm"
+    },
+    {
+      "name": "Guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Guid of the target object. In the case of Compiled Objects, the Guid represents the ComponentID, in the case of User Objects, the Guid is a hash of the file path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Guid.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the icon for this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Icon.htm"
+    },
+    {
+      "name": "Kind",
+      "type": "GH_ObjectType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the kind of the Proxy target object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Kind.htm"
+    },
+    {
+      "name": "LibraryGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of the library (GHA file) that defines this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_LibraryGuid.htm"
+    },
+    {
+      "name": "Location",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location of the target object. If the proxy represents a Compiled Object, the location refers to the file path of the assembly, in the case of User Objects, the location refers to the object file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Location.htm"
+    },
+    {
+      "name": "Obsolete",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this proxy represents an obsolete object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Obsolete.htm"
+    },
+    {
+      "name": "SDKCompliant",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this object is compliant with the current Rhino version.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_SDKCompliant.htm"
+    },
+    {
+      "name": "Type",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Type for the target object. If the proxy references a User Object, the Type member will be null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ObjectProxy_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

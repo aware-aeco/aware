@@ -1,0 +1,280 @@
+{
+  "name": "BinaryExpressionNode",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type BinaryExpressionNode",
+  "base": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "BinaryExpressionNode(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.DSASM.Operator)",
+      "signature": "void BinaryExpressionNode(ProtoCore.AST.AssociativeAST.AssociativeNode left, ProtoCore.AST.AssociativeAST.AssociativeNode right, ProtoCore.DSASM.Operator optr)",
+      "summary": "Create a Binary assignment node from a given lhs identifier and given right node with line and col properties of rhs node",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "optr",
+          "type": "ProtoCore.DSASM.Operator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BinaryExpressionNode(ProtoCore.AST.AssociativeAST.BinaryExpressionNode)",
+      "signature": "void BinaryExpressionNode(ProtoCore.AST.AssociativeAST.BinaryExpressionNode rhs)",
+      "summary": "Create a Binary assignment node from a given lhs identifier and given right node with line and col properties of rhs node",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BinaryExpressionNode(ProtoCore.AST.AssociativeAST.IdentifierNode, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "void BinaryExpressionNode(ProtoCore.AST.AssociativeAST.IdentifierNode lhs, ProtoCore.AST.AssociativeAST.AssociativeNode rhs)",
+      "summary": "Create a Binary assignment node from a given lhs identifier and given right node with line and col properties of rhs node",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Accept(ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E)",
+      "signature": "TResult Accept\u003CTResult\u003E(ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E visitor)",
+      "summary": "BinaryExpressionNode.Accept",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Children",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Children()",
+      "summary": "BinaryExpressionNode.Children",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object other)",
+      "summary": "BinaryExpressionNode.Equals",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "BinaryExpressionNode.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "BinaryExpressionNode.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ExpressionUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.ExpressionUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "IsFirstIdentListNode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.IsFirstIdentListNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "IsInputExpression",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.IsInputExpression",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Kind",
+      "type": "ProtoCore.AST.AssociativeAST.AstKind",
+      "getter": true,
+      "setter": false,
+      "summary": "BinaryExpressionNode.Kind",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "LeftNode",
+      "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.LeftNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Optr",
+      "type": "ProtoCore.DSASM.Operator",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.Optr",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "OriginalAstID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.OriginalAstID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "RightNode",
+      "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.RightNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "SSAExpressionUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.SSAExpressionUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "SSASubExpressionID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.SSASubExpressionID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.guid",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "isMultipleAssign",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.isMultipleAssign",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "isSSAAssignment",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.isSSAAssignment",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "isSSAFirstAssignment",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.isSSAFirstAssignment",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "isSSAPointerAssignment",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "BinaryExpressionNode.isSSAPointerAssignment",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

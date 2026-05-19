@@ -1,0 +1,805 @@
+{
+  "name": "Vector2d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the two components of a vector in two-dimensional space, using Double-precision floating point numbers.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Vector2d.htm",
+  "constructors": [
+    {
+      "name": "Vector2d",
+      "signature": "public Vector2d(double x, double y)",
+      "summary": "Initializes a new instance of the vector based on two, X and Y, components.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X (first) component.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y (second) component.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public static Vector2d Add(Vector2d vector1, Vector2d vector2)",
+      "summary": "Sums up two vectors. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that results from the component-wise addition of the two vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Add.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Vector2d other)",
+      "summary": "Compares this Vector2d with another Vector2d. Components evaluation priority is first X, then Y.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "The other Vector2d to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this.X \u003C other.X-1: if this.X == other.X and this.Y \u003C other.Y\u002B1: otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_CompareTo.htm"
+    },
+    {
+      "name": "Divide",
+      "signature": "public static Vector2d Divide(Vector2d vector, double t)",
+      "summary": "Divides a Vector2d by a number, having the effect of shrinking it. (Provided for languages that do not support operator overloading. You can use the / operator otherwise)",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is component-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Divide.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Vector2d other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector2d",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Vector2d.EpsilonEquals(Rhino.Geometry.Vector2d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified System.Object is a Vector2d and has the same value as the present vector.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The specified object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is Vector2d and has the same components as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Vector2d)",
+      "signature": "public bool Equals(Vector2d vector)",
+      "summary": "Determines whether the specified vector has the same value as the present vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "The specified vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if vector has the same components as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Provides a hashing value for the present vector.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique number based on vector components."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_GetHashCode.htm"
+    },
+    {
+      "name": "IsTiny()",
+      "signature": "public bool IsTiny()",
+      "summary": "Uses RhinoMath.ZeroTolerance for IsTiny calculation.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if vector is very small, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_IsTiny.htm"
+    },
+    {
+      "name": "IsTiny(Double)",
+      "signature": "public bool IsTiny(double tolerance)",
+      "summary": "Determines whether a vector is very short.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A nonzero value used as the coordinate zero tolerance. .",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "(Math.Abs(X) \u003C= tiny_tol) AND (Math.Abs(Y) \u003C= tiny_tol) AND (Math.Abs(Z) \u003C= tiny_tol)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_IsTiny_1.htm"
+    },
+    {
+      "name": "Multiply(Double, Vector2d)",
+      "signature": "public static Vector2d Multiply(double t, Vector2d vector)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Multiply_2.htm"
+    },
+    {
+      "name": "Multiply(Vector2d, Vector2d)",
+      "signature": "public static double Multiply(Vector2d vector1, Vector2d vector2)",
+      "summary": "Multiplies two vectors together, returning the dot product (or inner product). (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "A value that results from the evaluation of v1.X*v2.X \u002B v1.Y*v2.Y. This value equals v1.Length * v2.Length * cos(alpha), where alpha is the angle between vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Vector2d, Double)",
+      "signature": "public static Vector2d Multiply(Vector2d vector, double t)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Multiply_1.htm"
+    },
+    {
+      "name": "Negate",
+      "signature": "public static Vector2d Negate(Vector2d vector)",
+      "summary": "Computes the reversed vector. (Provided for languages that do not support operator overloading. You can use the - unary operator otherwise)",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector to negate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector where all components were multiplied by -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Negate.htm"
+    },
+    {
+      "name": "Rotate",
+      "signature": "public bool Rotate(double angleRadians)",
+      "summary": "Rotates this vector.",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Angle of rotation (in radians).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Rotate.htm"
+    },
+    {
+      "name": "Subtract",
+      "signature": "public static Vector2d Subtract(Vector2d vector1, Vector2d vector2)",
+      "summary": "Subtracts the second vector from the first one. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that results from the component-wise difference of vector1 - vector2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Subtract.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Constructs a string representation of the current vector.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string in the form X,Y."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_ToString_1.htm"
+    },
+    {
+      "name": "Unitize",
+      "signature": "public bool Unitize()",
+      "summary": "Unitizes the vector in place. A unit vector has length 1 unit. An invalid or zero length vector cannot be unitized.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success or false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_Unitize.htm"
+    },
+    {
+      "name": "Addition",
+      "signature": "public static Vector2d operator \u002B(Vector2d vector1, Vector2d vector2)",
+      "summary": "Sums up two vectors.",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that results from the component-wise addition of the two vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Addition.htm"
+    },
+    {
+      "name": "Division",
+      "signature": "public static Vector2d operator /(Vector2d vector, double t)",
+      "summary": "Divides a Vector2d by a number, having the effect of shrinking it.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is component-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Division.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Vector2d a, Vector2d b)",
+      "summary": "Determines whether two vectors have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "The first vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "The second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if components of the two vectors are pairwise equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Equality.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(Vector2d a, Vector2d b)",
+      "summary": "Determines whether the first specified vector comes after (has superior sorting value than) the second vector. Components have decreasing evaluation priority: first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "First vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(Vector2d a, Vector2d b)",
+      "summary": "Determines whether the first specified vector comes after (has superior sorting value than) the second vector, or it is equal to it. Components have decreasing evaluation priority: first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "First vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y \u003E= b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Vector2d a, Vector2d b)",
+      "summary": "Determines whether two vectors have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "The first vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "The second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if any component of the two vectors is pairwise different; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(Vector2d a, Vector2d b)",
+      "summary": "Determines whether the first specified vector comes before (has inferior sorting value than) the second vector. Components have decreasing evaluation priority: first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "First vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(Vector2d a, Vector2d b)",
+      "summary": "Determines whether the first specified vector comes before (has inferior sorting value than) the second vector, or it is equal to it. Components have decreasing evaluation priority: first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "First vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y \u003C= b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_LessThanOrEqual.htm"
+    },
+    {
+      "name": "Multiply(Double, Vector2d)",
+      "signature": "public static Vector2d operator *(double t, Vector2d vector)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Multiply_2.htm"
+    },
+    {
+      "name": "Multiply(Vector2d, Vector2d)",
+      "signature": "public static double operator *(Vector2d vector1, Vector2d vector2)",
+      "summary": "Multiplies two vectors together, returning the dot product (or inner product).",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "A value that results from the evaluation of v1.X*v2.X \u002B v1.Y*v2.Y. This value equals v1.Length * v2.Length * cos(alpha), where alpha is the angle between vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Vector2d, Double)",
+      "signature": "public static Vector2d operator *(Vector2d vector, double t)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Multiply_1.htm"
+    },
+    {
+      "name": "Subtraction",
+      "signature": "public static Vector2d operator -(Vector2d vector1, Vector2d vector2)",
+      "summary": "Subtracts the second vector from the first one.",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that results from the component-wise difference of vector1 - vector2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_Subtraction.htm"
+    },
+    {
+      "name": "UnaryNegation",
+      "signature": "public static Vector2d operator -(Vector2d vector)",
+      "summary": "Computes the opposite vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector to negate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector where all components were multiplied by -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector2d_op_UnaryNegation.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this vector is valid. A valid vector must be formed of valid component values for x, y and z.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector2d_IsValid.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Computes the length (or magnitude, or size) of this vector. This is an application of Pythagoras\u0027 theorem.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector2d_Length.htm"
+    },
+    {
+      "name": "SquareLength",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the square of the length of the vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector2d_SquareLength.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the vector with components set as RhinoMath.UnsetValue,RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector2d_Unset.htm"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X (first) component of this vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector2d_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y (second) component of this vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector2d_Y.htm"
+    },
+    {
+      "name": "Zero",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the vector with components 0,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector2d_Zero.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

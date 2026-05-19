@@ -1,0 +1,35 @@
+{
+  "name": "ElementAdapterTypeData",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.ElementAdapterTypeData.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterTypeData/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetElementAdapterType",
+      "signature": "GetElementAdapterType(uuid: GUID) -\u003E ElementAdapterType",
+      "summary": "Get the element adapter type for the defined UUID",
+      "remarks": "Get the element adapter type for the defined UUID",
+      "params": [
+        {
+          "name": "uuid",
+          "type": "GUID",
+          "doc": "Type UUID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ElementAdapterType",
+        "doc": "Element adapter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterTypeData/#NemAll_Python_IFW_ElementAdapter.ElementAdapterTypeData.GetElementAdapterType"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

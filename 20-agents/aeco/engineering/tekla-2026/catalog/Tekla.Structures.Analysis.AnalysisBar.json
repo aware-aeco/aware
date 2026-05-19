@@ -1,0 +1,267 @@
+{
+  "name": "AnalysisBar",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisBar class contains information related to analysis bars.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3ff27579-557f-2457-d76c-ea70b2c3101e",
+  "constructors": [
+    {
+      "name": "AnalysisBar",
+      "signature": "public AnalysisBar()",
+      "summary": "Initializes a new instance of the AnalysisBar class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c5bff53-a09b-0de8-6315-a7572415c2f1"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(AnalysisPosition)",
+      "signature": "public void Add(AnalysisPosition AnalysisPosition)",
+      "summary": "Adds a position to the analysis bar.",
+      "params": [
+        {
+          "name": "AnalysisPosition",
+          "type": "Tekla.Structures.Analysis.AnalysisPosition",
+          "doc": "The position to be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/94840bd0-1058-900f-d0d7-e1ce12084405"
+    },
+    {
+      "name": "Add(AnalysisPosition, AnalysisMember)",
+      "signature": "public void Add(AnalysisPosition position, AnalysisMember member)",
+      "summary": "Adds a position and member to the analysis bar.",
+      "params": [
+        {
+          "name": "position",
+          "type": "Tekla.Structures.Analysis.AnalysisPosition",
+          "doc": "The position to be added.",
+          "optional": false
+        },
+        {
+          "name": "member",
+          "type": "Tekla.Structures.Analysis.AnalysisMember",
+          "doc": "The member to be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b09f522-a98f-884b-899c-df298172e861"
+    },
+    {
+      "name": "Delete",
+      "signature": "public void Delete()",
+      "summary": "Deletes an analysis bar. The method is not implemented.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf807987-579b-264b-fe75-744322dcbcfc"
+    },
+    {
+      "name": "GetMembers",
+      "signature": "public AnalysisObjectEnumerator GetMembers()",
+      "summary": "Gets the members of the analysis bar.",
+      "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The members of the analysis bar."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6e0db972-47fa-4b46-4ecd-74d9ca57cc92"
+    },
+    {
+      "name": "GetPositions",
+      "signature": "public AnalysisObjectEnumerator GetPositions()",
+      "summary": "Gets the positions of the analysis bar.",
+      "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The positions of the analysis bar."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca833661-fac3-9807-2b22-01cd84711b6f"
+    },
+    {
+      "name": "Modify",
+      "signature": "public void Modify()",
+      "summary": "Modifies an analysis bar. The method is not implemented.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3d7699e4-55da-aac0-c137-f8670077b40b"
+    },
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis bar. The AnalysisModelName and ID have to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3a0291d9-eb64-9cba-5173-51025d0d1f36"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisDesignCode",
+      "type": "AnalysisDesignCode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis design code of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3a7df778-ef29-2203-77ba-c11266af1412"
+    },
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "AnalysisType",
+      "type": "AnalysisPart.AnalysisTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis type of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6afb8512-406c-5507-d74d-12f7a082fee3"
+    },
+    {
+      "name": "CardinalPoint",
+      "type": "AnalysisBar.CardinalPointEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cardinal point of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ecbeb43-adeb-74bb-84a7-71a8c81e6af3"
+    },
+    {
+      "name": "Composite",
+      "type": "AnalysisCompositeBeam",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the composite beam of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9ea42645-29d1-b6ab-5796-25e2b11fc7ef"
+    },
+    {
+      "name": "Curvature",
+      "type": "AnalysisCurvature",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the curvature of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/311b67ed-2773-9452-7de5-dbe6703df1e8"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Label",
+      "type": "AnalysisLabel",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the label of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a047fe2-c4bf-ccfa-40f7-9148ce49fbb1"
+    },
+    {
+      "name": "Material",
+      "type": "AnalysisMaterial",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the material of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/38bf9d9e-860a-e0a7-11e4-8d7251a9965a"
+    },
+    {
+      "name": "Members",
+      "type": "List\u003CAnalysisMember\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the members of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/397fc758-f161-ea07-d237-cea3e07ecb32"
+    },
+    {
+      "name": "Positions",
+      "type": "List\u003CAnalysisPosition\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the positions of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88706cd8-d075-8f96-eda0-3d39e378bb9f"
+    },
+    {
+      "name": "ProfileEnd",
+      "type": "AnalysisCrossSection",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the end profile of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/30551c21-52e4-b900-e12b-3b28daec9cff"
+    },
+    {
+      "name": "ProfileStart",
+      "type": "AnalysisCrossSection",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the start profile of the analysis bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/21795bed-e94d-73d4-3e1e-35bffe434167"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,126 @@
+{
+  "name": "PythonPartTransaction",
+  "namespace": "PythonPartTransaction",
+  "kind": "class",
+  "summary": "Implementation of the PythonPart transaction. The transaction creates the elements in the drawing file and introduces additional steps, that would normally have to be introduced separately, after the creation. This is to make the creation easier to implement in a PythonPart script. These additional steps are:",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/",
+  "constructors": [
+    {
+      "name": "PythonPartTransaction",
+      "signature": "PythonPartTransaction( doc: DocumentAdapter, connect_to_pyp: ConnectToPythonPart = ConnectToPythonPart(), connect_to_ele: ConnectToElements = ConnectToElements(), )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "connect_to_pyp",
+          "type": "ConnectToPythonPart",
+          "doc": "connect to pyp data",
+          "optional": false
+        },
+        {
+          "name": "connect_to_ele",
+          "type": "ConnectToElements",
+          "doc": "connect to element data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/#PythonPartTransaction.PythonPartTransaction.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "execute",
+      "signature": "execute( placement_matrix: Matrix3D, view_world_projection: ViewWorldProjection, model_ele_list: list[Any], modification_ele_list: ModificationElementList, rearrange_reinf_pos_nr: ReinforcementRearrange = ReinforcementRearrange(), append_reinf_pos_nr: bool = True, asso_ref_object: BaseElementAdapter | None = None, uuid_parameter_name: str = \u0022\u0022, _elementation_delete_py: bool = True, use_system_angle: bool = True, elements_to_delete: BaseElementAdapterList | None = None, ) -\u003E BaseElementAdapterList",
+      "summary": "Execute the transaction. Calling the method, makes the framework perform following operations:",
+      "remarks": "Execute the transaction. Calling the method, makes the framework perform following operations:",
+      "params": [
+        {
+          "name": "placement_matrix",
+          "type": "Matrix3D",
+          "doc": "placement matrix",
+          "optional": false
+        },
+        {
+          "name": "view_world_projection",
+          "type": "ViewWorldProjection",
+          "doc": "view world projection",
+          "optional": false
+        },
+        {
+          "name": "model_ele_list",
+          "type": "list[Any]",
+          "doc": "list with the model elements",
+          "optional": false
+        },
+        {
+          "name": "modification_ele_list",
+          "type": "ModificationElementList",
+          "doc": "list with the UUID\u0027s of the modified PythonPart elements",
+          "optional": false
+        },
+        {
+          "name": "rearrange_reinf_pos_nr",
+          "type": "ReinforcementRearrange",
+          "doc": "data for the reinforcement rearrange",
+          "optional": false
+        },
+        {
+          "name": "append_reinf_pos_nr",
+          "type": "bool",
+          "doc": "When set to True, the reinforcement position numbers are appended to the existing position numbers",
+          "optional": false
+        },
+        {
+          "name": "asso_ref_object",
+          "type": "BaseElementAdapter | None",
+          "doc": "associative view reference object",
+          "optional": false
+        },
+        {
+          "name": "uuid_parameter_name",
+          "type": "str",
+          "doc": "if set, the model object UUID of the created PythonPart is assigned to this name",
+          "optional": false
+        },
+        {
+          "name": "_elementation_delete_py",
+          "type": "bool",
+          "doc": "delete the PythonPart after the precast elementation",
+          "optional": false
+        },
+        {
+          "name": "use_system_angle",
+          "type": "bool",
+          "doc": "use the default system angle state (False = no use of the system angle) In case of True, the state of defined elements in the modification_ele_list is used - empty list = creation mode: use the system angle - element in list = modification mode: don\u0027t use the system angle",
+          "optional": false
+        },
+        {
+          "name": "elements_to_delete",
+          "type": "BaseElementAdapterList | None",
+          "doc": "elements which should be delete inside the created transaction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "list with the created elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/#PythonPartTransaction.PythonPartTransaction.execute"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

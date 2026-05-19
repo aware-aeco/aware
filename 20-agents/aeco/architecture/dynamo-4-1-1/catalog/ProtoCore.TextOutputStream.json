@@ -1,0 +1,66 @@
+{
+  "name": "TextOutputStream",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type TextOutputStream",
+  "interfaces": [
+    "ProtoCore.IOutputStream"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [
+    {
+      "name": "TextOutputStream(System.Collections.Generic.Dictionary\u003Cint, System.Collections.Generic.List\u003Cstring\u003E\u003E)",
+      "signature": "void TextOutputStream(System.Collections.Generic.Dictionary\u003Cint, System.Collections.Generic.List\u003Cstring\u003E\u003E map)",
+      "summary": "TextOutputStream.TextOutputStream",
+      "params": [
+        {
+          "name": "map",
+          "type": "System.Collections.Generic.Dictionary\u003Cint, System.Collections.Generic.List\u003Cstring\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Write(ProtoCore.OutputMessage)",
+      "signature": "void Write(ProtoCore.OutputMessage message)",
+      "summary": "TextOutputStream.Write",
+      "params": [
+        {
+          "name": "message",
+          "type": "ProtoCore.OutputMessage",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Map",
+      "type": "System.Collections.Generic.Dictionary\u003Cint, System.Collections.Generic.List\u003Cstring\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "TextOutputStream.Map",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "TextStream",
+      "type": "System.IO.StringWriter",
+      "getter": true,
+      "setter": false,
+      "summary": "TextOutputStream.TextStream",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

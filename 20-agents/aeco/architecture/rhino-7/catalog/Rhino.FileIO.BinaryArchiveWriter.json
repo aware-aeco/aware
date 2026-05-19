@@ -1,0 +1,1012 @@
+{
+  "name": "BinaryArchiveWriter",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents an entity that is able to write data to an archive.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_BinaryArchiveWriter.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BeginWrite3dmChunk(UInt32, Int64)",
+      "signature": "public bool BeginWrite3dmChunk(uint typecode, long value)",
+      "summary": "Begins writing a chunk",
+      "params": [
+        {
+          "name": "typecode",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022typecode\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.BeginWrite3dmChunk(System.UInt32,System.Int64)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int64",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.BeginWrite3dmChunk(System.UInt32,System.Int64)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.BeginWrite3dmChunk(System.UInt32,System.Int64)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_BeginWrite3dmChunk_1.htm"
+    },
+    {
+      "name": "BeginWrite3dmChunk(UInt32, Int32, Int32)",
+      "signature": "public bool BeginWrite3dmChunk(uint typecode, int majorVersion, int minorVersion)",
+      "summary": "Begins writing a chunk",
+      "params": [
+        {
+          "name": "typecode",
+          "type": "System.UInt32",
+          "doc": "chunk\u0027s typecode",
+          "optional": false
+        },
+        {
+          "name": "majorVersion",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022majorVersion\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.BeginWrite3dmChunk(System.UInt32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "minorVersion",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022minorVersion\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.BeginWrite3dmChunk(System.UInt32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if input was valid and chunk was started. In this case you must call EndWrite3dmChunk(), even if something goes wrong while you attempt to write the contents of the chunk. False if input was not valid or the write failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_BeginWrite3dmChunk.htm"
+    },
+    {
+      "name": "EnableCRCCalculation",
+      "signature": "public bool EnableCRCCalculation(bool enable)",
+      "summary": "Expert user function to control CRC calculation while reading and writing. Typically this is used when seeking around and reading/writing information in non-serial order.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enable\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.EnableCRCCalculation(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Current state of CRC calculation. Use the returned value to restore the CRC calculation setting after you are finished doing your fancy pants expert IO."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_EnableCRCCalculation.htm"
+    },
+    {
+      "name": "EndWrite3dmChunk",
+      "signature": "public bool EndWrite3dmChunk()",
+      "summary": "updates length in chunk header",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.EndWrite3dmChunk\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_EndWrite3dmChunk.htm"
+    },
+    {
+      "name": "Write3dmChunkVersion",
+      "signature": "public void Write3dmChunkVersion(int major, int minor)",
+      "summary": "A chunk version is a single byte that encodes a major.minor version number. Useful when creating I/O code for 3dm chunks that may change in the future. Increment the minor version number if new information is added to the end of the chunk. Increment the major version if the format of the chunk changes in some other way.",
+      "params": [
+        {
+          "name": "major",
+          "type": "System.Int32",
+          "doc": "0 to 15.",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "System.Int32",
+          "doc": "0 to 16.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_Write3dmChunkVersion.htm"
+    },
+    {
+      "name": "WriteBool",
+      "signature": "public void WriteBool(bool value)",
+      "summary": "Writes a Boolean value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteBool.htm"
+    },
+    {
+      "name": "WriteBoolArray",
+      "signature": "public void WriteBoolArray(IEnumerable\u003Cbool\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Boolean to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CBoolean\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteBoolArray.htm"
+    },
+    {
+      "name": "WriteBoundingBox",
+      "signature": "public void WriteBoundingBox(BoundingBox value)",
+      "summary": "Writes a BoundingBox value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteBoundingBox.htm"
+    },
+    {
+      "name": "WriteByte",
+      "signature": "public void WriteByte(byte value)",
+      "summary": "Writes a Byte value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteByte.htm"
+    },
+    {
+      "name": "WriteByteArray",
+      "signature": "public void WriteByteArray(IEnumerable\u003Cbyte\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Byte to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CByte\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteByteArray.htm"
+    },
+    {
+      "name": "WriteColor",
+      "signature": "public void WriteColor(Color value)",
+      "summary": "Writes a Color value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteColor.htm"
+    },
+    {
+      "name": "WriteCompressedBuffer",
+      "signature": "public void WriteCompressedBuffer(IEnumerable\u003Cbyte\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Byte to the archive as a compressed buffer. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CByte\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteCompressedBuffer.htm"
+    },
+    {
+      "name": "WriteDictionary",
+      "signature": "public void WriteDictionary(ArchivableDictionary dictionary)",
+      "summary": "Delivers the complete content of a dictionary to the archive.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "Rhino.Collections.ArchivableDictionary",
+          "doc": "A dictionary to archive.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteDictionary.htm"
+    },
+    {
+      "name": "WriteDouble",
+      "signature": "public void WriteDouble(double value)",
+      "summary": "Writes a Double value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteDouble.htm"
+    },
+    {
+      "name": "WriteDoubleArray",
+      "signature": "public void WriteDoubleArray(IEnumerable\u003Cdouble\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Double to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteDoubleArray.htm"
+    },
+    {
+      "name": "WriteFont",
+      "signature": "public void WriteFont(Font value)",
+      "summary": "Writes a Font value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.Font",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteFont.htm"
+    },
+    {
+      "name": "WriteGeometry",
+      "signature": "public void WriteGeometry(GeometryBase value)",
+      "summary": "Writes a GeometryBase value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteGeometry.htm"
+    },
+    {
+      "name": "WriteGeometryArray",
+      "signature": "public void WriteGeometryArray(IEnumerable\u003CGeometryBase\u003E geometry)",
+      "summary": "",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022geometry\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.WriteGeometryArray(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteGeometryArray.htm"
+    },
+    {
+      "name": "WriteGuid",
+      "signature": "public void WriteGuid(Guid value)",
+      "summary": "Writes a Guid value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteGuid.htm"
+    },
+    {
+      "name": "WriteGuidArray",
+      "signature": "public void WriteGuidArray(IEnumerable\u003CGuid\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Guid to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteGuidArray.htm"
+    },
+    {
+      "name": "WriteInt",
+      "signature": "public void WriteInt(int value)",
+      "summary": "Writes a Int32 value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteInt.htm"
+    },
+    {
+      "name": "WriteInt64",
+      "signature": "public void WriteInt64(long value)",
+      "summary": "Writes a Int64 value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int64",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteInt64.htm"
+    },
+    {
+      "name": "WriteIntArray",
+      "signature": "public void WriteIntArray(IEnumerable\u003Cint\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Int32 to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteIntArray.htm"
+    },
+    {
+      "name": "WriteInterval",
+      "signature": "public void WriteInterval(Interval value)",
+      "summary": "Writes a Interval value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteInterval.htm"
+    },
+    {
+      "name": "WriteLine",
+      "signature": "public void WriteLine(Line value)",
+      "summary": "Writes a Line value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteLine.htm"
+    },
+    {
+      "name": "WriteMeshingParameters",
+      "signature": "public void WriteMeshingParameters(MeshingParameters value)",
+      "summary": "Writes a MeshingParameters value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteMeshingParameters.htm"
+    },
+    {
+      "name": "WriteObjRef",
+      "signature": "public void WriteObjRef(ObjRef objref)",
+      "summary": "Writes a ObjRef to the archive",
+      "params": [
+        {
+          "name": "objref",
+          "type": "Rhino.DocObjects.ObjRef",
+          "doc": "[Missing \u003Cparam name=\u0022objref\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveWriter.WriteObjRef(Rhino.DocObjects.ObjRef)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteObjRef.htm"
+    },
+    {
+      "name": "WriteObjRefArray",
+      "signature": "public void WriteObjRefArray(IEnumerable\u003CObjRef\u003E objrefs)",
+      "summary": "Writes a list, an array, or any enumerable of ObjRef to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "objrefs",
+          "type": "System.Collections.Generic.IEnumerable\u003CObjRef\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteObjRefArray.htm"
+    },
+    {
+      "name": "WritePlane",
+      "signature": "public void WritePlane(Plane value)",
+      "summary": "Writes a Plane value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WritePlane.htm"
+    },
+    {
+      "name": "WritePoint",
+      "signature": "public void WritePoint(Point value)",
+      "summary": "Writes a Point value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WritePoint.htm"
+    },
+    {
+      "name": "WritePoint2d",
+      "signature": "public void WritePoint2d(Point2d value)",
+      "summary": "Writes a Point2d value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WritePoint2d.htm"
+    },
+    {
+      "name": "WritePoint3d",
+      "signature": "public void WritePoint3d(Point3d value)",
+      "summary": "Writes a Point3d value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WritePoint3d.htm"
+    },
+    {
+      "name": "WritePoint3f",
+      "signature": "public void WritePoint3f(Point3f value)",
+      "summary": "Writes a Point3f value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WritePoint3f.htm"
+    },
+    {
+      "name": "WritePoint4d",
+      "signature": "public void WritePoint4d(Point4d value)",
+      "summary": "Writes a Point4d value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WritePoint4d.htm"
+    },
+    {
+      "name": "WritePointF",
+      "signature": "public void WritePointF(PointF value)",
+      "summary": "Writes a PointF value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.PointF",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WritePointF.htm"
+    },
+    {
+      "name": "WriteRay3d",
+      "signature": "public void WriteRay3d(Ray3d value)",
+      "summary": "Writes a Ray3d value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteRay3d.htm"
+    },
+    {
+      "name": "WriteRectangle",
+      "signature": "public void WriteRectangle(Rectangle value)",
+      "summary": "Writes a Rectangle value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteRectangle.htm"
+    },
+    {
+      "name": "WriteRectangleF",
+      "signature": "public void WriteRectangleF(RectangleF value)",
+      "summary": "Writes a RectangleF value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.RectangleF",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteRectangleF.htm"
+    },
+    {
+      "name": "WriteRenderSettings",
+      "signature": "public void WriteRenderSettings(RenderSettings value)",
+      "summary": "Writes a RenderSettings value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Render.RenderSettings",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteRenderSettings.htm"
+    },
+    {
+      "name": "WriteSByte",
+      "signature": "public void WriteSByte(sbyte value)",
+      "summary": "Writes a SByte value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.SByte",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteSByte.htm"
+    },
+    {
+      "name": "WriteSByteArray",
+      "signature": "public void WriteSByteArray(IEnumerable\u003Csbyte\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of SByte to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CSByte\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteSByteArray.htm"
+    },
+    {
+      "name": "WriteShort",
+      "signature": "public void WriteShort(short value)",
+      "summary": "Writes a Int16 value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int16",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteShort.htm"
+    },
+    {
+      "name": "WriteShortArray",
+      "signature": "public void WriteShortArray(IEnumerable\u003Cshort\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Int16 to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt16\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteShortArray.htm"
+    },
+    {
+      "name": "WriteSingle",
+      "signature": "public void WriteSingle(float value)",
+      "summary": "Writes a Single value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteSingle.htm"
+    },
+    {
+      "name": "WriteSingleArray",
+      "signature": "public void WriteSingleArray(IEnumerable\u003Cfloat\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of Single to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CSingle\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteSingleArray.htm"
+    },
+    {
+      "name": "WriteSize",
+      "signature": "public void WriteSize(Size value)",
+      "summary": "Writes a Size value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteSize.htm"
+    },
+    {
+      "name": "WriteSizeF",
+      "signature": "public void WriteSizeF(SizeF value)",
+      "summary": "Writes a SizeF value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.SizeF",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteSizeF.htm"
+    },
+    {
+      "name": "WriteString",
+      "signature": "public void WriteString(string value)",
+      "summary": "Writes a String value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteString.htm"
+    },
+    {
+      "name": "WriteStringArray",
+      "signature": "public void WriteStringArray(IEnumerable\u003Cstring\u003E value)",
+      "summary": "Writes a list, an array, or any enumerable of String to the archive. The return will always be an array.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteStringArray.htm"
+    },
+    {
+      "name": "WriteTransform",
+      "signature": "public void WriteTransform(Transform value)",
+      "summary": "Writes a Transform value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteTransform.htm"
+    },
+    {
+      "name": "WriteUInt",
+      "signature": "public void WriteUInt(uint value)",
+      "summary": "Writes a UInt32 value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.UInt32",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteUInt.htm"
+    },
+    {
+      "name": "WriteUShort",
+      "signature": "public void WriteUShort(ushort value)",
+      "summary": "Writes a UInt16 value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.UInt16",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteUShort.htm"
+    },
+    {
+      "name": "WriteUtf8String",
+      "signature": "public void WriteUtf8String(string value)",
+      "summary": "Writes a String value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteUtf8String.htm"
+    },
+    {
+      "name": "WriteVector2d",
+      "signature": "public void WriteVector2d(Vector2d value)",
+      "summary": "Writes a Vector2d value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteVector2d.htm"
+    },
+    {
+      "name": "WriteVector3d",
+      "signature": "public void WriteVector3d(Vector3d value)",
+      "summary": "Writes a Vector3d value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteVector3d.htm"
+    },
+    {
+      "name": "WriteVector3f",
+      "signature": "public void WriteVector3f(Vector3f value)",
+      "summary": "Writes a Vector3f value to the archive.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "A value to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveWriter_WriteVector3f.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Archive3dmVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "If a 3dm archive is being read or written, then this is the version of the 3dm archive format (1, 2, 3, 4 or 5). 0 a 3dm archive is not being read/written 1 a version 1 3dm archive is being read/written 2 a version 2 3dm archive is being read/written 3 a version 3 3dm archive is being read/written 4 a version 4 3dm archive is being read/written 5 an old version 5 3dm archive is being read 50 a version 5 3dm archive is being read/written.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_BinaryArchiveWriter_Archive3dmVersion.htm"
+    },
+    {
+      "name": "WriteErrorOccured",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether an error occurred.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_BinaryArchiveWriter_WriteErrorOccured.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

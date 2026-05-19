@@ -1,0 +1,916 @@
+{
+  "name": "Executive",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type Executive",
+  "interfaces": [
+    "ProtoCore.DSASM.IExecutive"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs",
+  "constructors": [
+    {
+      "name": "Executive(ProtoCore.RuntimeCore, bool)",
+      "signature": "void Executive(ProtoCore.RuntimeCore runtimeCore, bool isFep)",
+      "summary": "Executive.Executive",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "isFep",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Bounce(int, int, ProtoCore.DSASM.StackFrame, int, bool, ProtoCore.DSASM.Executive, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E)",
+      "signature": "ProtoCore.DSASM.StackValue Bounce(int exeblock, int entry, ProtoCore.DSASM.StackFrame stackFrame, int locals, bool fepRun, ProtoCore.DSASM.Executive exec, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E breakpoints)",
+      "summary": "Bounce instantiates a new Executive Execution jumps to the new executive This iverload handles debugger properties when bouncing",
+      "params": [
+        {
+          "name": "exeblock",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "locals",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "fepRun",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "exec",
+          "type": "ProtoCore.DSASM.Executive",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "breakpoints",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "BounceUsingExecutive(ProtoCore.DSASM.Executive, int, int, ProtoCore.DSASM.StackFrame, int, bool, ProtoCore.DSASM.Executive, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E)",
+      "signature": "ProtoCore.DSASM.StackValue BounceUsingExecutive(ProtoCore.DSASM.Executive executive, int exeblock, int entry, ProtoCore.DSASM.StackFrame stackFrame, int locals, bool fepRun, ProtoCore.DSASM.Executive exec, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E breakpoints)",
+      "summary": "Bounce to an existing executive",
+      "params": [
+        {
+          "name": "executive",
+          "type": "ProtoCore.DSASM.Executive",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "exeblock",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "locals",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "fepRun",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "exec",
+          "type": "ProtoCore.DSASM.Executive",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "breakpoints",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "CALLR_Handler(ProtoCore.DSASM.Instruction)",
+      "signature": "void CALLR_Handler(ProtoCore.DSASM.Instruction instruction)",
+      "summary": "Executive.CALLR_Handler",
+      "params": [
+        {
+          "name": "instruction",
+          "type": "ProtoCore.DSASM.Instruction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "Callr(int, int, int, ref bool, bool, bool)",
+      "signature": "ProtoCore.DSASM.StackValue Callr(int blockDeclId, int functionIndex, int classIndex, ref bool explicitCall, bool isDynamicCall, bool hasDebugInfo)",
+      "summary": "Executive.Callr",
+      "params": [
+        {
+          "name": "blockDeclId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "explicitCall",
+          "type": "ref bool",
+          "optional": false
+        },
+        {
+          "name": "isDynamicCall",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "hasDebugInfo",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "CollectGCRoots",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E CollectGCRoots()",
+      "summary": "Executive.CollectGCRoots",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "Execute(int, int, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E, ProtoCore.Language)",
+      "signature": "void Execute(int exeblock, int entry, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E breakpoints, ProtoCore.Language language)",
+      "summary": "This is the VM execution entry function",
+      "params": [
+        {
+          "name": "exeblock",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "breakpoints",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "language",
+          "type": "ProtoCore.Language",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GCCodeBlock(int, int, int)",
+      "signature": "void GCCodeBlock(int blockId, int functionIndex, int classIndex)",
+      "summary": "Executive.GCCodeBlock",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetCachedAtLevels(int)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AtLevel\u003E GetCachedAtLevels(int argumentCount)",
+      "summary": "Executive.GetCachedAtLevels",
+      "params": [
+        {
+          "name": "argumentCount",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AtLevel\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetCachedReplicationGuides(int)",
+      "signature": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E GetCachedReplicationGuides(int argumentCount)",
+      "summary": "Executive.GetCachedReplicationGuides",
+      "params": [
+        {
+          "name": "argumentCount",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetCallerInformation(ref int, ref int)",
+      "signature": "void GetCallerInformation(ref int classIndex, ref int functionIndex)",
+      "summary": "Executive.GetCallerInformation",
+      "params": [
+        {
+          "name": "classIndex",
+          "type": "ref int",
+          "optional": false
+        },
+        {
+          "name": "functionIndex",
+          "type": "ref int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetFirstGraphNode(string, ref int)",
+      "signature": "ProtoCore.AssociativeGraph.GraphNode GetFirstGraphNode(string varName, ref int blockId)",
+      "summary": "Executive.GetFirstGraphNode",
+      "params": [
+        {
+          "name": "varName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "ref int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AssociativeGraph.GraphNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetIndexedArray(ProtoCore.DSASM.StackValue, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E)",
+      "signature": "ProtoCore.DSASM.StackValue GetIndexedArray(ProtoCore.DSASM.StackValue svArray, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E indices)",
+      "summary": "Executive.GetIndexedArray",
+      "params": [
+        {
+          "name": "svArray",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "indices",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetIndexedArray(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, int, ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue)",
+      "signature": "ProtoCore.DSASM.StackValue GetIndexedArray(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E dims, int blockId, ProtoCore.DSASM.StackValue op1, ProtoCore.DSASM.StackValue op2)",
+      "summary": "Executive.GetIndexedArray",
+      "params": [
+        {
+          "name": "dims",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "op1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "op2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetIndexedArrayW(int, int, ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue)",
+      "signature": "ProtoCore.DSASM.StackValue GetIndexedArrayW(int dimensions, int blockId, ProtoCore.DSASM.StackValue op1, ProtoCore.DSASM.StackValue op2)",
+      "summary": "Executive.GetIndexedArrayW",
+      "params": [
+        {
+          "name": "dimensions",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "op1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "op2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetProcedureNode(int, int, int)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetProcedureNode(int blockId, int classIndex, int functionIndex)",
+      "summary": "Executive.GetProcedureNode",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetRegisters",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E GetRegisters()",
+      "summary": "Executive.GetRegisters",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "GetSymbolNode(int, int, int)",
+      "signature": "ProtoCore.DSASM.SymbolNode GetSymbolNode(int blockId, int classIndex, int symbolIndex)",
+      "summary": "Executive.GetSymbolNode",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "symbolIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.SymbolNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "Modify_istream_entrypoint_FromSetValue(int, int)",
+      "signature": "void Modify_istream_entrypoint_FromSetValue(int blockId, int pc)",
+      "summary": "Executive.Modify_istream_entrypoint_FromSetValue",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "Modify_istream_instrList_FromSetValue(int, int, ProtoCore.DSASM.StackValue)",
+      "signature": "void Modify_istream_instrList_FromSetValue(int blockId, int pc, ProtoCore.DSASM.StackValue op)",
+      "summary": "Executive.Modify_istream_instrList_FromSetValue",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "POPM_Handler(ProtoCore.DSASM.Instruction)",
+      "signature": "void POPM_Handler(ProtoCore.DSASM.Instruction instruction)",
+      "summary": "Executive.POPM_Handler",
+      "params": [
+        {
+          "name": "instruction",
+          "type": "ProtoCore.DSASM.Instruction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "POPM_Helper(ProtoCore.DSASM.Instruction, ref int, ref int)",
+      "signature": "ProtoCore.DSASM.StackValue POPM_Helper(ProtoCore.DSASM.Instruction instruction, ref int blockId, ref int classIndex)",
+      "summary": "Executive.POPM_Helper",
+      "params": [
+        {
+          "name": "instruction",
+          "type": "ProtoCore.DSASM.Instruction",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "ref int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "ref int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "POP_Handler(ProtoCore.DSASM.Instruction)",
+      "signature": "void POP_Handler(ProtoCore.DSASM.Instruction instruction)",
+      "summary": "Executive.POP_Handler",
+      "params": [
+        {
+          "name": "instruction",
+          "type": "ProtoCore.DSASM.Instruction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "POP_helper(ProtoCore.DSASM.Instruction, ref int, ref int)",
+      "signature": "ProtoCore.DSASM.StackValue POP_helper(ProtoCore.DSASM.Instruction instruction, ref int blockId, ref int dimensions)",
+      "summary": "Executive.POP_helper",
+      "params": [
+        {
+          "name": "instruction",
+          "type": "ProtoCore.DSASM.Instruction",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "ref int",
+          "optional": false
+        },
+        {
+          "name": "dimensions",
+          "type": "ref int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "PopInterpreterProps",
+      "signature": "ProtoCore.InterpreterProperties PopInterpreterProps()",
+      "summary": "Executive.PopInterpreterProps",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.InterpreterProperties",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "PopTo(int, ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue)",
+      "signature": "ProtoCore.DSASM.StackValue PopTo(int blockId, ProtoCore.DSASM.StackValue op1, ProtoCore.DSASM.StackValue op2, ProtoCore.DSASM.StackValue opVal)",
+      "summary": "Executive.PopTo",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "op1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "op2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "opVal",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "PopToIndexedArray(int, int, int, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.StackValue)",
+      "signature": "ProtoCore.DSASM.StackValue PopToIndexedArray(int blockId, int symbol, int classIndex, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E dimlist, ProtoCore.DSASM.StackValue data)",
+      "summary": "Executive.PopToIndexedArray",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "dimlist",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "PushInterpreterProps(ProtoCore.InterpreterProperties)",
+      "signature": "void PushInterpreterProps(ProtoCore.InterpreterProperties properties)",
+      "summary": "Executive.PushInterpreterProps",
+      "params": [
+        {
+          "name": "properties",
+          "type": "ProtoCore.InterpreterProperties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "ReturnSiteGC(int, int, int)",
+      "signature": "void ReturnSiteGC(int blockId, int classIndex, int functionIndex)",
+      "summary": "Executive.ReturnSiteGC",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "SetupNextExecutableGraph(int, int)",
+      "signature": "void SetupNextExecutableGraph(int function, int classscope)",
+      "summary": "Executive.SetupNextExecutableGraph",
+      "params": [
+        {
+          "name": "function",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classscope",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "runtimeVerify(bool, string)",
+      "signature": "void runtimeVerify(bool condition, string msg)",
+      "summary": "Executive.runtimeVerify",
+      "params": [
+        {
+          "name": "condition",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsExplicitCall",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Executive.IsExplicitCall",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "PC",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Executive.PC",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "Properties",
+      "type": "ProtoCore.InterpreterProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Executive.Properties",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "RX",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "Executive.RX",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "RuntimeCore",
+      "type": "ProtoCore.RuntimeCore",
+      "getter": true,
+      "setter": false,
+      "summary": "Executive.RuntimeCore",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "TX",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "Executive.TX",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "deferedGraphNodes",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Executive.deferedGraphNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "exe",
+      "type": "ProtoCore.DSASM.Executable",
+      "getter": true,
+      "setter": true,
+      "summary": "Executive.exe",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    },
+    {
+      "name": "rmem",
+      "type": "ProtoCore.Runtime.RuntimeMemory",
+      "getter": true,
+      "setter": true,
+      "summary": "Executive.rmem",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,33 @@
+{
+  "name": "WinTrust",
+  "namespace": "DynamoUtilities.WinTrustInterop",
+  "kind": "class",
+  "summary": "Type WinTrust",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/CertificateVerification.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "VerifyEmbeddedSignature(string)",
+      "signature": "bool VerifyEmbeddedSignature(string fileName)",
+      "summary": "WinTrust.VerifyEmbeddedSignature",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/CertificateVerification.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

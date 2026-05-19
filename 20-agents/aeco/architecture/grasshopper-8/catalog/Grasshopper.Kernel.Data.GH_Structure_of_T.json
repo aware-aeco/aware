@@ -1,0 +1,831 @@
+{
+  "name": "GH_Structure\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Represents a data tree where each branch has a unique path",
+  "interfaces": [
+    "IGH_Structure",
+    "IEnumerable\u003CT\u003E",
+    "GH_ISerializable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_Structure_1.htm",
+  "constructors": [
+    {
+      "name": "GH_Structure\u003CT\u003E()",
+      "signature": "public GH_Structure()",
+      "summary": "Default constructor, create a blank data structure.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1__ctor.htm"
+    },
+    {
+      "name": "GH_Structure\u003CT\u003E(GH_Structure\u003CT\u003E, Boolean)",
+      "signature": "public GH_Structure(GH_Structure\u003CT\u003E other, bool shallowCopy)",
+      "summary": "Copy constructor, duplicate another data structure.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "doc": "Structure to copy, if null, this structure will be empty.",
+          "optional": false
+        },
+        {
+          "name": "shallowCopy",
+          "type": "System.Boolean",
+          "doc": "If True, data item pointers are shared among this and the [other] structure.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AllData",
+      "signature": "public IGH_StructureEnumerator AllData(bool skipNulls)",
+      "summary": "Gets an enumerator for all the data items in this structure.",
+      "params": [
+        {
+          "name": "skipNulls",
+          "type": "System.Boolean",
+          "doc": "If True, null items will be skipped.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_StructureEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_AllData.htm"
+    },
+    {
+      "name": "Append(T)",
+      "signature": "public void Append(T data)",
+      "summary": "Append a data item to the last branch in the structure. If no branch exist yet, a new one will be created with [path = {0}]",
+      "params": [
+        {
+          "name": "data",
+          "type": "T",
+          "doc": "Data to append.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Append.htm"
+    },
+    {
+      "name": "Append(T, GH_Path)",
+      "signature": "public void Append(T data, GH_Path path)",
+      "summary": "Append a data item to the specified branch in the structure. If the branch doesn\u0027t exist yet, it will be created.",
+      "params": [
+        {
+          "name": "data",
+          "type": "T",
+          "doc": "Data to append",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Data path",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Append_1.htm"
+    },
+    {
+      "name": "AppendRange(IEnumerable\u003CT\u003E)",
+      "signature": "public void AppendRange(IEnumerable\u003CT\u003E data)",
+      "summary": "Append a list of data items to the last branch in the structure",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "Data to append",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_AppendRange.htm"
+    },
+    {
+      "name": "AppendRange(IEnumerable\u003CT\u003E, GH_Path)",
+      "signature": "public void AppendRange(IEnumerable\u003CT\u003E data, GH_Path path)",
+      "summary": "Append a list of data items to the specified branch in the structure. If the branch doesn\u0027t exist yet, it will be created.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "Data to append",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Data path",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_AppendRange_1.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the entire structure.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Clear.htm"
+    },
+    {
+      "name": "ClearData",
+      "signature": "public void ClearData()",
+      "summary": "Removes all data from all paths without affecting the structure topology.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_ClearData.htm"
+    },
+    {
+      "name": "DataDescription",
+      "signature": "public string DataDescription(bool includeIndices, bool includePaths)",
+      "summary": "Gets a description of the data contained in this structure.",
+      "params": [
+        {
+          "name": "includeIndices",
+          "type": "System.Boolean",
+          "doc": "If true, every data item will be prefixed by its index.",
+          "optional": false
+        },
+        {
+          "name": "includePaths",
+          "type": "System.Boolean",
+          "doc": "If true, every branch of data will be preceded by the path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing the data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_DataDescription.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public GH_Structure\u003CT\u003E Duplicate()",
+      "summary": "Create an exact duplicate of this structure. All data items are copied as well.",
+      "params": [],
+      "returns": {
+        "type": "GH_Structure\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateCast\u003CQ\u003E",
+      "signature": "public GH_Structure\u003CQ\u003E DuplicateCast\u003CQ\u003E(GH_Structure\u003CT\u003E.ConversionDelegate\u003CT, Q\u003E conversion) where Q : IGH_Goo",
+      "summary": "Create a duplicate of this structure in a different type.",
+      "params": [
+        {
+          "name": "conversion",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E.ConversionDelegate\u003CT,Q\u003E",
+          "doc": "Conversion delegate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Structure\u003CQ\u003E",
+        "doc": "A duplicate of this structure with all valid casts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_DuplicateCast__1.htm"
+    },
+    {
+      "name": "EnsureCapacity",
+      "signature": "public void EnsureCapacity(int capacity)",
+      "summary": "Ensures that all current branches have a certain capacity.",
+      "params": [
+        {
+          "name": "capacity",
+          "type": "System.Int32",
+          "doc": "Capacity per branch.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_EnsureCapacity.htm"
+    },
+    {
+      "name": "EnsurePath(GH_Path)",
+      "signature": "public List\u003CT\u003E EnsurePath(GH_Path path)",
+      "summary": "Create a new branch with the specified path if it doesn\u0027t already exists.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path of the branch to ensure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CT\u003E",
+        "doc": "The list that belongs to the specified path."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_EnsurePath.htm"
+    },
+    {
+      "name": "EnsurePath(Int32[])",
+      "signature": "public List\u003CT\u003E EnsurePath(params int[] path)",
+      "summary": "Create a new branch with the specified path if it doesn\u0027t already exists.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.Int32[]",
+          "doc": "Path of the branch to ensure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CT\u003E",
+        "doc": "The list that belongs to the specified path."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_EnsurePath_1.htm"
+    },
+    {
+      "name": "ExpandPath",
+      "signature": "public void ExpandPath(GH_Path path, int element, GH_ExpandMode mode)",
+      "summary": "Expand a path in this structure by appending an element.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to expand, if the path doesn\u0027t exist, nothing will happen.",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "System.Int32",
+          "doc": "Element to append to the path.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Grasshopper.Kernel.Data.GH_ExpandMode",
+          "doc": "Expansion mode.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_ExpandPath.htm"
+    },
+    {
+      "name": "Flatten",
+      "signature": "public void Flatten(GH_Path flat_path = null)",
+      "summary": "Flattens the entire structure into a single path.",
+      "params": [
+        {
+          "name": "flat_path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "The path of the flattened data. If null, the path will be {0}",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Flatten.htm"
+    },
+    {
+      "name": "FlattenData",
+      "signature": "public List\u003CT\u003E FlattenData()",
+      "summary": "Collects all data in the structure under a single list. Does not alter the state of this structure.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CT\u003E",
+        "doc": "A linear list containing all data items in all branches."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_FlattenData.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_GetEnumerator.htm"
+    },
+    {
+      "name": "GetEnumerator_Generic",
+      "signature": "public IEnumerator\u003CT\u003E GetEnumerator_Generic()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_GetEnumerator_Generic.htm"
+    },
+    {
+      "name": "Graft(GH_GraftMode)",
+      "signature": "public void Graft(GH_GraftMode mode)",
+      "summary": "Grafts all paths by reallocating all data into child paths.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Grasshopper.Kernel.Data.GH_GraftMode",
+          "doc": "Graft mode.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Graft.htm"
+    },
+    {
+      "name": "Graft(GH_GraftMode, GH_Path)",
+      "signature": "public void Graft(GH_GraftMode mode, GH_Path path)",
+      "summary": "Grafts a specific path by reallocating all data into child paths. If a grafted path coincides with an existing path, the data item in question will be appended to the existing path.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Grasshopper.Kernel.Data.GH_GraftMode",
+          "doc": "Graft mode.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to graft",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Graft_1.htm"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(T data, GH_Path path, int index)",
+      "summary": "Insert a data item into the specified branch in the structure. If the branch doesn\u0027t exist yet, it will be created.",
+      "params": [
+        {
+          "name": "data",
+          "type": "T",
+          "doc": "Data to insert.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path of branch to insert into.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Insertion index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Insert.htm"
+    },
+    {
+      "name": "LongestPathIndex",
+      "signature": "public int LongestPathIndex()",
+      "summary": "Finds the path in this structure with the most dimensions. In case of multiple equally long longest paths, the last one will be returned.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the longest path or -1 if there are no paths."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_LongestPathIndex.htm"
+    },
+    {
+      "name": "MergeStructure",
+      "signature": "public void MergeStructure(GH_Structure\u003CT\u003E other)",
+      "summary": "Merges two structures together. Data inside similar paths will be merged into single lists and unique paths will be appended. The other structure will not be altered, so beware that data is now shared among both structures.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "doc": "Structure to merge",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_MergeStructure.htm"
+    },
+    {
+      "name": "PathExists",
+      "signature": "public bool PathExists(GH_Path path)",
+      "summary": "Returns True if the specified path is already defined inside the structure.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "The data path to search for",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_PathExists.htm"
+    },
+    {
+      "name": "PathIndex",
+      "signature": "public void PathIndex(GH_Path path, ref int idx0, ref int idx1)",
+      "summary": "Find the indices that surround the given path domain. Indices may be out of bounds.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to search for (it need not exist in the structure).",
+          "optional": false
+        },
+        {
+          "name": "idx0",
+          "type": "System.Int32",
+          "doc": "The index of the path itself or the first smaller path if the path is not defined.",
+          "optional": false
+        },
+        {
+          "name": "idx1",
+          "type": "System.Int32",
+          "doc": "The index of th path itself of the first larger path if the path is not defined.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_PathIndex.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "Read the entire GH_Structure from an archive. This method relies on the the serialization of the IGH_Goo items it contains. Also, the IGH_Goo T generic must have a public constructor that takes no arguments.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Archive to read from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Read.htm"
+    },
+    {
+      "name": "RemoveData",
+      "signature": "public void RemoveData(T data)",
+      "summary": "Removes the first occurence of a data instance in the tree.",
+      "params": [
+        {
+          "name": "data",
+          "type": "T",
+          "doc": "Data to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_RemoveData.htm"
+    },
+    {
+      "name": "RemovePath",
+      "signature": "public void RemovePath(GH_Path path)",
+      "summary": "Removes a path and all associated data from the structure. If the path doesn\u0027t exist, nothing will happen.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_RemovePath.htm"
+    },
+    {
+      "name": "ReplacePath",
+      "signature": "public void ReplacePath(GH_Path find, GH_Path replace)",
+      "summary": "Replace an existing path with a different one. If the operation is successfull, then the \u0027find\u0027 path will be deleted. If the \u0027replace\u0027 path is already defined, the items in \u0027find\u0027 will be appended to the existing path.",
+      "params": [
+        {
+          "name": "find",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "The path to search for.",
+          "optional": false
+        },
+        {
+          "name": "replace",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "The new path.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_ReplacePath.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public void Reverse()",
+      "summary": "Reverse the order of items in all branches.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Reverse.htm"
+    },
+    {
+      "name": "ShallowDuplicate",
+      "signature": "public GH_Structure\u003CT\u003E ShallowDuplicate()",
+      "summary": "Create a structure with a similar topology to this one with pointers to the same data items.",
+      "params": [],
+      "returns": {
+        "type": "GH_Structure\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_ShallowDuplicate.htm"
+    },
+    {
+      "name": "ShortestPathIndex",
+      "signature": "public int ShortestPathIndex()",
+      "summary": "Finds the path in this structure with the least dimensions. In case of multiple equally long longest paths, the first one will be returned.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the shortest path or -1 if there are no paths."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_ShortestPathIndex.htm"
+    },
+    {
+      "name": "Simplify",
+      "signature": "public void Simplify(GH_SimplificationMode mode)",
+      "summary": "Simplify the data structure by collapsing path indices shared by all branches.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Grasshopper.Kernel.Data.GH_SimplificationMode",
+          "doc": "Simplification algorithm to use.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Simplify.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_ToString.htm"
+    },
+    {
+      "name": "TrimExcess",
+      "signature": "public void TrimExcess()",
+      "summary": "Trims the excess allocated memory in all branches.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_TrimExcess.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "Write the entire GH_Structure to an archive. This method relies on the the serialization of the IGH_Goo items it contains.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Archive to write to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Structure_1_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Branch[GH_Path]",
+      "type": "IList",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a limited access pointer to the data list associated with a certain path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_Branch.htm"
+    },
+    {
+      "name": "Branch[Int32]",
+      "type": "IList",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a limited access pointer to the data list at the specified index",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_Branch_1.htm"
+    },
+    {
+      "name": "Branches",
+      "type": "IList\u003CList\u003CT\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the data-arrays in this structure",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_Branches.htm"
+    },
+    {
+      "name": "DataCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total number of data items stored in all paths.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_DataCount.htm"
+    },
+    {
+      "name": "DataItem[Int32]",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the item at a given offset. The structure is treated as a linear list in this case. If index is out of range, null is returned. For repeated indexed retrieval, consider using a For Each loop since the enumerator is more efficient.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_DataItem_1.htm"
+    },
+    {
+      "name": "DataItem[GH_Path, Int32]",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a direct pointer to a data item under a specific path and index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_DataItem.htm"
+    },
+    {
+      "name": "DataList[GH_Path]",
+      "type": "List\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a direct pointer to the list of data under a specific path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_DataList.htm"
+    },
+    {
+      "name": "DataList[Int32]",
+      "type": "List\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a direct pointer to the list of data under the specified index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_DataList_1.htm"
+    },
+    {
+      "name": "FirstItem",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the first item in the structure. If no such item exists, null is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_FirstItem.htm"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Empty state of the structure. If the structure is Empty it contains no paths and no branches.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_IsEmpty.htm"
+    },
+    {
+      "name": "LastItem",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the last item in the structure. If no such item exists, null is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_LastItem.htm"
+    },
+    {
+      "name": "NonNulls",
+      "type": "IEnumerable\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Get an enumerator for this structure that allow linear iteration over the data hierarchy while skipping all Null entries. This Enumerator has been optimized, do not cache instances of it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_NonNulls.htm"
+    },
+    {
+      "name": "Path",
+      "type": "GH_Path",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the data path at the specified index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_Path.htm"
+    },
+    {
+      "name": "PathCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of paths defined in this structure.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_PathCount.htm"
+    },
+    {
+      "name": "Paths",
+      "type": "IList\u003CGH_Path\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the paths in this structure.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_Paths.htm"
+    },
+    {
+      "name": "StructureProxy",
+      "type": "IList\u003CIList\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a proxy list of all the data-arrays in this structure.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_StructureProxy.htm"
+    },
+    {
+      "name": "TopologyDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a description of the topology of the structure. Useful for debugging purposes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Structure_1_TopologyDescription.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

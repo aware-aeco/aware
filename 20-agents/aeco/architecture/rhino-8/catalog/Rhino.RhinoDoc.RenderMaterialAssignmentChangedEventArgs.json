@@ -1,0 +1,79 @@
+{
+  "name": "RhinoDoc.RenderMaterialAssignmentChangedEventArgs",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.RhinoDoc.RenderMaterialAssignmentChangedEventArgs\u0022]",
+  "base": "RhinoDoc.RenderContentTableEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_RhinoDoc_RenderMaterialAssignmentChangedEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document the table belongs to",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderContentTableEventArgs_Document.htm"
+    },
+    {
+      "name": "EventType",
+      "type": "RhinoDoc.RenderContentTableEventType",
+      "getter": true,
+      "setter": false,
+      "summary": "Event type",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderContentTableEventArgs_EventType.htm"
+    },
+    {
+      "name": "IsLayer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderMaterialAssignmentChangedEventArgs_IsLayer.htm"
+    },
+    {
+      "name": "IsObject",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderMaterialAssignmentChangedEventArgs_IsObject.htm"
+    },
+    {
+      "name": "LayerId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderMaterialAssignmentChangedEventArgs_LayerId.htm"
+    },
+    {
+      "name": "NewRenderMaterial",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderMaterialAssignmentChangedEventArgs_NewRenderMaterial.htm"
+    },
+    {
+      "name": "ObjectId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderMaterialAssignmentChangedEventArgs_ObjectId.htm"
+    },
+    {
+      "name": "OldRenderMaterial",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderMaterialAssignmentChangedEventArgs_OldRenderMaterial.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

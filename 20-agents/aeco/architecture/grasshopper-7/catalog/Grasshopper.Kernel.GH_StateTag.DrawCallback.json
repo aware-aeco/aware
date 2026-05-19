@@ -1,0 +1,14 @@
+{
+  "name": "GH_StateTag.DrawCallback",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "delegate",
+  "summary": "Drawing delegate.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_StateTag_DrawCallback.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "protected delegate void DrawCallback( Graphics graphics, double alpha )"
+}

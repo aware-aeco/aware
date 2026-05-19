@@ -1,0 +1,62 @@
+{
+  "name": "ElementFilter",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "A filter type for an element.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementFilter",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IsEditable",
+      "value": "IsEditable"
+    },
+    {
+      "name": "IsVisibleByLayer",
+      "value": "IsVisibleByLayer"
+    },
+    {
+      "name": "IsVisibleByRenovation",
+      "value": "IsVisibleByRenovation"
+    },
+    {
+      "name": "IsVisibleByStructureDisplay",
+      "value": "IsVisibleByStructureDisplay"
+    },
+    {
+      "name": "IsVisibleIn3D",
+      "value": "IsVisibleIn3D"
+    },
+    {
+      "name": "OnActualFloor",
+      "value": "OnActualFloor"
+    },
+    {
+      "name": "OnActualLayout",
+      "value": "OnActualLayout"
+    },
+    {
+      "name": "InMyWorkspace",
+      "value": "InMyWorkspace"
+    },
+    {
+      "name": "IsIndependent",
+      "value": "IsIndependent"
+    },
+    {
+      "name": "InCroppedView",
+      "value": "InCroppedView"
+    },
+    {
+      "name": "HasAccessRight",
+      "value": "HasAccessRight"
+    },
+    {
+      "name": "IsOverriddenByRenovation",
+      "value": "IsOverriddenByRenovation"
+    }
+  ]
+}

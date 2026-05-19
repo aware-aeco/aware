@@ -1,0 +1,455 @@
+{
+  "name": "Vector2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D Vector.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/",
+  "constructors": [
+    {
+      "name": "Vector2D",
+      "signature": "Vector2D() | Vector2D(vec) | Vector2D(angle, length) | Vector2D(x, y) | Vector2D(startPoint, endPoint) | Vector2D(endPoint) | Vector2D(vec)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Normalize",
+      "signature": "Normalize() | Normalize(length)",
+      "summary": "Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.",
+      "remarks": "Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Normalize"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(vec) | Set(x, y) | Set(startPoint, endPoint)",
+      "summary": "Initialize from vector 2D.",
+      "remarks": "Initialize from vector 2D.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Set"
+    },
+    {
+      "name": "__imul__",
+      "signature": "__imul__(matrix) | __imul__(factor)",
+      "summary": "Matrix transformation. Formula: Vector(this) = Vector(this) * matrix",
+      "remarks": "Matrix transformation. Formula: Vector(this) = Vector(this) * matrix",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "Transformation matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Vector2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__imul__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(vec) | __mul__(matrix) | __mul__(factor)",
+      "summary": "Cross(vector) product operator. Formula: Vc = Va x Vb Va is this Vector",
+      "remarks": "Cross(vector) product operator. Formula: Vc = Va x Vb Va is this Vector",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector(Vb).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "new Vector(Vc)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__mul__"
+    },
+    {
+      "name": "CrossProduct",
+      "signature": "CrossProduct(vec)",
+      "summary": "Cross(vector) product operator. Formula: Va = Va x Vb Va is this Vector",
+      "remarks": "Cross(vector) product operator. Formula: Va = Va x Vb Va is this Vector",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector(Vb).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "new Vector(Vc)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.CrossProduct"
+    },
+    {
+      "name": "DotProduct",
+      "signature": "DotProduct(vec)",
+      "summary": "Dot(sxcalar) product. Formula: S = Va . Vb = Va1 * Va2 \u002B Vb1 * Vb2 Va is this Vector",
+      "remarks": "Dot(sxcalar) product. Formula: S = Va . Vb = Va1 * Va2 \u002B Vb1 * Vb2 Va is this Vector",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector(Vb).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "double."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.DotProduct"
+    },
+    {
+      "name": "GetAngle",
+      "signature": "GetAngle()",
+      "summary": "Get vector angle.",
+      "remarks": "Get vector angle.",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Angle in a range \u003C0, 2*PI\u003E (normalized 2pi)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.GetAngle"
+    },
+    {
+      "name": "GetAngleSigned",
+      "signature": "GetAngleSigned()",
+      "summary": "Get vector angle. equivalent to zfno()",
+      "remarks": "Get vector angle. equivalent to zfno()",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Angle in a range \u003C-PI..0..PI\u003E"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.GetAngleSigned"
+    },
+    {
+      "name": "GetCoords",
+      "signature": "GetCoords()",
+      "summary": "Get copy of X,Y coordinates.",
+      "remarks": "Get copy of X,Y coordinates.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "tuple(X coordinate of vector,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.GetCoords"
+    },
+    {
+      "name": "GetLength",
+      "signature": "GetLength()",
+      "summary": "Get vector length. Formula: Result(double) = ||Va|| Va is this vector",
+      "remarks": "Get vector length. Formula: Result(double) = ||Va|| Va is this vector",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.GetLength"
+    },
+    {
+      "name": "IsZero",
+      "signature": "IsZero()",
+      "summary": "Check the coords [0.0, 0.0] (binary comparison)",
+      "remarks": "Check the coords [0.0, 0.0] (binary comparison)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Is zero? true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.IsZero"
+    },
+    {
+      "name": "Orthogonal",
+      "signature": "Orthogonal(counterClockwise=True)",
+      "summary": "Compute orthogonal vector Method calculate orthogonal vector. Sample: vec = Vector2D(100., 0) vec.Orthogonal()",
+      "remarks": "Compute orthogonal vector Method calculate orthogonal vector. Sample: vec = Vector2D(100., 0) vec.Orthogonal()",
+      "params": [
+        {
+          "name": "counterClockwise",
+          "type": "bool",
+          "doc": "Orientation of orthogonal vector",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Orthogonal vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Orthogonal"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Compute reversed vector Method calculate vector with reversed orientation.",
+      "remarks": "Compute reversed vector Method calculate vector with reversed orientation.",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Reversed vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Reverse"
+    },
+    {
+      "name": "Values",
+      "signature": "Values()",
+      "summary": "Get copy of X,Y coordinates as python list",
+      "remarks": "Get copy of X,Y coordinates as python list",
+      "params": [],
+      "returns": {
+        "type": "list[float]",
+        "doc": "X coordinate of vector.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Values"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(vec)",
+      "summary": "Addition operator. Formula: Vc = Va \u002B Vb Va is this Vector.",
+      "remarks": "Addition operator. Formula: Vc = Va \u002B Vb Va is this Vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector(Vb).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "new Vector(Vc)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__add__"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(vec)",
+      "summary": "Comparison of vectors without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of vectors without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Compared vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when points are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__eq__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(vec)",
+      "summary": "Addition assignment operator. Formula: Va = Va \u002B Vb Va is this Vector.",
+      "remarks": "Addition assignment operator. Formula: Va = Va \u002B Vb Va is this Vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vb Vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Reference to vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__iadd__"
+    },
+    {
+      "name": "__idiv__",
+      "signature": "__idiv__(divider)",
+      "summary": "Multiply the vector by a factor (scalar multiplication)",
+      "remarks": "Multiply the vector by a factor (scalar multiplication)",
+      "params": [
+        {
+          "name": "divider",
+          "type": "float",
+          "doc": "scaling divider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "New vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__idiv__"
+    },
+    {
+      "name": "__isub__",
+      "signature": "__isub__(vec)",
+      "summary": "Subtraction assignment operator. Formula: Va = Va - Vb Va is this Vector.",
+      "remarks": "Subtraction assignment operator. Formula: Va = Va - Vb Va is this Vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vb Vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Reference to vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__isub__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(vec)",
+      "summary": "Comparison of vectors without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of vectors without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Compared vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when points are not equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__repr__"
+    },
+    {
+      "name": "__sub__",
+      "signature": "__sub__(vec)",
+      "summary": "Subtraction operator. Formula: Vc = Va - Vb Va is this Vector",
+      "remarks": "Subtraction operator. Formula: Vc = Va - Vb Va is this Vector",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector(Vb).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "new Vector(Vc)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__sub__"
+    },
+    {
+      "name": "__truediv__",
+      "signature": "__truediv__(divider)",
+      "summary": "Multiply the vector by a factor (scalar multiplication)",
+      "remarks": "Multiply the vector by a factor (scalar multiplication)",
+      "params": [
+        {
+          "name": "divider",
+          "type": "float",
+          "doc": "scaling divider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "New vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__truediv__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "X",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the X coordinate reference.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.X"
+    },
+    {
+      "name": "Y",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Y coordinate reference.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Y"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

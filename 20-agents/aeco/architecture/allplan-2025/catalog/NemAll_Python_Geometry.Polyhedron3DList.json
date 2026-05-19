@@ -1,0 +1,227 @@
+{
+  "name": "Polyhedron3DList",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "List for Polyhedron3D objects",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/",
+  "constructors": [
+    {
+      "name": "Polyhedron3DList",
+      "signature": "Polyhedron3DList() | Polyhedron3DList(ele: Polyhedron3D) | Polyhedron3DList(eleList: list)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__contains__",
+      "signature": "__contains__(value: Polyhedron3D) -\u003E bool",
+      "summary": "Check for a value in the list",
+      "remarks": "Check for a value in the list",
+      "params": [
+        {
+          "name": "value",
+          "type": "Polyhedron3D",
+          "doc": "Value to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "State for value is in the list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__contains__"
+    },
+    {
+      "name": "__delitem__",
+      "signature": "__delitem__(value: Polyhedron3D)",
+      "summary": "Delete a list item",
+      "remarks": "Delete a list item",
+      "params": [
+        {
+          "name": "value",
+          "type": "Polyhedron3D",
+          "doc": "Value to delete",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__delitem__"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(compare_list: Polyhedron3DList) -\u003E bool",
+      "summary": "Compare two lists",
+      "remarks": "Compare two lists",
+      "params": [
+        {
+          "name": "compare_list",
+          "type": "Polyhedron3DList",
+          "doc": "List to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Lists are equal state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__eq__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index: int) -\u003E Polyhedron3D",
+      "summary": "Get a list item",
+      "remarks": "Get a list item",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the item",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyhedron3D",
+        "doc": "Value for the index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__getitem__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(eleList: list) -\u003E Polyhedron3DList",
+      "summary": "Add a list",
+      "remarks": "Add a list",
+      "params": [
+        {
+          "name": "eleList",
+          "type": "list",
+          "doc": "Polyhedron3D list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyhedron3DList",
+        "doc": "Lists with the added elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__iadd__"
+    },
+    {
+      "name": "__iter__",
+      "signature": "__iter__() -\u003E Iterator",
+      "summary": "List iterator",
+      "remarks": "List iterator",
+      "params": [],
+      "returns": {
+        "type": "Iterator",
+        "doc": "List iterator"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__iter__"
+    },
+    {
+      "name": "__len__",
+      "signature": "__len__() -\u003E int",
+      "summary": "Get the list length",
+      "remarks": "Get the list length",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Length of the list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__len__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Create a string from the elements of the list",
+      "remarks": "Create a string from the elements of the list",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__repr__"
+    },
+    {
+      "name": "__setitem__",
+      "signature": "__setitem__(index: int | slice, value: Polyhedron3D)",
+      "summary": "Set a list item",
+      "remarks": "Set a list item",
+      "params": [
+        {
+          "name": "index",
+          "type": "int | slice",
+          "doc": "Index of the item",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Polyhedron3D",
+          "doc": "Value to item",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__setitem__"
+    },
+    {
+      "name": "append",
+      "signature": "append(value: Polyhedron3D)",
+      "summary": "Append a list item",
+      "remarks": "Append a list item",
+      "params": [
+        {
+          "name": "value",
+          "type": "Polyhedron3D",
+          "doc": "Value to append",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.append"
+    },
+    {
+      "name": "extend",
+      "signature": "extend(iterable: Polyhedron3DList) | extend(eleList: list)",
+      "summary": "Add the items from an iterable to the end of the list",
+      "remarks": "Add the items from an iterable to the end of the list",
+      "params": [
+        {
+          "name": "iterable",
+          "type": "Polyhedron3DList",
+          "doc": "Iterable to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.extend"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

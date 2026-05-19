@@ -1,0 +1,13 @@
+{
+  "name": "LayerCombinationAttributeOrError",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A layer combination attribute or an error.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayerCombinationAttributeOrError",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

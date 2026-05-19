@@ -1,0 +1,54 @@
+{
+  "name": "ConOperation",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConOperation.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConOperation.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsImported",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperation.isImported.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConOperation.md"
+    },
+    {
+      "name": "OperationType",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperation.operationType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConOperation.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperation.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConOperation.md"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperation.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConOperation.md"
+    },
+    {
+      "name": "Active",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperation.active.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConOperation.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

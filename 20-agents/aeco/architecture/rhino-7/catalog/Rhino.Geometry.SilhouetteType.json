@@ -1,0 +1,74 @@
+{
+  "name": "SilhouetteType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Enumerates the different types of silhouettes and their origins.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SilhouetteType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "None."
+    },
+    {
+      "name": "Projecting",
+      "value": 1,
+      "summary": "Boundary of a region that projects to a curve. The view direction is tangent to the surface over the entire region."
+    },
+    {
+      "name": "TangentProjects",
+      "value": 2,
+      "summary": "Tangent silhouette curve where the curve projects to a point (within tolerance). In this case side_fill[i] is meaningless so it\u0027s left unset."
+    },
+    {
+      "name": "Tangent",
+      "value": 4,
+      "summary": "Tangent silhouette curve. The view direction is tangent to the surface along the curve."
+    },
+    {
+      "name": "Crease",
+      "value": 8,
+      "summary": "Crease on geometry that is a silhouette."
+    },
+    {
+      "name": "Boundary",
+      "value": 16,
+      "summary": "Boundary of geometry is always a silhouette."
+    },
+    {
+      "name": "NonSilhouetteCrease",
+      "value": 256,
+      "summary": "A non-silhouette crease, meaning both sides are visible."
+    },
+    {
+      "name": "NonSilhouetteTangent",
+      "value": 512,
+      "summary": "A non-silhouette tangent edge that is not a crease."
+    },
+    {
+      "name": "NonSilhouetteSeam",
+      "value": 1024,
+      "summary": "A non-silhouette surface seam."
+    },
+    {
+      "name": "SectionCut",
+      "value": 4096,
+      "summary": "Intersection with a clipping plane."
+    },
+    {
+      "name": "MiscellaneousFeature",
+      "value": 8192,
+      "summary": "Miscellaneous curve feature."
+    },
+    {
+      "name": "DraftCurve",
+      "value": 32768,
+      "summary": "Draft curve is a curve of constant draft angle."
+    }
+  ]
+}

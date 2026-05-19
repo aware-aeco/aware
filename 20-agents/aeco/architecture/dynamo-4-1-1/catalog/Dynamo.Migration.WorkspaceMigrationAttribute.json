@@ -1,0 +1,55 @@
+{
+  "name": "WorkspaceMigrationAttribute",
+  "namespace": "Dynamo.Migration",
+  "kind": "class",
+  "summary": "Specifies versions which workspace should be migrated between.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs",
+  "constructors": [
+    {
+      "name": "WorkspaceMigrationAttribute(string, string)",
+      "signature": "void WorkspaceMigrationAttribute(string from, string to)",
+      "summary": "Initializes a new instance of the Dynamo.Migration.WorkspaceMigrationAttribute class with the versions which workspace should be migrated between.",
+      "params": [
+        {
+          "name": "from",
+          "type": "string",
+          "doc": "Version which workspace should be migrated from.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "doc": "Version which workspace should be migrated to. This parameter can be omitted that means workspace should migrate to the latest version",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "From",
+      "type": "System.Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns version which workspace should be migrated from.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "To",
+      "type": "System.Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns version which workspace should be migrated to.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

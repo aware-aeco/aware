@@ -1,0 +1,159 @@
+{
+  "name": "ClassificationCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Classification Commands\u0027 command group \u2014 8 JSON-RPC commands (Archicad 28.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllClassificationSystems",
+      "signature": "GetAllClassificationSystems(): object",
+      "summary": "Returns the list of available classification systems.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: classificationSystems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAllClassificationSystems"
+    },
+    {
+      "name": "GetAllClassificationsInSystem",
+      "signature": "GetAllClassificationsInSystem(classificationSystemId: ClassificationSystemId): object",
+      "summary": "Returns the tree of classifications in the given classification system.",
+      "params": [
+        {
+          "name": "classificationSystemId",
+          "type": "ClassificationSystemId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: classificationItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAllClassificationsInSystem"
+    },
+    {
+      "name": "GetClassificationItemAvailability",
+      "signature": "GetClassificationItemAvailability(classificationItemIds: ClassificationItemIds): object",
+      "summary": "Returns the ids of property definitions available for a given classification item.",
+      "params": [
+        {
+          "name": "classificationItemIds",
+          "type": "ClassificationItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: classificationItemAvailabilityList."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetClassificationItemAvailability"
+    },
+    {
+      "name": "GetClassificationSystemIds",
+      "signature": "GetClassificationSystemIds(): object",
+      "summary": "Returns the list of available classification systems.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: classificationSystemIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetClassificationSystemIds"
+    },
+    {
+      "name": "GetClassificationSystems",
+      "signature": "GetClassificationSystems(classificationSystemIds: ClassificationSystemIds): object",
+      "summary": "Returns the details of classification systems identified by their GUIDs.",
+      "params": [
+        {
+          "name": "classificationSystemIds",
+          "type": "ClassificationSystemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: classificationSystems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetClassificationSystems"
+    },
+    {
+      "name": "GetClassificationsOfElements",
+      "signature": "GetClassificationsOfElements(elements: Elements, classificationSystemIds: ClassificationSystemIds): object",
+      "summary": "Returns the classification of the given elements in the given classification systems.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "classificationSystemIds",
+          "type": "ClassificationSystemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elementClassifications."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetClassificationsOfElements"
+    },
+    {
+      "name": "GetDetailsOfClassificationItems",
+      "signature": "GetDetailsOfClassificationItems(classificationItemIds: ClassificationItemIds): object",
+      "summary": "Returns the details of classification items.",
+      "params": [
+        {
+          "name": "classificationItemIds",
+          "type": "ClassificationItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: classificationItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetDetailsOfClassificationItems"
+    },
+    {
+      "name": "SetClassificationsOfElements",
+      "signature": "SetClassificationsOfElements(elementClassifications: ElementClassifications): object",
+      "summary": "Sets the classifications of elements. In order to set the classification of an element to unclassified, omit the classificationItemId field.",
+      "params": [
+        {
+          "name": "elementClassifications",
+          "type": "ElementClassifications",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#SetClassificationsOfElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

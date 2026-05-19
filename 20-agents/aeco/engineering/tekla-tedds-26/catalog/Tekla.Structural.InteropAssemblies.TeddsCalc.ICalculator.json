@@ -1,0 +1,373 @@
+{
+  "name": "ICalculator",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "interface",
+  "summary": "Interface for the main Tedds Calculator",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-icalculator-64156",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CopyOutputToClipboard(OutputFormat)",
+      "signature": "void CopyOutputToClipboard(OutputFormat format = OutputFormat.Rtf)",
+      "summary": "Copies the output item to the Windows clipboard in the specified format",
+      "params": [
+        {
+          "name": "format",
+          "type": "OutputFormat",
+          "doc": "Output format, the default is Microsoft Rich Text Format (RTF)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/7459dca22bddaf39178a117918019b0c30050bf7acb67db38adba29948b9afcd"
+    },
+    {
+      "name": "GetOutput(OutputFormat)",
+      "signature": "string GetOutput(OutputFormat format = OutputFormat.Rtf)",
+      "summary": "Returns the documented output from the calculator in the specified format.",
+      "remarks": "In order to obtain output the calculator must have been initialized with RTF, using InitializeCalc or Initialize. If the scenario you are implementing requires both input and output then you will typically initialize the Calculator object twice, the first time to create the input variables for the calculation and the second time to initialise the calculator using those input variables to start a specific calculation. When the output is requested in PDF format the resulting string must be processed correctly. PDF is a binary format and as such the string should not be modified because it is likely to contain invalid characters and null terminators which will not be processed correctly by most string processing functions. The string should be converted to raw bytes before further processing or saving to disk.",
+      "params": [
+        {
+          "name": "format",
+          "type": "OutputFormat",
+          "doc": "Output format, the default is Microsoft Rich Text Format",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Output documentation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/ca45d8f35efea7491dd22f92bf3f1930264669cef90c8c5fa6e46c1f2518d015"
+    },
+    {
+      "name": "GetVariables(VariableFormat)",
+      "signature": "string GetVariables(VariableFormat format = VariableFormat.Xml)",
+      "summary": "Returns all the variables defined in the calculator excluding temporary variables",
+      "params": [
+        {
+          "name": "format",
+          "type": "VariableFormat",
+          "doc": "Format in which to return the variables, the default is XML",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "A string which defines the variables and their associated values and attributes. Temporary variables are excluded, if you require the temporary variables use GetVariables2"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/c6ba2c4dba023815ffb9c2a21ed88b88b96e2ed4b4dac49d14a89be26cf54f3f"
+    },
+    {
+      "name": "GetVariables2(VariableFormat, bool)",
+      "signature": "string GetVariables2(VariableFormat format = VariableFormat.Xml, bool includeTemporaryVariables = false)",
+      "summary": "Returns the current Document and Calc Section variables in the specified data format",
+      "params": [
+        {
+          "name": "format",
+          "type": "VariableFormat",
+          "doc": "Format in which to return the variables, the default is XML",
+          "optional": false
+        },
+        {
+          "name": "includeTemporaryVariables",
+          "type": "bool",
+          "doc": "Determines whether to include temporary variables",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "A string which defines the variables and their associated values and attributes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/dad1d22b7a396d2fb9774f8182fe2cd9422ce37cfb055455f8b0a8d40d3ebcc1"
+    },
+    {
+      "name": "GetVariables3(VariableFormat, bool, bool)",
+      "signature": "string GetVariables3(VariableFormat format = VariableFormat.Xml, bool includeTemporaryVariables = false, bool includeModifiedAttribute = false)",
+      "summary": "Returns the current Document and Calc Section variables in the specified data format",
+      "params": [
+        {
+          "name": "format",
+          "type": "VariableFormat",
+          "doc": "Format in which to return the variables, the default is XML",
+          "optional": false
+        },
+        {
+          "name": "includeTemporaryVariables",
+          "type": "bool",
+          "doc": "Determines whether to include temporary variables",
+          "optional": false
+        },
+        {
+          "name": "includeModifiedAttribute",
+          "type": "bool",
+          "doc": "Determines whether to include the modified attribute for each variable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "A string which defines the variables and their associated values and attributes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/fd6733c2fade95aa5a08a45363589f1daa68f1ab5221b76c6d30a86ade441688"
+    },
+    {
+      "name": "Initialize(string, string, string, int, int, int)",
+      "signature": "void Initialize(string inputRtf, string variables, string sectionName, int sectionId = 0, int pageWidth = 180, int pageHeight = 260)",
+      "summary": "Initializes the calculator to start calculating",
+      "remarks": "The initialize method is often used without any parameters, the optional parameters are required to run an existing calculation or to retrieve the final output, however also consider using InitializeCalc. The inputRtf is required if you want to calculate an existing RTF source, for example if you wanted to integrate Tedds with an alternative word processor you would get the RTF from the document and pass it as this parameter so that Tedds would calculate the expressions in the RTF. The inputRtf is also required if you want to obtain output RTF once calculating is finished. Output is obtained by using the GetOutput method but if no inputRtf has been specified to the Initialize function (or the InitializeCalc function) then GetOutput will not return any output. If the calculator has been used to perform a calculation and you want to save the variables so that they can be used for re-calculating then you can use the optional variables parameter to initialise the calculator with the previously saved variables. The variables from a previous calculation are retrieved by using the GetVariables function.",
+      "params": [
+        {
+          "name": "inputRtf",
+          "type": "string",
+          "doc": "Optional input formatted in Microsoft Rich Text Format(RTF) which will be calculated",
+          "optional": false
+        },
+        {
+          "name": "variables",
+          "type": "string",
+          "doc": "Xml string of the variables to initialize the calculator with, usually created by GetVariables",
+          "optional": false
+        },
+        {
+          "name": "sectionName",
+          "type": "string",
+          "doc": "Calc Section name",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "int",
+          "doc": "Calc Section unique numeric identifier",
+          "optional": false
+        },
+        {
+          "name": "pageWidth",
+          "type": "int",
+          "doc": "Output page width in twips, default is 180 twips",
+          "optional": false
+        },
+        {
+          "name": "pageHeight",
+          "type": "int",
+          "doc": "Output page height in twips, default is 260 twips",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/3ab2a6a338f894c330b63592f689966056f69beb09047175f6e40986902c5841"
+    },
+    {
+      "name": "InitializeCalc(string, string, string, string, int, int, int)",
+      "signature": "void InitializeCalc(string calcFileName, string calcItemName, string variables, string sectionName, int sectionId = 0, int pageWidth = 180, int pageHeight = 260)",
+      "summary": "Initializes the calculator and starts calculating using the specified Calc Library Item",
+      "remarks": "The fileName and itemName are required and determine the Calc Item in the specified Calc Library which will be calculated. If you want to retrieve the document output when calculating is finished the calc item you calculate must be in the RTF format. Output is obtained by using the GetOutput method. If the calculator has been used to perform a calculation and you want to save the variables so that they can be used at a later date for re-calculating then you can use the optional variables parameter to initialise the calculator with the previously saved variables.The variables from a previous calculation are retrieved by using the GetVariables method.",
+      "params": [
+        {
+          "name": "calcFileName",
+          "type": "string",
+          "doc": "File name of the Calc Library file which contains the calc item to calculate",
+          "optional": false
+        },
+        {
+          "name": "calcItemName",
+          "type": "string",
+          "doc": "Item name of the Calc Item to calculate",
+          "optional": false
+        },
+        {
+          "name": "variables",
+          "type": "string",
+          "doc": "Xml string of the variables to initialize the calculator instance with",
+          "optional": false
+        },
+        {
+          "name": "sectionName",
+          "type": "string",
+          "doc": "Initial section name",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "int",
+          "doc": "Initial section identifier",
+          "optional": false
+        },
+        {
+          "name": "pageWidth",
+          "type": "int",
+          "doc": "Output page width in twips, default is 180 twips",
+          "optional": false
+        },
+        {
+          "name": "pageHeight",
+          "type": "int",
+          "doc": "Output page height in twips, default is 260 twips",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/4ea1d7cff39c130aecc6be90103a3e4900815e9b473cb3713fbd77ef9c115700"
+    },
+    {
+      "name": "SetForegroundWindow(int)",
+      "signature": "void SetForegroundWindow(int WindowHandle)",
+      "summary": "Executes the Windows API function SetForegroundWindow from the Tedds calculator process.",
+      "params": [
+        {
+          "name": "WindowHandle",
+          "type": "int",
+          "doc": "Handle of window to make the foreground window",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/a4d66c046b6b69511f04dc3a35fe80aacc19569cf0fe72682802b18bb1aa82aa"
+    },
+    {
+      "name": "SetOwnerWindow(int)",
+      "signature": "void SetOwnerWindow(int ownerWindowHandle)",
+      "summary": "Sets which window owns the Tedds calculator\u0027s main window",
+      "remarks": "The main Tedds calculator window is always hidden but acts as the parent window for all other windows displayed by the Tedds calculator. The window handle may be required to ensure that the Calculator process is brought to the foreground when the calling processes expects the Tedds calculator to show a user interface.",
+      "params": [
+        {
+          "name": "ownerWindowHandle",
+          "type": "int",
+          "doc": "Window handle of the window which will be the owner of the Tedds calculator\u0027s main window",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/00b41f48802759a1cb72ea566e7961c29ab524ee3df4237a2b1d6a631d40cca0"
+    },
+    {
+      "name": "SetVariables(string, VariableFormat)",
+      "signature": "void SetVariables(string variables, VariableFormat format = VariableFormat.Xml)",
+      "summary": "Assign the specified variables to the calculator instance",
+      "remarks": "The Calculator currently supports one format for defining variables which uses XML. The XML schema is not documented and is subject to change, however the Tedds Calculator itself can be used to generate the required XML. To create the XML string create an instance of the XML calculator and initialize the calculator using Initialize, omitting all of the optional parameters. For each variable you wish to assign in the XML use Functions.SetVar or Functions.SetVarExpr. Once all the required variables have been assigned use @ref GetVariables to retrieve an XML string of all the variables which have been defined. This XML string can then be used with SetVariables although normally the variables would be initialized using one of the Initialize or InitializeCalc functions.",
+      "params": [
+        {
+          "name": "variables",
+          "type": "string",
+          "doc": "Variables and their associated values and attributes in the specified data format",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "VariableFormat",
+          "doc": "Format of the variables, the default is XML",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/174504dc6f5330c8dce44c982607f92bea731c0b66eb45a7205c08bf21173782"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CalculatingErrorEvents",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether error events are fired to the event listeners",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/3912c4e13261ced4a1ea49bc6294c7eccab612464959ec1570f9188871c02ee1"
+    },
+    {
+      "name": "CalculatingProgressEvents",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether progress events are fired to the event listeners",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/8361db3e7b335ffc121a081ce10a200a67d8c68fa82490ad8d4840e300994e8f"
+    },
+    {
+      "name": "Functions",
+      "type": "IFunctions",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an object supporting the IFunctions interface which is used to access the internal Tedds calculator functions",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/1533a575e76c73b4332afd67321f308cdc2fa997b7d0fc614abe96a6e2596c0c"
+    },
+    {
+      "name": "Status",
+      "type": "CalcStatus",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the status of the Tedds calculator when the last evaluation finished.",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/10fb5377fd29a84572422e67c1bd9f7966d76429728988462a6f17ac315776ee"
+    },
+    {
+      "name": "UndefinedVariableEvents",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether undefined variable events are fired to the event listeners",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/4db4a6ab79010cc47e0b03ab7530d565e2ca8b29c27a79304b699292b4c708f0"
+    },
+    {
+      "name": "VersionLibraryMajor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the major version number of the Tedds Engineering Library",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/949dde2e4808e3b18258b70fd25068cc75b0ad4555fb008f2560fa96fe5daf4d"
+    },
+    {
+      "name": "VersionLibraryMinor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the minor version number of the Tedds Engineering Library",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/75ec3d250927d802592be3e2c9819568f579a013fc88f8f01ed8a647c58755fa"
+    },
+    {
+      "name": "VersionMajor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the major version number of the Tedds software",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/3f1999512d695cf5f036bbd9df1d766cdc356cc764b3c122f8c28df86f094854"
+    },
+    {
+      "name": "VersionMinor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the minor version number of the Tedds software",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/904aacd146514ae2190c47cb095af4bac08da3f4253a29666d378c7504026e1c"
+    },
+    {
+      "name": "WindowHandle",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Tedds calculator\u0027s main window handle",
+      "remarks": "The main Tedds calculator window is always hidden but acts as the parent window for all other windows displayed by the Tedds calculator. The window handle may be required to ensure that the Calculator process is brought to the foreground when the calling processes expects the Tedds calculator to show a user interface.",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/1d287bc784880535cb6e65fd7a9ebe216a5753b632a38f0e4562beddf6e5e944"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

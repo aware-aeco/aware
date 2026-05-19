@@ -1,0 +1,31 @@
+{
+  "name": "GH_DocEnabledEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "These arguments are passed along with SettingsChanged events on GH_Document.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocEnabledEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that raised the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocEnabledEventArgs_Document.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the document Enabled flag at the time the event was raised, it may have been changed in between by other event handlers.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocEnabledEventArgs_Enabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

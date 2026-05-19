@@ -1,0 +1,110 @@
+{
+  "name": "FaceStyleProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of the style area",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/",
+  "constructors": [
+    {
+      "name": "FaceStyleProperties",
+      "signature": "FaceStyleProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: FaceStyleProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "FaceStyleProperties",
+          "doc": "FaceStyleProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DirectionToReferenceLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of the edge of the outline polyline, to align the style area to, when the property UseDirectionToReferenceLine is set to True.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.DirectionToReferenceLine"
+    },
+    {
+      "name": "FaceStyleID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "ID of style area",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.FaceStyleID"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "the point of origin, when property UseReferencePoint is set to True",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.ReferencePoint"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Rotation angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.RotationAngle"
+    },
+    {
+      "name": "UseDirectionToReferenceLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to align the direction of the style area to a certain edge. When set to true, the index of the edge is to be specified in the property DirectionToReferenceLine.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.UseDirectionToReferenceLine"
+    },
+    {
+      "name": "UseReferencePoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use a specific point as the origin of the style area. When set to False, the origin is (0,0). When set to True, the point is to be specified in the property ReferencePoint.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/#NemAll_Python_BasisElements.FaceStyleProperties.UseReferencePoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

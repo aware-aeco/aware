@@ -1,0 +1,202 @@
+{
+  "name": "PropertyCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Property Commands\u0027 command group \u2014 9 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllProperties",
+      "signature": "GetAllProperties(): object",
+      "summary": "Returns all user defined and built-in properties.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: properties."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetAllProperties",
+      "since": "1.1.3"
+    },
+    {
+      "name": "GetPropertyValuesOfElements",
+      "signature": "GetPropertyValuesOfElements(elements: Elements, properties: PropertyIds): object",
+      "summary": "Returns the property values of the elements for the given property. It works for subelements of hierarchal elements also.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "PropertyIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyValuesForElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetPropertyValuesOfElements",
+      "since": "1.0.6"
+    },
+    {
+      "name": "SetPropertyValuesOfElements",
+      "signature": "SetPropertyValuesOfElements(elementPropertyValues: ElementPropertyValues): object",
+      "summary": "Sets the property values of elements. It works for subelements of hierarchal elements also.",
+      "params": [
+        {
+          "name": "elementPropertyValues",
+          "type": "ElementPropertyValues",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetPropertyValuesOfElements",
+      "since": "1.0.6"
+    },
+    {
+      "name": "GetPropertyValuesOfAttributes",
+      "signature": "GetPropertyValuesOfAttributes(attributeIds: AttributeIds, properties: PropertyIds): object",
+      "summary": "Returns the property values of the attributes for the given property.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "PropertyIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyValuesForAttributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetPropertyValuesOfAttributes",
+      "since": "1.1.8"
+    },
+    {
+      "name": "SetPropertyValuesOfAttributes",
+      "signature": "SetPropertyValuesOfAttributes(attributePropertyValues: AttributePropertyValues): object",
+      "summary": "Sets the property values of attributes.",
+      "params": [
+        {
+          "name": "attributePropertyValues",
+          "type": "AttributePropertyValues",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetPropertyValuesOfAttributes",
+      "since": "1.1.8"
+    },
+    {
+      "name": "CreatePropertyGroups",
+      "signature": "CreatePropertyGroups(propertyGroups: PropertyGroupArrayItem[]): object",
+      "summary": "Creates Property Groups based on the given parameters.",
+      "params": [
+        {
+          "name": "propertyGroups",
+          "type": "PropertyGroupArrayItem[]",
+          "doc": "The parameters of the new property groups.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyGroupIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreatePropertyGroups",
+      "since": "1.0.7"
+    },
+    {
+      "name": "DeletePropertyGroups",
+      "signature": "DeletePropertyGroups(propertyGroupIds: PropertyGroupIdArrayItem[]): object",
+      "summary": "Deletes the given Custom Property Groups.",
+      "params": [
+        {
+          "name": "propertyGroupIds",
+          "type": "PropertyGroupIdArrayItem[]",
+          "doc": "The identifiers of property groups to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DeletePropertyGroups",
+      "since": "1.0.9"
+    },
+    {
+      "name": "CreatePropertyDefinitions",
+      "signature": "CreatePropertyDefinitions(propertyDefinitions: PropertyDefinitionArrayItem[]): object",
+      "summary": "Creates Custom Property Definitions based on the given parameters.",
+      "params": [
+        {
+          "name": "propertyDefinitions",
+          "type": "PropertyDefinitionArrayItem[]",
+          "doc": "The parameters of the new properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreatePropertyDefinitions",
+      "since": "1.0.9"
+    },
+    {
+      "name": "DeletePropertyDefinitions",
+      "signature": "DeletePropertyDefinitions(propertyIds: PropertyIdArrayItem[]): object",
+      "summary": "Deletes the given Custom Property Definitions.",
+      "params": [
+        {
+          "name": "propertyIds",
+          "type": "PropertyIdArrayItem[]",
+          "doc": "The identifiers of properties to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DeletePropertyDefinitions",
+      "since": "1.0.9"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

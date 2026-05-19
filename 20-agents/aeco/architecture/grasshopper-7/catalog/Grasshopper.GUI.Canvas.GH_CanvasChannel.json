@@ -1,0 +1,44 @@
+{
+  "name": "GH_CanvasChannel",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates all the drawing channels that are handled inside the Grasshopper canvas.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasChannel.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "First",
+      "value": 0,
+      "summary": "First channel. At present, the first channel equals the Groups channel."
+    },
+    {
+      "name": "Groups",
+      "value": 0,
+      "summary": "Channel for Group outlines and name tags."
+    },
+    {
+      "name": "Wires",
+      "value": 10,
+      "summary": "Channel for connecting wires."
+    },
+    {
+      "name": "Objects",
+      "value": 20,
+      "summary": "Channels for Document Objects (components, parameters, special objects)"
+    },
+    {
+      "name": "Overlay",
+      "value": 30,
+      "summary": "Channel for drawing overlay geometry."
+    },
+    {
+      "name": "Last",
+      "value": 30,
+      "summary": "Last channel. At present, the last channel equals the Overlay channel."
+    }
+  ]
+}

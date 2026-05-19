@@ -1,0 +1,25 @@
+{
+  "name": "UndefinedCurveDirectionException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The UndefinedCurveDirectionException class represents an error when, cannot make inward/outward curve check.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b4d572bd-333a-26f2-458c-d688d2ca0c4e",
+  "constructors": [
+    {
+      "name": "UndefinedCurveDirectionException",
+      "signature": "public UndefinedCurveDirectionException()",
+      "summary": "Initializes a new instance of the UndefinedCurveDirectionException class with \u0022Cannot make inward/outward curve check\u0022 error message.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/872dd23d-d519-0545-6ef2-443dd2df941a"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

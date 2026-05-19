@@ -1,0 +1,52 @@
+{
+  "name": "Skylight",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "ChangeQueue skylight",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_Skylight.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Textual representation of Skylight",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.Skylight.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_Skylight_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Return true if skylight is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Skylight_Enabled.htm"
+    },
+    {
+      "name": "ShadowIntensity",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Get shadow intensity for skylight. This is unused at present.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Skylight_ShadowIntensity.htm"
+    },
+    {
+      "name": "UsesCustomEnvironment",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Return true if skylight uses custom environment",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Skylight_UsesCustomEnvironment.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

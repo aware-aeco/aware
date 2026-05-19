@@ -1,0 +1,207 @@
+{
+  "name": "ReinforcementSettings",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.ReinforcementSettings.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/",
+  "constructors": [
+    {
+      "name": "ReinforcementSettings",
+      "signature": "ReinforcementSettings()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CheckBarDiameter",
+      "signature": "CheckBarDiameter() -\u003E float",
+      "summary": "Check, whether the diameter is included in the diameter list of the current steel grade",
+      "remarks": "Check, whether the diameter is included in the diameter list of the current steel grade",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Bar diameter (original or nearest value)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.CheckBarDiameter"
+    },
+    {
+      "name": "CheckMeshGroup",
+      "signature": "CheckMeshGroup() -\u003E int",
+      "summary": "Check, whether the mesh group is included in the group list",
+      "remarks": "Check, whether the mesh group is included in the group list",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Mesh group (original or first)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.CheckMeshGroup"
+    },
+    {
+      "name": "GetBarDiameter",
+      "signature": "GetBarDiameter() -\u003E float",
+      "summary": "Get the current bar diameter",
+      "remarks": "Get the current bar diameter",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Bar diameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetBarDiameter"
+    },
+    {
+      "name": "GetBarWeight",
+      "signature": "GetBarWeight(steelGrade: int, barDiameter: float) -\u003E float",
+      "summary": "Get the weight for a bar diameter",
+      "remarks": "Get the weight for a bar diameter",
+      "params": [
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "barDiameter",
+          "type": "float",
+          "doc": "Bar diameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Weight for a bar diameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetBarWeight"
+    },
+    {
+      "name": "GetBendingRoller",
+      "signature": "GetBendingRoller() -\u003E float",
+      "summary": "Get the current bending roller",
+      "remarks": "Get the current bending roller",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Bending roller"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetBendingRoller"
+    },
+    {
+      "name": "GetConcreteGrade",
+      "signature": "GetConcreteGrade() -\u003E int",
+      "summary": "Get the current concrete grade",
+      "remarks": "Get the current concrete grade",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Concrete grade"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetConcreteGrade"
+    },
+    {
+      "name": "GetMaxBarLength",
+      "signature": "GetMaxBarLength() -\u003E float",
+      "summary": "Get the maximal bar length",
+      "remarks": "Get the maximal bar length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Maximal bar length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetMaxBarLength"
+    },
+    {
+      "name": "GetMeshGroup",
+      "signature": "GetMeshGroup() -\u003E int",
+      "summary": "Get the current mesh group",
+      "remarks": "Get the current mesh group",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Mesh group"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetMeshGroup"
+    },
+    {
+      "name": "GetMeshType",
+      "signature": "GetMeshType() -\u003E str",
+      "summary": "Get the current mesh type",
+      "remarks": "Get the current mesh type",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Mesh type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetMeshType"
+    },
+    {
+      "name": "GetNorm",
+      "signature": "GetNorm() -\u003E int",
+      "summary": "Get the current norm",
+      "remarks": "Get the current norm",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Norm"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetNorm"
+    },
+    {
+      "name": "GetSteelGrade",
+      "signature": "GetSteelGrade() -\u003E int",
+      "summary": "Get the current steel grade",
+      "remarks": "Get the current steel grade",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Steel grade"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.GetSteelGrade"
+    },
+    {
+      "name": "Is3DReinforcement",
+      "signature": "Is3DReinforcement() -\u003E bool",
+      "summary": "Get the 3D-Reinforcement state",
+      "remarks": "Get the 3D-Reinforcement state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Create 3D-Reinforcement: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/#NemAll_Python_Reinforcement.ReinforcementSettings.Is3DReinforcement"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

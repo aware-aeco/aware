@@ -1,0 +1,86 @@
+{
+  "name": "CommandRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents the definition of a command in the GUI system",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.CommandRecord",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CanToggle",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies if the command can toggle",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.CanToggle"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The text to be displayed for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.DisplayName"
+    },
+    {
+      "name": "ExtendedToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The extended tooltip to be displayed for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.ExtendedToolTip"
+    },
+    {
+      "name": "Icon",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 16x16 icon to be displayed for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.Icon"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The full Id of the command. This is a combination of and Plugin.Id",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.Id"
+    },
+    {
+      "name": "LargeIcon",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 32x32 icon to be displayed for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.LargeIcon"
+    },
+    {
+      "name": "Shortcut",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the keyboard shortcut for the command.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.Shortcut"
+    },
+    {
+      "name": "ShortcutWindowTypes",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The Ids of the windows for which the shortcut is valid. Multiple Ids can be specified by separating with \u0022;\u0022. If Ids are specified the shortcut should be valid in all contexts.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.ShortcutWindowTypes"
+    },
+    {
+      "name": "ToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The tooltip to be displayed for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandRecord.ToolTip"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

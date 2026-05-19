@@ -1,0 +1,14 @@
+{
+  "name": "ObjectFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The ObjectFilterExpressions class contains all the object filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/57fed64d-d757-3c96-030a-d320f5177e2c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

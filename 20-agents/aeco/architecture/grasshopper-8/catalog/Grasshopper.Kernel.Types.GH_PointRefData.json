@@ -1,0 +1,267 @@
+{
+  "name": "GH_PointRefData",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Types.GH_PointRefData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_PointRefData.htm",
+  "constructors": [
+    {
+      "name": "GH_PointRefData()",
+      "signature": "public GH_PointRefData()",
+      "summary": "Initializes a new instance of the GH_PointRefData class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData__ctor.htm"
+    },
+    {
+      "name": "GH_PointRefData(GH_PointRefData)",
+      "signature": "public GH_PointRefData(GH_PointRefData iOther)",
+      "summary": "Initializes a new instance of the GH_PointRefData class",
+      "params": [
+        {
+          "name": "iOther",
+          "type": "Grasshopper.Kernel.Types.GH_PointRefData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EvCurve",
+      "signature": "public Point3d EvCurve(Curve c)",
+      "summary": "Evaluate this reference structure when applied to a curve",
+      "remarks": "Evaluation depends on the value of m_RefType",
+      "params": [
+        {
+          "name": "c",
+          "type": "Curve",
+          "doc": "The curve to act on",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the curve if successful, or Nothing"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_EvCurve.htm"
+    },
+    {
+      "name": "EvCurveParam",
+      "signature": "public double EvCurveParam(Curve c)",
+      "summary": "Evaluate this reference structure when applied to a curve",
+      "remarks": "Evaluation depends on the value of m_RefType",
+      "params": [
+        {
+          "name": "c",
+          "type": "Curve",
+          "doc": "The curve to act on",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The parameter on the curve that corresponds to this reference, or NaN"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_EvCurveParam.htm"
+    },
+    {
+      "name": "EvSurface",
+      "signature": "public Point3d EvSurface(Surface s)",
+      "summary": "Evaluate this reference structure when applied to the surface",
+      "remarks": "Surface is evaluated at normalized {uv} parameters",
+      "params": [
+        {
+          "name": "s",
+          "type": "Surface",
+          "doc": "The surface to act on.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A point if successful, or Nothing"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_EvSurface.htm"
+    },
+    {
+      "name": "SetCurveDistFromEndParam",
+      "signature": "protected bool SetCurveDistFromEndParam(Curve c, double t)",
+      "summary": "",
+      "params": [
+        {
+          "name": "c",
+          "type": "Curve",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_SetCurveDistFromEndParam.htm"
+    },
+    {
+      "name": "SetCurveDistFromStartParam",
+      "signature": "protected bool SetCurveDistFromStartParam(Curve c, double t)",
+      "summary": "",
+      "params": [
+        {
+          "name": "c",
+          "type": "Curve",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_SetCurveDistFromStartParam.htm"
+    },
+    {
+      "name": "SetCurveParam",
+      "signature": "public bool SetCurveParam(Curve c, double t)",
+      "summary": "Set the curve reference parameter based on the value of m_RefType and the curve parameter",
+      "params": [
+        {
+          "name": "c",
+          "type": "Curve",
+          "doc": "The curve to act on",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "The parameter on the curve domain which is to be translated",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_SetCurveParam.htm"
+    },
+    {
+      "name": "SetCurveRatioParam",
+      "signature": "protected bool SetCurveRatioParam(Curve c, double t)",
+      "summary": "",
+      "params": [
+        {
+          "name": "c",
+          "type": "Curve",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_SetCurveRatioParam.htm"
+    },
+    {
+      "name": "SetSurfaceParam",
+      "signature": "public bool SetSurfaceParam(Surface srf, double u, double v)",
+      "summary": "Set the surface reference parameters",
+      "params": [
+        {
+          "name": "srf",
+          "type": "Surface",
+          "doc": "The surface to act on",
+          "optional": false
+        },
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "The parameter on the surface u domain",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "The parameter on the surface v domain",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointRefData_SetSurfaceParam.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "m_RefID",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_PointRefData_m_RefID.htm"
+    },
+    {
+      "name": "m_RefIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_PointRefData_m_RefIndex.htm"
+    },
+    {
+      "name": "m_RefParam",
+      "type": "Double[]",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_PointRefData_m_RefParam.htm"
+    },
+    {
+      "name": "m_RefType",
+      "type": "GH_PointRefType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_PointRefData_m_RefType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

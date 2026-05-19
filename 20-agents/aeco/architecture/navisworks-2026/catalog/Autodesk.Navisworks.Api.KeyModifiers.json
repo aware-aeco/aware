@@ -1,0 +1,39 @@
+{
+  "name": "KeyModifiers",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Enumerates key modifiers used in input into Navisworks",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.KeyModifiers",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No modifier keys pressed"
+    },
+    {
+      "name": "Shift",
+      "value": 1,
+      "summary": "SHIFT modifier key pressed"
+    },
+    {
+      "name": "Alt",
+      "value": 2,
+      "summary": "ALT modifier keys pressed"
+    },
+    {
+      "name": "Ctrl",
+      "value": 4,
+      "summary": "CTRL modifier key pressed"
+    },
+    {
+      "name": "DoubleClick",
+      "value": 8,
+      "summary": "Double Click"
+    }
+  ]
+}

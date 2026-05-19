@@ -1,0 +1,141 @@
+{
+  "name": "GetCircle",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.GetCircle\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_GetCircle.htm",
+  "constructors": [
+    {
+      "name": "GetCircle",
+      "signature": "public GetCircle()",
+      "summary": "Initializes a new instance of the GetCircle class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCircle__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCircle_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCircle_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCircle_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public Result Get(out Circle circle)",
+      "summary": "Perform the \u0027get\u0027 operation.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "[Missing \u003Cparam name=\u0022circle\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetCircle.Get(Rhino.Geometry.Circle@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetCircle.Get(Rhino.Geometry.Circle@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCircle_Get.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowDeformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Allow for deformable options",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCircle_AllowDeformable.htm"
+    },
+    {
+      "name": "DefaultSize",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Default radius or diameter (based on InDiameterMode)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCircle_DefaultSize.htm"
+    },
+    {
+      "name": "Deformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Is the deformable option set",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCircle_Deformable.htm"
+    },
+    {
+      "name": "DeformableDegree",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCircle_DeformableDegree.htm"
+    },
+    {
+      "name": "DeformablePointCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCircle_DeformablePointCount.htm"
+    },
+    {
+      "name": "InDiameterMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the \u0022size\u0022 value is representing a radius or diameter",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCircle_InDiameterMode.htm"
+    },
+    {
+      "name": "UseActiveLayerLinetypeForCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCircle_UseActiveLayerLinetypeForCurves.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

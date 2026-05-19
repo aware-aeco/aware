@@ -1,0 +1,40 @@
+{
+  "name": "IEpsilonComparable\u003CT\u003E",
+  "namespace": "Rhino",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.IEpsilonComparable\u00601\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_IEpsilonComparable_1.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EpsilonEquals",
+      "signature": "bool EpsilonEquals(T other, double epsilon)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.IEpsilonComparable\u00601.EpsilonEquals(\u00600,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.IEpsilonComparable\u00601.EpsilonEquals(\u00600,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.IEpsilonComparable\u00601.EpsilonEquals(\u00600,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_IEpsilonComparable_1_EpsilonEquals.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

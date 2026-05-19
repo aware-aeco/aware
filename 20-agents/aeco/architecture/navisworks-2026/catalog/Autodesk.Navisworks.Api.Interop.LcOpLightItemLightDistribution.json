@@ -1,0 +1,30 @@
+{
+  "name": "LcOpLightItemLightDistribution",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLightItemLightDistribution enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDistribution",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDISTRIBUTION_ISOTROPIC",
+      "value": 0
+    },
+    {
+      "name": "eDISTRIBUTION_SPOT",
+      "value": 1
+    },
+    {
+      "name": "eDISTRIBUTION_DIFFUSE",
+      "value": 2
+    },
+    {
+      "name": "eDISTRIBUTION_WEB",
+      "value": 3
+    }
+  ]
+}

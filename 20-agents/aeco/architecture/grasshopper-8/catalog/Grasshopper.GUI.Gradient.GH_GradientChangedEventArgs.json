@@ -1,0 +1,53 @@
+{
+  "name": "GH_GradientChangedEventArgs",
+  "namespace": "Grasshopper.GUI.Gradient",
+  "kind": "class",
+  "summary": "Arguments for te GradientChanged event.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Gradient_GH_GradientChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_GradientChangedEventArgs",
+      "signature": "public GH_GradientChangedEventArgs(GH_Gradient gradient, bool intermediate)",
+      "summary": "Initializes a new instance of the GH_GradientChangedEventArgs class",
+      "params": [
+        {
+          "name": "gradient",
+          "type": "Grasshopper.GUI.Gradient.GH_Gradient",
+          "optional": false
+        },
+        {
+          "name": "intermediate",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_GradientChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Gradient",
+      "type": "GH_Gradient",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the gradient that raised this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_GradientChangedEventArgs_Gradient.htm"
+    },
+    {
+      "name": "Intermediate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this event is intermediate. I.e. whether it will be followed by another, similar event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_GradientChangedEventArgs_Intermediate.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

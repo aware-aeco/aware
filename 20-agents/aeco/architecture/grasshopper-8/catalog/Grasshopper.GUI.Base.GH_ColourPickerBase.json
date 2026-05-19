@@ -1,0 +1,451 @@
+{
+  "name": "GH_ColourPickerBase",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "Provides Colour picker GUI not tied to a control-handle.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_ColourPickerBase.htm",
+  "constructors": [
+    {
+      "name": "GH_ColourPickerBase",
+      "signature": "public GH_ColourPickerBase()",
+      "summary": "Create a new instance of the Colour Picker base control. This constructor assigns the default Colour space model and involves a call to the Grasshopper core settings server. You must call SetupColourPicker() prior to rendering this control on screen.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Invalidate",
+      "signature": "public void Invalidate()",
+      "summary": "Raise the Invalidated event.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_Invalidate.htm"
+    },
+    {
+      "name": "MouseClick",
+      "signature": "public bool MouseClick(MouseEventArgs args, PointF pt)",
+      "summary": "Respond to mouse-click events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a Drag operation was terminated, false if the event went unnoticed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_MouseClick.htm"
+    },
+    {
+      "name": "MouseDoubleClick",
+      "signature": "public bool MouseDoubleClick(MouseEventArgs args, PointF pt, Control owner, Matrix transform)",
+      "summary": "Respond to mouse-doubleclick events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        },
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Owner control for this colour-picker.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "System.Drawing.Drawing2D.Matrix",
+          "doc": "Display Transformation matrix of colour-picker.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_MouseDoubleClick.htm"
+    },
+    {
+      "name": "MouseDown",
+      "signature": "public bool MouseDown(MouseEventArgs args, PointF pt)",
+      "summary": "Respond to mouse-down events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a Drag operation was started, false if the event went unnoticed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_MouseDown.htm"
+    },
+    {
+      "name": "MouseMove",
+      "signature": "public bool MouseMove(MouseEventArgs args, PointF pt)",
+      "summary": "Respond to mouse-move events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a Drag operation was performed, false if the event went unnoticed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_MouseMove.htm"
+    },
+    {
+      "name": "MouseUp",
+      "signature": "public bool MouseUp(MouseEventArgs args, PointF pt)",
+      "summary": "Respond to mouse-up events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a Drag operation was terminated, false if the event went unnoticed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_MouseUp.htm"
+    },
+    {
+      "name": "OnColorChanged",
+      "signature": "public void OnColorChanged(bool intermediate)",
+      "summary": "Raise the ColorChanged event.",
+      "params": [
+        {
+          "name": "intermediate",
+          "type": "System.Boolean",
+          "doc": "Set the intermediate state of the event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_OnColorChanged.htm"
+    },
+    {
+      "name": "Render",
+      "signature": "public void Render(Graphics G)",
+      "summary": "Render this slider into a Graphics context.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics to render with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_Render.htm"
+    },
+    {
+      "name": "RespondToEnter",
+      "signature": "public GH_ToolstripItemKeyHandlerResult RespondToEnter()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_ToolstripItemKeyHandlerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_RespondToEnter.htm"
+    },
+    {
+      "name": "RespondToEscape",
+      "signature": "public GH_ToolstripItemKeyHandlerResult RespondToEscape()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_ToolstripItemKeyHandlerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_RespondToEscape.htm"
+    },
+    {
+      "name": "SetUiScaling",
+      "signature": "public void SetUiScaling(float factor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "factor",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_SetUiScaling.htm"
+    },
+    {
+      "name": "SetupColourPicker(Color, Point4d, GH_ColourSpace)",
+      "signature": "public void SetupColourPicker(Color col0, Point4d col1, GH_ColourSpace space)",
+      "summary": "Setup all UI elements.",
+      "params": [
+        {
+          "name": "col0",
+          "type": "System.Drawing.Color",
+          "doc": "Initial colour for this picker.",
+          "optional": false
+        },
+        {
+          "name": "col1",
+          "type": "Point4d",
+          "doc": "Active colour for this picker.",
+          "optional": false
+        },
+        {
+          "name": "space",
+          "type": "Grasshopper.GUI.Base.GH_ColourSpace",
+          "doc": "Colour space mode for this picker.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_SetupColourPicker.htm"
+    },
+    {
+      "name": "SetupColourPicker(Color, Color, GH_ColourSpace)",
+      "signature": "public void SetupColourPicker(Color col0, Color col1, GH_ColourSpace space)",
+      "summary": "Setup all UI elements.",
+      "params": [
+        {
+          "name": "col0",
+          "type": "System.Drawing.Color",
+          "doc": "Initial colour for this picker.",
+          "optional": false
+        },
+        {
+          "name": "col1",
+          "type": "System.Drawing.Color",
+          "doc": "Active colour for this picker.",
+          "optional": false
+        },
+        {
+          "name": "space",
+          "type": "Grasshopper.GUI.Base.GH_ColourSpace",
+          "doc": "Colour space mode for this picker.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ColourPickerBase_SetupColourPicker_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoSize",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the width and height of the Bounds are adjusted to fit the UI.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_AutoSize.htm"
+    },
+    {
+      "name": "BackColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the background colour of the picker.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_BackColour.htm"
+    },
+    {
+      "name": "BaseColour",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the original base colour for this picker. Use SetupColourPicker to assign this colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_BaseColour.htm"
+    },
+    {
+      "name": "Bounds",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Bounds for this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_Bounds.htm"
+    },
+    {
+      "name": "ColourSpace",
+      "type": "GH_ColourSpace",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Colour space mode used in this picker.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_ColourSpace.htm"
+    },
+    {
+      "name": "DesiredHeight",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ideal height for this colour picker given it\u0027s width and UI settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_DesiredHeight.htm"
+    },
+    {
+      "name": "DrawAlphaSlider",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether or not the alpha slider is included in the UI.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_DrawAlphaSlider.htm"
+    },
+    {
+      "name": "DrawBackground",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the background of the picker is drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_DrawBackground.htm"
+    },
+    {
+      "name": "DrawChannelSliders",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether or not the three basic channel sliders are included in the UI.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_DrawChannelSliders.htm"
+    },
+    {
+      "name": "DropperPreviewBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rectangle in which the eye-dropped preview will be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_DropperPreviewBox.htm"
+    },
+    {
+      "name": "Font",
+      "type": "Font",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Font used in this Colour Picker. Do not Dispose the Font returned by this property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_Font.htm"
+    },
+    {
+      "name": "IsTextInput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether any of the slider is currently displaying a text input box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_IsTextInput.htm"
+    },
+    {
+      "name": "Padding",
+      "type": "Padding",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Padding for this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_Padding.htm"
+    },
+    {
+      "name": "PickColour",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the picked colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_PickColour.htm"
+    },
+    {
+      "name": "SRCSpaceBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rectangle containing the eye-dropper function.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ColourPickerBase_SRCSpaceBox.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ColorChanged",
+      "delegate": "Grasshopper.GUI.Base.GH_ColourPickerBase.ColorChangedEventHandler",
+      "signature": "public event GH_ColourPickerBase.ColorChangedEventHandler ColorChanged",
+      "summary": "Raised whenever the color of this picker is changed due to User-Interface methods.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Base_GH_ColourPickerBase_ColorChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Invalidated",
+      "delegate": "Grasshopper.GUI.Base.GH_ColourPickerBase.InvalidatedEventHandler",
+      "signature": "public event GH_ColourPickerBase.InvalidatedEventHandler Invalidated",
+      "summary": "Raised whenever a redraw is required.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_Base_GH_ColourPickerBase_Invalidated.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,184 @@
+{
+  "name": "LcOpRmUtils",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpRmUtils class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRmUtils",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpRmUtils InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpRmUtils.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRmUtils",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpRmUtils.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetFetchPlaneCentre",
+      "signature": "static Autodesk.Navisworks.Api.Point3D GetFetchPlaneCentre(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, Autodesk.Navisworks.Api.Interop.LcLPlane3f plane)",
+      "summary": "GetFetchPlaneCentre method of LcOpRmUtils.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.GetFetchPlaneCentre%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CAutodesk.Navisworks.Api.Interop.LcLPlane3f%29"
+    },
+    {
+      "name": "GetLookAtPoint",
+      "signature": "static Autodesk.Navisworks.Api.Point3D GetLookAtPoint(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer)",
+      "summary": "GetLookAtPoint method of LcOpRmUtils.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.GetLookAtPoint%28Autodesk.Navisworks.Api.Interop.LcOaViewer%29"
+    },
+    {
+      "name": "IsPointInViewFrustum",
+      "signature": "static bool IsPointInViewFrustum(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "IsPointInViewFrustum method of LcOpRmUtils.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.IsPointInViewFrustum%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CAutodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "GetFocalDistance",
+      "signature": "static double GetFocalDistance(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer)",
+      "summary": "GetFocalDistance method of LcOpRmUtils.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.GetFocalDistance%28Autodesk.Navisworks.Api.Interop.LcOaViewer%29"
+    },
+    {
+      "name": "GetFrustumParameters",
+      "signature": "static void GetFrustumParameters(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, ref double near_max_size, ref double far_max_size)",
+      "summary": "GetFrustumParameters method of LcOpRmUtils.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "near_max_size",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "far_max_size",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.GetFrustumParameters%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CSystem.Double%40%2CSystem.Double%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpRmUtils.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpRmUtils.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

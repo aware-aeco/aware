@@ -1,0 +1,229 @@
+{
+  "name": "ClosedArea3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D closed area Representation class for 3D geometry area",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/",
+  "constructors": [
+    {
+      "name": "ClosedArea3D",
+      "signature": "ClosedArea3D() | ClosedArea3D(closedArea: ClosedArea3D)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddInnerCurve",
+      "signature": "AddInnerCurve(innerpath: Path2D) -\u003E bool",
+      "summary": "Add new inner curve",
+      "remarks": "Add new inner curve",
+      "params": [
+        {
+          "name": "innerpath",
+          "type": "Path2D",
+          "doc": "New inner curve ( Path2D )",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.AddInnerCurve"
+    },
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear all the components of this Profile",
+      "remarks": "Clear all the components of this Profile",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.Clear"
+    },
+    {
+      "name": "GetInnerCurve",
+      "signature": "GetInnerCurve(index: int) -\u003E Path2D",
+      "summary": "Get the curve of given index",
+      "remarks": "Get the curve of given index",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the inner curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Path2D",
+        "doc": "const reference to the curve ( Path2D )"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.GetInnerCurve"
+    },
+    {
+      "name": "GetInnerList",
+      "signature": "GetInnerList() -\u003E Path2DList",
+      "summary": "Get the list of the inner curves",
+      "remarks": "Get the list of the inner curves",
+      "params": [],
+      "returns": {
+        "type": "Path2DList",
+        "doc": "reference to a vector that contains the inner curves ( Path2D )"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.GetInnerList"
+    },
+    {
+      "name": "GetOuterCurve",
+      "signature": "GetOuterCurve() -\u003E Path2D",
+      "summary": "Get the outer curve of this profile",
+      "remarks": "Get the outer curve of this profile",
+      "params": [],
+      "returns": {
+        "type": "Path2D",
+        "doc": "const reference to outer curve ( Path2D )"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.GetOuterCurve"
+    },
+    {
+      "name": "GetRefPlacement",
+      "signature": "GetRefPlacement() -\u003E AxisPlacement3D",
+      "summary": "Get axis placement",
+      "remarks": "Get axis placement",
+      "params": [],
+      "returns": {
+        "type": "AxisPlacement3D",
+        "doc": "const reference to the reference axis placement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.GetRefPlacement"
+    },
+    {
+      "name": "InnerCount",
+      "signature": "InnerCount() -\u003E int",
+      "summary": "Get the count of inner curves",
+      "remarks": "Get the count of inner curves",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "count of inner curves"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.InnerCount"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Set Check the validity",
+      "remarks": "Set Check the validity",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if this Profile is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.IsValid"
+    },
+    {
+      "name": "SetOuterCurve",
+      "signature": "SetOuterCurve(outerpath: Path2D)",
+      "summary": "Set new Outer curve ( bounds )",
+      "remarks": "Set new Outer curve ( bounds )",
+      "params": [
+        {
+          "name": "outerpath",
+          "type": "Path2D",
+          "doc": "New outer curve ( Path2D )",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.SetOuterCurve"
+    },
+    {
+      "name": "SetRefPlacement",
+      "signature": "SetRefPlacement(placement: AxisPlacement3D)",
+      "summary": "Set axis placement",
+      "remarks": "Set axis placement",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "Reference axis placement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.SetRefPlacement"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(closedArea: ClosedArea3D) -\u003E object",
+      "summary": "Comparison of closedAreas without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of closedAreas without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "closedArea",
+          "type": "ClosedArea3D",
+          "doc": "Compared closedArea.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when closedAreas are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "RefPlacement",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the reference placement 3d as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/#NemAll_Python_Geometry.ClosedArea3D.RefPlacement"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

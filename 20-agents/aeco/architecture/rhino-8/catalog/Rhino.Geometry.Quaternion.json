@@ -1,0 +1,1118 @@
+{
+  "name": "Quaternion",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the four coefficient values in a quaternion. The first value a is the real part, while the rest multiplies i, j and k, that are imaginary.quaternion = a \u002B bi \u002B cj \u002B dk",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Quaternion.htm",
+  "constructors": [
+    {
+      "name": "Quaternion",
+      "signature": "public Quaternion(double a, double b, double c, double d)",
+      "summary": "Initializes a new quaternion with the provided coefficients.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Double",
+          "doc": "A number. This is the real part.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "doc": "Another number. This is the first coefficient of the imaginary part.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Double",
+          "doc": "Another number. This is the second coefficient of the imaginary part.",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "Another number. This is the third coefficient of the imaginary part.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFromRotationZYX",
+      "signature": "public static Quaternion CreateFromRotationZYX(double yaw, double pitch, double roll)",
+      "summary": "Constructs a quaternion defined by Tait-Byran angles, also loosely known as Euler angles.",
+      "remarks": "CreateFromRotationZYX(yaw, pitch, roll) = R_z(yaw) * R_y(pitch) * R_x(roll), where R_*(angle) is rotation of angle radians about the corresponding world coordinate axis.",
+      "params": [
+        {
+          "name": "yaw",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the ZAxis.",
+          "optional": false
+        },
+        {
+          "name": "pitch",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the YAxis.",
+          "optional": false
+        },
+        {
+          "name": "roll",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the XAxis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "The quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_CreateFromRotationZYX.htm"
+    },
+    {
+      "name": "CreateFromRotationZYZ",
+      "signature": "public static Quaternion CreateFromRotationZYZ(double alpha, double beta, double gamma)",
+      "summary": "Constructs a quaternion defined by Euler angles.",
+      "remarks": "CreateFromRotationZYZ(alpha, beta, gamma) = R_z(alpha) * R_y(beta) * R_z(gamma), where R_*(angle) is rotation of angle radians about the corresponding *-world coordinate axis.",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the ZAxis.",
+          "optional": false
+        },
+        {
+          "name": "beta",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the YAxis.",
+          "optional": false
+        },
+        {
+          "name": "gamma",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the ZAxis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "The quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_CreateFromRotationZYZ.htm"
+    },
+    {
+      "name": "CrossProduct",
+      "signature": "public static Quaternion CrossProduct(Quaternion p, Quaternion q)",
+      "summary": "Computes the vector cross product of p and q = (0,x,y,z), where (x,y,z) = CrossProduct(p.Vector,q.Vector).This is not the same as the quaternion product p*q.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_CrossProduct.htm"
+    },
+    {
+      "name": "Distance",
+      "signature": "public static double Distance(Quaternion p, Quaternion q)",
+      "summary": "Returns the distance or norm of the difference between two quaternions.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "(p - q).Length()"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Distance.htm"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "public double DistanceTo(Quaternion q)",
+      "summary": "Computes the distance or norm of the difference between this and another quaternion.",
+      "params": [
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "(this - q).Length."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_DistanceTo.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Quaternion other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Quaternion.EpsilonEquals(Rhino.Geometry.Quaternion,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Quaternion.EpsilonEquals(Rhino.Geometry.Quaternion,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Quaternion.EpsilonEquals(Rhino.Geometry.Quaternion,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether an object is a quaternion and has the same value of this quaternion.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "Another object to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a quaternion and has exactly equal coefficients; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Quaternion)",
+      "signature": "public bool Equals(Quaternion other)",
+      "summary": "Determines whether this quaternion has the same value of another quaternion.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the quaternions have exactly equal coefficients; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Equals.htm"
+    },
+    {
+      "name": "GetEulerZYZ",
+      "signature": "public bool GetEulerZYZ(out double alpha, out double beta, out double gamma)",
+      "summary": "Find the Euler angles for a rotation transformation.",
+      "remarks": "When true, this = RotationZYZ(alpha, beta, gamma) = R_z(alpha) * R_y(beta) * R_z(gamma), where R_*(angle) is rotation of angle radians about the corresponding *-world coordinate axis. alpha and gamma are in the range (-pi, pi], while beta in in the range [0, pi].",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the ZAxis.",
+          "optional": false
+        },
+        {
+          "name": "beta",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the YAxis.",
+          "optional": false
+        },
+        {
+          "name": "gamma",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the ZAxis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, or false if this is not a rotation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_GetEulerZYZ.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets a non-unique but repeatable hashing code for this quaternion.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A signed number."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_GetHashCode.htm"
+    },
+    {
+      "name": "GetRotation(Plane)",
+      "signature": "public bool GetRotation(out Plane plane)",
+      "summary": "Returns the frame created by applying the quaternion\u0027s rotation to the canonical world frame (1,0,0),(0,1,0),(0,0,1).",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane. This out value will be assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_GetRotation.htm"
+    },
+    {
+      "name": "GetRotation(Transform)",
+      "signature": "public bool GetRotation(out Transform xform)",
+      "summary": "Returns a transformation matrix that performs the rotation defined by the quaternion. The transformation returned by this method has the property that xform * V = q.Rotate(V). If the quaternion is not unitized, the rotation of its unitized form is returned.",
+      "remarks": "Do not confuse the result of this method the transformation matrix returned by MatrixForm().",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_GetRotation_1.htm"
+    },
+    {
+      "name": "GetRotation(Double, Vector3d)",
+      "signature": "public bool GetRotation(out double angle, out Vector3d axis)",
+      "summary": "Returns the rotation defined by the quaternion.",
+      "remarks": "If the quaternion is not unitized, the rotation of its unitized form is returned.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "An angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "unit axis of rotation of 0 if (b,c,d) is the zero vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_GetRotation_2.htm"
+    },
+    {
+      "name": "GetYawPitchRoll",
+      "signature": "public bool GetYawPitchRoll(out double yaw, out double pitch, out double roll)",
+      "summary": "Find sthe Tait-Byran angles, also loosely called Euler angles, for this quaternion.",
+      "remarks": "When true, this = RotationZYX(yaw, pitch, roll) = R_z(yaw) * R_y(pitch) * R_x(roll), where R_*(angle) is rotation of angle radians about the corresponding world coordinate axis. roll and yaw are in the range (-pi, pi], and pitch is in [-pi/2, pi/2].",
+      "params": [
+        {
+          "name": "yaw",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the ZAxis.",
+          "optional": false
+        },
+        {
+          "name": "pitch",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the YAxis.",
+          "optional": false
+        },
+        {
+          "name": "roll",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the XAxis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, or false if this is not a rotation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_GetYawPitchRoll.htm"
+    },
+    {
+      "name": "Invert",
+      "signature": "public bool Invert()",
+      "summary": "Modifies this quaternion to become (a/L2, -b/L2, -c/L2, -d/L2),where L2 = length squared = (a*a \u002B b*b \u002B c*c \u002B d*d).This is the multiplicative inverse, i.e., (a,b,c,d)*(a/L2, -b/L2, -c/L2, -d/L2) = (1,0,0,0).",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if the quaternion is zero and cannot be inverted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Invert.htm"
+    },
+    {
+      "name": "Lerp",
+      "signature": "public static Quaternion Lerp(Quaternion a, Quaternion b, double t)",
+      "summary": "Interpolates between two quaternions, using linear interpolation.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The first quaternion.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The second quaternion.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "The parameter in the range [0, 1].",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "The interpolated quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Lerp.htm"
+    },
+    {
+      "name": "MatrixForm",
+      "signature": "public Transform MatrixForm()",
+      "summary": "Returns 4x4 real valued matrix form of the quaternion a b c d -b a -d c -c d a -b -d -c b a which has the same arithmetic properties as the quaternion.",
+      "remarks": "Do not confuse this with the rotation defined by the quaternion. This function will only be interesting to math nerds and is not useful in rendering or animation applications.",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transform value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_MatrixForm.htm"
+    },
+    {
+      "name": "Product",
+      "signature": "public static Quaternion Product(Quaternion p, Quaternion q)",
+      "summary": "The quaternion product of p and q. This is the same value as p*q.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The first transform.",
+          "optional": false
+        },
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The second transform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A transform value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Product.htm"
+    },
+    {
+      "name": "Rotate",
+      "signature": "public Vector3d Rotate(Vector3d v)",
+      "summary": "Rotates a 3d vector. This operation is also called conjugation, because the result is the same as (q.Conjugate()*(0,x,y,x)*q/q.LengthSquared).Vector.",
+      "remarks": "If you need to rotate more than a dozen or so vectors, it will be more efficient to calculate the rotation matrix once and use it repeatedly.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The vector to be rotated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "R*v, where R is the rotation defined by the unit quaternion. This is mathematically the same as the values (Inverse(q)*(0,x,y,z)*q).Vector and (q.Conjugate()*(0,x,y,x)*q/q.LengthSquared).Vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Rotate.htm"
+    },
+    {
+      "name": "RotateTowards",
+      "signature": "public static Quaternion RotateTowards(Quaternion a, Quaternion b, double maxRadians)",
+      "summary": "Returns the quaternion obtained by rotating a towards b, limiting the rotation by MaxRadians.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The first quaternion.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The second quaternion.",
+          "optional": false
+        },
+        {
+          "name": "maxRadians",
+          "type": "System.Double",
+          "doc": "The maximum rotation in radians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "The rotated quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_RotateTowards.htm"
+    },
+    {
+      "name": "Rotation(Double, Vector3d)",
+      "signature": "public static Quaternion Rotation(double angle, Vector3d axisOfRotation)",
+      "summary": "Returns the unit quaternion cos(angle/2), sin(angle/2)*x, sin(angle/2)*y, sin(angle/2)*z where (x,y,z) is the unit vector parallel to axis. This is the unit quaternion that represents the rotation of angle about axis.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "An angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "axisOfRotation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Rotation_1.htm"
+    },
+    {
+      "name": "Rotation(Plane, Plane)",
+      "signature": "public static Quaternion Rotation(Plane plane0, Plane plane1)",
+      "summary": "Returns the unit quaternion that represents the rotation that maps plane0.xaxis to plane1.xaxis, plane0.yaxis to plane1.yaxis, and plane0.zaxis to plane1.zaxis.",
+      "remarks": "The plane origins are ignored",
+      "params": [
+        {
+          "name": "plane0",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The first plane.",
+          "optional": false
+        },
+        {
+          "name": "plane1",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The second plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A quaternion value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Rotation.htm"
+    },
+    {
+      "name": "Set",
+      "signature": "public void Set(double a, double b, double c, double d)",
+      "summary": "Sets all coefficients of the quaternion.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Quaternion.Set(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Quaternion.Set(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022c\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Quaternion.Set(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Quaternion.Set(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Set.htm"
+    },
+    {
+      "name": "SetRotation(Double, Vector3d)",
+      "signature": "public void SetRotation(double angle, Vector3d axisOfRotation)",
+      "summary": "Sets the quaternion to cos(angle/2), sin(angle/2)*x, sin(angle/2)*y, sin(angle/2)*z where (x,y,z) is the unit vector parallel to axis. This is the unit quaternion that represents the rotation of angle about axis.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "in radians.",
+          "optional": false
+        },
+        {
+          "name": "axisOfRotation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The direction of the axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_SetRotation_1.htm"
+    },
+    {
+      "name": "SetRotation(Plane, Plane)",
+      "signature": "public void SetRotation(Plane plane0, Plane plane1)",
+      "summary": "Sets the quaternion to the unit quaternion which rotates plane0.xaxis to plane1.xaxis, plane0.yaxis to plane1.yaxis, and plane0.zaxis to plane1.zaxis.",
+      "remarks": "The plane origins are ignored",
+      "params": [
+        {
+          "name": "plane0",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The \u0022from\u0022 rotation plane. Origin point is ignored.",
+          "optional": false
+        },
+        {
+          "name": "plane1",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The \u0022to\u0022 rotation plane. Origin point is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_SetRotation.htm"
+    },
+    {
+      "name": "Slerp",
+      "signature": "public static Quaternion Slerp(Quaternion a, Quaternion b, double t)",
+      "summary": "Interpolates between two quaternions, using spherical linear interpolation.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The first quaternion.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The second quaternion.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "The parameter in the range [0, 1].",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "The interpolated quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Slerp.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns a string representation of this Quaternion.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A textual representation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_ToString.htm"
+    },
+    {
+      "name": "Unitize",
+      "signature": "public bool Unitize()",
+      "summary": "Scales the quaternion\u0027s coordinates so that a*a \u002B b*b \u002B c*c \u002B d*d = 1.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if the quaternion is zero and cannot be unitized."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_Unitize.htm"
+    },
+    {
+      "name": "Addition",
+      "signature": "public static Quaternion operator \u002B(Quaternion a, Quaternion b)",
+      "summary": "Adds two quaternions. This sums each quaternion coefficient with its correspondent and returns a new result quaternion.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Addition.htm"
+    },
+    {
+      "name": "Division",
+      "signature": "public static Quaternion operator /(Quaternion q, double y)",
+      "summary": "Divides all quaternion coefficients by a factor and returns a new quaternion with the result.",
+      "params": [
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Division.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Quaternion a, Quaternion b)",
+      "summary": "Determines whether two quaternions have the same value.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the quaternions have exactly equal coefficients; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Quaternion a, Quaternion b)",
+      "summary": "Determines whether two quaternions have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the quaternions differ in any coefficient; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Inequality.htm"
+    },
+    {
+      "name": "Multiply(Quaternion, Quaternion)",
+      "signature": "public static Quaternion operator *(Quaternion a, Quaternion b)",
+      "summary": "Multiplies a quaternion with another one. Quaternion multiplication (Hamilton product) is not commutative.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The first term.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "The second term.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Quaternion, Double)",
+      "signature": "public static Quaternion operator *(Quaternion q, double x)",
+      "summary": "Multiplies (scales) all quaternion coefficients by a factor and returns a new quaternion with the result.",
+      "params": [
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Multiply_1.htm"
+    },
+    {
+      "name": "Multiply(Quaternion, Int32)",
+      "signature": "public static Quaternion operator *(Quaternion q, int x)",
+      "summary": "Multiplies (scales) all quaternion coefficients by a factor and returns a new quaternion with the result.",
+      "params": [
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Multiply_2.htm"
+    },
+    {
+      "name": "Multiply(Quaternion, Single)",
+      "signature": "public static Quaternion operator *(Quaternion q, float x)",
+      "summary": "Multiplies (scales) all quaternion coefficients by a factor and returns a new quaternion with the result.",
+      "params": [
+        {
+          "name": "q",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Multiply_3.htm"
+    },
+    {
+      "name": "Subtraction",
+      "signature": "public static Quaternion operator -(Quaternion a, Quaternion b)",
+      "summary": "Subtracts a quaternion from another one. This computes the difference of each quaternion coefficient with its correspondent and returns a new result quaternion.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "A quaternion.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Another quaternion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Quaternion",
+        "doc": "A new quaternion."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Quaternion_op_Subtraction.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the real part of the quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_A.htm"
+    },
+    {
+      "name": "B",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the first imaginary coefficient of the quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_B.htm"
+    },
+    {
+      "name": "C",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the second imaginary coefficient of the quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_C.htm"
+    },
+    {
+      "name": "Conjugate",
+      "type": "Quaternion",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a new quaternion that is the conjugate of this quaternion. This is (a,-b,-c,-d)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_Conjugate.htm"
+    },
+    {
+      "name": "D",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the third imaginary coefficient of the quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_D.htm"
+    },
+    {
+      "name": "I",
+      "type": "Quaternion",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the (0,1,0,0) quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_I.htm"
+    },
+    {
+      "name": "Identity",
+      "type": "Quaternion",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the (1,0,0,0) quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_Identity.htm"
+    },
+    {
+      "name": "Inverse",
+      "type": "Quaternion",
+      "getter": true,
+      "setter": false,
+      "summary": "Computes a new inverted quaternion, (a/L2, -b/L2, -c/L2, -d/L2),where L2 = length squared = (a*a \u002B b*b \u002B c*c \u002B d*d). This is the multiplicative inverse, i.e., (a,b,c,d)*(a/L2, -b/L2, -c/L2, -d/L2) = (1,0,0,0). If this is the zero quaternion, then the zero quaternion is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_Inverse.htm"
+    },
+    {
+      "name": "IsScalar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if b, c, and d are all zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_IsScalar.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the four coefficients are valid numbers within RhinoCommon. See IsValidDouble(Double).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_IsValid.htm"
+    },
+    {
+      "name": "IsVector",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if a = 0 and at least one of b, c, or d is not zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_IsVector.htm"
+    },
+    {
+      "name": "IsZero",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if a, b, c, and d are all zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_IsZero.htm"
+    },
+    {
+      "name": "J",
+      "type": "Quaternion",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the (0,0,1,0) quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_J.htm"
+    },
+    {
+      "name": "K",
+      "type": "Quaternion",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the (0,0,0,1) quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_K.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the length or norm of the quaternion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_Length.htm"
+    },
+    {
+      "name": "LengthSquared",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the result of (a^2 \u002B b^2 \u002B c^2 \u002B d^2).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_LengthSquared.htm"
+    },
+    {
+      "name": "Scalar",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The real (scalar) part of the quaternion This is A.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_Scalar.htm"
+    },
+    {
+      "name": "Vector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "The imaginary part of the quaternion (B,C,D)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_Vector.htm"
+    },
+    {
+      "name": "Zero",
+      "type": "Quaternion",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the default quaternion, where all coefficients are 0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Quaternion_Zero.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

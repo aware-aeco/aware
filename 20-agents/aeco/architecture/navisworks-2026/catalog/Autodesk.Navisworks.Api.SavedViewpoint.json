@@ -1,0 +1,184 @@
+{
+  "name": "SavedViewpoint",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A named saved viewpoint.",
+  "base": "Autodesk.Navisworks.Api.SavedItem",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SavedViewpoint",
+  "constructors": [
+    {
+      "name": "SavedViewpoint()",
+      "signature": "SavedViewpoint()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Exception when \u0027false\u0027"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedViewpoint.%23ctor"
+    },
+    {
+      "name": "SavedViewpoint(Autodesk.Navisworks.Api.Viewpoint)",
+      "signature": "SavedViewpoint(Autodesk.Navisworks.Api.Viewpoint viewpoint)",
+      "summary": "Initialize SavedViewpoint with a Viewpoint",
+      "params": [
+        {
+          "name": "viewpoint",
+          "type": "Autodesk.Navisworks.Api.Viewpoint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027viewpoint\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027viewpoint\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedViewpoint.%23ctor%28Autodesk.Navisworks.Api.Viewpoint%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAppearanceOverrides",
+      "signature": "Autodesk.Navisworks.Api.AppearanceOverrides GetAppearanceOverrides()",
+      "summary": "Gets material overrides for this SavedViewpoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.AppearanceOverrides",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedViewpoint.GetAppearanceOverrides"
+    },
+    {
+      "name": "EditRedlines",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRedlineList EditRedlines()",
+      "summary": "EditRedlines method of SavedViewpoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineList",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedViewpoint.EditRedlines"
+    },
+    {
+      "name": "GetVisibilityOverrides",
+      "signature": "Autodesk.Navisworks.Api.VisibilityOverrides GetVisibilityOverrides()",
+      "summary": "Gets visibility overrides for this SavedViewpoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VisibilityOverrides",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedViewpoint.GetVisibilityOverrides"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SavedViewpoint.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedViewpoint.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.SavedViewpoint InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SavedViewpoint.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedViewpoint.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ContainsAppearanceOverrides",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if this SavedViewpoint contains material overrides.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedViewpoint.ContainsAppearanceOverrides"
+    },
+    {
+      "name": "ContainsVisibilityOverrides",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if this SavedViewpoint contains visibility overrides.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedViewpoint.ContainsVisibilityOverrides"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedViewpoint.IsReadOnly"
+    },
+    {
+      "name": "Redlines",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineList",
+      "getter": true,
+      "setter": false,
+      "summary": "Redlines property of SavedViewpoint.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedViewpoint.Redlines"
+    },
+    {
+      "name": "Viewpoint",
+      "type": "Autodesk.Navisworks.Api.Viewpoint",
+      "getter": true,
+      "setter": false,
+      "summary": "Acesses the Viewpoint ascociated with this object.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedViewpoint.Viewpoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

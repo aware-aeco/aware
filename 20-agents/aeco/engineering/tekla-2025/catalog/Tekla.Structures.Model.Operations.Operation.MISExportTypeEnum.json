@@ -1,0 +1,39 @@
+{
+  "name": "Operation.MISExportTypeEnum",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "enum",
+  "summary": "The MIS export types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/011d6e9c-6827-b36b-a2bd-2cfb3a90c70d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DSTV",
+      "value": 0,
+      "summary": "The DSTV type."
+    },
+    {
+      "name": "KISS",
+      "value": 1,
+      "summary": "The KISS type."
+    },
+    {
+      "name": "EJE",
+      "value": 2,
+      "summary": "The EJE type."
+    },
+    {
+      "name": "EPC",
+      "value": 3,
+      "summary": "The EPC type."
+    },
+    {
+      "name": "STEEL2000",
+      "value": 4,
+      "summary": "The STEEL2000 type."
+    }
+  ]
+}

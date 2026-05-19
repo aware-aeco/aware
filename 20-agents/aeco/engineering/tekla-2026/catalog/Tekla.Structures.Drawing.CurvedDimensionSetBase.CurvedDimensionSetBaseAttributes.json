@@ -1,0 +1,140 @@
+{
+  "name": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CurvedDimensionSetBaseAttributes class contains the attributes for the curved dimensions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0f753e4c-b5ed-87df-f138-16e63f6dd96b",
+  "constructors": [
+    {
+      "name": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes()",
+      "signature": "public CurvedDimensionSetBaseAttributes()",
+      "summary": "Creates a new curved dimension set base attributes instance which loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a42acefd-4eac-141b-c030-878666e51be6"
+    },
+    {
+      "name": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes(String)",
+      "signature": "public CurvedDimensionSetBaseAttributes(string AttributesFile)",
+      "summary": "Creates a new curved dimension set base attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The attributes file\u0027s filename.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f900dde-9d7d-57a3-9da7-794e82753ecd"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/da11fa4f-a98d-c770-d0e2-f458bc3b82dc"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public abstract bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the specified file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file. Use only the filename, not the extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5597a575-45e2-aa83-6576-390f23af3e48"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Arrowhead",
+      "type": "ArrowheadAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c332baa-e78d-9f49-d545-06db80ded057"
+    },
+    {
+      "name": "Color",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the dimension line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3a7bd26a-cd08-2c1a-acba-2e7f94097b15"
+    },
+    {
+      "name": "Format",
+      "type": "DimensionSetBaseAttributes.DimensionFormatAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The format attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fd6dddef-6baa-38c4-6cdc-7e0160288d45"
+    },
+    {
+      "name": "Placing",
+      "type": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ba9881d-4209-effd-6196-617b4cf9ddfe"
+    },
+    {
+      "name": "Text",
+      "type": "DimensionSetBaseAttributes.DimensionTextAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The text attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4839ad95-c254-dcce-3452-d28af56facd4"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension text background transparency. (transparent/opaque)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bca2692c-a7f6-294b-6193-21843d7a31eb"
+    },
+    {
+      "name": "TrueColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (RGB enabled) of the dimension line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6bbcbdef-4946-63a4-b32f-687678147016"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

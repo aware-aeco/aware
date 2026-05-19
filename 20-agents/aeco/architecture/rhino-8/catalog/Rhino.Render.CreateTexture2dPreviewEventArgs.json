@@ -1,0 +1,31 @@
+{
+  "name": "CreateTexture2dPreviewEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.CreateTexture2dPreviewEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CreateTexture2dPreviewEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PreviewImage",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "Initially null. If this image is set, then this image will be used for the preview. If never set, the default internal simulation preview will be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CreateTexture2dPreviewEventArgs_PreviewImage.htm"
+    },
+    {
+      "name": "PreviewImageSize",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Pixel size of the image that is being requested for the preview scene",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CreateTexture2dPreviewEventArgs_PreviewImageSize.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

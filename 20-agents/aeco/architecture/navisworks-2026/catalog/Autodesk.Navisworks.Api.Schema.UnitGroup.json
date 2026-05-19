@@ -1,0 +1,39 @@
+{
+  "name": "UnitGroup",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "enum",
+  "summary": "Represents the unit group (eg. length, volume, angle, etc) of the field value.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.UnitGroup",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No unit group specified (default)."
+    },
+    {
+      "name": "Length",
+      "value": 8192,
+      "summary": "Unit group is length."
+    },
+    {
+      "name": "Area",
+      "value": 12288,
+      "summary": "Unit group is area."
+    },
+    {
+      "name": "Volume",
+      "value": 16384,
+      "summary": "Unit group is volume."
+    },
+    {
+      "name": "Angle",
+      "value": 32768,
+      "summary": "Unit group is angle."
+    }
+  ]
+}

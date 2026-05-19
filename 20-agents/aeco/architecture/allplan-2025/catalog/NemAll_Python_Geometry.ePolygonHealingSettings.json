@@ -1,0 +1,23 @@
+{
+  "name": "ePolygonHealingSettings",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Type of Healing settings for polygon",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ePolygonHealingSettings/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PHSET_NOMODIFY",
+      "value": 0
+    },
+    {
+      "name": "PHSET_NORMALIZE",
+      "value": 1
+    }
+  ]
+}

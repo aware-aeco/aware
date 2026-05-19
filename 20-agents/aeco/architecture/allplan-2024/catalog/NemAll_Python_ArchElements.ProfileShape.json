@@ -1,0 +1,34 @@
+{
+  "name": "ProfileShape",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.ProfileShape.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileShape/",
+  "constructors": [
+    {
+      "name": "ProfileShape",
+      "signature": "ProfileShape(arg2)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileShape/#NemAll_Python_ArchElements.ProfileShape.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ProfilePath",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the profile path) :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileShape/#NemAll_Python_ArchElements.ProfileShape.ProfilePath"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

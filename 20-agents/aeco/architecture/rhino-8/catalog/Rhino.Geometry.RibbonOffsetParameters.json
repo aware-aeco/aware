@@ -1,0 +1,97 @@
+{
+  "name": "RibbonOffsetParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Advanced parameters for RibbonOffset Parameters mimic the RibbonOffset Command.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_RibbonOffsetParameters.htm",
+  "constructors": [
+    {
+      "name": "RibbonOffsetParameters",
+      "signature": "public RibbonOffsetParameters()",
+      "summary": "Initializes a new instance of the RibbonOffsetParameters class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RibbonOffsetParameters__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AlignCrossSections",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When false: cross section slashes between input and output curve are located at the ends of ruled spans. When true: cross section slashes between input and output curve are located at the mid points of ruled spans and blends.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_AlignCrossSections.htm"
+    },
+    {
+      "name": "BlendRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Positive, typically the same as distance. When the offset results in a self-intersection that gets trimmed off at a kink, the kink will be blended out using this radius.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_BlendRadius.htm"
+    },
+    {
+      "name": "OffsetDistance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Offset curve distance from input curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_OffsetDistance.htm"
+    },
+    {
+      "name": "OffsetLocation",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Inside or Outside point location",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_OffsetLocation.htm"
+    },
+    {
+      "name": "OffsetPlaneVector3d",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "A vector that indicates the normal of the plane in which the offset will occur. This vector is typically similar to a logical extrude direction for the closed input curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_OffsetPlaneVector3d.htm"
+    },
+    {
+      "name": "OffsetTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Used to determine self-intersections of offset curve, not offset error.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_OffsetTolerance.htm"
+    },
+    {
+      "name": "RebuildPointCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Rebuild offset curve with defined number of control points 0 for disabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_RebuildPointCount.htm"
+    },
+    {
+      "name": "RefitTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Refit the offset curve to a specified tolerance 0 for disabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_RefitTolerance.htm"
+    },
+    {
+      "name": "RibbonSurfaceGenerationMethod",
+      "type": "RibbonOffsetSurfaceMethod",
+      "getter": true,
+      "setter": true,
+      "summary": "0 - no surfaces will be created, curves only 1 - Simple Sweep 2 2 - Sweep 2 mixed with NetworkSrf corners",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RibbonOffsetParameters_RibbonSurfaceGenerationMethod.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,98 @@
+{
+  "name": "AssemblyLoadedHandler",
+  "namespace": "Dynamo.Models.NodeModelAssemblyLoader",
+  "kind": "delegate",
+  "summary": "Type AssemblyLoadedHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs",
+  "constructors": [
+    {
+      "name": "AssemblyLoadedHandler(object, IntPtr)",
+      "signature": "void AssemblyLoadedHandler(object object, IntPtr method)",
+      "summary": "AssemblyLoadedHandler.AssemblyLoadedHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedEventArgs, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedEventArgs args, System.AsyncCallback callback, object object)",
+      "summary": "AssemblyLoadedHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "args",
+          "type": "Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedEventArgs",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "AssemblyLoadedHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedEventArgs)",
+      "signature": "void Invoke(Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedEventArgs args)",
+      "summary": "AssemblyLoadedHandler.Invoke",
+      "params": [
+        {
+          "name": "args",
+          "type": "Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedEventArgs args)"
+}

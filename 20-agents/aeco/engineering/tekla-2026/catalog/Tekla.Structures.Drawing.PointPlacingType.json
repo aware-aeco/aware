@@ -1,0 +1,25 @@
+{
+  "name": "PointPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PointPlacingType class defines a placing type where the object is placed at one point (the insertion point) without any additional placing options.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a6e0ca36-fefa-9b75-fd24-f764eab84ec0",
+  "constructors": [
+    {
+      "name": "PointPlacingType",
+      "signature": "public PointPlacingType()",
+      "summary": "Creates a new point placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a011c1c7-ec3a-b33a-3257-c525cab0c4b9"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

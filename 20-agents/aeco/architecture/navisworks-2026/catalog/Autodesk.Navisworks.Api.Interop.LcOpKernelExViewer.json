@@ -1,0 +1,172 @@
+{
+  "name": "LcOpKernelExViewer",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpKernelExViewer class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpKernelToolViewer",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpKernelExViewer",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetHelpIdForHighlight",
+      "signature": "bool GetHelpIdForHighlight(out string buffer)",
+      "summary": "GetHelpIdForHighlight method of LcOpKernelExViewer.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.GetHelpIdForHighlight%28System.String%40%29"
+    },
+    {
+      "name": "IsStereoAvailable",
+      "signature": "bool IsStereoAvailable()",
+      "summary": "IsStereoAvailable method of LcOpKernelExViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.IsStereoAvailable"
+    },
+    {
+      "name": "IsUsingStereo",
+      "signature": "bool IsUsingStereo()",
+      "summary": "IsUsingStereo method of LcOpKernelExViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.IsUsingStereo"
+    },
+    {
+      "name": "GetManagedView",
+      "signature": "nint GetManagedView()",
+      "summary": "GetManagedView method of LcOpKernelExViewer.",
+      "params": [],
+      "returns": {
+        "type": "nint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.GetManagedView"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpKernelExViewer InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpKernelExViewer.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelExViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpKernelExViewer.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "DoFocusOnCurrentSelection",
+      "signature": "void DoFocusOnCurrentSelection()",
+      "summary": "DoFocusOnCurrentSelection method of LcOpKernelExViewer.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.DoFocusOnCurrentSelection"
+    },
+    {
+      "name": "LookFrom",
+      "signature": "void LookFrom(Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection from)",
+      "summary": "LookFrom method of LcOpKernelExViewer.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.LookFrom%28Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection%29"
+    },
+    {
+      "name": "SetManagedView",
+      "signature": "void SetManagedView(nint handle)",
+      "summary": "SetManagedView method of LcOpKernelExViewer.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.SetManagedView%28System.IntPtr%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpKernelExViewer.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,134 @@
+{
+  "name": "PatternCurveProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "PatternCurveProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/",
+  "constructors": [
+    {
+      "name": "PatternCurveProperties",
+      "signature": "PatternCurveProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "PatternCurveProperties",
+          "doc": "PatternCurveProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AlignmentType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for alignment type :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.AlignmentType"
+    },
+    {
+      "name": "Height",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for height of pattern :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.Height"
+    },
+    {
+      "name": "IntersectionType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for intersection type :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.IntersectionType"
+    },
+    {
+      "name": "IsDrawReferenceCurve",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for draw reference curve state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.IsDrawReferenceCurve"
+    },
+    {
+      "name": "IsLockedToCorner",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for locked to corner state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.IsLockedToCorner"
+    },
+    {
+      "name": "IsMirrorPattern",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for mirror pattern state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.IsMirrorPattern"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for scale dependent :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.IsScaleDependent"
+    },
+    {
+      "name": "PatternID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for pattern ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.PatternID"
+    },
+    {
+      "name": "Width",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for width of pattern :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/#NemAll_Python_BasisElements.PatternCurveProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,128 @@
+{
+  "name": "DetailMarkTagsAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DetailMarkTagsAttributes class contains attributes for detail mark tags.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/82466df4-79d8-486e-cdbe-c58c38a329c1",
+  "constructors": [
+    {
+      "name": "DetailMarkTagsAttributes()",
+      "signature": "public DetailMarkTagsAttributes()",
+      "summary": "Creates a new mark tags attributes instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff2124aa-bdcc-8ffb-46f8-2e8269c50735"
+    },
+    {
+      "name": "DetailMarkTagsAttributes(ViewMarkBasicTagAttributes, ViewMarkBasicTagAttributes, ViewMarkBasicTagAttributes, ViewMarkBasicTagAttributes, ViewMarkBasicTagAttributes)",
+      "signature": "public DetailMarkTagsAttributes(ViewMarkBasicTagAttributes tagA1, ViewMarkBasicTagAttributes tagA2, ViewMarkBasicTagAttributes tagA3, ViewMarkBasicTagAttributes tagA4, ViewMarkBasicTagAttributes tagA5)",
+      "summary": "Creates a new mark tags attributes instance.",
+      "params": [
+        {
+          "name": "tagA1",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A1.",
+          "optional": false
+        },
+        {
+          "name": "tagA2",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A2.",
+          "optional": false
+        },
+        {
+          "name": "tagA3",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A3.",
+          "optional": false
+        },
+        {
+          "name": "tagA4",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A4.",
+          "optional": false
+        },
+        {
+          "name": "tagA5",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A5.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0ee79b9d-d98f-096f-de70-ed5ae0c40141"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/14044383-871a-2de6-0df0-017a86ee81de"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TagA1",
+      "type": "ViewMarkBasicTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A1 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8be62553-b9b0-1058-de7d-4ef4044813a4"
+    },
+    {
+      "name": "TagA2",
+      "type": "ViewMarkBasicTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A2 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a7d8746e-5d6e-1f4c-981d-05f6e918f194"
+    },
+    {
+      "name": "TagA3",
+      "type": "ViewMarkBasicTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A3 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7887022f-12f4-387a-ec27-91b4a4bb0b3c"
+    },
+    {
+      "name": "TagA4",
+      "type": "ViewMarkBasicTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A4 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dec25b99-03d1-a27a-6131-ba0f0bf5a456"
+    },
+    {
+      "name": "TagA5",
+      "type": "ViewMarkBasicTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A5 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9d1d2871-cb34-88b5-f8c5-3cfcf82c294f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

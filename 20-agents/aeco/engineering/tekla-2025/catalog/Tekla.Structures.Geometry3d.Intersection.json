@@ -1,0 +1,171 @@
+{
+  "name": "Intersection",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The Intersection class contains methods for calculating intersections between geometric objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/35693308-f07a-d279-aaf9-a56b86cd7d5f",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LineSegmentToObb",
+      "signature": "public static LineSegment LineSegmentToObb(LineSegment lineSegment, OBB obb)",
+      "summary": "Returns a new line segment which is an intersection of the given line segment and the oriented bounding box or null if the line segment and oriented bounding box do not intersect.",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "Line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "obb",
+          "type": "Tekla.Structures.Geometry3d.OBB",
+          "doc": "Oriented bounding box to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "The intersection line segment or null if no intersection was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e8e3d881-f138-39fc-4d4e-11b314c5c563"
+    },
+    {
+      "name": "LineSegmentToPlane",
+      "signature": "public static Point LineSegmentToPlane(LineSegment lineSegment, GeometricPlane plane)",
+      "summary": "Returns a new point which is an intersection of the given line segment and plane or null if the line segment and the plane are parallel or do not intersect.",
+      "params": [
+        {
+          "name": "lineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The intersection point or null if no intersection was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0225ef4f-26b0-b781-547c-eaaa48b705ce"
+    },
+    {
+      "name": "LineToLine",
+      "signature": "public static LineSegment LineToLine(Line line1, Line line2)",
+      "summary": "Returns a new line segment which is the shortest path between the given lines or null if the lines are parallel. If the resulting line segment has a length of 0.0, the given lines actually intersect in 3d space.",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The first line to be used.",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The second line to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "The shortest line segment between the given lines or null if the lines are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/36ab76a6-451c-6982-4ab2-eaf927e916d9"
+    },
+    {
+      "name": "LineToObb",
+      "signature": "public static LineSegment LineToObb(Line line, OBB obb)",
+      "summary": "Returns a new line segment which is an intersection of the given line and the oriented bounding box or null if the line and oriented bounding box do not intersect.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "Line to be used.",
+          "optional": false
+        },
+        {
+          "name": "obb",
+          "type": "Tekla.Structures.Geometry3d.OBB",
+          "doc": "Oriented bounding box to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "The intersection line segment or null if no intersection was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9fbd9b8f-a9f9-17d7-4ae9-4b3c53c84b9f"
+    },
+    {
+      "name": "LineToPlane",
+      "signature": "public static Point LineToPlane(Line line, GeometricPlane plane)",
+      "summary": "Returns a new point which is an intersection of the given line and plane or null if the line and the plane are parallel.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line to be used.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The intersection point or null if no intersection was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0600c85a-e9a9-ce7a-694e-d76674556e8c"
+    },
+    {
+      "name": "PlaneToPlane",
+      "signature": "public static Line PlaneToPlane(GeometricPlane plane1, GeometricPlane plane2)",
+      "summary": "Returns a new line which is an intersection of the given two planes or null if the planes are parallel.",
+      "params": [
+        {
+          "name": "plane1",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The first plane to be used.",
+          "optional": false
+        },
+        {
+          "name": "plane2",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The second plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "The intersection line or null if no intersection was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc70bcb0-7baf-4576-7fad-72dfacb97b61"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

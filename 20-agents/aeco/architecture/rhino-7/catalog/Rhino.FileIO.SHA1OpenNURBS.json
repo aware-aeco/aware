@@ -1,0 +1,102 @@
+{
+  "name": "SHA1OpenNURBS",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Provides the OpenNURBS implementation of SHA1. This class is provided only with the purpose of hashing. It is not meant to be used for any cryptographic purpose.",
+  "base": "SHA1",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_SHA1OpenNURBS.htm",
+  "constructors": [
+    {
+      "name": "SHA1OpenNURBS",
+      "signature": "public SHA1OpenNURBS()",
+      "summary": "Constructs a new instance of the SHA1 algorithm.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_SHA1OpenNURBS__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FileSystemPathHash",
+      "signature": "public static byte[] FileSystemPathHash(string path, Nullable\u003Cbool\u003E ignoreCase = null)",
+      "summary": "Computes the SHA1 hash of a file system path, converted to UTF8. These file system paths have identical values of FileSystemPathHash():/x/y/z/name.ext\\x\\y\\z\\name.ext/x//y//z/name.ext/x/y/a/b/c/../../../z/name.ext/X/Y/Z/NAME.EXT (When ignoreCase is true)",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "A non-null path string.",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Nullable\u003CBoolean\u003E",
+          "doc": "If case should be ignored. If this is null or unspecified, the operating system default is used.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "A 20-byte long SHA1 hash."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When input is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_SHA1OpenNURBS_FileSystemPathHash.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Instructs the runtime to reclaim unmanaged resources if the developer forgot to call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_SHA1OpenNURBS_Finalize.htm"
+    },
+    {
+      "name": "Initialize",
+      "signature": "public override void Initialize()",
+      "summary": "Resets this instance of the algorithm, so that it can be used again. It is not required to call this method after creation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_SHA1OpenNURBS_Initialize.htm"
+    },
+    {
+      "name": "StringHash",
+      "signature": "public static byte[] StringHash(string input)",
+      "summary": "Computes the SHA1 hash of a string, converted to UTF8.",
+      "params": [
+        {
+          "name": "input",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022input\u0022/\u003E documentation for \u0022M:Rhino.FileIO.SHA1OpenNURBS.StringHash(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "A 20-byte long SHA1 hash."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When input is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_SHA1OpenNURBS_StringHash.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

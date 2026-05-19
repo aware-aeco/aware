@@ -1,0 +1,34 @@
+{
+  "name": "AutoDrawingsStatusEnum",
+  "namespace": "Tekla.Structures.Drawing.Automation",
+  "kind": "enum",
+  "summary": "The status of the AutoDrawing script execution.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/23152b18-adf3-1cd5-e9c7-0d6d3278d1d8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OPERATION_OK",
+      "value": 0,
+      "summary": "The AutoDrawing script was executed without errors."
+    },
+    {
+      "name": "OPERATION_FAILED",
+      "value": 1,
+      "summary": "An error occured during the AutoDrawing script execution. See the AutoDrawing log file for more details."
+    },
+    {
+      "name": "ERROR_NUMBERING_NOT_UPTODATE",
+      "value": 2,
+      "summary": "The AutoDrawing script could not be executed because the numbering was not up-to-date."
+    },
+    {
+      "name": "ERROR_DRAWING_EDITOR_MUST_BE_CLOSED",
+      "value": 3,
+      "summary": "The command could not be executed because a drawing was open. Close the drawing and try again."
+    }
+  ]
+}

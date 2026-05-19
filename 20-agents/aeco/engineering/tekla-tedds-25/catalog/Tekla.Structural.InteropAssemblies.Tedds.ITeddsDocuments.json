@@ -1,0 +1,182 @@
+{
+  "name": "ITeddsDocuments",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for a collection of open documents",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iteddsdocuments-41839",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add()",
+      "signature": "ITeddsDocument Add()",
+      "summary": "Add a new document",
+      "remarks": "Adding a new document will prompt the user to choose the calculation they want to use and the document will be calculated.",
+      "params": [],
+      "returns": {
+        "type": "ITeddsDocument",
+        "doc": "The new document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/6668469fd04a141cd73e6529dad1efe590488f4d0bdaa6a784e210e293e14303"
+    },
+    {
+      "name": "Add2(string, string, string)",
+      "signature": "ITeddsDocument Add2(string libraryFileName, string libraryItemName, string VariablesXml)",
+      "summary": "Add a new document using the specified Calc Item and input variables",
+      "params": [
+        {
+          "name": "libraryFileName",
+          "type": "string",
+          "doc": "Name of the Calc Library file in which the Calc Item exists",
+          "optional": false
+        },
+        {
+          "name": "libraryItemName",
+          "type": "string",
+          "doc": "Short name of the Calc Item which is used to start the calculation",
+          "optional": false
+        },
+        {
+          "name": "VariablesXml",
+          "type": "string",
+          "doc": "Input variables for the document which have been created using an existing document or via the Tedds Calculator API.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ITeddsDocument",
+        "doc": "The new document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/52340a54a523df5fdc8cb0ca66f6b53c9d4b29ef1801af9f43a414a1153b48f3"
+    },
+    {
+      "name": "Add3(string, string, string, string, string)",
+      "signature": "ITeddsDocument Add3(string documentName, string libraryFileName, string libraryItemName, string VariablesXml, string outputRtf)",
+      "summary": "Add a new document using the specified Calc Item, input variables and pre-calculated RTF",
+      "remarks": "The input variables XML and the output RTF can be directly retrieved by using the Tedds Calculator API.",
+      "params": [
+        {
+          "name": "documentName",
+          "type": "string",
+          "doc": "Name for the new document",
+          "optional": false
+        },
+        {
+          "name": "libraryFileName",
+          "type": "string",
+          "doc": "Name of the Calc Library file in which the Calc Item exists",
+          "optional": false
+        },
+        {
+          "name": "libraryItemName",
+          "type": "string",
+          "doc": "Short name of the Calc Item which is used to start the calculation",
+          "optional": false
+        },
+        {
+          "name": "VariablesXml",
+          "type": "string",
+          "doc": "Input variables for the document which have been created using an existing document or via the Tedds Calculator API .",
+          "optional": false
+        },
+        {
+          "name": "outputRtf",
+          "type": "string",
+          "doc": "Output in RTF format which has been retrieved from an existing document or via the Tedds Calculator API.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ITeddsDocument",
+        "doc": "The new document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/8100f1a6190a880e4f0e983d9526421c00fce8b535031f5d4907624881e6269b"
+    },
+    {
+      "name": "Close(bool)",
+      "signature": "void Close(bool SaveChanges)",
+      "summary": "Close all documents",
+      "params": [
+        {
+          "name": "SaveChanges",
+          "type": "bool",
+          "doc": "false to discard unsaved changes; otherwise save changes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/571eec996e9813b9de40df102b3714e8411d30cea66a20bd60ae4a02ab117a43"
+    },
+    {
+      "name": "GetEnumerator()",
+      "signature": "IEnumerator GetEnumerator()",
+      "summary": "Enumeration interface for iterating the items in the collection",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "Enumeration interface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/e752a76a0ddcc4bf3d07e87f81b98a0244b2b5d6e7c9ae6dff083f32dd92d25f"
+    },
+    {
+      "name": "Open(string)",
+      "signature": "ITeddsDocument Open(string FilePath)",
+      "summary": "Open an existing document",
+      "params": [
+        {
+          "name": "FilePath",
+          "type": "string",
+          "doc": "Full path and file name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ITeddsDocument",
+        "doc": "Open document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/b234bdbd437e001a0180baabb7f5d3333b3123c55ead97950944871041ce3c4e"
+    },
+    {
+      "name": "Save()",
+      "signature": "void Save()",
+      "summary": "Saved changes to all open documents",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/dd7411ea67dd1c4b29dc84eb203fde9aec82902a2ae0a156504af837f34f6535"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of documents in the collection",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/569ea41a21022c206e6abc8cb3067bff5ec3d7ca8a80b781e4b4ef81be65d352"
+    },
+    {
+      "name": "this[object]",
+      "type": "ITeddsDocument",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a single document in the collection",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/c3e7caa9d5d793bf8527e1c367674747177510779948edc3adabfbeeb0a48cf7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

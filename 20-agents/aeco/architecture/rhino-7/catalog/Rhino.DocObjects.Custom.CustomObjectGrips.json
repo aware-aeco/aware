@@ -1,0 +1,320 @@
+{
+  "name": "CustomObjectGrips",
+  "namespace": "Rhino.DocObjects.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Custom.CustomObjectGrips\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Custom_CustomObjectGrips.htm",
+  "constructors": [
+    {
+      "name": "CustomObjectGrips",
+      "signature": "protected CustomObjectGrips()",
+      "summary": "Initializes a new instance of the CustomObjectGrips class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddGrip",
+      "signature": "protected void AddGrip(CustomGripObject grip)",
+      "summary": "",
+      "params": [
+        {
+          "name": "grip",
+          "type": "Rhino.DocObjects.Custom.CustomGripObject",
+          "doc": "[Missing \u003Cparam name=\u0022grip\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Custom.CustomObjectGrips.AddGrip(Rhino.DocObjects.Custom.CustomGripObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_AddGrip.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the CustomObjectGrips",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the CustomObjectGrips and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_Dispose_1.htm"
+    },
+    {
+      "name": "Dragging",
+      "signature": "public static bool Dragging()",
+      "summary": "Determines if grips are currently being dragged.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if grips are dragged."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_Dragging.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_Finalize.htm"
+    },
+    {
+      "name": "Grip",
+      "signature": "public CustomGripObject Grip(int index)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Custom.CustomObjectGrips.Grip(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CustomGripObject",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Custom.CustomObjectGrips.Grip(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_Grip.htm"
+    },
+    {
+      "name": "NeighborGrip",
+      "signature": "protected virtual GripObject NeighborGrip(int gripIndex, int dr, int ds, int dt, bool wrap)",
+      "summary": "Get neighbors.",
+      "params": [
+        {
+          "name": "gripIndex",
+          "type": "System.Int32",
+          "doc": "index of grip where the search begins.",
+          "optional": false
+        },
+        {
+          "name": "dr",
+          "type": "System.Int32",
+          "doc": "1 = next grip in the first parameter direction.-1 = previous grip in the first parameter direction.",
+          "optional": false
+        },
+        {
+          "name": "ds",
+          "type": "System.Int32",
+          "doc": "1 = next grip in the second parameter direction.-1 = previous grip in the second parameter direction.",
+          "optional": false
+        },
+        {
+          "name": "dt",
+          "type": "System.Int32",
+          "doc": "1 = next grip in the third parameter direction.-1 = rev grip in the third parameter direction.",
+          "optional": false
+        },
+        {
+          "name": "wrap",
+          "type": "System.Boolean",
+          "doc": "If true and object is \u0022closed\u0022, the search will wrap.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GripObject",
+        "doc": "Pointer to the desired neighbor or NULL if there is no neighbor."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_NeighborGrip.htm"
+    },
+    {
+      "name": "NewGeometry",
+      "signature": "protected virtual GeometryBase NewGeometry()",
+      "summary": "If the grips control just one object, then override NewGeometry(). When NewGeometry() is called, return new geometry calculated from the current grip locations. This happens once at the end of a grip drag.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "The new geometry. The default implementation returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_NewGeometry.htm"
+    },
+    {
+      "name": "NurbsSurface",
+      "signature": "protected virtual NurbsSurface NurbsSurface()",
+      "summary": "If the grips control a NURBS surface, this returns a pointer to that surface. You can look at but you must NEVER change this surface.",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A pointer to a NURBS surface or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_NurbsSurface.htm"
+    },
+    {
+      "name": "NurbsSurfaceGrip",
+      "signature": "protected virtual GripObject NurbsSurfaceGrip(int i, int j)",
+      "summary": "If the grips are control points of a NURBS surface, then this gets the index of the grip that controls the (i,j)-th CV.",
+      "params": [
+        {
+          "name": "i",
+          "type": "System.Int32",
+          "doc": "The index in the first dimension.",
+          "optional": false
+        },
+        {
+          "name": "j",
+          "type": "System.Int32",
+          "doc": "The index in the second dimension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GripObject",
+        "doc": "A grip controlling a NURBS surface CV or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_NurbsSurfaceGrip.htm"
+    },
+    {
+      "name": "OnDraw",
+      "signature": "protected virtual void OnDraw(GripsDrawEventArgs args)",
+      "summary": "Draws the grips. In your implementation, override this if you need to draw dynamic elements and then call this base implementation to draw the grips themselves.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Rhino.DocObjects.Custom.GripsDrawEventArgs",
+          "doc": "The grips draw event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_OnDraw.htm"
+    },
+    {
+      "name": "OnReset",
+      "signature": "protected virtual void OnReset()",
+      "summary": "Resets location of all grips to original spots and cleans up stuff that was created by dynamic dragging. This is required when dragging is canceled or in the Copy command when grips are \u0022copied\u0022. The override should clean up dynamic workspace stuff.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_OnReset.htm"
+    },
+    {
+      "name": "OnResetMeshes",
+      "signature": "protected virtual void OnResetMeshes()",
+      "summary": "Just before Rhino turns off object grips, it calls this function. If grips have modified any display meshes, they must override this function and restore the meshes to their original states.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_OnResetMeshes.htm"
+    },
+    {
+      "name": "OnUpdateMesh",
+      "signature": "protected virtual void OnUpdateMesh(MeshType meshType)",
+      "summary": "Just before Rhino shades an object with grips on, it calls this method to update the display meshes. Grips that modify surface or mesh objects must override this function and modify the display meshes here.",
+      "params": [
+        {
+          "name": "meshType",
+          "type": "Rhino.Geometry.MeshType",
+          "doc": "The mesh type being updated.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_OnUpdateMesh.htm"
+    },
+    {
+      "name": "RegisterGripsEnabler",
+      "signature": "public static void RegisterGripsEnabler(TurnOnGripsEventHandler enabler, Type customGripsType)",
+      "summary": "",
+      "params": [
+        {
+          "name": "enabler",
+          "type": "Rhino.DocObjects.Custom.TurnOnGripsEventHandler",
+          "doc": "[Missing \u003Cparam name=\u0022enabler\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Custom.CustomObjectGrips.RegisterGripsEnabler(Rhino.DocObjects.Custom.TurnOnGripsEventHandler,System.Type)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "customGripsType",
+          "type": "System.Type",
+          "doc": "[Missing \u003Cparam name=\u0022customGripsType\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Custom.CustomObjectGrips.RegisterGripsEnabler(Rhino.DocObjects.Custom.TurnOnGripsEventHandler,System.Type)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_CustomObjectGrips_RegisterGripsEnabler.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "GripCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_CustomObjectGrips_GripCount.htm"
+    },
+    {
+      "name": "GripsMoved",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If GripsMoved is true if some of the grips have ever been moved GripObject.NewLocation() sets GripsMoved=true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_CustomObjectGrips_GripsMoved.htm"
+    },
+    {
+      "name": "NewLocation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true if some of the grips have been moved. GripObject.NewLocation() sets NewLocation=true. Derived classes can set NewLocation to false after updating temporary display information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_CustomObjectGrips_NewLocation.htm"
+    },
+    {
+      "name": "OwnerObject",
+      "type": "RhinoObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Owner of the grips.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_CustomObjectGrips_OwnerObject.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

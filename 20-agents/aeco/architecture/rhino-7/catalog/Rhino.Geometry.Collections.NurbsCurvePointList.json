@@ -1,0 +1,561 @@
+{
+  "name": "NurbsCurvePointList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the control points of a NURBS curve.",
+  "interfaces": [
+    "IEnumerable\u003CControlPoint\u003E",
+    "IEnumerable",
+    "IEpsilonComparable\u003CNurbsCurvePointList\u003E",
+    "IList\u003CControlPoint\u003E",
+    "ICollection\u003CControlPoint\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_NurbsCurvePointList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ChangeEndWeights",
+      "signature": "public bool ChangeEndWeights(double w0, double w1)",
+      "summary": "Use a combination of scaling and reparameterization to change the end weights to the specified values.",
+      "remarks": "The domain, Euclidean locations of the control points, and locus of the curve do not change, but the weights, homogeneous CV values and internal knot values may change. If w0 and w1 are 1 and the curve is not rational, the curve is not changed.",
+      "params": [
+        {
+          "name": "w0",
+          "type": "System.Double",
+          "doc": "Weight for first control point.",
+          "optional": false
+        },
+        {
+          "name": "w1",
+          "type": "System.Double",
+          "doc": "Weight for last control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_ChangeEndWeights.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(ControlPoint item)",
+      "summary": "Determines if this list contains an item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.Geometry.ControlPoint",
+          "doc": "The exact item to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "A boolean value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_Contains.htm"
+    },
+    {
+      "name": "ControlPolygon",
+      "signature": "public Polyline ControlPolygon()",
+      "summary": "Constructs a polyline through all the control points. Note that periodic curves generate a closed polyline with fewer points than control-points.",
+      "params": [],
+      "returns": {
+        "type": "Polyline",
+        "doc": "A polyline connecting all control points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_ControlPolygon.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(ControlPoint[] array, int arrayIndex)",
+      "summary": "Copied the list to an array.",
+      "params": [
+        {
+          "name": "array",
+          "type": "Rhino.Geometry.ControlPoint[]",
+          "doc": "The array to copy to.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "The index in which the copy will begin.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_CopyTo.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(NurbsCurvePointList other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Collections.NurbsCurvePointList",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsCurvePointList.EpsilonEquals(Rhino.Geometry.Collections.NurbsCurvePointList,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsCurvePointList.EpsilonEquals(Rhino.Geometry.Collections.NurbsCurvePointList,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsCurvePointList.EpsilonEquals(Rhino.Geometry.Collections.NurbsCurvePointList,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_EpsilonEquals.htm"
+    },
+    {
+      "name": "GetPoint(Int32, Point3d)",
+      "signature": "public bool GetPoint(int index, out Point3d point)",
+      "summary": "Gets a world 3-D, or Euclidean, control point at the given index. The 4-D representation is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to get.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinate of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_GetPoint.htm"
+    },
+    {
+      "name": "GetPoint(Int32, Point4d)",
+      "signature": "public bool GetPoint(int index, out Point4d point)",
+      "summary": "Gets a homogeneous control point at the given index, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use the override that returns world 3-D, or Euclidean, coordinates.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to get.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Coordinate and weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_GetPoint_1.htm"
+    },
+    {
+      "name": "GetWeight",
+      "signature": "public double GetWeight(int index)",
+      "summary": "Gets the weight of a control point at the given index. Note, if the curve is non-rational, the weight will be 1.0.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The control point weight if successful, Rhino.Math.UnsetValue otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_GetWeight.htm"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "public int IndexOf(ControlPoint item)",
+      "summary": "Gets the index of a control point, or -1.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.Geometry.ControlPoint",
+          "doc": "The exact item to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_IndexOf.htm"
+    },
+    {
+      "name": "MakeNonRational",
+      "signature": "public bool MakeNonRational()",
+      "summary": "Converts the curve to a Non-rational NURBS curve. Non-rational curves have unweighted control points.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_MakeNonRational.htm"
+    },
+    {
+      "name": "MakeRational",
+      "signature": "public bool MakeRational()",
+      "summary": "Converts the curve to a Rational NURBS curve. Rational NURBS curves have weighted control points.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_MakeRational.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Point3d)",
+      "signature": "public bool SetPoint(int index, Point3d point)",
+      "summary": "Sets a world 3-D, or Euclidean, control point at the given index. The 4-D representation is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to set.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinate of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_SetPoint.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Point4d)",
+      "signature": "public bool SetPoint(int index, Point4d point)",
+      "summary": "Sets a homogeneous control point at the given index, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use an override that accepts world 3-D, or Euclidean, coordinates as input.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to set.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Coordinate and weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_SetPoint_2.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Point3d, Double)",
+      "signature": "public bool SetPoint(int index, Point3d point, double weight)",
+      "summary": "Sets a world 3-D, or Euclidean, control point and weight at a given index. The 4-D representation is (x*w, y*w, z*w, w).",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to set.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinates of the control point.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "Weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_SetPoint_1.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Double, Double, Double)",
+      "signature": "public bool SetPoint(int index, double x, double y, double z)",
+      "summary": "Sets a world 3-D, or Euclidean, control point at the given index. The 4-D representation is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to set.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z coordinate of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_SetPoint_3.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Double, Double, Double, Double)",
+      "signature": "public bool SetPoint(int index, double x, double y, double z, double weight)",
+      "summary": "Sets a homogeneous control point at the given index, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use an override that accepts world 3-D, or Euclidean, coordinates as input.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to set.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "Weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_SetPoint_4.htm"
+    },
+    {
+      "name": "SetWeight",
+      "signature": "public bool SetWeight(int index, double weight)",
+      "summary": "Sets the weight of a control point at the given index Note, if the curve is non-rational, it will be converted to rational.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point to set.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "The control point weight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_SetWeight.htm"
+    },
+    {
+      "name": "UVNDirectionsAt",
+      "signature": "public bool UVNDirectionsAt(int index, out Vector3d uDir, out Vector3d vDir, out Vector3d nDir)",
+      "summary": "Calculates the U, V, and N directions of a NURBS curve control point similar to the method used by Rhino\u0027s MoveUVN command.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of control point.",
+          "optional": false
+        },
+        {
+          "name": "uDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The U direction.",
+          "optional": false
+        },
+        {
+          "name": "vDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The V direction.",
+          "optional": false
+        },
+        {
+          "name": "nDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The N direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_UVNDirectionsAt.htm"
+    },
+    {
+      "name": "ValidateSpacing",
+      "signature": "public bool ValidateSpacing(double closeTolerance, double stackTolerance, out int[] closeIndices, out int[] stackedIndices)",
+      "summary": "Simple check of distance between adjacent control points",
+      "params": [
+        {
+          "name": "closeTolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use for determining if control points are \u0027close\u0027",
+          "optional": false
+        },
+        {
+          "name": "stackTolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use for determining if control points are \u0027stacked\u0027",
+          "optional": false
+        },
+        {
+          "name": "closeIndices",
+          "type": "System.Int32[]",
+          "doc": "indices of \u0027close\u0027 points are returned in this array",
+          "optional": false
+        },
+        {
+          "name": "stackedIndices",
+          "type": "System.Int32[]",
+          "doc": "indices of \u0027stacked\u0027 points are returned in this array",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if close or stacked indices are found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsCurvePointList_ValidateSpacing.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ControlPolygonLength",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the length of the polyline connecting all control points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_NurbsCurvePointList_ControlPolygonLength.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of control points in this curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_NurbsCurvePointList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "ControlPoint",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the control point location at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_NurbsCurvePointList_Item.htm"
+    },
+    {
+      "name": "PointSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the control point size, or the number of doubles per control point. For rational curves, PointSize = Curve.Dimension \u002B 1. For non-rational curves, PointSize = Curve.Dimension.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_NurbsCurvePointList_PointSize.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

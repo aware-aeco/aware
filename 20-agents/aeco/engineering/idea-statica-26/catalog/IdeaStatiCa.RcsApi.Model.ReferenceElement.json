@@ -1,0 +1,38 @@
+{
+  "name": "ReferenceElement",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ReferenceElement.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ReferenceElement.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "TypeName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReferenceElement.typeName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ReferenceElement.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReferenceElement.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ReferenceElement.md"
+    },
+    {
+      "name": "Element",
+      "type": "OpenElementId",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReferenceElement.element.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ReferenceElement.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,70 @@
+{
+  "name": "ResultOfInternalForces",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ResultOfInternalForces.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "N",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfInternalForces.n.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md"
+    },
+    {
+      "name": "Qy",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfInternalForces.qy.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md"
+    },
+    {
+      "name": "Qz",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfInternalForces.qz.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md"
+    },
+    {
+      "name": "Mx",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfInternalForces.mx.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md"
+    },
+    {
+      "name": "My",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfInternalForces.my.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md"
+    },
+    {
+      "name": "Mz",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfInternalForces.mz.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md"
+    },
+    {
+      "name": "Loading",
+      "type": "ResultOfLoading",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfInternalForces.loading.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfInternalForces.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

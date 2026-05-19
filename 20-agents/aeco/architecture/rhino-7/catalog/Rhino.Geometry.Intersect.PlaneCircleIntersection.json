@@ -1,0 +1,39 @@
+{
+  "name": "PlaneCircleIntersection",
+  "namespace": "Rhino.Geometry.Intersect",
+  "kind": "enum",
+  "summary": "Represents all possible cases of a Plane|Circle intersection event.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Intersect_PlaneCircleIntersection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No intersections. Either because radius is too small or because circle plane is parallel but not coincident with the intersection plane."
+    },
+    {
+      "name": "Tangent",
+      "value": 1,
+      "summary": "Tangent (one point) intersection."
+    },
+    {
+      "name": "Secant",
+      "value": 2,
+      "summary": "Secant (two point) intersection."
+    },
+    {
+      "name": "Parallel",
+      "value": 3,
+      "summary": "Circle and plane are planar but not coincident. Parallel indicates no intersection took place."
+    },
+    {
+      "name": "Coincident",
+      "value": 4,
+      "summary": "Circle and plane are co-planar, they intersect everywhere."
+    }
+  ]
+}

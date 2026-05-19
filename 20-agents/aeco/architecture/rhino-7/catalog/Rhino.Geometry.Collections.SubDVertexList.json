@@ -1,0 +1,102 @@
+{
+  "name": "SubDVertexList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the vertices and vertex-related functionality of a SubD",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_SubDVertexList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public SubDVertex Add(SubDVertexTag tag, Point3d vertex)",
+      "summary": "Add a new vertex to the end of the Vertex list.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "Rhino.Geometry.SubDVertexTag",
+          "doc": "The type of vertex tag, such as smooth or corner.",
+          "optional": false
+        },
+        {
+          "name": "vertex",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Location of new vertex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDVertex",
+        "doc": "The newly added vertex."
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If tag is unset or non-defined."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDVertexList_Add.htm"
+    },
+    {
+      "name": "Find(Int32)",
+      "signature": "public SubDVertex Find(int id)",
+      "summary": "Find a vertex in this SubD with a given id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDVertexList.Find(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDVertex",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDVertexList.Find(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDVertexList_Find.htm"
+    },
+    {
+      "name": "Find(UInt32)",
+      "signature": "public SubDVertex Find(uint id)",
+      "summary": "Find a vertex in this SubD with a given id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDVertexList.Find(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDVertex",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDVertexList.Find(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDVertexList_Find_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of SubD vertices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_SubDVertexList_Count.htm"
+    },
+    {
+      "name": "First",
+      "type": "SubDVertex",
+      "getter": true,
+      "setter": false,
+      "summary": "First vertex in this linked list of vertices",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_SubDVertexList_First.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

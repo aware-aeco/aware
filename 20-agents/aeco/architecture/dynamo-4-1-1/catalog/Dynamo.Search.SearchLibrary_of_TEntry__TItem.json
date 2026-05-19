@@ -1,0 +1,75 @@
+{
+  "name": "SearchLibrary\u003CTEntry, TItem\u003E",
+  "namespace": "Dynamo.Search",
+  "kind": "class",
+  "summary": "Searchable library of item sources.",
+  "base": "Dynamo.Search.EntryDictionary\u003CTEntry\u003E",
+  "interfaces": [
+    "Dynamo.Search.ISource\u003CTItem\u003E"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchLibrary.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnEntryAdded(TEntry)",
+      "signature": "void OnEntryAdded(TEntry entry)",
+      "summary": "SearchLibrary.OnEntryAdded",
+      "params": [
+        {
+          "name": "entry",
+          "type": "TEntry",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchLibrary.cs"
+    },
+    {
+      "name": "OnEntryRemoved(TEntry)",
+      "signature": "void OnEntryRemoved(TEntry entry)",
+      "summary": "SearchLibrary.OnEntryRemoved",
+      "params": [
+        {
+          "name": "entry",
+          "type": "TEntry",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchLibrary.cs"
+    },
+    {
+      "name": "OnItemProduced(TItem)",
+      "signature": "void OnItemProduced(TItem item)",
+      "summary": "SearchLibrary.OnItemProduced",
+      "params": [
+        {
+          "name": "item",
+          "type": "TItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchLibrary.cs"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "ItemProduced",
+      "delegate": "System.Action\u003CTItem\u003E",
+      "signature": "public event System.Action\u003CTItem\u003E ItemProduced",
+      "summary": "Produces an item whenever a search element produces an item.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchLibrary.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

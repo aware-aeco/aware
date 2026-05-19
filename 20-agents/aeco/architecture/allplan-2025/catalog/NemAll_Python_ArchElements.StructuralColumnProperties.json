@@ -1,0 +1,195 @@
+{
+  "name": "StructuralColumnProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the properties of the structural framing column",
+  "base": "StructuralElementProperties",
+  "interfaces": [
+    "ArchBaseProperties"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/",
+  "constructors": [
+    {
+      "name": "StructuralColumnProperties",
+      "signature": "StructuralColumnProperties() | StructuralColumnProperties(value: StructuralColumnProperties)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetHeight",
+      "signature": "GetHeight() -\u003E float",
+      "summary": "Get the Column Height",
+      "remarks": "Get the Column Height",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Column Height"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.GetHeight"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "GetPosition() -\u003E Point3D",
+      "summary": "Get the Column position in world coordinate system",
+      "remarks": "Get the Column position in world coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Column position in world coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.GetPosition"
+    },
+    {
+      "name": "SetAnchorPointProperties",
+      "signature": "SetAnchorPointProperties(anchorPoint: int, offset: Point2D)",
+      "summary": "Set the Column Anchor Point Properties 10 - CenterOfGravity",
+      "remarks": "Set the Column Anchor Point Properties 10 - CenterOfGravity",
+      "params": [
+        {
+          "name": "anchorPoint",
+          "type": "int",
+          "doc": "Anchor point position",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "Point2D",
+          "doc": "Offset from start anchor point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.SetAnchorPointProperties"
+    },
+    {
+      "name": "SetHeight",
+      "signature": "SetHeight( height: float, doc: DocumentAdapter, heightRefereces: PlaneReferences )",
+      "summary": "Set Column Height",
+      "remarks": "Set Column Height",
+      "params": [
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "Height",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "heightRefereces",
+          "type": "PlaneReferences",
+          "doc": "Height Properties of Column, as PlaneReferences type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.SetHeight"
+    },
+    {
+      "name": "SetHeightProperties",
+      "signature": "SetHeightProperties(doc: DocumentAdapter, value: PlaneReferences)",
+      "summary": "Set height properties",
+      "remarks": "Set height properties",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeReferences",
+          "type": "object",
+          "doc": "Height properties as PlaneReferences object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.SetHeightProperties"
+    },
+    {
+      "name": "SetHeightPropsByPlacementPoint",
+      "signature": "SetHeightPropsByPlacementPoint( doc: DocumentAdapter, value: PlaneReferences, startPointZcoord: float )",
+      "summary": "Set HeightProperties by a placement point",
+      "remarks": "Set HeightProperties by a placement point",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "PlaneReferences",
+          "doc": "Height Properties of Column, as PlaneReferences type",
+          "optional": false
+        },
+        {
+          "name": "startPointZcoord",
+          "type": "float",
+          "doc": "Z coordinate start point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.SetHeightPropsByPlacementPoint"
+    },
+    {
+      "name": "SetPosition",
+      "signature": "SetPosition(x: float, y: float, z: float)",
+      "summary": "Set the position of the column in world coordinate system",
+      "remarks": "Set the position of the column in world coordinate system",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "x coordinate",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "y coordinate",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "doc": "z coordinate",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.SetPosition"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

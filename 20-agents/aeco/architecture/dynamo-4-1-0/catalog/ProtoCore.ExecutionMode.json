@@ -1,0 +1,22 @@
+{
+  "name": "ExecutionMode",
+  "namespace": "ProtoCore",
+  "kind": "enum",
+  "summary": "Type ExecutionMode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Core.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Parallel",
+      "value": 0
+    },
+    {
+      "name": "Serial",
+      "value": 1
+    }
+  ]
+}

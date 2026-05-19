@@ -1,0 +1,149 @@
+{
+  "name": "LayerService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Utility for processing the layer definitions.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayerService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetIDByShortName",
+      "signature": "GetIDByShortName(shortName: str, doc: DocumentAdapter) -\u003E int",
+      "summary": "Get the ID by the short name",
+      "remarks": "Get the ID by the short name",
+      "params": [
+        {
+          "name": "shortName",
+          "type": "str",
+          "doc": "Short name of the layer",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "ID by name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayerService/#NemAll_Python_BaseElements.LayerService.GetIDByShortName"
+    },
+    {
+      "name": "GetNameByID",
+      "signature": "GetNameByID(layerID: int, documentID: int) -\u003E str",
+      "summary": "Get the name by the ID",
+      "remarks": "Get the name by the ID",
+      "params": [
+        {
+          "name": "layerID",
+          "type": "int",
+          "doc": "Layer ID",
+          "optional": false
+        },
+        {
+          "name": "documentID",
+          "type": "int",
+          "doc": "Document ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Name by ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayerService/#NemAll_Python_BaseElements.LayerService.GetNameByID"
+    },
+    {
+      "name": "GetShortNameByID",
+      "signature": "GetShortNameByID(layerID: int, documentID: int) -\u003E str",
+      "summary": "Get the short name by the ID",
+      "remarks": "Get the short name by the ID",
+      "params": [
+        {
+          "name": "layerID",
+          "type": "int",
+          "doc": "Layer ID",
+          "optional": false
+        },
+        {
+          "name": "documentID",
+          "type": "int",
+          "doc": "Document ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Name by ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayerService/#NemAll_Python_BaseElements.LayerService.GetShortNameByID"
+    },
+    {
+      "name": "LoadFromFavoriteFile",
+      "signature": "LoadFromFavoriteFile(doc: DocumentAdapter, fileName: str) -\u003E bool",
+      "summary": "Load the layer data from a favorite file",
+      "remarks": "Load the layer data from a favorite file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "File name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Data are loaded: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayerService/#NemAll_Python_BaseElements.LayerService.LoadFromFavoriteFile"
+    },
+    {
+      "name": "SaveToFavoriteFile",
+      "signature": "SaveToFavoriteFile(doc: DocumentAdapter, fileName: str) -\u003E bool",
+      "summary": "Save the layer data to a favorite file",
+      "remarks": "Save the layer data to a favorite file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "File name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Data are saved: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayerService/#NemAll_Python_BaseElements.LayerService.SaveToFavoriteFile"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

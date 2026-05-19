@@ -1,0 +1,212 @@
+{
+  "name": "ICollapsibleSection",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ICollapsibleSection\u0022]",
+  "interfaces": [
+    "IWindow",
+    "IHasCppImplementation",
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_ICollapsibleSection.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Move",
+      "signature": "void Move(Rectangle pos, bool bRepaint, bool bRepaintBorder)",
+      "summary": "(Inherited from IWindow.)",
+      "params": [
+        {
+          "name": "pos",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022pos\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IWindow.Move(System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bRepaint",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bRepaint\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IWindow.Move(System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bRepaintBorder",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bRepaintBorder\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IWindow.Move(System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IWindow_Move.htm"
+    },
+    {
+      "name": "RunScript",
+      "signature": "int RunScript(IRdkViewModel vm)",
+      "summary": "",
+      "params": [
+        {
+          "name": "vm",
+          "type": "Rhino.UI.Controls.IRdkViewModel",
+          "doc": "[Missing \u003Cparam name=\u0022vm\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection.RunScript(Rhino.UI.Controls.IRdkViewModel)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection.RunScript(Rhino.UI.Controls.IRdkViewModel)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ICollapsibleSection_RunScript.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_BackgroundColor.htm"
+    },
+    {
+      "name": "Caption",
+      "type": "LocalizeStringPair",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from IWindow.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Caption.htm"
+    },
+    {
+      "name": "Collapsible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_Collapsible.htm"
+    },
+    {
+      "name": "CommandOptionName",
+      "type": "LocalizeStringPair",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_CommandOptionName.htm"
+    },
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from IHasCppImplementation.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IHasCppImplementation_CppPointer.htm"
+    },
+    {
+      "name": "Created",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from IWindow.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Created.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from IWindow.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Enabled.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_Height.htm"
+    },
+    {
+      "name": "Hidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_Hidden.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_Id.htm"
+    },
+    {
+      "name": "InitiallyExpanded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_InitiallyExpanded.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from IWindow.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Parent.htm"
+    },
+    {
+      "name": "PlugInId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_PlugInId.htm"
+    },
+    {
+      "name": "SettingsTag",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_SettingsTag.htm"
+    },
+    {
+      "name": "Shown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from IWindow.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Shown.htm"
+    },
+    {
+      "name": "ViewModel",
+      "type": "IRdkViewModel",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_ViewModel.htm"
+    },
+    {
+      "name": "ViewModelId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ICollapsibleSection_ViewModelId.htm"
+    },
+    {
+      "name": "Window",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from IWindow.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Window.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

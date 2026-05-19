@@ -1,0 +1,150 @@
+{
+  "name": "ClashCheckHandler",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ClashCheckHandler class contains clash check methods.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/788112d7-7e99-4d1c-c631-4c1a23366696",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetIntersectionBoundingBoxes",
+      "signature": "public ArrayList GetIntersectionBoundingBoxes(Identifier ID1, Identifier ID2)",
+      "summary": "Get a list of bounding boxes (AABB) of the clashing volumes of two objects.",
+      "params": [
+        {
+          "name": "ID1",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier of the first object.",
+          "optional": false
+        },
+        {
+          "name": "ID2",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier of the second object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ArrayList",
+        "doc": "A list of bounding boxes of the clashing volumes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/73b07f50-4b4c-cfe3-1e89-d723db38ac7e"
+    },
+    {
+      "name": "RunClashCheck",
+      "signature": "public bool RunClashCheck()",
+      "summary": "Starts the clash checking. Uses advanced options sa option values.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/866f01a1-9f7b-64ff-5131-476f1162d5db"
+    },
+    {
+      "name": "RunClashCheckWithOptions(Boolean, Boolean, Double, Boolean)",
+      "signature": "public bool RunClashCheckWithOptions(bool betweenReferenceModels, bool objectsInsideReferenceModels, double minDistance, bool betweenParts)",
+      "summary": "Starts the clash checking with options.",
+      "params": [
+        {
+          "name": "betweenReferenceModels",
+          "type": "System.Boolean",
+          "doc": "True, if clash check should be performed between reference models.",
+          "optional": false
+        },
+        {
+          "name": "objectsInsideReferenceModels",
+          "type": "System.Boolean",
+          "doc": "True, if clash check should be performed to objects inside reference models.",
+          "optional": false
+        },
+        {
+          "name": "minDistance",
+          "type": "System.Double",
+          "doc": "The minimum distance value.",
+          "optional": false
+        },
+        {
+          "name": "betweenParts",
+          "type": "System.Boolean",
+          "doc": "True, if clash check should be performed between native parts.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/efdedd8f-706d-e77e-0f49-3647b6a78ebe"
+    },
+    {
+      "name": "RunClashCheckWithOptions(Boolean, Boolean, Boolean, Double, Boolean)",
+      "signature": "public bool RunClashCheckWithOptions(bool betweenReferenceModels, bool betweenReferenceModelsAndComponents, bool objectsInsideReferenceModels, double minDistance, bool betweenParts)",
+      "summary": "Starts the clash checking with options.",
+      "params": [
+        {
+          "name": "betweenReferenceModels",
+          "type": "System.Boolean",
+          "doc": "True, if clash check should be performed between reference models.",
+          "optional": false
+        },
+        {
+          "name": "betweenReferenceModelsAndComponents",
+          "type": "System.Boolean",
+          "doc": "True, if clash cehck should be performed between reference models and components.",
+          "optional": false
+        },
+        {
+          "name": "objectsInsideReferenceModels",
+          "type": "System.Boolean",
+          "doc": "True, if clash check should be performed to objects inside reference models.",
+          "optional": false
+        },
+        {
+          "name": "minDistance",
+          "type": "System.Double",
+          "doc": "The minimum distance value.",
+          "optional": false
+        },
+        {
+          "name": "betweenParts",
+          "type": "System.Boolean",
+          "doc": "True, if clash check should be performed between native parts.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/69286754-a3b8-f783-0f47-ba35a9d72ff9"
+    },
+    {
+      "name": "StopClashCheck",
+      "signature": "public bool StopClashCheck()",
+      "summary": "Stops the clash checking.",
+      "remarks": "Stops the clash check only when the Advanced Options\u0027 XS_USE_NEW_CLASH_CHECK is set.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a392ba3f-5f87-3d4d-e65e-15c1960e947a"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

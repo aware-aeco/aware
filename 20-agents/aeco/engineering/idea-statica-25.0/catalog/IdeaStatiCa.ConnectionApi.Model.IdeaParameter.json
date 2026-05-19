@@ -1,0 +1,110 @@
+{
+  "name": "IdeaParameter",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.IdeaParameter.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Key",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.key.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "Expression",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.expression.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "Default",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.default.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "Value",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.value.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "Unit",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.unit.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "ParameterType",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.parameterType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.description.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "ValidationStatus",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.validationStatus.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "IsVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.isVisible.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "LowerBound",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.lowerBound.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "UpperBound",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.upperBound.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    },
+    {
+      "name": "ParameterValidation",
+      "type": "IdeaParameterValidation",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameter.parameterValidation.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameter.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

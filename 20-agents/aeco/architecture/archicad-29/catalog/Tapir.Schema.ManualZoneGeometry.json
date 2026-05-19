@@ -1,0 +1,39 @@
+{
+  "name": "ManualZoneGeometry",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Manual zone placement.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ManualZoneGeometry",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "polygonCoordinates",
+      "type": "Coordinate2D[]",
+      "getter": true,
+      "setter": false,
+      "summary": "The 2D coordinates of the edge of the zone.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ManualZoneGeometry"
+    },
+    {
+      "name": "polygonArcs",
+      "type": "PolyArc[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Polygon outline arcs of the zone.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ManualZoneGeometry"
+    },
+    {
+      "name": "holes",
+      "type": "Holes2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Property \u0060holes\u0060 of type \u0060Holes2D\u0060 (optional).",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ManualZoneGeometry"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

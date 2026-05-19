@@ -1,0 +1,1240 @@
+{
+  "name": "WorkspaceModel",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "Represents base class for all kind of workspaces which contains general data such as Name, collections of nodes, notes, annotations, etc.",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [
+    "Dynamo.Graph.ILocatable",
+    "Dynamo.Core.IUndoRedoRecorderClient",
+    "Dynamo.Logging.ILogSource",
+    "System.IDisposable",
+    "Dynamo.Graph.Workspaces.IWorkspaceModel"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+  "constructors": [
+    {
+      "name": "WorkspaceModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E, Dynamo.Graph.Workspaces.WorkspaceInfo, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E, ProtoCore.Namespace.ElementResolver)",
+      "signature": "void WorkspaceModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E notes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E annotations, Dynamo.Graph.Workspaces.WorkspaceInfo info, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E presets, ProtoCore.Namespace.ElementResolver resolver)",
+      "summary": "WorkspaceModel.WorkspaceModel",
+      "params": [
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "notes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "annotations",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "optional": false
+        },
+        {
+          "name": "presets",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "WorkspaceModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E, Dynamo.Graph.Workspaces.WorkspaceInfo, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E, ProtoCore.Namespace.ElementResolver, Dynamo.Linting.LinterManager)",
+      "signature": "void WorkspaceModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E notes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E annotations, Dynamo.Graph.Workspaces.WorkspaceInfo info, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E presets, ProtoCore.Namespace.ElementResolver resolver, Dynamo.Linting.LinterManager linterManager)",
+      "summary": "WorkspaceModel.WorkspaceModel",
+      "params": [
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "notes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "annotations",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "optional": false
+        },
+        {
+          "name": "presets",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "optional": false
+        },
+        {
+          "name": "linterManager",
+          "type": "Dynamo.Linting.LinterManager",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clears this workspace of nodes, notes, and connectors.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "CreateModel(System.Xml.XmlElement)",
+      "signature": "void CreateModel(System.Xml.XmlElement modelData)",
+      "summary": "Creates Dynamo.Graph.ModelBase object by given xml data and adds it to corresponding collection of the workspace.",
+      "params": [
+        {
+          "name": "modelData",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml data to create model",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "DeleteModel(System.Xml.XmlElement)",
+      "signature": "void DeleteModel(System.Xml.XmlElement modelData)",
+      "summary": "Deletes Dynamo.Graph.ModelBase object given by System.Xml.XmlElement from a corresponding collection of the workspace.",
+      "params": [
+        {
+          "name": "modelData",
+          "type": "System.Xml.XmlElement",
+          "doc": "Dynamo.Graph.ModelBase object given by System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "DisposeNode(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void DisposeNode(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "WorkspaceModel.DisposeNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "FromJson(string, Dynamo.Engine.LibraryServices, Dynamo.Engine.EngineController, Dynamo.Scheduler.DynamoScheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, bool, bool, Dynamo.Core.CustomNodeManager)",
+      "signature": "Dynamo.Graph.Workspaces.WorkspaceModel FromJson(string json, Dynamo.Engine.LibraryServices libraryServices, Dynamo.Engine.EngineController engineController, Dynamo.Scheduler.DynamoScheduler scheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, bool isTestMode, bool verboseLogging, Dynamo.Core.CustomNodeManager manager)",
+      "summary": "Load a WorkspaceModel from json. If the WorkspaceModel is a HomeWorkspaceModel it will be set as the current workspace.",
+      "params": [
+        {
+          "name": "json",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "engineController",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.DynamoScheduler",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "manager",
+          "type": "Dynamo.Core.CustomNodeManager",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "FromJson(string, Dynamo.Engine.LibraryServices, Dynamo.Engine.EngineController, Dynamo.Scheduler.DynamoScheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, bool, bool, Dynamo.Core.CustomNodeManager, Dynamo.Linting.LinterManager)",
+      "signature": "Dynamo.Graph.Workspaces.WorkspaceModel FromJson(string json, Dynamo.Engine.LibraryServices libraryServices, Dynamo.Engine.EngineController engineController, Dynamo.Scheduler.DynamoScheduler scheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, bool isTestMode, bool verboseLogging, Dynamo.Core.CustomNodeManager manager, Dynamo.Linting.LinterManager linterManager)",
+      "summary": "Load a WorkspaceModel from json. If the WorkspaceModel is a HomeWorkspaceModel it will be set as the current workspace.",
+      "params": [
+        {
+          "name": "json",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "engineController",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.DynamoScheduler",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "manager",
+          "type": "Dynamo.Core.CustomNodeManager",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "linterManager",
+          "type": "Dynamo.Linting.LinterManager",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "GetModelForElement(System.Xml.XmlElement)",
+      "signature": "Dynamo.Graph.ModelBase GetModelForElement(System.Xml.XmlElement modelData)",
+      "summary": "Gets model by GUID which is contained in given Xml data.",
+      "params": [
+        {
+          "name": "modelData",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml data to find model.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.ModelBase",
+        "doc": "Found Dynamo.Graph.ModelBase object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "GetModelInternal(System.Guid)",
+      "signature": "Dynamo.Graph.ModelBase GetModelInternal(System.Guid modelGuid)",
+      "summary": "Returns model by GUID",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Guid",
+          "doc": "Identifier of the requested model.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.ModelBase",
+        "doc": "Found Dynamo.Graph.ModelBase object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "GetSharedName",
+      "signature": "string GetSharedName()",
+      "summary": "Returns appropriate name of workspace for sharing.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Log(Dynamo.Logging.ILogMessage)",
+      "signature": "void Log(Dynamo.Logging.ILogMessage obj)",
+      "summary": "WorkspaceModel.Log",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Logging.ILogMessage",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Log(string)",
+      "signature": "void Log(string msg)",
+      "summary": "WorkspaceModel.Log",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Log(string, Dynamo.Logging.WarningLevel)",
+      "signature": "void Log(string msg, Dynamo.Logging.WarningLevel severity)",
+      "summary": "WorkspaceModel.Log",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "severity",
+          "type": "Dynamo.Logging.WarningLevel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "NodeModified(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void NodeModified(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "Indicates that the AST for a node in this workspace requires recompilation",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnAnnotationAdded(Dynamo.Graph.Annotations.AnnotationModel)",
+      "signature": "void OnAnnotationAdded(Dynamo.Graph.Annotations.AnnotationModel annotation)",
+      "summary": "WorkspaceModel.OnAnnotationAdded",
+      "params": [
+        {
+          "name": "annotation",
+          "type": "Dynamo.Graph.Annotations.AnnotationModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnAnnotationRemoved(Dynamo.Graph.Annotations.AnnotationModel)",
+      "signature": "void OnAnnotationRemoved(Dynamo.Graph.Annotations.AnnotationModel annotation)",
+      "summary": "WorkspaceModel.OnAnnotationRemoved",
+      "params": [
+        {
+          "name": "annotation",
+          "type": "Dynamo.Graph.Annotations.AnnotationModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnAnnotationsCleared",
+      "signature": "void OnAnnotationsCleared()",
+      "summary": "WorkspaceModel.OnAnnotationsCleared",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnConnectorAdded(Dynamo.Graph.Connectors.ConnectorModel)",
+      "signature": "void OnConnectorAdded(Dynamo.Graph.Connectors.ConnectorModel obj)",
+      "summary": "WorkspaceModel.OnConnectorAdded",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Connectors.ConnectorModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnConnectorDeleted(Dynamo.Graph.Connectors.ConnectorModel)",
+      "signature": "void OnConnectorDeleted(Dynamo.Graph.Connectors.ConnectorModel obj)",
+      "summary": "WorkspaceModel.OnConnectorDeleted",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Connectors.ConnectorModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnDummyNodesReloaded",
+      "signature": "void OnDummyNodesReloaded()",
+      "summary": "This method invokes the DummyNodesReloaded event on the workspace model.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnNodeAdded(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnNodeAdded(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "WorkspaceModel.OnNodeAdded",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnNodeRemoved(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnNodeRemoved(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "WorkspaceModel.OnNodeRemoved",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnNodesCleared",
+      "signature": "void OnNodesCleared()",
+      "summary": "WorkspaceModel.OnNodesCleared",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnNodesClearingConnectors",
+      "signature": "void OnNodesClearingConnectors()",
+      "summary": "WorkspaceModel.OnNodesClearingConnectors",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnNoteAdded(Dynamo.Graph.Notes.NoteModel)",
+      "signature": "void OnNoteAdded(Dynamo.Graph.Notes.NoteModel note)",
+      "summary": "WorkspaceModel.OnNoteAdded",
+      "params": [
+        {
+          "name": "note",
+          "type": "Dynamo.Graph.Notes.NoteModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnNoteRemoved(Dynamo.Graph.Notes.NoteModel)",
+      "signature": "void OnNoteRemoved(Dynamo.Graph.Notes.NoteModel note)",
+      "summary": "WorkspaceModel.OnNoteRemoved",
+      "params": [
+        {
+          "name": "note",
+          "type": "Dynamo.Graph.Notes.NoteModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnNotesCleared",
+      "signature": "void OnNotesCleared()",
+      "summary": "WorkspaceModel.OnNotesCleared",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnPopulateJSONWorkspace(Newtonsoft.Json.Linq.JObject)",
+      "signature": "void OnPopulateJSONWorkspace(Newtonsoft.Json.Linq.JObject modelData)",
+      "summary": "WorkspaceModel.OnPopulateJSONWorkspace",
+      "params": [
+        {
+          "name": "modelData",
+          "type": "Newtonsoft.Json.Linq.JObject",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnSaving(System.Xml.XmlDocument)",
+      "signature": "void OnSaving(System.Xml.XmlDocument obj)",
+      "summary": "WorkspaceModel.OnSaving",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Xml.XmlDocument",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "OnToggleNodeFreeze(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnToggleNodeFreeze(Dynamo.Graph.Nodes.NodeModel obj)",
+      "summary": "WorkspaceModel.OnToggleNodeFreeze",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "RecordModelsForModification(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.ModelBase\u003E)",
+      "signature": "void RecordModelsForModification(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.ModelBase\u003E models)",
+      "summary": "Implement recording node modification for undo/redo.",
+      "params": [
+        {
+          "name": "models",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.ModelBase\u003E",
+          "doc": "Collection of Dynamo.Graph.ModelBase objects to record.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "RegisterNode(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void RegisterNode(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "WorkspaceModel.RegisterNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "ReloadModel(System.Xml.XmlElement)",
+      "signature": "void ReloadModel(System.Xml.XmlElement modelData)",
+      "summary": "Updates Dynamo.Graph.ModelBase object with given xml data",
+      "params": [
+        {
+          "name": "modelData",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml data to update model",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "RemoveGroup(Dynamo.Graph.ModelBase)",
+      "signature": "void RemoveGroup(Dynamo.Graph.ModelBase model)",
+      "summary": "Deletes Dynamo.Graph.Annotations.AnnotationModel object from annotation collection of the workspace.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.ModelBase",
+          "doc": "Dynamo.Graph.Annotations.AnnotationModel object to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "ReportPosition",
+      "signature": "void ReportPosition()",
+      "summary": "Called when workspace position is changed. This method notifyies all the listeners when a workspace is changed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "ResetWorkspaceCore",
+      "signature": "void ResetWorkspaceCore()",
+      "summary": "Derived workspace classes can choose to override this method to perform clean-up specific to them.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Save(string, bool, Dynamo.Engine.EngineController)",
+      "signature": "void Save(string filePath, bool isBackup, Dynamo.Engine.EngineController engine)",
+      "summary": "Workspace\u0027s Save method serializes the Workspace to JSON and writes it to the specified file path.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "The path of the file.",
+          "optional": false
+        },
+        {
+          "name": "isBackup",
+          "type": "bool",
+          "doc": "A flag indicating whether this save operation represents a backup. If it\u0027s not backup, we should add it to recent files. Otherwise leave it.",
+          "optional": false
+        },
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "An EngineController instance to be used to serialize node bindings.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Thrown when the file path is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "UpdateUndoRedoStack",
+      "signature": "void UpdateUndoRedoStack()",
+      "summary": "Notifies the UI that the undo/redo state has changed so that undo/redo buttons can be enabled/disabled.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "UpdateWithExtraWorkspaceViewInfo(Dynamo.Graph.Workspaces.ExtraWorkspaceViewInfo)",
+      "signature": "void UpdateWithExtraWorkspaceViewInfo(Dynamo.Graph.Workspaces.ExtraWorkspaceViewInfo workspaceViewInfo)",
+      "summary": "Updates a workspace model with extra view information. When loading a workspace from JSON, the data is split into two parts, model and view. This method sets the view information.",
+      "params": [
+        {
+          "name": "workspaceViewInfo",
+          "type": "Dynamo.Graph.Workspaces.ExtraWorkspaceViewInfo",
+          "doc": "The extra view information from the workspace to update the model with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "UpdateWithExtraWorkspaceViewInfo(Dynamo.Graph.Workspaces.ExtraWorkspaceViewInfo, double, double)",
+      "signature": "void UpdateWithExtraWorkspaceViewInfo(Dynamo.Graph.Workspaces.ExtraWorkspaceViewInfo workspaceViewInfo, double offsetX, double offsetY)",
+      "summary": "Updates a workspace model with extra view information. When loading a workspace from JSON, the data is split into two parts, model and view. This method sets the view information. This overload allows to \u0027move\u0027 the incoming when placing them",
+      "params": [
+        {
+          "name": "workspaceViewInfo",
+          "type": "Dynamo.Graph.Workspaces.ExtraWorkspaceViewInfo",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "offsetX",
+          "type": "double",
+          "doc": "Offset in X direction (positive - left, negative - right)",
+          "optional": false
+        },
+        {
+          "name": "offsetY",
+          "type": "double",
+          "doc": "Offset in Y direction (positive - down, negative - up)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Annotations",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns all of the annotations currently present in the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Author",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "An author of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "CanRedo",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determine if redo operation is currently possible.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "CanUndo",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determine if undo operation is currently possible.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "CenterX",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Implements Dynamo.Graph.ILocatable.CenterX property.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "CenterY",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Implements Dynamo.Graph.ILocatable.CenterY property.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Connectors",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All of the connectors currently in the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "CurrentSelection",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "WorkspaceModel.CurrentSelection",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Dependencies",
+      "type": "System.Collections.Generic.HashSet\u003CSystem.Guid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "gathers the direct customNode workspace dependencies of this workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "A description of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "ElementResolver",
+      "type": "ProtoCore.Namespace.ElementResolver",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Graph.Workspaces.WorkspaceModel.ElementResolver. This property resolves partial class name to fully resolved name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Path to the file this workspace is associated with. If null or empty, this workspace has never been saved.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "A unique identifier for the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "HasUnsavedChanges",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Are there unsaved changes in the workspace?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Height",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the height of the workspace\u0027s bounds.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns if current workspace is readonly.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "LastSaved",
+      "type": "System.DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "The date of the last save.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of this workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Nodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All of the nodes currently in the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Notes",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the notes Dynamo.Graph.Notes.NoteModel collection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Presets",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A set of input parameter states, this can be used to set the graph to a serialized state.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Rect",
+      "type": "Dynamo.Utilities.Rect2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the bounds of the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "ScaleFactor",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "The geometry scale factor specific to the workspace obtained from user input when selecting the scale of the model with which he/she is working. This is used by ProtoGeometry to scale geometric values appropriately before passing them to ASM. This property is set either when reading the setting from a DYN file or when the setting is updated from the UI.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "ShowPythonAutoMigrationNotifications",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Flag indicating whether the \u201CPython Engine Change\u201D notice should be shown on save/close. Runtime-only (not serialized) and reset on workspace switch.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Width",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the width of the workspace\u0027s bounds.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or set the X position of the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or set the Y position of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Zoom",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the zoom value of the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "AnnotationAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Annotations.AnnotationModel\u003E AnnotationAdded",
+      "summary": "Event that is fired when an annotation is added to the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "AnnotationRemoved",
+      "delegate": "System.Action\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Annotations.AnnotationModel\u003E AnnotationRemoved",
+      "summary": "Event that is fired when an annotation is removed from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "AnnotationsCleared",
+      "delegate": "System.Action",
+      "signature": "public event System.Action AnnotationsCleared",
+      "summary": "Event that is fired when annotations are cleared from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ConnectorAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E ConnectorAdded",
+      "summary": "Event that is fired when a connector is added to the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ConnectorDeleted",
+      "delegate": "System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E ConnectorDeleted",
+      "summary": "Event that is fired when a connector is deleted from a workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CurrentOffsetChanged",
+      "delegate": "Dynamo.Graph.Workspaces.WorkspaceModel.PointEventHandler",
+      "signature": "public event Dynamo.Graph.Workspaces.WorkspaceModel.PointEventHandler CurrentOffsetChanged",
+      "summary": "Event that is fired every time the position offset of a workspace changes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Disposed",
+      "delegate": "System.Action",
+      "signature": "public event System.Action Disposed",
+      "summary": "Event that is fired when this workspace is disposed of.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DummyNodesReloaded",
+      "delegate": "System.Action",
+      "signature": "public event System.Action DummyNodesReloaded",
+      "summary": "This event is raised after the workspace tries to resolve existing dummyNodes - for example after a new package or library is loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "Triggers when something needs to be logged",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeAdded",
+      "summary": "Event that is fired when a node is added to the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeRemoved",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeRemoved",
+      "summary": "Event that is fired when a node is removed from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodesCleared",
+      "delegate": "System.Action",
+      "signature": "public event System.Action NodesCleared",
+      "summary": "Event that is fired when nodes are cleared from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NoteAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Notes.NoteModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Notes.NoteModel\u003E NoteAdded",
+      "summary": "Event that is fired when a note is added to the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NoteRemoved",
+      "delegate": "System.Action\u003CDynamo.Graph.Notes.NoteModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Notes.NoteModel\u003E NoteRemoved",
+      "summary": "Event that is fired when a note is removed from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NotesCleared",
+      "delegate": "System.Action",
+      "signature": "public event System.Action NotesCleared",
+      "summary": "Event that is fired when notes are cleared from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestNodeCentered",
+      "delegate": "Dynamo.Models.NodeEventHandler",
+      "signature": "public event Dynamo.Models.NodeEventHandler RequestNodeCentered",
+      "summary": "Event that is fired when a workspace requests that a Node or Note model is centered.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Saved",
+      "delegate": "System.Action",
+      "signature": "public event System.Action Saved",
+      "summary": "Event that is fired when the workspace is saved.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Saving",
+      "delegate": "System.Action\u003CSystem.Xml.XmlDocument\u003E",
+      "signature": "public event System.Action\u003CSystem.Xml.XmlDocument\u003E Saving",
+      "summary": "Event that is fired during the saving of the workspace. Add additional XmlNode objects to the XmlDocument provided, in order to save data to the file.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceSaving",
+      "delegate": "System.Action\u003CDynamo.Graph.SaveContext\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.SaveContext\u003E WorkspaceSaving",
+      "summary": "Event that is fired when the workspace is starting the save process.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

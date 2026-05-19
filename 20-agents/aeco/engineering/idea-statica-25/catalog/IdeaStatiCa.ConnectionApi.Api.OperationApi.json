@@ -1,0 +1,176 @@
+{
+  "name": "OperationApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Operation endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OperationApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DeleteOperationsAsync",
+      "signature": "Task DeleteOperationsAsync(Guid projectId, int connectionId)",
+      "summary": "Delete all operations for the connection",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "Id of the connection to be modified",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OperationApi.md"
+    },
+    {
+      "name": "GetOperationsAsync",
+      "signature": "Task\u003CList\u003CConOperation\u003E\u003E GetOperationsAsync(Guid projectId, int connectionId)",
+      "summary": "Gets the list of operations for the connection.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the requested connection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CConOperation\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OperationApi.md"
+    },
+    {
+      "name": "GetCommonOperationPropertiesAsync",
+      "signature": "Task\u003CConOperationCommonProperties\u003E GetCommonOperationPropertiesAsync(Guid projectId, int connectionId)",
+      "summary": "Gets common operation properties.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConOperationCommonProperties",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OperationApi.md"
+    },
+    {
+      "name": "UpdateCommonOperationPropertiesAsync",
+      "signature": "Task UpdateCommonOperationPropertiesAsync(Guid projectId, int connectionId, ConOperationCommonProperties conOperationCommonProperties)",
+      "summary": "Updates common properties for all operations.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection.",
+          "optional": false
+        },
+        {
+          "name": "conOperationCommonProperties",
+          "type": "ConOperationCommonProperties",
+          "doc": "Common properties to apply (specify material IDs, or keep as null).",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OperationApi.md"
+    },
+    {
+      "name": "PreDesignWeldsAsync",
+      "signature": "Task\u003Cstring\u003E PreDesignWeldsAsync(Guid projectId, int connectionId, ConWeldSizingMethodEnum designType)",
+      "summary": "Pre-designs welds in the connection.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection.",
+          "optional": false
+        },
+        {
+          "name": "designType",
+          "type": "ConWeldSizingMethodEnum",
+          "doc": "The weld sizing method to apply (default is FullStrength).",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OperationApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

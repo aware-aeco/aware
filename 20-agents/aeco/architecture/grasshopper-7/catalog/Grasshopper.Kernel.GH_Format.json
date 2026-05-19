@@ -1,0 +1,1569 @@
+{
+  "name": "GH_Format",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides standard Grasshopper formatting functions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_Format.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DefaultCulture",
+      "signature": "public static IFormatProvider DefaultCulture()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IFormatProvider",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_DefaultCulture.htm"
+    },
+    {
+      "name": "FormatArc(Arc)",
+      "signature": "public static string FormatArc(Arc data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatArc_1.htm"
+    },
+    {
+      "name": "FormatArc(GH_Arc)",
+      "signature": "public static string FormatArc(GH_Arc data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatArc.htm"
+    },
+    {
+      "name": "FormatArcValidity",
+      "signature": "public static string FormatArcValidity(Arc val, string identifier = \u0022Arc\u0022)",
+      "summary": "If the arc is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Arc",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the arc is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatArcValidity.htm"
+    },
+    {
+      "name": "FormatBoolean(Boolean)",
+      "signature": "public static string FormatBoolean(bool data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBoolean_1.htm"
+    },
+    {
+      "name": "FormatBoolean(GH_Boolean)",
+      "signature": "public static string FormatBoolean(GH_Boolean data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBoolean.htm"
+    },
+    {
+      "name": "FormatBoundingBoxValidity",
+      "signature": "public static string FormatBoundingBoxValidity(BoundingBox val, string identifier = \u0022Bounding Box\u0022)",
+      "summary": "If the box is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "BoundingBox",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the box is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBoundingBoxValidity.htm"
+    },
+    {
+      "name": "FormatBox(Box)",
+      "signature": "public static string FormatBox(Box data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBox_1.htm"
+    },
+    {
+      "name": "FormatBox(GH_Box)",
+      "signature": "public static string FormatBox(GH_Box data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBox.htm"
+    },
+    {
+      "name": "FormatBoxValidity",
+      "signature": "public static string FormatBoxValidity(Box val, string identifier = \u0022Box\u0022)",
+      "summary": "If the box is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Box",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the box is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBoxValidity.htm"
+    },
+    {
+      "name": "FormatBrep(Brep)",
+      "signature": "public static string FormatBrep(Brep data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Brep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBrep_1.htm"
+    },
+    {
+      "name": "FormatBrep(GH_Brep)",
+      "signature": "public static string FormatBrep(GH_Brep data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Brep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBrep.htm"
+    },
+    {
+      "name": "FormatBrepValidity",
+      "signature": "public static string FormatBrepValidity(Brep val, string identifier = \u0022Brep\u0022)",
+      "summary": "If the brep is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Brep",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the brep is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatBrepValidity.htm"
+    },
+    {
+      "name": "FormatCircle(Circle)",
+      "signature": "public static string FormatCircle(Circle data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Circle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatCircle_1.htm"
+    },
+    {
+      "name": "FormatCircle(GH_Circle)",
+      "signature": "public static string FormatCircle(GH_Circle data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Circle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatCircle.htm"
+    },
+    {
+      "name": "FormatCircleValidity",
+      "signature": "public static string FormatCircleValidity(Circle val, string identifier = \u0022Circle\u0022)",
+      "summary": "If the circle is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Circle",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the circle is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatCircleValidity.htm"
+    },
+    {
+      "name": "FormatColour(Color)",
+      "signature": "public static string FormatColour(Color data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatColour_1.htm"
+    },
+    {
+      "name": "FormatColour(GH_Colour)",
+      "signature": "public static string FormatColour(GH_Colour data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Colour",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatColour.htm"
+    },
+    {
+      "name": "FormatComplexNumber(Complex)",
+      "signature": "public static string FormatComplexNumber(Complex num)",
+      "summary": "",
+      "params": [
+        {
+          "name": "num",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatComplexNumber.htm"
+    },
+    {
+      "name": "FormatComplexNumber(GH_ComplexNumber)",
+      "signature": "public static string FormatComplexNumber(GH_ComplexNumber data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_ComplexNumber",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatComplexNumber_1.htm"
+    },
+    {
+      "name": "FormatComplexValidity",
+      "signature": "public static string FormatComplexValidity(Complex val, string identifier = \u0022Complex\u0022)",
+      "summary": "If the complex number is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the complex number is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatComplexValidity.htm"
+    },
+    {
+      "name": "FormatCurve(GH_Curve)",
+      "signature": "public static string FormatCurve(GH_Curve data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatCurve.htm"
+    },
+    {
+      "name": "FormatCurve(Curve, String, String)",
+      "signature": "public static string FormatCurve(Curve data, string prefix = \u0022\u0022, string name = \u0022Curve\u0022)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Curve",
+          "optional": false
+        },
+        {
+          "name": "prefix",
+          "type": "System.String",
+          "optional": true
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatCurve_1.htm"
+    },
+    {
+      "name": "FormatCurveValidity",
+      "signature": "public static string FormatCurveValidity(Curve val, string identifier = \u0022Curve\u0022)",
+      "summary": "If the curve is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Curve",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the curve is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatCurveValidity.htm"
+    },
+    {
+      "name": "FormatDate(DateTime)",
+      "signature": "public static string FormatDate(DateTime data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatDate_1.htm"
+    },
+    {
+      "name": "FormatDate(GH_Time)",
+      "signature": "public static string FormatDate(GH_Time data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Time",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatDate.htm"
+    },
+    {
+      "name": "FormatDouble(Double)",
+      "signature": "public static string FormatDouble(double data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatDouble_1.htm"
+    },
+    {
+      "name": "FormatDouble(GH_Number)",
+      "signature": "public static string FormatDouble(GH_Number data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Number",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatDouble.htm"
+    },
+    {
+      "name": "FormatDoubleValidity",
+      "signature": "public static string FormatDoubleValidity(double val, string identifier = \u0022Number\u0022)",
+      "summary": "If the number is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "System.Double",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the number is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatDoubleValidity.htm"
+    },
+    {
+      "name": "FormatFilePath(String, Int32)",
+      "signature": "public static string FormatFilePath(string path, int maxLength)",
+      "summary": "Format a filepath so that it doesn\u0027t exceed a string length. If the filepath filename is already longer than maxLength it will be returned intact.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path for format.",
+          "optional": false
+        },
+        {
+          "name": "maxLength",
+          "type": "System.Int32",
+          "doc": "Maximum number of characters to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The formatted path."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatFilePath.htm"
+    },
+    {
+      "name": "FormatFilePath(String, Int32, Font)",
+      "signature": "public static string FormatFilePath(string path, int maxWidth, Font font)",
+      "summary": "Format a filepath so that it doesn\u0027t exceed width. If the filepath filename is already longer than maxLength it will be returned intact.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path to format.",
+          "optional": false
+        },
+        {
+          "name": "maxWidth",
+          "type": "System.Int32",
+          "doc": "Maximum allowed width (in pixels)",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to use for measuring.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The formatted path."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatFilePath_1.htm"
+    },
+    {
+      "name": "FormatGeometry",
+      "signature": "public static string FormatGeometry(IGH_GeometricGoo data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.IGH_GeometricGoo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatGeometry.htm"
+    },
+    {
+      "name": "FormatInteger(Int32)",
+      "signature": "public static string FormatInteger(int data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatInteger_1.htm"
+    },
+    {
+      "name": "FormatInteger(GH_Integer)",
+      "signature": "public static string FormatInteger(GH_Integer data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatInteger.htm"
+    },
+    {
+      "name": "FormatInterval(Interval)",
+      "signature": "public static string FormatInterval(Interval data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Interval",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatInterval_2.htm"
+    },
+    {
+      "name": "FormatInterval(GH_Interval)",
+      "signature": "public static string FormatInterval(GH_Interval data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Interval",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatInterval.htm"
+    },
+    {
+      "name": "FormatInterval(GH_Interval2D)",
+      "signature": "public static string FormatInterval(GH_Interval2D data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Interval2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatInterval_1.htm"
+    },
+    {
+      "name": "FormatInterval(Double, Double)",
+      "signature": "public static string FormatInterval(double t0, double t1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatInterval_3.htm"
+    },
+    {
+      "name": "FormatIntervalValidity",
+      "signature": "public static string FormatIntervalValidity(Interval val, string identifier = \u0022Domain\u0022, bool testSingleton = false, bool testDecreasing = false)",
+      "summary": "If the point is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Interval",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        },
+        {
+          "name": "testSingleton",
+          "type": "System.Boolean",
+          "doc": "If true, Intervals that have no length are considered invalid.",
+          "optional": true
+        },
+        {
+          "name": "testDecreasing",
+          "type": "System.Boolean",
+          "doc": "If true, Intervals that are decreasing are considered invalid.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the point is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatIntervalValidity.htm"
+    },
+    {
+      "name": "FormatKeys",
+      "signature": "public static string FormatKeys(Keys keys)",
+      "summary": "Format a keys enumeration as though it\u0027s a menu shortcut",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Windows.Forms.Keys",
+          "doc": "Key data to format",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatKeys.htm"
+    },
+    {
+      "name": "FormatLine(Line)",
+      "signature": "public static string FormatLine(Line data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatLine_1.htm"
+    },
+    {
+      "name": "FormatLine(GH_Line)",
+      "signature": "public static string FormatLine(GH_Line data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatLine.htm"
+    },
+    {
+      "name": "FormatLineValidity",
+      "signature": "public static string FormatLineValidity(Line val, string identifier = \u0022Line\u0022)",
+      "summary": "If the line is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Line",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the line is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatLineValidity.htm"
+    },
+    {
+      "name": "FormatMatrix(Matrix)",
+      "signature": "public static string FormatMatrix(Matrix data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatMatrix_1.htm"
+    },
+    {
+      "name": "FormatMatrix(GH_Matrix)",
+      "signature": "public static string FormatMatrix(GH_Matrix data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatMatrix.htm"
+    },
+    {
+      "name": "FormatMesh(GH_Mesh)",
+      "signature": "public static string FormatMesh(GH_Mesh data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Mesh",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatMesh.htm"
+    },
+    {
+      "name": "FormatMesh(Mesh, String)",
+      "signature": "public static string FormatMesh(Mesh data, string sPrefix = \u0022\u0022)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Mesh",
+          "optional": false
+        },
+        {
+          "name": "sPrefix",
+          "type": "System.String",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatMesh_1.htm"
+    },
+    {
+      "name": "FormatMeshFace",
+      "signature": "public static string FormatMeshFace(GH_MeshFace data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_MeshFace",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatMeshFace.htm"
+    },
+    {
+      "name": "FormatMeshFaceValidity",
+      "signature": "public static string FormatMeshFaceValidity(MeshFace val, string identifier = \u0022MeshFace\u0022)",
+      "summary": "If the number is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "MeshFace",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the point is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatMeshFaceValidity.htm"
+    },
+    {
+      "name": "FormatMeshValidity",
+      "signature": "public static string FormatMeshValidity(Mesh val, string identifier = \u0022Mesh\u0022)",
+      "summary": "If the mesh is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Mesh",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the mesh is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatMeshValidity.htm"
+    },
+    {
+      "name": "FormatPlane(Plane)",
+      "signature": "public static string FormatPlane(Plane data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatPlane_1.htm"
+    },
+    {
+      "name": "FormatPlane(GH_Plane)",
+      "signature": "public static string FormatPlane(GH_Plane data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatPlane.htm"
+    },
+    {
+      "name": "FormatPlaneValidity",
+      "signature": "public static string FormatPlaneValidity(Plane val, string identifier = \u0022Plane\u0022, bool testUnitAxes = false)",
+      "summary": "If the plane is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Plane",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        },
+        {
+          "name": "testUnitAxes",
+          "type": "System.Boolean",
+          "doc": "If True, planes with non-unit axis vectors are considered to be invalid.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the plane is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatPlaneValidity.htm"
+    },
+    {
+      "name": "FormatPoint(Point3d)",
+      "signature": "public static string FormatPoint(Point3d data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatPoint_1.htm"
+    },
+    {
+      "name": "FormatPoint(GH_Point)",
+      "signature": "public static string FormatPoint(GH_Point data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatPoint.htm"
+    },
+    {
+      "name": "FormatPointCloud",
+      "signature": "public static string FormatPointCloud(PointCloud data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "PointCloud",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatPointCloud.htm"
+    },
+    {
+      "name": "FormatPointValidity",
+      "signature": "public static string FormatPointValidity(Point3d val, string identifier = \u0022Point\u0022)",
+      "summary": "If the point is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Point3d",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the point is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatPointValidity.htm"
+    },
+    {
+      "name": "FormatRectangleValidity",
+      "signature": "public static string FormatRectangleValidity(Rectangle3d val, string identifier = \u0022Rectangle\u0022)",
+      "summary": "If the rectangle is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Rectangle3d",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the rectangle is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatRectangleValidity.htm"
+    },
+    {
+      "name": "FormatSingle",
+      "signature": "public static string FormatSingle(float data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatSingle.htm"
+    },
+    {
+      "name": "FormatSubD(SubD)",
+      "signature": "public static string FormatSubD(SubD data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "SubD",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatSubD_1.htm"
+    },
+    {
+      "name": "FormatSubD(GH_SubD)",
+      "signature": "public static string FormatSubD(GH_SubD data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_SubD",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatSubD.htm"
+    },
+    {
+      "name": "FormatSubDValidity",
+      "signature": "public static string FormatSubDValidity(SubD val, string identifier = \u0022SubD\u0022)",
+      "summary": "If the brep is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "SubD",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the brep is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatSubDValidity.htm"
+    },
+    {
+      "name": "FormatSurface(Brep)",
+      "signature": "public static string FormatSurface(Brep data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Brep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatSurface_1.htm"
+    },
+    {
+      "name": "FormatSurface(GH_Surface)",
+      "signature": "public static string FormatSurface(GH_Surface data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Surface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatSurface.htm"
+    },
+    {
+      "name": "FormatSurfaceValidity",
+      "signature": "public static string FormatSurfaceValidity(Surface val, string identifier = \u0022Surface\u0022)",
+      "summary": "If the surface is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Surface",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the surface is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatSurfaceValidity.htm"
+    },
+    {
+      "name": "FormatTransformValidity",
+      "signature": "public static string FormatTransformValidity(Transform val, string identifier = \u0022Transform\u0022)",
+      "summary": "If the transform is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Transform",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the transform is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatTransformValidity.htm"
+    },
+    {
+      "name": "FormatVector(Vector3d)",
+      "signature": "public static string FormatVector(Vector3d data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatVector_1.htm"
+    },
+    {
+      "name": "FormatVector(GH_Vector)",
+      "signature": "public static string FormatVector(GH_Vector data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "Grasshopper.Kernel.Types.GH_Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatVector.htm"
+    },
+    {
+      "name": "FormatVectorValidity",
+      "signature": "public static string FormatVectorValidity(Vector3d val, string identifier = \u0022Vector\u0022, bool testZero = false, bool testUnit = false)",
+      "summary": "If the point is invalid, return a string describing why.",
+      "params": [
+        {
+          "name": "val",
+          "type": "Vector3d",
+          "doc": "Value to format.",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "System.String",
+          "doc": "Name used to refer to the value in the format.",
+          "optional": true
+        },
+        {
+          "name": "testZero",
+          "type": "System.Boolean",
+          "doc": "If True, zero-length vectors are considered to be invalid.",
+          "optional": true
+        },
+        {
+          "name": "testUnit",
+          "type": "System.Boolean",
+          "doc": "If True, non-unit-length vectors are considered to be invalid.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string describing why the point is invalid or String.Empty if the value is not invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_FormatVectorValidity.htm"
+    },
+    {
+      "name": "RhinoUnitName",
+      "signature": "public static string RhinoUnitName()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_RhinoUnitName.htm"
+    },
+    {
+      "name": "RhinoUnitSymbol",
+      "signature": "public static string RhinoUnitSymbol()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_RhinoUnitSymbol.htm"
+    },
+    {
+      "name": "TreatAsCollection",
+      "signature": "public static bool TreatAsCollection(Object obj)",
+      "summary": "This method is used in Scripting components to determine whether a certain class was \u0027intended\u0027 as a collection or as a single piece of data .",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "Object to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if we think the object was intended as a collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Format_TreatAsCollection.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

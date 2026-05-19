@@ -1,0 +1,29 @@
+{
+  "name": "TransformRigidType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Lists all possible outcomes for rigid transformation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_TransformRigidType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "RigidReversing",
+      "value": -1,
+      "summary": "Transformation is an orientation reversing isometry."
+    },
+    {
+      "name": "NotRigid",
+      "value": 0,
+      "summary": "Transformation is not an orthogonal transformation."
+    },
+    {
+      "name": "Rigid",
+      "value": 1,
+      "summary": "Transformation is an rigid transformation."
+    }
+  ]
+}

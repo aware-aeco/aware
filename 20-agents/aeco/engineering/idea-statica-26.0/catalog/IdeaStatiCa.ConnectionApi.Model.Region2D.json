@@ -1,0 +1,30 @@
+{
+  "name": "Region2D",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.Region2D.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/Region2D.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Outline",
+      "type": "PolyLine2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Region2D.outline.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/Region2D.md"
+    },
+    {
+      "name": "Openings",
+      "type": "List\u003CPolyLine2D\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Region2D.openings.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/Region2D.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

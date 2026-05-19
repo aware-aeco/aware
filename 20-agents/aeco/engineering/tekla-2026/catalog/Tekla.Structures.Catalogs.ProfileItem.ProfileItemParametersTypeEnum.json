@@ -1,0 +1,29 @@
+{
+  "name": "ProfileItem.ProfileItemParametersTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Defines the different profile item parameters types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2348c0cd-946a-93da-eef9-dbec35c67fa1",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "GENERAL_PARAMETERS",
+      "value": 0,
+      "summary": "The general profile item parameters type."
+    },
+    {
+      "name": "ANALYSIS_PARAMETERS",
+      "value": 1,
+      "summary": "The analysis profile item parameters type."
+    },
+    {
+      "name": "USER_PARAMETERS",
+      "value": 2,
+      "summary": "The user profile item parameters type."
+    }
+  ]
+}

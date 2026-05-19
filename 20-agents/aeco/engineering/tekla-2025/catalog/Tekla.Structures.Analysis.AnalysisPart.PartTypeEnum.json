@@ -1,0 +1,24 @@
+{
+  "name": "AnalysisPart.PartTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The types of the physical model part.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/131441ba-c644-82f7-e390-379049b7d307",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PART",
+      "value": 0,
+      "summary": "The part is a normal part."
+    },
+    {
+      "name": "BOOLEAN_ADD_PART",
+      "value": 1,
+      "summary": "The part is a boolean add part."
+    }
+  ]
+}

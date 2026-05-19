@@ -1,0 +1,55 @@
+{
+  "name": "GH_ConnectivityNode",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents a single node in a Grasshopper connectivity diagram. A single node represents a single IGH_Param instance.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ConnectivityNode.htm",
+  "constructors": [
+    {
+      "name": "GH_ConnectivityNode",
+      "signature": "public GH_ConnectivityNode(GH_ConnectivityNode other)",
+      "summary": "Initializes a new instance of the GH_ConnectivityNode class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.GH_ConnectivityNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityNode__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "NodeID",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the InstanceID of the Parameter that this node represents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityNode_NodeID.htm"
+    },
+    {
+      "name": "NodeIn",
+      "type": "ReadOnlyCollection\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of IDs that are connected to the input of this node.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityNode_NodeIn.htm"
+    },
+    {
+      "name": "NodeOut",
+      "type": "ReadOnlyCollection\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of IDs that are connected to the input of this node.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityNode_NodeOut.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

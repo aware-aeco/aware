@@ -1,0 +1,326 @@
+{
+  "name": "PolygonalArea3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D polygonal area class for 3D polygonal area geometry",
+  "base": "PolygonalArea",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/",
+  "constructors": [
+    {
+      "name": "PolygonalArea3D",
+      "signature": "PolygonalArea3D() | PolygonalArea3D(verticesCount: int, edgesCount: int) | PolygonalArea3D(refPoint: Point3D, verticesCount: int, edgesCount: int) | PolygonalArea3D(polygon: PolygonalArea3D)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendRelVertex",
+      "signature": "AppendRelVertex(vertex: Point3D) -\u003E tuple",
+      "summary": "Append vertex in local coordinate system. Warning: method does not update edges.",
+      "remarks": "Append vertex in local coordinate system. Warning: method does not update edges.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Point3D",
+          "doc": "vertex in local coordinate system which will be appended.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.AppendRelVertex"
+    },
+    {
+      "name": "AppendVertex",
+      "signature": "AppendVertex(vertex: Point3D) -\u003E tuple",
+      "summary": "Append vertex in World coordinate system. Warning: method does not update edges.",
+      "remarks": "Append vertex in World coordinate system. Warning: method does not update edges.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Point3D",
+          "doc": "vertex in world coordinate system which will be appended.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.AppendVertex"
+    },
+    {
+      "name": "EqualRef",
+      "signature": "EqualRef(polygon: PolygonalArea3D) -\u003E bool",
+      "summary": "Test for equal reference points.",
+      "remarks": "Test for equal reference points.",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "PolygonalArea3D",
+          "doc": "polygonal area for comparision.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if reference points are equal else return false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.EqualRef"
+    },
+    {
+      "name": "GetEdgeVertices",
+      "signature": "GetEdgeVertices(edgeIndex: int) -\u003E tuple",
+      "summary": "Get edge vertices.",
+      "remarks": "Get edge vertices.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "edge index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.GetEdgeVertices"
+    },
+    {
+      "name": "GetPolygon",
+      "signature": "GetPolygon() -\u003E tuple",
+      "summary": "Get polygon. Returns empty polygon, if it has zero edges.",
+      "remarks": "Get polygon. Returns empty polygon, if it has zero edges.",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.GetPolygon"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point3D",
+      "summary": "Get the reference point.",
+      "remarks": "Get the reference point.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "constant reference to point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.GetRefPoint"
+    },
+    {
+      "name": "GetRelVertex",
+      "signature": "GetRelVertex(vertexIndex: int) -\u003E tuple",
+      "summary": "Get vertex in Local coordinate system.",
+      "remarks": "Get vertex in Local coordinate system.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "vertex in local coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.GetRelVertex"
+    },
+    {
+      "name": "GetVertex",
+      "signature": "GetVertex(vertexIndex: int) -\u003E tuple",
+      "summary": "Get vertex in World coordinate system.",
+      "remarks": "Get vertex in World coordinate system.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.GetVertex"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse() -\u003E eGeometryErrorCode",
+      "summary": "Reverse the point order of boundary polygons of the area.",
+      "remarks": "Reverse the point order of boundary polygons of the area.",
+      "params": [],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.Reverse"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point3D) -\u003E eGeometryErrorCode",
+      "summary": "Set reference point in world coordinate system. Coordinates of points will be recalculated with new reference point.",
+      "remarks": "Set reference point in world coordinate system. Coordinates of points will be recalculated with new reference point.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "new reference point.",
+          "optional": false
+        },
+        {
+          "name": "or",
+          "type": "object",
+          "doc": "code.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.SetRefPoint"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(polygonalArea: PolygonalArea3D) -\u003E object",
+      "summary": "Comparison of polygonalAreas without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of polygonalAreas without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "polygonalArea",
+          "type": "PolygonalArea3D",
+          "doc": "Compared polygonalArea.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when polygonalAreas are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__eq__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(arg2: int) -\u003E Point3D",
+      "summary": "Get point at position from index. Used world coordinates.",
+      "remarks": "Get point at position from index. Used world coordinates.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "object",
+          "doc": "vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Copy of vertex[vertexIndex] in world coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__getitem__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(polygonalarea: PolygonalArea3D) -\u003E object | __iadd__(polygon: Polygon3D) -\u003E object",
+      "summary": "Append polygon.",
+      "remarks": "Append polygon.",
+      "params": [
+        {
+          "name": "polygonalarea",
+          "type": "PolygonalArea3D",
+          "doc": "polygonal area which will be appended.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Reference to PolygonalArea3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__iadd__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E object | __mul__(matrix: Matrix3D) -\u003E object",
+      "summary": "2D matrix transformation.",
+      "remarks": "2D matrix transformation.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "2D transformation matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Transformed 3D polygon area."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "RefPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the reference point in world coordinate system as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.RefPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

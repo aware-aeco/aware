@@ -1,0 +1,245 @@
+{
+  "name": "ChamferCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class for chamfer calculation between two objects",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate(polyhedron, chamferWidth) | Calculate(polyhedron, edges, chamferWidth, propagation) | Calculate(brep, chamferWidth) | Calculate(brep, edges, chamferWidth, propagation)",
+      "summary": "Calculate chamfer on all edges of given Polyhedron3D",
+      "remarks": "Calculate chamfer on all edges of given Polyhedron3D",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "polyhedron to chamfer",
+          "optional": false
+        },
+        {
+          "name": "chamferWidth",
+          "type": "float",
+          "doc": "chamfer width",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.Calculate"
+    },
+    {
+      "name": "CalculateApplicableChamfers",
+      "signature": "CalculateApplicableChamfers(line1, line2, intersectionPoint, chamferWidth) | CalculateApplicableChamfers(igeo1, igeo2, plane3D, intersectionPoint, chamferWidth) | CalculateApplicableChamfers(line1, line2, plane3D, intersectionPoint, chamferWidth) | CalculateApplicableChamfers(line, arc, chamferArc, bFirstElementIsLine) | CalculateApplicableChamfers(arc1, arc2, chamferArc)",
+      "summary": "Calculates four applicable chamfer lines",
+      "remarks": "Calculates four applicable chamfer lines",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Line2D",
+          "doc": "Geometry of first chamfered line",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Line2D",
+          "doc": "Geometry of second chamfered line",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint",
+          "type": "Point2D",
+          "doc": "Intersection point of 2 chamfered lines",
+          "optional": false
+        },
+        {
+          "name": "chamferWidth",
+          "type": "float",
+          "doc": "Chamfer width",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2DList",
+        "doc": "Calculated 4 applicable chamfer lines"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateApplicableChamfers"
+    },
+    {
+      "name": "CalculateChamferLine",
+      "signature": "CalculateChamferLine(line1, line2, inputPoint) | CalculateChamferLine(igeo1, igeo2, plane3D, intersectionPoint, inputPoint) | CalculateChamferLine(line1, line2, plane3D, intersectionPoint, inputPoint) | CalculateChamferLine(line, arc, plane3D, intersectionPoint, inputPoint, bFirstElementIsLine) | CalculateChamferLine(arc1, arc2, plane3D, intersectionPoint, inputPoint)",
+      "summary": "Calculates chamfer line",
+      "remarks": "Calculates chamfer line",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Line2D",
+          "doc": "Geometry of first chamfered line",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Line2D",
+          "doc": "Geometry of second chamfered line",
+          "optional": false
+        },
+        {
+          "name": "inputPoint",
+          "type": "Point2D",
+          "doc": "Point of click (through which the chamfer should run)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2D",
+        "doc": "Calculated chamfer line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferLine"
+    },
+    {
+      "name": "CalculateChamferedLine",
+      "signature": "CalculateChamferedLine(originalLine, intersectionPoint, chamferPoint) | CalculateChamferedLine(originalLine, plane3D, intersectionPoint, chamferPoint)",
+      "summary": "Calculates chamfered line",
+      "remarks": "Calculates chamfered line",
+      "params": [
+        {
+          "name": "originalLine",
+          "type": "Line2D",
+          "doc": "Line which is being chamfered",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint",
+          "type": "Point2D",
+          "doc": "Intersection point of 2 chamfered lines",
+          "optional": false
+        },
+        {
+          "name": "chamferPoint",
+          "type": "Point2D",
+          "doc": "Intersection point of chamfer line and (original) chamfered line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2D",
+        "doc": "Calculated chamfered line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferedLine"
+    },
+    {
+      "name": "SwapLinePoints",
+      "signature": "SwapLinePoints(line, point) | SwapLinePoints(line, point)",
+      "summary": "Changes line orientation if given point lies on line\u0027s left side.",
+      "remarks": "Changes line orientation if given point lies on line\u0027s left side.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "line to be changed",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "point to be evaluated",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True if line orientation was changed, false if orientation was left intact,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.SwapLinePoints"
+    },
+    {
+      "name": "CalculateChamferInsideOnePolyline",
+      "signature": "CalculateChamferInsideOnePolyline(originalChamferLine, originalPolyLine, polySegment1, polySegment2)",
+      "summary": "Calculate chamfer inside one polyline - 2 different segments of a polyline are to be chamfered",
+      "remarks": "Calculate chamfer inside one polyline - 2 different segments of a polyline are to be chamfered",
+      "params": [
+        {
+          "name": "originalChamferLine",
+          "type": "Line3D",
+          "doc": "Geometry of chamfer line",
+          "optional": false
+        },
+        {
+          "name": "originalPolyLine",
+          "type": "Polyline3D",
+          "doc": "Geometry of chamfered polyline",
+          "optional": false
+        },
+        {
+          "name": "polySegment1",
+          "type": "int",
+          "doc": "First segment index of polyline",
+          "optional": false
+        },
+        {
+          "name": "polySegment2",
+          "type": "int",
+          "doc": "Second segment index of polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "Calculated chamfered polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferInsideOnePolyline"
+    },
+    {
+      "name": "CalculateHalvingAngle",
+      "signature": "CalculateHalvingAngle(line1, line2, intersectionPoint)",
+      "summary": "Calculates halving angle of 2 given lines in the global coordinate system",
+      "remarks": "Calculates halving angle of 2 given lines in the global coordinate system",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Line2D",
+          "doc": "Geometry of first line",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Line2D",
+          "doc": "Geometry of second line",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint",
+          "type": "Point2D",
+          "doc": "Intersection point of the 2 lines",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "Halving angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateHalvingAngle"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

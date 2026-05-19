@@ -1,0 +1,39 @@
+{
+  "name": "ScaleValue.ScaleStringFormat",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "Specifies preferred formats for automatically created string descriptions of a scale value.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ScaleValue_ScaleStringFormat.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No preference for automatically created string descriptions of a scale value."
+    },
+    {
+      "name": "RatioFormat",
+      "value": 1,
+      "summary": "Prefer the ratio format using a colon, like \u00221:4\u0022 or \u00224:1\u0022."
+    },
+    {
+      "name": "EquationFormat",
+      "value": 2,
+      "summary": "Prefer the equation format using an equal sign, like \u00221 = 4\u0022 or \u00224 = 1\u0022."
+    },
+    {
+      "name": "FractionFormat",
+      "value": 3,
+      "summary": "Prefer the fraction format using a slash, like \u00221/4\u0022 or \u00224/1\u0022."
+    },
+    {
+      "name": "Unset",
+      "value": 255,
+      "summary": "ON_ScaleValue::ScaleStringFormat::Unset is used to indicate no preference is set. This condition is different from ON_ScaleValue::ScaleStringFormat::None."
+    }
+  ]
+}

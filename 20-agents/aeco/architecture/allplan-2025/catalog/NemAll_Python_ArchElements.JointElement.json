@@ -1,0 +1,81 @@
+{
+  "name": "JointElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the General opening element",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointElement/",
+  "constructors": [
+    {
+      "name": "JointElement",
+      "signature": "JointElement() | JointElement( jointProp: JointProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, ) | JointElement(element: JointElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointElement/#NemAll_Python_ArchElements.JointElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties() -\u003E JointProperties",
+      "summary": "Get the General opening properties",
+      "remarks": "Get the General opening properties",
+      "params": [],
+      "returns": {
+        "type": "JointProperties",
+        "doc": "General opening properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointElement/#NemAll_Python_ArchElements.JointElement.GetProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(JointProp: JointProperties)",
+      "summary": "Set the GeneralOpening properties",
+      "remarks": "Set the GeneralOpening properties",
+      "params": [
+        {
+          "name": "JointProp",
+          "type": "JointProperties",
+          "doc": "General opening properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointElement/#NemAll_Python_ArchElements.JointElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointElement/#NemAll_Python_ArchElements.JointElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "JointProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the General opening properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointElement/#NemAll_Python_ArchElements.JointElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

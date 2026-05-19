@@ -1,0 +1,188 @@
+{
+  "name": "FileDialog",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "File dialog",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/FileDialog/",
+  "constructors": [
+    {
+      "name": "FileDialog",
+      "signature": "FileDialog()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/FileDialog/#NemAll_Python_Utility.FileDialog.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AskOpenFavoriteFile",
+      "signature": "AskOpenFavoriteFile(defaultPath, title, filters, extension)",
+      "summary": "Ask for a favorite file to open",
+      "remarks": "Ask for a favorite file to open",
+      "params": [
+        {
+          "name": "defaultPath",
+          "type": "str",
+          "doc": "Initial default path",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "doc": "Title of the dialog. If the title is empty an internal string will be used",
+          "optional": false
+        },
+        {
+          "name": "filters",
+          "type": "str",
+          "doc": "Filters of the files",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "str",
+          "doc": "Extension of the file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/FileDialog/#NemAll_Python_Utility.FileDialog.AskOpenFavoriteFile"
+    },
+    {
+      "name": "AskOpenFile",
+      "signature": "AskOpenFile(defaultPath, title, filters, extension, defaultDir)",
+      "summary": "Ask for a file to open",
+      "remarks": "Ask for a file to open",
+      "params": [
+        {
+          "name": "defaultPath",
+          "type": "str",
+          "doc": "Initial default path",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "doc": "Title of the dialog. If the title is empty an internal string will be used",
+          "optional": false
+        },
+        {
+          "name": "filters",
+          "type": "str",
+          "doc": "Filters of the files",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "str",
+          "doc": "Extension of the file",
+          "optional": false
+        },
+        {
+          "name": "defaultDir",
+          "type": "DefaultDirectories",
+          "doc": "Default directories",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "selected file"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/FileDialog/#NemAll_Python_Utility.FileDialog.AskOpenFile"
+    },
+    {
+      "name": "AskSaveFavoriteFile",
+      "signature": "AskSaveFavoriteFile(defaultPath, title, filters, extension)",
+      "summary": "Ask for a favorite file to save",
+      "remarks": "Ask for a favorite file to save",
+      "params": [
+        {
+          "name": "defaultPath",
+          "type": "str",
+          "doc": "Initial default path",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "doc": "Title of the dialog. If the title is empty an internal string will be used",
+          "optional": false
+        },
+        {
+          "name": "filters",
+          "type": "str",
+          "doc": "Filters of the files",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "str",
+          "doc": "Extension of the file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/FileDialog/#NemAll_Python_Utility.FileDialog.AskSaveFavoriteFile"
+    },
+    {
+      "name": "AskSaveFile",
+      "signature": "AskSaveFile(defaultPath, title, filters, extension, defaultDir)",
+      "summary": "Ask for a file to save",
+      "remarks": "Ask for a file to save",
+      "params": [
+        {
+          "name": "defaultPath",
+          "type": "str",
+          "doc": "Initial default path",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "doc": "Title of the dialog. If the title is empty an internal string will be used",
+          "optional": false
+        },
+        {
+          "name": "filters",
+          "type": "str",
+          "doc": "Filters of the files",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "str",
+          "doc": "Extension of the file",
+          "optional": false
+        },
+        {
+          "name": "defaultDir",
+          "type": "DefaultDirectories",
+          "doc": "Default directories",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "selected file"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/FileDialog/#NemAll_Python_Utility.FileDialog.AskSaveFile"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,59 @@
+{
+  "name": "AutoDirectionTypeEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The auto direction type defines how a connection or detail coordinate system will be oriented automatically.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4a99522f-60bb-44d4-c332-f63428e34119",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AUTODIR_NA",
+      "value": 0,
+      "summary": "The auto direction will not be available."
+    },
+    {
+      "name": "AUTODIR_BASIC",
+      "value": 1,
+      "summary": "The auto direction type for usual joints will be used."
+    },
+    {
+      "name": "AUTODIR_DIAGONAL",
+      "value": 2,
+      "summary": "The auto direction type for diagonal joints will be used."
+    },
+    {
+      "name": "AUTODIR_SPLICE",
+      "value": 3,
+      "summary": "The auto direction type for splices will be used."
+    },
+    {
+      "name": "AUTODIR_DETAIL",
+      "value": 4,
+      "summary": "The auto direction type for details will be used."
+    },
+    {
+      "name": "AUTODIR_GLOBAL_Z",
+      "value": 5,
+      "summary": "The auto direction type with joint direction at the global Z will be used."
+    },
+    {
+      "name": "AUTODIR_SEATING",
+      "value": 6,
+      "summary": "The auto direction type for seating joints will be used."
+    },
+    {
+      "name": "AUTODIR_PRIMARY_X",
+      "value": 7,
+      "summary": "The auto direction type with joint direction parallel to the primary X-axis will be used."
+    },
+    {
+      "name": "AUTODIR_FROM_ATTRIBUTE_FILE",
+      "value": 99,
+      "summary": "The auto direction type is fetched from the loaded attribute file."
+    }
+  ]
+}

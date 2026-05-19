@@ -1,0 +1,79 @@
+{
+  "name": "DynamoProducts",
+  "namespace": "DynamoInstallDetective",
+  "kind": "class",
+  "summary": "Type DynamoProducts",
+  "base": "DynamoInstallDetective.InstalledProducts",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindDynamoInstallations(string, DynamoInstallDetective.IProductLookUp)",
+      "signature": "DynamoInstallDetective.DynamoProducts FindDynamoInstallations(string debugPath, DynamoInstallDetective.IProductLookUp lookUp)",
+      "summary": "DynamoProducts.FindDynamoInstallations",
+      "params": [
+        {
+          "name": "debugPath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "lookUp",
+          "type": "DynamoInstallDetective.IProductLookUp",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DynamoInstallDetective.DynamoProducts",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetDynamoPath(System.Version, string)",
+      "signature": "string GetDynamoPath(System.Version version, string debugPath)",
+      "summary": "DynamoProducts.GetDynamoPath",
+      "params": [
+        {
+          "name": "version",
+          "type": "System.Version",
+          "optional": false
+        },
+        {
+          "name": "debugPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "LookUpAndInitProducts(DynamoInstallDetective.IProductLookUp)",
+      "signature": "void LookUpAndInitProducts(DynamoInstallDetective.IProductLookUp lookUp)",
+      "summary": "DynamoProducts.LookUpAndInitProducts",
+      "params": [
+        {
+          "name": "lookUp",
+          "type": "DynamoInstallDetective.IProductLookUp",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

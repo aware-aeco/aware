@@ -1,0 +1,154 @@
+{
+  "name": "GH_PluginUtil",
+  "namespace": "Grasshopper.Plugin",
+  "kind": "class",
+  "summary": "Grasshopper plugin utility class. This class exports some static (Shared in VB) methods to do with plugin loading and unloading.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Plugin_GH_PluginUtil.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BringRhinoToTop",
+      "signature": "public static void BringRhinoToTop()",
+      "summary": "Bring the Rhino window to the top of the stack.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_BringRhinoToTop.htm"
+    },
+    {
+      "name": "BringWindowToTop",
+      "signature": "public static bool BringWindowToTop(IntPtr hWnd)",
+      "summary": "",
+      "params": [
+        {
+          "name": "hWnd",
+          "type": "System.IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_BringWindowToTop.htm"
+    },
+    {
+      "name": "FocusOnRhino",
+      "signature": "public static void FocusOnRhino()",
+      "summary": "Set the focus to the Rhino command line.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_FocusOnRhino.htm"
+    },
+    {
+      "name": "SendKeyCodeToRhino(Char)",
+      "signature": "public static void SendKeyCodeToRhino(char key)",
+      "summary": "Send a key-code to the Rhino command line.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Char",
+          "doc": "Key char.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_SendKeyCodeToRhino.htm"
+    },
+    {
+      "name": "SendKeyCodeToRhino(Int32)",
+      "signature": "public static void SendKeyCodeToRhino(int key)",
+      "summary": "Send a key-code to the Rhino command line.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Int32",
+          "doc": "Key code.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_SendKeyCodeToRhino_1.htm"
+    },
+    {
+      "name": "SendKeyCodeToRhino(String)",
+      "signature": "public static void SendKeyCodeToRhino(string key)",
+      "summary": "Send a string of characters to the Rhino command line.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_SendKeyCodeToRhino_2.htm"
+    },
+    {
+      "name": "SendMessage",
+      "signature": "public static IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, IntPtr lParam)",
+      "summary": "",
+      "params": [
+        {
+          "name": "hWnd",
+          "type": "System.IntPtr",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "wParam",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "lParam",
+          "type": "System.IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_SendMessage.htm"
+    },
+    {
+      "name": "SetFocus",
+      "signature": "public static void SetFocus(IntPtr hWnd)",
+      "summary": "",
+      "params": [
+        {
+          "name": "hWnd",
+          "type": "System.IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Plugin_GH_PluginUtil_SetFocus.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,406 @@
+{
+  "name": "RenderMeshProvider",
+  "namespace": "Rhino.Render.CustomRenderMeshes",
+  "kind": "class",
+  "summary": "A RenderMeshProvider delivers custom render primitives (in the form of RenderMeshes). Derive a public class from this with a public constructor, and this primitive provider will be added to the RDK forming a collection of providers. Each RenderMeshProvider::HasCustomRenderMeshes will be called and if it returns true, a call to RenderMeshes will be made. It is up to the provider to cache its own primitives - the IRenderMeshes::ProviderTracking class is provided for that. A provider may optionally return a collection of non-object Ids that it will provide custom render primitives for. An example of this is Grasshopper, which which will typically return a collection of the Ids of each CustomPreview component. Override this class if you are a plug-in developer intending to supply a custom set of primitives for a given object, or objectId. Examples of IRenderMeshProviders are CurvePiping, EdgeSoftening, Displacement, Shutlining, Grasshopper\u0027s CustomPreview component.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshes_RenderMeshProvider.htm",
+  "constructors": [
+    {
+      "name": "RenderMeshProvider",
+      "signature": "protected RenderMeshProvider()",
+      "summary": "Initializes a new instance of the RenderMeshProvider class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Dispose method",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Dispose method. Note that you should only ever call Dispose if you explicitly registered this RenderMeshProvider using RegisterProvider If this provider was created using automatic registration, the Dispose function will thrown an exception.",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer to ensure correctly implemented dispose pattern.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_Finalize.htm"
+    },
+    {
+      "name": "GetParameter",
+      "signature": "public virtual Object GetParameter(RhinoDoc doc, Guid objectId, string parameterName)",
+      "summary": "Runtime access to specific parameters on for a given objectId relating to this primitive provider.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document of interest.",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "The objectId for which the parameter should be supplied.",
+          "optional": false
+        },
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "The name of the parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The value of the parameter for the specified ObjectId. IConvertable."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_GetParameter.htm"
+    },
+    {
+      "name": "HasCustomRenderMeshes",
+      "signature": "public abstract bool HasCustomRenderMeshes(MeshType mt, ViewportInfo vp, RhinoDoc doc, Guid objectId, ref RenderMeshProvider.Flags flags, PlugIn plugin, DisplayPipelineAttributes attrs)",
+      "summary": "Determine if custom render primitives will be supplied for a particular object.",
+      "params": [
+        {
+          "name": "mt",
+          "type": "Rhino.Geometry.MeshType",
+          "doc": "The mesh type to provide meshes for",
+          "optional": false
+        },
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document associated with the objectId",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "The objectId for which the primitives should be supplied.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Rhino.Render.CustomRenderMeshes.RenderMeshProvider.Flags",
+          "doc": "See Flags.",
+          "optional": false
+        },
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The requesting plug-in - typically the render plug-in requesting the primitives.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "The display attributes currently being used - nullptr if this is production rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if RenderMeshes will return a set of primitives, otherwise false. RenderMeshes may still return an empty collection - in case of cancelation something similar."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_HasCustomRenderMeshes.htm"
+    },
+    {
+      "name": "Progress",
+      "signature": "public virtual RenderMeshProviderProgress Progress(RhinoDoc doc, Guid[] optional_objectIds)",
+      "summary": "Provides details on the progress of custom render meshes for a document or collection of objects",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.Progress(Rhino.RhinoDoc,System.Guid[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "optional_objectIds",
+          "type": "System.Guid[]",
+          "doc": "[Missing \u003Cparam name=\u0022optional_objectIds\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.Progress(Rhino.RhinoDoc,System.Guid[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMeshProviderProgress",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.Progress(Rhino.RhinoDoc,System.Guid[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_Progress.htm"
+    },
+    {
+      "name": "ProgressForAll",
+      "signature": "public static RenderMeshProviderProgress[] ProgressForAll(RhinoDoc doc, Guid[] optional_objectIds)",
+      "summary": "Returns a complete list of progress reports for all providers for either the document or a collection of objects",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.ProgressForAll(Rhino.RhinoDoc,System.Guid[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "optional_objectIds",
+          "type": "System.Guid[]",
+          "doc": "[Missing \u003Cparam name=\u0022optional_objectIds\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.ProgressForAll(Rhino.RhinoDoc,System.Guid[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMeshProviderProgress[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.ProgressForAll(Rhino.RhinoDoc,System.Guid[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_ProgressForAll.htm"
+    },
+    {
+      "name": "RegisterProvider",
+      "signature": "public static bool RegisterProvider(RenderMeshProvider provider, PlugIn plugin)",
+      "summary": "Register RenderMeshProvider without relying on the auto-plug-in registration.",
+      "params": [
+        {
+          "name": "provider",
+          "type": "Rhino.Render.CustomRenderMeshes.RenderMeshProvider",
+          "doc": "[Missing \u003Cparam name=\u0022provider\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.RegisterProvider(Rhino.Render.CustomRenderMeshes.RenderMeshProvider,Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.RegisterProvider(Rhino.Render.CustomRenderMeshes.RenderMeshProvider,Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.RegisterProvider(Rhino.Render.CustomRenderMeshes.RenderMeshProvider,Rhino.PlugIns.PlugIn)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_RegisterProvider.htm"
+    },
+    {
+      "name": "RegisterProviders(PlugIn)",
+      "signature": "public static void RegisterProviders(PlugIn plugin)",
+      "summary": "Register RenderMeshProviders without relying on the auto-plug-in registration",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.RegisterProviders(Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_RegisterProviders.htm"
+    },
+    {
+      "name": "RegisterProviders(Assembly, PlugIn)",
+      "signature": "public static void RegisterProviders(Assembly assembly, PlugIn plugin)",
+      "summary": "Register RenderMeshProviders without relying on the auto-plug-in registration",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.RegisterProviders(System.Reflection.Assembly,Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.RegisterProviders(System.Reflection.Assembly,Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_RegisterProviders_1.htm"
+    },
+    {
+      "name": "RenderMeshes",
+      "signature": "public abstract RenderMeshes RenderMeshes(MeshType mt, ViewportInfo vp, RhinoDoc doc, Guid objectId, List\u003CInstanceObject\u003E ancestry, ref RenderMeshProvider.Flags flags, RenderMeshes previousPrimitives, PlugIn plugin, DisplayPipelineAttributes attrs)",
+      "summary": "Returns a complete set of custom render primitives for a given ObjectId.",
+      "params": [
+        {
+          "name": "mt",
+          "type": "Rhino.Geometry.MeshType",
+          "doc": "The mesh type to provide meshes for",
+          "optional": false
+        },
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document associated with the objectId",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "The objectId for which the primitives should be supplied.",
+          "optional": false
+        },
+        {
+          "name": "ancestry",
+          "type": "System.Collections.Generic.List\u003CInstanceObject\u003E",
+          "doc": "The ancestry of the object - ie, block references referring to this definition. This is only used to handle ByParent attributes, and should not be used to transform geometry.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Rhino.Render.CustomRenderMeshes.RenderMeshProvider.Flags",
+          "doc": "See Flags.",
+          "optional": false
+        },
+        {
+          "name": "previousPrimitives",
+          "type": "Rhino.Render.CustomRenderMeshes.RenderMeshes",
+          "doc": "Optionally a custom set of initial primitives. If this parameter is empty, the standard render primitives for the object will be used, or an empty set of primitives will be used where they are not available. This is typically used in meshing exporters, which produce specific meshes for the output rather than using the render primitives.",
+          "optional": false
+        },
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The requesting plug-in - typically the render plug-in requesting the meshes.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "The display attributes currently being used - nullptr if this is production rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMeshes",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshProvider.RenderMeshes(Rhino.Geometry.MeshType,Rhino.DocObjects.ViewportInfo,Rhino.RhinoDoc,System.Guid,System.Collections.Generic.List{Rhino.DocObjects.InstanceObject},Rhino.Render.CustomRenderMeshes.RenderMeshProvider.Flags@,Rhino.Render.CustomRenderMeshes.RenderMeshes,Rhino.PlugIns.PlugIn,Rhino.Display.DisplayPipelineAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_RenderMeshes.htm"
+    },
+    {
+      "name": "SetParameter",
+      "signature": "public virtual void SetParameter(RhinoDoc doc, Guid objectId, string parameterName, Object value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document of interest.",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "The objectId for which the parameter should be supplied.",
+          "optional": false
+        },
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "The name of the parameter.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The value to set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_SetParameter.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The localized name of the provider for UI display.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_Name.htm"
+    },
+    {
+      "name": "NonObjectIds",
+      "type": "List\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A provider may optionally return a collection of non-object Ids that it will provide custom render primitives for. An example of this is Grasshopper, which which will typically return a collection of the Ids of each CustomPreview component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_NonObjectIds.htm"
+    },
+    {
+      "name": "ProviderId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The localized name of the provider for UI display.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_ProviderId.htm"
+    },
+    {
+      "name": "m_disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "m_disposed available for sub-classes to check.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_m_disposed.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

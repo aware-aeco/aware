@@ -1,0 +1,41 @@
+{
+  "name": "PluginUserInterfaceAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The PluginUserInterfaceAttribute class is used for storing the description of the plug-in user interface to the system. The attribute is initialized from the custom attribute [PluginUserInterface(PluginName.UserInterfaceDefinitions.Plugin1)] in the plug-in source. In this case the description string Plugin1 is a dialog written in inp format. If the plug-in dialog is inherited from the PluginFormBase the description string contains a class name of the dialog i.e. [PluginUserInterface(\u0022Model_Plug_in1.MainForm\u0022)].",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/48e673e5-d34c-6ed9-ce45-1a1d5a444898",
+  "constructors": [
+    {
+      "name": "PluginUserInterfaceAttribute",
+      "signature": "public PluginUserInterfaceAttribute(string description)",
+      "summary": "The custom attribute [PluginUserInterface(PluginName.UserInterfaceDefinitions.Plugin1)] uses this to store the description of the plug-in user interface to the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the plug-in user interface in inp format or the name of the dialog class for the PluginFormBase dialog.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7962935c-29d1-0aae-3af5-a4233ae3d930"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The description of the plug-in user interface in inp format.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/36273632-82f7-2489-752e-20d2aae40796"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

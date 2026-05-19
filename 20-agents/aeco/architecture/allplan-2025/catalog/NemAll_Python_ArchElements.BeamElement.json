@@ -1,0 +1,81 @@
+{
+  "name": "BeamElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the upstand/downstand beam",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/",
+  "constructors": [
+    {
+      "name": "BeamElement",
+      "signature": "BeamElement() | BeamElement(beamProp: BeamProperties, axis: object) | BeamElement(element: BeamElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/#NemAll_Python_ArchElements.BeamElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties() -\u003E BeamProperties",
+      "summary": "Get the beam properties",
+      "remarks": "Get the beam properties",
+      "params": [],
+      "returns": {
+        "type": "BeamProperties",
+        "doc": "Beam properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/#NemAll_Python_ArchElements.BeamElement.GetProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(beamProp: BeamProperties)",
+      "summary": "Set the beam properties",
+      "remarks": "Set the beam properties",
+      "params": [
+        {
+          "name": "beamProp",
+          "type": "BeamProperties",
+          "doc": "Beam properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/#NemAll_Python_ArchElements.BeamElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/#NemAll_Python_ArchElements.BeamElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "BeamProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Properties of the beam",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/#NemAll_Python_ArchElements.BeamElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

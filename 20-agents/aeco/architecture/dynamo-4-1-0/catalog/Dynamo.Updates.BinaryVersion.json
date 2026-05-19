@@ -1,0 +1,236 @@
+{
+  "name": "BinaryVersion",
+  "namespace": "Dynamo.Updates",
+  "kind": "class",
+  "summary": "This class represents current version of the product.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object other)",
+      "summary": "Determines whether this instance and another specified Dynamo.Updates.BinaryVersion object are equal by reference",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "doc": "The Dynamo.Updates.BinaryVersion to compare to this instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if references are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "FromString(string)",
+      "signature": "Dynamo.Updates.BinaryVersion FromString(string version)",
+      "summary": "Parses a given string version representation",
+      "params": [
+        {
+          "name": "version",
+          "type": "string",
+          "doc": "Version to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Updates.BinaryVersion",
+        "doc": "Result Dynamo.Updates.BinaryVersion object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Returns the hash code for this Dynamo.Updates.BinaryVersion",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "The hash code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns string representation of the Dynamo.Updates.BinaryVersion",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "String representation of the version"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "op_Equality(Dynamo.Updates.BinaryVersion, Dynamo.Updates.BinaryVersion)",
+      "signature": "bool op_Equality(Dynamo.Updates.BinaryVersion lhs, Dynamo.Updates.BinaryVersion rhs)",
+      "summary": "Compares two Dynamo.Updates.BinaryVersion objects. The result specifies if the versions are the same",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the versions are the same"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "op_GreaterThan(Dynamo.Updates.BinaryVersion, Dynamo.Updates.BinaryVersion)",
+      "signature": "bool op_GreaterThan(Dynamo.Updates.BinaryVersion lhs, Dynamo.Updates.BinaryVersion rhs)",
+      "summary": "Compares two Dynamo.Updates.BinaryVersion objects. The result specifies if the first given version is newer than the second one",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the first version is newer than the second one"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "op_GreaterThanOrEqual(Dynamo.Updates.BinaryVersion, Dynamo.Updates.BinaryVersion)",
+      "signature": "bool op_GreaterThanOrEqual(Dynamo.Updates.BinaryVersion lhs, Dynamo.Updates.BinaryVersion rhs)",
+      "summary": "Compares two Dynamo.Updates.BinaryVersion objects. The result specifies if the first given version is newer or the same as the second one",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the first version is newer or the same as the second one"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "op_Inequality(Dynamo.Updates.BinaryVersion, Dynamo.Updates.BinaryVersion)",
+      "signature": "bool op_Inequality(Dynamo.Updates.BinaryVersion lhs, Dynamo.Updates.BinaryVersion rhs)",
+      "summary": "Compares two Dynamo.Updates.BinaryVersion objects. The result specifies if the versions are different",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the versions are different"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "op_LessThan(Dynamo.Updates.BinaryVersion, Dynamo.Updates.BinaryVersion)",
+      "signature": "bool op_LessThan(Dynamo.Updates.BinaryVersion lhs, Dynamo.Updates.BinaryVersion rhs)",
+      "summary": "Compares two Dynamo.Updates.BinaryVersion objects. The result specifies if the first given version is older than the second one",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the first version is older than the second one"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    },
+    {
+      "name": "op_LessThanOrEqual(Dynamo.Updates.BinaryVersion, Dynamo.Updates.BinaryVersion)",
+      "signature": "bool op_LessThanOrEqual(Dynamo.Updates.BinaryVersion lhs, Dynamo.Updates.BinaryVersion rhs)",
+      "summary": "Compares two Dynamo.Updates.BinaryVersion objects. The result specifies if the first given version is older or the same as the second one",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Updates.BinaryVersion",
+          "doc": "A Dynamo.Updates.BinaryVersion to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the first version is older or the same as the second one"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Updates/BinaryVersion.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

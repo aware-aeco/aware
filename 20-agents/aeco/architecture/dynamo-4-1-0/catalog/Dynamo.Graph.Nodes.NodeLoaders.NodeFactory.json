@@ -1,0 +1,25 @@
+{
+  "name": "NodeFactory",
+  "namespace": "Dynamo.Graph.Nodes.NodeLoaders",
+  "kind": "class",
+  "summary": "Manages factories and loaders for NodeModels. Can use registered factories and loaders to instantiate and load new NodeModels.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeLoaders/NodeFactory.cs",
+  "constructors": [
+    {
+      "name": "NodeFactory()",
+      "signature": "void NodeFactory()",
+      "summary": "NodeFactory.NodeFactory",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeLoaders/NodeFactory.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

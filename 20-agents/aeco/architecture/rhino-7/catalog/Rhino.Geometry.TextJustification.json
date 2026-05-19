@@ -1,0 +1,94 @@
+{
+  "name": "TextJustification",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Specifies enumerated constants used to indicate the internal alignment and justification of text.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_TextJustification.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "The default justification."
+    },
+    {
+      "name": "Left",
+      "value": 1,
+      "summary": "Left justification."
+    },
+    {
+      "name": "Center",
+      "value": 2,
+      "summary": "Center justification."
+    },
+    {
+      "name": "Right",
+      "value": 4,
+      "summary": "Right justification."
+    },
+    {
+      "name": "Bottom",
+      "value": 65536,
+      "summary": "Bottom inner alignment."
+    },
+    {
+      "name": "Middle",
+      "value": 131072,
+      "summary": "Middle inner alignment."
+    },
+    {
+      "name": "Top",
+      "value": 262144,
+      "summary": "Top inner alignment."
+    },
+    {
+      "name": "BottomLeft",
+      "value": 65537,
+      "summary": "Combination of left justification and bottom alignment."
+    },
+    {
+      "name": "BottomCenter",
+      "value": 65538,
+      "summary": "Combination of center justification and bottom alignment."
+    },
+    {
+      "name": "BottomRight",
+      "value": 65540,
+      "summary": "Combination of right justification and bottom alignment."
+    },
+    {
+      "name": "MiddleLeft",
+      "value": 131073,
+      "summary": "Combination of left justification and middle alignment."
+    },
+    {
+      "name": "MiddleCenter",
+      "value": 131074,
+      "summary": "Combination of center justification and middle alignment."
+    },
+    {
+      "name": "MiddleRight",
+      "value": 131076,
+      "summary": "Combination of right justification and middle alignment."
+    },
+    {
+      "name": "TopLeft",
+      "value": 262145,
+      "summary": "Combination of left justification and top alignment."
+    },
+    {
+      "name": "TopCenter",
+      "value": 262146,
+      "summary": "Combination of center justification and top alignment."
+    },
+    {
+      "name": "TopRight",
+      "value": 262148,
+      "summary": "Combination of right justification and top alignment."
+    }
+  ]
+}

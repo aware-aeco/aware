@@ -1,0 +1,283 @@
+{
+  "name": "AnnotationToleranceSettings",
+  "namespace": "Grasshopper.Rhinoceros.Annotations",
+  "kind": "class",
+  "summary": "Represents annotation tolerance settings.",
+  "base": "ModelData",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings.htm",
+  "constructors": [
+    {
+      "name": "AnnotationToleranceSettings()",
+      "signature": "public AnnotationToleranceSettings()",
+      "summary": "Initializes a new instance of the AnnotationToleranceSettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings__ctor.htm"
+    },
+    {
+      "name": "AnnotationToleranceSettings(AnnotationToleranceSettings.Attributes)",
+      "signature": "public AnnotationToleranceSettings(AnnotationToleranceSettings.Attributes attributes)",
+      "summary": "Initializes a new instance of the AnnotationToleranceSettings class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Annotations.AnnotationToleranceSettings.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings__ctor_1.htm"
+    },
+    {
+      "name": "AnnotationToleranceSettings(DimensionStyle)",
+      "signature": "public AnnotationToleranceSettings(DimensionStyle dimStyle)",
+      "summary": "Initializes a new instance of the AnnotationToleranceSettings class",
+      "params": [
+        {
+          "name": "dimStyle",
+          "type": "DimensionStyle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CastTo\u003CT\u003E",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_CastTo__1.htm"
+    },
+    {
+      "name": "Equals(ModelData)",
+      "signature": "public bool Equals(ModelData other)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Equals_1.htm"
+    },
+    {
+      "name": "GetDimensionStyle",
+      "signature": "public void GetDimensionStyle(ref DimensionStyle baseDimensionStyle = null)",
+      "summary": "",
+      "params": [
+        {
+          "name": "baseDimensionStyle",
+          "type": "DimensionStyle",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_GetDimensionStyle.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_GetHashCode.htm"
+    },
+    {
+      "name": "ToAttributes",
+      "signature": "public AnnotationToleranceSettings.Attributes ToAttributes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "AnnotationToleranceSettings.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_ToAttributes.htm"
+    },
+    {
+      "name": "ToDetails",
+      "signature": "public string ToDetails()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_ToDetails.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public virtual string TooltipString()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_ToString.htm"
+    },
+    {
+      "name": "Explicit(AnnotationToleranceSettings to DimensionStyle)",
+      "signature": "public static explicit operator DimensionStyle (AnnotationToleranceSettings settings)",
+      "summary": "",
+      "params": [
+        {
+          "name": "settings",
+          "type": "Grasshopper.Rhinoceros.Annotations.AnnotationToleranceSettings",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_op_Explicit.htm"
+    },
+    {
+      "name": "Implicit(AnnotationToleranceSettings.Attributes to AnnotationToleranceSettings)",
+      "signature": "public static implicit operator AnnotationToleranceSettings (AnnotationToleranceSettings.Attributes attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Annotations.AnnotationToleranceSettings.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AnnotationToleranceSettings",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AlternateToleranceResolution",
+      "type": "Nullable\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_AlternateToleranceResolution.htm"
+    },
+    {
+      "name": "ToleranceFormat",
+      "type": "Nullable\u003CToleranceDisplayFormat\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_ToleranceFormat.htm"
+    },
+    {
+      "name": "ToleranceHeightScale",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_ToleranceHeightScale.htm"
+    },
+    {
+      "name": "ToleranceLowerValue",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_ToleranceLowerValue.htm"
+    },
+    {
+      "name": "ToleranceResolution",
+      "type": "Nullable\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_ToleranceResolution.htm"
+    },
+    {
+      "name": "ToleranceUpperValue",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationToleranceSettings_ToleranceUpperValue.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,139 @@
+{
+  "name": "Field",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "class",
+  "summary": "Base class for all fields used within SchemaDefinitions.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.Field",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ValueEquals",
+      "signature": "bool ValueEquals(Autodesk.Navisworks.Api.Schema.Field value)",
+      "summary": "Performs comparison \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Schema.Field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Field.ValueEquals%28Autodesk.Navisworks.Api.Schema.Field%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Field.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Field.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Schema.Field InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Field.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.Field",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Field.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "static bool ValueEquals(Autodesk.Navisworks.Api.Schema.Field value1, Autodesk.Navisworks.Api.Schema.Field value2)",
+      "summary": "Compares the two references \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Schema.Field",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Schema.Field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Field.ValueEquals%28Autodesk.Navisworks.Api.Schema.Field%2CAutodesk.Navisworks.Api.Schema.Field%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Concepts",
+      "type": "Autodesk.Navisworks.Api.Schema.ConceptCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Field-specific semantics associated with this field.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.Field.Concepts"
+    },
+    {
+      "name": "DisplayNameId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The field\u0027s display name internal ID. Used for looking up the localized display name.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.Field.DisplayNameId"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier for the field.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.Field.Id"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.Field.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Projection",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "When a mapping primitive, like a plane, sphere, box, or cylinder, is used, there are two projection options. If m_type = srfp_mapping, then m_projection is ignored.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_Projection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "None"
+    },
+    {
+      "name": "ClosestPoint",
+      "value": 1,
+      "summary": "ClosestPoint: world xyz maps to the point on the mapping primitive that is closest to xyz. In this case, ON_TextureMapping::Evaluate ignores the vector argument."
+    },
+    {
+      "name": "Ray",
+      "value": 2,
+      "summary": "Ray: world xyz \u002B world vector defines a world line. The world line is intersected with the mapping primitive and the intersection point that is closest to the world xyz point is used to calculate the mapping parameters."
+    }
+  ]
+}

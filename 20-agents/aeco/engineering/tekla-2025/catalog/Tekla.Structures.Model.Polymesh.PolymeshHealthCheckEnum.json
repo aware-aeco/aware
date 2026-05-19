@@ -1,0 +1,134 @@
+{
+  "name": "Polymesh.PolymeshHealthCheckEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Polymesh check error result codes. See the PolymeshCheckerFlags to see how to set the various checks.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d3116a3b-bd01-49c1-ee54-56b2e9a2fb30",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PolymeshLevelError",
+      "value": -2,
+      "summary": "The vertex array contains vertices that are geometrically equivalent or the polymesh contains unused vertices"
+    },
+    {
+      "name": "PolymeshUndefined",
+      "value": -1,
+      "summary": "Polymesh is null, the creation failed or unknown reasons."
+    },
+    {
+      "name": "PolymeshOk",
+      "value": 0,
+      "summary": "Valid polymesh"
+    },
+    {
+      "name": "NumOfVerticesOuterloop",
+      "value": 1,
+      "summary": "Number of vertices in outer loop too small"
+    },
+    {
+      "name": "NumOfVerticesInnerloop",
+      "value": 2,
+      "summary": "Number of vertices in innerloop too small"
+    },
+    {
+      "name": "VertexArrayOuterloop",
+      "value": 3,
+      "summary": "Check of indices of vertices in outer loop failed"
+    },
+    {
+      "name": "VertexArrayInnerloop",
+      "value": 4,
+      "summary": "Check of indices of vertices in the innerloop failed"
+    },
+    {
+      "name": "InnerloopNotInsideOuterloop",
+      "value": 5,
+      "summary": "Inner loop is not inside the outer loop"
+    },
+    {
+      "name": "VertexArrayForListOfEdges",
+      "value": 6,
+      "summary": "Check of indices of vertices for edge list failed"
+    },
+    {
+      "name": "NonPlanarOuterloop",
+      "value": 7,
+      "summary": "Outer loop points are not in the same plane with each other"
+    },
+    {
+      "name": "NonPlanarInnerloop",
+      "value": 8,
+      "summary": "Inner loop points are not in the same plane with each other or with outer loop"
+    },
+    {
+      "name": "SelfIntersectingOuterloop",
+      "value": 9,
+      "summary": "Outer loop is self-intersecting"
+    },
+    {
+      "name": "SelfIntersectingInnerloop",
+      "value": 10,
+      "summary": "Inner loop is self-intersecting"
+    },
+    {
+      "name": "LoopNormalsInvalid",
+      "value": 11,
+      "summary": "Inner loop normal direction should be opposite to outer loop"
+    },
+    {
+      "name": "FaceEdgesInvalidOrientation",
+      "value": 12,
+      "summary": "Two neighbor faces with common edge have wrong orientation"
+    },
+    {
+      "name": "FaceEdgesPartlyInvalidOrientation",
+      "value": 13,
+      "summary": "Two neighbor faces with partly common edge have wrong orientation"
+    },
+    {
+      "name": "MultishellPolymesh",
+      "value": 14,
+      "summary": "Polymesh consists topologically of multiple shells"
+    },
+    {
+      "name": "MultishellPolymeshByGeometry",
+      "value": 21,
+      "summary": "Polymesh consists geometrically of multiple shells"
+    },
+    {
+      "name": "NumberOfFaces",
+      "value": 15,
+      "summary": "Number of faces too small"
+    },
+    {
+      "name": "VertexArrayUniqueness",
+      "value": 16,
+      "summary": "The vertex array contains vertices that are geometrically equivalent"
+    },
+    {
+      "name": "VertexDuplicatesOnPolygon",
+      "value": 17,
+      "summary": "The same vertex index appears at least twice for a face"
+    },
+    {
+      "name": "VertexCollinearOnPolygon",
+      "value": 18,
+      "summary": "The face has at least one vertex that is collinear with others on an edge"
+    },
+    {
+      "name": "NonManifoldEdges",
+      "value": 19,
+      "summary": "The polymesh contains non-manifold edges"
+    },
+    {
+      "name": "UnusedVertices",
+      "value": 20,
+      "summary": "The polymesh contains unused vertices"
+    }
+  ]
+}

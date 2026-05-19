@@ -1,0 +1,62 @@
+{
+  "name": "IFunctionDescriptor",
+  "namespace": "Dynamo.Engine",
+  "kind": "interface",
+  "summary": "Describes a function, whether imported or defined in a custom node.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/FunctionDescriptor.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name to be displayed for the function.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "FunctionName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Function name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "MangledName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "An unique name to identify a function. It is used to create a corresponding node instance",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "Parameters",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Function parameters",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "ReturnKeys",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Return keys for multi-output functions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "ReturnType",
+      "type": "ProtoCore.Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Return Type",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/FunctionDescriptor.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

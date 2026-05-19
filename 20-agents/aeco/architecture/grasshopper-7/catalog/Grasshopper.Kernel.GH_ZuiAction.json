@@ -1,0 +1,100 @@
+{
+  "name": "GH_ZuiAction",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Basic implementation of IGH_ZuiAction.",
+  "interfaces": [
+    "IGH_ZuiAction"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ZuiAction.htm",
+  "constructors": [
+    {
+      "name": "GH_ZuiAction",
+      "signature": "protected GH_ZuiAction(string name)",
+      "summary": "Initializes a new instance of the GH_ZuiAction class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ZuiAction__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsTooltipRegion",
+      "signature": "public bool IsTooltipRegion(PointF canvasPoint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ZuiAction_IsTooltipRegion.htm"
+    },
+    {
+      "name": "Perform",
+      "signature": "public abstract void Perform()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ZuiAction_Perform.htm"
+    },
+    {
+      "name": "SetupTooltip",
+      "signature": "public abstract void SetupTooltip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_TooltipDisplayEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ZuiAction_SetupTooltip.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ZuiAction_Name.htm"
+    },
+    {
+      "name": "TooltipEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ZuiAction_TooltipEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

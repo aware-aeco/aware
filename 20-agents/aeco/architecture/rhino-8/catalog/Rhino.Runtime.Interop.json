@@ -1,0 +1,652 @@
+{
+  "name": "Interop",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Contains static methods to marshal objects between RhinoCommon and legacy Rhino_DotNet or C\u002B\u002B.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_Interop.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CommandLineOptionFromNativePointer",
+      "signature": "public static CommandLineOption CommandLineOptionFromNativePointer(IntPtr ptrCommandLineOption)",
+      "summary": "Create a command line option for a native pointer. Do not hold onto this class as it does not control the lifetime of the underlying pointer",
+      "params": [
+        {
+          "name": "ptrCommandLineOption",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022ptrCommandLineOption\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.CommandLineOptionFromNativePointer(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CommandLineOption",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.CommandLineOptionFromNativePointer(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_CommandLineOptionFromNativePointer.htm"
+    },
+    {
+      "name": "CreateFromNativePointer",
+      "signature": "public static GeometryBase CreateFromNativePointer(IntPtr pGeometry)",
+      "summary": "Constructs a RhinoCommon Geometry class from a given ON_Geomety*. The ON_Geometry* must be declared on the heap and its lifetime becomes controlled by RhinoCommon.",
+      "params": [
+        {
+          "name": "pGeometry",
+          "type": "System.IntPtr",
+          "doc": "ON_Geometry*",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "The appropriate geometry class in RhinoCommon on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_CreateFromNativePointer.htm"
+    },
+    {
+      "name": "FileReadOptionsConstPointer",
+      "signature": "public static IntPtr FileReadOptionsConstPointer(FileReadOptions options)",
+      "summary": "Returns the underlying const CRhinoFileReadOptions* for a Rhino.FileIO.FileReadOptions object. You should only be interested in using this function if you are writing C\u002B\u002B code.",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileReadOptions",
+          "doc": "A FileReadOptions object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "A pointer to the Rhino const object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_FileReadOptionsConstPointer.htm"
+    },
+    {
+      "name": "FileWriteOptionsConstPointer",
+      "signature": "public static IntPtr FileWriteOptionsConstPointer(FileWriteOptions options)",
+      "summary": "Returns the underlying const CRhinoFileWriteOptions* for a Rhino.FileIO.FileWriteOptions object. You should only be interested in using this function if you are writing C\u002B\u002B code.",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "A FileWriteOptions object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "A pointer to the Rhino const object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_FileWriteOptionsConstPointer.htm"
+    },
+    {
+      "name": "FontFromPointer",
+      "signature": "public static Font FontFromPointer(IntPtr ptrManagedFont)",
+      "summary": "Create managed Font from native ON_Font*",
+      "params": [
+        {
+          "name": "ptrManagedFont",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022ptrManagedFont\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.FontFromPointer(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.FontFromPointer(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_FontFromPointer.htm"
+    },
+    {
+      "name": "FromOnBrep",
+      "signature": "public static Brep FromOnBrep(Object source)",
+      "summary": "Copies a Rhino_DotNet brep to a RhinoCommon brep class.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "doc": "RMA.OpenNURBS.IOnBrep or RMA.OpenNURBS.OnBrep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep",
+        "doc": "RhinoCommon object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_FromOnBrep.htm"
+    },
+    {
+      "name": "FromOnCurve",
+      "signature": "public static Curve FromOnCurve(Object source)",
+      "summary": "Copies a Rhino_DotNet curve to a RhinoCommon curve class.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "doc": "RMA.OpenNURBS.IOnCurve or RMA.OpenNURBS.OnCurve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "RhinoCommon object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_FromOnCurve.htm"
+    },
+    {
+      "name": "FromOnMesh",
+      "signature": "public static Mesh FromOnMesh(Object source)",
+      "summary": "Copies a Rhino_DotNet mesh to a RhinoCommon mesh class.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "doc": "RMA.OpenNURBS.IOnMesh or RMA.OpenNURBS.OnMesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "RhinoCommon object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_FromOnMesh.htm"
+    },
+    {
+      "name": "FromOnSurface",
+      "signature": "public static Surface FromOnSurface(Object source)",
+      "summary": "Copies a Rhino_DotNet surface to a RhinoCommon Surface class.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "doc": "Any of the following in the RMA.OpenNURBS namespace are acceptable. IOnSurface, OnSurface, IOnPlaneSurface, OnPlaneSurface, IOnClippingPlaneSurface, OnClippingPlaneSurface, IOnNurbsSurface, OnNurbsSurfac, IOnRevSurface, OnRevSurface, IOnSumSurface, OnSumSurface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "RhinoCommon object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_FromOnSurface.htm"
+    },
+    {
+      "name": "NativeGeometryConstPointer",
+      "signature": "public static IntPtr NativeGeometryConstPointer(GeometryBase geometry)",
+      "summary": "Returns the underlying const ON_Geometry* for a RhinoCommon class. You should only be interested in using this function if you are writing C\u002B\u002B code.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "A geometry object. This can be null and in such a case Zero is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "A pointer to the const geometry."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeGeometryConstPointer.htm"
+    },
+    {
+      "name": "NativeGeometryNonConstPointer",
+      "signature": "public static IntPtr NativeGeometryNonConstPointer(GeometryBase geometry)",
+      "summary": "Returns the underlying non-const ON_Geometry* for a RhinoCommon class. You should only be interested in using this function if you are writing C\u002B\u002B code.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "A geometry object. This can be null and in such a case Zero is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "A pointer to the non-const geometry."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeGeometryNonConstPointer.htm"
+    },
+    {
+      "name": "NativeNonConstPointer(DisplayPipeline)",
+      "signature": "public static IntPtr NativeNonConstPointer(DisplayPipeline pipeline)",
+      "summary": "Get CRhinoDisplayPipeline* for a DisplayPipeline instance",
+      "params": [
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "[Missing \u003Cparam name=\u0022pipeline\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Display.DisplayPipeline)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Display.DisplayPipeline)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeNonConstPointer.htm"
+    },
+    {
+      "name": "NativeNonConstPointer(GetPoint)",
+      "signature": "public static IntPtr NativeNonConstPointer(GetPoint getPoint)",
+      "summary": "Get CRhinoGetPoint* from a GetPoint instance",
+      "params": [
+        {
+          "name": "getPoint",
+          "type": "Rhino.Input.Custom.GetPoint",
+          "doc": "[Missing \u003Cparam name=\u0022getPoint\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Input.Custom.GetPoint)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Input.Custom.GetPoint)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeNonConstPointer_4.htm"
+    },
+    {
+      "name": "NativeNonConstPointer(RhinoViewport)",
+      "signature": "public static IntPtr NativeNonConstPointer(RhinoViewport viewport)",
+      "summary": "Get CRhinoViewport* from a RhinoViewport instance",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Display.RhinoViewport)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeNonConstPointer_1.htm"
+    },
+    {
+      "name": "NativeNonConstPointer(ViewCaptureSettings)",
+      "signature": "public static IntPtr NativeNonConstPointer(ViewCaptureSettings settings)",
+      "summary": "Get a CRhinoPrintInfo* for a given ViewCaptureSettings class",
+      "params": [
+        {
+          "name": "settings",
+          "type": "Rhino.Display.ViewCaptureSettings",
+          "doc": "[Missing \u003Cparam name=\u0022settings\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Display.ViewCaptureSettings)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.Display.ViewCaptureSettings)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeNonConstPointer_2.htm"
+    },
+    {
+      "name": "NativeNonConstPointer(ViewportInfo)",
+      "signature": "public static IntPtr NativeNonConstPointer(ViewportInfo viewport)",
+      "summary": "Get ON_Viewport* from a ViewportInfo instance",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.DocObjects.ViewportInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.NativeNonConstPointer(Rhino.DocObjects.ViewportInfo)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeNonConstPointer_3.htm"
+    },
+    {
+      "name": "NativeRhinoDocPointer",
+      "signature": "public static IntPtr NativeRhinoDocPointer(RhinoDoc doc)",
+      "summary": "Gets the C\u002B\u002B CRhinoDoc* for a given RhinoCommon RhinoDoc class.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "A pointer value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NativeRhinoDocPointer.htm"
+    },
+    {
+      "name": "NSFontFromFont(Font)",
+      "signature": "public static IntPtr NSFontFromFont(Font font)",
+      "summary": "Get native NSFont* from a Rhino Font. Only works on Mac",
+      "params": [
+        {
+          "name": "font",
+          "type": "Rhino.DocObjects.Font",
+          "doc": "[Missing \u003Cparam name=\u0022font\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.NSFontFromFont(Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "NSFont* on success. IntPtr.Zero on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NSFontFromFont.htm"
+    },
+    {
+      "name": "NSFontFromFont(Font, Double)",
+      "signature": "public static IntPtr NSFontFromFont(Font font, double pointSize)",
+      "summary": "Get native NSFont* from a Rhino Font. Only works on Mac",
+      "params": [
+        {
+          "name": "font",
+          "type": "Rhino.DocObjects.Font",
+          "doc": "[Missing \u003Cparam name=\u0022font\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.NSFontFromFont(Rhino.DocObjects.Font,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pointSize",
+          "type": "System.Double",
+          "doc": "Point size",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "NSFont* on success. IntPtr.Zero on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_NSFontFromFont_1.htm"
+    },
+    {
+      "name": "PlugInPointer",
+      "signature": "public static IntPtr PlugInPointer(PlugIn plugin)",
+      "summary": "Gets a C\u002B\u002B plug-in pointer for a given RhinoCommon plug-in. This is a Rhino SDK function.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "A plug-in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "A pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_PlugInPointer.htm"
+    },
+    {
+      "name": "RhinoObjectConstPointer",
+      "signature": "public static IntPtr RhinoObjectConstPointer(RhinoObject rhinoObject)",
+      "summary": "Returns the underlying const CRhinoObject* for a RhinoCommon class. You should only be interested in using this function if you are writing C\u002B\u002B code.",
+      "params": [
+        {
+          "name": "rhinoObject",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "A Rhino object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "A pointer to the Rhino const object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_RhinoObjectConstPointer.htm"
+    },
+    {
+      "name": "RhinoObjectFromPointer",
+      "signature": "public static RhinoObject RhinoObjectFromPointer(IntPtr pRhinoObject)",
+      "summary": "Constructs a RhinoCommon Rhino object from an unmanaged C\u002B\u002B RhinoObject pointer.",
+      "params": [
+        {
+          "name": "pRhinoObject",
+          "type": "System.IntPtr",
+          "doc": "The original pointer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject",
+        "doc": "A new Rhino object, or null if the pointer was invalid or Zero."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_RhinoObjectFromPointer.htm"
+    },
+    {
+      "name": "ToIRhinoViewport",
+      "signature": "public static Object ToIRhinoViewport(RhinoViewport source)",
+      "summary": "Convert a Rhino.Display.Viewport to an RMA.Rhino.IRhinoViewport.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "A RhinoCommon viewport.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Rhino_DotNet IRhinoViewport object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_ToIRhinoViewport.htm"
+    },
+    {
+      "name": "ToOnBrep",
+      "signature": "public static Object ToOnBrep(Brep source)",
+      "summary": "Constructs a Rhino_DotNet OnBrep that is a copy of a given brep.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "A source brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Rhino_DotNet object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_ToOnBrep.htm"
+    },
+    {
+      "name": "ToOnCurve",
+      "signature": "public static Object ToOnCurve(Curve source)",
+      "summary": "Constructs a Rhino_DotNet OnCurve that is a copy of a given curve.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A RhinoCommon source curve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Rhino_DotNet object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_ToOnCurve.htm"
+    },
+    {
+      "name": "ToOnMesh",
+      "signature": "public static Object ToOnMesh(Mesh source)",
+      "summary": "Constructs a Rhino_DotNet OnMesh that is a copy of a given mesh.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A source brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Rhino_DotNet object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_ToOnMesh.htm"
+    },
+    {
+      "name": "ToOnSurface",
+      "signature": "public static Object ToOnSurface(Surface source)",
+      "summary": "Constructs a Rhino_DotNet OnSurface that is a copy of a given curve.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "A source brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Rhino_DotNet object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_ToOnSurface.htm"
+    },
+    {
+      "name": "ToOnXform",
+      "signature": "public static Object ToOnXform(Transform source)",
+      "summary": "Constructs a Rhino_DotNet OnXform from a given RhinoCommon Transform.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A RhinoCommon source transform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Rhino_DotNet object on success. This will be an independent copy."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_ToOnXform.htm"
+    },
+    {
+      "name": "TryCopyFromOnArc",
+      "signature": "public static bool TryCopyFromOnArc(Object source, out Arc destination)",
+      "summary": "Attempts to copy the contents of a RMA.OpenNURBS.OnArc to a Rhino.Geometry.Arc.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "doc": "A source OnArc.",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "A destination arc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_TryCopyFromOnArc.htm"
+    },
+    {
+      "name": "TryCopyToOnArc",
+      "signature": "public static bool TryCopyToOnArc(Arc source, Object destination)",
+      "summary": "Attempts to copy the contents of a Rhino.Geometry.Arc to a RMA.OpenNURBS.OnArc.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "A source arc.",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "System.Object",
+          "doc": "A destination OnArc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_TryCopyToOnArc.htm"
+    },
+    {
+      "name": "ViewCaptureFromPointer",
+      "signature": "public static ViewCaptureSettings ViewCaptureFromPointer(IntPtr ptrViewCapture)",
+      "summary": "Create a ViewCaptureSettings class from a native const CRhinoPrintInfo* The pointer values are copied",
+      "params": [
+        {
+          "name": "ptrViewCapture",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022ptrViewCapture\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Interop.ViewCaptureFromPointer(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ViewCaptureSettings",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Interop.ViewCaptureFromPointer(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Interop_ViewCaptureFromPointer.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

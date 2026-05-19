@@ -1,0 +1,65 @@
+{
+  "name": "ReferenceModelObjectAttributeEnumerator",
+  "namespace": "Tekla.Structures.Model.Collaboration",
+  "kind": "class",
+  "summary": "The ReferenceModelObjectAttributeEnumerator class can be used to enumerate through reference model object attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/512af538-e85a-9411-176d-9ce3f55bd4f8",
+  "constructors": [
+    {
+      "name": "ReferenceModelObjectAttributeEnumerator",
+      "signature": "public ReferenceModelObjectAttributeEnumerator(ReferenceModelObject RMO)",
+      "summary": "Creates a new reference model object attribute enumerator instance.",
+      "params": [
+        {
+          "name": "RMO",
+          "type": "Tekla.Structures.Model.ReferenceModelObject",
+          "doc": "The reference model object from which the enumerator is created.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8864905e-6c22-05fc-b778-873e3eae3f4a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next reference model object attribute.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successfully moved to the next reference model object attribute."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d97e9744-200e-a87a-93ce-38b177e5a4cd"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8372f374-6d18-d371-d1a7-ddd9e33c4b91"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "The current attribute.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4a05ce9b-6a4f-19b5-c8ec-91164f069c36"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

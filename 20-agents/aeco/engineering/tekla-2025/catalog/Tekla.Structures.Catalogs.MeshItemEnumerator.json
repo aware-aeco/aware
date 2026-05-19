@@ -1,0 +1,86 @@
+{
+  "name": "MeshItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The MeshItemEnumerator class allows to loop through the catalog mesh items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f552ff0e-d4f1-6231-c3ef-0311c4c98d61",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSize",
+      "signature": "public int GetSize()",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/18b986f2-6f35-4fb8-b4a9-2189fc71872c"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/97bb2529-52f8-4678-1a2e-c0a8ac27b98e"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/057e41d3-1955-a5fe-48c7-aca7221b0b5c"
+    },
+    {
+      "name": "SelectMeshItem",
+      "signature": "public static MeshItem SelectMeshItem(string Name, string Grade)",
+      "summary": "Selects a mesh item in the mesh database with the given name and grade.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the mesh item to select.",
+          "optional": false
+        },
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the mesh item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshItem",
+        "doc": "The first MeshItem that matches the conditions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a34e89b5-c6a2-ec57-9250-2a9e29ae14bf"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "MeshItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a mesh item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8682f3bd-a155-b2dc-0af0-14bde8d9294f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

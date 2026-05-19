@@ -1,0 +1,65 @@
+{
+  "name": "ElementSelect",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the ElementSelect wrapper",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelect/",
+  "constructors": [
+    {
+      "name": "ElementSelect",
+      "signature": "ElementSelect()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelect/#NemAll_Python_IFW_Input.ElementSelect.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InitSelection",
+      "signature": "InitSelection(text: InputStringConvert)",
+      "summary": "Initialize the selection",
+      "remarks": "Initialize the selection",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Input text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelect/#NemAll_Python_IFW_Input.ElementSelect.InitSelection"
+    },
+    {
+      "name": "IsMouseMove",
+      "signature": "IsMouseMove(mouseMsg: int) -\u003E bool",
+      "summary": "Check for mouse move",
+      "remarks": "Check for mouse move",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Message is a mouse move: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelect/#NemAll_Python_IFW_Input.ElementSelect.IsMouseMove"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

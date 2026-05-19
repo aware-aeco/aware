@@ -1,0 +1,24 @@
+{
+  "name": "PhysicallyBasedMaterial",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PhysicallyBasedMaterial\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PhysicallyBasedMaterial.htm",
+  "constructors": [
+    {
+      "name": "PhysicallyBasedMaterial",
+      "signature": "public PhysicallyBasedMaterial()",
+      "summary": "Initializes a new instance of the PhysicallyBasedMaterial class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PhysicallyBasedMaterial__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

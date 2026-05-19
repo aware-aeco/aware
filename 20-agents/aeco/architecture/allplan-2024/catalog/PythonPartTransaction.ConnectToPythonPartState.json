@@ -1,0 +1,27 @@
+{
+  "name": "ConnectToPythonPartState",
+  "namespace": "PythonPartTransaction",
+  "kind": "enum",
+  "summary": "definition of the states for the PythonPart connection",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartTransaction/ConnectToPythonPartState/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IS_CHILD",
+      "value": 2
+    },
+    {
+      "name": "IS_PARENT",
+      "value": 1
+    },
+    {
+      "name": "IS_PARENT_CHILD",
+      "value": 3
+    }
+  ]
+}

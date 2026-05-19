@@ -1,0 +1,72 @@
+{
+  "name": "AnalysisObjectSelector",
+  "namespace": "Tekla.Structures.Analysis.UI",
+  "kind": "class",
+  "summary": "Get or set selected analysis objects in model views.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e030d77d-a743-dc11-357f-42c32dab23e7",
+  "constructors": [
+    {
+      "name": "AnalysisObjectSelector",
+      "signature": "public AnalysisObjectSelector()",
+      "summary": "Initializes a new instance of the AnalysisObjectSelector class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9a6b3fbd-4e63-e997-a9a5-9efb71d79f73"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSelectedObjects",
+      "signature": "public AnalysisObjectEnumerator GetSelectedObjects(string analysisModelName)",
+      "summary": "Get the analysis objects selected in model views.",
+      "params": [
+        {
+          "name": "analysisModelName",
+          "type": "System.String",
+          "doc": "The analysis model name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The analysis object enumerator of analysis objects selected in model views."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67a2ab44-62cf-ee69-7f6b-c0231934cbeb"
+    },
+    {
+      "name": "SetSelectedObjects",
+      "signature": "public int SetSelectedObjects(List\u003CAnalysisObject\u003E analysisObjects, bool append)",
+      "summary": "Set analysis objects as selected in model views.",
+      "params": [
+        {
+          "name": "analysisObjects",
+          "type": "System.Collections.Generic.List\u003CAnalysisObject\u003E",
+          "doc": "The analysis objects.",
+          "optional": false
+        },
+        {
+          "name": "append",
+          "type": "System.Boolean",
+          "doc": "If true, objects are added to currently selected. If false, current selection is cleared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The count of objects selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/86208bd9-647e-0e3a-5dee-0cce9a4e50a2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

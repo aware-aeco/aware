@@ -1,0 +1,180 @@
+{
+  "name": "ReinforcementBase.ReinforcementMeshAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ReinforcementMeshAttributes class is the base attributes class for ReinforcementMesh.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/cf7408d5-abf8-bc64-7087-ae2389369349",
+  "constructors": [
+    {
+      "name": "ReinforcementBase.ReinforcementMeshAttributes()",
+      "signature": "public ReinforcementMeshAttributes()",
+      "summary": "Creates a new default reinforcement attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2dddbd84-30ac-5ac3-c49d-6c6fecd7a605"
+    },
+    {
+      "name": "ReinforcementBase.ReinforcementMeshAttributes(Boolean)",
+      "signature": "public ReinforcementMeshAttributes(bool SkipLoadingAttributes)",
+      "summary": "Creates a new default reinforcement attributes instance that loads standard attributes. If it set to true attributes won\u0027t be lodaded.",
+      "params": [
+        {
+          "name": "SkipLoadingAttributes",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df286155-e431-0a77-a4d7-6c0bf182e6d3"
+    },
+    {
+      "name": "ReinforcementBase.ReinforcementMeshAttributes(String)",
+      "signature": "public ReinforcementMeshAttributes(string AttributeFile)",
+      "summary": "Creates a new reinforcement attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/af0094a2-f9f7-3302-b812-33b4d2add318"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/73beb5c4-187c-b116-b9d1-24415cf0bf65"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0b91e0d-69ce-a357-cb15-716ca34687ce"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CustomPresentation",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3e55c0c1-b98b-cb5c-7fe8-61848e7d63bb"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the hidden lines of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/86e209b5-bbfa-0173-2611-2841e4347b26"
+    },
+    {
+      "name": "HideLinesHiddenByPart",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether lines hidden by parts should be hidden or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/00ce7d59-4615-5a34-4480-b98ee6a5d2df"
+    },
+    {
+      "name": "HideLinesHiddenByReinforcement",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether lines hidden by reinforcements should be hidden or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e256a41-9554-cb2b-6a61-d4ee871f48ab"
+    },
+    {
+      "name": "MeshReinforcementSymbolIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines the index for the mesh symbol to be used. The mesh symbol appears in the middle of the mesh line when ReinforcementRepresentation == OutLine. The index starts from 0 and corresponds to the symbol in the file mesh.sym.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/630473d8-2720-e5d9-12ac-33ccbf3df43e"
+    },
+    {
+      "name": "MeshReinforcementSymbolSize",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines the size of the reinforcement mesh symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7968ede2-4327-3521-8465-a41199997e26"
+    },
+    {
+      "name": "MeshReinforcementVisibilityCrossing",
+      "type": "ReinforcementBase.ReinforcementVisibilityTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines which crossing bars in the mesh appear in drawings.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0ec34e87-3e3a-df41-7960-447b7c5020e1"
+    },
+    {
+      "name": "MeshReinforcementVisibilityLongitudinal",
+      "type": "ReinforcementBase.ReinforcementVisibilityTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines which longitudinal wires in the mesh appear in drawings.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/45fcb769-848e-beaa-9a17-ca49c75fefbe"
+    },
+    {
+      "name": "ReinforcementRepresentation",
+      "type": "ReinforcementBase.ReinforcementRepresentationTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The representation of reinforcing bars.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f1a4150-3fad-3e48-cf92-f50137a58be7"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the visible lines of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/345d0b9c-ab66-7be5-d6d9-94ea71b8165e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,59 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionValueFormats",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The dimension value formats.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/45e98101-6ab6-c31e-1fc3-97f9cdc23128",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoDecimals",
+      "value": 0,
+      "summary": "The value is with no decimals."
+    },
+    {
+      "name": "OneOptionalDecimal",
+      "value": 1,
+      "summary": "The value is with one decimal if the value is not whole."
+    },
+    {
+      "name": "OneDecimal",
+      "value": 2,
+      "summary": "The value is with one decimal."
+    },
+    {
+      "name": "TwoOptionalDecimals",
+      "value": 3,
+      "summary": "The value is with two decimals if the value is not whole."
+    },
+    {
+      "name": "TwoDecimals",
+      "value": 4,
+      "summary": "The value is with two decimals."
+    },
+    {
+      "name": "ThreeOptionalDecimals",
+      "value": 5,
+      "summary": "The value is with three decimals if the value is not whole."
+    },
+    {
+      "name": "ThreeDecimals",
+      "value": 6,
+      "summary": "The value is with three decimals."
+    },
+    {
+      "name": "RationalPart",
+      "value": 7,
+      "summary": "The value is with a rational part."
+    },
+    {
+      "name": "SuperscriptEnding",
+      "value": 8,
+      "summary": "The value is with superscript ending."
+    }
+  ]
+}

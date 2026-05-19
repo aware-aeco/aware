@@ -1,0 +1,99 @@
+{
+  "name": "SlabElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the Slab element",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/",
+  "constructors": [
+    {
+      "name": "SlabElement",
+      "signature": "SlabElement() | SlabElement(slabProp, slabPolygon) | SlabElement(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/#NemAll_Python_ArchElements.SlabElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties()",
+      "summary": "Get the Slab properties",
+      "remarks": "Get the Slab properties",
+      "params": [],
+      "returns": {
+        "type": "SlabProperties",
+        "doc": "Slab properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/#NemAll_Python_ArchElements.SlabElement.GetProperties"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/#NemAll_Python_ArchElements.SlabElement.SetCommonProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(SlabProp)",
+      "summary": "Set the Slab properties",
+      "remarks": "Set the Slab properties",
+      "params": [
+        {
+          "name": "SlabProp",
+          "type": "SlabProperties",
+          "doc": "Slab properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/#NemAll_Python_ArchElements.SlabElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/#NemAll_Python_ArchElements.SlabElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "SlabProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Slab properties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/#NemAll_Python_ArchElements.SlabElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

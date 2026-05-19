@@ -1,0 +1,1115 @@
+{
+  "name": "Panels",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Access to Rhino panels and register custom panels",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Panels.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ChangePanelIcon(Type, Icon)",
+      "signature": "public static void ChangePanelIcon(Type panelType, Icon icon)",
+      "summary": "Update the icon used for a panel tab.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "[Missing \u003Cparam name=\u0022panelType\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.ChangePanelIcon(System.Type,System.Drawing.Icon)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Icon",
+          "doc": "New icon to use",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_ChangePanelIcon.htm"
+    },
+    {
+      "name": "ChangePanelIcon(Type, String)",
+      "signature": "public static void ChangePanelIcon(Type panelType, string fullPathToResource)",
+      "summary": "Update the icon used for a panel tab.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "[Missing \u003Cparam name=\u0022panelType\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.ChangePanelIcon(System.Type,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fullPathToResource",
+          "type": "System.String",
+          "doc": "Full path to the new icon resource",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_ChangePanelIcon_1.htm"
+    },
+    {
+      "name": "ClosePanel(Guid)",
+      "signature": "public static void ClosePanel(Guid panelId)",
+      "summary": "Will close or hide the specified panel type, in Windows Rhino, if it is the only visible tab the tab dock bar will be closed as well. In Mac Rhino it will always close the modeless dialog hosting the panel.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class type Id of the panel to close.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_ClosePanel.htm"
+    },
+    {
+      "name": "ClosePanel(Type)",
+      "signature": "public static void ClosePanel(Type panelType)",
+      "summary": "Will close or hide the specified panel type, in Windows Rhino, if it is the only visible tab the tab dock bar will be closed as well. In Mac Rhino it will always close the modeless dialog hosting the panel.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Class type of the panel to close.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_ClosePanel_2.htm"
+    },
+    {
+      "name": "ClosePanel(Guid, RhinoDoc)",
+      "signature": "public static void ClosePanel(Guid panelId, RhinoDoc doc)",
+      "summary": "Will close or hide the specified panel type, in Windows Rhino, if it is the only visible tab the tab dock bar will be closed as well. In Mac Rhino it will always close the modeless dialog hosting the panel.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class type Id of the panel to close.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Document associated with panel you wish to close.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_ClosePanel_1.htm"
+    },
+    {
+      "name": "ClosePanel(Type, RhinoDoc)",
+      "signature": "public static void ClosePanel(Type panelType, RhinoDoc doc)",
+      "summary": "Will close or hide the specified panel type, in Windows Rhino, if it is the only visible tab the tab dock bar will be closed as well. In Mac Rhino it will always close the modeless dialog hosting the panel.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Class type of the panel to close.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Document associated with panel you wish to close.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_ClosePanel_3.htm"
+    },
+    {
+      "name": "DockBarIdInUse",
+      "signature": "public static bool DockBarIdInUse(Guid dockBarId)",
+      "summary": "For internal use, call this method to see if a dock bar Id is currently being used by any Rhino dock bar. Rhino",
+      "params": [
+        {
+          "name": "dockBarId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022dockBarId\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.DockBarIdInUse(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Panels.DockBarIdInUse(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_DockBarIdInUse.htm"
+    },
+    {
+      "name": "FloatPanel(Guid, Panels.FloatPanelMode)",
+      "signature": "public static bool FloatPanel(Guid panelTypeId, Panels.FloatPanelMode mode)",
+      "summary": "Mac support: Display the specified panel in a floating window on Mac, the floating window will only contain the specified panel. Windows support: On Windows this will show or hide the floating container containing the specified panel. If the tab is docked with other tabs it will be floated in a new container.",
+      "params": [
+        {
+          "name": "panelTypeId",
+          "type": "System.Guid",
+          "doc": "Guid for the panel type to show/hide.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.UI.Panels.FloatPanelMode",
+          "doc": "Show, hide or toggle the visibility state of the specified panel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the panel visibility state was changed, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_FloatPanel.htm"
+    },
+    {
+      "name": "FloatPanel(Type, Panels.FloatPanelMode)",
+      "signature": "public static bool FloatPanel(Type panelType, Panels.FloatPanelMode mode)",
+      "summary": "Mac support: Display the specified panel in a floating window on Mac, the floating window will only contain the specified panel. Windows support: On Windows this will show or hide the floating container containing the specified panel. If the tab is docked with other tabs it will be floated in a new container.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Panel type to show/hide.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.UI.Panels.FloatPanelMode",
+          "doc": "Show, hide or toggle the visibility state of the specified panel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the panel visibility state was changed, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_FloatPanel_1.htm"
+    },
+    {
+      "name": "GetOpenPanelIds",
+      "signature": "public static Guid[] GetOpenPanelIds()",
+      "summary": "Get a list of the currently open panel tabs in Windows Rhino, on Mac Rhino it will be a list of the currently visible modeless panel dialogs.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "Returns an array of panel class Id\u0027s for the currently open panels, if there are no open panels it will be an empty array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetOpenPanelIds.htm"
+    },
+    {
+      "name": "GetPanel(Guid)",
+      "signature": "[ObsoleteAttribute(\u0022Obsolete method, use GetPanel\u003CMyClass\u003E(RhinoDoc)\u0022)] public static Object GetPanel(Guid panelId)",
+      "summary": "Will return an instance of a .Net panel if the panel has been displayed at least once. Panel instances are not created until a panel is displayed.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class Id of the panel to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Returns the one and only instance of a panel if it has been properly registered and displayed at least once. If the panel has never been displayed then null will be returned even if the panel is properly registered."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanel.htm"
+    },
+    {
+      "name": "GetPanel(Guid, RhinoDoc)",
+      "signature": "public static Object GetPanel(Guid panelId, RhinoDoc rhinoDoc)",
+      "summary": "Will return an instance of a .Net panel if the panel has been displayed at least once. Panel instances are not created until a panel is displayed.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class Id of the panel to search for.",
+          "optional": false
+        },
+        {
+          "name": "rhinoDoc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Runtime document Id associated with the requested panel.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Returns the one and only instance of a panel if it has been properly registered and displayed at least once. If the panel has never been displayed then null will be returned even if the panel is properly registered."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanel_1.htm"
+    },
+    {
+      "name": "GetPanel(Guid, UInt32)",
+      "signature": "public static Object GetPanel(Guid panelId, uint documentSerialNumber)",
+      "summary": "Will return an instance of a .Net panel if the panel has been displayed at least once. Panel instances are not created until a panel is displayed.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class Id of the panel to search for.",
+          "optional": false
+        },
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "Runtime document Id associated with the requested panel.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Returns the one and only instance of a panel if it has been properly registered and displayed at least once. If the panel has never been displayed then null will be returned even if the panel is properly registered."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanel_2.htm"
+    },
+    {
+      "name": "GetPanel\u003CT\u003E()",
+      "signature": "[ObsoleteAttribute(\u0022Obsolete method, use GetPanel\u003CMyClass\u003E(RhinoDoc)\u0022)] public static T GetPanel\u003CT\u003E() where T : class",
+      "summary": "Return an instance of a .Net panel",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Panels.GetPanel\u0060\u00601\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanel__1.htm"
+    },
+    {
+      "name": "GetPanel\u003CT\u003E(RhinoDoc)",
+      "signature": "public static T GetPanel\u003CT\u003E(RhinoDoc rhinoDoc) where T : class",
+      "summary": "Return an instance of a .Net panel",
+      "params": [
+        {
+          "name": "rhinoDoc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Runtime document Id associated with the requested panel.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Panels.GetPanel\u0060\u00601(Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanel__1_1.htm"
+    },
+    {
+      "name": "GetPanel\u003CT\u003E(UInt32)",
+      "signature": "public static T GetPanel\u003CT\u003E(uint documentSerialNumber) where T : class",
+      "summary": "Return an instance of a .Net panel",
+      "params": [
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "Runtime document Id associated with the requested panel.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Panels.GetPanel\u0060\u00601(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanel__1_2.htm"
+    },
+    {
+      "name": "GetPanels(Guid, RhinoDoc)",
+      "signature": "public static Object[] GetPanels(Guid panelId, RhinoDoc doc)",
+      "summary": "Gets the panels.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Panel identifier.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object[]",
+        "doc": "The panels."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanels.htm"
+    },
+    {
+      "name": "GetPanels(Guid, UInt32)",
+      "signature": "public static Object[] GetPanels(Guid panelId, uint documentRuntimeSerialNumber)",
+      "summary": "Gets the panels.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Panel identifier.",
+          "optional": false
+        },
+        {
+          "name": "documentRuntimeSerialNumber",
+          "type": "System.UInt32",
+          "doc": "Document runtime serial number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object[]",
+        "doc": "The panels."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanels_1.htm"
+    },
+    {
+      "name": "GetPanels\u003CT\u003E(RhinoDoc)",
+      "signature": "public static T[] GetPanels\u003CT\u003E(RhinoDoc doc) where T : class",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.GetPanels\u0060\u00601(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Panels.GetPanels\u0060\u00601(Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanels__1.htm"
+    },
+    {
+      "name": "GetPanels\u003CT\u003E(UInt32)",
+      "signature": "public static T[] GetPanels\u003CT\u003E(uint documentRuntimeSerialNumber) where T : class",
+      "summary": "Gets the panels.",
+      "params": [
+        {
+          "name": "documentRuntimeSerialNumber",
+          "type": "System.UInt32",
+          "doc": "Document runtime serial number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T[]",
+        "doc": "The panels."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_GetPanels__1_1.htm"
+    },
+    {
+      "name": "IsHiding",
+      "signature": "public static bool IsHiding(ShowPanelReason reason)",
+      "summary": "Check to see if reason is equal to any of the show events",
+      "params": [
+        {
+          "name": "reason",
+          "type": "Rhino.UI.ShowPanelReason",
+          "doc": "[Missing \u003Cparam name=\u0022reason\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.IsHiding(Rhino.UI.ShowPanelReason)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Panels.IsHiding(Rhino.UI.ShowPanelReason)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_IsHiding.htm"
+    },
+    {
+      "name": "IsPanelVisible(Guid)",
+      "signature": "public static bool IsPanelVisible(Guid panelId)",
+      "summary": "Check to see if a panel is currently visible, on Windows this means you can see the tab, it does not necessarily mean it is the current tab.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class Id for the panel to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the tab is visible otherwise it returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_IsPanelVisible.htm"
+    },
+    {
+      "name": "IsPanelVisible(Type)",
+      "signature": "public static bool IsPanelVisible(Type panelType)",
+      "summary": "Check to see if a panel is currently visible, on Windows this means you can see the tab, it does not necessarily mean it is the current tab.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Type of panel to check for, this type must include a GUID attribute.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if panelType is non null and the tab is visible otherwise it returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_IsPanelVisible_2.htm"
+    },
+    {
+      "name": "IsPanelVisible(Guid, Boolean)",
+      "signature": "public static bool IsPanelVisible(Guid panelId, bool isSelectedTab)",
+      "summary": "Check to see if a panel is currently visible, if isSelectedTab is true then the tab must be the active tab as well.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class Id for the panel to check.",
+          "optional": false
+        },
+        {
+          "name": "isSelectedTab",
+          "type": "System.Boolean",
+          "doc": "This parameter is ignored on Mac. If Windows and true the panel must be visible in a container and if it is a tabbed container it must be the active tab to be true.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "On Windows: The return value is dependent on the isSelectedTab value. If isSelectedTab is true then the panel must be included in a visible tabbed container and must also be the active tab to be true. If isSelectedTab is false then the panel only has to be included in a visible tabbed container to be true. On Mac: isSelected is ignored and true is returned if the panel appears in any inspector panel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_IsPanelVisible_1.htm"
+    },
+    {
+      "name": "IsPanelVisible(Type, Boolean)",
+      "signature": "public static bool IsPanelVisible(Type panelType, bool isSelectedTab)",
+      "summary": "Check to see if a panel is currently visible, if isSelectedTab is true then the tab must be the active tab as well.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Type of panel to check for, this type must include a GUID attribute.",
+          "optional": false
+        },
+        {
+          "name": "isSelectedTab",
+          "type": "System.Boolean",
+          "doc": "This parameter is ignored on Mac. If Windows and true the panel must be visible in a container and if it is a tabbed container it must be the active tab to be true.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "On Windows: The return value is dependent on the isSelectedTab value. If isSelectedTab is true then the panel must be included in a visible tabbed container and must also be the active tab to be true. If isSelectedTab is false then the panel only has to be included in a visible tabbed container to be true. On Mac: isSelected is ignored and true is returned if the panel appears in any inspector panel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_IsPanelVisible_3.htm"
+    },
+    {
+      "name": "IsShowing",
+      "signature": "public static bool IsShowing(ShowPanelReason reason)",
+      "summary": "Check to see if reason is equal to any of the hide events",
+      "params": [
+        {
+          "name": "reason",
+          "type": "Rhino.UI.ShowPanelReason",
+          "doc": "[Missing \u003Cparam name=\u0022reason\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.IsShowing(Rhino.UI.ShowPanelReason)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Panels.IsShowing(Rhino.UI.ShowPanelReason)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_IsShowing.htm"
+    },
+    {
+      "name": "OnClosePanel",
+      "signature": "public static void OnClosePanel(Guid panelId, uint documentSerialNumber)",
+      "summary": "Call this method to raise the Closed event",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Panel identifier.",
+          "optional": false
+        },
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The document associated with the closed panel.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OnClosePanel.htm"
+    },
+    {
+      "name": "OnShowPanel",
+      "signature": "public static void OnShowPanel(Guid panelId, uint documentSerialNumber, bool show)",
+      "summary": "Call this method to raise the Show event",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022panelId\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.OnShowPanel(System.Guid,System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The document associated with the shown/hidden panel.",
+          "optional": false
+        },
+        {
+          "name": "show",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022show\u0022/\u003E documentation for \u0022M:Rhino.UI.Panels.OnShowPanel(System.Guid,System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OnShowPanel.htm"
+    },
+    {
+      "name": "OpenPanel(Guid)",
+      "signature": "public static void OpenPanel(Guid panelId)",
+      "summary": "Open the specified panel in its current or default location and if it is in a dock bar containing more than one tab, make it the current tab.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class type Id for the panel to open.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel.htm"
+    },
+    {
+      "name": "OpenPanel(Type)",
+      "signature": "public static void OpenPanel(Type panelType)",
+      "summary": "Open the specified panel in its current or default location and if it is in a dock bar containing more than one tab, make it the current tab.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Class type of the panel to open.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel_6.htm"
+    },
+    {
+      "name": "OpenPanel(Guid, Boolean)",
+      "signature": "public static void OpenPanel(Guid panelId, bool makeSelectedPanel)",
+      "summary": "Open the specified panel in its current or default location and if it is in a dock bar containing more than one tab, make it the current tab.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class type Id for the panel to open.",
+          "optional": false
+        },
+        {
+          "name": "makeSelectedPanel",
+          "type": "System.Boolean",
+          "doc": "If true then the panel is set as the active tab after opening it otherwise; the panel is opened but not set as the active tab.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel_1.htm"
+    },
+    {
+      "name": "OpenPanel(Guid, Guid)",
+      "signature": "public static Guid OpenPanel(Guid dockBarId, Guid panelId)",
+      "summary": "In Mac Rhino this will just call the version of OpenPanel that takes a class type Id. In Windows Rhino this will look for a dock bar with the specified Id and open or move the specified panel to that dock bar.",
+      "params": [
+        {
+          "name": "dockBarId",
+          "type": "System.Guid",
+          "doc": "Id of the dock bar hosting one or more panels.",
+          "optional": false
+        },
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class type Id for the panel to open.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Returns true if the"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel_2.htm"
+    },
+    {
+      "name": "OpenPanel(Guid, Type)",
+      "signature": "public static Guid OpenPanel(Guid dockBarId, Type panelType)",
+      "summary": "In Mac Rhino this will just call the version of OpenPanel that takes a class type Id. In Windows Rhino this will look for a dock bar with the specified Id and open or move the specified panel to that dock bar.",
+      "params": [
+        {
+          "name": "dockBarId",
+          "type": "System.Guid",
+          "doc": "Id of the dock bar hosting one or more panels.",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Class type for the panel to open.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Returns true if the"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel_4.htm"
+    },
+    {
+      "name": "OpenPanel(Type, Boolean)",
+      "signature": "public static void OpenPanel(Type panelType, bool makeSelectedPanel)",
+      "summary": "Open the specified panel in its current or default location and if it is in a dock bar containing more than one tab, make it the current tab.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Class type of the panel to open.",
+          "optional": false
+        },
+        {
+          "name": "makeSelectedPanel",
+          "type": "System.Boolean",
+          "doc": "If true then the panel is set as the active tab after opening it otherwise; the panel is opened but not set as the active tab.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel_7.htm"
+    },
+    {
+      "name": "OpenPanel(Guid, Guid, Boolean)",
+      "signature": "public static Guid OpenPanel(Guid dockBarId, Guid panelId, bool makeSelectedPanel)",
+      "summary": "In Mac Rhino this will just call the version of OpenPanel that takes a class type Id. In Windows Rhino this will look for a dock bar with the specified Id and open or move the specified panel to that dock bar.",
+      "params": [
+        {
+          "name": "dockBarId",
+          "type": "System.Guid",
+          "doc": "Id of the dock bar hosting one or more panels.",
+          "optional": false
+        },
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Class type Id for the panel to open.",
+          "optional": false
+        },
+        {
+          "name": "makeSelectedPanel",
+          "type": "System.Boolean",
+          "doc": "If true then the panel is set as the active tab after opening it otherwise; the panel is opened but not set as the active tab.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Returns true if the"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel_3.htm"
+    },
+    {
+      "name": "OpenPanel(Guid, Type, Boolean)",
+      "signature": "public static Guid OpenPanel(Guid dockBarId, Type panelType, bool makeSelectedPanel)",
+      "summary": "In Mac Rhino this will just call the version of OpenPanel that takes a class type Id. In Windows Rhino this will look for a dock bar with the specified Id and open or move the specified panel to that dock bar.",
+      "params": [
+        {
+          "name": "dockBarId",
+          "type": "System.Guid",
+          "doc": "Id of the dock bar hosting one or more panels.",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Class type for the panel to open.",
+          "optional": false
+        },
+        {
+          "name": "makeSelectedPanel",
+          "type": "System.Boolean",
+          "doc": "If true then the panel is set as the active tab after opening it otherwise; the panel is opened but not set as the active tab.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Returns true if the"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanel_5.htm"
+    },
+    {
+      "name": "OpenPanelAsSibling(Guid, Guid)",
+      "signature": "public static bool OpenPanelAsSibling(Guid panelId, Guid siblingPanelId)",
+      "summary": "In Mac Rhino this will currently just call OpenPanel, in Windows Rhino this will look for a dock bar which contains the sibling panel and add this panel to that dock bar as necessary, if the panel was in another dock bar it will be moved to this dock bar.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "The class Id of the panel type to open.",
+          "optional": false
+        },
+        {
+          "name": "siblingPanelId",
+          "type": "System.Guid",
+          "doc": "The class Id of the sibling panel.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the panel was successfully opened."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanelAsSibling.htm"
+    },
+    {
+      "name": "OpenPanelAsSibling(Guid, Guid, Boolean)",
+      "signature": "public static bool OpenPanelAsSibling(Guid panelId, Guid siblingPanelId, bool makeSelectedPanel)",
+      "summary": "In Mac Rhino this will currently just call OpenPanel, in Windows Rhino this will look for a dock bar which contains the sibling panel and add this panel to that dock bar as necessary, if the panel was in another dock bar it will be moved to this dock bar.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "The class Id of the panel type to open.",
+          "optional": false
+        },
+        {
+          "name": "siblingPanelId",
+          "type": "System.Guid",
+          "doc": "The class Id of the sibling panel.",
+          "optional": false
+        },
+        {
+          "name": "makeSelectedPanel",
+          "type": "System.Boolean",
+          "doc": "If true then the panel is set as the active tab after opening it otherwise; the panel is opened but not set as the active tab.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the panel was successfully opened."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_OpenPanelAsSibling_1.htm"
+    },
+    {
+      "name": "PanelDockBar(Guid)",
+      "signature": "public static Guid PanelDockBar(Guid panelId)",
+      "summary": "Will always return Guid.Empty in Mac Rhino. In Windows Rhino it will look for the dock bar which contains the specified panel class Id and return the dock bar Id.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Panel class Id for of the panel to look for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Always returns Guid.Empty on Mac Rhino. On Windows Rhino it will return the Id for the dock bar which host the specified panel or Guid.Empty if the panel is not currently visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_PanelDockBar.htm"
+    },
+    {
+      "name": "PanelDockBar(Type)",
+      "signature": "public static Guid PanelDockBar(Type panelType)",
+      "summary": "Will always return Guid.Empty in Mac Rhino. In Windows Rhino it will look for the dock bar which contains the specified panel class Id and return the dock bar Id.",
+      "params": [
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Panel class for of the panel to look for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Always returns Guid.Empty on Mac Rhino. On Windows Rhino it will return the Id for the dock bar which host the specified panel or Guid.Empty if the panel is not currently visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_PanelDockBar_1.htm"
+    },
+    {
+      "name": "PanelDockBars",
+      "signature": "public static Guid[] PanelDockBars(Guid panelId)",
+      "summary": "Will always return a empty array in Mac Rhino. In Windows Rhino it will look for any panel dock bars that contain the specified panel class Id and return the dock bar Id\u0027s.",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "Panel class Id for of the panel to look for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "Always returns Guid.Empty on Mac Rhino. On Windows Rhino it will return the Id for the dock bar which host the specified panel or Guid.Empty if the panel is not currently visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_PanelDockBars.htm"
+    },
+    {
+      "name": "RegisterPanel(PlugIn, Type, String, Icon)",
+      "signature": "public static void RegisterPanel(PlugIn plugin, Type panelType, string caption, Icon icon)",
+      "summary": "You typically register your panel class in your plug-in\u0027s OnLoad function. This will register your custom call with Rhino, Rhino will create an instance of your class the first time your panel is created and embed this instance of your class in a panel container.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "Plug-in this panel is associated with",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "Class type to construct when a panel is shown. If your class is derived from Eto.Forms.Control it will work on both the Mac and Windows version of Rhino. In addition Windows Rhino will support any class types that implement the IWin32Window interface or that are derived from System.Windows.FrameworkElement. Mac Rhino will also support classes that are derived from NsView. In addition to the type requirements the class must have a public constructor with no parameters or a constructor with a single uint that represents the document serial number and have a GuidAttribute applied with a unique Id. n Windows there is only one panel created which gets recycled for each new document. On the Mac a panel will be created for each open document and destroyed when the document closes. In certain situations in Mac Rhino a a panel may get created and destroyed multiple times when opening/closing a panel while editing a document.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "Displays in the panel tab on Windows or at the top of the modeless window on Mac.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Icon",
+          "doc": "The panel icon. On Windows the panel may be displayed using the icon, caption or both. On Mac the icon will be used and the caption will be the tool-tip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_RegisterPanel.htm"
+    },
+    {
+      "name": "RegisterPanel(PlugIn, Type, String, Icon, PanelType)",
+      "signature": "public static void RegisterPanel(PlugIn plugIn, Type type, string caption, Icon icon, PanelType panelType)",
+      "summary": "Call once to register a panel type which will get dynamically created and embedded in a Rhino docking/floating location.",
+      "params": [
+        {
+          "name": "plugIn",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "Plug-in restringing the panel",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "Type of the control object to be displayed in the panel",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "Panel caption also used as a tool-tip. On Windows the panel may be displayed using the icon, caption or both. On Mac the icon will be used and the caption will be the tool-tip.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Icon",
+          "doc": "The panel icon. On Windows the panel may be displayed using the icon, caption or both. On Mac the icon will be used and the caption will be the tool-tip.",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "Rhino.UI.PanelType",
+          "doc": "See PanelType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_RegisterPanel_1.htm"
+    },
+    {
+      "name": "RegisterPanel(PlugIn, Type, String, Assembly, String, PanelType)",
+      "signature": "public static void RegisterPanel(PlugIn plugIn, Type type, string caption, Assembly iconAssembly, string iconResourceId, PanelType panelType)",
+      "summary": "You typically register your panel class in your plug-in\u0027s OnLoad function. This will register your custom call with Rhino, Rhino will create an instance of your class the first time your panel is created and embed this instance of your class in a panel container.",
+      "params": [
+        {
+          "name": "plugIn",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "Plug-in this panel is associated with",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "Class type to construct when a panel is shown. If your class is derived from Eto.Forms.Control it will work on both the Mac and Windows version of Rhino. In addition Windows Rhino will support any class types that implement the IWin32Window interface or that are derived from System.Windows.FrameworkElement. Mac Rhino will also support classes that are derived from NsView. In addition to the type requirements the class must have a public constructor with no parameters or a constructor with a single uint that represents the document serial number and have a GuidAttribute applied with a unique Id. n Windows there is only one panel created which gets recycled for each new document. On the Mac a panel will be created for each open document and destroyed when the document closes. In certain situations in Mac Rhino a a panel may get created and destroyed multiple times when opening/closing a panel while editing a document.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "Displays in the panel tab on Windows or at the top of the modeless window on Mac.",
+          "optional": false
+        },
+        {
+          "name": "iconAssembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "Assembly conataining the iconResourceId, if null it is assumed the iconResourceId is a starndard Rhino resource and the Rhino.UI assembly will be used. assembly will be used",
+          "optional": false
+        },
+        {
+          "name": "iconResourceId",
+          "type": "System.String",
+          "doc": "The resource Id string used to load the panel icon from the iconAssembly. On Windows the panel may be displayed using the icon, caption or both. On Mac the icon will be used and the caption will be the tool-tip.",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "Rhino.UI.PanelType",
+          "doc": "See PanelType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Panels_RegisterPanel_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EtoPanelStyleName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Style applied to Eto controls hosted by the Rhino.UI.Panels and Rhino.UI.ObjectProperties systems.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Panels_EtoPanelStyleName.htm"
+    },
+    {
+      "name": "IconSize",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the panel icon size in logical units.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Panels_IconSize.htm"
+    },
+    {
+      "name": "IconSizeInPixels",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the panel icon size in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Panels_IconSizeInPixels.htm"
+    },
+    {
+      "name": "ScaledIconSize",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the panel icon size in pixels with DPI scaling applied.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Panels_ScaledIconSize.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "Closed",
+      "delegate": "System.EventHandler\u003CPanelEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CPanelEventArgs\u003E Closed",
+      "summary": "This event is raised when a panel host is closed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_UI_Panels_Closed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Show",
+      "delegate": "System.EventHandler\u003CShowPanelEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CShowPanelEventArgs\u003E Show",
+      "summary": "This event is called when a panel is shown or hidden. This event will get raised multipThis times when the active document changes in Mac Rhino. It will called with show equal to false for the previous active document and with show equal to true for the current document. When the event is raised with show equal to false it only means the document instance of the panel is not visible it does not mean the panel host has been closed. If you need to know when the panel host closes then subscribe to the Closed event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_UI_Panels_Show.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

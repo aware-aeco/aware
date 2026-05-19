@@ -1,0 +1,22 @@
+{
+  "name": "ApplicationOptions",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "class",
+  "summary": "Represents Application level options",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.ApplicationOptions",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Grids",
+      "type": "Autodesk.Navisworks.Api.GridsOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to Grids Options.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationOptions.Grids"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

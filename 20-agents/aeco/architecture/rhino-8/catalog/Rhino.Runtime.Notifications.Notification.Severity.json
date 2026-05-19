@@ -1,0 +1,39 @@
+{
+  "name": "Notification.Severity",
+  "namespace": "Rhino.Runtime.Notifications",
+  "kind": "enum",
+  "summary": "Determines the severity of a notification.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_Notifications_Notification_Severity.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Debug",
+      "value": 0,
+      "summary": "Least serious."
+    },
+    {
+      "name": "Info",
+      "value": 1,
+      "summary": "Not serious."
+    },
+    {
+      "name": "Warning",
+      "value": 2,
+      "summary": "Important."
+    },
+    {
+      "name": "Serious",
+      "value": 3,
+      "summary": "Very important."
+    },
+    {
+      "name": "Critical",
+      "value": 4,
+      "summary": "Extremely important."
+    }
+  ]
+}

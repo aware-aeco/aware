@@ -1,0 +1,148 @@
+{
+  "name": "IntegerConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The IntegerConverter class converts types to and from the integer datatype.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/83ff6d0a-70a0-8a03-3514-624cf9605045",
+  "constructors": [
+    {
+      "name": "IntegerConverter",
+      "signature": "public IntegerConverter()",
+      "summary": "Initializes a new instance of the IntegerConverter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/279e266f-2fbd-a714-2897-9c323457be36"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)",
+      "summary": "Checks whether the conversion can be made from the source type to the integer datatype.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "sourceType",
+          "type": "System.Type",
+          "doc": "The type to convert from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ec34b138-b93b-bf83-35e2-54169429e20e"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)",
+      "summary": "Checks whether the conversion can be made from the integer datatype to the destination type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The type to convert to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef525f1e-d054-144f-636d-85ae260b1331"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "public override Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)",
+      "summary": "Converts an object from the given culture to the Tekla.Structures.Datatype.Integer type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The object to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The new integer datatype object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d035f709-44b7-afc5-cd49-545314828813"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "public override Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)",
+      "summary": "Converts an object from the the integer datatype to the given destination type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The target culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The integer datatype object to be converted.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The destination type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The given integer datatype object converted to the new type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b7f633f9-8cf6-0241-57f1-8009d859b6c9"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

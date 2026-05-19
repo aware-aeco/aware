@@ -1,0 +1,51 @@
+{
+  "name": "LicenseLeaseChangedEventArgs",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "Arguments for OnLeaseChangedDelegate",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_LicenseLeaseChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "LicenseLeaseChangedEventArgs",
+      "signature": "public LicenseLeaseChangedEventArgs(LicenseLease lease)",
+      "summary": "Initializes a new instance of the LicenseLeaseChangedEventArgs class",
+      "params": [
+        {
+          "name": "lease",
+          "type": "Rhino.PlugIns.LicenseLease",
+          "doc": "[Missing \u003Cparam name=\u0022lease\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLeaseChangedEventArgs.#ctor(Rhino.PlugIns.LicenseLease)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseLeaseChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseLeaseChangedEventArgs_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Lease",
+      "type": "LicenseLease",
+      "getter": true,
+      "setter": false,
+      "summary": "The lease returned by Rhino Accounts server",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_LicenseLeaseChangedEventArgs_Lease.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,31 @@
+{
+  "name": "WeldGeometry",
+  "namespace": "Tekla.Structures.Model.Welding",
+  "kind": "class",
+  "summary": "Class that represents weld seam specific geometry.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6396431a-0b14-abed-6cf9-bb16aa8542b2",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Polygons",
+      "type": "ArrayList",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the weld seam specific ArrayList of Polygon objects.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0dbd376-b56e-43c6-051d-8303d7f975dc"
+    },
+    {
+      "name": "Position",
+      "type": "WeldSeamPositionEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the weld seam position (above or below).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d129fe41-9b21-9340-2912-24feae5653b7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

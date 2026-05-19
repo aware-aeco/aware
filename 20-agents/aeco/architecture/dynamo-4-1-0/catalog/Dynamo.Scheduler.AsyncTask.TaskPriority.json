@@ -1,0 +1,42 @@
+{
+  "name": "TaskPriority",
+  "namespace": "Dynamo.Scheduler.AsyncTask",
+  "kind": "enum",
+  "summary": "Type TaskPriority",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AboveNormal",
+      "value": 2
+    },
+    {
+      "name": "BelowNormal",
+      "value": 4
+    },
+    {
+      "name": "Critical",
+      "value": 0
+    },
+    {
+      "name": "Highest",
+      "value": 1
+    },
+    {
+      "name": "Idle",
+      "value": 6
+    },
+    {
+      "name": "Lowest",
+      "value": 5
+    },
+    {
+      "name": "Normal",
+      "value": 3
+    }
+  ]
+}

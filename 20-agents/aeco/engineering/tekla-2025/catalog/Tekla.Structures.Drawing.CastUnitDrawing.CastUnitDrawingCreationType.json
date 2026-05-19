@@ -1,0 +1,24 @@
+{
+  "name": "CastUnitDrawing.CastUnitDrawingCreationType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Defines the Cast Unit Drawing Creation type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9c093d34-dd10-12ed-df8a-b676bf0e32f2",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CastUnitDrawingByPosition",
+      "value": 0,
+      "summary": "Creating the Cast Unit drawing by Position means we follow the position of the cast unit."
+    },
+    {
+      "name": "CastUnitDrawingById",
+      "value": 1,
+      "summary": "Creating the Cast Unit drawing by Id means we follow the id of the cast unit."
+    }
+  ]
+}

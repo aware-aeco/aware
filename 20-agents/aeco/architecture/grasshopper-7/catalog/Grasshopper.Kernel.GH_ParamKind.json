@@ -1,0 +1,34 @@
+{
+  "name": "GH_ParamKind",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the different guises of parameter",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParamKind.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "unknown",
+      "value": 0,
+      "summary": "Unknown, when this happens, something went wrong. Most likely it is due to someone deriving from GH_Param and not setting the kind."
+    },
+    {
+      "name": "floating",
+      "value": 1,
+      "summary": "Parameter is top-level."
+    },
+    {
+      "name": "input",
+      "value": 2,
+      "summary": "Parameter is tied to an owner component as an input."
+    },
+    {
+      "name": "output",
+      "value": 3,
+      "summary": "Parameter is tied to an owner component as an output."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "AnalysisConnectivity.ConnectivityEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The connectivity types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/47869ce9-2303-0618-6f64-16f5cff42e3e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CONNECTIVITY_FIXED",
+      "value": 0,
+      "summary": "The connectivity is fixed."
+    },
+    {
+      "name": "CONNECTIVITY_FREE",
+      "value": 1,
+      "summary": "The connectivity is free."
+    },
+    {
+      "name": "CONNECTIVITY_SPRING",
+      "value": 2,
+      "summary": "The connectivity is a spring."
+    },
+    {
+      "name": "CONNECTIVITY_PARTIAL_RELEASE",
+      "value": 3,
+      "summary": "The connectivity is partially released."
+    }
+  ]
+}

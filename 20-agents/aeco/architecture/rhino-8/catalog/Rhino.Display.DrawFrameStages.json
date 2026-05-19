@@ -1,0 +1,98 @@
+{
+  "name": "DrawFrameStages",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DrawFrameStages\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DrawFrameStages.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "InitializeFrameBuffer",
+      "value": 1
+    },
+    {
+      "name": "SetupFrustum",
+      "value": 2
+    },
+    {
+      "name": "ObjectCulling",
+      "value": 4
+    },
+    {
+      "name": "CalculateBoundingBox",
+      "value": 8
+    },
+    {
+      "name": "CalculateClippingPlanes",
+      "value": 16
+    },
+    {
+      "name": "SetupLighting",
+      "value": 32
+    },
+    {
+      "name": "DrawBackground",
+      "value": 64
+    },
+    {
+      "name": "PreDrawObjects",
+      "value": 128
+    },
+    {
+      "name": "DrawObject",
+      "value": 256
+    },
+    {
+      "name": "PostDrawObjects",
+      "value": 512
+    },
+    {
+      "name": "DrawForeGround",
+      "value": 1024
+    },
+    {
+      "name": "DrawOverlay",
+      "value": 2048
+    },
+    {
+      "name": "PostProcessFrameBuffer",
+      "value": 4096
+    },
+    {
+      "name": "MeshingParameters",
+      "value": 8192
+    },
+    {
+      "name": "ObjectDisplayAttributes",
+      "value": 16384
+    },
+    {
+      "name": "PreObjectDraw",
+      "value": 32768
+    },
+    {
+      "name": "PostObjectDraw",
+      "value": 65536
+    },
+    {
+      "name": "ViewExtents",
+      "value": 131072
+    },
+    {
+      "name": "DrawMiddleGround",
+      "value": 896
+    },
+    {
+      "name": "ObjectBasedChannel",
+      "value": 114948
+    },
+    {
+      "name": "All",
+      "value": "4294836223"
+    }
+  ]
+}

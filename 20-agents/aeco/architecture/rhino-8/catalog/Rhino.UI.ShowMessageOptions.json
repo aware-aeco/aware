@@ -1,0 +1,42 @@
+{
+  "name": "ShowMessageOptions",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ShowMessageOptions\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_ShowMessageOptions.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "SetForeground",
+      "value": 65536
+    },
+    {
+      "name": "DefaultDesktopOnly",
+      "value": 131072
+    },
+    {
+      "name": "TopMost",
+      "value": 262144
+    },
+    {
+      "name": "RightAlign",
+      "value": 524288
+    },
+    {
+      "name": "RtlReading",
+      "value": 1048576
+    },
+    {
+      "name": "ServiceNotification",
+      "value": 2097152
+    }
+  ]
+}

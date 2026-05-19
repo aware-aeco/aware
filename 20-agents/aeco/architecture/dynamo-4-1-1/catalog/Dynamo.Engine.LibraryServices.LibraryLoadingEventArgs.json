@@ -1,0 +1,40 @@
+{
+  "name": "LibraryLoadingEventArgs",
+  "namespace": "Dynamo.Engine.LibraryServices",
+  "kind": "class",
+  "summary": "Type LibraryLoadingEventArgs",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/LibraryServices.cs",
+  "constructors": [
+    {
+      "name": "LibraryLoadingEventArgs(string)",
+      "signature": "void LibraryLoadingEventArgs(string libraryPath)",
+      "summary": "LibraryLoadingEventArgs.LibraryLoadingEventArgs",
+      "params": [
+        {
+          "name": "libraryPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LibraryPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "LibraryLoadingEventArgs.LibraryPath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,228 @@
+{
+  "name": "DrawingFileService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Service for processing the drawing files",
+  "base": "ExportImportService",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/",
+  "constructors": [
+    {
+      "name": "DrawingFileService",
+      "signature": "DrawingFileService()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateBendingSchedule",
+      "signature": "CreateBendingSchedule(doc: DocumentAdapter, refPnt: Point2D)",
+      "summary": "Create a bending schedule",
+      "remarks": "Create a bending schedule",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "refPnt",
+          "type": "Point2D",
+          "doc": "Reference point of the bending schedule",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.CreateBendingSchedule"
+    },
+    {
+      "name": "DeleteDocument",
+      "signature": "DeleteDocument(doc: DocumentAdapter)",
+      "summary": "Delete the context of the active document Args: doc: Document",
+      "remarks": "Delete the context of the active document Args: doc: Document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.DeleteDocument"
+    },
+    {
+      "name": "ExportBendingMachine",
+      "signature": "ExportBendingMachine( doc: DocumentAdapter, fileName: str, project: str, plan: str, index: str, bSplitGroups: bool, )",
+      "summary": "Export the reinforcement data for the bending machine",
+      "remarks": "Export the reinforcement data for the bending machine",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the output file",
+          "optional": false
+        },
+        {
+          "name": "project",
+          "type": "str",
+          "doc": "Name of the project",
+          "optional": false
+        },
+        {
+          "name": "plan",
+          "type": "str",
+          "doc": "Name of the plan",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "str",
+          "doc": "Index as text",
+          "optional": false
+        },
+        {
+          "name": "bSplitGroups",
+          "type": "bool",
+          "doc": "Split the reinforcement groups",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.ExportBendingMachine"
+    },
+    {
+      "name": "GetActiveFileNumber",
+      "signature": "GetActiveFileNumber() -\u003E int",
+      "summary": "Get the drawing file number of the active document",
+      "remarks": "Get the drawing file number of the active document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.GetActiveFileNumber"
+    },
+    {
+      "name": "GetFileState",
+      "signature": "GetFileState() -\u003E list[tuple[int, DrawingFileLoadState]]",
+      "summary": "Get the file state of all loaded drawing files Returns: list with a tuple(file index, drawing file load state)",
+      "remarks": "Get the file state of all loaded drawing files Returns: list with a tuple(file index, drawing file load state)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.GetFileState"
+    },
+    {
+      "name": "LoadFile",
+      "signature": "LoadFile(doc: DocumentAdapter, fileIndex: int, loadState: DrawingFileLoadState)",
+      "summary": "Load a drawing file",
+      "remarks": "Load a drawing file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileIndex",
+          "type": "int",
+          "doc": "Index of the drawing file",
+          "optional": false
+        },
+        {
+          "name": "loadState",
+          "type": "DrawingFileLoadState",
+          "doc": "File load state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.LoadFile"
+    },
+    {
+      "name": "SetScalingFactor",
+      "signature": "SetScalingFactor(arg2: DocumentAdapter, arg3: float)",
+      "summary": "Set the scaling factor of the current document",
+      "remarks": "Set the scaling factor of the current document",
+      "params": [
+        {
+          "name": "arg2",
+          "type": "DocumentAdapter",
+          "doc": "Document adapter",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "float",
+          "doc": "Scaling factor. For a scale of 1:20, set 20.0. For a scale 2:1, set 0.5",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.SetScalingFactor"
+    },
+    {
+      "name": "UnloadAll",
+      "signature": "UnloadAll(doc: DocumentAdapter)",
+      "summary": "Unload all drawing files",
+      "remarks": "Unload all drawing files",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.UnloadAll"
+    },
+    {
+      "name": "UnloadFile",
+      "signature": "UnloadFile(doc: DocumentAdapter, fileIndex: int)",
+      "summary": "Unload a drawing file",
+      "remarks": "Unload a drawing file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileIndex",
+          "type": "int",
+          "doc": "Index of the drawing file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/#NemAll_Python_BaseElements.DrawingFileService.UnloadFile"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

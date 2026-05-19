@@ -1,0 +1,128 @@
+{
+  "name": "IGH_VariableParameterComponent",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in your component if you want to enable variable parameter UI.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_VariableParameterComponent.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CanInsertParameter",
+      "signature": "bool CanInsertParameter(GH_ParameterSide side, int index)",
+      "summary": "This function will get called before an attempt is made to insert a parameter. Since this method is potentially called on Canvas redraws, it must be fast.",
+      "params": [
+        {
+          "name": "side",
+          "type": "Grasshopper.Kernel.GH_ParameterSide",
+          "doc": "Parameter side.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Insertion index of parameter. Index=0 means the parameter will be in the topmost spot.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return True if your component supports a variable parameter at the given location."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VariableParameterComponent_CanInsertParameter.htm"
+    },
+    {
+      "name": "CanRemoveParameter",
+      "signature": "bool CanRemoveParameter(GH_ParameterSide side, int index)",
+      "summary": "This function will get called before an attempt is made to remove a parameter. Since this method is potentially called on Canvas redraws, it must be fast.",
+      "params": [
+        {
+          "name": "side",
+          "type": "Grasshopper.Kernel.GH_ParameterSide",
+          "doc": "Parameter side.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Removal index of parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return True if your component supports removing a parameter at the given location."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VariableParameterComponent_CanRemoveParameter.htm"
+    },
+    {
+      "name": "CreateParameter",
+      "signature": "IGH_Param CreateParameter(GH_ParameterSide side, int index)",
+      "summary": "This function will be called when a new parameter is about to be inserted. You must provide a valid parameter or insertion will be skipped. You do not, repeat not, need to insert the parameter yourself.",
+      "params": [
+        {
+          "name": "side",
+          "type": "Grasshopper.Kernel.GH_ParameterSide",
+          "doc": "Parameter side.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Insertion index of parameter. Index=0 means the parameter will be in the topmost spot.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_Param",
+        "doc": "A valid IGH_Param instance to be inserted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VariableParameterComponent_CreateParameter.htm"
+    },
+    {
+      "name": "DestroyParameter",
+      "signature": "bool DestroyParameter(GH_ParameterSide side, int index)",
+      "summary": "This function will be called when a parameter is about to be removed. You do not need to do anything, but this would be a good time to remove any event handlers that might be attached to the parameter in question.",
+      "params": [
+        {
+          "name": "side",
+          "type": "Grasshopper.Kernel.GH_ParameterSide",
+          "doc": "Parameter side.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Removal index of parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return True if the parameter in question can indeed be removed. Note, this is only in emergencies, typically the CanRemoveParameter function should return false if the parameter in question is not removable."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VariableParameterComponent_DestroyParameter.htm"
+    },
+    {
+      "name": "VariableParameterMaintenance",
+      "signature": "void VariableParameterMaintenance()",
+      "summary": "This method will be called when a closely related set of variable parameter operations completes. This would be a good time to ensure all Nicknames and parameter properties are correct. This method will also be called upon IO operations such as Open, Paste, Undo and Redo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VariableParameterComponent_VariableParameterMaintenance.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

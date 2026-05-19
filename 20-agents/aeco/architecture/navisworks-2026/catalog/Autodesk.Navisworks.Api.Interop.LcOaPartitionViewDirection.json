@@ -1,0 +1,46 @@
+{
+  "name": "LcOaPartitionViewDirection",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOaPartitionViewDirection enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFRONT",
+      "value": 0
+    },
+    {
+      "name": "eBACK",
+      "value": 1
+    },
+    {
+      "name": "eTOP",
+      "value": 2
+    },
+    {
+      "name": "eBOTTOM",
+      "value": 3
+    },
+    {
+      "name": "eLEFT",
+      "value": 4
+    },
+    {
+      "name": "eRIGHT",
+      "value": 5
+    },
+    {
+      "name": "eFRONT_RIGHT_TOP",
+      "value": 6
+    },
+    {
+      "name": "eNORTH",
+      "value": 7
+    }
+  ]
+}

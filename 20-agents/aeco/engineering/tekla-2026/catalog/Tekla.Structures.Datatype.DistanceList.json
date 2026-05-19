@@ -1,0 +1,404 @@
+{
+  "name": "DistanceList",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "struct",
+  "summary": "A list of Distance instances.",
+  "remarks": "DistanceLists are used to store related Distance instances in an enumerable, formattable list.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2fbe454f-df7b-4de0-73ba-5d047f97fb14",
+  "constructors": [
+    {
+      "name": "DistanceList",
+      "signature": "public DistanceList(IEnumerable\u003CDistance\u003E distanceList)",
+      "summary": "Initializes a new instance of the structure.",
+      "params": [
+        {
+          "name": "distanceList",
+          "type": "System.Collections.Generic.IEnumerable\u003CDistance\u003E",
+          "doc": "The distance list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b729095f-47d7-1f3e-e2e8-f5cd270e17c8"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(Distance item)",
+      "summary": "Adds the specified item at the end of the list.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Tekla.Structures.Datatype.Distance",
+          "doc": "The item to be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf13e3d5-ae24-ff62-204f-175bd3cacc02"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the list.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/afc5521f-d3e1-de9a-b868-bae3fda01ee3"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(Distance item)",
+      "summary": "Determines whether the specified item is in the list.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Tekla.Structures.Datatype.Distance",
+          "doc": "The item to be matched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "A boolean value indicating whether the item was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7eb2564-de96-72bb-885f-a8559eb327d3"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(Distance[] array, int arrayIndex)",
+      "summary": "Copies the contents of the list to an array.",
+      "params": [
+        {
+          "name": "array",
+          "type": ".Tekla.Structures.Datatype.Distance.",
+          "doc": "The target array.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "The starting index in the array.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1e7381e6-ec7f-978e-2bf0-944d90d6f568"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CDistance\u003E GetEnumerator()",
+      "summary": "Gets an enumerator for enumeraring through the list.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CDistance\u003E",
+        "doc": "The list enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c8334d58-61bd-20a1-7bbc-c802b4530bf4"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "public int IndexOf(Distance item)",
+      "summary": "Returns the index of the first matching item in the list.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Tekla.Structures.Datatype.Distance",
+          "doc": "The item to be matched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the first matching item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cfebb454-880d-bb2c-c3bc-80da5bdcf887"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(int index, Distance item)",
+      "summary": "Inserts an item at the specified position.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the insertion point.",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Tekla.Structures.Datatype.Distance",
+          "doc": "The item to be inserted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c4fde84-17b9-e6ee-8b5a-d737b8f72762"
+    },
+    {
+      "name": "Parse(String)",
+      "signature": "public static DistanceList Parse(string input)",
+      "summary": "Parses a distance list from a string representation.",
+      "params": [
+        {
+          "name": "input",
+          "type": "System.String",
+          "doc": "The input string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DistanceList",
+        "doc": "The distance list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e98067a1-3b05-1a66-470a-7bceeaa89f26"
+    },
+    {
+      "name": "Parse(String, IFormatProvider)",
+      "signature": "public static DistanceList Parse(string input, IFormatProvider formatProvider)",
+      "summary": "Parses a distance list from a string representation.",
+      "params": [
+        {
+          "name": "input",
+          "type": "System.String",
+          "doc": "The input string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DistanceList",
+        "doc": "The distance list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5323b1c1-d6f2-a324-aff2-c4e46dd56b64"
+    },
+    {
+      "name": "Parse(String, IFormatProvider, Distance.UnitType)",
+      "signature": "public static DistanceList Parse(string input, IFormatProvider formatProvider, Distance.UnitType defaultUnitType)",
+      "summary": "Parses a distance list from a string representation.",
+      "params": [
+        {
+          "name": "input",
+          "type": "System.String",
+          "doc": "The input string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The format provider.",
+          "optional": false
+        },
+        {
+          "name": "defaultUnitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The default unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DistanceList",
+        "doc": "The distance list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fb31c67b-d91e-2135-3f35-665be8a14ac4"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(Distance item)",
+      "summary": "Removes the specified item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Tekla.Structures.Datatype.Distance",
+          "doc": "The item to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "A boolean value indicating whether the item was removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b575565e-2a57-74a6-430a-3cf350d5afcc"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "public void RemoveAt(int index)",
+      "summary": "Removes an item at the specified position.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the item to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/12c876a0-de2d-2184-26b6-8c577f8c2399"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public Distance[] ToArray()",
+      "summary": "Copies the contents of the list into a new array.",
+      "params": [],
+      "returns": {
+        "type": ".Distance.",
+        "doc": "The array of distances."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ef2b2bb-b79d-0ed9-503f-4ad56dc48d86"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Returns the string representation of the distance list.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/56e41342-c57e-ce1b-4f39-0fa1ffa9d9a8"
+    },
+    {
+      "name": "ToString(IFormatProvider)",
+      "signature": "public string ToString(IFormatProvider formatProvider)",
+      "summary": "Returns the string representation of the distance list.",
+      "params": [
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/22629370-6513-8468-d624-a238527e203a"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Returns the string representation of the distance list.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24c2f2b9-1ac5-2ea2-0b24-a3e4e8721482"
+    },
+    {
+      "name": "ToString(String, IFormatProvider, Distance.UnitType)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider, Distance.UnitType unitType)",
+      "summary": "Returns the string representation of the distance list.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The format provider.",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The distance unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5dc71ac4-54d5-1b7b-0d0a-f0ddc37512d3"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of items in the list.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9fd4ce9-089b-adcc-5e71-5a2fc3cd1c7a"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a boolean value indicating whether the collection is read-only.",
+      "remarks": "DistanceLists are always mutable.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/130669ed-948d-36c3-f4b3-0999ae34b83f"
+    },
+    {
+      "name": "Item",
+      "type": "Distance",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the item at the specified index.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/61892ee7-6858-def1-ecb0-e1af713fc6dd"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

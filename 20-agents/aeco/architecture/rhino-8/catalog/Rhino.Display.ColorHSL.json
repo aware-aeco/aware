@@ -1,0 +1,283 @@
+{
+  "name": "ColorHSL",
+  "namespace": "Rhino.Display",
+  "kind": "struct",
+  "summary": "Represents an HSL (Hue, Saturation, Luminance) color with double precision floating point channels. HSL colors are used primarily in Graphical User Interface environments as they provide a very natural approach to picking colors.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ColorHSL.htm",
+  "constructors": [
+    {
+      "name": "ColorHSL(Color)",
+      "signature": "public ColorHSL(Color rgb)",
+      "summary": "Constructs a new instance of ColorHSL that is equivalent to an ARGB color.",
+      "remarks": "Exact conversions between color spaces are often not possible.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "System.Drawing.Color",
+          "doc": "ARGB color to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL__ctor_2.htm"
+    },
+    {
+      "name": "ColorHSL(Double, Double, Double)",
+      "signature": "public ColorHSL(double hue, double saturation, double luminance)",
+      "summary": "Constructs a new instance of ColorHSL with custom channel values.",
+      "params": [
+        {
+          "name": "hue",
+          "type": "System.Double",
+          "doc": "Hue channel value. Hue channels rotate between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "saturation",
+          "type": "System.Double",
+          "doc": "Saturation channel value. Channel will be limited to 0~1.",
+          "optional": false
+        },
+        {
+          "name": "luminance",
+          "type": "System.Double",
+          "doc": "Luminance channel value. Channel will be limited to 0~1.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL__ctor.htm"
+    },
+    {
+      "name": "ColorHSL(Double, Double, Double, Double)",
+      "signature": "public ColorHSL(double alpha, double hue, double saturation, double luminance)",
+      "summary": "Constructs a new instance of ColorHSL with custom channel values.",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Alpha channel value. Channel will be limited to 0~1.",
+          "optional": false
+        },
+        {
+          "name": "hue",
+          "type": "System.Double",
+          "doc": "Hue channel value. Hue channels rotate between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "saturation",
+          "type": "System.Double",
+          "doc": "Saturation channel value. Channel will be limited to 0~1.",
+          "optional": false
+        },
+        {
+          "name": "luminance",
+          "type": "System.Double",
+          "doc": "Luminance channel value. Channel will be limited to 0~1.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFromCMYK",
+      "signature": "public static ColorHSL CreateFromCMYK(ColorCMYK cmyk)",
+      "summary": "Create the nearest HSL equivalent of a CMYK color.",
+      "params": [
+        {
+          "name": "cmyk",
+          "type": "Rhino.Display.ColorCMYK",
+          "doc": "Target color in CMYK space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorHSL",
+        "doc": "The HSL equivalent of the CMYK color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_CreateFromCMYK.htm"
+    },
+    {
+      "name": "CreateFromHSV",
+      "signature": "public static ColorHSL CreateFromHSV(ColorHSV hsv)",
+      "summary": "Constructs the nearest HSL equivalent of an HSV color.",
+      "params": [
+        {
+          "name": "hsv",
+          "type": "Rhino.Display.ColorHSV",
+          "doc": "Target color in HSV space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorHSL",
+        "doc": "The HSL equivalent of the HSV color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_CreateFromHSV.htm"
+    },
+    {
+      "name": "CreateFromLAB",
+      "signature": "public static ColorHSL CreateFromLAB(ColorLAB lab)",
+      "summary": "Create the nearest HSL equivalent of a LAB color.",
+      "params": [
+        {
+          "name": "lab",
+          "type": "Rhino.Display.ColorLAB",
+          "doc": "Target color in LAB space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorHSL",
+        "doc": "The HSL equivalent of the LAB color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_CreateFromLAB.htm"
+    },
+    {
+      "name": "CreateFromLCH",
+      "signature": "public static ColorHSL CreateFromLCH(ColorLCH lch)",
+      "summary": "Create the nearest HSL equivalent of a LCH color.",
+      "params": [
+        {
+          "name": "lch",
+          "type": "Rhino.Display.ColorLCH",
+          "doc": "Target color in LCH space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorHSL",
+        "doc": "The HSL equivalent of the LCH color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_CreateFromLCH.htm"
+    },
+    {
+      "name": "CreateFromRGBA",
+      "signature": "public static ColorHSL CreateFromRGBA(ColorRGBA rgba)",
+      "summary": "Create the nearest HSL equivalent of a RGBA color.",
+      "params": [
+        {
+          "name": "rgba",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "Target color in RGBA space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorHSL",
+        "doc": "The HSL equivalent of the RGBA color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_CreateFromRGBA.htm"
+    },
+    {
+      "name": "CreateFromXYZ",
+      "signature": "public static ColorHSL CreateFromXYZ(ColorXYZ xyz)",
+      "summary": "Create the nearest HSL equivalent of an XYZ color.",
+      "params": [
+        {
+          "name": "xyz",
+          "type": "Rhino.Display.ColorXYZ",
+          "doc": "Target color in XYZ space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorHSL",
+        "doc": "The HSL equivalent of the XYZ color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_CreateFromXYZ.htm"
+    },
+    {
+      "name": "ToArgbColor",
+      "signature": "public Color ToArgbColor()",
+      "summary": "Convert HSL color to an equivalent System.Drawing.Color.",
+      "params": [],
+      "returns": {
+        "type": "Color",
+        "doc": "A .Net framework library color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_ToArgbColor.htm"
+    },
+    {
+      "name": "Implicit(ColorHSL to Color)",
+      "signature": "public static implicit operator Color (ColorHSL hsl)",
+      "summary": "Implicitly converts a ColorHSL in a .Net library color.",
+      "params": [
+        {
+          "name": "hsl",
+          "type": "Rhino.Display.ColorHSL",
+          "doc": "A HSL color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "A ARGB .Net library color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorHSL_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the alpha channel value. Alpha channels are limited to a 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorHSL_A.htm"
+    },
+    {
+      "name": "H",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the hue channel value. Hue channels rotate between 0.0 and 1.0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorHSL_H.htm"
+    },
+    {
+      "name": "L",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the luminance channel value. Luminance channels are limited to a 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorHSL_L.htm"
+    },
+    {
+      "name": "S",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the saturation channel value. Saturation channels are limited to a 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorHSL_S.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

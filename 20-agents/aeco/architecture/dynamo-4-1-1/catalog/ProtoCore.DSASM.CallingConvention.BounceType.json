@@ -1,0 +1,22 @@
+{
+  "name": "BounceType",
+  "namespace": "ProtoCore.DSASM.CallingConvention",
+  "kind": "enum",
+  "summary": "Type BounceType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Explicit",
+      "value": 0
+    },
+    {
+      "name": "Implicit",
+      "value": 1
+    }
+  ]
+}

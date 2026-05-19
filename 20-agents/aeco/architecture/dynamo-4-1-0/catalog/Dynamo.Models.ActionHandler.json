@@ -1,0 +1,98 @@
+{
+  "name": "ActionHandler",
+  "namespace": "Dynamo.Models",
+  "kind": "delegate",
+  "summary": "This delegate is used to manage Dynamo\u0027s request dispatcher invoke.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs",
+  "constructors": [
+    {
+      "name": "ActionHandler(object, IntPtr)",
+      "signature": "void ActionHandler(object object, IntPtr method)",
+      "summary": "ActionHandler.ActionHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(System.Action, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(System.Action action, System.AsyncCallback callback, object object)",
+      "summary": "ActionHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "ActionHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "Invoke(System.Action)",
+      "signature": "void Invoke(System.Action action)",
+      "summary": "ActionHandler.Invoke",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(System.Action action)"
+}

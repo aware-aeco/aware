@@ -1,0 +1,108 @@
+{
+  "name": "RunCompletedHandler",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "delegate",
+  "summary": "Type RunCompletedHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelEvents.cs",
+  "constructors": [
+    {
+      "name": "RunCompletedHandler(object, IntPtr)",
+      "signature": "void RunCompletedHandler(object object, IntPtr method)",
+      "summary": "RunCompletedHandler.RunCompletedHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelEvents.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(object, bool, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(object sender, bool success, System.AsyncCallback callback, object object)",
+      "summary": "RunCompletedHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelEvents.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "RunCompletedHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelEvents.cs"
+    },
+    {
+      "name": "Invoke(object, bool)",
+      "signature": "void Invoke(object sender, bool success)",
+      "summary": "RunCompletedHandler.Invoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelEvents.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(object sender, bool success)"
+}

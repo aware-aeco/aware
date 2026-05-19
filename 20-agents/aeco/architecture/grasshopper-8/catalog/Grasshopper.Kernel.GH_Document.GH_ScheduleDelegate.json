@@ -1,0 +1,14 @@
+{
+  "name": "GH_Document.GH_ScheduleDelegate",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "delegate",
+  "summary": "Callback signature for Scheduled Solutions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_Document_GH_ScheduleDelegate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void GH_ScheduleDelegate( GH_Document doc )"
+}

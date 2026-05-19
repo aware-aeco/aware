@@ -1,0 +1,40 @@
+{
+  "name": "LibraryFileAddition",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Shared schema type \u0060LibraryFileAddition\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LibraryFileAddition",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "inputPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The path to the input file.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LibraryFileAddition"
+    },
+    {
+      "name": "outputPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The relative path to the new file inside embedded library.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LibraryFileAddition"
+    },
+    {
+      "name": "type",
+      "type": "LibraryPartType",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the library part. By default \u0027Pict\u0027.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LibraryFileAddition"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

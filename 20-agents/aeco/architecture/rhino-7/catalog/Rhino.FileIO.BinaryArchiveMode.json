@@ -1,0 +1,38 @@
+{
+  "name": "BinaryArchiveMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.BinaryArchiveMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_BinaryArchiveMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0
+    },
+    {
+      "name": "Read",
+      "value": 1
+    },
+    {
+      "name": "Write",
+      "value": 2
+    },
+    {
+      "name": "ReadWrite",
+      "value": 3
+    },
+    {
+      "name": "Read3dm",
+      "value": 5
+    },
+    {
+      "name": "Write3dm",
+      "value": 6
+    }
+  ]
+}

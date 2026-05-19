@@ -1,0 +1,330 @@
+{
+  "name": "GH_ResizeBorder",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Inheritance HierarchySystem.Object Grasshopper.GUI.Canvas.GH_Border Grasshopper.GUI.Canvas.GH_ResizeBorder Namespace: Grasshopper.GUI.Canvas Assembly: Grasshopper (in Grasshopper.dll)SyntaxC#VBCopypublic class GH_ResizeBorder : GH_BorderPublic Class GH_ResizeBorder Inherits GH_BorderThe GH_ResizeBorder type exposes the following members.Constructors NameDescriptionGH_ResizeBorder(GH_Border) Create a new instance of the GH_ResizeBorder class. GH_ResizeBorder(RectangleF, GH_BorderTopology) Create a new instance of the GH_ResizeBorder class. TopProperties NameDescriptionAnchor Gets or sets the anchor point for sizing operations. This point is determined automatically when you call Setup(), however you can alter it afterwards if you want. Region Gets the shape of the border. (Inherited from GH_Border.)Size_Cursor Gets the cursor associated with this border. (Inherited from GH_Border.)Topology Gets the type of border. (Inherited from GH_Border.)TopMethods NameDescriptionContains Test a point for border inclusion. (Inherited from GH_Border.)Setup(IGH_Attributes, PointF) Set up a new sizing operation. Setup(IGH_Attributes, PointF, SizeF) Set up a new sizing operation. Setup(RectangleF, PointF, PointF) Set up a new sizing operation. Setup(IGH_Attributes, PointF, SizeF, SizeF) Set up a new sizing operation. Setup(RectangleF, PointF, PointF, SizeF) Set up a new sizing operation. Setup(RectangleF, PointF, PointF, SizeF, SizeF) Set up a new sizing operation. Solve Solve a resizing step. TopSee AlsoReferenceGrasshopper.GUI.Canvas Namespace",
+  "base": "GH_Border",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_ResizeBorder.htm",
+  "constructors": [
+    {
+      "name": "GH_ResizeBorder(GH_Border)",
+      "signature": "public GH_ResizeBorder(GH_Border borders)",
+      "summary": "Create a new instance of the GH_ResizeBorder class.",
+      "params": [
+        {
+          "name": "borders",
+          "type": "Grasshopper.GUI.Canvas.GH_Border",
+          "doc": "Border to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder__ctor.htm"
+    },
+    {
+      "name": "GH_ResizeBorder(RectangleF, GH_BorderTopology)",
+      "signature": "public GH_ResizeBorder(RectangleF region, GH_BorderTopology topology)",
+      "summary": "Create a new instance of the GH_ResizeBorder class.",
+      "params": [
+        {
+          "name": "region",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Base rectangle for borders.",
+          "optional": false
+        },
+        {
+          "name": "topology",
+          "type": "Grasshopper.GUI.Canvas.GH_BorderTopology",
+          "doc": "Border topology.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(PointF pt)",
+      "summary": "Test a point for border inclusion.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if pt is inside or on this border."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Border_Contains.htm"
+    },
+    {
+      "name": "Setup(IGH_Attributes, PointF)",
+      "signature": "public void Setup(IGH_Attributes att, PointF MouseCursor)",
+      "summary": "Set up a new sizing operation.",
+      "params": [
+        {
+          "name": "att",
+          "type": "Grasshopper.Kernel.IGH_Attributes",
+          "doc": "Attributes of shape to resize.",
+          "optional": false
+        },
+        {
+          "name": "MouseCursor",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of cursor in shape space coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder_Setup.htm"
+    },
+    {
+      "name": "Setup(IGH_Attributes, PointF, SizeF)",
+      "signature": "public void Setup(IGH_Attributes att, PointF MouseCursor, SizeF MinSize)",
+      "summary": "Set up a new sizing operation.",
+      "params": [
+        {
+          "name": "att",
+          "type": "Grasshopper.Kernel.IGH_Attributes",
+          "doc": "Attributes of shape to resize.",
+          "optional": false
+        },
+        {
+          "name": "MouseCursor",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of cursor in shape space coordinates.",
+          "optional": false
+        },
+        {
+          "name": "MinSize",
+          "type": "System.Drawing.SizeF",
+          "doc": "Minimum allowed size for shape.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder_Setup_1.htm"
+    },
+    {
+      "name": "Setup(RectangleF, PointF, PointF)",
+      "signature": "public void Setup(RectangleF ShapeRegion, PointF ShapePivot, PointF MouseCursor)",
+      "summary": "Set up a new sizing operation.",
+      "params": [
+        {
+          "name": "ShapeRegion",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Shape of the object to resize.",
+          "optional": false
+        },
+        {
+          "name": "ShapePivot",
+          "type": "System.Drawing.PointF",
+          "doc": "Pivot of the object to resize.",
+          "optional": false
+        },
+        {
+          "name": "MouseCursor",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of cursor in shape space coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder_Setup_3.htm"
+    },
+    {
+      "name": "Setup(IGH_Attributes, PointF, SizeF, SizeF)",
+      "signature": "public void Setup(IGH_Attributes att, PointF MouseCursor, SizeF MinSize, SizeF MaxSize)",
+      "summary": "Set up a new sizing operation.",
+      "params": [
+        {
+          "name": "att",
+          "type": "Grasshopper.Kernel.IGH_Attributes",
+          "doc": "Attributes of shape to resize.",
+          "optional": false
+        },
+        {
+          "name": "MouseCursor",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of cursor in shape space coordinates.",
+          "optional": false
+        },
+        {
+          "name": "MinSize",
+          "type": "System.Drawing.SizeF",
+          "doc": "Minimum allowed size for shape.",
+          "optional": false
+        },
+        {
+          "name": "MaxSize",
+          "type": "System.Drawing.SizeF",
+          "doc": "Maximum allowed size for shape.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder_Setup_2.htm"
+    },
+    {
+      "name": "Setup(RectangleF, PointF, PointF, SizeF)",
+      "signature": "public void Setup(RectangleF ShapeRegion, PointF ShapePivot, PointF MouseCursor, SizeF MinSize)",
+      "summary": "Set up a new sizing operation.",
+      "params": [
+        {
+          "name": "ShapeRegion",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Shape of the object to resize.",
+          "optional": false
+        },
+        {
+          "name": "ShapePivot",
+          "type": "System.Drawing.PointF",
+          "doc": "Pivot of the object to resize.",
+          "optional": false
+        },
+        {
+          "name": "MouseCursor",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of cursor in shape space coordinates.",
+          "optional": false
+        },
+        {
+          "name": "MinSize",
+          "type": "System.Drawing.SizeF",
+          "doc": "Minimum allowed size for shape.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder_Setup_4.htm"
+    },
+    {
+      "name": "Setup(RectangleF, PointF, PointF, SizeF, SizeF)",
+      "signature": "public void Setup(RectangleF ShapeRegion, PointF ShapePivot, PointF MouseCursor, SizeF MinSize, SizeF MaxSize)",
+      "summary": "Set up a new sizing operation.",
+      "params": [
+        {
+          "name": "ShapeRegion",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Shape of the object to resize.",
+          "optional": false
+        },
+        {
+          "name": "ShapePivot",
+          "type": "System.Drawing.PointF",
+          "doc": "Pivot of the object to resize.",
+          "optional": false
+        },
+        {
+          "name": "MouseCursor",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of cursor in shape space coordinates.",
+          "optional": false
+        },
+        {
+          "name": "MinSize",
+          "type": "System.Drawing.SizeF",
+          "doc": "Minimum allowed size for shape.",
+          "optional": false
+        },
+        {
+          "name": "MaxSize",
+          "type": "System.Drawing.SizeF",
+          "doc": "Maximum allowed size for shape.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder_Setup_5.htm"
+    },
+    {
+      "name": "Solve",
+      "signature": "public void Solve(PointF nCursor, out RectangleF new_shape, out PointF new_pivot)",
+      "summary": "Solve a resizing step.",
+      "params": [
+        {
+          "name": "nCursor",
+          "type": "System.Drawing.PointF",
+          "doc": "The new cursor location.",
+          "optional": false
+        },
+        {
+          "name": "new_shape",
+          "type": "System.Drawing.RectangleF",
+          "doc": "The resized shape bounding box.",
+          "optional": false
+        },
+        {
+          "name": "new_pivot",
+          "type": "System.Drawing.PointF",
+          "doc": "The adjusted shape pivot.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_ResizeBorder_Solve.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Anchor",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the anchor point for sizing operations. This point is determined automatically when you call Setup(), however you can alter it afterwards if you want.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_ResizeBorder_Anchor.htm"
+    },
+    {
+      "name": "Region",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the shape of the border.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Border_Region.htm"
+    },
+    {
+      "name": "Size_Cursor",
+      "type": "Cursor",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the cursor associated with this border.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Border_Size_Cursor.htm"
+    },
+    {
+      "name": "Topology",
+      "type": "GH_BorderTopology",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of border.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Border_Topology.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

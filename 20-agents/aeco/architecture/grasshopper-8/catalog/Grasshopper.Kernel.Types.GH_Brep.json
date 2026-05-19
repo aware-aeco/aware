@@ -1,0 +1,588 @@
+{
+  "name": "GH_Brep",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Represents a 3D polysurface. GH_Brep wraps the functionality of the OpenNURBS OnBrep class.",
+  "base": "Brep",
+  "interfaces": [
+    "IGH_BakeAwareData",
+    "IGH_PreviewData",
+    "IGH_PreviewMeshData",
+    "IGH_RenderAwareData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Brep.htm",
+  "constructors": [
+    {
+      "name": "GH_Brep()",
+      "signature": "public GH_Brep()",
+      "summary": "Initializes a new instance of the GH_Brep class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep__ctor.htm"
+    },
+    {
+      "name": "GH_Brep(Brep)",
+      "signature": "public GH_Brep(Brep brep)",
+      "summary": "Initializes a new instance of the GH_Brep class",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Brep",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep__ctor_2.htm"
+    },
+    {
+      "name": "GH_Brep(GH_Brep)",
+      "signature": "public GH_Brep(GH_Brep other)",
+      "summary": "Initializes a new instance of the GH_Brep class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Types.GH_Brep",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep__ctor_1.htm"
+    },
+    {
+      "name": "GH_Brep(Guid)",
+      "signature": "public GH_Brep(Guid id)",
+      "summary": "Initializes a new instance of the GH_Brep class",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendRenderGeometry",
+      "signature": "public void AppendRenderGeometry(GH_RenderArgs args, RenderMaterial materialHint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_RenderArgs",
+          "optional": false
+        },
+        {
+          "name": "materialHint",
+          "type": "RenderMaterial",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_AppendRenderGeometry.htm"
+    },
+    {
+      "name": "BakeGeometry",
+      "signature": "public bool BakeGeometry(RhinoDoc doc, ObjectAttributes att, ref Guid obj_guid)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "optional": false
+        },
+        {
+          "name": "obj_guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_BakeGeometry.htm"
+    },
+    {
+      "name": "BrepTightBoundingBox",
+      "signature": "public static BoundingBox BrepTightBoundingBox(Brep in)",
+      "summary": "Compute the boundingbox of a Brep object without meshing.",
+      "params": [
+        {
+          "name": "in",
+          "type": "Brep",
+          "doc": "Brep to measure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The world aligned boundingbox of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_BrepTightBoundingBox.htm"
+    },
+    {
+      "name": "CastFrom",
+      "signature": "public override bool CastFrom(Object source)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.CastFrom(Object).)",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.CastTo\u003CQ\u003E(Q).)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public override bool CastTo\u003CQ\u003E(out Q target)",
+      "summary": "Attempt a cast to type T.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public virtual bool CastTo\u003CQ\u003E(ref Q target)",
+      "summary": "Attempt a cast to type Q.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_CastTo__1.htm"
+    },
+    {
+      "name": "ClearCaches",
+      "signature": "public override void ClearCaches()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.ClearCaches().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_ClearCaches.htm"
+    },
+    {
+      "name": "DestroyPreviewMeshes",
+      "signature": "public void DestroyPreviewMeshes()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_DestroyPreviewMeshes.htm"
+    },
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "public void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "public void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public override IGH_Goo Duplicate()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Duplicate().)",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateBrep",
+      "signature": "public GH_Brep DuplicateBrep()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_Brep",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_DuplicateBrep.htm"
+    },
+    {
+      "name": "DuplicateGeometry",
+      "signature": "public override IGH_GeometricGoo DuplicateGeometry()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.DuplicateGeometry().)",
+      "params": [],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_DuplicateGeometry.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public override IGH_GooProxy EmitProxy()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.EmitProxy().)",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_EmitProxy.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public override BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.GetBoundingBox(Transform).)",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetPreviewMeshes",
+      "signature": "public Mesh[] GetPreviewMeshes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Mesh[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_GetPreviewMeshes.htm"
+    },
+    {
+      "name": "LoadGeometry()",
+      "signature": "public override bool LoadGeometry()",
+      "summary": "If the geometry is referenced and not yet loaded, attempts to load the geometry.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the geometry is loaded (or if it was already loaded), False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_LoadGeometry.htm"
+    },
+    {
+      "name": "LoadGeometry(RhinoDoc)",
+      "signature": "public override bool LoadGeometry(RhinoDoc doc)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.LoadGeometry(RhinoDoc).)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_LoadGeometry_1.htm"
+    },
+    {
+      "name": "Morph",
+      "signature": "public override IGH_GeometricGoo Morph(SpaceMorph xmorph)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Morph(SpaceMorph).)",
+      "params": [
+        {
+          "name": "xmorph",
+          "type": "SpaceMorph",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_Morph.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public override bool Read(GH_IReader reader)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Read(GH_IReader).)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public override Object ScriptVariable()",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.ScriptVariable().)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_ScriptVariable.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_ToString.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public override IGH_GeometricGoo Transform(Transform xform)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Transform(Transform).)",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_Transform.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public override bool Write(GH_IWriter writer)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Write(GH_IWriter).)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Brep_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boundingbox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Boundingbox.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_Boundingbox.htm"
+    },
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_ClippingBox.htm"
+    },
+    {
+      "name": "IsGeometryLoaded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.IsGeometryLoaded.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_IsGeometryLoaded.htm"
+    },
+    {
+      "name": "IsReferencedGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this geometry is referenced. Not all IGH_GeometricGoo implementations support referenced geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_IsReferencedGeometry.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.IsValid.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string describing the state of \u0022invalidness\u0022. If the instance is valid, then this property should return Nothing or String.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_IsValidWhyNot.htm"
+    },
+    {
+      "name": "ReferenceID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.ReferenceID.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_ReferenceID.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeDescription.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeName.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_TypeName.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Brep",
+      "getter": true,
+      "setter": true,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Value.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Brep_Value.htm"
+    },
+    {
+      "name": "m_value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Goo\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_Goo_1_m_value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

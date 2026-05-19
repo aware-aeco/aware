@@ -1,0 +1,556 @@
+{
+  "name": "LcOpLightsElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpLightsElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightsElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLightList",
+      "signature": "Autodesk.Navisworks.Api.GroupItem GetLightList()",
+      "summary": "GetLightList method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.GroupItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.GetLightList"
+    },
+    {
+      "name": "FindLightByGuid",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpLightItem FindLightByGuid(System.Guid guid)",
+      "summary": "FindLightByGuid method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.FindLightByGuid%28System.Guid%29"
+    },
+    {
+      "name": "FindLightIndex",
+      "signature": "int FindLightIndex(System.Guid guid)",
+      "summary": "FindLightIndex method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.FindLightIndex%28System.Guid%29"
+    },
+    {
+      "name": "Create",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElement Create()",
+      "summary": "Create method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.Create"
+    },
+    {
+      "name": "GetClass",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElementClass GetClass()",
+      "summary": "GetClass method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.GetClass"
+    },
+    {
+      "name": "MakeDistantLight",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightItem MakeDistantLight()",
+      "summary": "MakeDistantLight method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.MakeDistantLight"
+    },
+    {
+      "name": "MakePointLight",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightItem MakePointLight()",
+      "summary": "MakePointLight method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.MakePointLight"
+    },
+    {
+      "name": "MakeSpotLight",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightItem MakeSpotLight()",
+      "summary": "MakeSpotLight method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.MakeSpotLight"
+    },
+    {
+      "name": "MakeWebLight",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightItem MakeWebLight()",
+      "summary": "MakeWebLight method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.MakeWebLight"
+    },
+    {
+      "name": "Edit",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightsElement Edit(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Edit method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightsElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.Edit%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "Get",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightsElement Get(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Get method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightsElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.Get%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpLightsElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpLightsElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CanAddType",
+      "signature": "static bool CanAddType(int type)",
+      "summary": "CanAddType method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.CanAddType%28System.Int32%29"
+    },
+    {
+      "name": "Delete",
+      "signature": "static bool Delete(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Delete method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.Delete%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "TryAddLightAndTakeOwn",
+      "signature": "static bool TryAddLightAndTakeOwn(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.Interop.LcOpLightItem light)",
+      "summary": "TryAddLightAndTakeOwn method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "light",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.TryAddLightAndTakeOwn%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpLightItem%29"
+    },
+    {
+      "name": "TryDeleteLight",
+      "signature": "static bool TryDeleteLight(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.GroupItem parent, int index)",
+      "summary": "TryDeleteLight method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.TryDeleteLight%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "TryEditLight",
+      "signature": "static bool TryEditLight(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.Interop.LcOpLightItem edited_light, Autodesk.Navisworks.Api.SavedItemParts parts)",
+      "summary": "TryEditLight method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "edited_light",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+          "optional": false
+        },
+        {
+          "name": "parts",
+          "type": "Autodesk.Navisworks.Api.SavedItemParts",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.TryEditLight%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpLightItem%2CAutodesk.Navisworks.Api.SavedItemParts%29"
+    },
+    {
+      "name": "TryEditLightCopy",
+      "signature": "static bool TryEditLightCopy(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.Interop.LcOpLightItem edited_light, Autodesk.Navisworks.Api.SavedItemParts parts)",
+      "summary": "TryEditLightCopy method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "edited_light",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+          "optional": false
+        },
+        {
+          "name": "parts",
+          "type": "Autodesk.Navisworks.Api.SavedItemParts",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.TryEditLightCopy%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpLightItem%2CAutodesk.Navisworks.Api.SavedItemParts%29"
+    },
+    {
+      "name": "TryRenameLight",
+      "signature": "static bool TryRenameLight(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.GroupItem parent, int index, string new_name)",
+      "summary": "TryRenameLight method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "new_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.TryRenameLight%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "TryReplaceLightAndTakeOwn",
+      "signature": "static bool TryReplaceLightAndTakeOwn(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.Interop.LcOpLightItem new_light)",
+      "summary": "TryReplaceLightAndTakeOwn method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "new_light",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.TryReplaceLightAndTakeOwn%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpLightItem%29"
+    },
+    {
+      "name": "TryReplaceLightCopy",
+      "signature": "static bool TryReplaceLightCopy(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.Interop.LcOpLightItem new_light)",
+      "summary": "TryReplaceLightCopy method of LcOpLightsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "new_light",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLightItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.TryReplaceLightCopy%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpLightItem%29"
+    },
+    {
+      "name": "GetClassUserName",
+      "signature": "static string GetClassUserName()",
+      "summary": "GetClassUserName method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.GetClassUserName"
+    },
+    {
+      "name": "GetElementClassName",
+      "signature": "static string GetElementClassName()",
+      "summary": "GetElementClassName method of LcOpLightsElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.GetElementClassName"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpLightsElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpLightsElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

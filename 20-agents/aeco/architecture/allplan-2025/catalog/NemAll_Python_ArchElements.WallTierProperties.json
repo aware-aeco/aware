@@ -1,0 +1,86 @@
+{
+  "name": "WallTierProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the properties of a single layer of a multi layer wall",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallTierProperties/",
+  "constructors": [
+    {
+      "name": "WallTierProperties",
+      "signature": "WallTierProperties(tierProp: WallTierProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "tierProp",
+          "type": "WallTierProperties",
+          "doc": "Tier properties to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallTierProperties/#NemAll_Python_ArchElements.WallTierProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetThickness",
+      "signature": "GetThickness() -\u003E float",
+      "summary": "Get the wall layer thickness",
+      "remarks": "Get the wall layer thickness",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Thickness"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallTierProperties/#NemAll_Python_ArchElements.WallTierProperties.GetThickness"
+    },
+    {
+      "name": "SetThickness",
+      "signature": "SetThickness(thickness: float)",
+      "summary": "Set the wall layer thickness",
+      "remarks": "Set the wall layer thickness",
+      "params": [
+        {
+          "name": "thickness",
+          "type": "float",
+          "doc": "Thickness",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallTierProperties/#NemAll_Python_ArchElements.WallTierProperties.SetThickness"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallTierProperties/#NemAll_Python_ArchElements.WallTierProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Thickness",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Tier thickness",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallTierProperties/#NemAll_Python_ArchElements.WallTierProperties.Thickness"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

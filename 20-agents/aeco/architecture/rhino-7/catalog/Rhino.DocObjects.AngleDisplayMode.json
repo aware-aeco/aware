@@ -1,0 +1,29 @@
+{
+  "name": "AngleDisplayMode",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the display of angles.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_AngleDisplayMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Degrees",
+      "value": 0,
+      "summary": "Shows angle in decimal degrees"
+    },
+    {
+      "name": "DMS",
+      "value": 1,
+      "summary": "Show angle as degree,minute,second."
+    },
+    {
+      "name": "Grads",
+      "value": 2,
+      "summary": "Show angle as grads."
+    }
+  ]
+}

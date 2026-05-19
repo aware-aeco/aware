@@ -1,0 +1,82 @@
+{
+  "name": "FunctionGroup",
+  "namespace": "Dynamo.Engine",
+  "kind": "class",
+  "summary": "A group of overloaded functions",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionGroup.cs",
+  "constructors": [
+    {
+      "name": "FunctionGroup(string)",
+      "signature": "void FunctionGroup(string qualifiedName)",
+      "summary": "Initializes a new instance of the Dynamo.Engine.FunctionGroup class.",
+      "params": [
+        {
+          "name": "qualifiedName",
+          "type": "string",
+          "doc": "Qualified name.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionGroup.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "Overrides equality check of two Dynamo.Engine.FunctionGroup objects",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "doc": "Dynamo.Engine.FunctionGroup object to compare with the current one",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true if two Dynamo.Engine.FunctionGroup objects are equals"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionGroup.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Overrides computing the hash code for the Dynamo.Engine.FunctionGroup",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "The hash code for this Dynamo.Engine.FunctionGroup"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionGroup.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Functions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Engine.FunctionDescriptor\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns collection of functions with common qualified name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionGroup.cs"
+    },
+    {
+      "name": "QualifiedName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns qualified name of the corresponding functions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionGroup.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

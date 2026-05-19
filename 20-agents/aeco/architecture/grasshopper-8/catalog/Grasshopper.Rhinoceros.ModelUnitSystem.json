@@ -1,0 +1,317 @@
+{
+  "name": "ModelUnitSystem",
+  "namespace": "Grasshopper.Rhinoceros",
+  "kind": "class",
+  "summary": "Represents a Rhino Unit System. Wraps the functionality of the UnitSystem type.",
+  "base": "ModelValue",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_ModelUnitSystem.htm",
+  "constructors": [
+    {
+      "name": "ModelUnitSystem()",
+      "signature": "public ModelUnitSystem()",
+      "summary": "Initializes a new instance of the ModelUnitSystem class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem__ctor.htm"
+    },
+    {
+      "name": "ModelUnitSystem(ModelUnitSystem.Value)",
+      "signature": "public ModelUnitSystem(ModelUnitSystem.Value attributes)",
+      "summary": "Initializes a new instance of the ModelUnitSystem class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.ModelUnitSystem.Value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem__ctor_1.htm"
+    },
+    {
+      "name": "ModelUnitSystem(ActiveSpace, RhinoDoc)",
+      "signature": "public ModelUnitSystem(ActiveSpace space, RhinoDoc document)",
+      "summary": "Initializes a new instance of the ModelUnitSystem class",
+      "params": [
+        {
+          "name": "space",
+          "type": "ActiveSpace",
+          "optional": false
+        },
+        {
+          "name": "document",
+          "type": "RhinoDoc",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AdjustDocumentUnitSystem",
+      "signature": "public void AdjustDocumentUnitSystem(RhinoDoc document, ActiveSpace space, bool scale = false)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "space",
+          "type": "ActiveSpace",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_AdjustDocumentUnitSystem.htm"
+    },
+    {
+      "name": "Cast",
+      "signature": "public static ModelUnitSystem Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUnitSystem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Overrides ModelValue.CastTo\u003CT\u003E(T).)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_CastTo__1.htm"
+    },
+    {
+      "name": "Copy",
+      "signature": "public static void Copy(RhinoDoc source, RhinoDoc target, ActiveSpace space)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "space",
+          "type": "ActiveSpace",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_Copy.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides Object.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_GetHashCode.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public override string TooltipString()",
+      "summary": "(Overrides ModelValue.TooltipString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelUnitSystem to ModelUnitSystem.Value)",
+      "signature": "public static implicit operator ModelUnitSystem.Value (ModelUnitSystem us)",
+      "summary": "",
+      "params": [
+        {
+          "name": "us",
+          "type": "Grasshopper.Rhinoceros.ModelUnitSystem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUnitSystem.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(ModelUnitSystem.Value to ModelUnitSystem)",
+      "signature": "public static implicit operator ModelUnitSystem (ModelUnitSystem.Value attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.ModelUnitSystem.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUnitSystem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUnitSystem_op_Implicit_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveSpace",
+      "type": "ActiveSpace",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUnitSystem_ActiveSpace.htm"
+    },
+    {
+      "name": "BaseSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUnitSystem_BaseSystem.htm"
+    },
+    {
+      "name": "Factor",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUnitSystem_Factor.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides ModelValue.IsValid.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUnitSystem_IsValid.htm"
+    },
+    {
+      "name": "MetersPerUnit",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUnitSystem_MetersPerUnit.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUnitSystem_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

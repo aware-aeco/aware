@@ -1,0 +1,40 @@
+{
+  "name": "FFIClassAttributes",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "It keeps FFI class\u0027s attributes.",
+  "base": "ProtoCore.AST.AssociativeAST.ClassAttributes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs",
+  "constructors": [
+    {
+      "name": "FFIClassAttributes(System.Type)",
+      "signature": "void FFIClassAttributes(System.Type type)",
+      "summary": "FFIClassAttributes.FFIClassAttributes",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Attribute\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "FFI class attributes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,25 @@
+{
+  "name": "FacesAtAnObtuseAngleException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The FacesAtAnObtuseAngleException class represents an error when, faces to be connected are too steep of an angle.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5a2bc09b-f29d-62ef-c502-50bfc1f8aa86",
+  "constructors": [
+    {
+      "name": "FacesAtAnObtuseAngleException",
+      "signature": "public FacesAtAnObtuseAngleException()",
+      "summary": "Initializes a new instance of the FacesAtAnObtuseAngleException class with \u0022Faces to be connected are too steep of an angle\u0022 error message.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/334602ae-a367-6169-3a7e-ad4a63e33e54"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

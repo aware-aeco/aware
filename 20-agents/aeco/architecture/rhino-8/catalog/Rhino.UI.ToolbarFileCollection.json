@@ -1,0 +1,129 @@
+{
+  "name": "ToolbarFileCollection",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Represents a collection of Rhino toolbars, or .RUI, files.",
+  "interfaces": [
+    "IEnumerable\u003CToolbarFile\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_ToolbarFileCollection.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindByName",
+      "signature": "public ToolbarFile FindByName(string name, bool ignoreCase)",
+      "summary": "Gets an open toolbar file by name, or alias.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name, or alias, of the toolbar file.",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "doc": "true to ignore case during the comparison; otherwise, false.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolbarFile",
+        "doc": "The toolbar if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ToolbarFileCollection_FindByName.htm"
+    },
+    {
+      "name": "FindByPath",
+      "signature": "public ToolbarFile FindByPath(string path)",
+      "summary": "Gets an open toolbar by full path.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The full path to the toolbar file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolbarFile",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.FindByPath(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ToolbarFileCollection_FindByPath.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CToolbarFile\u003E GetEnumerator()",
+      "summary": "Gets a toolbar file enumerator.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CToolbarFile\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ToolbarFileCollection_GetEnumerator.htm"
+    },
+    {
+      "name": "Open",
+      "signature": "public ToolbarFile Open(string path)",
+      "summary": "Opens a toolbar file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The full path to the toolbar file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolbarFile",
+        "doc": "The toolbar if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ToolbarFileCollection_Open.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get tne number of open toolbar files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarFileCollection_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "ToolbarFile",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an open toolbar file by index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarFileCollection_Item.htm"
+    },
+    {
+      "name": "MruSidebarIsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the most-recently-used sizebar is visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarFileCollection_MruSidebarIsVisible.htm"
+    },
+    {
+      "name": "SidebarIsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the sizebar is visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarFileCollection_SidebarIsVisible.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

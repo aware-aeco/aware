@@ -1,0 +1,140 @@
+{
+  "name": "ArchitectureElementsGeometryService",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the architecture elements geometry service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchitectureElementsGeometryService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreatePlacementArc",
+      "signature": "CreatePlacementArc( element: BaseElementAdapter, elementAxis: Arc2D, placementPnt: Point2D, directionPnt: Point2D, ) -\u003E tuple[Arc2D, bool]",
+      "summary": "Create a placement arc at the placement point",
+      "remarks": "Create a placement arc at the placement point",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "elementAxis",
+          "type": "Arc2D",
+          "doc": "Element axis",
+          "optional": false
+        },
+        {
+          "name": "placementPnt",
+          "type": "Point2D",
+          "doc": "Placement point",
+          "optional": false
+        },
+        {
+          "name": "directionPnt",
+          "type": "Point2D",
+          "doc": "Direction point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Arc2D, bool]",
+        "doc": "Placement arc, placement a bottom/top (true/false)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchitectureElementsGeometryService/#NemAll_Python_ArchElements.ArchitectureElementsGeometryService.CreatePlacementArc"
+    },
+    {
+      "name": "GetOpeningOffsetPoints",
+      "signature": "GetOpeningOffsetPoints( parentEle: BaseElementAdapter, placementPnt: Point2D ) -\u003E tuple[bool, Point2D, Point2D]",
+      "summary": "Get the offset points for the opening",
+      "remarks": "Get the offset points for the opening",
+      "params": [
+        {
+          "name": "parentEle",
+          "type": "BaseElementAdapter",
+          "doc": "Parent element of the opening",
+          "optional": false
+        },
+        {
+          "name": "placementPnt",
+          "type": "Point2D",
+          "doc": "Placement point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Point2D, Point2D]",
+        "doc": "Offset point for the opening"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchitectureElementsGeometryService/#NemAll_Python_ArchElements.ArchitectureElementsGeometryService.GetOpeningOffsetPoints"
+    },
+    {
+      "name": "GetOuterPolyline",
+      "signature": "GetOuterPolyline( elementPolygon: Polygon2D, refLine: Line2D, elementAxis: object ) -\u003E Polyline2D",
+      "summary": "Get the outer polyline from a curved element located at the reference line",
+      "remarks": "Get the outer polyline from a curved element located at the reference line",
+      "params": [
+        {
+          "name": "elementPolygon",
+          "type": "Polygon2D",
+          "doc": "Polygon of the curved element",
+          "optional": false
+        },
+        {
+          "name": "refLine",
+          "type": "Line2D",
+          "doc": "Reference line of the polyline",
+          "optional": false
+        },
+        {
+          "name": "elementAxis",
+          "type": "object",
+          "doc": "Axis of the element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline2D",
+        "doc": "Outer polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchitectureElementsGeometryService/#NemAll_Python_ArchElements.ArchitectureElementsGeometryService.GetOuterPolyline"
+    },
+    {
+      "name": "GetOutlineSegmentAndPoint",
+      "signature": "GetOutlineSegmentAndPoint( element: BaseElementAdapter, refPoint: Point2D ) -\u003E tuple[Line2D, Point2D, BaseElementAdapter]",
+      "summary": "Get the outline segment and point related to the reference point",
+      "remarks": "Get the outline segment and point related to the reference point",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "Reference point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Line2D, Point2D, BaseElementAdapter]",
+        "doc": "Outline segment, point and element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchitectureElementsGeometryService/#NemAll_Python_ArchElements.ArchitectureElementsGeometryService.GetOutlineSegmentAndPoint"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

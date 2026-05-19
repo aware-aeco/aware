@@ -1,0 +1,403 @@
+{
+  "name": "LcOpDiff",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpDiff class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDiff",
+  "constructors": [
+    {
+      "name": "LcOpDiff()",
+      "signature": "LcOpDiff()",
+      "summary": "Constructs a new LcOpDiff.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DoDiff",
+      "signature": "bool DoDiff(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem sel1, Autodesk.Navisworks.Api.ModelItem sel2, int max_details)",
+      "summary": "DoDiff method of LcOpDiff.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "sel1",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "sel2",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "max_details",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DoDiff%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.ModelItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "DoDiff",
+      "signature": "bool DoDiff(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem sel1, Autodesk.Navisworks.Api.ModelItem sel2, int max_details, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "DoDiff method of LcOpDiff.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "sel1",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "sel2",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "max_details",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DoDiff%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.ModelItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDiff InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpDiff.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDiff",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpDiff.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "MakeSummary",
+      "signature": "void MakeSummary(out string type_summary)",
+      "summary": "MakeSummary method of LcOpDiff.",
+      "params": [
+        {
+          "name": "type_summary",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MakeSummary%28System.String%40%29"
+    },
+    {
+      "name": "MakeSummary",
+      "signature": "void MakeSummary(out string type_summary, out string info_summary)",
+      "summary": "MakeSummary method of LcOpDiff.",
+      "params": [
+        {
+          "name": "type_summary",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "info_summary",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MakeSummary%28System.String%40%2CSystem.String%40%29"
+    },
+    {
+      "name": "MakeSummary",
+      "signature": "void MakeSummary(out string type_summary, out string info_summary, int num_info_details)",
+      "summary": "MakeSummary method of LcOpDiff.",
+      "params": [
+        {
+          "name": "type_summary",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "info_summary",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "num_info_details",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MakeSummary%28System.String%40%2CSystem.String%40%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Details",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffDetailVector",
+      "getter": true,
+      "setter": false,
+      "summary": "Details property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.Details"
+    },
+    {
+      "name": "DetailsResultType",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffResultType",
+      "getter": true,
+      "setter": true,
+      "summary": "DetailsResultType property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DetailsResultType"
+    },
+    {
+      "name": "DetailsSelectBehaviour",
+      "type": "Autodesk.Navisworks.Api.SelectionBehavior",
+      "getter": true,
+      "setter": true,
+      "summary": "DetailsSelectBehaviour property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DetailsSelectBehaviour"
+    },
+    {
+      "name": "DiffGeometry",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffGeometry property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffGeometry"
+    },
+    {
+      "name": "DiffInternalProperties",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffInternalProperties property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffInternalProperties"
+    },
+    {
+      "name": "DiffName",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffName property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffName"
+    },
+    {
+      "name": "DiffOverriddenMaterial",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffOverriddenMaterial property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffOverriddenMaterial"
+    },
+    {
+      "name": "DiffOverriddenTransform",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffOverriddenTransform property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffOverriddenTransform"
+    },
+    {
+      "name": "DiffPath",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffPath property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffPath"
+    },
+    {
+      "name": "DiffProperties",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffProperties property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffProperties"
+    },
+    {
+      "name": "DiffTree",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffTree property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffTree"
+    },
+    {
+      "name": "DiffType",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffType property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffType"
+    },
+    {
+      "name": "DiffUniqueIds",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DiffUniqueIds property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.DiffUniqueIds"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.IsReadOnly"
+    },
+    {
+      "name": "MatchGeometry",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "MatchGeometry property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MatchGeometry"
+    },
+    {
+      "name": "MatchName",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "MatchName property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MatchName"
+    },
+    {
+      "name": "MatchTree",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "MatchTree property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MatchTree"
+    },
+    {
+      "name": "MatchType",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "MatchType property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MatchType"
+    },
+    {
+      "name": "MatchUniqueIds",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "MatchUniqueIds property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MatchUniqueIds"
+    },
+    {
+      "name": "MaxInfo",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "MaxInfo property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.MaxInfo"
+    },
+    {
+      "name": "Result1",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffResult",
+      "getter": true,
+      "setter": false,
+      "summary": "Result1 property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.Result1"
+    },
+    {
+      "name": "Result2",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffResult",
+      "getter": true,
+      "setter": false,
+      "summary": "Result2 property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.Result2"
+    },
+    {
+      "name": "SummaryResultType",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffResultType",
+      "getter": true,
+      "setter": true,
+      "summary": "SummaryResultType property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.SummaryResultType"
+    },
+    {
+      "name": "SummarySelectBehaviour",
+      "type": "Autodesk.Navisworks.Api.SelectionBehavior",
+      "getter": true,
+      "setter": true,
+      "summary": "SummarySelectBehaviour property of LcOpDiff.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiff.SummarySelectBehaviour"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

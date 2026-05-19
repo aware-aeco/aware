@@ -1,0 +1,46 @@
+{
+  "name": "TextRunType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Geometry.TextRunType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_TextRunType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Text",
+      "value": 1
+    },
+    {
+      "name": "Newline",
+      "value": 2
+    },
+    {
+      "name": "Paragraph",
+      "value": 3
+    },
+    {
+      "name": "Column",
+      "value": 4
+    },
+    {
+      "name": "Field",
+      "value": 5
+    },
+    {
+      "name": "Fontdef",
+      "value": 6
+    },
+    {
+      "name": "Header",
+      "value": 7
+    }
+  ]
+}

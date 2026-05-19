@@ -1,0 +1,414 @@
+{
+  "name": "OrderedSet\u003CT\u003E",
+  "namespace": "Dynamo.Utilities",
+  "kind": "class",
+  "summary": "A set of unique elements, with insertion order preserved.",
+  "interfaces": [
+    "System.Collections.Generic.ISet\u003CT\u003E",
+    "System.Collections.Generic.ICollection\u003CT\u003E",
+    "System.Collections.Generic.IEnumerable\u003CT\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs",
+  "constructors": [
+    {
+      "name": "OrderedSet()",
+      "signature": "void OrderedSet()",
+      "summary": "OrderedSet.OrderedSet",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(T)",
+      "signature": "bool Add(T item)",
+      "summary": "Adds an element to the current set and returns a value to indicate if the element was successfully added.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The element to add to the set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the element is added to the set; false if the element is already in the set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Removes all items from the System.Collections.Generic.ICollection\u00601.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "The System.Collections.Generic.ICollection\u00601 is read-only."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "Contains(T)",
+      "signature": "bool Contains(T item)",
+      "summary": "Determines whether the System.Collections.Generic.ICollection\u00601 contains a specific value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the System.Collections.Generic.ICollection\u00601.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if item is found in the System.Collections.Generic.ICollection\u00601; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "CopyTo(T[], int)",
+      "signature": "void CopyTo(T[] array, int arrayIndex)",
+      "summary": "Copies the elements of the System.Collections.Generic.ICollection\u00601 to an System.Array, starting at a particular System.Array index.",
+      "params": [
+        {
+          "name": "array",
+          "type": "T[]",
+          "doc": "The one-dimensional System.Array that is the destination of the elements copied from System.Collections.Generic.ICollection\u00601. The System.Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "int",
+          "doc": "The zero-based index in array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "array is null."
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "arrayIndex is less than 0."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "The number of elements in the source System.Collections.Generic.ICollection\u00601 is greater than the available space from arrayIndex to the end of the destination array."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "ExceptWith(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "void ExceptWith(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Removes all elements in the specified collection from the current set.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection of items to remove from the set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that iterates through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CT\u003E",
+        "doc": "A System.Collections.Generic.IEnumerator\u00601 that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "IntersectWith(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "void IntersectWith(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Modifies the current set so that it contains only elements that are also in a specified collection.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "IsProperSubsetOf(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "bool IsProperSubsetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Determines whether the current set is a proper (strict) subset of a specified collection.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the current set is a proper subset of other; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "IsProperSupersetOf(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "bool IsProperSupersetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Determines whether the current set is a proper (strict) superset of a specified collection.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the current set is a proper superset of other; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "IsSubsetOf(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "bool IsSubsetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Determines whether a set is a subset of a specified collection.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the current set is a subset of other; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "IsSupersetOf(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "bool IsSupersetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Determines whether the current set is a superset of a specified collection.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the current set is a superset of other; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "Overlaps(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "bool Overlaps(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Determines whether the current set overlaps with the specified collection.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the current set and other share at least one common element; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "Remove(T)",
+      "signature": "bool Remove(T item)",
+      "summary": "Removes the first occurrence of a specific object from the System.Collections.Generic.ICollection\u00601.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to remove from the System.Collections.Generic.ICollection\u00601.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if item was successfully removed from the System.Collections.Generic.ICollection\u00601; otherwise, false. This method also returns false if item is not found in the original System.Collections.Generic.ICollection\u00601."
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "The System.Collections.Generic.ICollection\u00601 is read-only."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "SetEquals(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "bool SetEquals(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Determines whether the current set and the specified collection contain the same elements.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the current set is equal to other; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "SymmetricExceptWith(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "void SymmetricExceptWith(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Modifies the current set so that it contains only elements that are present either in the current set or in the specified collection, but not both.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "UnionWith(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "void UnionWith(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Modifies the current set so that it contains all elements that are present in both the current set and in the specified collection.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection to compare to the current set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "other is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of elements contained in the System.Collections.Generic.ICollection\u00601.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the System.Collections.Generic.ICollection\u00601 is read-only.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/OrderedSet.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

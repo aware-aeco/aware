@@ -1,0 +1,79 @@
+{
+  "name": "BoltItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The BoltItem class contains information about the bolts in the Tekla Structures bolt catalog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e9c3c616-26e8-f827-b96f-592aa2724c60",
+  "constructors": [
+    {
+      "name": "BoltItem",
+      "signature": "public BoltItem()",
+      "summary": "Creates a new bolt item instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/58b3c99b-bbed-2c92-916d-37a1ed32c3e4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExportBoltStandard",
+      "signature": "public bool ExportBoltStandard(ref string filename)",
+      "summary": "Exports the bolt item standard \u002B needed bolt catalog items in *.bass-format to the to given file name. If path is not given bolt standard \u002B items are exported to model folder. If filename is empty bolt standard name is used as filename.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the bolt assembly.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/742798eb-02a0-3b83-ef22-62f4ee2ef9d3"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Lengths",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The bolt item\u0027s length values.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25a1da59-756d-dc91-0dd1-c0d8de4d838b"
+    },
+    {
+      "name": "Size",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt item\u0027s size.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f77ef19e-7a9a-6e54-0d36-607f7195e53c"
+    },
+    {
+      "name": "Standard",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt item\u0027s grade.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0f9e1e0-a506-629c-d40a-b8f541c754bb"
+    },
+    {
+      "name": "Type",
+      "type": "BoltItem.BoltItemTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt item\u0027s type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/51befdf8-7e82-5744-3700-32d572b082f3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

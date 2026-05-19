@@ -1,0 +1,1108 @@
+{
+  "name": "File3dm",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents a 3dm file, which is stored using the OpenNURBS file standard. The 3dm format is the main Rhinoceros storage format.Visit http://www.opennurbs.com/ for more details.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dm.htm",
+  "constructors": [
+    {
+      "name": "File3dm",
+      "signature": "public File3dm()",
+      "summary": "Initializes a new instance of a 3dm file.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Audit",
+      "signature": "[ObsoleteAttribute(\u0022Polish and Audit functionality no longer exist.\u0022)] public int Audit(bool attemptRepair, out int repairCount, out string errors, out int[] warnings)",
+      "summary": "This function is only kept for forward assembly compatibility.",
+      "params": [
+        {
+          "name": "attemptRepair",
+          "type": "System.Boolean",
+          "doc": "Ignored.",
+          "optional": false
+        },
+        {
+          "name": "repairCount",
+          "type": "System.Int32",
+          "doc": "Is set to 0.",
+          "optional": false
+        },
+        {
+          "name": "errors",
+          "type": "System.String",
+          "doc": "Contains no meaningful error.",
+          "optional": false
+        },
+        {
+          "name": "warnings",
+          "type": "System.Int32[]",
+          "doc": "Is set to null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Returns 0."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Audit.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Dispose_1.htm"
+    },
+    {
+      "name": "Dump",
+      "signature": "public string Dump()",
+      "summary": "Prepares a text dump of the entire model.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The text dump."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Dump.htm"
+    },
+    {
+      "name": "DumpSummary",
+      "signature": "public string DumpSummary()",
+      "summary": "Prepares a text dump of model properties and settings.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The text dump."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_DumpSummary.htm"
+    },
+    {
+      "name": "DumpToTextLog",
+      "signature": "public void DumpToTextLog(TextLog log)",
+      "summary": "Prepares a text dump of the entire model.",
+      "params": [
+        {
+          "name": "log",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "[Missing \u003Cparam name=\u0022log\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dm.DumpToTextLog(Rhino.FileIO.TextLog)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_DumpToTextLog.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Finalize.htm"
+    },
+    {
+      "name": "FromByteArray",
+      "signature": "public static File3dm FromByteArray(byte[] bytes)",
+      "summary": "Read a 3dm file from a byte array",
+      "params": [
+        {
+          "name": "bytes",
+          "type": "System.Byte[]",
+          "doc": "[Missing \u003Cparam name=\u0022bytes\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dm.FromByteArray(System.Byte[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dm",
+        "doc": "New File3dm on success, null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_FromByteArray.htm"
+    },
+    {
+      "name": "GetPreviewImage",
+      "signature": "public Bitmap GetPreviewImage()",
+      "summary": "Preview image used for file explorer",
+      "params": [],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dm.GetPreviewImage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_GetPreviewImage.htm"
+    },
+    {
+      "name": "IsValid(String)",
+      "signature": "[ObsoleteAttribute(\u0022IsValid now returns always true.\u0022)] public bool IsValid(out string errors)",
+      "summary": "The File3dm object is kept consistent during its creation. Therefore, this function now returns only true.",
+      "params": [
+        {
+          "name": "errors",
+          "type": "System.String",
+          "doc": "No errors are found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true in any case."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_IsValid_1.htm"
+    },
+    {
+      "name": "IsValid(TextLog)",
+      "signature": "[ObsoleteAttribute(\u0022IsValid now returns always true.\u0022)] public bool IsValid(TextLog errors)",
+      "summary": "The File3dm object is kept consistent during its creation. Therefore, this function now returns only true.",
+      "params": [
+        {
+          "name": "errors",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "No errors are found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "\u003Etrue in any case."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_IsValid.htm"
+    },
+    {
+      "name": "Polish",
+      "signature": "[ObsoleteAttribute(\u0022Polish and Audit functionality no longer exist.\u0022)] public void Polish()",
+      "summary": "This function is only kept for forward assembly compatibility.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Polish.htm"
+    },
+    {
+      "name": "Read(String)",
+      "signature": "public static File3dm Read(string path)",
+      "summary": "Reads a 3dm file from a specified location.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file to read.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dm",
+        "doc": "new File3dm on success, null on error."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If path does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Read.htm"
+    },
+    {
+      "name": "Read(String, File3dm.TableTypeFilter, File3dm.ObjectTypeFilter)",
+      "signature": "public static File3dm Read(string path, File3dm.TableTypeFilter tableTypeFilterFilter, File3dm.ObjectTypeFilter objectTypeFilter)",
+      "summary": "Reads a 3dm file from a specified location.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file to read.",
+          "optional": false
+        },
+        {
+          "name": "tableTypeFilterFilter",
+          "type": "Rhino.FileIO.File3dm.TableTypeFilter",
+          "doc": "If tableTypeFilterFilter is None, then everything in the archive is read. Otherwise tableTypeFilterFilter identifies what tables should be read.",
+          "optional": false
+        },
+        {
+          "name": "objectTypeFilter",
+          "type": "Rhino.FileIO.File3dm.ObjectTypeFilter",
+          "doc": "If objectTypeFilter is not None, then is a filter made by bitwise or-ing values to select which types of objects will be read from the model object table.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dm",
+        "doc": "new File3dm on success, null on error."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If path does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Read_1.htm"
+    },
+    {
+      "name": "ReadApplicationData",
+      "signature": "public static void ReadApplicationData(string path, out string applicationName, out string applicationUrl, out string applicationDetails)",
+      "summary": "Reads only the application information from an existing 3dm file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "A location on disk or network.",
+          "optional": false
+        },
+        {
+          "name": "applicationName",
+          "type": "System.String",
+          "doc": "The application name. This out parameter is assigned during this call.",
+          "optional": false
+        },
+        {
+          "name": "applicationUrl",
+          "type": "System.String",
+          "doc": "The application URL. This out parameter is assigned during this call.",
+          "optional": false
+        },
+        {
+          "name": "applicationDetails",
+          "type": "System.String",
+          "doc": "The application details. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadApplicationData.htm"
+    },
+    {
+      "name": "ReadArchiveVersion",
+      "signature": "public static int ReadArchiveVersion(string path)",
+      "summary": "Reads only the archive 3dm version from an existing 3dm file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file from which to read the archive version.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The 3dm file archive version."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If path does not exist, is null or cannot be accessed because of permissions."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadArchiveVersion.htm"
+    },
+    {
+      "name": "ReadDimensionStyles",
+      "signature": "public static DimensionStyle[] ReadDimensionStyles(string path)",
+      "summary": "Read the dimension styles table out of a 3dm file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The location of the file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle[]",
+        "doc": "Array of dimension styles on success (empty array if file does not contain dimension styles) null on error"
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If the provided path is null, does not exist or cannot be accessed."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadDimensionStyles.htm"
+    },
+    {
+      "name": "ReadEarthAnchorPoint",
+      "signature": "public static EarthAnchorPoint ReadEarthAnchorPoint(string path)",
+      "summary": "Reads only the earth anchor point from an existing 3dm file",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "A location on disk or network.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "EarthAnchorPoint",
+        "doc": "The earth anchor point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadEarthAnchorPoint.htm"
+    },
+    {
+      "name": "ReadNotes",
+      "signature": "public static string ReadNotes(string path)",
+      "summary": "Reads only the notes from an existing 3dm file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file from which to read the notes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The 3dm file notes."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If path does not exist, is null or cannot be accessed because of permissions."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadNotes.htm"
+    },
+    {
+      "name": "ReadPreviewImage",
+      "signature": "public static Bitmap ReadPreviewImage(string path)",
+      "summary": "Attempts to read the preview image out of a 3dm file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The location of the file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A bitmap, or null on failure."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If the provided path is null, does not exist or cannot be accessed."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadPreviewImage.htm"
+    },
+    {
+      "name": "ReadRevisionHistory",
+      "signature": "public static bool ReadRevisionHistory(string path, out string createdBy, out string lastEditedBy, out int revision, out DateTime createdOn, out DateTime lastEditedOn)",
+      "summary": "Quickly check a file for it\u0027s revision information. This function does not read the entire file, just what it needs to get revision information out",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to the 3dm file",
+          "optional": false
+        },
+        {
+          "name": "createdBy",
+          "type": "System.String",
+          "doc": "original author of the file",
+          "optional": false
+        },
+        {
+          "name": "lastEditedBy",
+          "type": "System.String",
+          "doc": "last person to edit the file",
+          "optional": false
+        },
+        {
+          "name": "revision",
+          "type": "System.Int32",
+          "doc": "which revision this file is at",
+          "optional": false
+        },
+        {
+          "name": "createdOn",
+          "type": "System.DateTime",
+          "doc": "date file was created (DateTime.MinValue if not set in file)",
+          "optional": false
+        },
+        {
+          "name": "lastEditedOn",
+          "type": "System.DateTime",
+          "doc": "date file was last edited (DateTime.MinValue if not set in file)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadRevisionHistory.htm"
+    },
+    {
+      "name": "ReadWithLog(String, String)",
+      "signature": "public static File3dm ReadWithLog(string path, out string errorLog)",
+      "summary": "Read a 3dm file from a specified location and log any archive reading errors.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file to read.",
+          "optional": false
+        },
+        {
+          "name": "errorLog",
+          "type": "System.String",
+          "doc": "Any archive reading errors are logged here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dm",
+        "doc": "New File3dm on success, null on error."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If path does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadWithLog_1.htm"
+    },
+    {
+      "name": "ReadWithLog(String, File3dm.TableTypeFilter, File3dm.ObjectTypeFilter, String)",
+      "signature": "public static File3dm ReadWithLog(string path, File3dm.TableTypeFilter tableTypeFilterFilter, File3dm.ObjectTypeFilter objectTypeFilter, out string errorLog)",
+      "summary": "Reads a 3dm file from a specified location.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file to read.",
+          "optional": false
+        },
+        {
+          "name": "tableTypeFilterFilter",
+          "type": "Rhino.FileIO.File3dm.TableTypeFilter",
+          "doc": "If tableTypeFilterFilter is None, then everything in the archive is read. Otherwise tableTypeFilterFilter identifies what tables should be read.",
+          "optional": false
+        },
+        {
+          "name": "objectTypeFilter",
+          "type": "Rhino.FileIO.File3dm.ObjectTypeFilter",
+          "doc": "If objectTypeFilter is not None, then is a filter made by bitwise or-ing values to select which types of objects will be read from the model object table.",
+          "optional": false
+        },
+        {
+          "name": "errorLog",
+          "type": "System.String",
+          "doc": "Any archive reading errors are logged here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dm",
+        "doc": "new File3dm on success, null on error."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "If path does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ReadWithLog.htm"
+    },
+    {
+      "name": "SetPreviewImage",
+      "signature": "public void SetPreviewImage(Bitmap image)",
+      "summary": "Preview image used for file explorer",
+      "params": [
+        {
+          "name": "image",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022image\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dm.SetPreviewImage(System.Drawing.Bitmap)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_SetPreviewImage.htm"
+    },
+    {
+      "name": "ToByteArray()",
+      "signature": "public byte[] ToByteArray()",
+      "summary": "Write to an in-memory byte[]",
+      "params": [],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dm.ToByteArray\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ToByteArray.htm"
+    },
+    {
+      "name": "ToByteArray(File3dmWriteOptions)",
+      "signature": "public byte[] ToByteArray(File3dmWriteOptions options)",
+      "summary": "Write to an in-memory byte[]",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.File3dmWriteOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dm.ToByteArray(Rhino.FileIO.File3dmWriteOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dm.ToByteArray(Rhino.FileIO.File3dmWriteOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_ToByteArray_1.htm"
+    },
+    {
+      "name": "Write(String, File3dmWriteOptions)",
+      "signature": "public bool Write(string path, File3dmWriteOptions options)",
+      "summary": "Writes contents of this model to an openNURBS archive. If the model is not valid, then Write will refuse to write it.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file name to use for writing.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.File3dmWriteOptions",
+          "doc": "An options instance, or null for default.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if archive is written with no error. false if errors occur."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Write.htm"
+    },
+    {
+      "name": "Write(String, Int32)",
+      "signature": "public bool Write(string path, int version)",
+      "summary": "Writes contents of this model to an openNURBS archive. If the model is not valid, then Write will refuse to write it.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file name to use for writing.",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": "Version of the openNURBS archive to write. Must be [2; current version]. Rhino can read its current version, plus earlier file versions except 1. Use latest version when possible. Alternatively, 0 is a placeholder for the last valid version.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if archive is written with no error. false if errors occur."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_Write_1.htm"
+    },
+    {
+      "name": "WriteMultipleObjects",
+      "signature": "public static bool WriteMultipleObjects(string path, IEnumerable\u003CGeometryBase\u003E geometry)",
+      "summary": "Creates a simple 3dm file that contains a multiple geometric objects.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path to the 3dm file to create.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "The geometry to be saved in the archive\u0027s object table. This is typically some Curves, Surfaces, Breps, Meshs, or SubDs.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_WriteMultipleObjects.htm"
+    },
+    {
+      "name": "WriteOneObject",
+      "signature": "public static bool WriteOneObject(string path, GeometryBase geometry)",
+      "summary": "Creates a simple 3dm file that contains a single geometric object.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path to the 3dm file to create.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "The geometry to be saved in the archive\u0027s object table. This is typically a Curve, Surface, Brep, Mesh, or SubD.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_WriteOneObject.htm"
+    },
+    {
+      "name": "WriteWithLog(String, File3dmWriteOptions, String)",
+      "signature": "public bool WriteWithLog(string path, File3dmWriteOptions options, out string errorLog)",
+      "summary": "Writes contents of this model to an openNURBS archive. If the model is not valid, then Write will refuse to write it.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file name to use for writing.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.File3dmWriteOptions",
+          "doc": "An options instance, or null for default.",
+          "optional": false
+        },
+        {
+          "name": "errorLog",
+          "type": "System.String",
+          "doc": "This argument will be filled by out reference.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if archive is written with no error. false if errors occur."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_WriteWithLog.htm"
+    },
+    {
+      "name": "WriteWithLog(String, Int32, String)",
+      "signature": "public bool WriteWithLog(string path, int version, out string errorLog)",
+      "summary": "Writes contents of this model to an openNURBS archive. If the model is not valid, then Write will refuse to write it.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The file name to use for writing.",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": "Version of the openNURBS archive to write. Must be [2; current version]. Rhino can read its current version, plus earlier file versions except 1. Use latest version when possible. Alternatively, 0 is a placeholder for the last valid version.",
+          "optional": false
+        },
+        {
+          "name": "errorLog",
+          "type": "System.String",
+          "doc": "This argument will be filled by out reference.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if archive is written with no error. false if errors occur."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dm_WriteWithLog_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllDimStyles",
+      "type": "File3dmDimStyleTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Dimension Styles in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllDimStyles.htm"
+    },
+    {
+      "name": "AllGroups",
+      "type": "File3dmGroupTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Groups in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllGroups.htm"
+    },
+    {
+      "name": "AllHatchPatterns",
+      "type": "File3dmHatchPatternTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Hatch patterns in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllHatchPatterns.htm"
+    },
+    {
+      "name": "AllInstanceDefinitions",
+      "type": "File3dmInstanceDefinitionTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Instance definitions in this file",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllInstanceDefinitions.htm"
+    },
+    {
+      "name": "AllLayers",
+      "type": "File3dmLayerTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Layers in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllLayers.htm"
+    },
+    {
+      "name": "AllLinetypes",
+      "type": "File3dmLinetypeTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Linetypes in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllLinetypes.htm"
+    },
+    {
+      "name": "AllMaterials",
+      "type": "File3dmMaterialTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Materials in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllMaterials.htm"
+    },
+    {
+      "name": "AllNamedConstructionPlanes",
+      "type": "File3dmNamedConstructionPlanes",
+      "getter": true,
+      "setter": false,
+      "summary": "Named construction planes in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllNamedConstructionPlanes.htm"
+    },
+    {
+      "name": "AllNamedViews",
+      "type": "File3dmViewTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Named views in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllNamedViews.htm"
+    },
+    {
+      "name": "AllViews",
+      "type": "File3dmViewTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Views that represent the RhinoViews which are displayed when Rhino loads this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_AllViews.htm"
+    },
+    {
+      "name": "ApplicationDetails",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets details for the application that wrote this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_ApplicationDetails.htm"
+    },
+    {
+      "name": "ApplicationName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the application that wrote this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_ApplicationName.htm"
+    },
+    {
+      "name": "ApplicationUrl",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a URL for the application that wrote this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_ApplicationUrl.htm"
+    },
+    {
+      "name": "ArchiveVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 3dm file archive version.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_ArchiveVersion.htm"
+    },
+    {
+      "name": "Created",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the DateTime that this file was originally created. If the value is not set in the 3dm file, then DateTime.MinValue is returned",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Created.htm"
+    },
+    {
+      "name": "CreatedBy",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string that names the user who created the file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_CreatedBy.htm"
+    },
+    {
+      "name": "DimStyles",
+      "type": "IList\u003CDimensionStyle\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Dimension Styles in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_DimStyles.htm"
+    },
+    {
+      "name": "EarthAnchorPoint",
+      "type": "EarthAnchorPoint",
+      "getter": true,
+      "setter": true,
+      "summary": "If set, this is the model\u0027s location on the earth. This information is used when the model is used with GIS information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_EarthAnchorPoint.htm"
+    },
+    {
+      "name": "EmbeddedFiles",
+      "type": "File3dmEmbeddedFiles",
+      "getter": true,
+      "setter": false,
+      "summary": "The embedded files in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_EmbeddedFiles.htm"
+    },
+    {
+      "name": "HatchPatterns",
+      "type": "IList\u003CHatchPattern\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Hatch patterns in this file",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_HatchPatterns.htm"
+    },
+    {
+      "name": "InstanceDefinitions",
+      "type": "IList\u003CInstanceDefinitionGeometry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Instance definitions in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_InstanceDefinitions.htm"
+    },
+    {
+      "name": "LastEdited",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the DateTime that this file was last edited. If the value is not set in the 3dm file, then DateTime.MinValue is returned",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_LastEdited.htm"
+    },
+    {
+      "name": "LastEditedBy",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string that names the user who last edited the file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_LastEditedBy.htm"
+    },
+    {
+      "name": "Layers",
+      "type": "IList\u003CLayer\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Layers in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Layers.htm"
+    },
+    {
+      "name": "Linetypes",
+      "type": "IList\u003CLinetype\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Linetypes in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Linetypes.htm"
+    },
+    {
+      "name": "Manifest",
+      "type": "ManifestTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Retrieves the manifest with all object descriptions in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Manifest.htm"
+    },
+    {
+      "name": "Materials",
+      "type": "IList\u003CMaterial\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Materials in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Materials.htm"
+    },
+    {
+      "name": "NamedConstructionPlanes",
+      "type": "IList\u003CConstructionPlane\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Named construction planes in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_NamedConstructionPlanes.htm"
+    },
+    {
+      "name": "NamedViews",
+      "type": "IList\u003CViewInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Named views in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_NamedViews.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "File3dmNotes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model notes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Notes.htm"
+    },
+    {
+      "name": "Objects",
+      "type": "File3dmObjectTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets access to the File3dmObjectTable class associated with this file, which contains all objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Objects.htm"
+    },
+    {
+      "name": "PlugInData",
+      "type": "File3dmPlugInDataTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Custom plug-in data in this file. This data is not attached to any geometry or attributes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_PlugInData.htm"
+    },
+    {
+      "name": "RenderEnvironments",
+      "type": "File3dmRenderEnvironments",
+      "getter": true,
+      "setter": false,
+      "summary": "The render environments in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_RenderEnvironments.htm"
+    },
+    {
+      "name": "RenderMaterials",
+      "type": "File3dmRenderMaterials",
+      "getter": true,
+      "setter": false,
+      "summary": "The render materials in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_RenderMaterials.htm"
+    },
+    {
+      "name": "RenderTextures",
+      "type": "File3dmRenderTextures",
+      "getter": true,
+      "setter": false,
+      "summary": "The render textures in this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_RenderTextures.htm"
+    },
+    {
+      "name": "Revision",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the revision number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Revision.htm"
+    },
+    {
+      "name": "Settings",
+      "type": "File3dmSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Settings include tolerance, and unit system, and defaults used for creating views and objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Settings.htm"
+    },
+    {
+      "name": "StartSectionComments",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the start section comments, which are the comments with which the 3dm file begins.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_StartSectionComments.htm"
+    },
+    {
+      "name": "Strings",
+      "type": "File3dmStringTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Document user strings in this file",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Strings.htm"
+    },
+    {
+      "name": "Views",
+      "type": "IList\u003CViewInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Views that represent the RhinoViews which are displayed when Rhino loads this file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dm_Views.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

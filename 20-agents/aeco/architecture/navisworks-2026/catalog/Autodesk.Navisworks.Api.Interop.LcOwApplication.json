@@ -1,0 +1,259 @@
+{
+  "name": "LcOwApplication",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOwApplication class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwApplication",
+  "constructors": [
+    {
+      "name": "LcOwApplication()",
+      "signature": "LcOwApplication()",
+      "summary": "Constructs a new LcOwApplication.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EditDocuments",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOwDocumentPtrVec EditDocuments()",
+      "summary": "EditDocuments method of LcOwApplication.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwDocumentPtrVec",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.EditDocuments"
+    },
+    {
+      "name": "IsCursorOverridden",
+      "signature": "bool IsCursorOverridden()",
+      "summary": "IsCursorOverridden method of LcOwApplication.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.IsCursorOverridden"
+    },
+    {
+      "name": "Application",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwApplication Application()",
+      "summary": "Application method of LcOwApplication.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwApplication",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.Application"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwApplication InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOwApplication.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwApplication",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "GetRoamerViewer",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwViewer GetRoamerViewer()",
+      "summary": "GetRoamerViewer method of LcOwApplication.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.GetRoamerViewer"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOwApplication.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetCustomColor",
+      "signature": "static uint GetCustomColor(ulong index)",
+      "summary": "GetCustomColor method of LcOwApplication.",
+      "params": [
+        {
+          "name": "index",
+          "type": "ulong",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.GetCustomColor%28System.UInt64%29"
+    },
+    {
+      "name": "GetNumCustomColors",
+      "signature": "static ulong GetNumCustomColors()",
+      "summary": "GetNumCustomColors method of LcOwApplication.",
+      "params": [],
+      "returns": {
+        "type": "ulong",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.GetNumCustomColors"
+    },
+    {
+      "name": "SetCustomColor",
+      "signature": "static void SetCustomColor(ulong index, uint value)",
+      "summary": "SetCustomColor method of LcOwApplication.",
+      "params": [
+        {
+          "name": "index",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.SetCustomColor%28System.UInt64%2CSystem.UInt32%29"
+    },
+    {
+      "name": "SetIsViewerAPI",
+      "signature": "static void SetIsViewerAPI(bool is_vw_api)",
+      "summary": "SetIsViewerAPI method of LcOwApplication.",
+      "params": [
+        {
+          "name": "is_vw_api",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.SetIsViewerAPI%28System.Boolean%29"
+    },
+    {
+      "name": "GetIdleId",
+      "signature": "uint GetIdleId()",
+      "summary": "GetIdleId method of LcOwApplication.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.GetIdleId"
+    },
+    {
+      "name": "OnActivateApp",
+      "signature": "void OnActivateApp(bool active)",
+      "summary": "OnActivateApp method of LcOwApplication.",
+      "params": [
+        {
+          "name": "active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.OnActivateApp%28System.Boolean%29"
+    },
+    {
+      "name": "OnIdle",
+      "signature": "void OnIdle()",
+      "summary": "OnIdle method of LcOwApplication.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.OnIdle"
+    },
+    {
+      "name": "OverrideCursor",
+      "signature": "void OverrideCursor(bool override_cursor)",
+      "summary": "OverrideCursor method of LcOwApplication.",
+      "params": [
+        {
+          "name": "override_cursor",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.OverrideCursor%28System.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOwApplication.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOwApplication.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

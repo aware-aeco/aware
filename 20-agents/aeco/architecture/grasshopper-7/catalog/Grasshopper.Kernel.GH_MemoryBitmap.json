@@ -1,0 +1,837 @@
+{
+  "name": "GH_MemoryBitmap",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Utility class for ultra-fast bitmap sampling and filters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_MemoryBitmap.htm",
+  "constructors": [
+    {
+      "name": "GH_MemoryBitmap(Bitmap)",
+      "signature": "public GH_MemoryBitmap(Bitmap bitmap)",
+      "summary": "Default constructor.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Bitmap to operate on. This bitmap will be in an invalid state until the Release() function has been called.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap__ctor.htm"
+    },
+    {
+      "name": "GH_MemoryBitmap(Bitmap, WrapMode)",
+      "signature": "public GH_MemoryBitmap(Bitmap bitmap, WrapMode wrap)",
+      "summary": "Constructor with Wrap mode override.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Bitmap to operate on. This bitmap will be in an invalid state until the Release() function has been called.",
+          "optional": false
+        },
+        {
+          "name": "wrap",
+          "type": "System.Drawing.Drawing2D.WrapMode",
+          "doc": "Wrap mode to use during sampling.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "A",
+      "signature": "public byte A(int x, int y)",
+      "summary": "Gets the alpha channel value at the given pixel coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "X coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Y coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "Value of alpha channel at given pixel or 255 if the alpha channel is not defined."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_A.htm"
+    },
+    {
+      "name": "B",
+      "signature": "public byte B(int x, int y)",
+      "summary": "Gets the blue channel value at the given pixel coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "X coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Y coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "Value of Blue channel at given pixel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_B.htm"
+    },
+    {
+      "name": "Colour(Int32, Int32)",
+      "signature": "public Color Colour(int x, int y)",
+      "summary": "Gets the colour at the given pixel coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "X coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Y coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "Colour at given pixel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Colour.htm"
+    },
+    {
+      "name": "Colour(Int32, Int32, Color)",
+      "signature": "public void Colour(int x, int y, Color col)",
+      "summary": "Sets the colour at the given pixel coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "X coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Y coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "Color to assign.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Colour_1.htm"
+    },
+    {
+      "name": "CopyChannel",
+      "signature": "public void CopyChannel(GH_BitmapChannel source, GH_BitmapChannel target)",
+      "summary": "Copy the contents of one channel into another.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Source channel (compound channels are not allowed).",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Target channel (compound channels are not allowed).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_CopyChannel.htm"
+    },
+    {
+      "name": "Filter_AlphaEdges",
+      "signature": "public void Filter_AlphaEdges(Padding padding, byte alpha_override)",
+      "summary": "Set the alpha component on all edges to a specific value.",
+      "params": [
+        {
+          "name": "padding",
+          "type": "System.Windows.Forms.Padding",
+          "doc": "Width of alpha band along all edges. Must be a valid padding construct.",
+          "optional": false
+        },
+        {
+          "name": "alpha_override",
+          "type": "System.Byte",
+          "doc": "Value of alpha to apply.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_AlphaEdges.htm"
+    },
+    {
+      "name": "Filter_Blur()",
+      "signature": "public void Filter_Blur()",
+      "summary": "Blur the image in both directions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Blur.htm"
+    },
+    {
+      "name": "Filter_Blur(Int32)",
+      "signature": "public void Filter_Blur(int N)",
+      "summary": "Blur the image N times in both directions.",
+      "params": [
+        {
+          "name": "N",
+          "type": "System.Int32",
+          "doc": "Number of times to perform the blurring operation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Blur_1.htm"
+    },
+    {
+      "name": "Filter_Blur(Int32, Int32)",
+      "signature": "public void Filter_Blur(int interior_weight, int exterior_weight)",
+      "summary": "Blur the image in both directions.",
+      "params": [
+        {
+          "name": "interior_weight",
+          "type": "System.Int32",
+          "doc": "Weighting factor for pixels at the center of the convolution matrix.",
+          "optional": false
+        },
+        {
+          "name": "exterior_weight",
+          "type": "System.Int32",
+          "doc": "Weighting factor for pixels at the edges of the convolution matrix.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Blur_2.htm"
+    },
+    {
+      "name": "Filter_Blur(Int32, Int32, Int32)",
+      "signature": "public void Filter_Blur(int N, int interior_weight, int exterior_weight)",
+      "summary": "Blur the image N times in both directions.",
+      "params": [
+        {
+          "name": "N",
+          "type": "System.Int32",
+          "doc": "Number of times to perform the blurring operation.",
+          "optional": false
+        },
+        {
+          "name": "interior_weight",
+          "type": "System.Int32",
+          "doc": "Weighting factor for pixels at the center of the convolution matrix.",
+          "optional": false
+        },
+        {
+          "name": "exterior_weight",
+          "type": "System.Int32",
+          "doc": "Weighting factor for pixels at the edges of the convolution matrix.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Blur_3.htm"
+    },
+    {
+      "name": "Filter_BlurAlpha",
+      "signature": "public void Filter_BlurAlpha(int N, int interior_weight, int exterior_weight)",
+      "summary": "Blur the alpha channel of the image N times in both directions.",
+      "params": [
+        {
+          "name": "N",
+          "type": "System.Int32",
+          "doc": "Number of times to perform the blurring operation.",
+          "optional": false
+        },
+        {
+          "name": "interior_weight",
+          "type": "System.Int32",
+          "doc": "Weighting factor for pixels at the center of the convolution matrix.",
+          "optional": false
+        },
+        {
+          "name": "exterior_weight",
+          "type": "System.Int32",
+          "doc": "Weighting factor for pixels at the edges of the convolution matrix.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_BlurAlpha.htm"
+    },
+    {
+      "name": "Filter_Contrast",
+      "signature": "public void Filter_Contrast(GH_BitmapChannel channel, double factor)",
+      "summary": "Adjust the contrast of a specific channel.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Channel(s) to modify.",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "doc": "Contrast boost factor. A factor of 1.0 will not affect contrast. Lower values will lessen contrast and higher values will increase contrast.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Contrast.htm"
+    },
+    {
+      "name": "Filter_DitherPattern",
+      "signature": "public void Filter_DitherPattern(Color colour)",
+      "summary": "Create a checkerboard dither pattern.",
+      "params": [
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour value to set at dithered pixels.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_DitherPattern.htm"
+    },
+    {
+      "name": "Filter_DropShadow",
+      "signature": "public void Filter_DropShadow(Size offset, int blur, double darkness)",
+      "summary": "Add a drop-shadow to the image. Image is not grown, so if you want the drop shadow to extend beyond the image boundaries, you have to add padding to the image first.",
+      "params": [
+        {
+          "name": "offset",
+          "type": "System.Drawing.Size",
+          "doc": "Number of pixels (x and y) to offset the drop shadow.",
+          "optional": false
+        },
+        {
+          "name": "blur",
+          "type": "System.Int32",
+          "doc": "Amount of blurring for the shadow.",
+          "optional": false
+        },
+        {
+          "name": "darkness",
+          "type": "System.Double",
+          "doc": "Darkness factor for the shadow.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_DropShadow.htm"
+    },
+    {
+      "name": "Filter_Dullify",
+      "signature": "public void Filter_Dullify()",
+      "summary": "Reduces contrast based on opacity. This filter pulls all colours towards dull grey, without wrecking drop-shadows.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Dullify.htm"
+    },
+    {
+      "name": "Filter_Equalize",
+      "signature": "public void Filter_Equalize(GH_BitmapChannel channel, byte value)",
+      "summary": "Set all the values in a specific channel to a specific value.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Channel(s) to equalize.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "Value to equalize with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Equalize.htm"
+    },
+    {
+      "name": "Filter_GreyScale()",
+      "signature": "public void Filter_GreyScale()",
+      "summary": "Convert the image to a greyscale shadow of its former self.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_GreyScale.htm"
+    },
+    {
+      "name": "Filter_GreyScale(Double)",
+      "signature": "public void Filter_GreyScale(double amount)",
+      "summary": "Convert the image to a greyscale shadow of its former self.",
+      "params": [
+        {
+          "name": "amount",
+          "type": "System.Double",
+          "doc": "Greyscale factor. 1.0 equals complete greyscale, 0.0 equals no greyscale, -1.0 equals inverse greyscale",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_GreyScale_1.htm"
+    },
+    {
+      "name": "Filter_HueScale",
+      "signature": "public void Filter_HueScale()",
+      "summary": "Convert the image to a greyscale representation of the hues.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_HueScale.htm"
+    },
+    {
+      "name": "Filter_Invert",
+      "signature": "public void Filter_Invert(GH_BitmapChannel channel)",
+      "summary": "Invert all values in a specific channel.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Channel(s) to invert.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Invert.htm"
+    },
+    {
+      "name": "Filter_LumScale",
+      "signature": "public void Filter_LumScale()",
+      "summary": "Convert the image to a greyscale representation of the luminance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_LumScale.htm"
+    },
+    {
+      "name": "Filter_Multiply(GH_BitmapChannel, Double)",
+      "signature": "public void Filter_Multiply(GH_BitmapChannel channel, double factor)",
+      "summary": "Multiply all values in a specific channel with a specific factor.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Channel(s) to multiply.",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "doc": "Multiplication factor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Multiply.htm"
+    },
+    {
+      "name": "Filter_Multiply(GH_BitmapChannel, Double, Byte)",
+      "signature": "public void Filter_Multiply(GH_BitmapChannel channel, double factor, byte anchor)",
+      "summary": "Multiply all values in a specific channel with a specific factor, using a custom scaling center anchor.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Channel(s) to multiply.",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "doc": "Multiplication factor.",
+          "optional": false
+        },
+        {
+          "name": "anchor",
+          "type": "System.Byte",
+          "doc": "Byte value to scale from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Multiply_1.htm"
+    },
+    {
+      "name": "Filter_SatScale",
+      "signature": "public void Filter_SatScale()",
+      "summary": "Convert the image to a greyscale representation of the saturation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_SatScale.htm"
+    },
+    {
+      "name": "Filter_Shift",
+      "signature": "public void Filter_Shift(GH_BitmapChannel channel, byte amount)",
+      "summary": "Shift all values in a specific channel with a specific amount.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Grasshopper.Kernel.GH_BitmapChannel",
+          "doc": "Channel(s) to shift.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Byte",
+          "doc": "Shift amount.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Shift.htm"
+    },
+    {
+      "name": "Filter_SpectrumScale",
+      "signature": "public void Filter_SpectrumScale()",
+      "summary": "Convert the image to a spectral representation of the hues.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_SpectrumScale.htm"
+    },
+    {
+      "name": "Filter_Tint",
+      "signature": "public void Filter_Tint(Color tint, double lum_factor, double sat_factor)",
+      "summary": "Colorize the image using Hue and Saturation from a base colour.",
+      "params": [
+        {
+          "name": "tint",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of colorize operation.",
+          "optional": false
+        },
+        {
+          "name": "lum_factor",
+          "type": "System.Double",
+          "doc": "Luminance blend factor. 0.0 equals no luminance adjustment, 1.0 equals complete luminance adjustment.",
+          "optional": false
+        },
+        {
+          "name": "sat_factor",
+          "type": "System.Double",
+          "doc": "Saturation blend factor. 0.0 equals no saturation adjustment, 1.0 equals complete saturation adjustment.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Filter_Tint.htm"
+    },
+    {
+      "name": "G",
+      "signature": "public byte G(int x, int y)",
+      "summary": "Gets the greeb channel value at the given pixel coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "X coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Y coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "Value of Green channel at given pixel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_G.htm"
+    },
+    {
+      "name": "OpaqueArea",
+      "signature": "public Rectangle OpaqueArea()",
+      "summary": "Find the opaque area of a bitmap. The opaque area is the rectangle that contains pixels with a colour that is not fully transparent.",
+      "params": [],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "Area of bitmap containing all non-transparent pixels."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_OpaqueArea.htm"
+    },
+    {
+      "name": "PadBitmap",
+      "signature": "public static Bitmap PadBitmap(Image bmp, Padding padding, Color padding_color)",
+      "summary": "Add padding edges around a bitmap.",
+      "params": [
+        {
+          "name": "bmp",
+          "type": "System.Drawing.Image",
+          "doc": "Source bitmap.",
+          "optional": false
+        },
+        {
+          "name": "padding",
+          "type": "System.Windows.Forms.Padding",
+          "doc": "Padding to apply.",
+          "optional": false
+        },
+        {
+          "name": "padding_color",
+          "type": "System.Drawing.Color",
+          "doc": "Color of padded edges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A new bitmap with padded edges and the same PixelFormat as the original bitmap."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_PadBitmap.htm"
+    },
+    {
+      "name": "R",
+      "signature": "public byte R(int x, int y)",
+      "summary": "Gets the red channel value at the given pixel coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "X coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Y coordinate (column) of pixel. Must be on image interior.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "Value of Red channel at given pixel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_R.htm"
+    },
+    {
+      "name": "Release",
+      "signature": "public void Release(bool includeChanges)",
+      "summary": "Release the locked bits. You must call this function when you are done with this GH_MemoryBitmap instance.",
+      "params": [
+        {
+          "name": "includeChanges",
+          "type": "System.Boolean",
+          "doc": "If true, changes to the bitmap memory block will be written back into the bitmap.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Release.htm"
+    },
+    {
+      "name": "Sample(Double, Double, Color)",
+      "signature": "public bool Sample(double x, double y, ref Color col)",
+      "summary": "Top level sampling function for interpolated sampling.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "floating point coordinate in pixel space.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "floating point coordinate in pixel space.",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "Resulting colour",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Sample.htm"
+    },
+    {
+      "name": "Sample(Int32, Int32, Color)",
+      "signature": "public bool Sample(int x, int y, ref Color col)",
+      "summary": "Top level sampling function.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "Unmapped x pixel coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "Unmapped y pixel coordinate.",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "doc": "Colour output.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false if pixels could not be sampled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_Sample_1.htm"
+    },
+    {
+      "name": "ShrinkBitmap",
+      "signature": "public static Bitmap ShrinkBitmap(Bitmap image)",
+      "summary": "Shrink an image by removing all outer columns and rows that contain only fully transparent pixels.",
+      "params": [
+        {
+          "name": "image",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Image to shrink.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "Shrunk bitmap."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_MemoryBitmap_ShrinkBitmap.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasAlphaChannel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the local image has an alpha channel defined.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_MemoryBitmap_HasAlphaChannel.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the height (in pixels) of the local image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_MemoryBitmap_Height.htm"
+    },
+    {
+      "name": "SizeOf",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the size (in bytes) of the local image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_MemoryBitmap_SizeOf.htm"
+    },
+    {
+      "name": "Width",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the width (in pixels) of the local image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_MemoryBitmap_Width.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

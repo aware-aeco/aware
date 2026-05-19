@@ -1,0 +1,49 @@
+{
+  "name": "Distance.UnitType",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "enum",
+  "summary": "The distance units.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2410add6-9fcc-35cd-ef9e-0468934d8a3e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Millimeter",
+      "value": 0,
+      "summary": "The millimeter unit type."
+    },
+    {
+      "name": "Centimeter",
+      "value": 1,
+      "summary": "The centimeter unit type."
+    },
+    {
+      "name": "Meter",
+      "value": 2,
+      "summary": "The meter unit type."
+    },
+    {
+      "name": "Inch",
+      "value": 3,
+      "summary": "The inch unit type."
+    },
+    {
+      "name": "Foot",
+      "value": 4,
+      "summary": "The foot unit type."
+    },
+    {
+      "name": "UsSurveyInch",
+      "value": 5,
+      "summary": "The US survey inch unit type."
+    },
+    {
+      "name": "UsSurveyFoot",
+      "value": 6,
+      "summary": "The US survey foot unit type."
+    }
+  ]
+}

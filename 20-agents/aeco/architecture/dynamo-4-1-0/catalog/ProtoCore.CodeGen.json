@@ -1,0 +1,2463 @@
+{
+  "name": "CodeGen",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type CodeGen",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs",
+  "constructors": [
+    {
+      "name": "CodeGen(ProtoCore.Core, ProtoCore.DSASM.CodeBlock)",
+      "signature": "void CodeGen(ProtoCore.Core coreObj, ProtoCore.DSASM.CodeBlock parentBlock)",
+      "summary": "CodeGen.CodeGen",
+      "params": [
+        {
+          "name": "coreObj",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "parentBlock",
+          "type": "ProtoCore.DSASM.CodeBlock",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AllocateVar(ProtoCore.DSASM.SymbolNode)",
+      "signature": "void AllocateVar(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "CodeGen.AllocateVar",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "Backpatch(System.Collections.Generic.List\u003CProtoCore.BackpatchNode\u003E, int)",
+      "signature": "void Backpatch(System.Collections.Generic.List\u003CProtoCore.BackpatchNode\u003E table, int pc)",
+      "summary": "CodeGen.Backpatch",
+      "params": [
+        {
+          "name": "table",
+          "type": "System.Collections.Generic.List\u003CProtoCore.BackpatchNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "Backpatch(int, int)",
+      "signature": "void Backpatch(int bp, int pc)",
+      "summary": "CodeGen.Backpatch",
+      "params": [
+        {
+          "name": "bp",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "BuildOperand(ProtoCore.DSASM.SymbolNode)",
+      "signature": "ProtoCore.DSASM.StackValue BuildOperand(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "CodeGen.BuildOperand",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "BuildRealDependencyForIdentList(ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void BuildRealDependencyForIdentList(ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "CodeGen.BuildRealDependencyForIdentList",
+      "params": [
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "DFSGetSymbolList(ProtoCore.AST.Node, ref ProtoCore.Type, ProtoCore.AssociativeGraph.UpdateNodeRef)",
+      "signature": "void DFSGetSymbolList(ProtoCore.AST.Node pNode, ref ProtoCore.Type lefttype, ProtoCore.AssociativeGraph.UpdateNodeRef nodeRef)",
+      "summary": "CodeGen.DFSGetSymbolList",
+      "params": [
+        {
+          "name": "pNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "lefttype",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "nodeRef",
+          "type": "ProtoCore.AssociativeGraph.UpdateNodeRef",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "DFSGetSymbolList_Simple(ProtoCore.AST.Node, ref ProtoCore.Type, ref int, ProtoCore.AssociativeGraph.UpdateNodeRef)",
+      "signature": "void DFSGetSymbolList_Simple(ProtoCore.AST.Node pNode, ref ProtoCore.Type lefttype, ref int functionindex, ProtoCore.AssociativeGraph.UpdateNodeRef nodeRef)",
+      "summary": "CodeGen.DFSGetSymbolList_Simple",
+      "params": [
+        {
+          "name": "pNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "lefttype",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "functionindex",
+          "type": "ref int",
+          "optional": false
+        },
+        {
+          "name": "nodeRef",
+          "type": "ProtoCore.AssociativeGraph.UpdateNodeRef",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "DfsEmitArrayIndexHeap(ProtoCore.AST.Node, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.AST.Node, ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "int DfsEmitArrayIndexHeap(ProtoCore.AST.Node node, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.AST.Node parentNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.DfsEmitArrayIndexHeap",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "parentNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "DfsEmitIdentList(ProtoCore.AST.Node, ProtoCore.AST.Node, int, ref ProtoCore.Type, ref int, ref ProtoCore.Type, bool, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass, ProtoCore.AST.Node)",
+      "signature": "bool DfsEmitIdentList(ProtoCore.AST.Node pNode, ProtoCore.AST.Node parentNode, int contextClassScope, ref ProtoCore.Type lefttype, ref int depth, ref ProtoCore.Type finalType, bool isLeftidentList, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass, ProtoCore.AST.Node binaryExpNode)",
+      "summary": "CodeGen.DfsEmitIdentList",
+      "params": [
+        {
+          "name": "pNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "parentNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "contextClassScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "lefttype",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "ref int",
+          "optional": false
+        },
+        {
+          "name": "finalType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isLeftidentList",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        },
+        {
+          "name": "binaryExpNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "DfsTraverse(ProtoCore.AST.Node, ref ProtoCore.Type, bool, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass, ProtoCore.AST.Node)",
+      "signature": "void DfsTraverse(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, bool isBooleanOp, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass, ProtoCore.AST.Node parentNode)",
+      "summary": "CodeGen.DfsTraverse",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isBooleanOp",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        },
+        {
+          "name": "parentNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "Emit(ProtoCore.AST.Node, ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "int Emit(ProtoCore.AST.Node codeblocknode, ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "CodeGen.Emit",
+      "params": [
+        {
+          "name": "codeblocknode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitAtLevel(ProtoCore.AST.AssociativeAST.AtLevelNode)",
+      "signature": "void EmitAtLevel(ProtoCore.AST.AssociativeAST.AtLevelNode atLevel)",
+      "summary": "CodeGen.EmitAtLevel",
+      "params": [
+        {
+          "name": "atLevel",
+          "type": "ProtoCore.AST.AssociativeAST.AtLevelNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitBinary(ProtoCore.DSASM.OpCode, int, int, int, int)",
+      "signature": "void EmitBinary(ProtoCore.DSASM.OpCode opcode, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitBinary",
+      "params": [
+        {
+          "name": "opcode",
+          "type": "ProtoCore.DSASM.OpCode",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitBinaryOperation(ProtoCore.Type, ProtoCore.Type, ProtoCore.DSASM.Operator)",
+      "signature": "void EmitBinaryOperation(ProtoCore.Type leftType, ProtoCore.Type rightType, ProtoCore.DSASM.Operator optr)",
+      "summary": "CodeGen.EmitBinaryOperation",
+      "params": [
+        {
+          "name": "leftType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "rightType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "optr",
+          "type": "ProtoCore.DSASM.Operator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitBooleanNode(ProtoCore.AST.Node, ref ProtoCore.Type, ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitBooleanNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitBooleanNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitBounceIntrinsic(int, int)",
+      "signature": "void EmitBounceIntrinsic(int blockId, int entry)",
+      "summary": "CodeGen.EmitBounceIntrinsic",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCJmp(int, int, int, int, int)",
+      "signature": "void EmitCJmp(int label, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitCJmp",
+      "params": [
+        {
+          "name": "label",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCall(int, int, int, int, int, int, int, int)",
+      "signature": "void EmitCall(int fi, int blockId, int type, int line, int col, int endLine, int endCol, int entrypoint)",
+      "summary": "CodeGen.EmitCall",
+      "params": [
+        {
+          "name": "fi",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endLine",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endCol",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "entrypoint",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCallBaseCtor(int, int, int)",
+      "signature": "void EmitCallBaseCtor(int fi, int ci, int offset)",
+      "summary": "CodeGen.EmitCallBaseCtor",
+      "params": [
+        {
+          "name": "fi",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ci",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCast(int, int)",
+      "signature": "void EmitCast(int UID, int rank)",
+      "summary": "CodeGen.EmitCast",
+      "params": [
+        {
+          "name": "UID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "rank",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCharNode(ProtoCore.AST.Node, ref ProtoCore.Type, bool, ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitCharNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, bool isBooleanOp, ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitCharNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isBooleanOp",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCompileLog(string)",
+      "signature": "void EmitCompileLog(string message)",
+      "summary": "CodeGen.EmitCompileLog",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCompileLogFunctionEnd",
+      "signature": "void EmitCompileLogFunctionEnd()",
+      "summary": "CodeGen.EmitCompileLogFunctionEnd",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitCompileLogFunctionStart(string)",
+      "signature": "void EmitCompileLogFunctionStart(string function)",
+      "summary": "CodeGen.EmitCompileLogFunctionStart",
+      "params": [
+        {
+          "name": "function",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitDefaultArgNode(ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitDefaultArgNode(ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitDefaultArgNode",
+      "params": [
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitDoubleNode(ProtoCore.AST.Node, ref ProtoCore.Type, bool, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitDoubleNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, bool isBooleanOp, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitDoubleNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isBooleanOp",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitDynamicCall(int, int, int, int, int, int, int)",
+      "signature": "void EmitDynamicCall(int functionIndex, int type, int line, int col, int endline, int endcol, int entrypoint)",
+      "summary": "CodeGen.EmitDynamicCall",
+      "params": [
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endcol",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "entrypoint",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitDynamicNode(ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitDynamicNode(ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitDynamicNode",
+      "params": [
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitExprListNode(ProtoCore.AST.Node, ref ProtoCore.Type, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass, ProtoCore.AST.Node)",
+      "signature": "void EmitExprListNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass, ProtoCore.AST.Node parentNode)",
+      "summary": "CodeGen.EmitExprListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        },
+        {
+          "name": "parentNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitFunctionPointer(ProtoCore.DSASM.ProcedureNode)",
+      "signature": "void EmitFunctionPointer(ProtoCore.DSASM.ProcedureNode procNode)",
+      "summary": "CodeGen.EmitFunctionPointer",
+      "params": [
+        {
+          "name": "procNode",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitGetterSetterForIdentList(ProtoCore.AST.Node, ref ProtoCore.Type, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass, ref bool, ProtoCore.AST.Node)",
+      "signature": "void EmitGetterSetterForIdentList(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass, ref bool isCollapsed, ProtoCore.AST.Node setterArgument)",
+      "summary": "CodeGen.EmitGetterSetterForIdentList",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        },
+        {
+          "name": "isCollapsed",
+          "type": "ref bool",
+          "optional": false
+        },
+        {
+          "name": "setterArgument",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitIdentifierListNode(ProtoCore.AST.Node, ref ProtoCore.Type, bool, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass, ProtoCore.AST.Node)",
+      "signature": "void EmitIdentifierListNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, bool isBooleanOp, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass, ProtoCore.AST.Node bnode)",
+      "summary": "CodeGen.EmitIdentifierListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isBooleanOp",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        },
+        {
+          "name": "bnode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitInstrConsole(string)",
+      "signature": "void EmitInstrConsole(string instr)",
+      "summary": "CodeGen.EmitInstrConsole",
+      "params": [
+        {
+          "name": "instr",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitInstrConsole(string, string)",
+      "signature": "void EmitInstrConsole(string instr, string op1)",
+      "summary": "CodeGen.EmitInstrConsole",
+      "params": [
+        {
+          "name": "instr",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "op1",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitInstrConsole(string, string, string)",
+      "signature": "void EmitInstrConsole(string instr, string op1, string op2)",
+      "summary": "CodeGen.EmitInstrConsole",
+      "params": [
+        {
+          "name": "instr",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "op1",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "op2",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitInstrConsole(string, string, string, string)",
+      "signature": "void EmitInstrConsole(string instr, string op1, string op2, string op3)",
+      "summary": "CodeGen.EmitInstrConsole",
+      "params": [
+        {
+          "name": "instr",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "op1",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "op2",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "op3",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitIntNode(ProtoCore.AST.Node, ref ProtoCore.Type, bool, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitIntNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, bool isBooleanOp, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitIntNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isBooleanOp",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitJmp(int, int, int, int, int)",
+      "signature": "void EmitJmp(int L1, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitJmp",
+      "params": [
+        {
+          "name": "L1",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitLoadElement(ProtoCore.DSASM.SymbolNode, int)",
+      "signature": "void EmitLoadElement(ProtoCore.DSASM.SymbolNode symbol, int blockId)",
+      "summary": "CodeGen.EmitLoadElement",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitNullNode(ProtoCore.AST.Node, ref ProtoCore.Type, bool, ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitNullNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, bool isBooleanOp, ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitNullNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isBooleanOp",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitOpWithEmptyAtLevelAndGuides(bool, ProtoCore.DSASM.StackValue, string, ProtoCore.AST.Node)",
+      "signature": "void EmitOpWithEmptyAtLevelAndGuides(bool emit, ProtoCore.DSASM.StackValue op, string value, ProtoCore.AST.Node node)",
+      "summary": "CodeGen.EmitOpWithEmptyAtLevelAndGuides",
+      "params": [
+        {
+          "name": "emit",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPop(ProtoCore.DSASM.StackValue, int, int, int, int, int, int)",
+      "signature": "void EmitPop(ProtoCore.DSASM.StackValue op, int classIndex, int blockId, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitPop",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPopArray(int)",
+      "signature": "void EmitPopArray(int size)",
+      "summary": "CodeGen.EmitPopArray",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPopForSymbol(ProtoCore.DSASM.SymbolNode, int, int, int, int, int)",
+      "signature": "void EmitPopForSymbol(ProtoCore.DSASM.SymbolNode symbol, int blockId, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitPopForSymbol",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPopForSymbolW(ProtoCore.DSASM.SymbolNode, int, int, int, int, int)",
+      "signature": "void EmitPopForSymbolW(ProtoCore.DSASM.SymbolNode symbol, int blockId, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitPopForSymbolW",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPopReplicationGuides(int)",
+      "signature": "void EmitPopReplicationGuides(int replicationGuide)",
+      "summary": "CodeGen.EmitPopReplicationGuides",
+      "params": [
+        {
+          "name": "replicationGuide",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPopUpdateInstruction(ProtoCore.DSASM.StackValue, int, int, int, int, int, int)",
+      "signature": "void EmitPopUpdateInstruction(ProtoCore.DSASM.StackValue op, int astID, int blockId, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitPopUpdateInstruction",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "astID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPopm(ProtoCore.DSASM.StackValue, int, int, int, int, int)",
+      "signature": "void EmitPopm(ProtoCore.DSASM.StackValue op, int blockId, int line, int col, int endline, int endcol)",
+      "summary": "CodeGen.EmitPopm",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endcol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPush(ProtoCore.DSASM.StackValue, int, int, int)",
+      "signature": "void EmitPush(ProtoCore.DSASM.StackValue op, int blockId, int line, int col)",
+      "summary": "CodeGen.EmitPush",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushBlockID(int)",
+      "signature": "void EmitPushBlockID(int blockID)",
+      "summary": "CodeGen.EmitPushBlockID",
+      "params": [
+        {
+          "name": "blockID",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushDimensions(int)",
+      "signature": "void EmitPushDimensions(int dimensions)",
+      "summary": "CodeGen.EmitPushDimensions",
+      "params": [
+        {
+          "name": "dimensions",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushForSymbol(ProtoCore.DSASM.SymbolNode, int, ProtoCore.AST.Node)",
+      "signature": "void EmitPushForSymbol(ProtoCore.DSASM.SymbolNode symbol, int blockId, ProtoCore.AST.Node identNode)",
+      "summary": "CodeGen.EmitPushForSymbol",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "identNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushForSymbolW(ProtoCore.DSASM.SymbolNode, int, int, int)",
+      "signature": "void EmitPushForSymbolW(ProtoCore.DSASM.SymbolNode symbol, int blockId, int line, int col)",
+      "summary": "CodeGen.EmitPushForSymbolW",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushLevel(int, bool)",
+      "signature": "void EmitPushLevel(int level, bool isDominant)",
+      "summary": "CodeGen.EmitPushLevel",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "isDominant",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushNull",
+      "signature": "void EmitPushNull()",
+      "summary": "CodeGen.EmitPushNull",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushReplicationGuide(int, bool)",
+      "signature": "void EmitPushReplicationGuide(int repGuide, bool isLongest)",
+      "summary": "CodeGen.EmitPushReplicationGuide",
+      "params": [
+        {
+          "name": "repGuide",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "isLongest",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushUpdateInstruction(ProtoCore.DSASM.StackValue, int, int, int, int)",
+      "signature": "void EmitPushUpdateInstruction(ProtoCore.DSASM.StackValue op, int astID, int blockID, int line, int col)",
+      "summary": "CodeGen.EmitPushUpdateInstruction",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "astID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "blockID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitPushm(ProtoCore.DSASM.StackValue, int, int, int, int, int, int)",
+      "signature": "void EmitPushm(ProtoCore.DSASM.StackValue op, int classIndex, int blockId, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitPushm",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitReplicationGuides(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void EmitReplicationGuides(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E replicationGuidesList)",
+      "summary": "CodeGen.EmitReplicationGuides",
+      "params": [
+        {
+          "name": "replicationGuidesList",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitRetb(int, int, int, int)",
+      "signature": "void EmitRetb(int line, int col, int endline, int endcol)",
+      "summary": "CodeGen.EmitRetb",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endcol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitRetcn(int, int, int, int, int)",
+      "signature": "void EmitRetcn(int blockId, int line, int col, int endline, int endcol)",
+      "summary": "CodeGen.EmitRetcn",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endcol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitReturn(int, int, int, int)",
+      "signature": "void EmitReturn(int line, int col, int endline, int endcol)",
+      "summary": "CodeGen.EmitReturn",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endcol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitReturnNull",
+      "signature": "void EmitReturnNull()",
+      "summary": "CodeGen.EmitReturnNull",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitReturnNull(System.Nullable\u003CSystem.Guid\u003E)",
+      "signature": "void EmitReturnNull(System.Nullable\u003CSystem.Guid\u003E guid)",
+      "summary": "CodeGen.EmitReturnNull",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Nullable\u003CSystem.Guid\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitReturnStatement(ProtoCore.AST.Node, ProtoCore.Type)",
+      "signature": "void EmitReturnStatement(ProtoCore.AST.Node node, ProtoCore.Type inferedType)",
+      "summary": "CodeGen.EmitReturnStatement",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitReturnToRegister(int, int, int, int)",
+      "signature": "void EmitReturnToRegister(int line, int col, int endline, int endcol)",
+      "summary": "CodeGen.EmitReturnToRegister",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endcol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitSetElement(ProtoCore.DSASM.SymbolNode, int, int, int, int, int)",
+      "signature": "void EmitSetElement(ProtoCore.DSASM.SymbolNode symbol, int blockId, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitSetElement",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitSetMemElement(ProtoCore.DSASM.StackValue, int, int, int, int, int)",
+      "signature": "void EmitSetMemElement(ProtoCore.DSASM.StackValue op, int blockId, int line, int col, int endline, int endcol)",
+      "summary": "CodeGen.EmitSetMemElement",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endcol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitStringNode(ProtoCore.AST.Node, ref ProtoCore.Type, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitStringNode(ProtoCore.AST.Node node, ref ProtoCore.Type inferedType, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitStringNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitThisPointerNode(ProtoCore.CompilerDefinitions.SubCompilePass)",
+      "signature": "void EmitThisPointerNode(ProtoCore.CompilerDefinitions.SubCompilePass subPass)",
+      "summary": "CodeGen.EmitThisPointerNode",
+      "params": [
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "EmitUnary(ProtoCore.DSASM.OpCode, int, int, int, int)",
+      "signature": "void EmitUnary(ProtoCore.DSASM.OpCode opcode, int line, int col, int eline, int ecol)",
+      "summary": "CodeGen.EmitUnary",
+      "params": [
+        {
+          "name": "opcode",
+          "type": "ProtoCore.DSASM.OpCode",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "GenerateCallsiteIdentifierForGraphNode(ProtoCore.AssociativeGraph.GraphNode, string)",
+      "signature": "void GenerateCallsiteIdentifierForGraphNode(ProtoCore.AssociativeGraph.GraphNode graphNode, string procName)",
+      "summary": "Generates unique identifier for the callsite associated with the graphnode",
+      "params": [
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "procName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "GetConstructBlockName(string)",
+      "signature": "string GetConstructBlockName(string construct)",
+      "summary": "CodeGen.GetConstructBlockName",
+      "params": [
+        {
+          "name": "construct",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "GetDebugObject(int, int, int, int, int, int)",
+      "signature": "ProtoCore.DSASM.DebugInfo GetDebugObject(int line, int col, int eline, int ecol, int nextStep_a, int nextStep_b)",
+      "summary": "CodeGen.GetDebugObject",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "eline",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "ecol",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "nextStep_a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "nextStep_b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.DebugInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "InsideFunction",
+      "signature": "bool InsideFunction()",
+      "summary": "CodeGen.InsideFunction",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "IsConstantExpression(ProtoCore.AST.Node)",
+      "signature": "bool IsConstantExpression(ProtoCore.AST.Node node)",
+      "summary": "CodeGen.IsConstantExpression",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "IsInLanguageBlockDefinedInFunction",
+      "signature": "bool IsInLanguageBlockDefinedInFunction()",
+      "summary": "CodeGen.IsInLanguageBlockDefinedInFunction",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "IsProperty(string)",
+      "signature": "bool IsProperty(string name)",
+      "summary": "CodeGen.IsProperty",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "PopulateAttribute(object)",
+      "signature": "ProtoCore.DSASM.AttributeEntry PopulateAttribute(object anode)",
+      "summary": "CodeGen.PopulateAttribute",
+      "params": [
+        {
+          "name": "anode",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.AttributeEntry",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "PopulateAttributes(object)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.DSASM.AttributeEntry\u003E PopulateAttributes(object attributenodes)",
+      "summary": "CodeGen.PopulateAttributes",
+      "params": [
+        {
+          "name": "attributenodes",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.AttributeEntry\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "PushGraphNode(ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void PushGraphNode(ProtoCore.AssociativeGraph.GraphNode graphnode)",
+      "summary": "Append the graphnode to the instruction stream and procedure nodes",
+      "params": [
+        {
+          "name": "graphnode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "SetEntry",
+      "signature": "void SetEntry()",
+      "summary": "CodeGen.SetEntry",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "SetStackIndex(ProtoCore.DSASM.SymbolNode)",
+      "signature": "void SetStackIndex(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "CodeGen.SetStackIndex",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "TraverseFunctionCall(ProtoCore.AST.Node, ProtoCore.AST.Node, int, int, ref ProtoCore.Type, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.CompilerDefinitions.SubCompilePass, ProtoCore.AST.Node)",
+      "signature": "ProtoCore.DSASM.ProcedureNode TraverseFunctionCall(ProtoCore.AST.Node node, ProtoCore.AST.Node parentNode, int lefttype, int depth, ref ProtoCore.Type inferedType, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.CompilerDefinitions.SubCompilePass subPass, ProtoCore.AST.Node bnode)",
+      "summary": "CodeGen.TraverseFunctionCall",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "parentNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "lefttype",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "inferedType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "subPass",
+          "type": "ProtoCore.CompilerDefinitions.SubCompilePass",
+          "optional": false
+        },
+        {
+          "name": "bnode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "VerifyAllocation(string, int, int, ref ProtoCore.DSASM.SymbolNode, ref bool)",
+      "signature": "bool VerifyAllocation(string name, int classScope, int functionScope, ref ProtoCore.DSASM.SymbolNode symbol, ref bool isAccessible)",
+      "summary": "Verify the allocation of a variable in the current scope and parent scopes",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "functionScope",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "ref ProtoCore.DSASM.SymbolNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isAccessible",
+          "type": "ref bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "VerifyAllocationInScope(string, int, int, ref ProtoCore.DSASM.SymbolNode, ref bool)",
+      "signature": "bool VerifyAllocationInScope(string name, int classScope, int functionScope, ref ProtoCore.DSASM.SymbolNode symbol, ref bool isAccessible)",
+      "summary": "Verifies the allocation of a variable in the given symbol table",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "functionScope",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "ref ProtoCore.DSASM.SymbolNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isAccessible",
+          "type": "ref bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "setBlkId(int)",
+      "signature": "void setBlkId(int b)",
+      "summary": "CodeGen.setBlkId",
+      "params": [
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "updatePcDictionary(int, int)",
+      "signature": "void updatePcDictionary(int line, int col)",
+      "summary": "CodeGen.updatePcDictionary",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "codeBlock",
+      "type": "ProtoCore.DSASM.CodeBlock",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeGen.codeBlock",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    },
+    {
+      "name": "context",
+      "type": "ProtoCore.CompileTime.Context",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeGen.context",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

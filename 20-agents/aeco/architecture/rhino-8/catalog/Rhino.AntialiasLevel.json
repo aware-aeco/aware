@@ -1,0 +1,34 @@
+{
+  "name": "AntialiasLevel",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "Provides the anti-alias levels used for render quality",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_AntialiasLevel.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Low quality"
+    },
+    {
+      "name": "Draft",
+      "value": 1,
+      "summary": "Draft quality"
+    },
+    {
+      "name": "Good",
+      "value": 2,
+      "summary": "Good quality"
+    },
+    {
+      "name": "High",
+      "value": 3,
+      "summary": "High quality"
+    }
+  ]
+}

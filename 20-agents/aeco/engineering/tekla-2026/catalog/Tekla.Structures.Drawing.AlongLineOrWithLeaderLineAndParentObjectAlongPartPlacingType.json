@@ -1,0 +1,25 @@
+{
+  "name": "AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType class defines a placing type that places the object using the along line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line and rotated to be at the same angle as the connected part.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1abcb5b7-e5df-cccf-642e-fef8e6c1d34c",
+  "constructors": [
+    {
+      "name": "AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType",
+      "signature": "public AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType()",
+      "summary": "Creates a new along line or with leader line and parent object along part placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa75d03f-8b7b-1611-af78-2dc9d413c265"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

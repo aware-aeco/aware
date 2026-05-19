@@ -1,0 +1,49 @@
+{
+  "name": "WorkPlaneHandler",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The WorkPlaneHandler class contains methods for getting and setting the current transformation plane.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ac187147-19d4-851c-7af5-19e217534818",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentTransformationPlane",
+      "signature": "public TransformationPlane GetCurrentTransformationPlane()",
+      "summary": "Gets the current transformation plane.",
+      "params": [],
+      "returns": {
+        "type": "TransformationPlane",
+        "doc": "The current transformation plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74206331-60ff-3061-ce71-526788aee687"
+    },
+    {
+      "name": "SetCurrentTransformationPlane",
+      "signature": "public bool SetCurrentTransformationPlane(TransformationPlane TransformationPlane)",
+      "summary": "Sets the current transformation plane.",
+      "remarks": "Please note that in order to see workplane change visible in the model, use the RedrawWorkplane() method of the ViewHandler class.",
+      "params": [
+        {
+          "name": "TransformationPlane",
+          "type": "Tekla.Structures.Model.TransformationPlane",
+          "doc": "The transformation plane to be set as the current transformation plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e6f659a2-cc4a-9e35-fbde-78769210ab87"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

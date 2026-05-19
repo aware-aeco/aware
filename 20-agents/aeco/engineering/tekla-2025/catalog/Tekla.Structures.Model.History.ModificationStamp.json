@@ -1,0 +1,73 @@
+{
+  "name": "ModificationStamp",
+  "namespace": "Tekla.Structures.Model.History",
+  "kind": "class",
+  "summary": "The ModificationStamp class provides the modification stamp for the objects of the model that is currently open in Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d09ad3fe-1eb4-eb58-4017-0eed1f2e042a",
+  "constructors": [
+    {
+      "name": "ModificationStamp()",
+      "signature": "public ModificationStamp()",
+      "summary": "Creates a new modification stamp instance where the current modification stamp is 0. Can be used for fetching all the created or deleted model objects from the model history.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5425bc7a-ca86-d72a-af4a-9f5668897282"
+    },
+    {
+      "name": "ModificationStamp(Int32, Int32)",
+      "signature": "public ModificationStamp(int LocalStamp, int ServerStamp)",
+      "summary": "Creates a new modification stamp instance with the given local and server stamps. Can be used for fetching from the model history all the model objects that have been created or deleted after the specified stamp.",
+      "params": [
+        {
+          "name": "LocalStamp",
+          "type": "System.Int32",
+          "doc": "The local stamp to be used for fetching the model changes after the stamp.",
+          "optional": false
+        },
+        {
+          "name": "ServerStamp",
+          "type": "System.Int32",
+          "doc": "The server stamp for fetching the external multi-user or synchronized model changes after the stamp.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/029f07f6-707a-1435-dba0-cbf55cf9533a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Guid",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Guid representation",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa0c20df-cea3-e8c2-082d-7569011a2788"
+    },
+    {
+      "name": "LocalStamp",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The modification stamp for the local changes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c5babef-a9be-7d19-4453-1425b46cc281"
+    },
+    {
+      "name": "ServerStamp",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The modification stamp from the multi-user server for the external changes caused by the saving of the multi-user model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/660dbfb8-5e3a-9337-bb34-47942aef0d99"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

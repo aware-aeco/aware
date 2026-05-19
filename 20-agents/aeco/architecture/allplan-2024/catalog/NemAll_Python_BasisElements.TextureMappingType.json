@@ -1,0 +1,65 @@
+{
+  "name": "TextureMappingType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "eCube - from each side eWall - mainly from the front view eRoof - mainly from the top view eGround - only from the top view eCylinder - Cylindrical mapping eSphere - Spherical mapping eUV - UV mapping",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMappingType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMappingType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMappingType/#NemAll_Python_BasisElements.TextureMappingType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCube",
+      "value": 0
+    },
+    {
+      "name": "eCylinder",
+      "value": 4
+    },
+    {
+      "name": "eGround",
+      "value": 3
+    },
+    {
+      "name": "eRoof",
+      "value": 2
+    },
+    {
+      "name": "eSphere",
+      "value": 5
+    },
+    {
+      "name": "eUV",
+      "value": 6
+    },
+    {
+      "name": "eWall",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "name": "UserInterfaceSection",
+  "namespace": "Rhino.Render.UI",
+  "kind": "class",
+  "summary": "Custom user interface section manager",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_UI_UserInterfaceSection.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Expand",
+      "signature": "public void Expand(bool expand)",
+      "summary": "Expand or collapse this content section.",
+      "params": [
+        {
+          "name": "expand",
+          "type": "System.Boolean",
+          "doc": "If true then expand the content section otherwise collapse it.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_UI_UserInterfaceSection_Expand.htm"
+    },
+    {
+      "name": "FromWindow",
+      "signature": "public static UserInterfaceSection FromWindow(Object window)",
+      "summary": "Find the UserInterfaceSection that created the specified instance of a window.",
+      "params": [
+        {
+          "name": "window",
+          "type": "System.Object",
+          "doc": "If window is not null then look for the UserInterfaceSection that created the window.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UserInterfaceSection",
+        "doc": "If a UserInterfaceSection object is found containing a reference to the requested window then return the object otherwise return null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_UI_UserInterfaceSection_FromWindow.htm"
+    },
+    {
+      "name": "GetContentList",
+      "signature": "public RenderContent[] GetContentList()",
+      "summary": "Returns a list of currently selected content items to be edited.",
+      "params": [],
+      "returns": {
+        "type": "RenderContent[]",
+        "doc": "Returns a list of currently selected content items to be edited."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_UI_UserInterfaceSection_GetContentList.htm"
+    },
+    {
+      "name": "Show",
+      "signature": "public void Show(bool visible)",
+      "summary": "Show or hide this content section.",
+      "params": [
+        {
+          "name": "visible",
+          "type": "System.Boolean",
+          "doc": "If true then show the content section otherwise hide it.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_UI_UserInterfaceSection_Show.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "RenderContent",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "The RenderContent object that created this user interface object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_UI_UserInterfaceSection_RenderContent.htm"
+    },
+    {
+      "name": "Window",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "The user control associated with this user interface object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_UI_UserInterfaceSection_Window.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

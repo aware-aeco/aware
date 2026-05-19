@@ -1,0 +1,49 @@
+{
+  "name": "VerticalOpeningSillProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the vertical opening properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningSillProperties/",
+  "constructors": [
+    {
+      "name": "VerticalOpeningSillProperties",
+      "signature": "VerticalOpeningSillProperties(element: VerticalOpeningSillProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "VerticalOpeningSillProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningSillProperties/#NemAll_Python_ArchElements.VerticalOpeningSillProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CommonProperties",
+      "type": "CommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the common properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningSillProperties/#NemAll_Python_ArchElements.VerticalOpeningSillProperties.CommonProperties"
+    },
+    {
+      "name": "Type",
+      "type": "VerticalOpeningSillType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the sill Type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningSillProperties/#NemAll_Python_ArchElements.VerticalOpeningSillProperties.Type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

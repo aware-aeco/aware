@@ -1,0 +1,256 @@
+{
+  "name": "PropertyCategoryCollection",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A collection of PropertyCategory objects.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.PropertyCategory\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PropertyCategoryCollection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindPropertyByCombinedName",
+      "signature": "Autodesk.Navisworks.Api.DataProperty FindPropertyByCombinedName(Autodesk.Navisworks.Api.NamedConstant categoryCombinedName, Autodesk.Navisworks.Api.NamedConstant propertyCombinedName)",
+      "summary": "Find first property with specified CombinedName and CombinedName",
+      "params": [
+        {
+          "name": "categoryCombinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        },
+        {
+          "name": "propertyCombinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DataProperty",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.FindPropertyByCombinedName%28Autodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "FindPropertyByDisplayName",
+      "signature": "Autodesk.Navisworks.Api.DataProperty FindPropertyByDisplayName(string categoryDisplayName, string propertyDisplayName)",
+      "summary": "Find first property with specified DisplayName and DisplayName",
+      "params": [
+        {
+          "name": "categoryDisplayName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyDisplayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DataProperty",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.FindPropertyByDisplayName%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "FindPropertyByName",
+      "signature": "Autodesk.Navisworks.Api.DataProperty FindPropertyByName(string categoryName, string propertyName)",
+      "summary": "Find first property with specified Name and Name",
+      "params": [
+        {
+          "name": "categoryName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DataProperty",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.FindPropertyByName%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "FindCategoryByCombinedName",
+      "signature": "Autodesk.Navisworks.Api.PropertyCategory FindCategoryByCombinedName(Autodesk.Navisworks.Api.NamedConstant combinedName)",
+      "summary": "Find first category with specified CombinedName",
+      "params": [
+        {
+          "name": "combinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PropertyCategory",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.FindCategoryByCombinedName%28Autodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "FindCategoryByDisplayName",
+      "signature": "Autodesk.Navisworks.Api.PropertyCategory FindCategoryByDisplayName(string displayName)",
+      "summary": "Find first category with specified DisplayName",
+      "params": [
+        {
+          "name": "displayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PropertyCategory",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.FindCategoryByDisplayName%28System.String%29"
+    },
+    {
+      "name": "FindCategoryByName",
+      "signature": "Autodesk.Navisworks.Api.PropertyCategory FindCategoryByName(string name)",
+      "summary": "Find first category with specified Name",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PropertyCategory",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.FindCategoryByName%28System.String%29"
+    },
+    {
+      "name": "FindCategoryWithStableId",
+      "signature": "Autodesk.Navisworks.Api.PropertyCategory FindCategoryWithStableId()",
+      "summary": "Find first category with a stable id",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PropertyCategory",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.FindCategoryWithStableId"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.PropertyCategory\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that can iterate through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.PropertyCategory\u003E",
+        "doc": "An IEnumerator that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.GetEnumerator"
+    },
+    {
+      "name": "InternalGetEnumerator",
+      "signature": "System.Collections.IEnumerator InternalGetEnumerator()",
+      "summary": "InternalGetEnumerator method of PropertyCategoryCollection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.InternalGetEnumerator"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of PropertyCategoryCollection.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.PropertyCategoryCollection InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of PropertyCategoryCollection.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PropertyCategoryCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalToJson",
+      "signature": "string InternalToJson()",
+      "summary": "InternalToJson method of PropertyCategoryCollection.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.InternalToJson"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategoryCollection.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

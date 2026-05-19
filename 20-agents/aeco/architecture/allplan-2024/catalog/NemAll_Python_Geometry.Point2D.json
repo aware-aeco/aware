@@ -1,0 +1,360 @@
+{
+  "name": "Point2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D point",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/",
+  "constructors": [
+    {
+      "name": "Point2D",
+      "signature": "Point2D() | Point2D(point) | Point2D(point) | Point2D(refPoint, point) | Point2D(x, y)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Set",
+      "signature": "Set(point) | Set(x, y)",
+      "summary": "Set the coordinate.",
+      "remarks": "Set the coordinate.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Set"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(point) | __add__(vec)",
+      "summary": "Point translation by point. Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
+      "remarks": "Point translation by point. Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__add__"
+    },
+    {
+      "name": "__sub__",
+      "signature": "__sub__(vec) | __sub__(point)",
+      "summary": "Move the point by reversed vector",
+      "remarks": "Move the point by reversed vector",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "New point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__sub__"
+    },
+    {
+      "name": "GetCoords",
+      "signature": "GetCoords()",
+      "summary": "Get copy of X,Y coordinates.",
+      "remarks": "Get copy of X,Y coordinates.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "tuple(X coordinate of point,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.GetCoords"
+    },
+    {
+      "name": "GetDistance",
+      "signature": "GetDistance(point)",
+      "summary": "Get distance. Formula: Result(double) = |A-B|.",
+      "remarks": "Get distance. Formula: Result(double) = |A-B|.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "double."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.GetDistance"
+    },
+    {
+      "name": "IsZero",
+      "signature": "IsZero()",
+      "summary": "Check the coords [0.0,0.0]. If the coords are zero, the return value is true. If the coords aren\u0027t zero, the return value is false.",
+      "remarks": "Check the coords [0.0,0.0]. If the coords are zero, the return value is true. If the coords aren\u0027t zero, the return value is false.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.IsZero"
+    },
+    {
+      "name": "SetX",
+      "signature": "SetX(x)",
+      "summary": "Set the coordinate.",
+      "remarks": "Set the coordinate.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.SetX"
+    },
+    {
+      "name": "SetY",
+      "signature": "SetY(y)",
+      "summary": "Set the coordinate.",
+      "remarks": "Set the coordinate.",
+      "params": [
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.SetY"
+    },
+    {
+      "name": "Values",
+      "signature": "Values()",
+      "summary": "Get copy of X,Y coordinates as python list.",
+      "remarks": "Get copy of X,Y coordinates as python list.",
+      "params": [],
+      "returns": {
+        "type": "list[float]",
+        "doc": "X coordinate of point.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Values"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(point)",
+      "summary": "Comparison of points without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of points without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Compared point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when points are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__eq__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(point)",
+      "summary": "Point translation by point. Formula: Point(this) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
+      "remarks": "Point translation by point. Formula: Point(this) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__iadd__"
+    },
+    {
+      "name": "__idiv__",
+      "signature": "__idiv__(divider)",
+      "summary": "Divide operator. This method is checked and throwing Geometry::Exception when divider is zero.",
+      "remarks": "Divide operator. This method is checked and throwing Geometry::Exception when divider is zero.",
+      "params": [
+        {
+          "name": "divider",
+          "type": "float",
+          "doc": "Divider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__idiv__"
+    },
+    {
+      "name": "__isub__",
+      "signature": "__isub__(point)",
+      "summary": "Point translation by negative point Formula: Point(this) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
+      "remarks": "Point translation by negative point Formula: Point(this) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__isub__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix)",
+      "summary": "Matrix transformation. Result = Point * matrix",
+      "remarks": "Matrix transformation. Result = Point * matrix",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "Transformation Matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__mul__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(point)",
+      "summary": "Comparison of points without tolerance. Be careful, this method works without tolerance!",
+      "remarks": "Comparison of points without tolerance. Be careful, this method works without tolerance!",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Compared point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when points are not equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__repr__"
+    },
+    {
+      "name": "__truediv__",
+      "signature": "__truediv__(divider)",
+      "summary": "Divide operator.",
+      "remarks": "Divide operator.",
+      "params": [
+        {
+          "name": "divider",
+          "type": "float",
+          "doc": "Divider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__truediv__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "X",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the x coordinate.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.X"
+    },
+    {
+      "name": "Y",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the y coordinate.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Y"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

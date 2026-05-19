@@ -1,0 +1,331 @@
+{
+  "name": "MeshData",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the mesh data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/",
+  "constructors": [
+    {
+      "name": "MeshData",
+      "signature": "MeshData() | MeshData(type, length, width, diameterLongitudinal, diameterCross, asLongitudinal, asCross, distanceLongitudinal, distanceCross, bDoubleBarLongitudinal, bDoubleBarCross, overlapLongitudinal, overlapCross, weight) | MeshData(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateLabel",
+      "signature": "CreateLabel()",
+      "summary": "Create the label",
+      "remarks": "Create the label",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.CreateLabel"
+    },
+    {
+      "name": "Format",
+      "signature": "Format(type, length, width)",
+      "summary": "Get the mesh text",
+      "remarks": "Get the mesh text",
+      "params": [
+        {
+          "name": "type",
+          "type": "str",
+          "doc": "Mesh type",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Mesh length",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Mesh width",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Mesh text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.Format"
+    },
+    {
+      "name": "GetAsBendingDirection",
+      "signature": "GetAsBendingDirection(bendingDirection)",
+      "summary": "Get the as in bending direction",
+      "remarks": "Get the as in bending direction",
+      "params": [
+        {
+          "name": "bendingDirection",
+          "type": "MeshBendingDirection",
+          "doc": "Bending direction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "As in bending direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.GetAsBendingDirection"
+    },
+    {
+      "name": "GetDiameterBendingDirection",
+      "signature": "GetDiameterBendingDirection(bendingDirection)",
+      "summary": "Get the diameter in bending direction",
+      "remarks": "Get the diameter in bending direction",
+      "params": [
+        {
+          "name": "bendingDirection",
+          "type": "MeshBendingDirection",
+          "doc": "Bending direction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "tuple(Diameter in bending direction,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.GetDiameterBendingDirection"
+    },
+    {
+      "name": "GetDimensions",
+      "signature": "GetDimensions()",
+      "summary": "Get the mesh dimensions",
+      "remarks": "Get the mesh dimensions",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "tuple(Mesh length,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.GetDimensions"
+    },
+    {
+      "name": "GetDistanceBendingDirection",
+      "signature": "GetDistanceBendingDirection(bendingDirection)",
+      "summary": "Get the distance in bending direction",
+      "remarks": "Get the distance in bending direction",
+      "params": [
+        {
+          "name": "bendingDirection",
+          "type": "MeshBendingDirection",
+          "doc": "Bending direction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Distance in bending direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.GetDistanceBendingDirection"
+    },
+    {
+      "name": "GetOverlapBendingDirection",
+      "signature": "GetOverlapBendingDirection(bendingDirection)",
+      "summary": "Get the overlap in bending direction",
+      "remarks": "Get the overlap in bending direction",
+      "params": [
+        {
+          "name": "bendingDirection",
+          "type": "MeshBendingDirection",
+          "doc": "Bending direction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Overlap in bending direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.GetOverlapBendingDirection"
+    },
+    {
+      "name": "SetType",
+      "signature": "SetType(type)",
+      "summary": "Set the mesh type",
+      "remarks": "Set the mesh type",
+      "params": [
+        {
+          "name": "type",
+          "type": "str",
+          "doc": "Mesh type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.SetType"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AsBendingDirection",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the as in bending direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.AsBendingDirection"
+    },
+    {
+      "name": "AsCross",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the as in cross direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.AsCross"
+    },
+    {
+      "name": "AsLongitudinal",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the as in longitudinal direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.AsLongitudinal"
+    },
+    {
+      "name": "DiameterCross",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the diameter in cross direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.DiameterCross"
+    },
+    {
+      "name": "DiameterLongitudinal",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the diameter in longitudinal direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.DiameterLongitudinal"
+    },
+    {
+      "name": "DistanceBendingDirection",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the distance in bending direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.DistanceBendingDirection"
+    },
+    {
+      "name": "DistanceCross",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the distance in cross direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.DistanceCross"
+    },
+    {
+      "name": "DistanceLongitudinal",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the distance in longitudinal direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.DistanceLongitudinal"
+    },
+    {
+      "name": "IsDoubleBarCross",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the double bar state in cross direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.IsDoubleBarCross"
+    },
+    {
+      "name": "IsDoubleBarLongitudinal",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the double bar state in longitudinal direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.IsDoubleBarLongitudinal"
+    },
+    {
+      "name": "Label",
+      "type": "str",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the mesh label",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.Label"
+    },
+    {
+      "name": "Length",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the mesh length",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.Length"
+    },
+    {
+      "name": "OverlapBendingDirection",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the overlap in bending direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.OverlapBendingDirection"
+    },
+    {
+      "name": "OverlapCross",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the overlap in cross direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.OverlapCross"
+    },
+    {
+      "name": "OverlapLongitudinal",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the overlap in longitudinal direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.OverlapLongitudinal"
+    },
+    {
+      "name": "Type",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the mesh type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.Type"
+    },
+    {
+      "name": "Weight",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the mesh weight",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.Weight"
+    },
+    {
+      "name": "Width",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the mesh width",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/#NemAll_Python_Reinforcement.MeshData.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

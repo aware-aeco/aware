@@ -1,0 +1,31 @@
+{
+  "name": "MaterialMarketSizesItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The MaterialMarketSizesItem class contains information about the available market sizes for particular material.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4b82a70e-35d7-0a4b-08b1-10c3b96f6505",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "MarketSizes",
+      "type": ".Double.",
+      "getter": true,
+      "setter": false,
+      "summary": "Available MarketSizes for the particular material",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5d48b745-97d1-ab88-cb15-ac37b34761ef"
+    },
+    {
+      "name": "MaterialName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Material name",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6c908b41-a6b3-434a-c6a5-48d671b1497f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

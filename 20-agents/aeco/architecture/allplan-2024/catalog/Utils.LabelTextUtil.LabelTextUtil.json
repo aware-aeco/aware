@@ -1,0 +1,254 @@
+{
+  "name": "LabelTextUtil",
+  "namespace": "Utils.LabelTextUtil",
+  "kind": "class",
+  "summary": "Implementation of the utility for the label text creation",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/",
+  "constructors": [
+    {
+      "name": "LabelTextUtil",
+      "signature": "LabelTextUtil()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_attribute",
+      "signature": "add_attribute(doc, attribute_id, value=\u0027\u0027)",
+      "summary": "add an attribute to the label text",
+      "remarks": "add an attribute to the label text",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": true,
+          "default": "\u0027\u0027"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.add_attribute"
+    },
+    {
+      "name": "add_parameter",
+      "signature": "add_parameter(build_ele, parameter_name)",
+      "summary": "add a parameter to the label text",
+      "remarks": "add a parameter to the label text",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        },
+        {
+          "name": "parameter_name",
+          "type": "str",
+          "doc": "parameter name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.add_parameter"
+    },
+    {
+      "name": "add_parameter_name",
+      "signature": "add_parameter_name(parameter_name, value)",
+      "summary": "add a parameter name and value to the label text",
+      "remarks": "add a parameter name and value to the label text",
+      "params": [
+        {
+          "name": "parameter_name",
+          "type": "str",
+          "doc": "parameter name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.add_parameter_name"
+    },
+    {
+      "name": "create_label_default_text",
+      "signature": "create_label_default_text()",
+      "summary": "create the text",
+      "remarks": "create the text",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "default label text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.create_label_default_text"
+    },
+    {
+      "name": "create_label_text",
+      "signature": "create_label_text()",
+      "summary": "create the label text",
+      "remarks": "create the label text",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "label text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.create_label_text"
+    },
+    {
+      "name": "set_dimension_unit",
+      "signature": "set_dimension_unit(dimension_unit)",
+      "summary": "set the dimension",
+      "remarks": "set the dimension",
+      "params": [
+        {
+          "name": "dimension_unit",
+          "type": "LabelTextDimensionUnit",
+          "doc": "dimension unit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.set_dimension_unit"
+    },
+    {
+      "name": "set_dimension_unit_by_value_type",
+      "signature": "set_dimension_unit_by_value_type(value_type)",
+      "summary": "set the dimension unit by the value type",
+      "remarks": "set the dimension unit by the value type",
+      "params": [
+        {
+          "name": "value_type",
+          "type": "ParameterPropertyValueType",
+          "doc": "Value type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.set_dimension_unit_by_value_type"
+    },
+    {
+      "name": "set_format",
+      "signature": "set_format(text_format, digits, decimals=0)",
+      "summary": "set the format of the label text",
+      "remarks": "set the format of the label text",
+      "params": [
+        {
+          "name": "text_format",
+          "type": "LabelTextFormat",
+          "doc": "text format",
+          "optional": false
+        },
+        {
+          "name": "digits",
+          "type": "int",
+          "doc": "digits",
+          "optional": false
+        },
+        {
+          "name": "decimals",
+          "type": "int",
+          "doc": "decimals",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.set_format"
+    },
+    {
+      "name": "set_format_by_value_type",
+      "signature": "set_format_by_value_type(value_type)",
+      "summary": "set the format by the value type",
+      "remarks": "set the format by the value type",
+      "params": [
+        {
+          "name": "value_type",
+          "type": "ParameterPropertyValueType",
+          "doc": "Value type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.set_format_by_value_type"
+    },
+    {
+      "name": "set_pre_text",
+      "signature": "set_pre_text(pre_text)",
+      "summary": "set the pre text",
+      "remarks": "set the pre text",
+      "params": [
+        {
+          "name": "pre_text",
+          "type": "str",
+          "doc": "prefix text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.set_pre_text"
+    },
+    {
+      "name": "set_text_frame",
+      "signature": "set_text_frame(text_frame)",
+      "summary": "set the text frame of the label",
+      "remarks": "set the text frame of the label",
+      "params": [
+        {
+          "name": "text_frame",
+          "type": "LabelTextFrame",
+          "doc": "text frame",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/#Utils.LabelTextUtil.LabelTextUtil.set_text_frame"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

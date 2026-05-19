@@ -1,0 +1,119 @@
+{
+  "name": "GH_Canvas.GH_ImageSettings",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Settings class for high-resolution image output.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings.htm",
+  "constructors": [
+    {
+      "name": "GH_Canvas.GH_ImageSettings()",
+      "signature": "public GH_ImageSettings()",
+      "summary": "Create a new instance of the GH_ImageSettings class with default values.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings__ctor.htm"
+    },
+    {
+      "name": "GH_Canvas.GH_ImageSettings(String)",
+      "signature": "public GH_ImageSettings(string filePath)",
+      "summary": "Create a new instance of the GH_ImageSettings class.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Target location for image.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings__ctor_1.htm"
+    },
+    {
+      "name": "GH_Canvas.GH_ImageSettings(String, String, String)",
+      "signature": "public GH_ImageSettings(string folder, string filename, string extension)",
+      "summary": "Create a new instance of the GH_ImageSettings class.",
+      "params": [
+        {
+          "name": "folder",
+          "type": "System.String",
+          "doc": "Folder for target image.",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "File name of target image.",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "System.String",
+          "doc": "Image extension for target image.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings__ctor_2.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BackColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the background colour to use for the high-resolution rendering.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings_BackColour.htm"
+    },
+    {
+      "name": "Extension",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the image extension of the target image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings_Extension.htm"
+    },
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the filename of the target image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings_FileName.htm"
+    },
+    {
+      "name": "Folder",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the folder in which the target image will be saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings_Folder.htm"
+    },
+    {
+      "name": "TileSize",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default tile size for high-resolution export. This is a constant value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings_TileSize.htm"
+    },
+    {
+      "name": "Zoom",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the zoom at which to export the high-resolution image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Canvas_GH_ImageSettings_Zoom.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

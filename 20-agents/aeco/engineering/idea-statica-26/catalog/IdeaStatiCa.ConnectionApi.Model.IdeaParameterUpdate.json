@@ -1,0 +1,30 @@
+{
+  "name": "IdeaParameterUpdate",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.IdeaParameterUpdate.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterUpdate.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Key",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterUpdate.key.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterUpdate.md"
+    },
+    {
+      "name": "Expression",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterUpdate.expression.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterUpdate.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,89 @@
+{
+  "name": "RestoreLayerProperties",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.RestoreLayerProperties\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_RestoreLayerProperties.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Restore nothing"
+    },
+    {
+      "name": "Current",
+      "value": 1,
+      "summary": "Restore current layer"
+    },
+    {
+      "name": "Visible",
+      "value": 2,
+      "summary": "Restore layer visibility"
+    },
+    {
+      "name": "Locked",
+      "value": 4,
+      "summary": "Restore layer locked status"
+    },
+    {
+      "name": "Color",
+      "value": 8,
+      "summary": "Restore layer color"
+    },
+    {
+      "name": "Linetype",
+      "value": 16,
+      "summary": "Restore layer linetype"
+    },
+    {
+      "name": "PrintColor",
+      "value": 32,
+      "summary": "Restore layer print color"
+    },
+    {
+      "name": "PrintWidth",
+      "value": 64,
+      "summary": "Restore layer print width"
+    },
+    {
+      "name": "ViewportVisible",
+      "value": 128,
+      "summary": "Restore per-viewport layer visibility"
+    },
+    {
+      "name": "ViewportColor",
+      "value": 256,
+      "summary": "Restore per-viewport layer color"
+    },
+    {
+      "name": "ViewportPrintColor",
+      "value": 512,
+      "summary": "Restore per-viewport layer print color"
+    },
+    {
+      "name": "ViewportPrintWidth",
+      "value": 1024,
+      "summary": "Restore per-viewport layer print width"
+    },
+    {
+      "name": "RenderMaterial",
+      "value": 2048,
+      "summary": "Restore render material"
+    },
+    {
+      "name": "Unused",
+      "value": 4096,
+      "summary": "Unused flag"
+    },
+    {
+      "name": "All",
+      "value": "4294967295",
+      "summary": "Restore all layer properties"
+    }
+  ]
+}

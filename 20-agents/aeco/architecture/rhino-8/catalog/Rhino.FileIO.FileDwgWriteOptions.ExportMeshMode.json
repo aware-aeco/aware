@@ -1,0 +1,22 @@
+{
+  "name": "FileDwgWriteOptions.ExportMeshMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileDwgWriteOptions.ExportMeshMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileDwgWriteOptions_ExportMeshMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Meshes",
+      "value": 0
+    },
+    {
+      "name": "ThreeDFace",
+      "value": 1
+    }
+  ]
+}

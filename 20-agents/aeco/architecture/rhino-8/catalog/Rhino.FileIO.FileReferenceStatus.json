@@ -1,0 +1,29 @@
+{
+  "name": "FileReferenceStatus",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Enumerates a list of file statuses.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileReferenceStatus.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0,
+      "summary": "Status of a the full path is not known."
+    },
+    {
+      "name": "FullPathValid",
+      "value": 1,
+      "summary": "Full path is valid."
+    },
+    {
+      "name": "FileNotFound",
+      "value": 2,
+      "summary": "Unable to locate file."
+    }
+  ]
+}

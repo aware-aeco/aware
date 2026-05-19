@@ -1,0 +1,24 @@
+{
+  "name": "View.LabelLineLengthType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The label line length types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/96db0a18-547a-5b83-dadc-dd300725426f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Minimal",
+      "value": 1,
+      "summary": "The label is of minimal possible length according to the label text."
+    },
+    {
+      "name": "Custom",
+      "value": 2,
+      "summary": "The label is of custom length."
+    }
+  ]
+}

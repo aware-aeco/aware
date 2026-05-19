@@ -1,0 +1,143 @@
+{
+  "name": "SpiralElement",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.SpiralElement.)",
+  "base": "ReinfElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/",
+  "constructors": [
+    {
+      "name": "SpiralElement",
+      "signature": "SpiralElement() | SpiralElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, pitch, hookLengthStart, hookAngleStart, hookLengthEnd, hookAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/#NemAll_Python_Reinforcement.SpiralElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetLengthFactor",
+      "signature": "SetLengthFactor(arg2)",
+      "summary": "Get the length factor",
+      "remarks": "Get the length factor",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Length factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/#NemAll_Python_Reinforcement.SpiralElement.SetLengthFactor"
+    },
+    {
+      "name": "SetNumberLoopsEnd",
+      "signature": "SetNumberLoopsEnd(arg2)",
+      "summary": "Set the loops at the end",
+      "remarks": "Set the loops at the end",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/#NemAll_Python_Reinforcement.SpiralElement.SetNumberLoopsEnd"
+    },
+    {
+      "name": "SetNumberLoopsStart",
+      "signature": "SetNumberLoopsStart(arg2)",
+      "summary": "Set the loops at the start",
+      "remarks": "Set the loops at the start",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/#NemAll_Python_Reinforcement.SpiralElement.SetNumberLoopsStart"
+    },
+    {
+      "name": "SetPitchSections",
+      "signature": "SetPitchSections(pitch1, length1, pitch2, length2, pitch3, length3, pitch4, length4)",
+      "summary": "Set the pitch section",
+      "remarks": "Set the pitch section",
+      "params": [
+        {
+          "name": "pitch1",
+          "type": "float",
+          "doc": "Pitch section 1",
+          "optional": false
+        },
+        {
+          "name": "length1",
+          "type": "float",
+          "doc": "Length section 1",
+          "optional": false
+        },
+        {
+          "name": "pitch2",
+          "type": "float",
+          "doc": "Pitch section 2",
+          "optional": false
+        },
+        {
+          "name": "length2",
+          "type": "float",
+          "doc": "Length section 2",
+          "optional": false
+        },
+        {
+          "name": "pitch3",
+          "type": "float",
+          "doc": "Pitch section 3",
+          "optional": false
+        },
+        {
+          "name": "length3",
+          "type": "float",
+          "doc": "Length section 3",
+          "optional": false
+        },
+        {
+          "name": "pitch4",
+          "type": "float",
+          "doc": "Pitch section 4",
+          "optional": false
+        },
+        {
+          "name": "length4",
+          "type": "float",
+          "doc": "Length section 4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/#NemAll_Python_Reinforcement.SpiralElement.SetPitchSections"
+    },
+    {
+      "name": "SetPlacePerLinearMeter",
+      "signature": "SetPlacePerLinearMeter(bPlacePerMeter)",
+      "summary": "Set the place per linear meter state",
+      "remarks": "Set the place per linear meter state",
+      "params": [
+        {
+          "name": "bPlacePerMeter",
+          "type": "bool",
+          "doc": "Place per linear meter: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/#NemAll_Python_Reinforcement.SpiralElement.SetPlacePerLinearMeter"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

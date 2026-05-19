@@ -1,0 +1,26 @@
+{
+  "name": "MemoryRegion",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type MemoryRegion",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "InvalidRegion",
+      "value": -1
+    },
+    {
+      "name": "MemStack",
+      "value": 1
+    },
+    {
+      "name": "MemStatic",
+      "value": 0
+    }
+  ]
+}

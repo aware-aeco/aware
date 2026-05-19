@@ -1,0 +1,156 @@
+{
+  "name": "ICalculatorExEvents",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "interface",
+  "summary": "Interface for Calculator events.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-icalculatorexevents-64157",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CalculatingError(CalcErrorType, uint, string, string, string, uint, ref CalcStatus)",
+      "signature": "void CalculatingError(CalcErrorType errorType, uint errorCode, string context, string message, string expression, uint options, ref CalcStatus status)",
+      "summary": "Calculating error event",
+      "params": [
+        {
+          "name": "errorType",
+          "type": "CalcErrorType",
+          "doc": "Type of error",
+          "optional": false
+        },
+        {
+          "name": "errorCode",
+          "type": "uint",
+          "doc": "Error code identifier",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "string",
+          "doc": "Context of error",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "Error message",
+          "optional": false
+        },
+        {
+          "name": "expression",
+          "type": "string",
+          "doc": "Expression which caused error",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "uint",
+          "doc": "Error handler option flags",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "CalcStatus",
+          "doc": "Calculation status, to stop calculation process return Aborted or Interrupted",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/c4360bc2c3c5e2e9d0c653895e0e3fdacea13c19280b1fa12cefa7a9e0395dba"
+    },
+    {
+      "name": "CalculatingProgress(CalcProgressEvent, uint, string, ref CalcStatus)",
+      "signature": "void CalculatingProgress(CalcProgressEvent progressEvent, uint progressValue, string text, ref CalcStatus status)",
+      "summary": "Calculating progress event",
+      "params": [
+        {
+          "name": "progressEvent",
+          "type": "CalcProgressEvent",
+          "doc": "Progress event type",
+          "optional": false
+        },
+        {
+          "name": "progressValue",
+          "type": "uint",
+          "doc": "Progress value for the current event",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "Text for the current event",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "CalcStatus",
+          "doc": "Calculation status after the event has been processed, the caller can change the state to stop the calculation process",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/d38ce4e7579dc46cf0472a9676b6bed654649e1707ef6ab3b5d986e6da89700f"
+    },
+    {
+      "name": "UndefinedVariable(string, out string)",
+      "signature": "void UndefinedVariable(string variableName, out string value)",
+      "summary": "Undefined variable event",
+      "remarks": "The undefined variable event can be used to provide a hook into the data model or API of another software system. If a variable is referred to in your calculations which doesn\u0027t exist then your event handler will be called and you have the opportunity to provide a value for the referenced name. Note that once a value has been provided the variable will then exist in Tedds so the undefined event will not fire again for that variable unless it is explicitly deleted.",
+      "params": [
+        {
+          "name": "variableName",
+          "type": "string",
+          "doc": "Name of undefined variable",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "Value to be assigned to variable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/f29fc3008f656adc287c7f03ed166ee3b54ecc5de60323d34228921aed6cd5b8"
+    },
+    {
+      "name": "UndefinedVariable2(string, out string, out string)",
+      "signature": "void UndefinedVariable2(string variableName, out string value, out string attributes)",
+      "summary": "Undefined variable event",
+      "remarks": "The undefined variable event can be used to provide a hook into the data model or API of another software system. If a variable is referred to in your calculations which doesn\u0027t exist then your event handler will be called and you have the opportunity to provide a value for the referenced name. Note that once a value has been provided the variable will then exist in Tedds so the undefined event will not fire again for that variable unless it is explicitly deleted.",
+      "params": [
+        {
+          "name": "variableName",
+          "type": "string",
+          "doc": "Name of undefined variable",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "Value to be assigned to variable",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "string",
+          "doc": "Attributes to be assigned to variable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/bfd3e49e17020062b9d18a5b43246ba9381130d53f97d6f94fe7d2190dbff63a"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

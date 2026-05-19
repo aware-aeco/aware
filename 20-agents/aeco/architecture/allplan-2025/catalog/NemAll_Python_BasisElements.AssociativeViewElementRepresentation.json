@@ -1,0 +1,23 @@
+{
+  "name": "AssociativeViewElementRepresentation",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Element representation of the associative view",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElementRepresentation/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AssociativeViewAllElements",
+      "value": 0
+    },
+    {
+      "name": "AssociativeViewConcreteShape",
+      "value": 3
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "OptionsDialogPage.PageType",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "17 March 2021 John Morse For internal use in determining the page type. RhinoMac uses this to ensure pages are sized properly when hosting them.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_OptionsDialogPage_PageType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Options",
+      "value": 0
+    },
+    {
+      "name": "DocumentProperties",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "InsidePartAlongPartOrWithLeaderLinePlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The InsidePartAlongPartOrWithLeaderLinePlacingType class defines a placing type that places the object using the base line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line. The base line used is in the middle of the part, aligned with the part.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2f6e6f1d-f5c8-a4a5-3af3-804fb15825b2",
+  "constructors": [
+    {
+      "name": "InsidePartAlongPartOrWithLeaderLinePlacingType",
+      "signature": "public InsidePartAlongPartOrWithLeaderLinePlacingType()",
+      "summary": "Creates a new inside part along part or with leader line placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/08527666-646a-3e63-75e4-a074a9de4218"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

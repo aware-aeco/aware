@@ -1,0 +1,29 @@
+{
+  "name": "SubDAutomaticMeshToSubDContext",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubD::AutomaticMeshToSubDContext indentifies a context where meshes can automatically be converted to subds.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDAutomaticMeshToSubDContext.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Indicates the context has not been initialized."
+    },
+    {
+      "name": "Rhino5BoxModeTSpline",
+      "value": 1,
+      "summary": "A mesh in a Rhino 5 3dm file that is a representation of a box mode T-spline. By default, these meshes are automatically converted to subds."
+    },
+    {
+      "name": "FBXMeshWithDivisionLevels",
+      "value": 2,
+      "summary": "A mesh in an FBX file that has nonzero values for either preview division levels or render division levels. Some FBX files created by Maya save subdivision objects as meshes with nonzero division level values. By default, FBX division levels are ignored."
+    }
+  ]
+}

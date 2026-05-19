@@ -1,0 +1,41 @@
+{
+  "name": "FabricatorProfilesAndMaterials",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The FabricatorProfilesAndMaterials class contains methods for converting fabricator profiles and materials to Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5041534d-8dc1-d4ac-f2b8-ca0cd7778b26",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConvertSourceFile",
+      "signature": "public static bool ConvertSourceFile(string profilesFilePath, string dimensionsFilePath)",
+      "summary": "Converts a fabricator profile catalog source file to an XML file that contains a list of valid Tekla Structures catalog profiles and materials.",
+      "params": [
+        {
+          "name": "profilesFilePath",
+          "type": "System.String",
+          "doc": "The path to the fabricator profiles and materials file.",
+          "optional": false
+        },
+        {
+          "name": "dimensionsFilePath",
+          "type": "System.String",
+          "doc": "The path to the fabricator dimensions file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if conversion was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0ebcca0c-210b-e614-7bb9-ba5dfadceec1"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

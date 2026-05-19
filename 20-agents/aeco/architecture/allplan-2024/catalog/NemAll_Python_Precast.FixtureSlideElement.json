@@ -1,0 +1,89 @@
+{
+  "name": "FixtureSlideElement",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "FixtureSlideElement class",
+  "base": "PrecastElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/",
+  "constructors": [
+    {
+      "name": "FixtureSlideElement",
+      "signature": "FixtureSlideElement() | FixtureSlideElement(FixtureSlideProp, objectList)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/#NemAll_Python_Precast.FixtureSlideElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFixtureSlideProperties",
+      "signature": "GetFixtureSlideProperties()",
+      "summary": "Get the FixtureSlide properties",
+      "remarks": "Get the FixtureSlide properties",
+      "params": [],
+      "returns": {
+        "type": "FixtureSlideProperties",
+        "doc": "FixtureSlide properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/#NemAll_Python_Precast.FixtureSlideElement.GetFixtureSlideProperties"
+    },
+    {
+      "name": "GetObjectList",
+      "signature": "GetObjectList()",
+      "summary": "Get the slide object list",
+      "remarks": "Get the slide object list",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Slide object list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/#NemAll_Python_Precast.FixtureSlideElement.GetObjectList"
+    },
+    {
+      "name": "SetFixtureSlideProperties",
+      "signature": "SetFixtureSlideProperties(FixtureSlideProp)",
+      "summary": "Set the FixtureSlide properties",
+      "remarks": "Set the FixtureSlide properties",
+      "params": [
+        {
+          "name": "FixtureSlideProp",
+          "type": "FixtureSlideProperties",
+          "doc": "FixtureSlide properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/#NemAll_Python_Precast.FixtureSlideElement.SetFixtureSlideProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/#NemAll_Python_Precast.FixtureSlideElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

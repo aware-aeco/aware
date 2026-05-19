@@ -1,0 +1,272 @@
+{
+  "name": "IGH_CanvasValidator",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "interface",
+  "summary": "\u0027Interface used for limiting a collection of typical actions on the canvas. Do not implement this interface directly if you can help it, instead inherit from GH_CanvasValidator.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_IGH_CanvasValidator.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddedToCanvas",
+      "signature": "void AddedToCanvas(GH_Canvas canvas)",
+      "summary": "This method will be called by the Canvas when this validator is added to it.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas which just added this validator.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_AddedToCanvas.htm"
+    },
+    {
+      "name": "AppliesToDocument",
+      "signature": "bool AppliesToDocument(Guid id)",
+      "summary": "Test whether this validator applies to a specific document.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Document id or Guid.Empty if no document is available.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_AppliesToDocument.htm"
+    },
+    {
+      "name": "CanAcceptObject",
+      "signature": "bool CanAcceptObject(Guid id)",
+      "summary": "Validates whether a specific component can be accepted by the canvas at all.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanAcceptObject.htm"
+    },
+    {
+      "name": "CanCreateObject",
+      "signature": "bool CanCreateObject(Guid id, PointF pt)",
+      "summary": "Validates whether a specific component may be inserted at a specific point.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanCreateObject.htm"
+    },
+    {
+      "name": "CanCreateWire",
+      "signature": "bool CanCreateWire(IGH_Param source, IGH_Param target)",
+      "summary": "Validates whether a wire-operation can commence.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanCreateWire.htm"
+    },
+    {
+      "name": "CanDeleteObject",
+      "signature": "bool CanDeleteObject(IGH_DocumentObject object)",
+      "summary": "Validates whether a specific object can be deleted.",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanDeleteObject.htm"
+    },
+    {
+      "name": "CanDeleteWire",
+      "signature": "bool CanDeleteWire(IGH_Param source, IGH_Param target)",
+      "summary": "Validates whether a wire can be deleted.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanDeleteWire.htm"
+    },
+    {
+      "name": "CanDragObject",
+      "signature": "bool CanDragObject(IGH_DocumentObject object, PointF dragFromPoint)",
+      "summary": "Validates whether some components can be dragged.",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "dragFromPoint",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanDragObject.htm"
+    },
+    {
+      "name": "CanNavigateCanvas",
+      "signature": "bool CanNavigateCanvas()",
+      "summary": "Validates whether the canvas can be navigated (panning, zooming etc)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanNavigateCanvas.htm"
+    },
+    {
+      "name": "CanShowCanvasMenu",
+      "signature": "bool CanShowCanvasMenu(PointF pt)",
+      "summary": "Validates whether the canvas menus (both the radial and the old-fashioned one) are allowed to pop up at a specific point.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanShowCanvasMenu.htm"
+    },
+    {
+      "name": "CanShowComponentSearchBox",
+      "signature": "bool CanShowComponentSearchBox(PointF pt)",
+      "summary": "Validates whether the double-click-component-search-window is allowed to pop up at a specific point.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanShowComponentSearchBox.htm"
+    },
+    {
+      "name": "CanShowObjectMenu",
+      "signature": "bool CanShowObjectMenu(IGH_DocumentObject object)",
+      "summary": "Validates whether the object menu can be shown.",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_CanShowObjectMenu.htm"
+    },
+    {
+      "name": "RemovedFromCanvas",
+      "signature": "void RemovedFromCanvas(GH_Canvas canvas)",
+      "summary": "This method will be called by the Canvas when this validator is removed from it.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas which just removed this validator.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_CanvasValidator_RemovedFromCanvas.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

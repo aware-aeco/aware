@@ -1,0 +1,31 @@
+{
+  "name": "Hotlink",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The details of a hotlink node.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Hotlink",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "location",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The path of the hotlink file.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Hotlink"
+    },
+    {
+      "name": "children",
+      "type": "Hotlinks",
+      "getter": true,
+      "setter": true,
+      "summary": "The children of the hotlink node if it has any.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Hotlink"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

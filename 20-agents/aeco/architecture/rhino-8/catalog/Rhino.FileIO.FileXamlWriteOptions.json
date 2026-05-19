@@ -1,0 +1,88 @@
+{
+  "name": "FileXamlWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for writing a Xaml file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileXamlWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileXamlWriteOptions",
+      "signature": "public FileXamlWriteOptions()",
+      "summary": "Initializes a new instance of the FileXamlWriteOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileXamlWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Export function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileXamlWriteOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileXamlWriteOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AddRotationAnimation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileXamlWriteOptions_AddRotationAnimation.htm"
+    },
+    {
+      "name": "AddRotationScrollbars",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileXamlWriteOptions_AddRotationScrollbars.htm"
+    },
+    {
+      "name": "AnimationAxis",
+      "type": "FileXamlWriteOptions.AnimationMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileXamlWriteOptions_AnimationAxis.htm"
+    },
+    {
+      "name": "MeshingParameters",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "remarks": "This is not currently being used but may be in the future. See UseExistingRenderMeshes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileXamlWriteOptions_MeshingParameters.htm"
+    },
+    {
+      "name": "UseExistingRenderMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If render meshes exist they will be used. Otherwise they are created on the fly using the current render settings of the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileXamlWriteOptions_UseExistingRenderMeshes.htm"
+    },
+    {
+      "name": "UseOriginForRotationCenter",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileXamlWriteOptions_UseOriginForRotationCenter.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

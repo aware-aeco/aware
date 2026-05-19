@@ -1,0 +1,433 @@
+{
+  "name": "Silhouette",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Information about silhouette curves that are generated from geometry (surfaces, brep faces, meshes)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Silhouette.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Compute(GeometryBase, SilhouetteType, ViewportInfo, Double, Double)",
+      "signature": "public static Silhouette[] Compute(GeometryBase geometry, SilhouetteType silhouetteType, ViewportInfo viewport, double tolerance, double angleToleranceRadians)",
+      "summary": "Compute silhouettes of a shape for a specified projection.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "silhouetteType",
+          "type": "Rhino.Geometry.SilhouetteType",
+          "doc": "Types of silhouette to compute.",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "Projection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_Compute.htm"
+    },
+    {
+      "name": "Compute(GeometryBase, SilhouetteType, Point3d, Double, Double)",
+      "signature": "public static Silhouette[] Compute(GeometryBase geometry, SilhouetteType silhouetteType, Point3d perspectiveCameraLocation, double tolerance, double angleToleranceRadians)",
+      "summary": "Compute silhouettes of a shape for a perspective projection.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "silhouetteType",
+          "type": "Rhino.Geometry.SilhouetteType",
+          "doc": "Types of silhouette to compute.",
+          "optional": false
+        },
+        {
+          "name": "perspectiveCameraLocation",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Location of perspective camera.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_Compute_2.htm"
+    },
+    {
+      "name": "Compute(GeometryBase, SilhouetteType, Vector3d, Double, Double)",
+      "signature": "public static Silhouette[] Compute(GeometryBase geometry, SilhouetteType silhouetteType, Vector3d parallelCameraDirection, double tolerance, double angleToleranceRadians)",
+      "summary": "Compute silhouettes of a shape for a parallel projection.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "silhouetteType",
+          "type": "Rhino.Geometry.SilhouetteType",
+          "doc": "Types of silhouette to compute.",
+          "optional": false
+        },
+        {
+          "name": "parallelCameraDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Direction of parallel camera.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_Compute_4.htm"
+    },
+    {
+      "name": "Compute(GeometryBase, SilhouetteType, ViewportInfo, Double, Double, IEnumerable\u003CPlane\u003E, CancellationToken)",
+      "signature": "public static Silhouette[] Compute(GeometryBase geometry, SilhouetteType silhouetteType, ViewportInfo viewport, double tolerance, double angleToleranceRadians, IEnumerable\u003CPlane\u003E clippingPlanes, CancellationToken cancelToken)",
+      "summary": "Compute silhouettes of a shape for a specified projection.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "silhouetteType",
+          "type": "Rhino.Geometry.SilhouetteType",
+          "doc": "Types of silhouette to compute.",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "Projection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        },
+        {
+          "name": "clippingPlanes",
+          "type": "System.Collections.Generic.IEnumerable\u003CPlane\u003E",
+          "doc": "Optional collection of clipping planes.",
+          "optional": false
+        },
+        {
+          "name": "cancelToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "Computation cancellation token.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_Compute_1.htm"
+    },
+    {
+      "name": "Compute(GeometryBase, SilhouetteType, Point3d, Double, Double, IEnumerable\u003CPlane\u003E, CancellationToken)",
+      "signature": "public static Silhouette[] Compute(GeometryBase geometry, SilhouetteType silhouetteType, Point3d perspectiveCameraLocation, double tolerance, double angleToleranceRadians, IEnumerable\u003CPlane\u003E clippingPlanes, CancellationToken cancelToken)",
+      "summary": "Compute silhouettes of a shape for a perspective projection.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "silhouetteType",
+          "type": "Rhino.Geometry.SilhouetteType",
+          "doc": "Types of silhouette to compute.",
+          "optional": false
+        },
+        {
+          "name": "perspectiveCameraLocation",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Location of perspective camera.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        },
+        {
+          "name": "clippingPlanes",
+          "type": "System.Collections.Generic.IEnumerable\u003CPlane\u003E",
+          "doc": "Optional collection of clipping planes.",
+          "optional": false
+        },
+        {
+          "name": "cancelToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "Computation cancellation token.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_Compute_3.htm"
+    },
+    {
+      "name": "Compute(GeometryBase, SilhouetteType, Vector3d, Double, Double, IEnumerable\u003CPlane\u003E, CancellationToken)",
+      "signature": "public static Silhouette[] Compute(GeometryBase geometry, SilhouetteType silhouetteType, Vector3d parallelCameraDirection, double tolerance, double angleToleranceRadians, IEnumerable\u003CPlane\u003E clippingPlanes, CancellationToken cancelToken)",
+      "summary": "Compute silhouettes of a shape for a parallel projection.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "silhouetteType",
+          "type": "Rhino.Geometry.SilhouetteType",
+          "doc": "Types of silhouette to compute.",
+          "optional": false
+        },
+        {
+          "name": "parallelCameraDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Direction of parallel camera.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        },
+        {
+          "name": "clippingPlanes",
+          "type": "System.Collections.Generic.IEnumerable\u003CPlane\u003E",
+          "doc": "Optional collection of clipping planes.",
+          "optional": false
+        },
+        {
+          "name": "cancelToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "Computation cancellation token.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_Compute_5.htm"
+    },
+    {
+      "name": "ComputeDraftCurve(GeometryBase, Double, Vector3d, Double, Double)",
+      "signature": "public static Silhouette[] ComputeDraftCurve(GeometryBase geometry, double draftAngle, Vector3d pullDirection, double tolerance, double angleToleranceRadians)",
+      "summary": "Computes draft curve silhouettes of a shape.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "draftAngle",
+          "type": "System.Double",
+          "doc": "The draft angle in radians. Draft angle can be a positive or negative value.",
+          "optional": false
+        },
+        {
+          "name": "pullDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "3d direction for the mold to be pulled in, directed away from the object.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_ComputeDraftCurve.htm"
+    },
+    {
+      "name": "ComputeDraftCurve(GeometryBase, Double, Vector3d, Double, Double, CancellationToken)",
+      "signature": "public static Silhouette[] ComputeDraftCurve(GeometryBase geometry, double draftAngle, Vector3d pullDirection, double tolerance, double angleToleranceRadians, CancellationToken cancelToken)",
+      "summary": "Computes draft curve silhouettes of a shape.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry whose silhouettes need to be computed. Can be Brep, BrepFace, Mesh, or Extrusion.",
+          "optional": false
+        },
+        {
+          "name": "draftAngle",
+          "type": "System.Double",
+          "doc": "The draft angle in radians. Draft angle can be a positive or negative value.",
+          "optional": false
+        },
+        {
+          "name": "pullDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "3d direction for the mold to be pulled in, directed away from the object.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for determining projecting relationships. Surfaces and curves that are closer than tolerance, may be treated as projecting. When in doubt use RhinoDoc.ModelAbsoluteTolerance.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Angular tolerance to use for determining projecting relationships. A surface normal N that satisfies N o cameraDirection \u003C Sin(angleToleranceRadians) may be considered projecting. When in doubt use RhinoDoc.ModelAngleToleranceRadians.",
+          "optional": false
+        },
+        {
+          "name": "cancelToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "Computation cancellation token.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Silhouette[]",
+        "doc": "Array of silhouette curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Silhouette_ComputeDraftCurve_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Curve",
+      "type": "Curve",
+      "getter": true,
+      "setter": false,
+      "summary": "3D curve representing the shape of the silhouette.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Silhouette_Curve.htm"
+    },
+    {
+      "name": "GeometryComponentIndex",
+      "type": "ComponentIndex",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the component index corresponding with this silhouette curve. This field is only set when the entire silhouette curve is part of some geometry component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Silhouette_GeometryComponentIndex.htm"
+    },
+    {
+      "name": "SilhouetteType",
+      "type": "SilhouetteType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of this silhouette curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Silhouette_SilhouetteType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

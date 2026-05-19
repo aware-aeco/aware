@@ -1,0 +1,50 @@
+{
+  "name": "RebarThreadingDataNullable",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarThreadingDataNullable class defines the threading properties at the end of a reinforcing bar affected by a RebarEndDetailModifier. If a threading property is null then that property will not be applied to the RebarSet generated reinforcing bars.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/57d87a1e-cd45-eccf-35f1-73a6e5fba633",
+  "constructors": [
+    {
+      "name": "RebarThreadingDataNullable",
+      "signature": "public RebarThreadingDataNullable()",
+      "summary": "Initializes a new instance of the RebarThreadingDataNullable class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca0e34ce-f534-4054-a639-e7cf3a035ba6"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ExtraFabricationLength",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the extra fabrication length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3f4fc775-8e44-3071-2326-14ea1a920a38"
+    },
+    {
+      "name": "Length",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the threading length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/28318049-e091-da8a-2516-e4f858e3f61e"
+    },
+    {
+      "name": "ThreadingType",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the threading type. Null indicates that the threading type is not specified.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0eedf36d-606a-1094-8008-47e122f5f09a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

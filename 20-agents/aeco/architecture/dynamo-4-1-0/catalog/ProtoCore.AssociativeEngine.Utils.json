@@ -1,0 +1,384 @@
+{
+  "name": "Utils",
+  "namespace": "ProtoCore.AssociativeEngine",
+  "kind": "class",
+  "summary": "Type Utils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs",
+  "constructors": [
+    {
+      "name": "Utils()",
+      "signature": "void Utils()",
+      "summary": "Utils.Utils",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AreLHSEqualIdentList(ProtoCore.AssociativeGraph.GraphNode, ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "bool AreLHSEqualIdentList(ProtoCore.AssociativeGraph.GraphNode node, ProtoCore.AssociativeGraph.GraphNode otherNode)",
+      "summary": "Checks if both nodes are LHS identlists and that their identlists are equal",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "otherNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "BuildGraphNodeDependencies(System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E)",
+      "signature": "void BuildGraphNodeDependencies(System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E graphNodesInScope)",
+      "summary": "Builds the dependencies within the list of graphNodes",
+      "params": [
+        {
+          "name": "graphNodesInScope",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "GetFirstDirtyGraphNodeFromPC(int, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E)",
+      "signature": "ProtoCore.AssociativeGraph.GraphNode GetFirstDirtyGraphNodeFromPC(int pc, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E graphNodesInScope)",
+      "summary": "Returns the first dirty graphnode starting from the given pc",
+      "params": [
+        {
+          "name": "pc",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "graphNodesInScope",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AssociativeGraph.GraphNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "GetFirstSSAGraphnode(int, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E)",
+      "signature": "ProtoCore.AssociativeGraph.GraphNode GetFirstSSAGraphnode(int indexOfDirtyNode, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E nodesInScope)",
+      "summary": "Find the first dirty node of the graphnode residing at indexOfDirtyNode",
+      "params": [
+        {
+          "name": "indexOfDirtyNode",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "nodesInScope",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AssociativeGraph.GraphNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "GetGraphNodeAtPC(int, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E)",
+      "signature": "ProtoCore.AssociativeGraph.GraphNode GetGraphNodeAtPC(int pc, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E graphNodesInScope)",
+      "summary": "Returns the dirty graphnode of the given pc",
+      "params": [
+        {
+          "name": "pc",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "graphNodesInScope",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AssociativeGraph.GraphNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "GetGraphNodesFromAST(ProtoCore.DSASM.Executable, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E GetGraphNodesFromAST(ProtoCore.DSASM.Executable exe, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E astList)",
+      "summary": "Returns the VM Graphnodes associated with the input ASTs",
+      "params": [
+        {
+          "name": "exe",
+          "type": "ProtoCore.DSASM.Executable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "astList",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "GetRedefinedGraphNodes(ProtoCore.RuntimeCore, ProtoCore.AssociativeGraph.GraphNode, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E, int, int)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E GetRedefinedGraphNodes(ProtoCore.RuntimeCore runtimeCore, ProtoCore.AssociativeGraph.GraphNode executingGraphNode, System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E nodesInScope, int classScope, int functionScope)",
+      "summary": "GetRedefinedGraphNodes will return a list of graphnodes that have been redefined by executingGraphNode Given: [1] a = b \u002B c [2] a = d Statement [1] has been redefined by statment [2] Returns true if this has occured",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "executingGraphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "nodesInScope",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "functionScope",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsGlobalScopeDirty(ProtoCore.DSASM.Executable)",
+      "signature": "bool IsGlobalScopeDirty(ProtoCore.DSASM.Executable exe)",
+      "summary": "Determines if at least one graphnode in the glboal scope is dirty",
+      "params": [
+        {
+          "name": "exe",
+          "type": "ProtoCore.DSASM.Executable",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsGraphNodeRedefined(ProtoCore.AssociativeGraph.GraphNode, ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "bool IsGraphNodeRedefined(ProtoCore.AssociativeGraph.GraphNode gnode, ProtoCore.AssociativeGraph.GraphNode executingNode)",
+      "summary": "Determines if a graphnode was redefined by executingNode Given: a = b; a = 1; Where: \u0027a = b\u0027 has been redefined by \u0027a = 1\u0027",
+      "params": [
+        {
+          "name": "gnode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "executingNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsTempVarLHS(ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "bool IsTempVarLHS(ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "Utils.IsTempVarLHS",
+      "params": [
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "MarkGraphNodesDirtyAtGlobalScope(ProtoCore.RuntimeCore, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AssociativeGraph.GraphNode MarkGraphNodesDirtyAtGlobalScope(ProtoCore.RuntimeCore core, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E nodeList)",
+      "summary": "Finds all graphnodes associated with each AST and marks them dirty. Returns the first dirty node",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "nodeList",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AssociativeGraph.GraphNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "MarkGraphNodesDirtyFromFunctionRedef(ProtoCore.RuntimeCore, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void MarkGraphNodesDirtyFromFunctionRedef(ProtoCore.RuntimeCore runtimeCore, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E fnodeList)",
+      "summary": "Utils.MarkGraphNodesDirtyFromFunctionRedef",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "fnodeList",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "UpdateDependencyGraph(ProtoCore.AssociativeGraph.GraphNode, ProtoCore.DSASM.Executive, int, bool, bool, int, bool)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E UpdateDependencyGraph(ProtoCore.AssociativeGraph.GraphNode executingGraphNode, ProtoCore.DSASM.Executive executive, int exprUID, bool isSSAAssign, bool executeSSA, int languageBlockID, bool recursiveSearch)",
+      "summary": "Find and return all graphnodes that can be reached by executingGraphNode",
+      "params": [
+        {
+          "name": "executingGraphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "executive",
+          "type": "ProtoCore.DSASM.Executive",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "exprUID",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isSSAAssign",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "executeSSA",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "languageBlockID",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "recursiveSearch",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

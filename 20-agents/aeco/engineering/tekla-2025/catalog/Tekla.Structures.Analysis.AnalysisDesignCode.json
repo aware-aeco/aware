@@ -1,0 +1,58 @@
+{
+  "name": "AnalysisDesignCode",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisDesignCode class contains information related to analysis design codes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/eb046690-d5ab-6cfe-0853-e7e2cbeb80d7",
+  "constructors": [
+    {
+      "name": "AnalysisDesignCode",
+      "signature": "public AnalysisDesignCode()",
+      "summary": "Initializes a new instance of the AnalysisDesignCode class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f2259a2e-bd3b-10f6-3c88-c160011b9b21"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DesignParameters",
+      "type": "AnalysisObjectEnumerator",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the design parameters of the analysis design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6275cc6d-6847-711b-969d-21934bf5918e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/57d31c1e-f8ef-a141-c700-f0be50a56fd6"
+    },
+    {
+      "name": "MaterialType",
+      "type": "AnalysisMaterial.MaterialTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the material type of the analysis analysis design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/575765b6-a9e3-819d-7e37-42287f62c9d7"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the analysis design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1a23c53c-83e4-ab35-ff66-329065d2d8ba"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

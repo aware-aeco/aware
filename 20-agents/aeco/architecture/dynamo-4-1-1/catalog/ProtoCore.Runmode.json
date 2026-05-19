@@ -1,0 +1,30 @@
+{
+  "name": "Runmode",
+  "namespace": "ProtoCore",
+  "kind": "enum",
+  "summary": "Type Runmode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "RunTo",
+      "value": 0
+    },
+    {
+      "name": "StepIn",
+      "value": 2
+    },
+    {
+      "name": "StepNext",
+      "value": 1
+    },
+    {
+      "name": "StepOut",
+      "value": 3
+    }
+  ]
+}

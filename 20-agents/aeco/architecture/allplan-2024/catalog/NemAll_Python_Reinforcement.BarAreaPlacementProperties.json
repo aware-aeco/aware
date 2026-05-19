@@ -1,0 +1,26 @@
+{
+  "name": "BarAreaPlacementProperties",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.BarAreaPlacementProperties.)",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/",
+  "constructors": [
+    {
+      "name": "BarAreaPlacementProperties",
+      "signature": "BarAreaPlacementProperties() | BarAreaPlacementProperties(diameter, distance, overlapping, isMoveOverlapping, maxBarLength, startBarLength, maxPlacementLength, firstBarEdgeDistance, placementStrategy, benching, benchingLength, isPolygonalPlacement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/#NemAll_Python_Reinforcement.BarAreaPlacementProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

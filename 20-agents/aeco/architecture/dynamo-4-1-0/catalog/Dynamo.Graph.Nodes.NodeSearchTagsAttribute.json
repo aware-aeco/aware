@@ -1,0 +1,64 @@
+{
+  "name": "NodeSearchTagsAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "The NodeSearchTagsAttribute attribute allows the node implementer to define search tags.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "NodeSearchTagsAttribute(string, System.Type)",
+      "signature": "void NodeSearchTagsAttribute(string tagsID, System.Type resourceType)",
+      "summary": "Creates NodeSearchTagsAttribute with tags from resx file.",
+      "params": [
+        {
+          "name": "tagsID",
+          "type": "string",
+          "doc": "Tag name",
+          "optional": false
+        },
+        {
+          "name": "resourceType",
+          "type": "System.Type",
+          "doc": "Type of Resource. E.g. typeof(Resource)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    },
+    {
+      "name": "NodeSearchTagsAttribute(string[])",
+      "signature": "void NodeSearchTagsAttribute(string[] tags)",
+      "summary": "Creates NodeSearchTagsAttribute with string tags.",
+      "params": [
+        {
+          "name": "tags",
+          "type": "string[]",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Tags",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Search tags used in library search.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

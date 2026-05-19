@@ -1,0 +1,29 @@
+{
+  "name": "ClipboardState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Defines enumerated constant values for different behavior that is related to clipboard data.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_ClipboardState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KeepData",
+      "value": 0,
+      "summary": "Always keep clipboard data, regardless of size and never prompt the user."
+    },
+    {
+      "name": "DeleteData",
+      "value": 1,
+      "summary": "Always delete clipboard data, regardless of size and never prompt the user."
+    },
+    {
+      "name": "PromptWhenBig",
+      "value": 2,
+      "summary": "Prompt user when clipboard memory is large."
+    }
+  ]
+}

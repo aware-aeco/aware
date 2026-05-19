@@ -1,0 +1,39 @@
+{
+  "name": "PictResTierOffsetType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for tier offset types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResTierOffsetType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAdvanced",
+      "value": 16507
+    },
+    {
+      "name": "eInnerSide",
+      "value": 16505
+    },
+    {
+      "name": "eNone",
+      "value": 16501
+    },
+    {
+      "name": "eOuterSide",
+      "value": 16503
+    },
+    {
+      "name": "eWithInnerFacing",
+      "value": 16511
+    },
+    {
+      "name": "eWithOuterFacing",
+      "value": 16509
+    }
+  ]
+}

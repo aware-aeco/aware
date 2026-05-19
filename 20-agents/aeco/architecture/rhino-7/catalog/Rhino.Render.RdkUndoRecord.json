@@ -1,0 +1,71 @@
+{
+  "name": "RdkUndoRecord",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "RdkUndoRecord class",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RdkUndoRecord.htm",
+  "constructors": [
+    {
+      "name": "RdkUndoRecord",
+      "signature": "public RdkUndoRecord(IntPtr pUndoRecord)",
+      "summary": "Constructor for RdkUndoRecord",
+      "params": [
+        {
+          "name": "pUndoRecord",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pUndoRecord\u0022/\u003E documentation for \u0022M:Rhino.Render.RdkUndoRecord.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RdkUndoRecord__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose for RdkUndoRecord",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RdkUndoRecord_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor for RdkUndoRecord",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RdkUndoRecord_Finalize.htm"
+    },
+    {
+      "name": "SetDescription",
+      "signature": "public void SetDescription(string description)",
+      "summary": "Set description for RdkUndoRecord",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.Render.RdkUndoRecord.SetDescription(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RdkUndoRecord_SetDescription.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

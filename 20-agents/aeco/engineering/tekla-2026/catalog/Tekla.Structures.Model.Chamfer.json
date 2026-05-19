@@ -1,0 +1,95 @@
+{
+  "name": "Chamfer",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Chamfer class defines how the corners of a polybeam or a contour plate are rounded.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3064a4cf-a8fc-6b76-b9e1-01173be467df",
+  "constructors": [
+    {
+      "name": "Chamfer()",
+      "signature": "public Chamfer()",
+      "summary": "Creates a chamfer instance with the basic shape type CHAMFER_NONE.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a0bbda9-99a0-7cbf-2b81-8f655cd1b02f"
+    },
+    {
+      "name": "Chamfer(Double, Double, Chamfer.ChamferTypeEnum)",
+      "signature": "public Chamfer(double X, double Y, Chamfer.ChamferTypeEnum Type)",
+      "summary": "Instantiates a chamfer with the given values.",
+      "params": [
+        {
+          "name": "X",
+          "type": "System.Double",
+          "doc": "The X value of the chamfer.",
+          "optional": false
+        },
+        {
+          "name": "Y",
+          "type": "System.Double",
+          "doc": "The Y value of the chamfer.",
+          "optional": false
+        },
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Model.Chamfer.ChamferTypeEnum",
+          "doc": "The basic shape type of the chamfer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17d86049-fc29-135a-c1d3-e24df677334f"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DZ1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The thickness above the offset. Note that this does nothing when used with the PolyBeam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cf3f1e0a-d3c1-e9c5-15f3-3fb865824c73"
+    },
+    {
+      "name": "DZ2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The thickness below the offset. Note that this does nothing when used with the PolyBeam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/65578b68-7a4e-f7b6-8c43-9fa5c6c9a348"
+    },
+    {
+      "name": "Type",
+      "type": "Chamfer.ChamferTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The basic shape type of the chamfer.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/30f88a77-bd91-7669-288b-4f5c7df7a713"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension of the chamfer.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf409de3-a137-501c-da5a-4745376df968"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The second dimension of straight chamfers.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6272b442-b0c7-be7f-9470-2d49a9d75633"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

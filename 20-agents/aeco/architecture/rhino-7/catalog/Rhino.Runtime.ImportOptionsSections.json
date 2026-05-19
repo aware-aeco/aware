@@ -1,0 +1,100 @@
+{
+  "name": "ImportOptionsSections",
+  "namespace": "Rhino.Runtime",
+  "kind": "enum",
+  "summary": "Standard CRhImportOptions sections to import",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_ImportOptionsSections.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AdvancedDisplay",
+      "value": 0
+    },
+    {
+      "name": "Alias",
+      "value": 1
+    },
+    {
+      "name": "Appearance",
+      "value": 2
+    },
+    {
+      "name": "ChooseOneObject",
+      "value": 3
+    },
+    {
+      "name": "ControlPointContextMenu",
+      "value": 4
+    },
+    {
+      "name": "CursorToolTip",
+      "value": 5
+    },
+    {
+      "name": "Display",
+      "value": 6
+    },
+    {
+      "name": "File",
+      "value": 7
+    },
+    {
+      "name": "General",
+      "value": 8
+    },
+    {
+      "name": "Grid",
+      "value": 9
+    },
+    {
+      "name": "ModelAid",
+      "value": 10
+    },
+    {
+      "name": "Mouse",
+      "value": 11
+    },
+    {
+      "name": "NeverRepeatCommands",
+      "value": 12
+    },
+    {
+      "name": "ObjectContextMenu",
+      "value": 13
+    },
+    {
+      "name": "SearchPath",
+      "value": 14
+    },
+    {
+      "name": "ShortcutKey",
+      "value": 15
+    },
+    {
+      "name": "Smarttrack",
+      "value": 16
+    },
+    {
+      "name": "View",
+      "value": 17
+    },
+    {
+      "name": "ViewportContextMenu",
+      "value": 18
+    },
+    {
+      "name": "ToolPaletteSettings",
+      "value": 19,
+      "summary": "Tool palette settings for Mac, ignored for Windows"
+    },
+    {
+      "name": "Count",
+      "value": 20,
+      "summary": "Must always be the last item"
+    }
+  ]
+}

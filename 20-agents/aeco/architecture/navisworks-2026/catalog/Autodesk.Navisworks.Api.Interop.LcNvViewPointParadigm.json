@@ -1,0 +1,70 @@
+{
+  "name": "LcNvViewPointParadigm",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcNvViewPointParadigm enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvViewPointParadigm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFIXED",
+      "value": 0
+    },
+    {
+      "name": "eSWIVEL",
+      "value": 1
+    },
+    {
+      "name": "eEXAMINE",
+      "value": 2
+    },
+    {
+      "name": "eWALK",
+      "value": 3
+    },
+    {
+      "name": "eFLY",
+      "value": 4
+    },
+    {
+      "name": "eTURNTABLE",
+      "value": 5
+    },
+    {
+      "name": "eAPPLICATION",
+      "value": 6
+    },
+    {
+      "name": "eZOOM",
+      "value": 7
+    },
+    {
+      "name": "ePAN_LOCAL",
+      "value": 8
+    },
+    {
+      "name": "ePAN_WORLD",
+      "value": 9
+    },
+    {
+      "name": "eSWIVEL_WORLD",
+      "value": 10
+    },
+    {
+      "name": "eORBIT_WORLD",
+      "value": 11
+    },
+    {
+      "name": "eZOOM_BOX",
+      "value": 12
+    },
+    {
+      "name": "eNUM_PARADIGMS",
+      "value": 13
+    }
+  ]
+}

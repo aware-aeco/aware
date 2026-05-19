@@ -1,0 +1,170 @@
+{
+  "name": "AnalysisModelOutputProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelOutputProperties class contains information related to analysis model output properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/995eb0dd-5cef-88a8-e391-a1c2f6f6f75d",
+  "constructors": [
+    {
+      "name": "AnalysisModelOutputProperties",
+      "signature": "public AnalysisModelOutputProperties()",
+      "summary": "Initializes a new instance of the AnalysisModelOutputProperties class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e05a1df-a62a-ba67-14df-1494a6654eb0"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "OutputAnalysisResults",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the analysis results are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/77550ad8-b365-3288-3440-f24c92b04a6f"
+    },
+    {
+      "name": "OutputElementForces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the element forces are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1f5c9901-31ba-2da3-b971-8d0e25476081"
+    },
+    {
+      "name": "OutputElementInformation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the element information is created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f78b0c3e-dca6-e4ff-fdda-7724c5b1af46"
+    },
+    {
+      "name": "OutputElementJointStresses",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the element joint stresses are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/279a0599-499b-cef5-f71e-ab4d2f98a9a3"
+    },
+    {
+      "name": "OutputElementJointStressesSolid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the element joint stresses solid is created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6f13f0c0-1d73-0163-a5da-cd1fc2562d6f"
+    },
+    {
+      "name": "OutputEntireSteelTable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the entire steel table is created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2adb46e8-04e3-edb2-f825-0dec26c2fcaa"
+    },
+    {
+      "name": "OutputJointCoordinates",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the joint coordinates are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7da53eb9-96f5-b7aa-c476-acb9f9fc1679"
+    },
+    {
+      "name": "OutputJointDisplacements",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the joint displacements are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b2678971-80b6-4968-6330-0cb9ed2a1aa2"
+    },
+    {
+      "name": "OutputMaterialProperties",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the material properties are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dd660f6b-8ff2-bd7a-25ed-f88f752c9cc9"
+    },
+    {
+      "name": "OutputMemberForces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the member forces are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca2219f1-121b-9e53-1bfa-ef148f698970"
+    },
+    {
+      "name": "OutputMemberInformation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the member information is created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/162ccfc9-b1dc-78cc-3319-e244c3098471"
+    },
+    {
+      "name": "OutputMemberProperties",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the member properties are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/48e2baa2-9213-292d-4861-386141beaa26"
+    },
+    {
+      "name": "OutputMemberSectionForces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the member section forces are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bca4af45-8ea2-ff7b-8433-3e893f62570b"
+    },
+    {
+      "name": "OutputMemberStresses",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the member stresses are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9e7b1c69-caf3-16c5-7ae4-c8e818f320bf"
+    },
+    {
+      "name": "OutputModeShapes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the mode shapes are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8589dc17-84c2-d032-99a7-e7991a521376"
+    },
+    {
+      "name": "OutputStoryDrift",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the story drift is created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a57dce5a-eda8-ab1d-3ae5-e7cf6bc6e5fc"
+    },
+    {
+      "name": "OutputSupportInformation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the support information is created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/12e9ba12-8bfc-5484-c10f-16699412bd81"
+    },
+    {
+      "name": "OutputSupportReactions",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the supported reactions are created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/97c6039d-b53f-6744-b50d-ef4309dc7229"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

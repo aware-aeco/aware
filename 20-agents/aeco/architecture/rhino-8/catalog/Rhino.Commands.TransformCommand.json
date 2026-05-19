@@ -1,0 +1,258 @@
+{
+  "name": "TransformCommand",
+  "namespace": "Rhino.Commands",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Commands.TransformCommand\u0022]",
+  "base": "Command",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Commands_TransformCommand.htm",
+  "constructors": [
+    {
+      "name": "TransformCommand",
+      "signature": "protected TransformCommand()",
+      "summary": "Initializes a new instance of the TransformCommand class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_TransformCommand__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DuplicateObjects",
+      "signature": "protected void DuplicateObjects(TransformObjectList list)",
+      "summary": "",
+      "params": [
+        {
+          "name": "list",
+          "type": "Rhino.Collections.TransformObjectList",
+          "doc": "[Missing \u003Cparam name=\u0022list\u0022/\u003E documentation for \u0022M:Rhino.Commands.TransformCommand.DuplicateObjects(Rhino.Collections.TransformObjectList)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_TransformCommand_DuplicateObjects.htm"
+    },
+    {
+      "name": "OnHelp",
+      "signature": "protected virtual void OnHelp()",
+      "summary": "Is called when the user needs assistance with this command.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_OnHelp.htm"
+    },
+    {
+      "name": "ReplayHistory",
+      "signature": "protected virtual bool ReplayHistory(ReplayHistoryData replayData)",
+      "summary": "Repeats an operation of a command. In order to make this function work, you will likely need to grab the Result property that gives the list of input objects. Then, you will be able to replace these inputs by using one of the UpdateToX() methods of the ReplayHistoryResult.You should NOT use any document AddX() or ReplaceX() functions, as they will break history.",
+      "params": [
+        {
+          "name": "replayData",
+          "type": "Rhino.DocObjects.ReplayHistoryData",
+          "doc": "The replay history information.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded. The default implementation always returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_ReplayHistory.htm"
+    },
+    {
+      "name": "ResetGrips",
+      "signature": "protected void ResetGrips(TransformObjectList list)",
+      "summary": "Sets dynamic grip locations back to starting grip locations. This makes things like the Copy command work when grips are \u0022copied\u0022.",
+      "params": [
+        {
+          "name": "list",
+          "type": "Rhino.Collections.TransformObjectList",
+          "doc": "A list of object to transform. This is a special list type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_TransformCommand_ResetGrips.htm"
+    },
+    {
+      "name": "RunCommand",
+      "signature": "protected abstract Result RunCommand(RhinoDoc doc, RunMode mode)",
+      "summary": "Executes the command.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The current document.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.Commands.RunMode",
+          "doc": "The command running mode.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The command result code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_RunCommand.htm"
+    },
+    {
+      "name": "SelectObjects(String, TransformObjectList)",
+      "signature": "protected Result SelectObjects(string prompt, TransformObjectList list)",
+      "summary": "Selects objects within the command.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The selection prompt.",
+          "optional": false
+        },
+        {
+          "name": "list",
+          "type": "Rhino.Collections.TransformObjectList",
+          "doc": "A list of objects to transform. This is a special list type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The operation result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_TransformCommand_SelectObjects.htm"
+    },
+    {
+      "name": "SelectObjects(String, ObjectType, TransformObjectList)",
+      "signature": "protected Result SelectObjects(string prompt, ObjectType filter, TransformObjectList list)",
+      "summary": "Selects objects within the command.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The selection prompt.",
+          "optional": false
+        },
+        {
+          "name": "filter",
+          "type": "Rhino.DocObjects.ObjectType",
+          "doc": "Geometry filter to limit selection. Use function above if you do not need specific types.",
+          "optional": false
+        },
+        {
+          "name": "list",
+          "type": "Rhino.Collections.TransformObjectList",
+          "doc": "A list of objects to transform. This is a special list type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The operation result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_TransformCommand_SelectObjects_1.htm"
+    },
+    {
+      "name": "TransformObjects",
+      "signature": "protected void TransformObjects(TransformObjectList list, Transform xform, bool copy, bool autoHistory)",
+      "summary": "",
+      "params": [
+        {
+          "name": "list",
+          "type": "Rhino.Collections.TransformObjectList",
+          "doc": "[Missing \u003Cparam name=\u0022list\u0022/\u003E documentation for \u0022M:Rhino.Commands.TransformCommand.TransformObjects(Rhino.Collections.TransformObjectList,Rhino.Geometry.Transform,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022xform\u0022/\u003E documentation for \u0022M:Rhino.Commands.TransformCommand.TransformObjects(Rhino.Collections.TransformObjectList,Rhino.Geometry.Transform,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "copy",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022copy\u0022/\u003E documentation for \u0022M:Rhino.Commands.TransformCommand.TransformObjects(Rhino.Collections.TransformObjectList,Rhino.Geometry.Transform,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "autoHistory",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022autoHistory\u0022/\u003E documentation for \u0022M:Rhino.Commands.TransformCommand.TransformObjects(Rhino.Collections.TransformObjectList,Rhino.Geometry.Transform,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_TransformCommand_TransformObjects.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommandContextHelpUrl",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the URL of the command contextual help. This is usually a location of a local CHM file. The default implementation return an empty string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_CommandContextHelpUrl.htm"
+    },
+    {
+      "name": "EnglishName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the command. This method is abstract.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_EnglishName.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the unique ID of this command. It is best to use a Guid attribute for each custom derived command class since this will keep the id consistent between sessions of Rhino GuidAttribute",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_Id.htm"
+    },
+    {
+      "name": "LocalName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the local name of the command.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_LocalName.htm"
+    },
+    {
+      "name": "PlugIn",
+      "type": "PlugIn",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the plug-in where this commands is placed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_PlugIn.htm"
+    },
+    {
+      "name": "Settings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the settings of the command.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_Settings.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

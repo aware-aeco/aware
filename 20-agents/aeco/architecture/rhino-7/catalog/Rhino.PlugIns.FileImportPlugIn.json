@@ -1,0 +1,734 @@
+{
+  "name": "FileImportPlugIn",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "Rhino plug-in that imports data from other file formats into Rhino; can support more that one format.",
+  "base": "PlugIn",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_FileImportPlugIn.htm",
+  "constructors": [
+    {
+      "name": "FileImportPlugIn",
+      "signature": "protected FileImportPlugIn()",
+      "summary": "Initializes a new instance of the FileImportPlugIn class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_FileImportPlugIn__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddFileTypes",
+      "signature": "protected abstract FileTypeList AddFileTypes(FileReadOptions options)",
+      "summary": "",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileReadOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.AddFileTypes(Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FileTypeList",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.AddFileTypes(Rhino.FileIO.FileReadOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_FileImportPlugIn_AddFileTypes.htm"
+    },
+    {
+      "name": "AskUserForLicense",
+      "signature": "protected bool AskUserForLicense(LicenseBuildType productBuildType, bool standAlone, string textMask, Object parentWindow, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate onLeaseChangedDelegate)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "productBuildType",
+          "type": "Rhino.PlugIns.LicenseBuildType",
+          "doc": "[Missing \u003Cparam name=\u0022productBuildType\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "standAlone",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022standAlone\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022parentWindow\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022validateProductKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onLeaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022onLeaseChangedDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.AskUserForLicense(Rhino.PlugIns.LicenseBuildType,System.Boolean,System.String,System.Object,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_AskUserForLicense.htm"
+    },
+    {
+      "name": "CommandSettings",
+      "signature": "public PersistentSettings CommandSettings(string name)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.CommandSettings(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PersistentSettings",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.CommandSettings(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_CommandSettings.htm"
+    },
+    {
+      "name": "CreateCommands",
+      "signature": "protected virtual void CreateCommands()",
+      "summary": "Called right after plug-in is created and is responsible for creating all of the commands in a given plug-in. The base class implementation Constructs an instance of every publicly exported command class in your plug-in\u0027s assembly.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_CreateCommands.htm"
+    },
+    {
+      "name": "DisplayOptionsDialog",
+      "signature": "protected virtual void DisplayOptionsDialog(IntPtr parent, string description, string extension)",
+      "summary": "",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022parent\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.DisplayOptionsDialog(System.IntPtr,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.DisplayOptionsDialog(System.IntPtr,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.DisplayOptionsDialog(System.IntPtr,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_FileImportPlugIn_DisplayOptionsDialog.htm"
+    },
+    {
+      "name": "DocumentPropertiesDialogPages",
+      "signature": "protected virtual void DocumentPropertiesDialogPages(RhinoDoc doc, List\u003COptionsDialogPage\u003E pages)",
+      "summary": "Override this function if you want to extend the document properties sections of the options dialog. This function is called whenever the user brings up the Options dialog.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document that the pages are set up for",
+          "optional": false
+        },
+        {
+          "name": "pages",
+          "type": "System.Collections.Generic.List\u003COptionsDialogPage\u003E",
+          "doc": "list of pages to add your custom options dialog page(s) to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_DocumentPropertiesDialogPages.htm"
+    },
+    {
+      "name": "GetCommands",
+      "signature": "public Command[] GetCommands()",
+      "summary": "All of the commands associated with this plug-in.",
+      "params": [],
+      "returns": {
+        "type": "Command[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetCommands\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_GetCommands.htm"
+    },
+    {
+      "name": "GetLicense(LicenseBuildType, ValidateProductKeyDelegate, OnLeaseChangedDelegate)",
+      "signature": "protected bool GetLicense(LicenseBuildType productBuildType, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate leaseChangedDelegate)",
+      "summary": "Verifies that there is a valid product license for your plug-in, using the Rhino licensing system. If the plug-in is installed as a standalone node, the locally installed license will be validated. If the plug-in is installed as a network node, a loaner license will be requested by the system\u0027s assigned Zoo server. If the Zoo server finds and returns a license, then this license will be validated. If no license is found, then the user will be prompted to provide a license key, which will be validated.",
+      "params": [
+        {
+          "name": "productBuildType",
+          "type": "Rhino.PlugIns.LicenseBuildType",
+          "doc": "The product build contentType required by your plug-in.",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "Since the Rhino licensing system knows nothing about your product license, you will need to validate the product license provided by the Rhino licensing system. This is done by supplying a callback function, or delegate, that can be called to perform the validation.",
+          "optional": false
+        },
+        {
+          "name": "leaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "Called by the ZooClient when the cloud zoo lease is changed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a valid license was found. false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_GetLicense.htm"
+    },
+    {
+      "name": "GetLicense(LicenseCapabilities, String, ValidateProductKeyDelegate, OnLeaseChangedDelegate)",
+      "signature": "protected bool GetLicense(LicenseCapabilities licenseCapabilities, string textMask, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate leaseChangedDelegate)",
+      "summary": "Verifies that there is a valid product license for your plug-in, using the Rhino licensing system. If the plug-in is installed as a standalone node, the locally installed license will be validated. If the plug-in is installed as a network node, a loaner license will be requested by the system\u0027s assigned Zoo server. If the Zoo server finds and returns a license, then this license will be validated. If no license is found, then the user will be prompted to provide a license key, which will be validated.",
+      "params": [
+        {
+          "name": "licenseCapabilities",
+          "type": "Rhino.PlugIns.LicenseCapabilities",
+          "doc": "In the event that a license was not found, or if the user wants to change the way your plug-in is licenses, then provide what capabilities your license has by using this enumeration flag.",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "In the event that the user needs to be asked for a license, then you can provide a text mask, which helps the user to distinguish between proper and improper user input of your license code. Note, if you do not want to use a text mask, then pass in a null value for this parameter. For more information on text masks, search MSDN for the System.Windows.Forms.MaskedTextBox class.",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "Since the Rhino licensing system knows nothing about your product license, you will need to validate the product license provided by the Rhino licensing system. This is done by supplying a callback function, or delegate, that can be called to perform the validation.",
+          "optional": false
+        },
+        {
+          "name": "leaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "Called by the ZooClient when the cloud zoo lease is changed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a valid license was found. false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_GetLicense_1.htm"
+    },
+    {
+      "name": "GetLicenseOwner",
+      "signature": "protected bool GetLicenseOwner(out string registeredOwner, out string registeredOrganization)",
+      "summary": "Get the customer name and organization used when entering the product license.",
+      "params": [
+        {
+          "name": "registeredOwner",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022registeredOwner\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetLicenseOwner(System.String@,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "registeredOrganization",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022registeredOrganization\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetLicenseOwner(System.String@,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetLicenseOwner(System.String@,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_GetLicenseOwner.htm"
+    },
+    {
+      "name": "GetPlugInObject",
+      "signature": "public virtual Object GetPlugInObject()",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.GetPlugInObject\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_GetPlugInObject.htm"
+    },
+    {
+      "name": "Icon",
+      "signature": "public Bitmap Icon(Size size)",
+      "summary": "Returns the plug-in\u0027s icon in bitmap form.",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "The desired size in pixels.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The icon if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_Icon.htm"
+    },
+    {
+      "name": "MakeReferenceTableName",
+      "signature": "protected string MakeReferenceTableName(string nameToPrefix)",
+      "summary": "",
+      "params": [
+        {
+          "name": "nameToPrefix",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022nameToPrefix\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.MakeReferenceTableName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.MakeReferenceTableName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_FileImportPlugIn_MakeReferenceTableName.htm"
+    },
+    {
+      "name": "ObjectPropertiesPages(List\u003CObjectPropertiesPage\u003E)",
+      "signature": "[ObsoleteAttribute(\u0022Use ObjectPropertiesPages(ObjectPropertiesPageCollection collection) instead\u0022)] protected virtual void ObjectPropertiesPages(List\u003CObjectPropertiesPage\u003E pages)",
+      "summary": "Override this function is you want to extend the object properties dialog",
+      "params": [
+        {
+          "name": "pages",
+          "type": "System.Collections.Generic.List\u003CObjectPropertiesPage\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022pages\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.ObjectPropertiesPages(System.Collections.Generic.List{Rhino.UI.ObjectPropertiesPage})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_ObjectPropertiesPages_1.htm"
+    },
+    {
+      "name": "ObjectPropertiesPages(ObjectPropertiesPageCollection)",
+      "signature": "protected virtual void ObjectPropertiesPages(ObjectPropertiesPageCollection collection)",
+      "summary": "Override this function is you want to extend the object properties dialog. This method will be called each time a new document is created for each instance of a object properties panel. On Windows there will be a single panel per document but on Mac there may be many properties panel per document.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "Rhino.UI.ObjectPropertiesPageCollection",
+          "doc": "Add custom pages by calling collection.Add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_ObjectPropertiesPages.htm"
+    },
+    {
+      "name": "OnLoad",
+      "signature": "protected virtual LoadReturnCode OnLoad(ref string errorMessage)",
+      "summary": "Is called when the plug-in is being loaded.",
+      "params": [
+        {
+          "name": "errorMessage",
+          "type": "System.String",
+          "doc": "If a load error is returned and this string is set. This string is the error message that will be reported back to the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LoadReturnCode",
+        "doc": "An appropriate load return code. The default implementation returns Success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_OnLoad.htm"
+    },
+    {
+      "name": "OnShutdown",
+      "signature": "protected virtual void OnShutdown()",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_OnShutdown.htm"
+    },
+    {
+      "name": "OptionsDialogPages",
+      "signature": "protected virtual void OptionsDialogPages(List\u003COptionsDialogPage\u003E pages)",
+      "summary": "Override this function if you want to extend the options dialog. This function is called whenever the user brings up the Options dialog.",
+      "params": [
+        {
+          "name": "pages",
+          "type": "System.Collections.Generic.List\u003COptionsDialogPage\u003E",
+          "doc": "list of pages to add your custom options dialog page(s) to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_OptionsDialogPages.htm"
+    },
+    {
+      "name": "ReadDocument",
+      "signature": "protected virtual void ReadDocument(RhinoDoc doc, BinaryArchiveReader archive, FileReadOptions options)",
+      "summary": "Called whenever a Rhino document is being loaded and plug-in user data was encountered written by a plug-in with this plug-in\u0027s GUID.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document that is being loaded.",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "OpenNURBS file archive object Rhino is using to read this file. Use BinaryArchiveReader.Read*() functions to read plug-in data. If any BinaryArchive.Read*() functions throws an exception then archive.ReadErrorOccurve will be true and you should immediately return.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileReadOptions",
+          "doc": "Describes what is being written.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_ReadDocument.htm"
+    },
+    {
+      "name": "ReadFile",
+      "signature": "protected abstract bool ReadFile(string filename, int index, RhinoDoc doc, FileReadOptions options)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.ReadFile(System.String,System.Int32,Rhino.RhinoDoc,Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.ReadFile(System.String,System.Int32,Rhino.RhinoDoc,Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.ReadFile(System.String,System.Int32,Rhino.RhinoDoc,Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileReadOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.ReadFile(System.String,System.Int32,Rhino.RhinoDoc,Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileImportPlugIn.ReadFile(System.String,System.Int32,Rhino.RhinoDoc,Rhino.FileIO.FileReadOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_FileImportPlugIn_ReadFile.htm"
+    },
+    {
+      "name": "RegisterCommand",
+      "signature": "protected bool RegisterCommand(Command command)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "command",
+          "type": "Rhino.Commands.Command",
+          "doc": "[Missing \u003Cparam name=\u0022command\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.RegisterCommand(Rhino.Commands.Command)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.RegisterCommand(Rhino.Commands.Command)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_RegisterCommand.htm"
+    },
+    {
+      "name": "ResetMessageBoxes",
+      "signature": "protected virtual void ResetMessageBoxes()",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_ResetMessageBoxes.htm"
+    },
+    {
+      "name": "ReturnLicense",
+      "signature": "protected bool ReturnLicense()",
+      "summary": "Returns, or releases, a product license that was obtained from the Rhino licensing system. Note, most plug-ins do not need to call this as the Rhino licensing system will return all licenses when Rhino shuts down.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.ReturnLicense\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_ReturnLicense.htm"
+    },
+    {
+      "name": "SaveSettings",
+      "signature": "public void SaveSettings()",
+      "summary": "Write settings to disk which will raise a SettingsSaved event.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_SaveSettings.htm"
+    },
+    {
+      "name": "SetLicenseCapabilities",
+      "signature": "protected void SetLicenseCapabilities(string textMask, LicenseCapabilities capabilities, Guid licenseId)",
+      "summary": "(Inherited from PlugIn.)",
+      "params": [
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.SetLicenseCapabilities(System.String,Rhino.PlugIns.LicenseCapabilities,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capabilities",
+          "type": "Rhino.PlugIns.LicenseCapabilities",
+          "doc": "[Missing \u003Cparam name=\u0022capabilities\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.SetLicenseCapabilities(System.String,Rhino.PlugIns.LicenseCapabilities,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "licenseId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022licenseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugIn.SetLicenseCapabilities(System.String,Rhino.PlugIns.LicenseCapabilities,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_SetLicenseCapabilities.htm"
+    },
+    {
+      "name": "ShouldCallWriteDocument",
+      "signature": "protected virtual bool ShouldCallWriteDocument(FileWriteOptions options)",
+      "summary": "Called whenever a Rhino is about to save a .3dm file. If you want to save plug-in document data when a model is saved in a version 5 .3dm file, then you must override this function to return true and you must override WriteDocument().",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "The file write options, such as \u0022include preview image\u0022 and \u0022include render meshes\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the plug-in wants to save document user data in the version 5 .3dm file. The default returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_ShouldCallWriteDocument.htm"
+    },
+    {
+      "name": "WriteDocument",
+      "signature": "protected virtual void WriteDocument(RhinoDoc doc, BinaryArchiveWriter archive, FileWriteOptions options)",
+      "summary": "Called when Rhino is saving a .3dm file to allow the plug-in to save document user data.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document instance that is being saved.",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveWriter",
+          "doc": "OpenNURBS file archive object Rhino is using to write the file. Use BinaryArchiveWriter.Write*() functions to write plug-in data. OR use the ArchivableDictionary If any BinaryArchiveWriter.Write*() functions throw an exception, then archive.WriteErrorOccured will be true and you should immediately return. Setting archive.WriteErrorOccured to true will cause Rhino to stop saving the file.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "The file write options, such as \u0022include preview image\u0022 and \u0022include render meshes\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_PlugIn_WriteDocument.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "Assembly",
+      "getter": true,
+      "setter": false,
+      "summary": "Source assembly for this plug-in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_Assembly.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the description of the plug-in, as found in the plug-in\u0027s assembly attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_Description.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Guid, or unique Id, of the plug-in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_Id.htm"
+    },
+    {
+      "name": "LicenseId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from PlugIn.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_LicenseId.htm"
+    },
+    {
+      "name": "LoadAtStartup",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete. (Inherited from PlugIn.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_LoadAtStartup.htm"
+    },
+    {
+      "name": "LoadTime",
+      "type": "PlugInLoadTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Plug-ins are typically loaded on demand when they are first needed. You can change this behavior to load the plug-in at during different stages in time by overriding this property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_LoadTime.htm"
+    },
+    {
+      "name": "LocalPlugInName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Optionally override this to provide a localized plug-in name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_LocalPlugInName.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the plug-in, as found in the plug-in\u0027s assembly attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_Name.htm"
+    },
+    {
+      "name": "Settings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Persistent plug-in settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_Settings.htm"
+    },
+    {
+      "name": "SettingsDirectory",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the plug-in\u0027s settings directory. This is the directory where the plug-in\u0027s persistent settings files are saved. This directory will be located in the user\u0027s profile folder. Note, this does not verify the directory exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_SettingsDirectory.htm"
+    },
+    {
+      "name": "SettingsDirectoryAllUsers",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the plug-in\u0027s \u0022all users\u0022 settings directory. This directory will be located in the system\u0027s program data folder. Note, this does not verify the directory exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_SettingsDirectoryAllUsers.htm"
+    },
+    {
+      "name": "Version",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the version of the plug-in, as found in the plug-in\u0027s assembly attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_Version.htm"
+    },
+    {
+      "name": "WindowPositionSettings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from PlugIn.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_PlugIn_WindowPositionSettings.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "SettingsSaved",
+      "delegate": "System.EventHandler\u003CPersistentSettingsSavedEventArgs\u003E",
+      "signature": "public event EventHandler\u003CPersistentSettingsSavedEventArgs\u003E SettingsSaved",
+      "summary": "This event is raised when an instance of Rhino has modified the external settings file associated with this plug-in\u0027s Settings property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_PlugIns_PlugIn_SettingsSaved.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

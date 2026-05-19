@@ -1,0 +1,47 @@
+{
+  "name": "RenderContentEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Event args for RenderContent",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderContentEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Content",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentEventArgs_Content.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentEventArgs_Document.htm"
+    },
+    {
+      "name": "EnvironmentUsage",
+      "type": "RenderEnvironment.Usage",
+      "getter": true,
+      "setter": false,
+      "summary": "Meaningful for CurrentEnvironmentChanged event. Will be one of Background, ReflectionAndRefraction or Skylighting. Since 6.11",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentEventArgs_EnvironmentUsage.htm"
+    },
+    {
+      "name": "Reason",
+      "type": "RenderContentChangeReason",
+      "getter": true,
+      "setter": false,
+      "summary": "Not when used in CurrentEnvironmentChanged (defaults to None).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentEventArgs_Reason.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

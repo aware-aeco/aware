@@ -1,0 +1,54 @@
+{
+  "name": "GH_RuleKind",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "enum",
+  "summary": "Represents all possible element types in a Path Pattern.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_RuleKind.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Represents an invalid, default value."
+    },
+    {
+      "name": "AnyNumber",
+      "value": 1,
+      "summary": "Any single number"
+    },
+    {
+      "name": "AnyNumbers",
+      "value": 2,
+      "summary": "Any (or no) collection of numbers"
+    },
+    {
+      "name": "Number",
+      "value": 3,
+      "summary": "Single number"
+    },
+    {
+      "name": "Group",
+      "value": 4,
+      "summary": "A collection of non-related integers."
+    },
+    {
+      "name": "Range",
+      "value": 5,
+      "summary": "A range of digits delimited by two extremes."
+    },
+    {
+      "name": "Sequence",
+      "value": 6,
+      "summary": "A collection of increasing non-related integers which repeat either indefinitely or up to a limit"
+    },
+    {
+      "name": "Complex",
+      "value": 7,
+      "summary": "Represents a complex of multiple pattern types."
+    }
+  ]
+}

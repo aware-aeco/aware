@@ -1,0 +1,91 @@
+{
+  "name": "DrawingItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The DrawingItem class contains information from the drawings in the master drawing catalog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9c95f68b-b566-e073-66a1-6eb6016b5da4",
+  "constructors": [
+    {
+      "name": "DrawingItem",
+      "signature": "public DrawingItem()",
+      "summary": "Creates a new drawing item instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/242395d8-20d5-d2ca-2490-d11111b0811c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Export",
+      "signature": "public bool Export(ref string filename)",
+      "summary": "Exports the drawing item in the catalog to given file name. If path is not given drawing is exported to model folder. If filename is empty drawing name is used as filename.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the drawing item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e73e32a2-21fa-37e6-2d50-dba9af49e09a"
+    },
+    {
+      "name": "Select",
+      "signature": "public bool Select(string Name)",
+      "summary": "Selects the drawing item in the drawing catalog.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The Name of the drawing item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6a028f0c-b5bb-2e2a-8119-eea7fbea3a34"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Files",
+      "type": "List\u003CFileInfo\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The files belonging to drawing item.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0a0cdd75-7963-266b-c1c9-7416f55cbc19"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The drawing item\u0027s name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0f99686f-166f-8522-758b-28b85188ff9f"
+    },
+    {
+      "name": "Type",
+      "type": "DrawingTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The files belonging to drawing item.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c9ebca33-70ca-e0fb-0f5a-da7002d050f4"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

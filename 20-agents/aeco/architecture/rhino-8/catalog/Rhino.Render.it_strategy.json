@@ -1,0 +1,24 @@
+{
+  "name": "it_strategy",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Defines the collection type to iterate.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_it_strategy.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ContentDataBase",
+      "value": 0,
+      "summary": "This type represents all the render contents in the database."
+    },
+    {
+      "name": "ContentSelection",
+      "value": 1,
+      "summary": "This type represents the selected render content collection."
+    }
+  ]
+}

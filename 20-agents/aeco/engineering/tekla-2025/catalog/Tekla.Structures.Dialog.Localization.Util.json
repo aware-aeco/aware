@@ -1,0 +1,118 @@
+{
+  "name": "Localization.Util",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The Util class contains general localizers for different kinds of controls.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/aa928c88-9b75-5a1b-8794-73e855e9d5f0",
+  "constructors": [
+    {
+      "name": "Localization.Util",
+      "signature": "public Util()",
+      "summary": "Initializes a new instance of the Localization.Util class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e8505c88-64bd-efed-efc5-46ca855f1ef4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "LocalizeDataGridView",
+      "signature": "public static void LocalizeDataGridView(Localization localization, Object obj)",
+      "summary": "Localizes a DataGridView.",
+      "params": [
+        {
+          "name": "localization",
+          "type": "Tekla.Structures.Dialog.Localization",
+          "doc": "The localization instance to be used.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object to be localized.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d441aa17-4e68-79e7-f9f5-d7335ede5bf3"
+    },
+    {
+      "name": "LocalizeImageListComboBox",
+      "signature": "public static void LocalizeImageListComboBox(Localization localization, Object obj)",
+      "summary": "Localizes an ImageListComboBox.",
+      "params": [
+        {
+          "name": "localization",
+          "type": "Tekla.Structures.Dialog.Localization",
+          "doc": "The localization instance to be used.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object to be localized.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b545de48-174b-a35c-509f-59fa08f10ff9"
+    },
+    {
+      "name": "LocalizeListControl",
+      "signature": "public static void LocalizeListControl(Localization localization, Object obj)",
+      "summary": "Localizes a List control.",
+      "params": [
+        {
+          "name": "localization",
+          "type": "Tekla.Structures.Dialog.Localization",
+          "doc": "The localization instance to be used.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object to be localized.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8acd981d-ed5c-9a67-9e3f-a2e962900e88"
+    },
+    {
+      "name": "LocalizeToolStrip",
+      "signature": "public static void LocalizeToolStrip(Localization localization, Object obj)",
+      "summary": "Localizes a ToolStrip.",
+      "params": [
+        {
+          "name": "localization",
+          "type": "Tekla.Structures.Dialog.Localization",
+          "doc": "The localization instance to be used.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object to be localized.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3373bd2e-3e18-5f90-30e9-5fabcae9fb9b"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

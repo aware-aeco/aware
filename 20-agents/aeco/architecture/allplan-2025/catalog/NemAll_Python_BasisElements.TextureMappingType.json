@@ -1,0 +1,50 @@
+{
+  "name": "TextureMappingType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Types of texture mapping",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMappingType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCube",
+      "value": 0,
+      "summary": "From each side"
+    },
+    {
+      "name": "eCylinder",
+      "value": 4,
+      "summary": "Cylindrical mapping"
+    },
+    {
+      "name": "eGround",
+      "value": 3,
+      "summary": "Only from the top view"
+    },
+    {
+      "name": "eRoof",
+      "value": 2,
+      "summary": "Mainly from the top view"
+    },
+    {
+      "name": "eSphere",
+      "value": 5,
+      "summary": "Spherical mapping"
+    },
+    {
+      "name": "eUV",
+      "value": 6,
+      "summary": "UV mapping"
+    },
+    {
+      "name": "eWall",
+      "value": 1,
+      "summary": "Mainly from the front view"
+    }
+  ]
+}

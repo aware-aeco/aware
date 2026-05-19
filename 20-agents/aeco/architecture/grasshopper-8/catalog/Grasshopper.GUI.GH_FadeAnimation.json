@@ -1,0 +1,220 @@
+{
+  "name": "GH_FadeAnimation",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Utility class for animating fade ZUI events on the canvas.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_FadeAnimation.htm",
+  "constructors": [
+    {
+      "name": "GH_FadeAnimation()",
+      "signature": "public GH_FadeAnimation()",
+      "summary": "Creates a new instance of the Animator class with default settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FadeAnimation__ctor.htm"
+    },
+    {
+      "name": "GH_FadeAnimation(Single)",
+      "signature": "public GH_FadeAnimation(float threshold)",
+      "summary": "Create a new instance of the Animator class with custom values for zoom threshold.",
+      "params": [
+        {
+          "name": "threshold",
+          "type": "System.Single",
+          "doc": "Zoom threshold at which the animation kicks in. The default is 2.0",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FadeAnimation__ctor_1.htm"
+    },
+    {
+      "name": "GH_FadeAnimation(Single, Int32)",
+      "signature": "public GH_FadeAnimation(float threshold, int duration)",
+      "summary": "Create a new instance of the Animator class with custom values for zoom threshold and duration.",
+      "params": [
+        {
+          "name": "threshold",
+          "type": "System.Single",
+          "doc": "Zoom threshold at which the animation kicks in. The default is 2.0",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "doc": "The duration (in milliseconds) of the fade animation, the default is 350",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FadeAnimation__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Evaluate(GH_Canvas)",
+      "signature": "public void Evaluate(GH_Canvas canvas)",
+      "summary": "Reevaluate the fade animation parameters. You should call this method from within the Render method of your attributes. If an animation is currently in progress a redraw of the canvas will be scheduled, whether or not the attributes are actually visible on the canvas. You should therefore only call this method if your attributes are already drawing themselves.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas currently drawing in.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FadeAnimation_Evaluate.htm"
+    },
+    {
+      "name": "Evaluate(GH_Canvas, Boolean)",
+      "signature": "public void Evaluate(GH_Canvas canvas, bool scheduleRedraw)",
+      "summary": "Reevaluate the fade animation parameters. You should call this method from within the Render method of your attributes. If an animation is currently in progress a redraw of the canvas will be scheduled, whether or not the attributes are actually visible on the canvas. You should therefore only call this method if your attributes are already drawing themselves.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas currently drawing in.",
+          "optional": false
+        },
+        {
+          "name": "scheduleRedraw",
+          "type": "System.Boolean",
+          "doc": "If true and the animator is active, a redraw will be scheduled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FadeAnimation_Evaluate_1.htm"
+    },
+    {
+      "name": "Evaluate(GH_Canvas, Single)",
+      "signature": "public void Evaluate(GH_Canvas canvas, float value)",
+      "summary": "Reevaluate the fade animation parameters. You should call this method from within the Render method of your attributes. If an animation is currently in progress a redraw of the canvas will be scheduled, whether or not the attributes are actually visible on the canvas. You should therefore only call this method if your attributes are already drawing themselves.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas currently drawing in.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FadeAnimation_Evaluate_2.htm"
+    },
+    {
+      "name": "Evaluate(GH_Canvas, Single, Boolean)",
+      "signature": "public void Evaluate(GH_Canvas canvas, float value, bool scheduleRedraw)",
+      "summary": "Reevaluate the fade animation parameters. You should call this method from within the Render method of your attributes. If an animation is currently in progress a redraw of the canvas will be scheduled, whether or not the attributes are actually visible on the canvas. You should therefore only call this method if your attributes are already drawing themselves.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas currently drawing in.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "scheduleRedraw",
+          "type": "System.Boolean",
+          "doc": "If true and the animator is active, a redraw will be scheduled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FadeAnimation_Evaluate_3.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Duration",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the duration (in milliseconds) for ZUI animations. Negative durations are not allowed. The default is 350 milliseconds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FadeAnimation_Duration.htm"
+    },
+    {
+      "name": "FadeAlpha",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the blend alpha byte for the current state. 0 means fully hidden, 255 means fully shown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FadeAnimation_FadeAlpha.htm"
+    },
+    {
+      "name": "FadeFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the blend factor for the current state. 0.0 means fully hidden, 1.0 means fully shown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FadeAnimation_FadeFactor.htm"
+    },
+    {
+      "name": "IsFinished",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this animator has finished animating.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FadeAnimation_IsFinished.htm"
+    },
+    {
+      "name": "Phase",
+      "type": "GH_FadePhase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current animation phase.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FadeAnimation_Phase.htm"
+    },
+    {
+      "name": "Threshold",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the threshold value for the fade animation trigger.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FadeAnimation_Threshold.htm"
+    },
+    {
+      "name": "TriggerUpdate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether this animator triggers canvas updates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FadeAnimation_TriggerUpdate.htm"
+    },
+    {
+      "name": "Delay",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of milliseconds between redraws (25 milliseconds, resulting in ~40 fps)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_FadeAnimation_Delay.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

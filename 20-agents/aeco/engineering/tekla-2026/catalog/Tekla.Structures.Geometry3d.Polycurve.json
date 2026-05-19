@@ -1,0 +1,131 @@
+{
+  "name": "Polycurve",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "Represents 3D polycurve geometry, which itself is composed of one or more connected curves. The class offers facilities for iteration through the polycurve, and implements the ICurve interface. Once this class is constructed, it represents an immutable polycurve. The curves that can be obtained during iteration are mere copies of the curves in the polycurve, and mutating them won\u0027t affect the polycurve. Please use the PolycurveGeometryBuilder class to build and manipulate this objects of this class. Since it implements IEnumerable, the curves can be iterated using foreach loops, and it supports all of the LINQ operations, and it is possible to build arbitrarily complex queries over the curves of this class.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/30425d6a-467a-1cf9-a182-0d5859a9b75d",
+  "constructors": [
+    {
+      "name": "Polycurve()",
+      "signature": "public Polycurve()",
+      "summary": "Initializes a new instance of the Polycurve class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9facaafc-472b-5a61-c790-436e5514568b"
+    },
+    {
+      "name": "Polycurve(ICurve)",
+      "signature": "public Polycurve(ICurve geometry)",
+      "summary": "Initializes a new instance of the Polycurve class from a curve geometry.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Geometry3d.ICurve",
+          "doc": "Initial geometry for the polycurve",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/07335fb4-483f-b2b7-08fc-0f70fd8251ec"
+    },
+    {
+      "name": "Polycurve(PolyLine)",
+      "signature": "public Polycurve(PolyLine polyLine)",
+      "summary": "Initializes a new instance of the Polycurve class from a PolyLine. The lines are converted to line segments.",
+      "params": [
+        {
+          "name": "polyLine",
+          "type": "Tekla.Structures.Geometry3d.PolyLine",
+          "doc": "Initial geometry for the geometry list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a1280e0-7f40-5343-92c2-715880aea375"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public ICurve Clone()",
+      "summary": "Creates a deep copy of the polycurve",
+      "params": [],
+      "returns": {
+        "type": "ICurve",
+        "doc": "The copy"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99934b85-1d06-7519-e2f4-088739ec4ff2"
+    },
+    {
+      "name": "Equals",
+      "signature": "public bool Equals(ICurve other)",
+      "summary": "Determines whether the polycurve equals another polycurve This function only checks for equality among polycurves",
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Geometry3d.ICurve",
+          "doc": "The other polycurve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/db9385bc-cef2-213d-644b-0c6bd15583d1"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CICurve\u003E GetEnumerator()",
+      "summary": "This method implements the IEnumerable interface",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CICurve\u003E",
+        "doc": "Enumerator of the geometry list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5f3b450c-d314-020c-dafa-3ae3b17c7a54"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end point of the polycurve",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b717de23-0a0a-914b-696b-ddc0f75e61bd"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total length of the polycurve",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a520778e-92ce-cac8-6388-76abb42dd69e"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the start point of the polycurve",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/de4e5dba-557d-82d8-049a-eb325a0daa0d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

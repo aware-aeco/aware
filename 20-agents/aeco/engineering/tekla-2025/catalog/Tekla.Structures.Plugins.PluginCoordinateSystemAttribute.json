@@ -1,0 +1,58 @@
+{
+  "name": "PluginCoordinateSystemAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The PluginCoordinateSystemAttribute class is used for defining the coordinate system type for model plug-ins which are using points as an input. The attribute is initialized from the custom attribute [PluginCoordinateSystem(PluginBase.CoordinateSystemType Type)] in the plug-in source. If attribute is not defined or attribute has value PluginBase.CoordinateSystemType.FROM_FIRST_POINT_AND_GLOBAL coordinate system is calculated as earlier. The attribute is used if the first Inputdefinition object contains at least two points (defined by two points, line, face or polygon).",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4e22e521-31d7-14cd-9322-b5e585d3cdee",
+  "constructors": [
+    {
+      "name": "PluginCoordinateSystemAttribute(Int32)",
+      "signature": "public PluginCoordinateSystemAttribute(int Type)",
+      "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type of the input object dependency as an integer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/51605f3a-66ba-b8cf-c00b-7b5069c2bfdb"
+    },
+    {
+      "name": "PluginCoordinateSystemAttribute(PluginBase.CoordinateSystemType)",
+      "signature": "public PluginCoordinateSystemAttribute(PluginBase.CoordinateSystemType Type)",
+      "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.PluginBase.CoordinateSystemType",
+          "doc": "The type of the input object dependency.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fda7daa8-5b93-c2d1-77c2-71d401e2d512"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "PluginBase.CoordinateSystemType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the type of the input object dependency.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f62f37c8-45fd-e3ba-6914-7fe3e6db688b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,45 @@
+{
+  "name": "CertificateVerification",
+  "namespace": "DynamoUtilities",
+  "kind": "class",
+  "summary": "Type CertificateVerification",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/CertificateVerification.cs",
+  "constructors": [
+    {
+      "name": "CertificateVerification()",
+      "signature": "void CertificateVerification()",
+      "summary": "CertificateVerification.CertificateVerification",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/CertificateVerification.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CheckAssemblyForValidCertificate(string)",
+      "signature": "bool CheckAssemblyForValidCertificate(string assemblyPath)",
+      "summary": "Check if a .NET assembly can be loaded and has a valid certificate",
+      "params": [
+        {
+          "name": "assemblyPath",
+          "type": "string",
+          "doc": "Path of the assembly file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/CertificateVerification.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

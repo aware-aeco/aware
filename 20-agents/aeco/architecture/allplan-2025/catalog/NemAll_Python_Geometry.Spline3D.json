@@ -1,0 +1,306 @@
+{
+  "name": "Spline3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "class for 3D spline geometry",
+  "base": "PolyPoints3D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/",
+  "constructors": [
+    {
+      "name": "Spline3D",
+      "signature": "Spline3D() | Spline3D(splinePoints: list) | Spline3D(spline: Spline3D) | Spline3D(spline: Spline2D, zPlane: float)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CalculateEndVector",
+      "signature": "CalculateEndVector() -\u003E Vector3D",
+      "summary": "Calculates end vector",
+      "remarks": "Calculates end vector",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "End vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CalculateEndVector"
+    },
+    {
+      "name": "CalculatePoint",
+      "signature": "CalculatePoint(param: float) -\u003E Point3D | CalculatePoint(param: float, cpoints: Point3DList) -\u003E Point3D",
+      "summary": "Calculates point on spline",
+      "remarks": "Calculates point on spline",
+      "params": [
+        {
+          "name": "param",
+          "type": "float",
+          "doc": "parameter of spline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Resulting point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CalculatePoint"
+    },
+    {
+      "name": "CalculateStartVector",
+      "signature": "CalculateStartVector() -\u003E Vector3D",
+      "summary": "Calculates start vector",
+      "remarks": "Calculates start vector",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Start vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CalculateStartVector"
+    },
+    {
+      "name": "CreateClosedSpline",
+      "signature": "CreateClosedSpline(points: Point3DList) -\u003E Spline3D",
+      "summary": "Create closed spline from given points",
+      "remarks": "Create closed spline from given points",
+      "params": [
+        {
+          "name": "points",
+          "type": "Point3DList",
+          "doc": "Points",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Spline3D",
+        "doc": "Spline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CreateClosedSpline"
+    },
+    {
+      "name": "GetControlPoints",
+      "signature": "GetControlPoints() -\u003E tuple[GeoErrorCode, list[Point3D]]",
+      "summary": "Compute bezier control points",
+      "remarks": "Compute bezier control points",
+      "params": [],
+      "returns": {
+        "type": "tuple[GeoErrorCode, list[Point3D]]",
+        "doc": "tuple(error code, vector of control points)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.GetControlPoints"
+    },
+    {
+      "name": "GetEndVector",
+      "signature": "GetEndVector() -\u003E Vector3D",
+      "summary": "Get end vector.",
+      "remarks": "Get end vector.",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "end vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.GetEndVector"
+    },
+    {
+      "name": "GetStartVector",
+      "signature": "GetStartVector() -\u003E Vector3D",
+      "summary": "Get start vector.",
+      "remarks": "Get start vector.",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "start vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.GetStartVector"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed() -\u003E bool",
+      "summary": "Check if spline is closed ( first/last points are equal )",
+      "remarks": "Check if spline is closed ( first/last points are equal )",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "closed spline true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.IsClosed"
+    },
+    {
+      "name": "IsCollinear",
+      "signature": "IsCollinear() -\u003E bool",
+      "summary": "Function checks if the 3D spline is collinear - all control points are on same line",
+      "remarks": "Function checks if the 3D spline is collinear - all control points are on same line",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if collinear"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.IsCollinear"
+    },
+    {
+      "name": "IsPlanar",
+      "signature": "IsPlanar() -\u003E tuple[bool, Plane3D]",
+      "summary": "Function checks if the 3D spline is planar, if yes sets the plane",
+      "remarks": "Function checks if the 3D spline is planar, if yes sets the plane",
+      "params": [],
+      "returns": {
+        "type": "tuple[bool, Plane3D]",
+        "doc": "tuple(true if planar, the plane the spline is laying on)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.IsPlanar"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "remarks": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.Reverse"
+    },
+    {
+      "name": "SetEndVector",
+      "signature": "SetEndVector(vec: Vector3D)",
+      "summary": "Set end vector.",
+      "remarks": "Set end vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "new end vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.SetEndVector"
+    },
+    {
+      "name": "SetStartVector",
+      "signature": "SetStartVector(vec: Vector3D)",
+      "summary": "Set start vector.",
+      "remarks": "Set start vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "new start vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.SetStartVector"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(spline: Spline3D) -\u003E object",
+      "summary": "Comparison of splines without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of splines without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline3D",
+          "doc": "Compared spline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when splines are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.__eq__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(point: Point3D) -\u003E Spline3D",
+      "summary": "Addition assignment operator",
+      "remarks": "Addition assignment operator",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "New Point3D which will be added to the spline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Spline3D",
+        "doc": "Reference to spline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.__iadd__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndVector",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end vector.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.EndVector"
+    },
+    {
+      "name": "IsPeriodic",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Check if spline is periodic ( first/last points are equal \u002B start and end tangents are equal)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.IsPeriodic"
+    },
+    {
+      "name": "StartVector",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start vector.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.StartVector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

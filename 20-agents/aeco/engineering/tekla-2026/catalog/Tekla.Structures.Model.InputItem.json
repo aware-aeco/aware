@@ -1,0 +1,41 @@
+{
+  "name": "InputItem",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The InputItem class is used to store input objects and positions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cc7681b2-4148-059a-f0f0-641b7c2d2769",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetData",
+      "signature": "public Object GetData()",
+      "summary": "Returns the data of the input item. See also: InputItem.InputTypeEnum.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "The input data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d588fef0-4022-bf7b-a92f-b3528419fe35"
+    },
+    {
+      "name": "GetInputType",
+      "signature": "public InputItem.InputTypeEnum GetInputType()",
+      "summary": "Returns the type of the input item.",
+      "params": [],
+      "returns": {
+        "type": "InputItem.InputTypeEnum",
+        "doc": "The type of the input item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9929646f-ef1d-03c3-f4d1-3d123818108d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

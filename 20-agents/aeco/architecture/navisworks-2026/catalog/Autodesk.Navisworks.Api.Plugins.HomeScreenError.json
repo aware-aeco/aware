@@ -1,0 +1,41 @@
+{
+  "name": "HomeScreenError",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "HomeScreenError class in Autodesk.Navisworks.Api.Plugins.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.HomeScreenError",
+  "constructors": [
+    {
+      "name": "HomeScreenError()",
+      "signature": "HomeScreenError()",
+      "summary": "Constructs a new HomeScreenError.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.HomeScreenError.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ErrorStatus",
+      "type": "Autodesk.Navisworks.Api.Plugins.HomeScreenErrorStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "ErrorStatus property of HomeScreenError.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.HomeScreenError.ErrorStatus"
+    },
+    {
+      "name": "HttpStatusCode",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "HttpStatusCode property of HomeScreenError.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.HomeScreenError.HttpStatusCode"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

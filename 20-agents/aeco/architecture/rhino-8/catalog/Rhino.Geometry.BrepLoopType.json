@@ -1,0 +1,44 @@
+{
+  "name": "BrepLoopType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Each brep loop has a defined type, e.g. outer, inner or point on surface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_BrepLoopType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0,
+      "summary": "Unknown loop type."
+    },
+    {
+      "name": "Outer",
+      "value": 1,
+      "summary": "2d loop curves form a simple closed curve with a counterclockwise orientation."
+    },
+    {
+      "name": "Inner",
+      "value": 2,
+      "summary": "2d loop curves form a simple closed curve with a clockwise orientation."
+    },
+    {
+      "name": "Slit",
+      "value": 3,
+      "summary": "Always closed - used internally during splitting operations."
+    },
+    {
+      "name": "CurveOnSurface",
+      "value": 4,
+      "summary": "\u0022loop\u0022 is a curve-on-surface made from a single (open or closed) trim that has type TrimType.CurveOnSurface."
+    },
+    {
+      "name": "PointOnSurface",
+      "value": 5,
+      "summary": "\u0022loop\u0022 is a PointOnSurface made from a single trim that has type TrimType.PointOnSurface."
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "name": "Settings",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The Settings class contains the currently active unit settings.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9485d590-5b71-ebb9-13fb-8f55de9337ab",
+  "constructors": [
+    {
+      "name": "Settings",
+      "signature": "public Settings()",
+      "summary": "Initializes a new instance of the Settings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb350206-d31b-553d-fa35-2394d59889ac"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetValue",
+      "signature": "public static Object GetValue(string name)",
+      "summary": "Gets the value of the setting with the given name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The value of the given setting."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0db94c0d-502a-97b2-51df-d351b58524c4"
+    },
+    {
+      "name": "SetValue",
+      "signature": "public static void SetValue(string name, Object value)",
+      "summary": "Sets a setting to a value.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the setting.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The new value for the setting.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2903c000-7c5f-df96-9a7f-9556d992d4aa"
+    },
+    {
+      "name": "TryGetValue(String, Object.)",
+      "signature": "public static bool TryGetValue(string name, out Object obj)",
+      "summary": "Tries to get the value of the setting with the given name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the setting.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "System.Object.",
+          "doc": "The value of the given setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ebbbc0c-626d-6f2b-2c3f-e58c9509bcf5"
+    },
+    {
+      "name": "TryGetValue\u003CT\u003E(String, T.)",
+      "signature": "public static bool TryGetValue\u003CT\u003E(string name, out T obj)",
+      "summary": "Tries to get the value of the setting with the given name and given object type.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the setting.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "T.",
+          "doc": "The value of the given setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c48529be-f7c8-5b08-34fe-33491cb04597"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

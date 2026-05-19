@@ -1,0 +1,89 @@
+{
+  "name": "GH_ParamHashFields",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all accepted fields for hashing parameter data.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParamHashFields.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Represents a blank hash."
+    },
+    {
+      "name": "Input",
+      "value": 1,
+      "summary": "Input parameters are taken into account."
+    },
+    {
+      "name": "Output",
+      "value": 2,
+      "summary": "Output parameters are taken into account."
+    },
+    {
+      "name": "InputAndOutput",
+      "value": 3,
+      "summary": "Input and output parameters are taken into account."
+    },
+    {
+      "name": "InstanceId",
+      "value": 4,
+      "summary": "Parameter instance ID is taken into account."
+    },
+    {
+      "name": "NickName",
+      "value": 8,
+      "summary": "Parameter nickname is taken into account."
+    },
+    {
+      "name": "Access",
+      "value": 16,
+      "summary": "Parameter access (item, list, tree) is taken into account."
+    },
+    {
+      "name": "TypeId",
+      "value": 32,
+      "summary": "Parameter type code is taken into account."
+    },
+    {
+      "name": "PersistentData",
+      "value": 64,
+      "summary": "Parameter persistent data is taken into account."
+    },
+    {
+      "name": "Expression",
+      "value": 128,
+      "summary": "Parameter Expression is taken into account."
+    },
+    {
+      "name": "TypeHint",
+      "value": 256,
+      "summary": "Parameter typehint is taken into account."
+    },
+    {
+      "name": "Sources",
+      "value": 65536,
+      "summary": "Parameter source IDs are taken into account."
+    },
+    {
+      "name": "Recipients",
+      "value": 131072,
+      "summary": "Parameter recipient IDs are taken into account."
+    },
+    {
+      "name": "SourcesAndRecipients",
+      "value": 196608,
+      "summary": "Parameter sources and recipients are taken into account."
+    },
+    {
+      "name": "SerialData",
+      "value": 16777216,
+      "summary": "Parameter serialization byte array is taken into account."
+    }
+  ]
+}

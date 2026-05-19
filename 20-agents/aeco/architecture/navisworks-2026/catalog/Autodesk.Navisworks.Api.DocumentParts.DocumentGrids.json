@@ -1,0 +1,79 @@
+{
+  "name": "DocumentGrids",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "Stores the Grids information contained in a Document.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentGrids",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SetSystemLockedLevel",
+      "signature": "void SetSystemLockedLevel(Autodesk.Navisworks.Api.GridSystem system, Autodesk.Navisworks.Api.GridLevel level)",
+      "summary": "Sets the LockedLevel for a particular System.",
+      "params": [
+        {
+          "name": "system",
+          "type": "Autodesk.Navisworks.Api.GridSystem",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Autodesk.Navisworks.Api.GridLevel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentGrids.SetSystemLockedLevel%28Autodesk.Navisworks.Api.GridSystem%2CAutodesk.Navisworks.Api.GridLevel%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveSystem",
+      "type": "Autodesk.Navisworks.Api.GridSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "The GridSystem that will be rendered.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentGrids.ActiveSystem"
+    },
+    {
+      "name": "RenderMode",
+      "type": "Autodesk.Navisworks.Api.GridsRenderMode",
+      "getter": true,
+      "setter": true,
+      "summary": "The GridSystem that will be rendered.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentGrids.RenderMode"
+    },
+    {
+      "name": "Systems",
+      "type": "Autodesk.Navisworks.Api.GridSystemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "The collection of all GridSystems within the Document.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentGrids.Systems"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changed",
+      "summary": "Occurs when the GridsData contained in this object has changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentGrids.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the GridsData contained in about to change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentGrids.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

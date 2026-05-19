@@ -1,0 +1,149 @@
+{
+  "name": "BaseWeld.WeldTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The weld types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4371747e-9838-b687-e75b-06d27cbffb1e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WELD_TYPE_NONE",
+      "value": 0,
+      "summary": "No weld type."
+    },
+    {
+      "name": "WELD_TYPE_EDGE_FLANGE",
+      "value": 1,
+      "summary": "The edge-flange weld."
+    },
+    {
+      "name": "WELD_TYPE_SQUARE_GROOVE_SQUARE_BUTT",
+      "value": 2,
+      "summary": "The square-groove (square butt) weld."
+    },
+    {
+      "name": "WELD_TYPE_BEVEL_GROOVE_SINGLE_V_BUTT",
+      "value": 3,
+      "summary": "The bevel-groove (single-V butt) weld."
+    },
+    {
+      "name": "WELD_TYPE_BEVEL_GROOVE_SINGLE_BEVEL_BUTT",
+      "value": 4,
+      "summary": "The bevel-groove (single-bevel butt) weld."
+    },
+    {
+      "name": "WELD_TYPE_SINGLE_V_BUTT_WITH_BROAD_ROOT_FACE",
+      "value": 5,
+      "summary": "The single-V butt weld with broad root face."
+    },
+    {
+      "name": "WELD_TYPE_SINGLE_BEVEL_BUTT_WITH_BROAD_ROOT_FACE",
+      "value": 6,
+      "summary": "The single-bevel butt weld with broad root face."
+    },
+    {
+      "name": "WELD_TYPE_U_GROOVE_SINGLE_U_BUTT",
+      "value": 7,
+      "summary": "The U-groove (single U-butt) weld."
+    },
+    {
+      "name": "WELD_TYPE_J_GROOVE_J_BUTT",
+      "value": 8,
+      "summary": "The J-groove (single J-butt) weld."
+    },
+    {
+      "name": "WELD_TYPE_BEVEL_BACKING",
+      "value": 9,
+      "summary": "The bevel backing weld."
+    },
+    {
+      "name": "WELD_TYPE_FILLET",
+      "value": 10,
+      "summary": "The fillet weld."
+    },
+    {
+      "name": "WELD_TYPE_PLUG",
+      "value": 11,
+      "summary": "The plug weld."
+    },
+    {
+      "name": "WELD_TYPE_SPOT",
+      "value": 12,
+      "summary": "The spot weld."
+    },
+    {
+      "name": "WELD_TYPE_SEAM",
+      "value": 13,
+      "summary": "The seam weld."
+    },
+    {
+      "name": "WELD_TYPE_SLOT",
+      "value": 14,
+      "summary": "The slot weld."
+    },
+    {
+      "name": "WELD_TYPE_FLARE_BEVEL_GROOVE",
+      "value": 15,
+      "summary": "The flare-bevel-groove weld."
+    },
+    {
+      "name": "WELD_TYPE_FLARE_V_GROOVE",
+      "value": 16,
+      "summary": "The flare V-groove weld."
+    },
+    {
+      "name": "WELD_TYPE_CORNER_FLANGE",
+      "value": 17,
+      "summary": "The corner-flange weld."
+    },
+    {
+      "name": "WELD_TYPE_PARTIAL_PENETRATION_SINGLE_BEVEL_BUTT_PLUS_FILLET",
+      "value": 18,
+      "summary": "The partial penetration (single-bevel butt \u002B fillet) weld."
+    },
+    {
+      "name": "WELD_TYPE_PARTIAL_PENETRATION_SQUARE_GROOVE_PLUS_FILLET",
+      "value": 19,
+      "summary": "The partial penetration (square groove \u002B fillet) weld."
+    },
+    {
+      "name": "WELD_TYPE_MELT_THROUGH",
+      "value": 20,
+      "summary": "The melt-through weld."
+    },
+    {
+      "name": "STEEP_FLANKED_BEVEL_GROOVE_SINGLE_V_BUTT",
+      "value": 21,
+      "summary": "The steep flanked bevel groove single-V butt weld."
+    },
+    {
+      "name": "STEEP_FLANKED_BEVEL_GROOVE_SINGLE_BEVEL_BUTT",
+      "value": 22,
+      "summary": "The steep flanked bevel groove single-bevel butt weld."
+    },
+    {
+      "name": "WELD_TYPE_EDGE",
+      "value": 23,
+      "summary": "The edge weld."
+    },
+    {
+      "name": "WELD_TYPE_ISO_SURFACING",
+      "value": 24,
+      "summary": "The ISO surfacing weld."
+    },
+    {
+      "name": "WELD_TYPE_FOLD",
+      "value": 25,
+      "summary": "The fold weld."
+    },
+    {
+      "name": "WELD_TYPE_INCLINED",
+      "value": 26,
+      "summary": "The inclined weld."
+    }
+  ]
+}

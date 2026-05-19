@@ -1,0 +1,777 @@
+{
+  "name": "HatchPattern",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.HatchPattern\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_HatchPattern.htm",
+  "constructors": [
+    {
+      "name": "HatchPattern()",
+      "signature": "public HatchPattern()",
+      "summary": "Initializes a new instance of the HatchPattern class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern__ctor.htm"
+    },
+    {
+      "name": "HatchPattern(HatchPattern)",
+      "signature": "public HatchPattern(HatchPattern other)",
+      "summary": "Initializes a new instance of the HatchPattern class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HatchPattern.#ctor(Rhino.DocObjects.HatchPattern)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddHatchLine",
+      "signature": "public int AddHatchLine(HatchLine hatchLine)",
+      "summary": "Add a HatchLine to the pattern.",
+      "params": [
+        {
+          "name": "hatchLine",
+          "type": "Rhino.DocObjects.HatchLine",
+          "doc": "The hatch line to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of newly added hatch line, or -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_AddHatchLine.htm"
+    },
+    {
+      "name": "ClearId",
+      "signature": "public void ClearId()",
+      "summary": "Resets the HasId property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the ID is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearId.htm"
+    },
+    {
+      "name": "ClearIndex",
+      "signature": "public void ClearIndex()",
+      "summary": "Resets the HasIndex property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the index is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearIndex.htm"
+    },
+    {
+      "name": "ClearName",
+      "signature": "public void ClearName()",
+      "summary": "Resets the HasName property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the name is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearName.htm"
+    },
+    {
+      "name": "CreatePreviewGeometry",
+      "signature": "public Line[] CreatePreviewGeometry(int width, int height, double angle)",
+      "summary": "Creates preview line segments of the hatch pattern.",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "The width of the preview.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "The height of the preview.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "The rotation angle of the pattern display in radians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line[]",
+        "doc": "The preview line segments if successful, an empty array on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_CreatePreviewGeometry.htm"
+    },
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint currentRemainder)",
+      "summary": "Increments the Cyclic Redundancy Check value by this instance.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The current remainder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The updated remainder value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_DataCRC.htm"
+    },
+    {
+      "name": "DeleteAllUserStrings",
+      "signature": "public void DeleteAllUserStrings()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_DeleteAllUserStrings.htm"
+    },
+    {
+      "name": "DeleteUserString",
+      "signature": "public bool DeleteUserString(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.HatchPattern.DeleteUserString(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.HatchPattern.DeleteUserString(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_DeleteUserString.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "public string GetUserString(string key)",
+      "summary": "Gets user string from this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve the string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "string associated with the key if successful. null if no key was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_GetUserString.htm"
+    },
+    {
+      "name": "GetUserStrings",
+      "signature": "public NameValueCollection GetUserStrings()",
+      "summary": "Gets a copy of all (user key string, user value string) pairs attached to this geometry.",
+      "params": [],
+      "returns": {
+        "type": "NameValueCollection",
+        "doc": "A new collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_GetUserStrings.htm"
+    },
+    {
+      "name": "HatchLineAt",
+      "signature": "public HatchLine HatchLineAt(int hatchLineIndex)",
+      "summary": "Gets a HatchLine at an index.",
+      "params": [
+        {
+          "name": "hatchLineIndex",
+          "type": "System.Int32",
+          "doc": "The index of the hatch line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HatchLine",
+        "doc": "The hatch line, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_HatchLineAt.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "LockId",
+      "signature": "public void LockId()",
+      "summary": "Locks the component Id property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockId.htm"
+    },
+    {
+      "name": "LockIndex",
+      "signature": "public void LockIndex()",
+      "summary": "Locks the component Index property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockIndex.htm"
+    },
+    {
+      "name": "LockName",
+      "signature": "public void LockName()",
+      "summary": "Locks the component Name property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockName.htm"
+    },
+    {
+      "name": "ReadFromFile",
+      "signature": "public static HatchPattern[] ReadFromFile(string filename, bool quiet)",
+      "summary": "Reads hatch pattern definitions from a file.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Name of an existing file. If filename is null or empty, default hatch pattern filename is used.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "Ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HatchPattern[]",
+        "doc": "An array of hatch patterns. This can be null, but not empty."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_ReadFromFile.htm"
+    },
+    {
+      "name": "RemoveAllHatchLines",
+      "signature": "public void RemoveAllHatchLines()",
+      "summary": "Remove all of the hatch line from the pattern.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_RemoveAllHatchLines.htm"
+    },
+    {
+      "name": "RemoveHatchLine",
+      "signature": "public bool RemoveHatchLine(int hatchLineIndex)",
+      "summary": "Remove a hatch line from the pattern.",
+      "params": [
+        {
+          "name": "hatchLineIndex",
+          "type": "System.Int32",
+          "doc": "The index of the hatch line to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false if index is out of range."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_RemoveHatchLine.htm"
+    },
+    {
+      "name": "SetHatchLines",
+      "signature": "public int SetHatchLines(IEnumerable\u003CHatchLine\u003E hatchLines)",
+      "summary": "Set all of the hatch lines at once. Existing hatch lines are deleted.",
+      "params": [
+        {
+          "name": "hatchLines",
+          "type": "System.Collections.Generic.IEnumerable\u003CHatchLine\u003E",
+          "doc": "An enumeration of hatch lines.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of hatch lines added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_SetHatchLines.htm"
+    },
+    {
+      "name": "SetUserString",
+      "signature": "public bool SetUserString(string key, string value)",
+      "summary": "Attach a user string (key,value combination) to this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve this string.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "string associated with key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_SetUserString.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns the name of the model component type, and then its name and index.",
+      "remarks": "This is provided as a visual aid. Do not rely on this for serialization.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ModelComponent.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ToString.htm"
+    },
+    {
+      "name": "WriteToFile(String, HatchPattern)",
+      "signature": "public static bool WriteToFile(string filename, HatchPattern hatchPattern)",
+      "summary": "Writes a hatch pattern defintion to a file.",
+      "remarks": "Output file is in AutoCAD .PAT format.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Name of file to create. If file exists, it will be overwritten.",
+          "optional": false
+        },
+        {
+          "name": "hatchPattern",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "The hatch pattern to write.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_WriteToFile.htm"
+    },
+    {
+      "name": "WriteToFile(String, IEnumerable\u003CHatchPattern\u003E)",
+      "signature": "public static bool WriteToFile(string filename, IEnumerable\u003CHatchPattern\u003E hatchPatterns)",
+      "summary": "Writes one or more hatch pattern defintions to a file.",
+      "remarks": "Output file is in AutoCAD .PAT format.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Name of file to create. If file exists, it will be overwritten.",
+          "optional": false
+        },
+        {
+          "name": "hatchPatterns",
+          "type": "System.Collections.Generic.IEnumerable\u003CHatchPattern\u003E",
+          "doc": "The enumeration of hatch patterns to write.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchPattern_WriteToFile_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentStatus",
+      "type": "ComponentStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the component status of the model component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ComponentStatus.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns HatchPattern.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_ComponentType.htm"
+    },
+    {
+      "name": "DeletedName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of a component that is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_DeletedName.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets a short description of the pattern.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_Description.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "FillType",
+      "type": "HatchPatternFillType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the pattern\u0027s fill type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_FillType.htm"
+    },
+    {
+      "name": "HasId",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasId.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an Index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has a Name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasName.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "HatchLineCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the number of HatchLines in the pattern.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_HatchLineCount.htm"
+    },
+    {
+      "name": "HatchLines",
+      "type": "IEnumerable\u003CHatchLine\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all the hatch lines.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_HatchLines.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ID of the current instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_Id.htm"
+    },
+    {
+      "name": "IdIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component ID is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IdIsLocked.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Index in the hatch pattern table for this pattern. -1 if not in the table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_Index.htm"
+    },
+    {
+      "name": "IndexIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Index is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IndexIsLocked.htm"
+    },
+    {
+      "name": "InstanceDefinitionModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model as part of the information required for a linked instance definition, this value identifies the linked instance definition reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_InstanceDefinitionModelSerialNumber.htm"
+    },
+    {
+      "name": "InUse",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the hatch pattern is in use by a Rhino object, a layer, an instance definition, or a section style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_InUse.htm"
+    },
+    {
+      "name": "IsComponentStatusLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The component status itself can be locked. This returns an indication.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsComponentStatusLocked.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Deleted hatch patterns are kept in the runtime hatch pattern table so that undo will work with hatch patterns. Call IsDeleted to determine to determine if a hatch pattern is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_IsDeleted.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsReference",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino allows multiple files to be viewed simultaneously. Hatch patterns in the document are \u0022normal\u0022 or \u0022reference\u0022. Reference hatch patterns are not saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_IsReference.htm"
+    },
+    {
+      "name": "IsSystemComponent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this model component is a system constant. An incomplete list of system constant model components is below:ON_ModelComponent::Unset ON_InstanceDefinition::Empty ON_Linetype::UnsetON_Linetype::ContinuousON_Linetype::ByLayerON_Linetype::ByParent ON_Layer::UnsetON_Layer::Default ON_TextStyle::UnsetON_TextStyle::DefaultON_TextStyle::ByLayerON_TextStyle::ByParent ON_DimStyle::UnsetON_DimStyle::DefaultON_DimStyle::DefaultInchDecimalON_DimStyle::DefaultInchFractionalON_DimStyle::DefaultFootInchArchitectureON_DimStyle::DefaultMillimeterSmallON_DimStyle::DefaultMillimeterLargeON_DimStyle::DefaultMillimeterArchitecture",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsSystemComponent.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "ModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "A value identifying the model that manages this component.",
+      "remarks": "If the component is being managed by a model, this value identifies the model. In Rhino, this value is the document runtime serial number. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ModelSerialNumber.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_Name.htm"
+    },
+    {
+      "name": "NameIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Name is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_NameIsLocked.htm"
+    },
+    {
+      "name": "ReferenceModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model for reference, this value identifies the reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ReferenceModelSerialNumber.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use shareable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UserStringCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of user strings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchPattern_UserStringCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

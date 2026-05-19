@@ -1,0 +1,307 @@
+{
+  "name": "PublishProperties",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Set of properties used when publishing a file",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PublishProperties",
+  "constructors": [
+    {
+      "name": "PublishProperties()",
+      "signature": "PublishProperties()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PublishProperties.%23ctor"
+    },
+    {
+      "name": "PublishProperties(Autodesk.Navisworks.Api.PublishProperties)",
+      "signature": "PublishProperties(Autodesk.Navisworks.Api.PublishProperties value)",
+      "summary": "Copy constructor",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PublishProperties.%23ctor%28Autodesk.Navisworks.Api.PublishProperties%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of PublishProperties.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PublishProperties.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.PublishProperties InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of PublishProperties.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PublishProperties",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PublishProperties.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "RemoveExpiryDate",
+      "signature": "void RemoveExpiryDate()",
+      "summary": "Remove any expiry date that has been set",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PublishProperties.RemoveExpiryDate"
+    },
+    {
+      "name": "RemovePassword",
+      "signature": "void RemovePassword()",
+      "summary": "Remove any password that has been set",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PublishProperties.RemovePassword"
+    },
+    {
+      "name": "SetPassword",
+      "signature": "void SetPassword(string password)",
+      "summary": "Set a password to protect the content with when published",
+      "params": [
+        {
+          "name": "password",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PublishProperties.SetPassword%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowResave",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Can the file be resaved after it has been published ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.AllowResave"
+    },
+    {
+      "name": "Author",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Who created data ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.Author"
+    },
+    {
+      "name": "Comments",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Any comments",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.Comments"
+    },
+    {
+      "name": "Copyright",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Any copyright statement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.Copyright"
+    },
+    {
+      "name": "DisplayAtPassword",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should the publish properties be displayed when asking the user for a password ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.DisplayAtPassword"
+    },
+    {
+      "name": "DisplayOnOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should the publish properties be displayed when the published file is opened ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.DisplayOnOpen"
+    },
+    {
+      "name": "EmbedDatabaseProperties",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should any properties from linked databases be embedded in the published file ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.EmbedDatabaseProperties"
+    },
+    {
+      "name": "ExpiryDate",
+      "type": "System.DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "Date that content expires. Only valid if HasExpiryDate is true.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.ExpiryDate"
+    },
+    {
+      "name": "HasBeenResaved",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Has the published file been resaved (and possibly modified) since it was published ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.HasBeenResaved"
+    },
+    {
+      "name": "HasExpiryDate",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is there a valid expiry date ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.HasExpiryDate"
+    },
+    {
+      "name": "HasPassword",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is the content password protected ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.HasPassword"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.IsReadOnly"
+    },
+    {
+      "name": "Keywords",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Any keywords for searching",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.Keywords"
+    },
+    {
+      "name": "PublishDate",
+      "type": "System.DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "Date of publication",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.PublishDate"
+    },
+    {
+      "name": "PublishedFor",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Who\u0027s the data intended for ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.PublishedFor"
+    },
+    {
+      "name": "Publisher",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Who published data ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.Publisher"
+    },
+    {
+      "name": "Subject",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Subject",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.Subject"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Title of published content",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PublishProperties.Title"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

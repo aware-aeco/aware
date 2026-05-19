@@ -1,0 +1,275 @@
+{
+  "name": "PropertyElement.PropertyElementType.ReinforcementMeshMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ReinforcementMeshMarkPropertyElementTypes class represents the available property element types for reinforcement mesh marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2f8635ce-f545-33dc-f58b-70b35a9b455c",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CcCrossing",
+      "signature": "public static PropertyElement.PropertyElementType CcCrossing()",
+      "summary": "Returns the crossing cc property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ad30b28-de86-d336-f472-e262c2191c78"
+    },
+    {
+      "name": "CcExactCrossing",
+      "signature": "public static PropertyElement.PropertyElementType CcExactCrossing()",
+      "summary": "Returns the crossing cc exact property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7c809512-05fa-c152-d302-fb120582c76d"
+    },
+    {
+      "name": "CcExactLongitudinal",
+      "signature": "public static PropertyElement.PropertyElementType CcExactLongitudinal()",
+      "summary": "Returns the longitudinal cc exact property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/09bebe43-a812-1d83-0249-8b399041ed1d"
+    },
+    {
+      "name": "CcLongitudinal",
+      "signature": "public static PropertyElement.PropertyElementType CcLongitudinal()",
+      "summary": "Returns the longitudinal cc property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/815cb488-adf6-ff57-e235-79f5ce15522a"
+    },
+    {
+      "name": "CcMaxCrossing",
+      "signature": "public static PropertyElement.PropertyElementType CcMaxCrossing()",
+      "summary": "Returns the crossing cc max property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/68df9c09-dd6c-31d9-cf80-57eb7be1d631"
+    },
+    {
+      "name": "CcMaxLongitudinal",
+      "signature": "public static PropertyElement.PropertyElementType CcMaxLongitudinal()",
+      "summary": "Returns the longitudinal cc max property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5e7769c0-b17f-bbc5-611a-65a367d820c2"
+    },
+    {
+      "name": "CcMinCrossing",
+      "signature": "public static PropertyElement.PropertyElementType CcMinCrossing()",
+      "summary": "Returns the crossing cc min property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9c69ea45-9915-c206-529d-7d6d56330a70"
+    },
+    {
+      "name": "CcMinLongitudinal",
+      "signature": "public static PropertyElement.PropertyElementType CcMinLongitudinal()",
+      "summary": "Returns the longitudinal cc min property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/48ba2e4f-ea34-13f9-663e-b8859f62d661"
+    },
+    {
+      "name": "Class",
+      "signature": "public static PropertyElement.PropertyElementType Class()",
+      "summary": "Returns the class property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e3e2ecbe-98d8-41a3-b2c5-a77e924e5df8"
+    },
+    {
+      "name": "DiameterCrossing",
+      "signature": "public static PropertyElement.PropertyElementType DiameterCrossing()",
+      "summary": "Returns the crossing diameter property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b9247e49-d325-2c4b-799d-edf40f24ed74"
+    },
+    {
+      "name": "DiameterLongitudinal",
+      "signature": "public static PropertyElement.PropertyElementType DiameterLongitudinal()",
+      "summary": "Returns the longitudinal diameter property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/24f66cc3-dbe9-ccf1-6674-415fc3a44431"
+    },
+    {
+      "name": "Grade",
+      "signature": "public static PropertyElement.PropertyElementType Grade()",
+      "summary": "Returns the grade property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3bd15925-bab8-0842-f4ce-3718e0bb7b8d"
+    },
+    {
+      "name": "MeshLength",
+      "signature": "public static PropertyElement.PropertyElementType MeshLength()",
+      "summary": "Returns the mesh length property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b620f7bc-342a-747c-2d2e-b0576f3c5141"
+    },
+    {
+      "name": "MeshWidth",
+      "signature": "public static PropertyElement.PropertyElementType MeshWidth()",
+      "summary": "Returns the mesh width property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2d6c9c68-c1a2-fb6c-8a73-0a7888a4b0d6"
+    },
+    {
+      "name": "Name",
+      "signature": "public static PropertyElement.PropertyElementType Name()",
+      "summary": "Returns the name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/94b1f110-4233-628e-c141-2bb5fe34f8aa"
+    },
+    {
+      "name": "Number",
+      "signature": "public static PropertyElement.PropertyElementType Number()",
+      "summary": "Returns the number property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0f6df021-0c8b-d454-8b32-c4accc8e5f25"
+    },
+    {
+      "name": "Position",
+      "signature": "public static PropertyElement.PropertyElementType Position()",
+      "summary": "Returns the position property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fcf99a1f-e7d8-b1e9-4621-b995829fbb66"
+    },
+    {
+      "name": "Shape",
+      "signature": "public static PropertyElement.PropertyElementType Shape()",
+      "summary": "Returns the shape property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c21a5fe-3920-fba9-1729-37591400ab92"
+    },
+    {
+      "name": "Size",
+      "signature": "public static PropertyElement.PropertyElementType Size()",
+      "summary": "Returns the size property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/85b41a8a-0d8e-b1e9-0973-474d542d3f6b"
+    },
+    {
+      "name": "Weight",
+      "signature": "public static PropertyElement.PropertyElementType Weight()",
+      "summary": "Returns the weight property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e538ce0-ecd8-f281-b56f-fed2c51a0dd4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

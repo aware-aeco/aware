@@ -1,0 +1,46 @@
+{
+  "name": "VolumeType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The type of the volume measurement unit.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#VolumeType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CubicMeter",
+      "value": "CubicMeter"
+    },
+    {
+      "name": "Liter",
+      "value": "Liter"
+    },
+    {
+      "name": "CubicCentimeter",
+      "value": "CubicCentimeter"
+    },
+    {
+      "name": "CubicMillimeter",
+      "value": "CubicMillimeter"
+    },
+    {
+      "name": "CubicFoot",
+      "value": "CubicFoot"
+    },
+    {
+      "name": "CubicInch",
+      "value": "CubicInch"
+    },
+    {
+      "name": "CubicYard",
+      "value": "CubicYard"
+    },
+    {
+      "name": "Gallon",
+      "value": "Gallon"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "GH_AttributesChangedEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Event arguments passed during AttributesChanged events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_AttributesChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_AttributesChangedEventArgs",
+      "signature": "public GH_AttributesChangedEventArgs()",
+      "summary": "Initializes a new instance of the GH_AttributesChangedEventArgs class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_AttributesChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

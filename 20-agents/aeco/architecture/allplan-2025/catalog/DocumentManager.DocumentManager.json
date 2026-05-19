@@ -1,0 +1,110 @@
+{
+  "name": "DocumentManager",
+  "namespace": "DocumentManager",
+  "kind": "class",
+  "summary": "Singleton class for the document manager",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/",
+  "constructors": [
+    {
+      "name": "DocumentManager",
+      "signature": "DocumentManager()",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "PermissionError",
+          "when": "if no instance exist"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "clear_asso_ref_element",
+      "signature": "clear_asso_ref_element()",
+      "summary": "clear the asso_ref element",
+      "remarks": "clear the asso_ref element",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.clear_asso_ref_element"
+    },
+    {
+      "name": "clear_pythonpart_element",
+      "signature": "clear_pythonpart_element()",
+      "summary": "clear the PythonPart element",
+      "remarks": "clear the PythonPart element",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.clear_pythonpart_element"
+    },
+    {
+      "name": "get_instance",
+      "signature": "get_instance() -\u003E DocumentManager",
+      "summary": "Get the one an only instance for the document manager",
+      "remarks": "Get the one an only instance for the document manager",
+      "params": [],
+      "returns": {
+        "type": "DocumentManager",
+        "doc": "DocumentManager object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.get_instance"
+    },
+    {
+      "name": "set_pythonpart_element",
+      "signature": "set_pythonpart_element(modification_ele_list: ModificationElementList)",
+      "summary": "set the PythonPart element from the model element UUID",
+      "remarks": "set the PythonPart element from the model element UUID",
+      "params": [
+        {
+          "name": "modification_ele_list",
+          "type": "ModificationElementList",
+          "doc": "list with the modification elements in modification mode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.set_pythonpart_element"
+    }
+  ],
+  "properties": [
+    {
+      "name": "asso_ref_element",
+      "type": "BaseElementAdapter",
+      "getter": true,
+      "setter": true,
+      "summary": "get the asso_ref element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.asso_ref_element"
+    },
+    {
+      "name": "document",
+      "type": "DocumentAdapter",
+      "getter": true,
+      "setter": true,
+      "summary": "get the document",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.document"
+    },
+    {
+      "name": "pythonpart_element",
+      "type": "BaseElementAdapter",
+      "getter": true,
+      "setter": false,
+      "summary": "get the PythonPart element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/#DocumentManager.DocumentManager.pythonpart_element"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Environment.BackgroundProjections",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "The available background projections.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Environment_BackgroundProjections.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Planar",
+      "value": 0,
+      "summary": "Planar."
+    },
+    {
+      "name": "Spherical",
+      "value": 1,
+      "summary": "Spherical."
+    },
+    {
+      "name": "Emap",
+      "value": 2,
+      "summary": "Environment map."
+    },
+    {
+      "name": "Box",
+      "value": 3,
+      "summary": "Box."
+    },
+    {
+      "name": "Automatic",
+      "value": 4,
+      "summary": "Automatic."
+    },
+    {
+      "name": "LightProbe",
+      "value": 5,
+      "summary": "Light probe."
+    },
+    {
+      "name": "CubeMap",
+      "value": 6,
+      "summary": "Cube map."
+    },
+    {
+      "name": "VerticalCrossCubeMap",
+      "value": 7,
+      "summary": "Vertical cross cube map."
+    },
+    {
+      "name": "HorizontalCrossCubeMap",
+      "value": 8,
+      "summary": "Horizontal cross cube map."
+    },
+    {
+      "name": "Hemispherical",
+      "value": 9,
+      "summary": "Hemispherical."
+    }
+  ]
+}

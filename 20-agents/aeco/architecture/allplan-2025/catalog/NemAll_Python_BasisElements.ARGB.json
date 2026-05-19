@@ -1,0 +1,137 @@
+{
+  "name": "ARGB",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Represents true color with transparency",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/",
+  "constructors": [
+    {
+      "name": "ARGB",
+      "signature": "ARGB() | ARGB(argb: int) | ARGB(red: int, green: int, blue: int, alpha: int) | ARGB(argb: ARGB)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetARGB",
+      "signature": "GetARGB() -\u003E int",
+      "summary": "returns color as unsigned long",
+      "remarks": "returns color as unsigned long",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "color as long"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.GetARGB"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(argb: ARGB) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "argb",
+          "type": "ARGB",
+          "doc": "color to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ABGR",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "returns color as ABGR sets color from unsigned long ABGR value",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.ABGR"
+    },
+    {
+      "name": "ARGB",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "returns color as unsigned long sets color from ARGB",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.ARGB"
+    },
+    {
+      "name": "Alpha",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "returns alpha component",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Alpha"
+    },
+    {
+      "name": "BGR",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "returns color as BGR sets only RGB values from unsigned long BGR format",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.BGR"
+    },
+    {
+      "name": "Blue",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "returns blue component",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Blue"
+    },
+    {
+      "name": "Green",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "returns green component",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Green"
+    },
+    {
+      "name": "IRGB",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the indexed rgb color representation of the ARGB color If color not found in the index table, the rgb color converted to integer value is returned",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.IRGB"
+    },
+    {
+      "name": "Red",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "returns red component",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Red"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,178 @@
+{
+  "name": "HeapElement",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type HeapElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs",
+  "constructors": [
+    {
+      "name": "HeapElement(ProtoCore.DSASM.StackValue[], ProtoCore.DSASM.Heap)",
+      "signature": "void HeapElement(ProtoCore.DSASM.StackValue[] values, ProtoCore.DSASM.Heap heap)",
+      "summary": "Create HeapElement based on the existing values",
+      "params": [
+        {
+          "name": "values",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "HeapElement(int, ProtoCore.DSASM.Heap)",
+      "signature": "void HeapElement(int size, ProtoCore.DSASM.Heap heap)",
+      "summary": "Create HeapElement",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CollectElementsForGC(System.Collections.Generic.Queue\u003CProtoCore.DSASM.StackValue\u003E)",
+      "signature": "void CollectElementsForGC(System.Collections.Generic.Queue\u003CProtoCore.DSASM.StackValue\u003E gcQueue)",
+      "summary": "Enqueue all reference-typed elements for garbage collection. Note: This is used by the heap manager to trace reachable objects during GC.",
+      "params": [
+        {
+          "name": "gcQueue",
+          "type": "System.Collections.Generic.Queue\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "Queue to enqueue reference-typed stack values",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "ExpandByAcessingAt(int)",
+      "signature": "int ExpandByAcessingAt(int index)",
+      "summary": "HeapElement.ExpandByAcessingAt",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "GetValueAt(int)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueAt(int index)",
+      "summary": "HeapElement.GetValueAt",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "SetValueAt(int, ProtoCore.DSASM.StackValue)",
+      "signature": "void SetValueAt(int index, ProtoCore.DSASM.StackValue value)",
+      "summary": "HeapElement.SetValueAt",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "HeapElement.Count",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "Mark",
+      "type": "ProtoCore.DSASM.Heap.GCMark",
+      "getter": true,
+      "setter": true,
+      "summary": "HeapElement.Mark",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "MemorySize",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "HeapElement.MemorySize",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "MetaData",
+      "type": "ProtoCore.DSASM.MetaData",
+      "getter": true,
+      "setter": true,
+      "summary": "HeapElement.MetaData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "Values",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "HeapElement.Values",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,68 @@
+{
+  "name": "Enum\u003CE\u003E",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "struct",
+  "summary": "The Enum datatype generic.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6d6e6a90-123e-b7b7-8c1c-28582ecc1119",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSchema",
+      "signature": "public XmlSchema GetSchema()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "XmlSchema",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/27ddc2df-2642-c422-aea0-63db5fc74037"
+    },
+    {
+      "name": "ReadXml",
+      "signature": "public void ReadXml(XmlReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.Xml.XmlReader",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8cd9e291-2d2d-6178-3366-05fde4a64bc2"
+    },
+    {
+      "name": "WriteXml",
+      "signature": "public void WriteXml(XmlWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/777144d9-9d41-3453-fb21-7af2b6baf9c8"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/643f88aa-7325-118d-d495-b6bb3ceb9370"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

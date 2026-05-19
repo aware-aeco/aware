@@ -1,0 +1,36 @@
+{
+  "name": "IRenderPackageFactory",
+  "namespace": "Dynamo.Visualization",
+  "kind": "interface",
+  "summary": "IRenderPackageFactory is used to create IRenderPackage objects suitable for a specific rendering pipeline. IRenderPackages generated from IRenderPackageFactory classes contain tessellated geometry for rendering, which may be stored in different forms depending on the rendering pipeline being used.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/IRenderPackageFactory.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateRenderPackage",
+      "signature": "Autodesk.DesignScript.Interfaces.IRenderPackage CreateRenderPackage()",
+      "summary": "Create an IRenderPackage object of the type manufactured by this factory.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.DesignScript.Interfaces.IRenderPackage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/IRenderPackageFactory.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TessellationParameters",
+      "type": "Autodesk.DesignScript.Interfaces.TessellationParameters",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets the Tessellation parameters.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/IRenderPackageFactory.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

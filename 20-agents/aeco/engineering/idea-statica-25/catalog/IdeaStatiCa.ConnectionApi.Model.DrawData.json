@@ -1,0 +1,38 @@
+{
+  "name": "DrawData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.DrawData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/DrawData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Groups",
+      "type": "List\u003CIGroup\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for DrawData.groups.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/DrawData.md"
+    },
+    {
+      "name": "Vertices",
+      "type": "List\u003Cdouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for DrawData.vertices.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/DrawData.md"
+    },
+    {
+      "name": "Normals",
+      "type": "List\u003Cdouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for DrawData.normals.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/DrawData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

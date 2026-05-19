@@ -1,0 +1,226 @@
+{
+  "name": "GH_PreviewUtil",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "This class exposes functionality that makes it easy to draw temporary geometry in Rhino viewports.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_PreviewUtil.htm",
+  "constructors": [
+    {
+      "name": "GH_PreviewUtil()",
+      "signature": "public GH_PreviewUtil()",
+      "summary": "Initializes a new instance of the GH_PreviewUtil class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil__ctor.htm"
+    },
+    {
+      "name": "GH_PreviewUtil(Boolean)",
+      "signature": "public GH_PreviewUtil(bool enable)",
+      "summary": "Initializes a new instance of the GH_PreviewUtil class",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddBox",
+      "signature": "public void AddBox(Box box)",
+      "summary": "Add a box to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Box",
+          "doc": "Box to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddBox.htm"
+    },
+    {
+      "name": "AddBrep",
+      "signature": "public void AddBrep(Brep brep)",
+      "summary": "Add a brep to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Brep",
+          "doc": "Brep to add. Invalid breps will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddBrep.htm"
+    },
+    {
+      "name": "AddCurve",
+      "signature": "public void AddCurve(Curve curve)",
+      "summary": "Add a curve to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Curve",
+          "doc": "Curve to add. Invalid curves will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddCurve.htm"
+    },
+    {
+      "name": "AddLine",
+      "signature": "public void AddLine(Line line)",
+      "summary": "Add a line to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line",
+          "doc": "Line to add. Invalid lines will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddLine.htm"
+    },
+    {
+      "name": "AddMesh",
+      "signature": "public void AddMesh(Mesh mesh)",
+      "summary": "Add a mesh to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Mesh",
+          "doc": "Mesh to add. Invalid meshes will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddMesh.htm"
+    },
+    {
+      "name": "AddPlane",
+      "signature": "public void AddPlane(Plane plane)",
+      "summary": "Add a plane to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane",
+          "doc": "Plane to add. Invalid planes will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddPlane.htm"
+    },
+    {
+      "name": "AddPoint",
+      "signature": "public void AddPoint(Point3d point)",
+      "summary": "Add a point to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3d",
+          "doc": "Point to add. Invalid points will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddPoint.htm"
+    },
+    {
+      "name": "AddVector",
+      "signature": "public void AddVector(Line vector)",
+      "summary": "Add a vector to the temporary Preview lists.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Line",
+          "doc": "Vector to add. Invalid vectors will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_AddVector.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clear all temporary geometry.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_Clear.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the GH_PreviewUtil",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_Dispose.htm"
+    },
+    {
+      "name": "Redraw",
+      "signature": "public void Redraw()",
+      "summary": "Forces a redraw the the viewports.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewUtil_Redraw.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of this Preview util.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewUtil_Enabled.htm"
+    },
+    {
+      "name": "WireColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour to use for Preview geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewUtil_WireColour.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

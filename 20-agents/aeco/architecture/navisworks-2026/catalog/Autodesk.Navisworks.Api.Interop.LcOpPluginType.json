@@ -1,0 +1,114 @@
+{
+  "name": "LcOpPluginType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpPluginType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpPluginType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePLUGIN_SCENE",
+      "value": 0
+    },
+    {
+      "name": "ePLUGIN_SET",
+      "value": 1
+    },
+    {
+      "name": "ePLUGIN_EXPORT",
+      "value": 2
+    },
+    {
+      "name": "ePLUGIN_GENERIC",
+      "value": 3
+    },
+    {
+      "name": "ePLUGIN_PROPERTY",
+      "value": 4
+    },
+    {
+      "name": "ePLUGIN_CLASH",
+      "value": 5
+    },
+    {
+      "name": "ePLUGIN_CLASH_REPORT",
+      "value": 6
+    },
+    {
+      "name": "ePLUGIN_COMMENT",
+      "value": 7
+    },
+    {
+      "name": "ePLUGIN_GUI",
+      "value": 8
+    },
+    {
+      "name": "ePLUGIN_PRESENTER_OBSOLETE",
+      "value": 9
+    },
+    {
+      "name": "ePLUGIN_SELECTION_TREE",
+      "value": 10
+    },
+    {
+      "name": "ePLUGIN_PROPERTY2",
+      "value": 11
+    },
+    {
+      "name": "ePLUGIN_TIMELINER",
+      "value": 12
+    },
+    {
+      "name": "ePLUGIN_ANIM_SEQ_FACTORY",
+      "value": 13
+    },
+    {
+      "name": "ePLUGIN_VIEW_RENDERER_FACTORY",
+      "value": 14
+    },
+    {
+      "name": "ePLUGIN_MULTI_PROPERTY",
+      "value": 15
+    },
+    {
+      "name": "ePLUGIN_IMAGE_FORMAT",
+      "value": 16
+    },
+    {
+      "name": "ePLUGIN_ANIM_FORMAT",
+      "value": 17
+    },
+    {
+      "name": "ePLUGIN_INPUT_OBSOLETE",
+      "value": 18
+    },
+    {
+      "name": "ePLUGIN_RULE",
+      "value": 19
+    },
+    {
+      "name": "ePLUGIN_STATE_WATCHER",
+      "value": 20
+    },
+    {
+      "name": "ePLUGIN_OPTIMISER",
+      "value": 21
+    },
+    {
+      "name": "ePLUGIN_FILE_UI_PROVIDER",
+      "value": 22
+    },
+    {
+      "name": "ePLUGIN_POINT_INFO",
+      "value": 23
+    },
+    {
+      "name": "ePLUGIN_MODEL_DATA",
+      "value": 24
+    }
+  ]
+}

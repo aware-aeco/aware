@@ -1,0 +1,23 @@
+{
+  "name": "IOverlayModelEvents",
+  "namespace": "Tekla.Structures.Model.Internal.OverlayModel",
+  "kind": "interface",
+  "summary": "Interface for the OverlayModelEvents class allows the user to register event listeners for OverlayModel events.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1bd72aa5-d22c-71c1-a538-e7690d486747",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "OverlayModelCollectionChanged",
+      "delegate": "Tekla.Structures.Model.Internal.OverlayModel.OverlayModelEvents.OverlayModelCollectionChangedDelegate",
+      "signature": "event OverlayModelEvents.OverlayModelCollectionChangedDelegate OverlayModelCollectionChanged",
+      "summary": "The OverlayModelCollectionChanged event is raised when an overlay model is changed (added/updated/removed).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cddddf87-f612-8b80-8651-c769dd483482",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

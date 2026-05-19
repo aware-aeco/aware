@@ -1,0 +1,380 @@
+{
+  "name": "EtoExtensions",
+  "namespace": "Grasshopper",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.EtoExtensions.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_EtoExtensions.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToEto(Bitmap)",
+      "signature": "[ObsoleteAttribute(\u0022Use Rhino.UI.EtoExtensions.ToEto instead\u0022)] public static Bitmap ToEto(Bitmap bitmap)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto.htm"
+    },
+    {
+      "name": "ToEto(Color)",
+      "signature": "public static Color ToEto(this Color sdcolor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "sdcolor",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_1.htm"
+    },
+    {
+      "name": "ToEto(Control)",
+      "signature": "public static Control ToEto(this Control control)",
+      "summary": "",
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Control",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_7.htm"
+    },
+    {
+      "name": "ToEto(Font)",
+      "signature": "public static Font ToEto(this Font font)",
+      "summary": "",
+      "params": [
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_2.htm"
+    },
+    {
+      "name": "ToEto(Form)",
+      "signature": "public static Window ToEto(this Form control)",
+      "summary": "",
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Form",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Window",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_8.htm"
+    },
+    {
+      "name": "ToEto(Point)",
+      "signature": "public static Point ToEto(this Point point)",
+      "summary": "",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_3.htm"
+    },
+    {
+      "name": "ToEto(PointF)",
+      "signature": "public static PointF ToEto(this PointF point)",
+      "summary": "",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_4.htm"
+    },
+    {
+      "name": "ToEto(Size)",
+      "signature": "public static Size ToEto(this Size size)",
+      "summary": "",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_5.htm"
+    },
+    {
+      "name": "ToEto(SizeF)",
+      "signature": "public static SizeF ToEto(this SizeF size)",
+      "summary": "",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.SizeF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SizeF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEto_6.htm"
+    },
+    {
+      "name": "ToEtoWindow",
+      "signature": "public static Window ToEtoWindow(this IWin32Window control)",
+      "summary": "",
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.IWin32Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Window",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToEtoWindow.htm"
+    },
+    {
+      "name": "ToSD(Color)",
+      "signature": "public static Color ToSD(this Color color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSD.htm"
+    },
+    {
+      "name": "ToSD(Font)",
+      "signature": "public static Font ToSD(this Font font)",
+      "summary": "",
+      "params": [
+        {
+          "name": "font",
+          "type": "Font",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSD_1.htm"
+    },
+    {
+      "name": "ToSD(Point)",
+      "signature": "public static Point ToSD(this Point point)",
+      "summary": "",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSD_2.htm"
+    },
+    {
+      "name": "ToSD(PointF)",
+      "signature": "public static PointF ToSD(this PointF point)",
+      "summary": "",
+      "params": [
+        {
+          "name": "point",
+          "type": "PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSD_3.htm"
+    },
+    {
+      "name": "ToSD(Rectangle)",
+      "signature": "public static Rectangle ToSD(this Rectangle rectangle)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rectangle",
+          "type": "Rectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSD_4.htm"
+    },
+    {
+      "name": "ToSD(Size)",
+      "signature": "public static Size ToSD(this Size size)",
+      "summary": "",
+      "params": [
+        {
+          "name": "size",
+          "type": "Size",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSD_5.htm"
+    },
+    {
+      "name": "ToSD(SizeF)",
+      "signature": "public static SizeF ToSD(this SizeF size)",
+      "summary": "",
+      "params": [
+        {
+          "name": "size",
+          "type": "SizeF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SizeF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSD_6.htm"
+    },
+    {
+      "name": "ToSwf",
+      "signature": "public static Control ToSwf(this Control control, bool attach = false)",
+      "summary": "",
+      "params": [
+        {
+          "name": "control",
+          "type": "Control",
+          "optional": false
+        },
+        {
+          "name": "attach",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Control",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToSwf.htm"
+    },
+    {
+      "name": "ToWin32Window",
+      "signature": "public static IWin32Window ToWin32Window(this Window window)",
+      "summary": "",
+      "params": [
+        {
+          "name": "window",
+          "type": "Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IWin32Window",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_EtoExtensions_ToWin32Window.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

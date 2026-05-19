@@ -1,0 +1,156 @@
+{
+  "name": "LayoutAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LayoutAttributes class contains attributes for controlling the drawing layout.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1850def0-b58c-df22-0db5-e61ee3c34036",
+  "constructors": [
+    {
+      "name": "LayoutAttributes()",
+      "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a Drawing Type.\u0022, false)] public LayoutAttributes()",
+      "summary": "Creates a new layout attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/938fa59a-b84b-9ea5-d944-133d69d35589"
+    },
+    {
+      "name": "LayoutAttributes(String)",
+      "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a Drawing Type.\u0022, false)] public LayoutAttributes(string AttributeFile)",
+      "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the drawing attribute file. E.g. \u0022standard\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5cdf493a-df16-0949-6993-b25cc0c308c2"
+    },
+    {
+      "name": "LayoutAttributes(Drawing)",
+      "signature": "public LayoutAttributes(Drawing Drawing)",
+      "summary": "Creates a new layout attributes instance that loads standard attributes.",
+      "params": [
+        {
+          "name": "Drawing",
+          "type": "Tekla.Structures.Drawing.Drawing",
+          "doc": "The type of drawing to load layout attributes for.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/92d67225-8eb3-0d92-c4ae-ca7d56be457a"
+    },
+    {
+      "name": "LayoutAttributes(String, Drawing)",
+      "signature": "public LayoutAttributes(string AttributeFile, Drawing Drawing)",
+      "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the drawing attribute file. E.g. \u0022standard\u0022.",
+          "optional": false
+        },
+        {
+          "name": "Drawing",
+          "type": "Tekla.Structures.Drawing.Drawing",
+          "doc": "The type of drawing to load layout attributes for.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0948ada9-0299-3031-262a-2f60ece82d5c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/628efe7a-02bf-5d5c-0e53-cf5464e9e70d"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads drawing layout attributes from the specified attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the drawing attribute file. E.g. \u0022standard\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/be6c4b9e-a9a4-b5c7-e99c-a88c1d33ebcc"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoSizeOptions",
+      "type": "AutoSizeOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the auto size options that control the drawing sheet size. Setting this property will change the SizeDefinitionMode to AutoSize.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cbaf0da0-0d41-420d-a8f3-76b741d2ee76"
+    },
+    {
+      "name": "ListHiddenObjectsInTemplates",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the property for controlling whether to list hidden objects in templates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3de70f71-d20e-232e-c6d5-a8df744557bd"
+    },
+    {
+      "name": "SheetSize",
+      "type": "Size",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the sheet size. Setting this property will change the SizeDefinitionMode to SpecifiedSize.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a22406e-0b31-f6ee-69d1-af77643d7138"
+    },
+    {
+      "name": "SizeDefinitionMode",
+      "type": "SizeDefinitionMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size definition mode.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8dac26fa-4989-4dcd-79fd-31b94de3f064"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

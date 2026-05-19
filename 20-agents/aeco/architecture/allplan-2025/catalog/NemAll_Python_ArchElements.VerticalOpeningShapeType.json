@@ -1,0 +1,50 @@
+{
+  "name": "VerticalOpeningShapeType",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Shape of vertical opening (door or window)",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningShapeType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eArbitrary",
+      "value": 6,
+      "summary": "Arbitrary shape"
+    },
+    {
+      "name": "eCircle",
+      "value": 2,
+      "summary": "Circle"
+    },
+    {
+      "name": "eDiamond",
+      "value": 1,
+      "summary": "Diamond"
+    },
+    {
+      "name": "eRectangle",
+      "value": 0,
+      "summary": "Rectangle"
+    },
+    {
+      "name": "eRiseBottomTop",
+      "value": 5,
+      "summary": "Rise at bottom and/or top"
+    },
+    {
+      "name": "eSemiCircle",
+      "value": 4,
+      "summary": "Semi circle"
+    },
+    {
+      "name": "eSemiDiamond",
+      "value": 3,
+      "summary": "Semi diamond"
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+{
+  "name": "BuildingElementPaletteService",
+  "namespace": "BuildingElementPaletteService",
+  "kind": "class",
+  "summary": "Definition of class BuildingElementPaletteService",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/",
+  "constructors": [
+    {
+      "name": "BuildingElementPaletteService",
+      "signature": "BuildingElementPaletteService(build_ele_list, build_ele_composite, build_ele_script, build_ele_ctrl_props_list, picture_path)",
+      "summary": "Initialize the data",
+      "remarks": "Initialize the data",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "List[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        },
+        {
+          "name": "build_ele_composite",
+          "type": "BuildingElementComposite",
+          "doc": "building element composite with the building element constraints",
+          "optional": false
+        },
+        {
+          "name": "build_ele_script",
+          "type": "Any",
+          "doc": "Building element script",
+          "optional": false
+        },
+        {
+          "name": "build_ele_ctrl_props_list",
+          "type": "List[BuildingElementControlProperties]",
+          "doc": "list with the building element control properties",
+          "optional": false
+        },
+        {
+          "name": "picture_path",
+          "type": "str",
+          "doc": "Picture path",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "check_building_element_index",
+      "signature": "check_building_element_index()",
+      "summary": "Check the building element index (e.g. set to 0 for hidden elements)",
+      "remarks": "Check the building element index (e.g. set to 0 for hidden elements)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.check_building_element_index"
+    },
+    {
+      "name": "close_palette",
+      "signature": "close_palette()",
+      "summary": "Close the palette",
+      "remarks": "Close the palette",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "text of the active page"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.close_palette"
+    },
+    {
+      "name": "get_control_text",
+      "signature": "get_control_text()",
+      "summary": "Get the control data as text",
+      "remarks": "Get the control data as text",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Controls data as text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.get_control_text"
+    },
+    {
+      "name": "modify_element_property",
+      "signature": "modify_element_property(page, name, value)",
+      "summary": "Modify property of element",
+      "remarks": "Modify property of element",
+      "params": [
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "new value for property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "update palette state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.modify_element_property"
+    },
+    {
+      "name": "on_control_event",
+      "signature": "on_control_event(event_id)",
+      "summary": "On control event",
+      "remarks": "On control event",
+      "params": [
+        {
+          "name": "event_id",
+          "type": "int",
+          "doc": "event id of control.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "event was processed state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.on_control_event"
+    },
+    {
+      "name": "refresh_palette",
+      "signature": "refresh_palette(build_ele_list, build_ele_ctrl_props_list)",
+      "summary": "refresh the palette",
+      "remarks": "refresh the palette",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "List[BuildingElement]",
+          "doc": "Building element list",
+          "optional": false
+        },
+        {
+          "name": "build_ele_ctrl_props_list",
+          "type": "List[BuildingElementControlProperties]",
+          "doc": "Control properties list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.refresh_palette"
+    },
+    {
+      "name": "set_building_element_index",
+      "signature": "set_building_element_index(index, script_name)",
+      "summary": "Set the building element index",
+      "remarks": "Set the building element index",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Element index",
+          "optional": false
+        },
+        {
+          "name": "script_name",
+          "type": "str",
+          "doc": "Script name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.set_building_element_index"
+    },
+    {
+      "name": "set_palette_lock",
+      "signature": "set_palette_lock(palette_lock)",
+      "summary": "set the palette lock state",
+      "remarks": "set the palette lock state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.set_palette_lock"
+    },
+    {
+      "name": "show_page_for_element",
+      "signature": "show_page_for_element(act_page, build_ele_index_list)",
+      "summary": "Show the page for the element_index",
+      "remarks": "Show the page for the element_index",
+      "params": [
+        {
+          "name": "act_page",
+          "type": "int",
+          "doc": "active page index",
+          "optional": false
+        },
+        {
+          "name": "build_ele_index_list",
+          "type": "List[int]",
+          "doc": "index list with the connected building elements (geometry, reinforcement, ...) of a sub element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.show_page_for_element"
+    },
+    {
+      "name": "show_palette",
+      "signature": "show_palette(part_name, show_close_button=True, open_palette=True, active_page_text=\u0027\u0027, is_visual_script=False)",
+      "summary": "Show the palette",
+      "remarks": "Show the palette",
+      "params": [
+        {
+          "name": "part_name",
+          "type": "str",
+          "doc": "Name of the PythonPart",
+          "optional": false
+        },
+        {
+          "name": "show_close_button",
+          "type": "bool",
+          "doc": "Show close button in palette",
+          "optional": true,
+          "default": "True"
+        },
+        {
+          "name": "open_palette",
+          "type": "bool",
+          "doc": "open the palette",
+          "optional": true,
+          "default": "True"
+        },
+        {
+          "name": "active_page_text",
+          "type": "str",
+          "doc": "active page text",
+          "optional": true,
+          "default": "\u0027\u0027"
+        },
+        {
+          "name": "is_visual_script",
+          "type": "bool",
+          "doc": "execution for VisualScripting",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.show_palette"
+    },
+    {
+      "name": "update_palette",
+      "signature": "update_palette(page_index, update_dialog_data, _show_palette_close_btn=True)",
+      "summary": "Update the palette",
+      "remarks": "Update the palette",
+      "params": [
+        {
+          "name": "page_index",
+          "type": "int",
+          "doc": "page index to show, -1 = use current",
+          "optional": false
+        },
+        {
+          "name": "update_dialog_data",
+          "type": "bool",
+          "doc": "update the dialog data: True/False",
+          "optional": false
+        },
+        {
+          "name": "_show_palette_close_btn",
+          "type": "object",
+          "doc": "show close button in palette: True/False",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementPaletteService/BuildingElementPaletteService/#BuildingElementPaletteService.BuildingElementPaletteService.update_palette"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

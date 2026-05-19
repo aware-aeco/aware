@@ -1,0 +1,410 @@
+{
+  "name": "MinMax3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D MinMax box.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/",
+  "constructors": [
+    {
+      "name": "MinMax3D",
+      "signature": "MinMax3D() | MinMax3D(min, max) | MinMax3D(point) | MinMax3D(minmax)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Deflate",
+      "signature": "Deflate(size) | Deflate(x, y, z)",
+      "summary": "Deflate in x,y,z axis concurrently.",
+      "remarks": "Deflate in x,y,z axis concurrently.",
+      "params": [
+        {
+          "name": "size",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Deflate"
+    },
+    {
+      "name": "Inflate",
+      "signature": "Inflate(x, y, z) | Inflate(size)",
+      "summary": "ame Inflate and deflate minmax box Inflate in x, y and z axis.",
+      "remarks": "ame Inflate and deflate minmax box Inflate in x, y and z axis.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Inflate"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(minmax) | __iadd__(point)",
+      "summary": "Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minmax",
+      "remarks": "Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minmax",
+      "params": [
+        {
+          "name": "minmax",
+          "type": "MinMax3D",
+          "doc": "MinMax3D to be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax3D",
+        "doc": "minmax box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__iadd__"
+    },
+    {
+      "name": "Get",
+      "signature": "Get()",
+      "summary": "Get minimum and maximum point",
+      "remarks": "Get minimum and maximum point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "tuple(minimum point,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Get"
+    },
+    {
+      "name": "GetCenter",
+      "signature": "GetCenter()",
+      "summary": "Get box center point",
+      "remarks": "Get box center point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "center point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetCenter"
+    },
+    {
+      "name": "GetMax",
+      "signature": "GetMax()",
+      "summary": "Get maximum point",
+      "remarks": "Get maximum point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "maximum point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetMax"
+    },
+    {
+      "name": "GetMin",
+      "signature": "GetMin()",
+      "summary": "Get minimum point",
+      "remarks": "Get minimum point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "minimum point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetMin"
+    },
+    {
+      "name": "GetSizeX",
+      "signature": "GetSizeX()",
+      "summary": "Get the size of the box in the X direction",
+      "remarks": "Get the size of the box in the X direction",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "delta X value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetSizeX"
+    },
+    {
+      "name": "GetSizeY",
+      "signature": "GetSizeY()",
+      "summary": "Get the size of the box in the Y direction",
+      "remarks": "Get the size of the box in the Y direction",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "delta Y value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetSizeY"
+    },
+    {
+      "name": "GetSizeZ",
+      "signature": "GetSizeZ()",
+      "summary": "Get the size of the box in the Y direction",
+      "remarks": "Get the size of the box in the Y direction",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "delta Y value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetSizeZ"
+    },
+    {
+      "name": "IsContaining",
+      "signature": "IsContaining(box)",
+      "summary": "Is box inside this box",
+      "remarks": "Is box inside this box",
+      "params": [
+        {
+          "name": "box",
+          "type": "MinMax3D",
+          "doc": "Potentially contained box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if is inside, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.IsContaining"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Test if box is valid",
+      "remarks": "Test if box is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if box valid, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.IsValid"
+    },
+    {
+      "name": "Overlaps",
+      "signature": "Overlaps(box)",
+      "summary": "Does box overlap this box",
+      "remarks": "Does box overlap this box",
+      "params": [
+        {
+          "name": "box",
+          "type": "MinMax3D",
+          "doc": "Box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if boxes overlap, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Overlaps"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset()",
+      "summary": "Set min point to [DBL_MAX,DBL_MAX,DBL_MAX] and max point to [-DBL_MAX,-DBL_MAX,-DBL_MAX]",
+      "remarks": "Set min point to [DBL_MAX,DBL_MAX,DBL_MAX] and max point to [-DBL_MAX,-DBL_MAX,-DBL_MAX]",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Reset"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(min, max)",
+      "summary": "Set minimum and maximum point",
+      "remarks": "Set minimum and maximum point",
+      "params": [
+        {
+          "name": "min",
+          "type": "Point3D",
+          "doc": "minimum point",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "Point3D",
+          "doc": "maximum point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Set"
+    },
+    {
+      "name": "SetMax",
+      "signature": "SetMax(max)",
+      "summary": "Set maximum point",
+      "remarks": "Set maximum point",
+      "params": [
+        {
+          "name": "max",
+          "type": "Point3D",
+          "doc": "maximum point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.SetMax"
+    },
+    {
+      "name": "SetMin",
+      "signature": "SetMin(min)",
+      "summary": "Set minimum point",
+      "remarks": "Set minimum point",
+      "params": [
+        {
+          "name": "min",
+          "type": "Point3D",
+          "doc": "minimum point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.SetMin"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(minmax)",
+      "summary": "Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minmax",
+      "remarks": "Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minmax",
+      "params": [
+        {
+          "name": "minmax",
+          "type": "MinMax3D",
+          "doc": "MinMax3D to be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax3D",
+        "doc": "minmax box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__add__"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(minmax)",
+      "summary": "Comparison of minmax objects without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of minmax objects without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "minmax",
+          "type": "MinMax3D",
+          "doc": "Compared minmax.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when minmax objects are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Max",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get maximum point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Max"
+    },
+    {
+      "name": "Min",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get minimum point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Min"
+    },
+    {
+      "name": "SizeX",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the size of the box in the X direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.SizeX"
+    },
+    {
+      "name": "SizeY",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the size of the box in the Y direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.SizeY"
+    },
+    {
+      "name": "SizeZ",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the size of the box in the Y direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.SizeZ"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,130 @@
+{
+  "name": "RenderWindow.StandardChannels",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderWindow.StandardChannels\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderWindow_StandardChannels.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Red",
+      "value": 1
+    },
+    {
+      "name": "Green",
+      "value": 2
+    },
+    {
+      "name": "Blue",
+      "value": 4
+    },
+    {
+      "name": "Alpha",
+      "value": 8
+    },
+    {
+      "name": "RGBA",
+      "value": 14
+    },
+    {
+      "name": "RGB",
+      "value": 15
+    },
+    {
+      "name": "DistanceFromCamera",
+      "value": 16
+    },
+    {
+      "name": "NormalX",
+      "value": 32
+    },
+    {
+      "name": "NormalY",
+      "value": 64
+    },
+    {
+      "name": "NormalZ",
+      "value": 128
+    },
+    {
+      "name": "NormalXYZ",
+      "value": 240
+    },
+    {
+      "name": "LuminanceRed",
+      "value": 256
+    },
+    {
+      "name": "LuminanceGreen",
+      "value": 512
+    },
+    {
+      "name": "LuminanceBlue",
+      "value": 1024
+    },
+    {
+      "name": "BackgroundLuminanceRed",
+      "value": 4096
+    },
+    {
+      "name": "BackgroundLuminanceGreen",
+      "value": 8192
+    },
+    {
+      "name": "BackgroundLuminanceBlue",
+      "value": 16384
+    },
+    {
+      "name": "MaterialIds",
+      "value": 65536
+    },
+    {
+      "name": "ObjectIds",
+      "value": 131072
+    },
+    {
+      "name": "Wireframe",
+      "value": 262144
+    },
+    {
+      "name": "AlbedoRed",
+      "value": 1048576
+    },
+    {
+      "name": "AlbedoGreen",
+      "value": 2097152
+    },
+    {
+      "name": "AlbedoBlue",
+      "value": 4194304
+    },
+    {
+      "name": "AlbedoRGB",
+      "value": 7340032
+    },
+    {
+      "name": "WireframePointsRGBA",
+      "value": 8388608
+    },
+    {
+      "name": "WireframeIsocurvesRGBA",
+      "value": 16777216
+    },
+    {
+      "name": "WireframeCurvesRGBA",
+      "value": 33554432
+    },
+    {
+      "name": "WireframeAnnotationsRGBA",
+      "value": 67108864
+    }
+  ]
+}

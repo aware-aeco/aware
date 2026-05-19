@@ -1,0 +1,384 @@
+{
+  "name": "FilePdf",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for PDF file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FilePdf.htm",
+  "constructors": [
+    {
+      "name": "FilePdf",
+      "signature": "protected FilePdf()",
+      "summary": "Initializes a new instance of the FilePdf class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddPage(ViewCaptureSettings)",
+      "signature": "public abstract int AddPage(ViewCaptureSettings settings)",
+      "summary": "Add a new page to this document and draw a viewport into it based on provided ViewCaptureSettings",
+      "params": [
+        {
+          "name": "settings",
+          "type": "Rhino.Display.ViewCaptureSettings",
+          "doc": "[Missing \u003Cparam name=\u0022settings\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.AddPage(Rhino.Display.ViewCaptureSettings)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "page number on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_AddPage.htm"
+    },
+    {
+      "name": "AddPage(Int32, Int32, Int32)",
+      "signature": "public abstract int AddPage(int widthInDots, int heightInDots, int dotsPerInch)",
+      "summary": "Add a blank page to this document",
+      "params": [
+        {
+          "name": "widthInDots",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022widthInDots\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.AddPage(System.Int32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "heightInDots",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022heightInDots\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.AddPage(System.Int32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dotsPerInch",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022dotsPerInch\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.AddPage(System.Int32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "page number on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_AddPage_1.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public static FilePdf Create()",
+      "summary": "Create a new instance of a FilePdf class",
+      "params": [],
+      "returns": {
+        "type": "FilePdf",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.Create\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_Create.htm"
+    },
+    {
+      "name": "DrawBitmap",
+      "signature": "public abstract void DrawBitmap(int pageNumber, Bitmap bitmap, float left, float top, float width, float height, float rotationInDegrees)",
+      "summary": "Draw a bitmap",
+      "params": [
+        {
+          "name": "pageNumber",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022pageNumber\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawBitmap(System.Int32,System.Drawing.Bitmap,System.Single,System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022bitmap\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawBitmap(System.Int32,System.Drawing.Bitmap,System.Single,System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022left\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawBitmap(System.Int32,System.Drawing.Bitmap,System.Single,System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022top\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawBitmap(System.Int32,System.Drawing.Bitmap,System.Single,System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022width\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawBitmap(System.Int32,System.Drawing.Bitmap,System.Single,System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022height\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawBitmap(System.Int32,System.Drawing.Bitmap,System.Single,System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rotationInDegrees",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022rotationInDegrees\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawBitmap(System.Int32,System.Drawing.Bitmap,System.Single,System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_DrawBitmap.htm"
+    },
+    {
+      "name": "DrawLine",
+      "signature": "public void DrawLine(int pageNumber, PointF from, PointF to, Color strokeColor, float strokeWidth)",
+      "summary": "Draw a line",
+      "params": [
+        {
+          "name": "pageNumber",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022pageNumber\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawLine(System.Int32,System.Drawing.PointF,System.Drawing.PointF,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "System.Drawing.PointF",
+          "doc": "[Missing \u003Cparam name=\u0022from\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawLine(System.Int32,System.Drawing.PointF,System.Drawing.PointF,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "System.Drawing.PointF",
+          "doc": "[Missing \u003Cparam name=\u0022to\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawLine(System.Int32,System.Drawing.PointF,System.Drawing.PointF,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022strokeColor\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawLine(System.Int32,System.Drawing.PointF,System.Drawing.PointF,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeWidth",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022strokeWidth\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawLine(System.Int32,System.Drawing.PointF,System.Drawing.PointF,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_DrawLine.htm"
+    },
+    {
+      "name": "DrawPolyline",
+      "signature": "public abstract void DrawPolyline(int pageNumber, PointF[] polyline, Color fillColor, Color strokeColor, float strokeWidth)",
+      "summary": "Draw a polyline path",
+      "params": [
+        {
+          "name": "pageNumber",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022pageNumber\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawPolyline(System.Int32,System.Drawing.PointF[],System.Drawing.Color,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "polyline",
+          "type": "System.Drawing.PointF[]",
+          "doc": "[Missing \u003Cparam name=\u0022polyline\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawPolyline(System.Int32,System.Drawing.PointF[],System.Drawing.Color,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fillColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022fillColor\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawPolyline(System.Int32,System.Drawing.PointF[],System.Drawing.Color,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022strokeColor\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawPolyline(System.Int32,System.Drawing.PointF[],System.Drawing.Color,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeWidth",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022strokeWidth\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawPolyline(System.Int32,System.Drawing.PointF[],System.Drawing.Color,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_DrawPolyline.htm"
+    },
+    {
+      "name": "DrawText",
+      "signature": "public abstract void DrawText(int pageNumber, string text, double x, double y, float heightPoints, Font onfont, Color fillColor, Color strokeColor, float strokeWidth, float angleDegrees, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment)",
+      "summary": "Draw text on a page",
+      "params": [
+        {
+          "name": "pageNumber",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022pageNumber\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022text\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022x\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022y\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "heightPoints",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022heightPoints\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onfont",
+          "type": "Rhino.DocObjects.Font",
+          "doc": "[Missing \u003Cparam name=\u0022onfont\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fillColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022fillColor\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022strokeColor\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeWidth",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022strokeWidth\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "angleDegrees",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022angleDegrees\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "horizontalAlignment",
+          "type": "Rhino.DocObjects.TextHorizontalAlignment",
+          "doc": "[Missing \u003Cparam name=\u0022horizontalAlignment\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "verticalAlignment",
+          "type": "Rhino.DocObjects.TextVerticalAlignment",
+          "doc": "[Missing \u003Cparam name=\u0022verticalAlignment\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.DrawText(System.Int32,System.String,System.Double,System.Double,System.Single,Rhino.DocObjects.Font,System.Drawing.Color,System.Drawing.Color,System.Single,System.Single,Rhino.DocObjects.TextHorizontalAlignment,Rhino.DocObjects.TextVerticalAlignment)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_DrawText.htm"
+    },
+    {
+      "name": "FirePreWriteEvent",
+      "signature": "protected void FirePreWriteEvent()",
+      "summary": "Called by the framework to fire a PreWrite event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_FirePreWriteEvent.htm"
+    },
+    {
+      "name": "PdfDocumentImplementation",
+      "signature": "public abstract Object PdfDocumentImplementation()",
+      "summary": "Get actual implementation of PdfDocument class",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.PdfDocumentImplementation\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_PdfDocumentImplementation.htm"
+    },
+    {
+      "name": "Write(Stream)",
+      "signature": "public abstract void Write(Stream stream)",
+      "summary": "Write PDF to a stream",
+      "params": [
+        {
+          "name": "stream",
+          "type": "System.IO.Stream",
+          "doc": "[Missing \u003Cparam name=\u0022stream\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.Write(System.IO.Stream)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_Write.htm"
+    },
+    {
+      "name": "Write(String)",
+      "signature": "public abstract void Write(string filename)",
+      "summary": "Write PDF to a file",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePdf.Write(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FilePdf_Write_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LayersAsOptionalContentGroups",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Add layers as \u0022optional content groups\u0022 to the PDF. This is the visible layer tree available in PDF viewers",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FilePdf_LayersAsOptionalContentGroups.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "PreWrite",
+      "delegate": "System.EventHandler\u003CFilePdfEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CFilePdfEventArgs\u003E PreWrite",
+      "summary": "Fired immediately before a PDF is written",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_FileIO_FilePdf_PreWrite.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

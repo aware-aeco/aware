@@ -1,0 +1,22 @@
+{
+  "name": "PropertyValuesOrErrorArray",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of property value lists.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyValuesOrErrorArray",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "PropertyValuesOrError[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyValuesOrErrorArray"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

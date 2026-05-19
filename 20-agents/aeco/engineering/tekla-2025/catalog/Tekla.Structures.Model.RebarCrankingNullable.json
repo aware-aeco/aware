@@ -1,0 +1,82 @@
+{
+  "name": "RebarCrankingNullable",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarCrankingNullable class represents the cranking of reinforcing bars at a RebarEndDetailModifier.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/103b736f-aa8a-4005-0b09-ea6808049d23",
+  "constructors": [
+    {
+      "name": "RebarCrankingNullable",
+      "signature": "public RebarCrankingNullable()",
+      "summary": "Initializes a new instance of the RebarCrankingNullable class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ee820f69-553c-9535-4fb7-5bf6433f054d"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CrankedDistance",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked distance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c200ae5b-e64c-0eac-6606-e40151b3850e"
+    },
+    {
+      "name": "CrankedLengthType",
+      "type": "Nullable\u003CRebarCranking.CrankedLengthTypeEnum\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked length type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/621eea77-b299-e8f6-ac9d-eb95e0e9fdc0"
+    },
+    {
+      "name": "CrankedOffset",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked offset.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5e82963c-d395-a624-4c90-dcc9463398cc"
+    },
+    {
+      "name": "CrankedRatio",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked ratio.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b9f028a9-a4b9-2f3b-75e7-9c8832a350ef"
+    },
+    {
+      "name": "CrankingType",
+      "type": "Nullable\u003CRebarCrankingNullable.EndCrankingTypeEnum\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranking type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0562aba-9860-587f-5255-29933938fdd1"
+    },
+    {
+      "name": "CrankRotation",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crank rotation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2a94e50-0898-86fc-6b8b-112a1886d647"
+    },
+    {
+      "name": "CrankStraightLength",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crank straight length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7d36a1af-d830-74e2-4588-62f3af58cc53"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

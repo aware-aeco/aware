@@ -1,0 +1,139 @@
+{
+  "name": "ModelEleList",
+  "namespace": "TypeCollections.ModelEleList",
+  "kind": "class",
+  "summary": "implementation of the model element list",
+  "base": "list",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/",
+  "constructors": [
+    {
+      "name": "ModelEleList",
+      "signature": "ModelEleList(com_prop=GetCurrentCommonProperties())",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "com_prop",
+          "type": "CommonProperties",
+          "doc": "common properties for the elements",
+          "optional": true,
+          "default": "GetCurrentCommonProperties()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/#TypeCollections.ModelEleList.ModelEleList.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "append_geometry_2d",
+      "signature": "append_geometry_2d(geo_ele, com_prop=None)",
+      "summary": "append a 2D geometry element to the list",
+      "remarks": "append a 2D geometry element to the list",
+      "params": [
+        {
+          "name": "geo_ele",
+          "type": "Union[ListModelEle2D, ModelEle2D, ModelEle2DList]",
+          "doc": "2D geometry element",
+          "optional": false
+        },
+        {
+          "name": "com_prop",
+          "type": "Optional[CommonProperties]",
+          "doc": "common properties",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/#TypeCollections.ModelEleList.ModelEleList.append_geometry_2d"
+    },
+    {
+      "name": "append_geometry_3d",
+      "signature": "append_geometry_3d(geo_ele, com_prop=None)",
+      "summary": "append a 3D geometry element to the list",
+      "remarks": "append a 3D geometry element to the list",
+      "params": [
+        {
+          "name": "geo_ele",
+          "type": "Union[ListModelEle3D, ModelEle3D, ModelEle3DList]",
+          "doc": "3D geometry element",
+          "optional": false
+        },
+        {
+          "name": "com_prop",
+          "type": "Optional[CommonProperties]",
+          "doc": "common properties",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/#TypeCollections.ModelEleList.ModelEleList.append_geometry_3d"
+    },
+    {
+      "name": "set_color",
+      "signature": "set_color(color)",
+      "summary": "set the color",
+      "remarks": "set the color",
+      "params": [
+        {
+          "name": "color",
+          "type": "int",
+          "doc": "color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/#TypeCollections.ModelEleList.ModelEleList.set_color"
+    },
+    {
+      "name": "set_pen",
+      "signature": "set_pen(pen)",
+      "summary": "set the pen",
+      "remarks": "set the pen",
+      "params": [
+        {
+          "name": "pen",
+          "type": "int",
+          "doc": "pen",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/#TypeCollections.ModelEleList.ModelEleList.set_pen"
+    },
+    {
+      "name": "set_stroke",
+      "signature": "set_stroke(stroke)",
+      "summary": "set the stroke",
+      "remarks": "set the stroke",
+      "params": [
+        {
+          "name": "stroke",
+          "type": "int",
+          "doc": "stroke",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/#TypeCollections.ModelEleList.ModelEleList.set_stroke"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

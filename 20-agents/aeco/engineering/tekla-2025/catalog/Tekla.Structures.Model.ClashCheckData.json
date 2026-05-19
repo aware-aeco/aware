@@ -1,0 +1,58 @@
+{
+  "name": "ClashCheckData",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ClashCheckData class presents information about the detected clash. It is instantiated inside the onClashDetected method. The objects store the identifiers and type of the clash to be passed on to event subscribers.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2e113655-9825-9801-b873-2dc75b1549f1",
+  "constructors": [
+    {
+      "name": "ClashCheckData",
+      "signature": "public ClashCheckData()",
+      "summary": "Initializes a new instance of the ClashCheckData class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5655ddd7-1c7b-0877-e839-a9905c42f6b7"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Object1",
+      "type": "ModelObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the first clashing object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2d4fc46b-394c-8e44-873d-32b4e827ec57"
+    },
+    {
+      "name": "Object2",
+      "type": "ModelObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the second clashing object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11ea7120-139b-121c-cbc0-f412d94a3bae"
+    },
+    {
+      "name": "Overlap",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the overlap of the clash. Only applies to clashes of type CLASH_TYPE_CLASH.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5757702d-26bf-6d30-7ebe-d62498ac91e7"
+    },
+    {
+      "name": "Type",
+      "type": "ClashCheckData.ClashTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of the clash.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ec95ede2-2188-f03b-347a-75bceefc732a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

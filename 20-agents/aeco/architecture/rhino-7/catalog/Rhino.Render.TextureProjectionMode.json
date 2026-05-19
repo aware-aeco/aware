@@ -1,0 +1,38 @@
+{
+  "name": "TextureProjectionMode",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.TextureProjectionMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_TextureProjectionMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MappingChannel",
+      "value": 0
+    },
+    {
+      "name": "View",
+      "value": 1
+    },
+    {
+      "name": "Wcs",
+      "value": 2
+    },
+    {
+      "name": "EnvironmentMap",
+      "value": 3
+    },
+    {
+      "name": "WcsBox",
+      "value": 4
+    },
+    {
+      "name": "Screen",
+      "value": 5
+    }
+  ]
+}

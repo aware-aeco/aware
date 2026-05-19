@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisPartCompositeProperties.CompositeBeamEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The composite beam options.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/135caca2-4966-9151-b833-8609654aafc7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "COMPOSITE_BEAM_NOT",
+      "value": 0,
+      "summary": "The composite beam setting \u0022not\u0022."
+    },
+    {
+      "name": "COMPOSITE_BEAM_YES",
+      "value": 1,
+      "summary": "The composite beam setting \u0022yes\u0022."
+    },
+    {
+      "name": "COMPOSITE_BEAM_AUTOMATIC",
+      "value": 2,
+      "summary": "The composite beam setting \u0022automatic\u0022."
+    }
+  ]
+}

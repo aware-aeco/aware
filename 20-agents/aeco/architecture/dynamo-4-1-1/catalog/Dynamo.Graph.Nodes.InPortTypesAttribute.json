@@ -1,0 +1,64 @@
+{
+  "name": "InPortTypesAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Indicates input ports\u0027 types",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "InPortTypesAttribute(System.Type, string[])",
+      "signature": "void InPortTypesAttribute(System.Type resourceType, string[] resourceNames)",
+      "summary": "Loads ports types from resource.",
+      "params": [
+        {
+          "name": "resourceType",
+          "type": "System.Type",
+          "doc": "resource type, i.e. type of resource class specified in .resx file",
+          "optional": false
+        },
+        {
+          "name": "resourceNames",
+          "type": "string[]",
+          "doc": "resource names",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    },
+    {
+      "name": "InPortTypesAttribute(string[])",
+      "signature": "void InPortTypesAttribute(string[] types)",
+      "summary": "Loads ports types, that are specified directly in Attribute.",
+      "params": [
+        {
+          "name": "types",
+          "type": "string[]",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PortTypes",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Port types, that are shown in Dynamo tooltips.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

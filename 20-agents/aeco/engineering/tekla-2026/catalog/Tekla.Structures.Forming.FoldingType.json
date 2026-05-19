@@ -1,0 +1,29 @@
+{
+  "name": "FoldingType",
+  "namespace": "Tekla.Structures.Forming",
+  "kind": "enum",
+  "summary": "Enumeration for folding type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c886da23-040c-cf1b-842b-6154335c7852",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_SPECIFIED",
+      "value": 0,
+      "summary": "Not specified, default value."
+    },
+    {
+      "name": "FOLDED",
+      "value": 1,
+      "summary": "Indicates folded item."
+    },
+    {
+      "name": "UNFOLDED",
+      "value": 2,
+      "summary": "Indicates unfolded item."
+    }
+  ]
+}

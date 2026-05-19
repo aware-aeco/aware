@@ -1,0 +1,268 @@
+{
+  "name": "GumballDisplayConduit",
+  "namespace": "Rhino.UI.Gumball",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Gumball.GumballDisplayConduit\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Gumball_GumballDisplayConduit.htm",
+  "constructors": [
+    {
+      "name": "GumballDisplayConduit()",
+      "signature": "[ObsoleteAttribute] public GumballDisplayConduit()",
+      "summary": "Initializes a new instance of the GumballDisplayConduit class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit__ctor.htm"
+    },
+    {
+      "name": "GumballDisplayConduit(ActiveSpace)",
+      "signature": "public GumballDisplayConduit(ActiveSpace space)",
+      "summary": "Initializes a new instance of the GumballDisplayConduit class",
+      "params": [
+        {
+          "name": "space",
+          "type": "Rhino.DocObjects.ActiveSpace",
+          "doc": "[Missing \u003Cparam name=\u0022space\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.#ctor(Rhino.DocObjects.ActiveSpace)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CheckShiftAndControlKeys",
+      "signature": "public void CheckShiftAndControlKeys()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_CheckShiftAndControlKeys.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the GumballDisplayConduit",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GumballDisplayConduit and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_Finalize.htm"
+    },
+    {
+      "name": "PickGumball",
+      "signature": "public bool PickGumball(PickContext pickContext, GetPoint getPoint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pickContext",
+          "type": "Rhino.Input.Custom.PickContext",
+          "doc": "[Missing \u003Cparam name=\u0022pickContext\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.PickGumball(Rhino.Input.Custom.PickContext,Rhino.Input.Custom.GetPoint)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "getPoint",
+          "type": "Rhino.Input.Custom.GetPoint",
+          "doc": "[Missing \u003Cparam name=\u0022getPoint\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.PickGumball(Rhino.Input.Custom.PickContext,Rhino.Input.Custom.GetPoint)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.PickGumball(Rhino.Input.Custom.PickContext,Rhino.Input.Custom.GetPoint)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_PickGumball.htm"
+    },
+    {
+      "name": "SetBaseGumball(GumballObject)",
+      "signature": "public void SetBaseGumball(GumballObject gumball)",
+      "summary": "Contents of the gumball are copied to the base gumball of this class.",
+      "params": [
+        {
+          "name": "gumball",
+          "type": "Rhino.UI.Gumball.GumballObject",
+          "doc": "The gumball source.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_SetBaseGumball.htm"
+    },
+    {
+      "name": "SetBaseGumball(GumballObject, GumballAppearanceSettings)",
+      "signature": "public void SetBaseGumball(GumballObject gumball, GumballAppearanceSettings appearanceSettings)",
+      "summary": "Contents of the gumball are copied to the base gumball of this class.",
+      "params": [
+        {
+          "name": "gumball",
+          "type": "Rhino.UI.Gumball.GumballObject",
+          "doc": "The gumball source.",
+          "optional": false
+        },
+        {
+          "name": "appearanceSettings",
+          "type": "Rhino.UI.Gumball.GumballAppearanceSettings",
+          "doc": "The gumball appearance and behavior settings. Argument can be null.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_SetBaseGumball_1.htm"
+    },
+    {
+      "name": "UpdateGumball(Plane)",
+      "signature": "public bool UpdateGumball(Plane frame)",
+      "summary": "",
+      "params": [
+        {
+          "name": "frame",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022frame\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.UpdateGumball(Rhino.Geometry.Plane)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.UpdateGumball(Rhino.Geometry.Plane)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_UpdateGumball.htm"
+    },
+    {
+      "name": "UpdateGumball(Point3d, Line)",
+      "signature": "public bool UpdateGumball(Point3d point, Line worldLine)",
+      "summary": "",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022point\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.UpdateGumball(Rhino.Geometry.Point3d,Rhino.Geometry.Line)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "worldLine",
+          "type": "Rhino.Geometry.Line",
+          "doc": "[Missing \u003Cparam name=\u0022worldLine\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.UpdateGumball(Rhino.Geometry.Point3d,Rhino.Geometry.Line)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballDisplayConduit.UpdateGumball(Rhino.Geometry.Point3d,Rhino.Geometry.Line)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballDisplayConduit_UpdateGumball_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BaseGumball",
+      "type": "GumballObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Starting location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_BaseGumball.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_Enabled.htm"
+    },
+    {
+      "name": "Gumball",
+      "type": "GumballObject",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_Gumball.htm"
+    },
+    {
+      "name": "GumballTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "The gumball transformation is the transformation calculated by comparing the current gumball to the starting BaseGumball.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_GumballTransform.htm"
+    },
+    {
+      "name": "InRelocate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_InRelocate.htm"
+    },
+    {
+      "name": "PickResult",
+      "type": "GumballPickResult",
+      "getter": true,
+      "setter": false,
+      "summary": "The initial mouse down event sets PickResult.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_PickResult.htm"
+    },
+    {
+      "name": "PreTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "The pre-transform is a transformation that needs to be applied before the gumball transformation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_PreTransform.htm"
+    },
+    {
+      "name": "TotalTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "The total transformation is GumballTransform * PreTransform.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballDisplayConduit_TotalTransform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

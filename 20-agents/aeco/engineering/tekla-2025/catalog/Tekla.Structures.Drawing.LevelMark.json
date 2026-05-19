@@ -1,0 +1,927 @@
+{
+  "name": "LevelMark",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LevelMark class defines a drawing object that is displayed as a level mark in a drawing. See the Tekla Structures help for more information.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fce74c34-2166-28c3-f4db-792a8ecdff6c",
+  "constructors": [
+    {
+      "name": "LevelMark(ViewBase, Point, Point)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint)",
+      "summary": "Initializes a new instance of the LevelMark class using the default standard attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a3fffa94-bad2-5a7a-15bb-3318af812e55"
+    },
+    {
+      "name": "LevelMark(ViewBase, Point, Point, LevelMark.LevelMarkAttributes)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint, LevelMark.LevelMarkAttributes Attributes)",
+      "summary": "Initializes a new instance of the LevelMark class using the given attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        },
+        {
+          "name": "Attributes",
+          "type": "Tekla.Structures.Drawing.LevelMark.LevelMarkAttributes",
+          "doc": "The level mark attributes to be applied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c0c0718-99d3-2124-77c6-af918fd40276"
+    },
+    {
+      "name": "LevelMark(ViewBase, Point, Point, ModelObject)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint, ModelObject modelObject)",
+      "summary": "Initializes a new instance of the LevelMark class using the given attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        },
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Drawing.ModelObject",
+          "doc": "The model object that the Mark will be attached to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/40c030cd-6aaa-8624-dc79-1eece7c753a6"
+    },
+    {
+      "name": "LevelMark(ViewBase, Point, Point, PlacingBase)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint, PlacingBase Placing)",
+      "summary": "Initializes a new instance of the LevelMark class using the given attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        },
+        {
+          "name": "Placing",
+          "type": "Tekla.Structures.Drawing.PlacingBase",
+          "doc": "The way the object is placed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33310ffc-fdfc-6e0e-e365-d4211910abe1"
+    },
+    {
+      "name": "LevelMark(ViewBase, Point, Point, ModelObject, LevelMark.LevelMarkAttributes)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint, ModelObject modelObject, LevelMark.LevelMarkAttributes Attributes)",
+      "summary": "Initializes a new instance of the LevelMark class using the given attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        },
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Drawing.ModelObject",
+          "doc": "The model object that the Mark will be attached to.",
+          "optional": false
+        },
+        {
+          "name": "Attributes",
+          "type": "Tekla.Structures.Drawing.LevelMark.LevelMarkAttributes",
+          "doc": "The level mark attributes to be applied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/22c08baf-ccc1-ca23-af8b-04da0c18b4e4"
+    },
+    {
+      "name": "LevelMark(ViewBase, Point, Point, PlacingBase, LevelMark.LevelMarkAttributes)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint, PlacingBase Placing, LevelMark.LevelMarkAttributes Attributes)",
+      "summary": "Initializes a new instance of the LevelMark class using the given attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        },
+        {
+          "name": "Placing",
+          "type": "Tekla.Structures.Drawing.PlacingBase",
+          "doc": "The way the object is placed.",
+          "optional": false
+        },
+        {
+          "name": "Attributes",
+          "type": "Tekla.Structures.Drawing.LevelMark.LevelMarkAttributes",
+          "doc": "The level mark attributes to be applied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/23adf592-761f-57a7-eb28-ad6a8ac40e9b"
+    },
+    {
+      "name": "LevelMark(ViewBase, Point, Point, PlacingBase, ModelObject)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint, PlacingBase Placing, ModelObject modelObject)",
+      "summary": "Initializes a new instance of the LevelMark class using the given attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        },
+        {
+          "name": "Placing",
+          "type": "Tekla.Structures.Drawing.PlacingBase",
+          "doc": "The way the object is placed.",
+          "optional": false
+        },
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Drawing.ModelObject",
+          "doc": "The model object that the Mark will be attached to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/043d4828-6fe1-ffbe-4aff-533c600b5fdf"
+    },
+    {
+      "name": "LevelMark(ViewBase, Point, Point, PlacingBase, ModelObject, LevelMark.LevelMarkAttributes)",
+      "signature": "public LevelMark(ViewBase View, Point InsertionPoint, Point BasePoint, PlacingBase Placing, ModelObject modelObject, LevelMark.LevelMarkAttributes Attributes)",
+      "summary": "Initializes a new instance of the LevelMark class using the given attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view where to insert the level mark.",
+          "optional": false
+        },
+        {
+          "name": "InsertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to place the level mark.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location where to the level mark points.",
+          "optional": false
+        },
+        {
+          "name": "Placing",
+          "type": "Tekla.Structures.Drawing.PlacingBase",
+          "doc": "The way the object is placed.",
+          "optional": false
+        },
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Drawing.ModelObject",
+          "doc": "The model object that the Mark will be attached to.",
+          "optional": false
+        },
+        {
+          "name": "Attributes",
+          "type": "Tekla.Structures.Drawing.LevelMark.LevelMarkAttributes",
+          "doc": "The level mark attributes to be applied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5a6594b-abea-523e-6a74-b4998e5ce7f6"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public override bool Delete()",
+      "summary": "Deletes the level mark from the current drawing database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b10336fd-b459-a877-0e4a-dcb65e25769e"
+    },
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetAxisAlignedBoundingBox()",
+      "summary": "Returns the axis aligned bounding box of the level mark (rectangle format).",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the level mark."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/87100edf-a1b5-af48-a4fc-1c4d7e8264d4"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "public Drawing GetDrawing()",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "Drawing",
+        "doc": "The drawing where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetObjectAlignedBoundingBox()",
+      "summary": "Returns the bounding box of the level mark (rectangle format).",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the level mark."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3f4fc5f4-2b3a-d410-68ea-e7dd6af1d96f"
+    },
+    {
+      "name": "GetObjects()",
+      "signature": "public DrawingObjectEnumerator GetObjects()",
+      "summary": "Gets the children objects of the current object.",
+      "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The children objects of the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e697d436-dbc5-daf0-5f23-441f0ed1d3f0"
+    },
+    {
+      "name": "GetObjects(.Type[])",
+      "signature": "public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)",
+      "summary": "Gets the children objects of the current object that are of certain types.",
+      "params": [
+        {
+          "name": "TypeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The children objects of the current object that are of certain types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6345f693-40cb-39a3-cd7d-2ca032df473b"
+    },
+    {
+      "name": "GetRelatedObjects()",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type[])",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [
+        {
+          "name": "typeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object that are of certain types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "public bool GetUserProperty(string Name, ref double Value)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "public bool GetUserProperty(string Name, ref int Value)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "public bool GetUserProperty(string Name, ref string Value)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "public ViewBase GetView()",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "ViewBase",
+        "doc": "The view where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "public override bool Insert()",
+      "summary": "Inserts the level mark into the current drawing database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/098b8330-bcfa-6dda-40dc-836e08cd3692"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa26702e-29e2-512c-b1cd-23c502ea0aa2"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "public virtual bool IsSameDatabaseObject(DatabaseObject Object)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Drawing.DatabaseObject",
+          "doc": "The other object to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the objects are referencing the same database object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "public override bool Modify()",
+      "summary": "Modifies the level mark in the current drawing database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [
+        {
+          "type": "InvalidAttributesForOperationException",
+          "when": "Thrown if Attributes contains values that are not supported by the object."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d730928a-7f22-1a4b-351d-4830dd26f25e"
+    },
+    {
+      "name": "MoveObjectRelative",
+      "signature": "public bool MoveObjectRelative(Vector MoveVector)",
+      "summary": "Moves the object using the move vector.",
+      "params": [
+        {
+          "name": "MoveVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The move vector to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/274e6d27-c54b-31cd-8cc5-30075d19d665"
+    },
+    {
+      "name": "Select",
+      "signature": "public override bool Select()",
+      "summary": "Selects the level mark from the current drawing database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6e4eabea-c3ae-b9ec-5759-2c93154afc98"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "public bool SetUserProperty(string Name, double Value)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "public bool SetUserProperty(string Name, int Value)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "public bool SetUserProperty(string Name, string Value)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The name of the current drawing object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "LevelMark.LevelMarkAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the level mark attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/81e2374e-3f10-3996-94f6-99198c491703"
+    },
+    {
+      "name": "BasePoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the level mark base point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d8e4b682-ee1d-61e9-2d9e-57e875e137e2"
+    },
+    {
+      "name": "Hideable",
+      "type": "Hideable",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33c7436b-fb6f-bd92-1683-281520c40ec7"
+    },
+    {
+      "name": "InsertionPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the level mark insertion point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6178bb6b-fcf0-2aa1-c798-d44a31ce3d51"
+    },
+    {
+      "name": "ModelObjectIdentifier",
+      "type": "Identifier",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the model object identifier",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5872b709-658e-e477-1e08-51d855ac1a4c"
+    },
+    {
+      "name": "Placing",
+      "type": "PlacingBase",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the current placing of the object. See the placing types for different placing options.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/59a21556-9db0-0ce6-e9ee-378ed41c34ae"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "ReturnValuesEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    },
+    {
+      "name": "SubType",
+      "type": "LevelMark.LevelMarkType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the subtype of the level mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f8bdeb6e-b9d5-2687-defe-efbf9646f816"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

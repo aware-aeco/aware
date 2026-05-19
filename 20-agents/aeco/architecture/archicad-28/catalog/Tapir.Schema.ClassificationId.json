@@ -1,0 +1,31 @@
+{
+  "name": "ClassificationId",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The element classification identifier.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ClassificationId",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "classificationSystemId",
+      "type": "ClassificationSystemId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060classificationSystemId\u0060 of type \u0060ClassificationSystemId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ClassificationId"
+    },
+    {
+      "name": "classificationItemId",
+      "type": "ClassificationItemId",
+      "getter": true,
+      "setter": true,
+      "summary": "The element\u0027s classification in the given system. If no value is specified here, the element is Unclassified in this system.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ClassificationId"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

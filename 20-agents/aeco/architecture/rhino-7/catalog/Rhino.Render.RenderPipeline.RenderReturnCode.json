@@ -1,0 +1,62 @@
+{
+  "name": "RenderPipeline.RenderReturnCode",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderPipeline.RenderReturnCode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderPipeline_RenderReturnCode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Ok",
+      "value": 0
+    },
+    {
+      "name": "EmptyScene",
+      "value": 1
+    },
+    {
+      "name": "Cancel",
+      "value": 2
+    },
+    {
+      "name": "NoActiveView",
+      "value": 3
+    },
+    {
+      "name": "OnPreCreateWindow",
+      "value": 4
+    },
+    {
+      "name": "NoFrameWndPointer",
+      "value": 5
+    },
+    {
+      "name": "ErrorCreatingWindow",
+      "value": 6
+    },
+    {
+      "name": "ErrorStartingRender",
+      "value": 7
+    },
+    {
+      "name": "EnterModalLoop",
+      "value": 8
+    },
+    {
+      "name": "ExitModalLoop",
+      "value": 9
+    },
+    {
+      "name": "ExitRhino",
+      "value": 10
+    },
+    {
+      "name": "InternalError",
+      "value": 11
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "name": "Fonts",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Rhino.Rumtime.UI",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Fonts.htm",
+  "constructors": [
+    {
+      "name": "Fonts",
+      "signature": "public Fonts()",
+      "summary": "Initializes a new instance of the Fonts class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Fonts__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetUiFont",
+      "signature": "public static Font GetUiFont(Fonts.Style style, Fonts.Size size)",
+      "summary": "GetUiFont provides access to a set of unmanaged fonts used by Rhino.",
+      "params": [
+        {
+          "name": "style",
+          "type": "Rhino.UI.Fonts.Style",
+          "doc": "Normal, Bold, Italic",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "Rhino.UI.Fonts.Size",
+          "doc": "One of several preset enumerable sizes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Fonts.GetUiFont(Rhino.UI.Fonts.Style,Rhino.UI.Fonts.Size)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Fonts_GetUiFont.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoldHeadingFont",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a font that is 1.2x NormalFont and Bold",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Fonts_BoldHeadingFont.htm"
+    },
+    {
+      "name": "HeadingFont",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a font used for dialog headings. 1.2x the size of NormalFont.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Fonts_HeadingFont.htm"
+    },
+    {
+      "name": "NormalFont",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the normal font used for dialog boxes and buttons.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Fonts_NormalFont.htm"
+    },
+    {
+      "name": "SmallFont",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a font use for small text in dialog boxes. 0.8x the size of NormalFont.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Fonts_SmallFont.htm"
+    },
+    {
+      "name": "TitleFont",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a font used for dialog titles. 2x the size of NormalFont, and bold.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Fonts_TitleFont.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,421 @@
+{
+  "name": "Parallel",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The Parallel class contains methods for testing the parallelism of geometric objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/500ff3fe-9fc3-17dd-9776-c01150876d46",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LineSegmentToLineSegment(LineSegment, LineSegment)",
+      "signature": "public static bool LineSegmentToLineSegment(LineSegment LineSegment1, LineSegment LineSegment2)",
+      "summary": "Returns true if the given line segments are parallel.",
+      "params": [
+        {
+          "name": "LineSegment1",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The first line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "LineSegment2",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The second line segment to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given line segments are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3fefb26c-3308-e52b-ae2b-cba9ac001741"
+    },
+    {
+      "name": "LineSegmentToLineSegment(LineSegment, LineSegment, Double)",
+      "signature": "public static bool LineSegmentToLineSegment(LineSegment LineSegment1, LineSegment LineSegment2, double Tolerance)",
+      "summary": "Returns true if the given line segments are parallel within the given angular tolerance.",
+      "params": [
+        {
+          "name": "LineSegment1",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The first line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "LineSegment2",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The second line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "System.Double",
+          "doc": "The angular tolerance (in radians) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given line segments are parallel within the given tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/44ea8e3b-9814-ec3b-a4e5-516c578a1494"
+    },
+    {
+      "name": "LineSegmentToPlane(LineSegment, GeometricPlane)",
+      "signature": "public static bool LineSegmentToPlane(LineSegment LineSegment, GeometricPlane Plane)",
+      "summary": "Returns true if the given line segment and plane are parallel.",
+      "params": [
+        {
+          "name": "LineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given line segment and plane are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9314182-a9a9-2302-1209-a29b53163c93"
+    },
+    {
+      "name": "LineSegmentToPlane(LineSegment, GeometricPlane, Double)",
+      "signature": "public static bool LineSegmentToPlane(LineSegment LineSegment, GeometricPlane Plane, double Tolerance)",
+      "summary": "Returns true if the given line segment and plane are parallel within the given angular tolerance.",
+      "params": [
+        {
+          "name": "LineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "System.Double",
+          "doc": "The angular tolerance (in radians) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given line segment and plane are parallel within the given tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/870d4a57-1b49-825b-2e31-a04a7bf43c35"
+    },
+    {
+      "name": "LineToLine(Line, Line)",
+      "signature": "public static bool LineToLine(Line Line1, Line Line2)",
+      "summary": "Returns true if the given lines are parallel.",
+      "params": [
+        {
+          "name": "Line1",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The first line to be used.",
+          "optional": false
+        },
+        {
+          "name": "Line2",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The second line to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given lines are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df4f30d9-ee2a-cee1-18c1-9b3d2d69ed89"
+    },
+    {
+      "name": "LineToLine(Line, Line, Double)",
+      "signature": "public static bool LineToLine(Line Line1, Line Line2, double Tolerance)",
+      "summary": "Returns true if the given lines are parallel within the given angular tolerance.",
+      "params": [
+        {
+          "name": "Line1",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The first line to be used.",
+          "optional": false
+        },
+        {
+          "name": "Line2",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The second line to be used.",
+          "optional": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "System.Double",
+          "doc": "The angular tolerance (in radians) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given lines are parallel within the given tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0fbab871-aea2-72ba-a7dc-2e2a912050d8"
+    },
+    {
+      "name": "LineToPlane(Line, GeometricPlane)",
+      "signature": "public static bool LineToPlane(Line Line, GeometricPlane Plane)",
+      "summary": "Returns true if the given line and plane are parallel.",
+      "params": [
+        {
+          "name": "Line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given line and plane are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31959918-df5e-12cc-cd38-e1260cf7357a"
+    },
+    {
+      "name": "LineToPlane(Line, GeometricPlane, Double)",
+      "signature": "public static bool LineToPlane(Line Line, GeometricPlane Plane, double Tolerance)",
+      "summary": "Returns true if the given line and plane are parallel within the given angular tolerance.",
+      "params": [
+        {
+          "name": "Line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "System.Double",
+          "doc": "The angular tolerance (in radians) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given line and plane are parallel within the given tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e754eecb-6a64-d122-aad1-384160b958c9"
+    },
+    {
+      "name": "PlaneToPlane(GeometricPlane, GeometricPlane)",
+      "signature": "public static bool PlaneToPlane(GeometricPlane Plane1, GeometricPlane Plane2)",
+      "summary": "Returns true if the given planes are parallel.",
+      "params": [
+        {
+          "name": "Plane1",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The first plane to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane2",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The second plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given planes are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6a5598cf-b34d-d891-95df-3e37bd53fcd8"
+    },
+    {
+      "name": "PlaneToPlane(GeometricPlane, GeometricPlane, Double)",
+      "signature": "public static bool PlaneToPlane(GeometricPlane Plane1, GeometricPlane Plane2, double Tolerance)",
+      "summary": "Returns true if the given planes are parallel within the given angular tolerance.",
+      "params": [
+        {
+          "name": "Plane1",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The first plane to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane2",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The second plane to be used.",
+          "optional": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "System.Double",
+          "doc": "The angular tolerance (in radians) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given planes are parallel within the given tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b4d81bf6-d30f-693a-2cc4-a848e0ed328f"
+    },
+    {
+      "name": "VectorToPlane(Vector, GeometricPlane)",
+      "signature": "public static bool VectorToPlane(Vector Vector, GeometricPlane Plane)",
+      "summary": "Returns true if the given vector and plane are parallel.",
+      "params": [
+        {
+          "name": "Vector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The vector to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given vector and plane are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c8b8357-5e18-facf-dece-f437f6f1e98e"
+    },
+    {
+      "name": "VectorToPlane(Vector, GeometricPlane, Double)",
+      "signature": "public static bool VectorToPlane(Vector Vector, GeometricPlane Plane, double Tolerance)",
+      "summary": "Returns true if the given vector and plane are parallel within the given angular tolerance.",
+      "params": [
+        {
+          "name": "Vector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The vector to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "System.Double",
+          "doc": "The angular tolerance (in radians) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given vector and plane are parallel within the given tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/feb7a799-8d7c-dae3-c162-4e1d83c5131c"
+    },
+    {
+      "name": "VectorToVector(Vector, Vector)",
+      "signature": "public static bool VectorToVector(Vector Vector1, Vector Vector2)",
+      "summary": "Returns true if the given vectors are parallel.",
+      "params": [
+        {
+          "name": "Vector1",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The first vector to be used.",
+          "optional": false
+        },
+        {
+          "name": "Vector2",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The second vector to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given vectors are parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8c02559b-3211-e5a0-95fa-43312faa6df2"
+    },
+    {
+      "name": "VectorToVector(Vector, Vector, Double)",
+      "signature": "public static bool VectorToVector(Vector Vector1, Vector Vector2, double Tolerance)",
+      "summary": "Returns true if the given vectors are parallel within the given angular tolerance.",
+      "params": [
+        {
+          "name": "Vector1",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The first vector to be used.",
+          "optional": false
+        },
+        {
+          "name": "Vector2",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The second vector to be used.",
+          "optional": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "System.Double",
+          "doc": "The angular tolerance (in radians) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given vectors are parallel within the given tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f77a5938-933c-2e87-c3cc-6e8132ee9c0f"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,566 @@
+{
+  "name": "Application",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "The singleton object that represents the application.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Application",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadDocumentInfo",
+      "signature": "static Autodesk.Navisworks.Api.DocumentInfo LoadDocumentInfo(string fileName)",
+      "summary": "Load DocumentInfo.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "fileName to load DocumentInfo from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DocumentInfo",
+        "doc": "Returns DocumentInfo if success"
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to open file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.LoadDocumentInfo%28System.String%29"
+    },
+    {
+      "name": "TryLoadDocumentInfo",
+      "signature": "static Autodesk.Navisworks.Api.DocumentInfo TryLoadDocumentInfo(string fileName)",
+      "summary": "Try to Load DocumentInfo.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "fileName to load DocumentInfo from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DocumentInfo",
+        "doc": "Returns null if failed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.TryLoadDocumentInfo%28System.String%29"
+    },
+    {
+      "name": "BeginProgress",
+      "signature": "static Autodesk.Navisworks.Api.Progress BeginProgress()",
+      "summary": "Provides an instance of the Progress class which starts reporting of progress of an operation, typically displaying a progress bar or dialog to the end user.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Progress",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.BeginProgress"
+    },
+    {
+      "name": "BeginProgress",
+      "signature": "static Autodesk.Navisworks.Api.Progress BeginProgress(string title)",
+      "summary": "Provides an instance of the Progress class which starts reporting of progress of an operation, typically displaying a progress bar or dialog to the end user.",
+      "params": [
+        {
+          "name": "title",
+          "type": "string",
+          "doc": "Title for the overall progress operation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Progress",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.BeginProgress%28System.String%29"
+    },
+    {
+      "name": "BeginProgress",
+      "signature": "static Autodesk.Navisworks.Api.Progress BeginProgress(string title, string message)",
+      "summary": "Provides an instance of the Progress class which starts reporting of progress of an operation, typically displaying a progress bar or dialog to the end user.",
+      "params": [
+        {
+          "name": "title",
+          "type": "string",
+          "doc": "Title for the overall progress operation (title for Navisworks progress dialog)",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "Message describing the current operation (body of Navisworks progress dialog)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Progress",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.BeginProgress%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "UnregisterBitmap",
+      "signature": "static bool UnregisterBitmap(int bitmapIndex)",
+      "summary": "Unregister a previously registered bitmap. The function returns true if successful, or false otherwise.",
+      "params": [
+        {
+          "name": "bitmapIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.UnregisterBitmap%28System.Int32%29"
+    },
+    {
+      "name": "RegisterBitmap",
+      "signature": "static int RegisterBitmap(System.Drawing.Bitmap bitmap)",
+      "summary": "Register a bitmap for later use by the graphics system. The function returns an integer ID, or -1 if registration failed.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.RegisterBitmap%28System.Drawing.Bitmap%29"
+    },
+    {
+      "name": "GetCustomColors",
+      "signature": "static int[] GetCustomColors()",
+      "summary": "Retrieve the custom colors for the current session",
+      "params": [],
+      "returns": {
+        "type": "int[]",
+        "doc": "The custom colors for the current session"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.GetCustomColors"
+    },
+    {
+      "name": "EndProgress",
+      "signature": "static void EndProgress()",
+      "summary": "Finishes the operation and disposes of the Progress control allocated using BeginProgress()",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.EndProgress"
+    },
+    {
+      "name": "PostUserMessage",
+      "signature": "static void PostUserMessage(string internalId, string source, Autodesk.Navisworks.Api.MessageCenterCategory category, string message, string extendedMessage, int messageFlags)",
+      "summary": "PostUserMessage method of Application.",
+      "params": [
+        {
+          "name": "internalId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "category",
+          "type": "Autodesk.Navisworks.Api.MessageCenterCategory",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "extendedMessage",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "messageFlags",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.PostUserMessage%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.MessageCenterCategory%2CSystem.String%2CSystem.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetCustomColors",
+      "signature": "static void SetCustomColors(int[] customColors)",
+      "summary": "Set the custom colors for the current session The custom colors to set for the current session",
+      "params": [
+        {
+          "name": "customColors",
+          "type": "int[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Application.SetCustomColors%28System.Int32%5B%5D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveDocument",
+      "type": "Autodesk.Navisworks.Api.Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a reference to the current Document being displayed in a View",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.ActiveDocument"
+    },
+    {
+      "name": "Automation",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a reference to the ApplicationAutomation singleton, which provides the same interface for automation as NavisWorksApplication in the Automation assembly",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Automation"
+    },
+    {
+      "name": "Bim360",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.IApplicationBim360",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to the BIM360 state of the application of which is hosting the API. Will be null if the application doesn\u0027t have BIM360 state.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Bim360"
+    },
+    {
+      "name": "Documents",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Document\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a reference to the Read Only collection of documents currently open",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Documents"
+    },
+    {
+      "name": "DragDrop",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.ApplicationDragDrop",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to Drag Drop utilities.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.DragDrop"
+    },
+    {
+      "name": "Gui",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.IApplicationGui",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides information about the Gui of the application which is hosting the API. Will be null if the application doesn\u0027t have a Gui.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Gui"
+    },
+    {
+      "name": "IsAutomated",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this instance is running under Automation",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.IsAutomated"
+    },
+    {
+      "name": "IsUserDataCollectionEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is user data collection enabled.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.IsUserDataCollectionEnabled"
+    },
+    {
+      "name": "MainDocument",
+      "type": "Autodesk.Navisworks.Api.Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a reference to the Primary Document being worked on. Once set the MainDocument does not change for the lifetime of the application.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.MainDocument"
+    },
+    {
+      "name": "Options",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.ApplicationOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to Application Options.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Options"
+    },
+    {
+      "name": "Plugins",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides information about the Plugins available in the application runtime",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Plugins"
+    },
+    {
+      "name": "Resources",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.ApplicationResources",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to Application Resources.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Resources"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Title for application. Suitable for display in window title bar, or similar.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Title"
+    },
+    {
+      "name": "Version",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.ApplicationVersion",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides information about the version of the currently running API and Runtime",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Application.Version"
+    }
+  ],
+  "events": [
+    {
+      "name": "ActiveDocumentChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E ActiveDocumentChanged",
+      "summary": "Occurs when the ActiveDocument has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ActiveDocumentChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ActiveDocumentChanging",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E ActiveDocumentChanging",
+      "summary": "Occurs when the ActiveDocument is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ActiveDocumentChanging",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Bim360Created",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Bim360Created",
+      "summary": "Occurs when the Application\u0027s BIM360 state been created. Bim360 will be non-null.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.Bim360Created",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Bim360Destroying",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Bim360Destroying",
+      "summary": "Occurs when the Application\u0027s BIM360 state is about to be destroyed. Bim360 will be set to null after this event has been raised.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.Bim360Destroying",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DocumentAdded",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.DocumentEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.DocumentEventArgs\u003E DocumentAdded",
+      "summary": "Occurs when a Document has been added to the Documents collection. Typically soon after the Document has been created.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.DocumentAdded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DocumentRemoved",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.DocumentEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.DocumentEventArgs\u003E DocumentRemoved",
+      "summary": "Occurs when a Document has been removed from the Documents collection. Typically shortly before the Document is destroyed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.DocumentRemoved",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FileInteractiveResolved",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileInteractiveResolvedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileInteractiveResolvedEventArgs\u003E FileInteractiveResolved",
+      "summary": "Occurs when a file reference has been interactively resolved. Raised before FileResolved if automatic resolution has failed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.FileInteractiveResolved",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FileInteractiveResolving",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileInteractiveResolvingEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileInteractiveResolvingEventArgs\u003E FileInteractiveResolving",
+      "summary": "Occurs when a file reference needs to be interactively resolved. Raised after FileResolving if automatic resolution has failed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.FileInteractiveResolving",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FileResolved",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileResolvedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileResolvedEventArgs\u003E FileResolved",
+      "summary": "Occurs when a file reference has been resolved. Typically when opening a file.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.FileResolved",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FileResolving",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileResolvingEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileResolvingEventArgs\u003E FileResolving",
+      "summary": "Occurs when a file reference needs to be resolved. Typically when opening a file.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.FileResolving",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "GuiCreated",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E GuiCreated",
+      "summary": "Occurs when the Application\u0027s GUI has been created. Gui will be non-null.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.GuiCreated",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "GuiDestroying",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E GuiDestroying",
+      "summary": "Occurs when the Application\u0027s GUI is about to be destroyed. Gui will be set to null after this event has been raised.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.GuiDestroying",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Idle",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Idle",
+      "summary": "Occurs when the application finishes processing and is about to enter the idle state.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.Idle",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MainDocumentChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E MainDocumentChanged",
+      "summary": "Occurs when the MainDocument has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.MainDocumentChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MainDocumentChanging",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E MainDocumentChanging",
+      "summary": "Occurs when the MainDocument is about to change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.MainDocumentChanging",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressBeginning",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressBeginningEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressBeginningEventArgs\u003E ProgressBeginning",
+      "summary": "Occurs when BeginProgress() is called. If any handler markes the event as handled, the standard progress dialog will not be displayed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressBeginning",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressEnded",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressEndedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressEndedEventArgs\u003E ProgressEnded",
+      "summary": "Occurs when EndProgress is called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressEnded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressErrorReporting",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressErrorReportingEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressErrorReportingEventArgs\u003E ProgressErrorReporting",
+      "summary": "Occurs when an error occurs during the lifetime of a Progress object. For example, if an error occurs whilst opening a large file the error can be displayed to the user who is offered the chance to cancel.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressErrorReporting",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressMessageReporting",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressMessageReportingEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressMessageReportingEventArgs\u003E ProgressMessageReporting",
+      "summary": "Occurs during Progress reporting when message describing current operation is updated.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressMessageReporting",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressSubOperationBegan",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressSubOperationBeganEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressSubOperationBeganEventArgs\u003E ProgressSubOperationBegan",
+      "summary": "Occurs when Progress.BeginSubOperation is called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressSubOperationBegan",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressSubOperationEnded",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressSubOperationEndedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressSubOperationEndedEventArgs\u003E ProgressSubOperationEnded",
+      "summary": "Occurs when Progress.EndSubOperation is called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressSubOperationEnded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressUpdating",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressUpdatingEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressUpdatingEventArgs\u003E ProgressUpdating",
+      "summary": "Occurs during Progress reporting when progress is updated.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressUpdating",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProgressVisibility",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressVisibilityEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ProgressVisibilityEventArgs\u003E ProgressVisibility",
+      "summary": "Occurs when Progress.SetVisible is called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.ProgressVisibility",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "UserMessagePosted",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.UserMessageEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.UserMessageEventArgs\u003E UserMessagePosted",
+      "summary": "UserMessagePosted event of Application.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Application.UserMessagePosted",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,112 @@
+{
+  "name": "BeamProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the beam properties",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/",
+  "constructors": [
+    {
+      "name": "BeamProperties",
+      "signature": "BeamProperties() | BeamProperties(beamProp)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth()",
+      "summary": "Get the width",
+      "remarks": "Get the width",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Width"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.GetWidth"
+    },
+    {
+      "name": "SetAttribute",
+      "signature": "SetAttribute(attrib)",
+      "summary": "Set the attribute",
+      "remarks": "Set the attribute",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "object",
+          "doc": "Attribute",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.SetAttribute"
+    },
+    {
+      "name": "SetAxis",
+      "signature": "SetAxis(axis)",
+      "summary": "Set the axis",
+      "remarks": "Set the axis",
+      "params": [
+        {
+          "name": "axis",
+          "type": "AxisProperties",
+          "doc": "Axis data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.SetAxis"
+    },
+    {
+      "name": "SetWidth",
+      "signature": "SetWidth(width)",
+      "summary": "Set the width",
+      "remarks": "Set the width",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.SetWidth"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsStartNewJoinedBeamGroup",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the state for starting a new beam group All beams in a group are used for to create a continues join between the beams.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.IsStartNewJoinedBeamGroup"
+    },
+    {
+      "name": "Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the width",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

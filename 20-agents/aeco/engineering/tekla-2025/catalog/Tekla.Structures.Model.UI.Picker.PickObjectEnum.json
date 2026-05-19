@@ -1,0 +1,39 @@
+{
+  "name": "Picker.PickObjectEnum",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The possible model object pick types for a single object.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a753a5ec-dca7-2bf0-480f-061d24ca0cc3",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PICK_ONE_OBJECT",
+      "value": 0,
+      "summary": "Pick one model object of any type."
+    },
+    {
+      "name": "PICK_ONE_PART",
+      "value": 1,
+      "summary": "Pick one part."
+    },
+    {
+      "name": "PICK_ONE_WELD",
+      "value": 2,
+      "summary": "Pick one welding."
+    },
+    {
+      "name": "PICK_ONE_BOLTGROUP",
+      "value": 3,
+      "summary": "Pick one bolt group."
+    },
+    {
+      "name": "PICK_ONE_REINFORCEMENT",
+      "value": 4,
+      "summary": "Pick one reinforcement."
+    }
+  ]
+}

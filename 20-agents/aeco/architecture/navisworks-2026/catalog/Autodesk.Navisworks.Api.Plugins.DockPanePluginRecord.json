@@ -1,0 +1,103 @@
+{
+  "name": "DockPanePluginRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents an DockPanePlugin record in Navisworks",
+  "base": "Autodesk.Navisworks.Api.Plugins.PluginRecord",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.DockPanePluginRecord",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.DockPanePlugin LoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.DockPanePlugin",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.LoadPlugin"
+    },
+    {
+      "name": "TryLoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.DockPanePlugin TryLoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.DockPanePlugin",
+        "doc": "null if plugin failed to load"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.TryLoadPlugin"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoScroll",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if scroll bars should appear when the pane gets bellow it\u0027s minimum size",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.AutoScroll"
+    },
+    {
+      "name": "FixedSize",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the pane should be resizable",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.FixedSize"
+    },
+    {
+      "name": "LoadedPlugin",
+      "type": "Autodesk.Navisworks.Api.Plugins.DockPanePlugin",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the plugin if loaded, otherwise null",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.LoadedPlugin"
+    },
+    {
+      "name": "MinimumHeight",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Minimum height of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.MinimumHeight"
+    },
+    {
+      "name": "MinimumWidth",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Minimum width of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.MinimumWidth"
+    },
+    {
+      "name": "PreferredHeight",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred height of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.PreferredHeight"
+    },
+    {
+      "name": "PreferredWidth",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred width of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginRecord.PreferredWidth"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

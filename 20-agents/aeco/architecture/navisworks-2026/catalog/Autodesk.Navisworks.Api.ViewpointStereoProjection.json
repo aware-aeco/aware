@@ -1,0 +1,29 @@
+{
+  "name": "ViewpointStereoProjection",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The stereo projection type of the viewpoint.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewpointStereoProjection",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Mono",
+      "value": 0,
+      "summary": "Standard mono camera"
+    },
+    {
+      "name": "Left",
+      "value": 1,
+      "summary": "Left eye for stereo"
+    },
+    {
+      "name": "Right",
+      "value": 2,
+      "summary": "Right eye for stereo"
+    }
+  ]
+}

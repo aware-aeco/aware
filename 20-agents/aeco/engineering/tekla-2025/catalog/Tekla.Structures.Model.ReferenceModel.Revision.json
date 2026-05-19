@@ -1,0 +1,104 @@
+{
+  "name": "ReferenceModel.Revision",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "struct",
+  "summary": "Reference model revision.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2d3e9160-2d8e-2de7-7c4c-978d447e3d92",
+  "constructors": [
+    {
+      "name": "ReferenceModel.Revision",
+      "signature": "public Revision(int referenceModelId, int id, DateTime time, string hash, string fileName, bool isCurrentRevision)",
+      "summary": "Parameterized constructor.",
+      "params": [
+        {
+          "name": "referenceModelId",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "time",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "hash",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "isCurrentRevision",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0f2a1165-c608-1c61-67df-7bf7a9c8ee9b"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the revision file name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f806e361-474e-487e-a649-3c8d48151c7d"
+    },
+    {
+      "name": "Hash",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the revision hash identifier.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/52cf82f9-1a62-3248-631d-8cbd4b6d9ccb"
+    },
+    {
+      "name": "Id",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the revision id.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4db4418c-8340-eba1-e109-b0569f02ede8"
+    },
+    {
+      "name": "IsCurrentRevision",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value indicating whether this revision is the current revision or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0c5a03b3-a429-95a2-69c7-5b22686f1417"
+    },
+    {
+      "name": "ReferenceModelId",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets or sets the parent reference model id.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2702447a-a76a-575f-7d73-7de1b5d4d045"
+    },
+    {
+      "name": "Time",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the revision time.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/de4bde21-81bc-1f5a-4a7a-56f0a55f5212"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "AssignBys",
+  "namespace": "Rhino.Render.DataSources",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DataSources.AssignBys\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_DataSources_AssignBys.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0
+    },
+    {
+      "name": "Layer",
+      "value": 1
+    },
+    {
+      "name": "Parent",
+      "value": 2
+    },
+    {
+      "name": "Object",
+      "value": 3
+    },
+    {
+      "name": "Varies",
+      "value": 4
+    },
+    {
+      "name": "PlugIn",
+      "value": 5
+    }
+  ]
+}

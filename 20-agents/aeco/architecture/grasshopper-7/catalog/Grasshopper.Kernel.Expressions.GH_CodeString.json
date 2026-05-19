@@ -1,0 +1,147 @@
+{
+  "name": "GH_CodeString",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_CodeString.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_CodeString.htm",
+  "constructors": [
+    {
+      "name": "GH_CodeString",
+      "signature": "public GH_CodeString(string input)",
+      "summary": "Initializes a new instance of the GH_CodeString class",
+      "params": [
+        {
+          "name": "input",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeString__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Flatten",
+      "signature": "public string Flatten()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeString_Flatten.htm"
+    },
+    {
+      "name": "ParseNewString",
+      "signature": "public void ParseNewString(string input)",
+      "summary": "",
+      "params": [
+        {
+          "name": "input",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeString_ParseNewString.htm"
+    },
+    {
+      "name": "Replace",
+      "signature": "public void Replace(string search, string replace, bool bIgnoreCase = true, bool bOmitNonCode = true)",
+      "summary": "",
+      "params": [
+        {
+          "name": "search",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "replace",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "bIgnoreCase",
+          "type": "System.Boolean",
+          "optional": true
+        },
+        {
+          "name": "bOmitNonCode",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeString_Replace.htm"
+    },
+    {
+      "name": "ReplaceToken",
+      "signature": "public void ReplaceToken(string search, string replace, bool bIgnoreCase = true, bool bOmitNonCode = true)",
+      "summary": "",
+      "params": [
+        {
+          "name": "search",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "replace",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "bIgnoreCase",
+          "type": "System.Boolean",
+          "optional": true
+        },
+        {
+          "name": "bOmitNonCode",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeString_ReplaceToken.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Segments",
+      "type": "List\u003CGH_CodeStringSegment\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_CodeString_Segments.htm"
+    },
+    {
+      "name": "DoubleQuote",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_CodeString_DoubleQuote.htm"
+    },
+    {
+      "name": "m_Segments",
+      "type": "List\u003CGH_CodeStringSegment\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_CodeString_m_Segments.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

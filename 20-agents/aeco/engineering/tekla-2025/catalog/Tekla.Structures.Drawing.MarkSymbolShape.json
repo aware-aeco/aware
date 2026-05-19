@@ -1,0 +1,34 @@
+{
+  "name": "MarkSymbolShape",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The mark symbol shapes for the detail mark.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/94c5a91d-8f13-ba70-192b-ea34fcbbc28c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "No shape."
+    },
+    {
+      "name": "Circular",
+      "value": 2,
+      "summary": "The circular shape."
+    },
+    {
+      "name": "SlashedCircular",
+      "value": 3,
+      "summary": "The slashed circular shape."
+    },
+    {
+      "name": "Custom",
+      "value": 4,
+      "summary": "The custom shape."
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "name": "CullObjectEventArgs",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.CullObjectEventArgs\u0022]",
+  "base": "DrawEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_CullObjectEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CullObject",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_CullObjectEventArgs_CullObject.htm"
+    },
+    {
+      "name": "Display",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DrawEventArgs_Display.htm"
+    },
+    {
+      "name": "RhinoDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DrawEventArgs_RhinoDoc.htm"
+    },
+    {
+      "name": "RhinoObject",
+      "type": "RhinoObject",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_CullObjectEventArgs_RhinoObject.htm"
+    },
+    {
+      "name": "RhinoObjectSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rhino object runtime serial number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_CullObjectEventArgs_RhinoObjectSerialNumber.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DrawEventArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

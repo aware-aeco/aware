@@ -1,0 +1,81 @@
+{
+  "name": "GH_Message",
+  "namespace": "GH_IO.Serialization",
+  "kind": "class",
+  "summary": "Represents an archive log message. Messages are collected during read/write operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Serialization_GH_Message.htm",
+  "constructors": [
+    {
+      "name": "GH_Message()",
+      "signature": "public GH_Message()",
+      "summary": "Fake constructor to avoid new instances being created by a PropertyGrid.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Message__ctor.htm"
+    },
+    {
+      "name": "GH_Message(String)",
+      "signature": "public GH_Message(string message_content)",
+      "summary": "Create a new message of type GH_Message_Type.info",
+      "params": [
+        {
+          "name": "message_content",
+          "type": "System.String",
+          "doc": "Text content of message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Message__ctor_1.htm"
+    },
+    {
+      "name": "GH_Message(String, GH_Message_Type)",
+      "signature": "public GH_Message(string message_content, GH_Message_Type message_type)",
+      "summary": "Create a new message.",
+      "params": [
+        {
+          "name": "message_content",
+          "type": "System.String",
+          "doc": "Text content of message.",
+          "optional": false
+        },
+        {
+          "name": "message_type",
+          "type": "GH_IO.Serialization.GH_Message_Type",
+          "doc": "Type of message, GH_Message_Type.unset is not a valid type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Message__ctor_2.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Message",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the text content of this message.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_Message_Message.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_Message_Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of this message.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_Message_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

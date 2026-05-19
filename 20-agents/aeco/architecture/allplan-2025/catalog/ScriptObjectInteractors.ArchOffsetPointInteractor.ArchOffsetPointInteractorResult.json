@@ -1,0 +1,46 @@
+{
+  "name": "ArchOffsetPointInteractorResult",
+  "namespace": "ScriptObjectInteractors.ArchOffsetPointInteractor",
+  "kind": "class",
+  "summary": "Implementation of the result of a point input on an architectural element",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchOffsetPointInteractor/ArchOffsetPointInteractorResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "input_point",
+      "type": "Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Selected point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchOffsetPointInteractor/ArchOffsetPointInteractorResult/#ScriptObjectInteractors.ArchOffsetPointInteractor.ArchOffsetPointInteractorResult.input_point"
+    },
+    {
+      "name": "sel_geo_ele",
+      "type": "CURVES",
+      "getter": true,
+      "setter": false,
+      "summary": "Selected geometry element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchOffsetPointInteractor/ArchOffsetPointInteractorResult/#ScriptObjectInteractors.ArchOffsetPointInteractor.ArchOffsetPointInteractorResult.sel_geo_ele"
+    },
+    {
+      "name": "sel_wall",
+      "type": "BaseElementAdapter",
+      "getter": true,
+      "setter": false,
+      "summary": "Selected wall",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchOffsetPointInteractor/ArchOffsetPointInteractorResult/#ScriptObjectInteractors.ArchOffsetPointInteractor.ArchOffsetPointInteractorResult.sel_wall"
+    },
+    {
+      "name": "show_simple_preview",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether a simplified preview should be shown",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchOffsetPointInteractor/ArchOffsetPointInteractorResult/#ScriptObjectInteractors.ArchOffsetPointInteractor.ArchOffsetPointInteractorResult.show_simple_preview"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

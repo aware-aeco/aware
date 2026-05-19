@@ -1,0 +1,317 @@
+{
+  "name": "ApplicationAutomation",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "class",
+  "summary": "Provides the same interface as Api.Automation.NavisworksApplication but within the current process. Calls made via NavisworksApplication or command line when automating eventually call methods on here.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ExecuteAddInPlugin",
+      "signature": "int ExecuteAddInPlugin(string pluginId, string[] parameters)",
+      "summary": "Executes an Addin Plugin whose full name is given by pluginId, passing in the paramaters given.",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "string",
+          "doc": "The full identifier for the plugin.\nThis is formed as Name.DeveloperId",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "string[]",
+          "doc": "Optional parameters to pass to the plugin",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Plugin not found, failed to load or is not an AddInPlugin"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.ExecuteAddInPlugin%28System.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "AddPluginAssembly",
+      "signature": "void AddPluginAssembly(string fileName)",
+      "summary": "Adds another assembly that plugins can be loaded from. Assembly is loaded using the LoadFrom context and can be used outside the Application root.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.AddPluginAssembly%28System.String%29"
+    },
+    {
+      "name": "AppendFile",
+      "signature": "void AppendFile(string fileName)",
+      "summary": "Appends the Navisworks supported file to the currently loaded document",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "The file name including extension",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to append file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.AppendFile%28System.String%29"
+    },
+    {
+      "name": "CreateCache",
+      "signature": "void CreateCache(string fileNameToCache)",
+      "summary": "Creates a corresponding nwc file for specified file.",
+      "params": [
+        {
+          "name": "fileNameToCache",
+          "type": "string",
+          "doc": "The file name, excluding extension, for the cache file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.CreateCache%28System.String%29"
+    },
+    {
+      "name": "DisableProgress",
+      "signature": "void DisableProgress()",
+      "summary": "Normal behavior is that Progress is displayed when performing long operations, even during Automated actions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.DisableProgress"
+    },
+    {
+      "name": "EnableProgress",
+      "signature": "void EnableProgress()",
+      "summary": "Normal behavior is that Progress is displayed when performing long operations, even during Automated actions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.EnableProgress"
+    },
+    {
+      "name": "GenerateThumbnail",
+      "signature": "void GenerateThumbnail(int width, int height, string fileName)",
+      "summary": "Generates a Thumbnail Image for this Document, and save it as a PNG image",
+      "params": [
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "The width of the image",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "The height of the image",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "The file name of the saved image",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Fail to generate the thumbnail"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.GenerateThumbnail%28System.Int32%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "GenerateThumbnailByRayTrace",
+      "signature": "void GenerateThumbnailByRayTrace(int width, int height, string fileName)",
+      "summary": "Generates a thumbnail render by ray trace for this Document, and save it as a PNG image",
+      "params": [
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "The width of the image",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "The height of the image",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "The file name of the saved image",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Fail to generate the thumbnail"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.GenerateThumbnailByRayTrace%28System.Int32%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "OpenFile",
+      "signature": "void OpenFile(string fileName, string[] moreFiles)",
+      "summary": "Loads one or more Navisworks supported files",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "First file to open",
+          "optional": false
+        },
+        {
+          "name": "moreFiles",
+          "type": "string[]",
+          "doc": "Other files to open",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to open file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.OpenFile%28System.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "Print",
+      "signature": "void Print()",
+      "summary": "Sends the current View to the Printer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.Print"
+    },
+    {
+      "name": "Print",
+      "signature": "void Print(string printer)",
+      "summary": "Sends the current View to the Printer",
+      "params": [
+        {
+          "name": "printer",
+          "type": "string",
+          "doc": "The name of the printer to print to",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.Print%28System.String%29"
+    },
+    {
+      "name": "Print",
+      "signature": "void Print(string printer, string driver)",
+      "summary": "Sends the current View to the Printer",
+      "params": [
+        {
+          "name": "printer",
+          "type": "string",
+          "doc": "The name of the printer to print to",
+          "optional": false
+        },
+        {
+          "name": "driver",
+          "type": "string",
+          "doc": "The name of the printer driver to use",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.Print%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "Print",
+      "signature": "void Print(string printer, string driver, string port)",
+      "summary": "Sends the current View to the Printer",
+      "params": [
+        {
+          "name": "printer",
+          "type": "string",
+          "doc": "The name of the printer to print to",
+          "optional": false
+        },
+        {
+          "name": "driver",
+          "type": "string",
+          "doc": "The name of the printer driver to use",
+          "optional": false
+        },
+        {
+          "name": "port",
+          "type": "string",
+          "doc": "The name of the port the printer is connected to",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.Print%28System.String%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "SaveFile",
+      "signature": "void SaveFile(string fileName)",
+      "summary": "Save the documents loaded using OpenFile to a single Navisworks Document",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "The file name including extension",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to save file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationAutomation.SaveFile%28System.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,799 @@
+{
+  "name": "DefaultRenderPackage",
+  "namespace": "Dynamo.Visualization",
+  "kind": "class",
+  "summary": "Example implementation of IRenderPackage. DefaultRenderPackage can be used as package for your visualization.",
+  "interfaces": [
+    "Autodesk.DesignScript.Interfaces.IRenderPackage",
+    "Autodesk.DesignScript.Interfaces.IRenderPackageSupplement"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs",
+  "constructors": [
+    {
+      "name": "DefaultRenderPackage()",
+      "signature": "void DefaultRenderPackage()",
+      "summary": "DefaultRenderPackage.DefaultRenderPackage",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddLineStripVertex(double, double, double)",
+      "signature": "void AddLineStripVertex(double x, double y, double z)",
+      "summary": "Add a line vertex to the render package.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddLineStripVertexColor(byte, byte, byte, byte)",
+      "signature": "void AddLineStripVertexColor(byte red, byte green, byte blue, byte alpha)",
+      "summary": "Add a line strip vertex color to the render package.",
+      "params": [
+        {
+          "name": "red",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddLineStripVertexCount(int)",
+      "signature": "void AddLineStripVertexCount(int n)",
+      "summary": "Add a line strip vertex count to the render package.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddPointVertex(double, double, double)",
+      "signature": "void AddPointVertex(double x, double y, double z)",
+      "summary": "Add a point vertex to the render package.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddPointVertexColor(byte, byte, byte, byte)",
+      "signature": "void AddPointVertexColor(byte red, byte green, byte blue, byte alpha)",
+      "summary": "Add a point color to the render package.",
+      "params": [
+        {
+          "name": "red",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddTextureMapForMeshVerticesRange(int, int, byte[], int)",
+      "signature": "void AddTextureMapForMeshVerticesRange(int startIndex, int endIndex, byte[] textureMap, int stride)",
+      "summary": "Set a color map for a range of mesh vertices",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "int",
+          "doc": "The index associated with the first vertex in MeshVertices we want to associate with the texture map",
+          "optional": false
+        },
+        {
+          "name": "endIndex",
+          "type": "int",
+          "doc": "The index associated with the last vertex in MeshVertices we want to associate with the texture map",
+          "optional": false
+        },
+        {
+          "name": "textureMap",
+          "type": "byte[]",
+          "doc": "An array of bytes representing RGBA colors to be used as a color texture map",
+          "optional": false
+        },
+        {
+          "name": "stride",
+          "type": "int",
+          "doc": "The size of one dimension of the colors array",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddTriangleVertex(double, double, double)",
+      "signature": "void AddTriangleVertex(double x, double y, double z)",
+      "summary": "Add a triangle vertex location to the render package.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddTriangleVertexColor(byte, byte, byte, byte)",
+      "signature": "void AddTriangleVertexColor(byte red, byte green, byte blue, byte alpha)",
+      "summary": "Add a triangle vertex color to the render package.",
+      "params": [
+        {
+          "name": "red",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddTriangleVertexNormal(double, double, double)",
+      "signature": "void AddTriangleVertexNormal(double x, double y, double z)",
+      "summary": "Add a triangle vertex normal to the render package.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AddTriangleVertexUV(double, double)",
+      "signature": "void AddTriangleVertexUV(double u, double v)",
+      "summary": "Add a triangle texture coordinate to the render package.",
+      "params": [
+        {
+          "name": "u",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AppendLineVertexColorRange(byte[])",
+      "signature": "void AppendLineVertexColorRange(byte[] colors)",
+      "summary": "Append a color range for line vertices.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "byte[]",
+          "doc": "A buffer of R,G,B,A values corresponding to each vertex.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AppendMeshVertexColorRange(byte[])",
+      "signature": "void AppendMeshVertexColorRange(byte[] colors)",
+      "summary": "Append a color range for mesh vertex.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "byte[]",
+          "doc": "A buffer of R,G,B,A values corresponding to each vertex.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "AppendPointVertexColorRange(byte[])",
+      "signature": "void AppendPointVertexColorRange(byte[] colors)",
+      "summary": "Append a color range for point vertices.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "byte[]",
+          "doc": "A buffer of R,G,B,A values corresponding to each vertex.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "ApplyLineVertexColors(byte[])",
+      "signature": "void ApplyLineVertexColors(byte[] colors)",
+      "summary": "Apply a color to a sequence of line vertices.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "byte[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "ApplyMeshVertexColors(byte[])",
+      "signature": "void ApplyMeshVertexColors(byte[] colors)",
+      "summary": "Apply a color to each mesh vertex.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "byte[]",
+          "doc": "A buffer of R,G,B,A values corresponding to each vertex.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "ApplyPointVertexColors(byte[])",
+      "signature": "void ApplyPointVertexColors(byte[] colors)",
+      "summary": "Apply a color to each point vertex.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "byte[]",
+          "doc": "A buffer of R,G,B,A values corresponding to each vertex.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear all render data from the render package.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "SetColors(byte[])",
+      "signature": "void SetColors(byte[] colors)",
+      "summary": "Sets an array of bytes that is used as a color map.",
+      "params": [
+        {
+          "name": "colors",
+          "type": "byte[]",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "UpdateLineVertexColorForRange(int, int, byte, byte, byte, byte)",
+      "signature": "void UpdateLineVertexColorForRange(int startIndex, int endIndex, byte red, byte green, byte blue, byte alpha)",
+      "summary": "Update a color to a range of line vertices.",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "int",
+          "doc": "The index associated with the first vertex in LineVertices we want to associate with a color",
+          "optional": false
+        },
+        {
+          "name": "endIndex",
+          "type": "int",
+          "doc": "The index associated with the last vertex in LineVertices we want to associate with a color",
+          "optional": false
+        },
+        {
+          "name": "red",
+          "type": "byte",
+          "doc": "byte for the red RGB value",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "byte",
+          "doc": "byte for the green RGB value",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "byte",
+          "doc": "byte for the blue RGB value",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "byte",
+          "doc": "byte for the alpha RGB value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "UpdateMeshVertexColorForRange(int, int, byte, byte, byte, byte)",
+      "signature": "void UpdateMeshVertexColorForRange(int startIndex, int endIndex, byte red, byte green, byte blue, byte alpha)",
+      "summary": "Update a color to a range of of mesh vertices.",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "int",
+          "doc": "The index associated with the first vertex in MeshVertices we want to associate with a color",
+          "optional": false
+        },
+        {
+          "name": "endIndex",
+          "type": "int",
+          "doc": "The index associated with the last vertex in MeshVertices we want to associate with a color",
+          "optional": false
+        },
+        {
+          "name": "red",
+          "type": "byte",
+          "doc": "byte for the red RGB value",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "byte",
+          "doc": "byte for the green RGB value",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "byte",
+          "doc": "byte for the blue RGB value",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "byte",
+          "doc": "byte for the alpha RGB value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "UpdatePointVertexColorForRange(int, int, byte, byte, byte, byte)",
+      "signature": "void UpdatePointVertexColorForRange(int startIndex, int endIndex, byte red, byte green, byte blue, byte alpha)",
+      "summary": "Update a color to a range of point vertices.",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "int",
+          "doc": "The index associated with the first vertex in PointVertices we want to associate with a color",
+          "optional": false
+        },
+        {
+          "name": "endIndex",
+          "type": "int",
+          "doc": "The index associated with the last vertex in PointVertices we want to associate with a color",
+          "optional": false
+        },
+        {
+          "name": "red",
+          "type": "byte",
+          "doc": "byte for the red RGB value",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "byte",
+          "doc": "byte for the green RGB value",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "byte",
+          "doc": "byte for the blue RGB value",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "byte",
+          "doc": "byte for the alpha RGB value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowLegacyColorOperations",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Allow legacy usage of the color methods in IRenderPackage This flag is used by the UpdateRenderPackageAsyncTask implementation to flag any third party usage of deprecated color methods in IRenderPackage API",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "Colors",
+      "type": "System.Collections.Generic.IEnumerable\u003Cbyte\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection of bytes representing RGBA colors. This field can be used to populate textures for mapping onto surfaces. Use the ColorsStride property to define the size of one dimension of the collection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "ColorsStride",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The size of one dimension of the Colors collection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "A tag used to store information about the render package.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "DisplayLabels",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the render package is displaying labels.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "HasRenderingData",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the render package has data.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "IsSelected",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the render package is selected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "LineStripIndices",
+      "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all line strip indices.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "LineStripVertexColors",
+      "type": "System.Collections.Generic.IEnumerable\u003Cbyte\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all line strip colors as r1,g1,b1,a1,r2,g2,b2,a2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "LineStripVertexCounts",
+      "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection of int values representing how many vertices comprise each line segment in the package.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "LineStripVertices",
+      "type": "System.Collections.Generic.IEnumerable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all line strip vertices as x1,y1,z1,x2,y2,z2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "LineVertexColorCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of line vertices colors in the package (Optimized for speed).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "LineVertexCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of line vertices in the package divided by 3.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshIndices",
+      "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all mesh vertex indices.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshNormals",
+      "type": "System.Collections.Generic.IEnumerable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all mesh normals as x1,y1,z1,x2,y2,z2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshTextureCoordinates",
+      "type": "System.Collections.Generic.IEnumerable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all mesh texture coordinates as u1,v1,u2,v2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshVertexColorCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of mesh vertices colors in the package (Optimized for speed).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshVertexColors",
+      "type": "System.Collections.Generic.IEnumerable\u003Cbyte\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all mesh vertex colors as r1,g1,b1,a1,r2,g2,b2,a2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshVertexCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of mesh vertices in the package divided by 3.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshVertices",
+      "type": "System.Collections.Generic.IEnumerable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all mesh vertices as x1,y1,z1,x2,y2,z2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "MeshVerticesRangesAssociatedWithTextureMaps",
+      "type": "System.Collections.Generic.List\u003CSystem.Tuple\u003Cint, int\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A list of mesh vertices ranges that have associated texture maps",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "PointIndices",
+      "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all mesh vertex indices.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "PointVertexColorCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of point vertices colors in the package (Optimized for speed).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "PointVertexColors",
+      "type": "System.Collections.Generic.IEnumerable\u003Cbyte\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all mesh vertex colors as r1,g1,b1,a1,r2,g2,b2,a2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "PointVertexCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of point vertices in the package divided by 3.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "PointVertices",
+      "type": "System.Collections.Generic.IEnumerable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection containing all point vertices as x1,y1,z1,x2,y2,z2...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "RequiresPerVertexColoration",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the render package requires per vertex coloration",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "TextureMapsList",
+      "type": "System.Collections.Generic.List\u003Cbyte[]\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A List containing arrays of bytes representing RGBA colors. These arrays can be used to populate textures for mapping onto specific meshes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    },
+    {
+      "name": "TextureMapsStrideList",
+      "type": "System.Collections.Generic.List\u003Cint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A list containing the size of one dimension of the associated texture map array in TextureMapsList.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

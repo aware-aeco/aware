@@ -1,0 +1,132 @@
+{
+  "name": "Surfacing.SurfacingAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SurfacingAttributes class is the attributes class for the surfacing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b0b71097-ef0e-95a2-5a44-398c01b6f009",
+  "constructors": [
+    {
+      "name": "Surfacing.SurfacingAttributes()",
+      "signature": "public SurfacingAttributes()",
+      "summary": "Creates a new default surfacing attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e7286c0-f9a2-a2c3-5e2f-44383cfb1990"
+    },
+    {
+      "name": "Surfacing.SurfacingAttributes(String)",
+      "signature": "public SurfacingAttributes(string AttributeFile)",
+      "summary": "Creates a new surfacing attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/26438b3a-e96d-5cfa-6ded-dc2fe3a19023"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b4ee56c-622d-74d8-99f1-bcf616d3fb67"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/53def60f-8695-9925-0755-4fc288c1bb65"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawHiddenLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if hidden lines are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/34596ec3-08e2-b8e2-50cb-7507b79d7dad"
+    },
+    {
+      "name": "DrawOwnHiddenLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if own hidden lines are enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/43e46cfb-f718-fb47-1c08-4d029ad5f99a"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of hidden lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7228e944-85e1-9221-d411-f08cc23be4bf"
+    },
+    {
+      "name": "Representation",
+      "type": "Surfacing.Representation",
+      "getter": true,
+      "setter": true,
+      "summary": "The representation type of the surfacing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ffd0f570-e7ba-278b-648a-dad64bce93b5"
+    },
+    {
+      "name": "ShowPattern",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the pattern is shown.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7f7db4e-7ebf-9c0d-5b3d-93f558850d67"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of visible lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d8e7aea2-e4cd-698b-531e-2cc282910290"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

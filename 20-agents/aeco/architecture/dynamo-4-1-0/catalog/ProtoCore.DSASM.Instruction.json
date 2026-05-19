@@ -1,0 +1,24 @@
+{
+  "name": "Instruction",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type Instruction",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/InstructionSet.cs",
+  "constructors": [
+    {
+      "name": "Instruction()",
+      "signature": "void Instruction()",
+      "summary": "Instruction.Instruction",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

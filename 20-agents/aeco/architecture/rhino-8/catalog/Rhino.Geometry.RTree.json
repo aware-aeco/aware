@@ -1,0 +1,717 @@
+{
+  "name": "RTree",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a spatial search structure based on implementations of the R-tree algorithm by Toni Gutman.",
+  "remarks": "The opennurbs rtree code is a modified version of the free and unrestricted R-tree implementation obtained from http://www.superliminal.com/sources/sources.htm .",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_RTree.htm",
+  "constructors": [
+    {
+      "name": "RTree",
+      "signature": "public RTree()",
+      "summary": "Initializes a new, empty instance of the tree.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all elements.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Clear.htm"
+    },
+    {
+      "name": "CreateFromPointArray",
+      "signature": "public static RTree CreateFromPointArray(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Constructs a new tree with an element for each point cloud point.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RTree",
+        "doc": "A new tree, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_CreateFromPointArray.htm"
+    },
+    {
+      "name": "CreateMeshFaceTree",
+      "signature": "public static RTree CreateMeshFaceTree(Mesh mesh)",
+      "summary": "Constructs a new tree with an element for each face in the mesh. The element id is set to the index of the face.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RTree",
+        "doc": "A new tree, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_CreateMeshFaceTree.htm"
+    },
+    {
+      "name": "CreatePointCloudTree",
+      "signature": "public static RTree CreatePointCloudTree(PointCloud cloud)",
+      "summary": "Constructs a new tree with an element for each point cloud point.",
+      "params": [
+        {
+          "name": "cloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "A point cloud.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RTree",
+        "doc": "A new tree, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_CreatePointCloudTree.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Finalize.htm"
+    },
+    {
+      "name": "Insert(BoundingBox, Int32)",
+      "signature": "public bool Insert(BoundingBox box, int elementId)",
+      "summary": "Inserts an element into the tree.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.Int32",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully inserted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Insert.htm"
+    },
+    {
+      "name": "Insert(BoundingBox, IntPtr)",
+      "signature": "public bool Insert(BoundingBox box, IntPtr elementId)",
+      "summary": "Inserts an element into the tree.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.IntPtr",
+          "doc": "A pointer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully inserted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Insert_1.htm"
+    },
+    {
+      "name": "Insert(Point2d, Int32)",
+      "signature": "public bool Insert(Point2d point, int elementId)",
+      "summary": "Inserts an element into the tree.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.Int32",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully inserted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Insert_2.htm"
+    },
+    {
+      "name": "Insert(Point2d, IntPtr)",
+      "signature": "public bool Insert(Point2d point, IntPtr elementId)",
+      "summary": "Inserts an element into the tree.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.IntPtr",
+          "doc": "A pointer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully inserted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Insert_3.htm"
+    },
+    {
+      "name": "Insert(Point3d, Int32)",
+      "signature": "public bool Insert(Point3d point, int elementId)",
+      "summary": "Inserts an element into the tree.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.Int32",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully inserted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Insert_4.htm"
+    },
+    {
+      "name": "Insert(Point3d, IntPtr)",
+      "signature": "public bool Insert(Point3d point, IntPtr elementId)",
+      "summary": "Inserts an element into the tree.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.IntPtr",
+          "doc": "A pointer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully inserted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Insert_5.htm"
+    },
+    {
+      "name": "Point3dClosestPoints",
+      "signature": "public static IEnumerable\u003Cint[]\u003E Point3dClosestPoints(IEnumerable\u003CPoint3d\u003E hayPoints, IEnumerable\u003CPoint3d\u003E needlePts, double limitDistance)",
+      "summary": "Finds the point in a list of 3D points that is closest to a test point.",
+      "params": [
+        {
+          "name": "hayPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A series of points.",
+          "optional": false
+        },
+        {
+          "name": "needlePts",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "limitDistance",
+          "type": "System.Double",
+          "doc": "The maximum allowed distance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Point3dClosestPoints.htm"
+    },
+    {
+      "name": "Point3dKNeighbors",
+      "signature": "public static IEnumerable\u003Cint[]\u003E Point3dKNeighbors(IEnumerable\u003CPoint3d\u003E hayPoints, IEnumerable\u003CPoint3d\u003E needlePts, int amount)",
+      "summary": "Finds a certain amount of points in a list of 3D points that are the k-closest to a test point.",
+      "params": [
+        {
+          "name": "hayPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A series of points.",
+          "optional": false
+        },
+        {
+          "name": "needlePts",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Int32",
+          "doc": "The required amount of closest neighbors to find.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Point3dKNeighbors.htm"
+    },
+    {
+      "name": "PointCloudClosestPoints",
+      "signature": "public static IEnumerable\u003Cint[]\u003E PointCloudClosestPoints(PointCloud pointcloud, IEnumerable\u003CPoint3d\u003E needlePts, double limitDistance)",
+      "summary": "Finds the point in a list of 3D points that is closest to a test point.",
+      "params": [
+        {
+          "name": "pointcloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "A point cloud to be searched.",
+          "optional": false
+        },
+        {
+          "name": "needlePts",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "limitDistance",
+          "type": "System.Double",
+          "doc": "The maximum allowed distance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_PointCloudClosestPoints.htm"
+    },
+    {
+      "name": "PointCloudKNeighbors",
+      "signature": "public static IEnumerable\u003Cint[]\u003E PointCloudKNeighbors(PointCloud pointcloud, IEnumerable\u003CPoint3d\u003E needlePts, int amount)",
+      "summary": "Finds a certain amount of points in a list of 3D points that are the k-closest to a test point.",
+      "params": [
+        {
+          "name": "pointcloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "A point cloud to be searched.",
+          "optional": false
+        },
+        {
+          "name": "needlePts",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Int32",
+          "doc": "The required amount of closest neighbors to find.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_PointCloudKNeighbors.htm"
+    },
+    {
+      "name": "Remove(BoundingBox, Int32)",
+      "signature": "public bool Remove(BoundingBox box, int elementId)",
+      "summary": "Removes an element from the tree.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.Int32",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Remove.htm"
+    },
+    {
+      "name": "Remove(BoundingBox, IntPtr)",
+      "signature": "public bool Remove(BoundingBox box, IntPtr elementId)",
+      "summary": "Removes an element from the tree.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.IntPtr",
+          "doc": "A pointer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Remove_1.htm"
+    },
+    {
+      "name": "Remove(Point2d, Int32)",
+      "signature": "public bool Remove(Point2d point, int elementId)",
+      "summary": "Removes an element from the tree.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.Int32",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Remove_2.htm"
+    },
+    {
+      "name": "Remove(Point3d, Int32)",
+      "signature": "public bool Remove(Point3d point, int elementId)",
+      "summary": "Removes an element from the tree.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.Int32",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Remove_3.htm"
+    },
+    {
+      "name": "Remove(Point3d, IntPtr)",
+      "signature": "public bool Remove(Point3d point, IntPtr elementId)",
+      "summary": "Removes an element from the tree.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "elementId",
+          "type": "System.IntPtr",
+          "doc": "A pointer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if element was successfully removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Remove_4.htm"
+    },
+    {
+      "name": "Search(BoundingBox, EventHandler\u003CRTreeEventArgs\u003E)",
+      "signature": "public bool Search(BoundingBox box, EventHandler\u003CRTreeEventArgs\u003E callback)",
+      "summary": "Searches for items in a bounding box. The bounding box can be singular and contain exactly one single point.",
+      "remarks": "Do not modify the tree while a Search() is in progress. Doing so can have unintended consequences, including corruption and crashes.If you need to modify the tree, collect the results during the search and modify the tree once the search is completed.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.EventHandler\u003CRTreeEventArgs\u003E",
+          "doc": "An event handler to be raised when items are found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if entire tree was searched. It is possible no results were found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Search.htm"
+    },
+    {
+      "name": "Search(Sphere, EventHandler\u003CRTreeEventArgs\u003E)",
+      "signature": "public bool Search(Sphere sphere, EventHandler\u003CRTreeEventArgs\u003E callback)",
+      "summary": "Searches for items in a sphere.",
+      "remarks": "Do not modify the tree while a Search() is in progress. Doing so can have unintended consequences, including corruption and crashes.If you need to modify the tree, collect the results during the search and modify the tree once the search is completed.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "bounds used for searching.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.EventHandler\u003CRTreeEventArgs\u003E",
+          "doc": "An event handler to be raised when items are found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if entire tree was searched. It is possible no results were found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Search_2.htm"
+    },
+    {
+      "name": "Search(BoundingBox, EventHandler\u003CRTreeEventArgs\u003E, Object)",
+      "signature": "public bool Search(BoundingBox box, EventHandler\u003CRTreeEventArgs\u003E callback, Object tag)",
+      "summary": "Searches for items in a bounding box. The bounding box can be singular and contain exactly one single point.",
+      "remarks": "Do not modify the tree while a Search() is in progress. Doing so can have unintended consequences, including corruption and crashes.If you need to modify the tree, collect the results during the search and modify the tree once the search is completed.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.EventHandler\u003CRTreeEventArgs\u003E",
+          "doc": "An event handler to be raised when items are found.",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "doc": "State to be passed inside the RTreeEventArgs Tag property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if entire tree was searched. It is possible no results were found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Search_1.htm"
+    },
+    {
+      "name": "Search(Sphere, EventHandler\u003CRTreeEventArgs\u003E, Object)",
+      "signature": "public bool Search(Sphere sphere, EventHandler\u003CRTreeEventArgs\u003E callback, Object tag)",
+      "summary": "Searches for items in a sphere.",
+      "remarks": "Do not modify the tree while a Search() is in progress. Doing so can have unintended consequences, including corruption and crashes.If you need to modify the tree, collect the results during the search and modify the tree once the search is completed.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "bounds used for searching.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.EventHandler\u003CRTreeEventArgs\u003E",
+          "doc": "An event handler to be raised when items are found.",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "doc": "State to be passed inside the RTreeEventArgs Tag property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if entire tree was searched. It is possible no results were found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_Search_3.htm"
+    },
+    {
+      "name": "SearchOverlaps",
+      "signature": "public static bool SearchOverlaps(RTree treeA, RTree treeB, double tolerance, EventHandler\u003CRTreeEventArgs\u003E callback)",
+      "summary": "Searches two R-trees for all pairs elements whose bounding boxes overlap.",
+      "remarks": "Do not modify the tree while a Search() is in progress. Doing so can have unintended consequences, including corruption and crashes.If you need to modify the tree, collect the results during the search and modify the tree once the search is completed.",
+      "params": [
+        {
+          "name": "treeA",
+          "type": "Rhino.Geometry.RTree",
+          "doc": "A first tree.",
+          "optional": false
+        },
+        {
+          "name": "treeB",
+          "type": "Rhino.Geometry.RTree",
+          "doc": "A second tree.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "If the distance between a pair of bounding boxes is less than tolerance, then callback is called.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.EventHandler\u003CRTreeEventArgs\u003E",
+          "doc": "A callback event handler.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if entire tree was searched. It is possible no results were found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_RTree_SearchOverlaps.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of items in this tree.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_RTree_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

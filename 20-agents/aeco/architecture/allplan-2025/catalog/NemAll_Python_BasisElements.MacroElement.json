@@ -1,0 +1,163 @@
+{
+  "name": "MacroElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of the macro definition (smart symbol) in Allplan",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/",
+  "constructors": [
+    {
+      "name": "MacroElement",
+      "signature": "MacroElement() | MacroElement(macroProp: MacroProperties, slideList: list)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAttributesForSubElementInStrucutredContainer",
+      "signature": "GetAttributesForSubElementInStrucutredContainer(subElementID: type) -\u003E object",
+      "summary": "Get attributes for sub element in StructuredContainer",
+      "remarks": "Get attributes for sub element in StructuredContainer",
+      "params": [
+        {
+          "name": "subElementID",
+          "type": "type",
+          "doc": "Sub element id",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.GetAttributesForSubElementInStrucutredContainer"
+    },
+    {
+      "name": "GetHash",
+      "signature": "GetHash() -\u003E str",
+      "summary": "Get the hash value",
+      "remarks": "Get the hash value",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Hash value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.GetHash"
+    },
+    {
+      "name": "GetMacroProperties",
+      "signature": "GetMacroProperties() -\u003E MacroProperties",
+      "summary": "Get the Macro properties",
+      "remarks": "Get the Macro properties",
+      "params": [],
+      "returns": {
+        "type": "MacroProperties",
+        "doc": "Macro properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.GetMacroProperties"
+    },
+    {
+      "name": "GetSlideList",
+      "signature": "GetSlideList() -\u003E list",
+      "summary": "Get the slide object list",
+      "remarks": "Get the slide object list",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Slide object list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.GetSlideList"
+    },
+    {
+      "name": "SetAttributesForSubElementInStrucutredContainer",
+      "signature": "SetAttributesForSubElementInStrucutredContainer( attributeContainer: object, subElementID: type )",
+      "summary": "Set attributes to sub element in StructuredContainer",
+      "remarks": "Set attributes to sub element in StructuredContainer",
+      "params": [
+        {
+          "name": "attributeContainer",
+          "type": "object",
+          "doc": "AttributeSet",
+          "optional": false
+        },
+        {
+          "name": "subElementID",
+          "type": "type",
+          "doc": "Sub element id",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.SetAttributesForSubElementInStrucutredContainer"
+    },
+    {
+      "name": "SetHash",
+      "signature": "SetHash(hash: str)",
+      "summary": "Set the hash value",
+      "remarks": "Set the hash value",
+      "params": [
+        {
+          "name": "hash",
+          "type": "str",
+          "doc": "Hash value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.SetHash"
+    },
+    {
+      "name": "SetMacroProperties",
+      "signature": "SetMacroProperties(MacroProp: MacroProperties)",
+      "summary": "Set the Macro properties",
+      "remarks": "Set the Macro properties",
+      "params": [
+        {
+          "name": "MacroProp",
+          "type": "MacroProperties",
+          "doc": "Macro properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.SetMacroProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

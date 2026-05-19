@@ -1,0 +1,261 @@
+{
+  "name": "ZooClientParameters",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "ZooClientParameters is a read-only set of parameters that control the flow of licensing inside ZooClient. Because this class flows through a number of other classes, functions, and UI, it is read-only so that inadvertent changes are not made to the data as it propagates from the caller.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_ZooClientParameters.htm",
+  "constructors": [
+    {
+      "name": "ZooClientParameters",
+      "signature": "public ZooClientParameters(Guid productGuid, Guid licenseGuid, string productTitle, int productBuildType, LicenseCapabilities capabilities, string licenseEntryTextMask, string productPath, Object parentWindow, LicenseTypes selectedLicenseType, ValidateProductKeyDelegate validateProductKey, OnLeaseChangedDelegate onLeaseChangedDelegate, VerifyLicenseKeyDelegate verifyLicenseKeyDelegate, VerifyPreviousVersionLicenseDelegate verifyPreviousVersionLicenseKeyDelegate)",
+      "summary": "ZooClientParameters Constructor",
+      "params": [
+        {
+          "name": "productGuid",
+          "type": "System.Guid",
+          "doc": "Guid used by ZooClient to identify the plug-in requesting a license from ZooClient. This Guid may be used by different versions of the plug-in. If different licenses are used by different versions of the plug-in, the plug-in must also specify a LicenseGuid.",
+          "optional": false
+        },
+        {
+          "name": "licenseGuid",
+          "type": "System.Guid",
+          "doc": "Guid used by ZooClient to identify the license saved by ZooClient. This differs from ProductGuid because different versions of a plug-in with the same Plug-in ID may need different licenses.",
+          "optional": false
+        },
+        {
+          "name": "productTitle",
+          "type": "System.String",
+          "doc": "Title of product displayed in user interface",
+          "optional": false
+        },
+        {
+          "name": "productBuildType",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022productBuildType\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ZooClientParameters.#ctor(System.Guid,System.Guid,System.String,System.Int32,Rhino.PlugIns.LicenseCapabilities,System.String,System.String,System.Object,Rhino.Runtime.LicenseTypes,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capabilities",
+          "type": "Rhino.PlugIns.LicenseCapabilities",
+          "doc": "Enum that declares whether this product supports evalation, licensing, purchasing, and cloud zoo",
+          "optional": false
+        },
+        {
+          "name": "licenseEntryTextMask",
+          "type": "System.String",
+          "doc": "Text mask used to limit input. EG: RH50-AAAA-AAAA-AAAA-AAAA-AAAA",
+          "optional": false
+        },
+        {
+          "name": "productPath",
+          "type": "System.String",
+          "doc": "Full path to DLL implementing product",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "System.Object",
+          "doc": "Object used to parent UI DLLs",
+          "optional": false
+        },
+        {
+          "name": "selectedLicenseType",
+          "type": "Rhino.Runtime.LicenseTypes",
+          "doc": "Type of license currently used by this product",
+          "optional": false
+        },
+        {
+          "name": "validateProductKey",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "Delegate called to validate the structure of a license key",
+          "optional": false
+        },
+        {
+          "name": "onLeaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "Delegate called when a cloud zoo lease changes",
+          "optional": false
+        },
+        {
+          "name": "verifyLicenseKeyDelegate",
+          "type": "Rhino.PlugIns.VerifyLicenseKeyDelegate",
+          "doc": "Delegate called to verify the structure of a license key",
+          "optional": false
+        },
+        {
+          "name": "verifyPreviousVersionLicenseKeyDelegate",
+          "type": "Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate",
+          "doc": "Delegate called to verify the structure of an upgrade license key",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_ZooClientParameters__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "VerifyLicenseKey",
+      "signature": "public ValidateResult VerifyLicenseKey(string licenseKey, string validationCode, DateTime validationCodeInstallDate, bool gracePeriodExpired, out LicenseData licenseData)",
+      "summary": "Called by GetLicense to ensure that the license key entered by the user is legitimate and can be used.",
+      "params": [
+        {
+          "name": "licenseKey",
+          "type": "System.String",
+          "doc": "License key string entered by user",
+          "optional": false
+        },
+        {
+          "name": "validationCode",
+          "type": "System.String",
+          "doc": "Validation code entered by user (only if a previous call to VerifyLicenseKey set LicenseData.RequiresOnlineValidation to true).",
+          "optional": false
+        },
+        {
+          "name": "validationCodeInstallDate",
+          "type": "System.DateTime",
+          "doc": "Date that validation code was entered by user (only if a previous call to VerifyLicenseKey set LicenseData.RequiresOnlineValidation to true).",
+          "optional": false
+        },
+        {
+          "name": "gracePeriodExpired",
+          "type": "System.Boolean",
+          "doc": "Date by which license validation must complete successfully.",
+          "optional": false
+        },
+        {
+          "name": "licenseData",
+          "type": "Rhino.PlugIns.LicenseData",
+          "doc": "Output parameter where return data about the license is set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ValidateResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.ZooClientParameters.VerifyLicenseKey(System.String,System.String,System.DateTime,System.Boolean,Rhino.PlugIns.LicenseData@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_ZooClientParameters_VerifyLicenseKey.htm"
+    },
+    {
+      "name": "VerifyPreviousVersionLicense",
+      "signature": "public bool VerifyPreviousVersionLicense(string license, string previousVersionLicense, out string errorMessage)",
+      "summary": "When a caller calls GetLicense, ZooClient may call VerifyPreviousVersionLicense to ensure previousVersionLicense is legitimate and can be used to upgrade license.",
+      "params": [
+        {
+          "name": "license",
+          "type": "System.String",
+          "doc": "License key for current product. This was returned by a previous call to VerifyLicenseKey or ValidateProductKey.",
+          "optional": false
+        },
+        {
+          "name": "previousVersionLicense",
+          "type": "System.String",
+          "doc": "License key entered by user to show upgrade eligibility for license.",
+          "optional": false
+        },
+        {
+          "name": "errorMessage",
+          "type": "System.String",
+          "doc": "Error message to be displayed to user if something isn\u0027t correct.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.ZooClientParameters.VerifyPreviousVersionLicense(System.String,System.String,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_ZooClientParameters_VerifyPreviousVersionLicense.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Capabilities",
+      "type": "LicenseCapabilities",
+      "getter": true,
+      "setter": true,
+      "summary": "LicenseCapabilities flags that set options for how licenses can be obtained for this product",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_Capabilities.htm"
+    },
+    {
+      "name": "LicenseEntryTextMask",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Text mask in the form @\u0022RH4A-AAAA-AAAA-AAAA-AAAA-AAAA\u0022 that informs the user what numbers they are looking for",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_LicenseEntryTextMask.htm"
+    },
+    {
+      "name": "LicenseGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Guid used by ZooClient to identify the license saved by ZooClient. This differs from ProductGuid because different versions of a plug-in with the same Plug-in ID may need different licenses.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_LicenseGuid.htm"
+    },
+    {
+      "name": "OnLeaseChanged",
+      "type": "OnLeaseChangedDelegate",
+      "getter": true,
+      "setter": false,
+      "summary": "Delegate called by ZooClient when a cloud zoo lease is changed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_OnLeaseChanged.htm"
+    },
+    {
+      "name": "ParentWindow",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Parent window assigned to any licensing dialogs that appear. If null, the Rhino main window is used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_ParentWindow.htm"
+    },
+    {
+      "name": "ProductBuildType",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Product build type. Must be one of LicenseBuildType values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_ProductBuildType.htm"
+    },
+    {
+      "name": "ProductGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Guid used by ZooClient to identify the plug-in requesting a license from ZooClient. This Guid may be used by different versions of the plug-in. If different licenses are used by different versions of the plug-in, the plug-in must also specify a LicenseGuid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_ProductGuid.htm"
+    },
+    {
+      "name": "ProductPath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Path to the application calling ZooClient",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_ProductPath.htm"
+    },
+    {
+      "name": "ProductTitle",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Title of the product, \u0022Rhinoceros 6\u0022 for example.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_ProductTitle.htm"
+    },
+    {
+      "name": "SelectedLicenseType",
+      "type": "LicenseTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "License type selected by default when user is prompted to enter a license key",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ZooClientParameters_SelectedLicenseType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

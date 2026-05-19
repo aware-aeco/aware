@@ -1,0 +1,38 @@
+{
+  "name": "RcsReinforcedCrossSection",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsReinforcedCrossSection.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedCrossSection.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedCrossSection.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedCrossSection.md"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedCrossSection.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedCrossSection.md"
+    },
+    {
+      "name": "CrossSectionId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedCrossSection.crossSectionId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedCrossSection.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "GH_IBinarySupport",
+  "namespace": "GH_IO.Serialization",
+  "kind": "interface",
+  "summary": "Interface which declares all methods required for objects that can be (de)serialized to and from a binary archive.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_Serialization_GH_IBinarySupport.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "void Read(BinaryReader reader)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "doc": "Reader object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "void Write(BinaryWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

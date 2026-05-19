@@ -1,0 +1,146 @@
+{
+  "name": "OptionDouble",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.OptionDouble\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_OptionDouble.htm",
+  "constructors": [
+    {
+      "name": "OptionDouble(Double)",
+      "signature": "public OptionDouble(double initialValue)",
+      "summary": "Initializes a new instance of the OptionDouble class",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022initialValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionDouble.#ctor(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionDouble__ctor.htm"
+    },
+    {
+      "name": "OptionDouble(Double, Boolean, Double)",
+      "signature": "public OptionDouble(double initialValue, bool setLowerLimit, double limit)",
+      "summary": "Initializes a new instance of the double option class.",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Double",
+          "doc": "The initial number .",
+          "optional": false
+        },
+        {
+          "name": "setLowerLimit",
+          "type": "System.Boolean",
+          "doc": "If true, limit sets the lower limit and upper limit is undefined. If false, limit sets the upper limit and lower limit is undefined.",
+          "optional": false
+        },
+        {
+          "name": "limit",
+          "type": "System.Double",
+          "doc": "The lower limit if setLowerLimit is true; otherwise, the upper limit.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionDouble__ctor_1.htm"
+    },
+    {
+      "name": "OptionDouble(Double, Double, Double)",
+      "signature": "public OptionDouble(double initialValue, double lowerLimit, double upperLimit)",
+      "summary": "Initializes a new instance of the OptionDouble class with lower and upper limits.",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Double",
+          "doc": "The initial number .",
+          "optional": false
+        },
+        {
+          "name": "lowerLimit",
+          "type": "System.Double",
+          "doc": "The minimum value.",
+          "optional": false
+        },
+        {
+          "name": "upperLimit",
+          "type": "System.Double",
+          "doc": "The maximum value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionDouble__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the OptionDouble",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionDouble_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the OptionDouble and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionDouble_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionDouble_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentValue",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_OptionDouble_CurrentValue.htm"
+    },
+    {
+      "name": "InitialValue",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_OptionDouble_InitialValue.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

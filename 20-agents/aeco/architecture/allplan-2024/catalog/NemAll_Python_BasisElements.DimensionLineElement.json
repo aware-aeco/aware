@@ -1,0 +1,85 @@
+{
+  "name": "DimensionLineElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "DimensionLineElement class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/",
+  "constructors": [
+    {
+      "name": "DimensionLineElement",
+      "signature": "DimensionLineElement() | DimensionLineElement(arg2, dimensionPoints, placementPoint, directionVector)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/#NemAll_Python_BasisElements.DimensionLineElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDimensionPoints",
+      "signature": "GetDimensionPoints()",
+      "summary": "Get the dimension points",
+      "remarks": "Get the dimension points",
+      "params": [],
+      "returns": {
+        "type": "Point3DList",
+        "doc": "Dimension points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/#NemAll_Python_BasisElements.DimensionLineElement.GetDimensionPoints"
+    },
+    {
+      "name": "GetDirectionVector",
+      "signature": "GetDirectionVector()",
+      "summary": "Get the direction vector",
+      "remarks": "Get the direction vector",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Direction vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/#NemAll_Python_BasisElements.DimensionLineElement.GetDirectionVector"
+    },
+    {
+      "name": "GetPlacementVector",
+      "signature": "GetPlacementVector()",
+      "summary": "Get the placement vector",
+      "remarks": "Get the placement vector",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Placement vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/#NemAll_Python_BasisElements.DimensionLineElement.GetPlacementVector"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/#NemAll_Python_BasisElements.DimensionLineElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

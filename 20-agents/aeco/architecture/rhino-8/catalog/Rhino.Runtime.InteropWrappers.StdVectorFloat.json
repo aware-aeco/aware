@@ -1,0 +1,176 @@
+{
+  "name": "StdVectorFloat",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Wrapper for ON_SimpleArray\u003Cfloat\u003E. If you are not writing C\u002B\u002B code then this class is not for you.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_InteropWrappers_StdVectorFloat.htm",
+  "constructors": [
+    {
+      "name": "StdVectorFloat()",
+      "signature": "public StdVectorFloat()",
+      "summary": "Initializes a new StdVectorFloat class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat__ctor.htm"
+    },
+    {
+      "name": "StdVectorFloat(IEnumerable\u003CSingle\u003E)",
+      "signature": "public StdVectorFloat(IEnumerable\u003Cfloat\u003E values)",
+      "summary": "Initializes a new SimpleArrayFloat class",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CSingle\u003E",
+          "doc": "initial set of integers to add to the array",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat__ctor_2.htm"
+    },
+    {
+      "name": "StdVectorFloat(StdVectorFloat)",
+      "signature": "public StdVectorFloat(StdVectorFloat other)",
+      "summary": "Initializes a new StdVectorFloat with the contents of another SimpleArrayFloat.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Runtime.InteropWrappers.StdVectorFloat",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StdVectorFloat.#ctor(Rhino.Runtime.InteropWrappers.StdVectorFloat)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat__ctor_1.htm"
+    },
+    {
+      "name": "StdVectorFloat(UInt64)",
+      "signature": "public StdVectorFloat(ulong initialSize)",
+      "summary": "Initializes a new StdVectorFloat class. Initial size of the array - all values are set to zero.",
+      "params": [
+        {
+          "name": "initialSize",
+          "type": "System.UInt64",
+          "doc": "[Missing \u003Cparam name=\u0022initialSize\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StdVectorFloat.#ctor(System.UInt64)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "Gets the constant (immutable) pointer of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat_ConstPointer.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(StdVectorFloat other)",
+      "summary": "Copies the contents of a StdVectorFloat into another SimpleArrayFloat.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Runtime.InteropWrappers.StdVectorFloat",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StdVectorFloat.CopyTo(Rhino.Runtime.InteropWrappers.StdVectorFloat)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat_CopyTo.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat_Finalize.htm"
+    },
+    {
+      "name": "Memory",
+      "signature": "public IntPtr Memory()",
+      "summary": "Return the raw data.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StdVectorFloat.Memory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat_Memory.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "Gets the non-constant pointer (for modification) of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The non-constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat_NonConstPointer.htm"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public float[] ToArray()",
+      "summary": "Returns the managed counterpart of the unmanaged array.",
+      "params": [],
+      "returns": {
+        "type": "Single[]",
+        "doc": "The managed array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StdVectorFloat_ToArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "UInt64",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of elements in this array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_InteropWrappers_StdVectorFloat_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

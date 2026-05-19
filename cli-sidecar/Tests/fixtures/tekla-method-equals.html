@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel="preload" as="style" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,700italic,800italic,600italic,400italic,300italic&display=swap">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,700italic,800italic,600italic,400italic,300italic&display=swap" rel="stylesheet">
+    <!-- Favicons and touch icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/themes/contrib/trimble2017/images/favicons/apple-touch-icon.png?v=bORyEr80JO">
+    <link rel="icon" type="image/png" sizes="32x32" href="/themes/contrib/trimble2017/images/favicons/favicon-32x32.png?v=bORyEr80JO">
+    <link rel="icon" type="image/png" sizes="16x16" href="/themes/contrib/trimble2017/images/favicons/favicon-16x16.png?v=bORyEr80JO">
+    <link rel="manifest" href="/themes/contrib/trimble2017/images/favicons/site.webmanifest?v=bORyEr80JO">
+    <link rel="mask-icon" href="/themes/contrib/trimble2017/images/favicons/safari-pinned-tab.svg?v=bORyEr80JO" color="#5bbad5">
+    <link rel="shortcut icon" href="/themes/contrib/trimble2017/images/favicons/favicon.ico?v=bORyEr80JO">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="/themes/contrib/trimble2017/images/favicons/browserconfig.xml?v=bORyEr80JO">
+    <meta name="theme-color" content="#ffffff">
+    <!-- end favicons -->
+    <meta charset="utf-8" />
+<meta name="description" content="The equals." />
+<link rel="canonical" href="https://developer.tekla.com/doc/tekla-structures/2026/equals-method-64312" />
+<meta property="og:url" content="https://developer.tekla.com/doc/tekla-structures/2026/equals-method-64312" />
+<meta property="og:title" content="Assertion.Equals Method" />
+<meta property="og:description" content="AssertionAddLanguageSpecificTextSet(&quot;LST2919CFD1_0?cpp=::|nu=.&quot;);Equals Method The equals. Namespace: Tekla.Structures Assembly: Tekla.Structures (in Tekla.Structures.dll) Version:" />
+<meta property="og:image" content="https://developer.tekla.com/themes/custom/trimble2017_devcenter/og-default.jpg" />
+<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>UL.menu--main li {display:none} UL.menu--main li.tekla-structures {display:block}</style>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0];var j=d.createElement(s);var dl=l!='dataLayer'?'&l='+l:'';j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';j.async=true;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PK5XT28');</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0];var j=d.createElement(s);var dl=l!='dataLayer'?'&l='+l:'';j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';j.async=true;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-59PX7Q9');</script>
+
+    <title>Assertion.Equals Method | Tekla Developer Center</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_Fmiy_r-MocCGM7olBXUOU4bYyHc87qZF1D1ZRAp9xyY.css?delta=0&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJx1jt0OwjAIhV9otuqNj9PQFrsaWpaC07698yfGZO4GyPkOBwg6X9XFLIFnbN1yxcA0SBfFYj0IDtpy8YTH_eFkE7EH2ol2yjX9IhdxDlgV24bJjVrI5TJxU_tHcxMkNKJQI7T43RKEFsYXtO95uKE_cyv20w1c4L4SAy-pkhVXBAnL8qiJqJBJjHJKtG0rKLIc3-Q8aeYqK_4sD7UpiKA" />
+<link rel="stylesheet" media="all" href="https://search.cloud.tekla.com/static/css/vendor.chunk.css" />
+<link rel="stylesheet" media="all" href="https://search.cloud.tekla.com/static/css/main.chunk.css" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_atUkJYnc8o6bsNCVToVc_fZ5Ox-YlWI5TPuhZ5VfCf8.css?delta=3&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJx1jt0OwjAIhV9otuqNj9PQFrsaWpaC07698yfGZO4GyPkOBwg6X9XFLIFnbN1yxcA0SBfFYj0IDtpy8YTH_eFkE7EH2ol2yjX9IhdxDlgV24bJjVrI5TJxU_tHcxMkNKJQI7T43RKEFsYXtO95uKE_cyv20w1c4L4SAy-pkhVXBAnL8qiJqJBJjHJKtG0rKLIc3-Q8aeYqK_4sD7UpiKA" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_hJbc9avoq6qeZmMy4oacogbujEzgT186hUAAVS7GsNs.css?delta=4&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJx1jt0OwjAIhV9otuqNj9PQFrsaWpaC07698yfGZO4GyPkOBwg6X9XFLIFnbN1yxcA0SBfFYj0IDtpy8YTH_eFkE7EH2ol2yjX9IhdxDlgV24bJjVrI5TJxU_tHcxMkNKJQI7T43RKEFsYXtO95uKE_cyv20w1c4L4SAy-pkhVXBAnL8qiJqJBJjHJKtG0rKLIc3-Q8aeYqK_4sD7UpiKA" />
+
+    <script src="/sites/default/files/js/js_U6YM_dAL_Ff_pGsqWvEpqlmyVeHLwglg6JOv1n2yZD4.js?scope=header&amp;delta=0&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+
+  </head>
+  <body class="user-logged-out path-node page-node-type-api-reference-page has-glyphicons">
+    <div class="body-inner">
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PK5XT28" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59PX7Q9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <a href="#main-content" class="visually-hidden focusable skip-link">
+        Skip to main content
+      </a>
+        <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+              <header class="header navbar navbar-default" id="navbar" role="banner">
+      <div class="navbar-header">
+        <div class="navbar-header__super-navigation">
+          <div class="navbar-header__super-navigation--left">
+            <div id="tekla-navigation" data-language="en"></div>
+
+                          <div class="logo-trimble"><img class="logo-trimble__img" src="/themes/contrib/trimble2017/images/svg_icons/logo-trimble.svg" alt="Trimble"></div>
+            
+              <div class="region region-super-navigation-left">
+          <a class="logo navbar-btn pull-left" href="/" title="Home" rel="home">
+      <img src="/themes/custom/trimble2017_devcenter/logo.svg?v=bORyEr80JO" alt="Home" />
+    </a>
+      <section id="block-trimble2017-devcenter-honeypot" class="block block-block-content block-block-contenta204467b-4cfd-448d-9327-b633b70276df clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><a aria-hidden="true" class="hide" href="/notallowed" rel="nofollow">not-allowed-link</a></div>
+      
+  </section>
+
+
+  </div>
+
+          </div>
+          <div class="navbar-header__super-navigation--right">
+              <div class="region region-super-navigation-right">
+      
+        <ul class="menu nav navbar-nav user-account-menu__username-link">
+                        
+                        <li>
+        <a href="/atc/login?redirect=/doc/tekla-structures/2026/equals-method-64312" class="user-account-menu__username-link" rel="nofollow" data-drupal-link-query="{&quot;redirect&quot;:&quot;\/doc\/tekla-structures\/2026\/equals-method-64312&quot;}" data-drupal-link-system-path="atc/login">Sign in</a>
+                  </li>
+                          </ul>
+              
+
+
+
+  </div>
+
+            <div class="mobile-button--super-navigation">
+              <button type="button" class="toggle" aria-label="Show menu"></button>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-header__mobile-super-navigation">
+            <div class="region region-super-navigation-right">
+      
+        <ul class="menu nav navbar-nav user-account-menu__username-link">
+                        
+                        <li>
+        <a href="/atc/login?redirect=/doc/tekla-structures/2026/equals-method-64312" class="user-account-menu__username-link" rel="nofollow" data-drupal-link-query="{&quot;redirect&quot;:&quot;\/doc\/tekla-structures\/2026\/equals-method-64312&quot;}" data-drupal-link-system-path="atc/login">Sign in</a>
+                  </li>
+                          </ul>
+              
+
+
+
+  </div>
+
+        </div>
+                  <div class="navbar-header__main-navigation navbar-header__main-navigation--desktop">
+            <div class="navbar-header__main-navigation--left">
+                <div class="region region-main-navigation-left">
+    <section id="block-trimble2017-devcenter-teklaproductselectversion" class="block block-tekla-product-select block-tekla-product-select-version clearfix">
+  
+    
+
+      <div class="tekla-product-select-logos-wrapper">
+  <form class="tekla-product-select-version-form" data-drupal-selector="tekla-product-select-version-form" action="/doc/tekla-structures/2026/equals-method-64312" method="post" id="tekla-product-select-version-form" accept-charset="UTF-8">
+  <div class="form-item js-form-item form-type-select js-form-type-select form-item-product-select js-form-item-product-select form-no-label form-group">
+  
+  
+  <div class="input-group"><div class="select-wrapper"><select data-drupal-selector="edit-product-select" data-disable-refocus="true" class="form-select form-control" id="edit-product-select" name="product_select"><option
+            value="18" selected="selected">Tekla Structures</option><option
+            value="19">Tekla Structural Designer</option><option
+            value="20">Tekla Tedds</option><option
+            value="21">Tekla PowerFab</option><option
+            value="22">Trimble Connect</option></select></div><span class="input-group-addon"><span class="icon glyphicon glyphicon-refresh ajax-progress ajax-progress-throbber" aria-hidden="true"></span></span></div>
+
+  
+  
+  </div>
+<input autocomplete="off" data-drupal-selector="form-8re1awbani897zskbmepuubjmfthmroejla78-nov54" type="hidden" name="form_build_id" value="form-8Re1aWbanI897zSKBMePUuBJmFThMrOejLA78_Nov54" /><input data-drupal-selector="edit-tekla-product-select-version-form" type="hidden" name="form_id" value="tekla_product_select_version_form" />
+</form>
+
+</div>
+
+  </section>
+
+<nav role="navigation" aria-labelledby="block-trimble2017-devcenter-main-navigation-desktop-menu" id="block-trimble2017-devcenter-main-navigation-desktop" class="mainnavigation">
+            
+  <h2 class="visually-hidden" id="block-trimble2017-devcenter-main-navigation-desktop-menu">Main navigation</h2>
+  
+
+        
+      <ul class="menu menu--main nav navbar-nav">
+                      <li class="tekla-structures first">
+                                        <a href="/doc/tekla-structures/2026/tekla-structures-64304" data-drupal-link-system-path="node/64304">API references</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/tekla-structures/tekla-structures-documentation" data-drupal-link-system-path="node/243">Documentation</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/doc/tekla-powerfab/2026/fab-suite-request-api-77584" data-drupal-link-system-path="node/77584">API References</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/tekla-powerfab/tekla-powerfab-documentation" data-drupal-link-system-path="node/245">Documentation</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/doc/tekla-structural-designer/2026/tsd-api-remoting-73833" data-drupal-link-system-path="node/73833">API References</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/tekla-structural-designer/tekla-structural-designer-documentation" data-drupal-link-system-path="node/388">Documentation</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/doc/tekla-tedds/2026/64124" data-drupal-link-system-path="node/64124">API References</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/tekla-tedds/tekla-tedds-documentation" data-drupal-link-system-path="node/387">Documentation</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/benefits-for-your-business" data-drupal-link-system-path="node/20115">Benefits</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/tekla-developer-community" data-drupal-link-system-path="node/20111">Community</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/trimble-connect-community" class="trimble-connect" target="_blank" data-drupal-link-system-path="node/20114">Community</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/policy" data-drupal-link-system-path="node/20112">Policy</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/policy-trimble-connect" data-drupal-link-system-path="node/20113">Policy</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab trimble-connect last">
+                                        <a href="/tekla-structures/tekla-developer-news" data-drupal-link-system-path="node/281">News</a>
+              </li>
+        </ul>
+  
+
+  </nav>
+
+  </div>
+
+              <div class="mobile-button">
+                <button type="button" class="toggle" aria-label="Show menu"></button>
+              </div>
+            </div>
+            <div class="navbar-header__main-navigation--right">
+                <div class="region region-main-navigation-right">
+    <section id="block-trimble2017-devcenter-trimblesearch" class="block block-trimble-search-page block-trimble-search-block clearfix">
+  
+    
+
+      <div id="tekla-search-field" data-language="en" data-product="Tekla Structures" data-version="2026" data-service="devctr"></div>
+
+  </section>
+
+
+  </div>
+
+            </div>
+          </div>
+                <div class="navbar-header__mobile-navigation">
+            <div class="region region-main-navigation-mobile">
+    <nav role="navigation" aria-labelledby="block-trimble2017-devcenter-main-navigation-mobile-menu" id="block-trimble2017-devcenter-main-navigation-mobile" class="mainnavigation_mobile">
+            
+  <h2 class="visually-hidden" id="block-trimble2017-devcenter-main-navigation-mobile-menu">Main navigation</h2>
+  
+
+        
+      <ul class="menu menu--main nav navbar-nav">
+                      <li class="tekla-structures first">
+                                        <a href="/doc/tekla-structures/2026/tekla-structures-64304" data-drupal-link-system-path="node/64304">API references</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/tekla-structures/tekla-structures-documentation" data-drupal-link-system-path="node/243">Documentation</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/doc/tekla-powerfab/2026/fab-suite-request-api-77584" data-drupal-link-system-path="node/77584">API References</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/tekla-powerfab/tekla-powerfab-documentation" data-drupal-link-system-path="node/245">Documentation</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/doc/tekla-structural-designer/2026/tsd-api-remoting-73833" data-drupal-link-system-path="node/73833">API References</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/tekla-structural-designer/tekla-structural-designer-documentation" data-drupal-link-system-path="node/388">Documentation</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/doc/tekla-tedds/2026/64124" data-drupal-link-system-path="node/64124">API References</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/tekla-tedds/tekla-tedds-documentation" data-drupal-link-system-path="node/387">Documentation</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/benefits-for-your-business" data-drupal-link-system-path="node/20115">Benefits</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/tekla-developer-community" data-drupal-link-system-path="node/20111">Community</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/trimble-connect-community" class="trimble-connect" target="_blank" data-drupal-link-system-path="node/20114">Community</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/policy" data-drupal-link-system-path="node/20112">Policy</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/policy-trimble-connect" data-drupal-link-system-path="node/20113">Policy</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab trimble-connect last">
+                                        <a href="/tekla-structures/tekla-developer-news" data-drupal-link-system-path="node/281">News</a>
+              </li>
+        </ul>
+  
+
+  </nav>
+
+  </div>
+
+        </div>
+              </div>
+          </header>
+  
+
+<div class="preface">  <div class="region region-preface">
+        <ol class="breadcrumb">
+    <li ><a href="/">Home</a></li><li ><a href="/tekla-structures">Tekla Structures</a></li><li ><a href="/doc/tekla-structures/2026/tekla-structures-64304">Tekla.Structures Namespace</a></li><li ><a href="/doc/tekla-structures/2026/assertion-class-64305">Assertion Class</a></li><li ><a href="/doc/tekla-structures/2026/assertion-methods-64311">Assertion Methods</a></li><li  class="active">Assertion.Equals Method</li>  </ol>
+
+
+  </div>
+</div>
+
+<div class="precontent">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="main-container-wrap">
+    <div role="main" class="main-container container js-quickedit-main-content">
+      <div class="row row__main-container">
+
+                                      <div class="content-header col-sm-12" role="heading"></div>
+                  
+                                      <aside class="sidebar-first col-sm-4" role="complementary">  <div class="region region-sidebar-first">
+    <section id="block-trimble2017-devcenter-ts-apiref2026version" class="block block-block-content block-block-contente394d457-b48c-4ba8-b0db-ce8cf46a81ee clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="alert">
+<h3>Tekla Open API References 2026</h3>
+<p>Click <a href="/doc/tekla-structures/2025/tekla-structures-45473">here</a> to access Tekla Open API References for version 2025. Visit Tekla Warehouse to access <a target="_blank" href="https://warehouse.tekla.com/#/catalog/details/u97eeed98-e862-467b-a6f7-9b60588fadae">older versions</a>.</p>
+</div></div>
+      
+  </section>
+
+<section class="api-packages-tree block-product-guide-tree block block-trimble-html-import-manager block-api-reference-page-tree clearfix" id="block-trimble2017-devcenter-apipackagenavigation">
+  
+    
+
+      <h3>API References</h3><ul><li leaf-id="64304" class=" expanded has-children" aria-expanded="true"><a href="/doc/tekla-structures/2026/tekla-structures-64304">Tekla.Structures Namespace</a><button type="button" class="has-children expanded loaded accordion-trigger">Expand</button><ul><li leaf-id="64305" class=" expanded has-children" aria-expanded="true"><a href="/doc/tekla-structures/2026/assertion-class-64305">Assertion Class</a><button type="button" class="has-children expanded loaded accordion-trigger">Expand</button><ul><li leaf-id="64306" aria-expanded="false"><a href="/doc/tekla-structures/2026/assertion-constructor-64306">Assertion Constructor</a></li><li leaf-id="64307" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/assertion-properties-64307">Assertion Properties</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64311" class=" expanded has-children" aria-expanded="true"><a href="/doc/tekla-structures/2026/assertion-methods-64311">Assertion Methods</a><button type="button" class="has-children expanded loaded accordion-trigger">Expand</button><ul><li leaf-id="64312" aria-expanded="false"><a href="/doc/tekla-structures/2026/equals-method-64312">Assertion.Equals Method</a></li><li leaf-id="64313" aria-expanded="false"><a href="/doc/tekla-structures/2026/get-hash-code-method-64313">Assertion.GetHashCode Method</a></li><li leaf-id="64314" aria-expanded="false"><a href="/doc/tekla-structures/2026/string-method-64314">Assertion.ToString Method</a></li></ul></li></ul></li><li leaf-id="64315" aria-expanded="false"><a href="/doc/tekla-structures/2026/auto-direction-type-enum-enumeration-64315">AutoDirectionTypeEnum Enumeration</a></li><li leaf-id="64316" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/clash-check-options-class-64316">ClashCheckOptions Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64321" aria-expanded="false"><a href="/doc/tekla-structures/2026/component-definition-type-enum-enumeration-64321">ComponentDefinitionTypeEnum Enumeration</a></li><li leaf-id="64322" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/component-options-class-64322">ComponentOptions Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64340" aria-expanded="false"><a href="/doc/tekla-structures/2026/component-options-bolt-edge-distance-reference-enum-enumeration-64340">ComponentOptions.BoltEdgeDistanceReferenceEnum Enumeration</a></li><li leaf-id="64341" aria-expanded="false"><a href="/doc/tekla-structures/2026/connection-status-enum-enumeration-64341">ConnectionStatusEnum Enumeration</a></li><li leaf-id="64342" aria-expanded="false"><a href="/doc/tekla-structures/2026/detail-type-enum-enumeration-64342">DetailTypeEnum Enumeration</a></li><li leaf-id="64343" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/identifier-class-64343">Identifier Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64360" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/module-manager-class-64360">ModuleManager Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64372" aria-expanded="false"><a href="/doc/tekla-structures/2026/module-manager-program-configuration-enum-enumeration-64372">ModuleManager.ProgramConfigurationEnum Enumeration</a></li><li leaf-id="64373" aria-expanded="false"><a href="/doc/tekla-structures/2026/position-type-enum-enumeration-64373">PositionTypeEnum Enumeration</a></li><li leaf-id="64374" aria-expanded="false"><a href="/doc/tekla-structures/2026/property-type-enum-enumeration-64374">PropertyTypeEnum Enumeration</a></li><li leaf-id="64375" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-database-type-enum-enumeration-64375">TeklaStructuresDatabaseTypeEnum Enumeration</a></li><li leaf-id="64376" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-files-class-64376">TeklaStructuresFiles Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64388" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-info-class-64388">TeklaStructuresInfo Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64400" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-settings-class-64400">TeklaStructuresSettings Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64417" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-settings-invalid-path-callback-delegate-64417">TeklaStructuresSettings.InvalidPathCallback Delegate</a></li><li leaf-id="64418" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-settings-tool-option-names-class-64418">TeklaStructuresSettings.ToolOptionNames Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="64451" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-variables-class-64451">TeklaStructuresVariables Class</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li></ul></li><li leaf-id="64458" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-analysis-64458">Tekla.Structures.Analysis Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="65331" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-analysis-operations-65331">Tekla.Structures.Analysis.Operations Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="65339" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-analysis-ui-65339">Tekla.Structures.Analysis.UI Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="65351" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-catalogs-65351">Tekla.Structures.Catalogs Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="65857" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-datatype-65857">Tekla.Structures.Datatype Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="66114" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-dialog-66114">Tekla.Structures.Dialog Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="66334" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-dialog-ui-controls-66334">Tekla.Structures.Dialog.UIControls Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="66738" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-drawing-66738">Tekla.Structures.Drawing Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="69577" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-drawing-automation-69577">Tekla.Structures.Drawing.Automation Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="69589" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-drawing-operations-69589">Tekla.Structures.Drawing.Operations Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="69596" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-drawing-tools-69596">Tekla.Structures.Drawing.Tools Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="69619" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-drawing-ui-69619">Tekla.Structures.Drawing.UI Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="69695" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-filtering-69695">Tekla.Structures.Filtering Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="69826" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-filtering-categories-69826">Tekla.Structures.Filtering.Categories Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="70325" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-forming-70325">Tekla.Structures.Forming Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="70342" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-geometry3d-70342">Tekla.Structures.Geometry3d Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="70705" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-70705">Tekla.Structures.Model Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73028" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-clash-checker-73028">Tekla.Structures.Model.ClashChecker Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73034" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-collaboration-73034">Tekla.Structures.Model.Collaboration Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73129" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-geometry-73129">Tekla.Structures.Model.Geometry Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73141" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-history-73141">Tekla.Structures.Model.History Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73178" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-internal-bim-model-data-product-types-73178">Tekla.Structures.Model.Internal.BimModelDataProduct.Types Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73185" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-operations-73185">Tekla.Structures.Model.Operations Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73346" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-point-cloud-data-services-73346">Tekla.Structures.Model.PointCloudDataServices Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73366" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-ui-73366">Tekla.Structures.Model.UI Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73601" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-model-welding-73601">Tekla.Structures.Model.Welding Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73607" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-plugins-73607">Tekla.Structures.Plugins Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="73774" class=" has-children" aria-expanded="false"><a href="/doc/tekla-structures/2026/tekla-structures-solid-73774">Tekla.Structures.Solid Namespace</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li></ul>
+  </section>
+
+
+  </div>
+</aside>
+                  
+                        <section class="main-content col-sm-8">
+
+                                              <div class="highlighted">  <div class="region region-highlighted">
+    <div data-drupal-messages-fallback class="hidden"></div>
+
+  </div>
+</div>
+                      
+                    
+                    
+                                <a id="main-content"></a>
+              <div class="region region-content">
+        <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      
+            <div class="field field--name-dynamic-token-fieldnode-api-top-link-anchor field--type-ds field--label-hidden field--item"><a id="PageHeader"></a></div>
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="topicContent" id="TopicContent"><table class="titleTable"><tr><td class="logoColumn"><img src="/modules/custom/trimble_html_import/icons/logo.png"></td><td class="titleColumn"><h1>Assertion<span id="LST2919CFD1_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST2919CFD1_0?cpp=::|nu=.");</script>Equals Method </h1></td></tr></table><span class="introStyle"></span> <div class="summary">
+            The equals.
+            </div><p> </p>
+    <strong>Namespace:</strong> 
+   <a href="/topic/en/18/47/9e348af4-4c32-9f4b-cd2f-6d83d1862bf1">Tekla.Structures</a><br>
+    <strong>Assembly:</strong>
+   Tekla.Structures (in Tekla.Structures.dll) Version: 2026.0.0-alpha00057080+93cd22c410a086ecc356b7088d4daaf2e12907eb<div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID1RB')" onkeypress="SectionExpandCollapse_CheckKey('ID1RB', event)" tabindex="0"><img id="ID1RBToggle" class="collapseToggle" src="/modules/custom/trimble_html_import/icons/SectionExpanded.png">Syntax</span></div><div id="ID1RBSection" class="collapsibleSection"><div class="codeSnippetContainer"><div class="codeSnippetContainerTabs"><div id="ID0EBCA_tab1" class="codeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID0EBCA','cs','1','2');return false;">C#</a></div><div id="ID0EBCA_tab2" class="codeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID0EBCA','vb','2','2');return false;">VB</a></div></div><div class="codeSnippetContainerCodeContainer"><div class="codeSnippetToolBar"><div class="codeSnippetToolBarText"><a id="ID0EBCA_copyCode" href="#" class="copyCodeSnippet" onclick="javascript:CopyToClipboard('ID0EBCA');return false;" title="Copy">Copy</a></div></div><div id="ID0EBCA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve"><span class="keyword">public</span> <span class="keyword">override</span> <span class="identifier">bool</span> <span class="identifier">Equals</span>(
+	<span class="identifier">Object</span> <span class="parameter">obj</span>
+)</pre></div><div id="ID0EBCA_code_Div2" class="codeSnippetContainerCode" style="display: none"><pre xml:space="preserve"><span class="keyword">Public</span> <span class="keyword">Overrides</span> <span class="keyword">Function</span> <span class="identifier">Equals</span> ( 
+	<span class="parameter">obj</span> <span class="keyword">As</span> <span class="identifier">Object</span>
+) <span class="keyword">As</span> <span class="identifier">Boolean</span></pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID0EBCA");</script><h4 class="subHeading">Parameters</h4><dl><dt><span class="parameter">obj</span></dt><dd>Type: <span class="nolink">System<span id="LST2919CFD1_1"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST2919CFD1_1?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Object</span><br>
+            The obj.
+            </dd></dl><h4 class="subHeading">Return Value</h4>Type: <span class="nolink">Boolean</span><br>
+            The <span class="nolink">Boolean</span>.
+            </div><div class="collapsibleAreaRegion" id="seeAlsoSection"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID2RB')" onkeypress="SectionExpandCollapse_CheckKey('ID2RB', event)" tabindex="0"><img id="ID2RBToggle" class="collapseToggle" src="/modules/custom/trimble_html_import/icons/SectionExpanded.png">See Also</span></div><div id="ID2RBSection" class="collapsibleSection"><h4 class="subHeading">Reference</h4><div class="seeAlsoStyle"><a href="/topic/en/18/47/ad52597a-0408-037b-a3d1-689855b86dc5">Assertion Class</a></div><div class="seeAlsoStyle"><a href="/topic/en/18/47/9e348af4-4c32-9f4b-cd2f-6d83d1862bf1">Tekla.Structures Namespace</a></div></div></div></div>
+      
+    </div>
+  </div>
+
+
+<section id="block-trimble2017-devcenter-quick-feedback" class="block block-webform block-webform-block clearfix">
+  
+    
+
+      <span id="webform-submission-quick-feedback-node-64312-form-ajax-content"></span><div id="webform-submission-quick-feedback-node-64312-form-ajax" class="webform-ajax-form-wrapper" data-effect="fade" data-progress-type="throbber"><form class="webform-submission-form webform-submission-add-form webform-submission-quick-feedback-form webform-submission-quick-feedback-add-form webform-submission-quick-feedback-node-64312-form webform-submission-quick-feedback-node-64312-add-form js-webform-details-toggle webform-details-toggle" data-drupal-selector="webform-submission-quick-feedback-node-64312-add-form" action="/doc/tekla-structures/2026/equals-method-64312" method="post" id="webform-submission-quick-feedback-node-64312-add-form" accept-charset="UTF-8">
+  
+  <fieldset data-drupal-selector="edit-was-this-helpful" class="radios--wrapper fieldgroup form-composite webform-composite-visible-title required js-webform-type-radios webform-type-radios js-form-item form-item js-form-wrapper form-wrapper" id="edit-was-this-helpful--wrapper">
+      <legend id="edit-was-this-helpful--wrapper-legend">
+    <span class="fieldset-legend js-form-required form-required">Was this helpful?</span>
+  </legend>
+  <div class="fieldset-wrapper">
+                <div id="edit-was-this-helpful" class="js-webform-radios webform-options-display-two-columns"><div class="form-item js-form-item form-type-radio js-form-type-radio form-item-was-this-helpful js-form-item-was-this-helpful radio">
+  
+  
+  
+
+      <label for="edit-was-this-helpful-yes" class="control-label option"><input data-drupal-selector="edit-was-this-helpful-yes" class="form-radio" type="radio" id="edit-was-this-helpful-yes" name="was_this_helpful" value="yes" />Yes</label>
+  
+  
+  </div>
+<div class="form-item js-form-item form-type-radio js-form-type-radio form-item-was-this-helpful js-form-item-was-this-helpful radio">
+  
+  
+  
+
+      <label for="edit-was-this-helpful-no" class="control-label option"><input data-drupal-selector="edit-was-this-helpful-no" class="form-radio" type="radio" id="edit-was-this-helpful-no" name="was_this_helpful" value="no" />No</label>
+  
+  
+  </div>
+</div>
+
+          </div>
+</fieldset>
+<div class="js-webform-states-hidden form-item js-form-item form-type-textarea js-form-type-textarea form-item-what-is-missing js-form-item-what-is-missing form-group">
+      <label for="edit-what-is-missing" class="control-label">What is missing?</label>
+  
+  
+  <div class="form-textarea-wrapper">
+  <textarea data-drupal-selector="edit-what-is-missing" aria-describedby="edit-what-is-missing--description" class="form-textarea form-control resize-vertical" data-drupal-states="{&quot;visible&quot;:{&quot;.webform-submission-quick-feedback-node-64312-add-form :input[name=\u0022was_this_helpful\u0022]&quot;:{&quot;value&quot;:&quot;no&quot;}},&quot;required&quot;:{&quot;.webform-submission-quick-feedback-node-64312-add-form :input[name=\u0022was_this_helpful\u0022]&quot;:{&quot;value&quot;:&quot;no&quot;}}}" id="edit-what-is-missing" name="what_is_missing" rows="5" cols="60" placeholder="The feedback you give here is not visible to other users. We use your comments to improve the content."></textarea>
+</div>
+
+
+  
+  
+      <div class="description help-block">
+      <div id="edit-what-is-missing--description" class="webform-element-description form-group">The feedback you give here is not visible to other users. We use your comments to improve the content.</div>
+
+    </div>
+  </div>
+<div data-drupal-selector="edit-actions" class="form-actions webform-actions form-group js-form-wrapper form-wrapper" id="edit-actions"><button class="webform-button--submit btn-default button button--primary js-form-submit form-submit btn" data-drupal-selector="edit-actions-submit" data-disable-refocus="true" type="submit" id="edit-actions-submit" name="op" value="Submit">Submit</button>
+</div>
+<input data-drupal-selector="edit-page-url" type="hidden" name="page_url" value="https://developer.tekla.com/doc/tekla-structures/2026/equals-method-64312" /><input data-drupal-selector="edit-content-owner" type="hidden" name="content_owner" value="rune.backman@trimble.com" /><input autocomplete="off" data-drupal-selector="form-e0itjb-v3uinyp6lbqdqjwwahjuh5yykfqokkppxyem" type="hidden" name="form_build_id" value="form-e0itjB_v3uinyp6lbqdqJWWahjUh5YYKFQoKkPPxYEM" /><input data-drupal-selector="edit-webform-submission-quick-feedback-node-64312-add-form" type="hidden" name="form_id" value="webform_submission_quick_feedback_node_64312_add_form" /><div class="url-textfield form-group js-form-wrapper form-wrapper" style="display: none !important;"><div class="form-item js-form-item form-type-textfield js-form-type-textfield form-item-url js-form-item-url form-group">
+      <label for="edit-url" class="control-label">Leave this field blank</label>
+  
+  
+  <input autocomplete="off" data-drupal-selector="edit-url" class="form-text form-control" type="text" id="edit-url" name="url" value="" size="20" maxlength="128" />
+
+  
+  
+  </div>
+</div>
+
+
+  
+</form>
+</div>
+  </section>
+
+<section id="block-trimble2017-devcenter-previousapireferencepageinthetree" class="block-product-guide-previous block block-trimble-html-import-manager block-api-reference-page-previous clearfix">
+  
+    
+
+      <a href="/doc/tekla-structures/2026/assertion-methods-64311">Previous</a>
+  </section>
+
+<section id="block-trimble2017-devcenter-nextapireferencepageinthetree" class="block-product-guide-next block block-trimble-html-import-manager block-api-reference-page-next clearfix">
+  
+    
+
+      <a href="/doc/tekla-structures/2026/get-hash-code-method-64313">Next</a>
+  </section>
+
+
+  </div>
+
+                  </section>
+
+                      </div>
+    </div>
+  </div>
+
+<div class="postcontent">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+    </div>
+  </div>
+</div>
+
+<div class="postscript">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">  <div class="region region-postscript">
+    <section id="block-followusonsocialmedia" class="block block-block-content block-block-contentac151fd8-1977-42e2-94bc-74aeaf95f9a7 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="wp-block-group alignfull banner background-trimble-blue">
+   <p class="ingress has-text-color" style="color:#ffffff">Want to stay up-to-date with Tekla development information?</p>
+   <a class="btn btn-primary" href="/tekla-structures/tekla-developer-news">Check out all developer news and updates</a></p>
+</div>
+<a aria-hidden="true" class="hide" href="/notallowed" rel="nofollow">not-allowed-link</a></div>
+      
+  </section>
+
+
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer" role="contentinfo">
+  <div id="trimble-common-footer" data-language="en" />
+</footer>
+
+  </div>
+
+      
+    </div>
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/64312","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"eJydUdtyAiEM_aFlafvSz2ECG1cUCE2yq_v3stU6Oup02hfInEtyCJ5IRRmqVaKksXaBGG0silwg9buvCXnpN8S5S7DQpG6IEmhuqKWCgVIniyhm60GwU47ZJ_x4e_-0YyIPyYguKZbxjqpMwxTUjFMcUO4oxX0Cg8dzAFNgNoFoH1HM6rrVugHngGvUF7PcVnNyMVditU8wV2HE3jOU4d8us2krRP6bWbSZgYdnLpehNA3_uA3UaCqEfQPNhetvsbaiOIJGKtd2BQ-OMcVgr5XzTAdBds1S9KoUBA7b71T2XHcH9Ot_28vdww6OD2CgFlai4gODCXOb0A-oEJP0AvPvIqVxTK9lGUVawpc81fX58sCvxwnDiyAH","theme":"trimble2017_devcenter","theme_token":null},"ajaxTrustedUrl":{"form_action_p_pvdeGsVG5zNF_XLGPTvYSKCf43t8qZYSwcfZl2uzM":true,"\/doc\/tekla-structures\/2026\/equals-method-64312?ajax_form=1":true},"bootstrap":{"forms_has_error_value_toggle":1,"trimble_bootstrap_table_query":"DIV.node:not(.node--type-business-card) table, ARTICLE.page.full table","modal_animation":1,"modal_backdrop":"true","modal_focus_input":1,"modal_keyboard":1,"modal_select_text":1,"modal_show":1,"modal_size":"","tooltip_enabled":1,"tooltip_animation":1,"tooltip_container":"body","tooltip_delay":"0","tooltip_html":0,"tooltip_placement":"auto top","tooltip_selector":"","tooltip_trigger":"hover"},"ajax":{"edit-actions-submit":{"callback":"::submitAjaxForm","event":"click","effect":"fade","speed":500,"progress":{"type":"throbber","message":""},"disable-refocus":true,"url":"\/doc\/tekla-structures\/2026\/equals-method-64312?ajax_form=1","httpMethod":"POST","dialogType":"ajax","submit":{"_triggering_element_name":"op","_triggering_element_value":"Submit"}},"edit-product-select":{"callback":[{},"selectProduct"],"disable-refocus":true,"event":"change","wrapper":"product-select-element","url":"\/doc\/tekla-structures\/2026\/equals-method-64312?ajax_form=1","httpMethod":"POST","dialogType":"ajax","submit":{"_triggering_element_name":"product_select"}}},"user":{"uid":0,"permissionsHash":"be3a3cf5af333966e607c605804f4efcb317eab61e6dcb2a2241f15acf486e77"}}</script>
+<script src="/sites/default/files/js/js_kVmpb1bsLG7hJY6hmLzIU3FoG1JzQPFjlc5A_foGAho.js?scope=footer&amp;delta=0&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+<script src="https://nav.prod.tekla.com/main.js" defer></script>
+<script src="https://cookies.prod.tekla.com/main.js" defer></script>
+<script src="/sites/default/files/js/js_ajU6S3P8-G8ruzuUyL5uZbWo2oAiLgHRoXHWJDpoico.js?scope=footer&amp;delta=3&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+<script src="https://search.cloud.tekla.com/static/js/runtime-main.js"></script>
+<script src="https://search.cloud.tekla.com/static/js/vendor.chunk.js"></script>
+<script src="https://search.cloud.tekla.com/static/js/main.chunk.js"></script>
+<script src="/sites/default/files/js/js_CRXz1I5iI1cxZrb7KalOSxgf9gYf5sLVMvPZ4sAmHWs.js?scope=footer&amp;delta=7&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+
+  </body>
+</html>

@@ -1,0 +1,224 @@
+{
+  "name": "LOC",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Used a placeholder which is used by LocalizationProcessor application to create contextId mapped localized strings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_LOC.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "COMMANDNAME",
+      "signature": "public static string COMMANDNAME(string english)",
+      "summary": "Command names that need to be localized should call this function. The COMMANDNAME function doesn\u0027t actually do anything but return the original string. The LocalizationProcessor application walks through the source code of a project and looks for LOC.COMMANDNAME and builds a record for each command name for the translators that can be used by developers in a commands overridden Rhino.Commands.Command.LocalName which should call Rhino.UI.Localization.LocalizeCommandName(EnglishName)",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[in] The English string to localize.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.LOC.COMMANDNAME(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_COMMANDNAME.htm"
+    },
+    {
+      "name": "CON(String)",
+      "signature": "public static LocalizeStringPair CON(string english)",
+      "summary": "Command option name strings that need to be localized should call this function. The CON function doesn\u0027t actually do anything but return the original string. The LocalizationProcessor application walks through the source code of a project and looks for LOC.CON. The function is then replaced with a call to Localization.LocalizeCommandOptionName using a unique context ID.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[in] The English string to localize.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "Returns localized string pair with both the English and local names set to the English value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_CON.htm"
+    },
+    {
+      "name": "CON(String, Int32)",
+      "signature": "[ObsoleteAttribute(\u0022Don\u0027t copy and paste context IDs\u0022, true)] public static LocalizeStringPair CON(string english, int contextid)",
+      "summary": "DO NOT use this function, it is a trap to determine where context IDs have been copied from other, already extracted, strings.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The English name.",
+          "optional": false
+        },
+        {
+          "name": "contextid",
+          "type": "System.Int32",
+          "doc": "Copied context id.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "English name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_CON_1.htm"
+    },
+    {
+      "name": "CON(String, Object)",
+      "signature": "public static LocalizeStringPair CON(string english, Object assemblyFromObject)",
+      "summary": "Command option name strings that need to be localized should call this function. The CON function doesn\u0027t actually do anything but return the original string. The LocalizationProcessor application walks through the source code of a project and looks for LOC.CON. The function is then replaced with a call to Localization.LocalizeCommandOptionName using a unique context ID.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[in] The English string to localize.",
+          "optional": false
+        },
+        {
+          "name": "assemblyFromObject",
+          "type": "System.Object",
+          "doc": "[in] The object that identifies the assembly that owns the command option name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "Returns localized string pair with both the English and local names set to the English value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_CON_2.htm"
+    },
+    {
+      "name": "COV(String)",
+      "signature": "public static LocalizeStringPair COV(string english)",
+      "summary": "Command option name strings that need to be localized should call this function. The COV function doesn\u0027t actually do anything but return the original string. The LocalizationProcessor application walks through the source code of a project and looks for LOC.COV. The function is then replaced with a call to Localization.LocalizeCommandOptionValue using a unique context ID.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[in] The English string to localize.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "Returns localized string pair with both the English and local names set to the English value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_COV.htm"
+    },
+    {
+      "name": "COV(String, Object)",
+      "signature": "public static LocalizeStringPair COV(string english, Object assemblyFromObject)",
+      "summary": "Command option name strings that need to be localized should call this function. The COV function doesn\u0027t actually do anything but return the original string. The LocalizationProcessor application walks through the source code of a project and looks for LOC.COV. The function is then replaced with a call to Localization.LocalizeCommandOptionValue using a unique context ID.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[in] The English string to localize.",
+          "optional": false
+        },
+        {
+          "name": "assemblyFromObject",
+          "type": "System.Object",
+          "doc": "[in] The object that identifies the assembly that owns the command option value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "Returns localized string pair with both the English and local names set to the English value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_COV_1.htm"
+    },
+    {
+      "name": "STR(String)",
+      "signature": "public static string STR(string english)",
+      "summary": "Strings that need to be localized should call this function. The STR function doesn\u0027t actually do anything but return the original string. The LocalizationProcessor application walks through the source code of a project and looks for LOC.STR. The function is then replaced with a call to Localization.LocalizeString using a unique context ID.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[in] The English string to localize.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.LOC.STR(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_STR.htm"
+    },
+    {
+      "name": "STR(String, Int32)",
+      "signature": "[ObsoleteAttribute(\u0022Don\u0027t copy and paste context IDs\u0022, true)] public static string STR(string english, int contextid)",
+      "summary": "DO NOT use this function, it is a trap to determine where context IDs have been copied from other, already extracted, strings.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The English name.",
+          "optional": false
+        },
+        {
+          "name": "contextid",
+          "type": "System.Int32",
+          "doc": "Copied context id.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "English name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_STR_1.htm"
+    },
+    {
+      "name": "STR(String, Object)",
+      "signature": "public static string STR(string english, Object assemblyOrObject)",
+      "summary": "Similar to Format(String, Object) function.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The English name.",
+          "optional": false
+        },
+        {
+          "name": "assemblyOrObject",
+          "type": "System.Object",
+          "doc": "Unused.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "English name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_LOC_STR_2.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

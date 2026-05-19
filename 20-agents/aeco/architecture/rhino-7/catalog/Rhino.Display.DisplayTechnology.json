@@ -1,0 +1,38 @@
+{
+  "name": "DisplayTechnology",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Graphics display techologies.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayTechnology.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "OpenGL",
+      "value": 1
+    },
+    {
+      "name": "Metal",
+      "value": 2
+    },
+    {
+      "name": "DirectX",
+      "value": 3
+    },
+    {
+      "name": "Software",
+      "value": 4
+    },
+    {
+      "name": "Vulkan",
+      "value": 5
+    }
+  ]
+}

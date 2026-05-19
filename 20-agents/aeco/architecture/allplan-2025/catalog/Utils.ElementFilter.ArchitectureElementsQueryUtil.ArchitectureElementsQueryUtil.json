@@ -1,0 +1,56 @@
+{
+  "name": "ArchitectureElementsQueryUtil",
+  "namespace": "Utils.ElementFilter.ArchitectureElementsQueryUtil",
+  "kind": "class",
+  "summary": "implementation of the selection query utilities for architecture elements",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/ArchitectureElementsQueryUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_arch_door_window_opening_elements_query",
+      "signature": "create_arch_door_window_opening_elements_query() -\u003E SelectionQuery",
+      "summary": "create a query for the elements with a possible door/window input",
+      "remarks": "create a query for the elements with a possible door/window input",
+      "params": [],
+      "returns": {
+        "type": "SelectionQuery",
+        "doc": "selection query"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/ArchitectureElementsQueryUtil/#Utils.ElementFilter.ArchitectureElementsQueryUtil.ArchitectureElementsQueryUtil.create_arch_door_window_opening_elements_query"
+    },
+    {
+      "name": "create_arch_general_opening_elements_query",
+      "signature": "create_arch_general_opening_elements_query() -\u003E SelectionQuery",
+      "summary": "create a query for the elements with a possible general opening input",
+      "remarks": "create a query for the elements with a possible general opening input",
+      "params": [],
+      "returns": {
+        "type": "SelectionQuery",
+        "doc": "selection query"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/ArchitectureElementsQueryUtil/#Utils.ElementFilter.ArchitectureElementsQueryUtil.ArchitectureElementsQueryUtil.create_arch_general_opening_elements_query"
+    },
+    {
+      "name": "create_vertical_arch_opening_query",
+      "signature": "create_vertical_arch_opening_query() -\u003E SelectionQuery",
+      "summary": "create a query for the vertical architecture opening elements",
+      "remarks": "create a query for the vertical architecture opening elements",
+      "params": [],
+      "returns": {
+        "type": "SelectionQuery",
+        "doc": "selection query"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/ArchitectureElementsQueryUtil/#Utils.ElementFilter.ArchitectureElementsQueryUtil.ArchitectureElementsQueryUtil.create_vertical_arch_opening_query"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

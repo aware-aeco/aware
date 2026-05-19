@@ -1,0 +1,57 @@
+{
+  "name": "OpeningSymbolsProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the opening symbols properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/OpeningSymbolsProperties/",
+  "constructors": [
+    {
+      "name": "OpeningSymbolsProperties",
+      "signature": "OpeningSymbolsProperties(element: OpeningSymbolsProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "OpeningSymbolsProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/OpeningSymbolsProperties/#NemAll_Python_ArchElements.OpeningSymbolsProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "OpeningRefPntIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the opening reference point index",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/OpeningSymbolsProperties/#NemAll_Python_ArchElements.OpeningSymbolsProperties.OpeningRefPntIndex"
+    },
+    {
+      "name": "OpeningTierIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the opening tier index",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/OpeningSymbolsProperties/#NemAll_Python_ArchElements.OpeningSymbolsProperties.OpeningTierIndex"
+    },
+    {
+      "name": "SymbolNames",
+      "type": "list[str]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the symbol names",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/OpeningSymbolsProperties/#NemAll_Python_ArchElements.OpeningSymbolsProperties.SymbolNames"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

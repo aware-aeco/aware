@@ -1,0 +1,46 @@
+{
+  "name": "TaskFilterExpressions.CustomBoolean",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomBoolean class represents a custom Boolean filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/357280a0-6d81-b861-9ff5-87e8a9b584c1",
+  "constructors": [
+    {
+      "name": "TaskFilterExpressions.CustomBoolean",
+      "signature": "public CustomBoolean(string UserAttribute)",
+      "summary": "Initializes a new instance of the CustomBoolean class.",
+      "params": [
+        {
+          "name": "UserAttribute",
+          "type": "System.String",
+          "doc": "The user attribute to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88b9bb1c-0b57-4613-68c3-bfbad7bb682b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

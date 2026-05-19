@@ -1,0 +1,44 @@
+{
+  "name": "SnoopElementGeometryFilter",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.SnoopElementGeometryFilter.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/",
+  "constructors": [
+    {
+      "name": "SnoopElementGeometryFilter",
+      "signature": "SnoopElementGeometryFilter() | SnoopElementGeometryFilter( bFindBaseGeometry: bool, bFindAreaGeometry: bool, bPerpendicularOnElement: bool, bFindNonPassiveOnly: bool, bSplitAreaGeometries: bool, bIdentifyEmbeddedElement: bool, bFindCompleteFootprint: bool, splitElement3D: eSplitElement3D, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/#NemAll_Python_IFW_Input.SnoopElementGeometryFilter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddElements",
+      "signature": "AddElements(elementNames: str)",
+      "summary": "Add elements to the filter",
+      "remarks": "Add elements to the filter",
+      "params": [
+        {
+          "name": "elementNames",
+          "type": "str",
+          "doc": "Element names, separated by ,",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/#NemAll_Python_IFW_Input.SnoopElementGeometryFilter.AddElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

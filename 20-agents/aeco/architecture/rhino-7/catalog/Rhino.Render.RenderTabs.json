@@ -1,0 +1,141 @@
+{
+  "name": "RenderTabs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderTabs\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderTabs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FromRenderSessionId",
+      "signature": "public static Object FromRenderSessionId(PlugIn plugIn, Type tabType, Guid renderSessionId)",
+      "summary": "Get the instance of a render tab associated with a specific render session, this is useful when it is necessary to update a control from a RenderPipeline",
+      "params": [
+        {
+          "name": "plugIn",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The plug-in that registered the custom user interface",
+          "optional": false
+        },
+        {
+          "name": "tabType",
+          "type": "System.Type",
+          "doc": "The type of tab to return",
+          "optional": false
+        },
+        {
+          "name": "renderSessionId",
+          "type": "System.Guid",
+          "doc": "The RenderSessionId of a specific render session.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Returns the custom tab object if found; otherwise null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTabs_FromRenderSessionId.htm"
+    },
+    {
+      "name": "RegisterTab(PlugIn, Type, String, Icon)",
+      "signature": "[ObsoleteAttribute(\u0022Use RegisterTabEx(PlugIn plugin, Type tabType, Guid renderEngineId, string caption, Icon icon)\u0022)] public void RegisterTab(PlugIn plugin, Type tabType, string caption, Icon icon)",
+      "summary": "Register custom render user interface with Rhino. This should only be done in RegisterRenderTabs(RenderTabs). Panels registered after RegisterRenderTabs(RenderTabs) is called will be ignored. If the class includes a public method \u0022void DoHelp()\u0022 the method will get called when F1 is pressed and the custom tab is active.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The plug-in providing the custom user interface",
+          "optional": false
+        },
+        {
+          "name": "tabType",
+          "type": "System.Type",
+          "doc": "The type of object to be created and added to the render container.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "The caption for the custom user interface.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Icon",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTabs_RegisterTab_1.htm"
+    },
+    {
+      "name": "RegisterTab(PlugIn, Type, Guid, String, Icon)",
+      "signature": "public void RegisterTab(PlugIn plugin, Type tabType, Guid renderEngineId, string caption, Icon icon)",
+      "summary": "",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTabs.RegisterTab(Rhino.PlugIns.PlugIn,System.Type,System.Guid,System.String,System.Drawing.Icon)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tabType",
+          "type": "System.Type",
+          "doc": "[Missing \u003Cparam name=\u0022tabType\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTabs.RegisterTab(Rhino.PlugIns.PlugIn,System.Type,System.Guid,System.String,System.Drawing.Icon)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "renderEngineId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022renderEngineId\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTabs.RegisterTab(Rhino.PlugIns.PlugIn,System.Type,System.Guid,System.String,System.Drawing.Icon)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022caption\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTabs.RegisterTab(Rhino.PlugIns.PlugIn,System.Type,System.Guid,System.String,System.Drawing.Icon)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Icon",
+          "doc": "[Missing \u003Cparam name=\u0022icon\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTabs.RegisterTab(Rhino.PlugIns.PlugIn,System.Type,System.Guid,System.String,System.Drawing.Icon)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTabs_RegisterTab.htm"
+    },
+    {
+      "name": "SessionIdFromTab",
+      "signature": "public static Guid SessionIdFromTab(Object tab)",
+      "summary": "Get the session Id that created the specified tab object.",
+      "params": [
+        {
+          "name": "tab",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022tab\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderTabs.SessionIdFromTab(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderTabs.SessionIdFromTab(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderTabs_SessionIdFromTab.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

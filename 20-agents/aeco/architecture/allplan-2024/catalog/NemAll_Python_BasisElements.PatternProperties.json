@@ -1,0 +1,175 @@
+{
+  "name": "PatternProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the pattern properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/",
+  "constructors": [
+    {
+      "name": "PatternProperties",
+      "signature": "PatternProperties() | PatternProperties(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetBackgroundColorBGR",
+      "signature": "SetBackgroundColorBGR(value)",
+      "summary": "Set the background color",
+      "remarks": "Set the background color",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Color value as BGR",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.SetBackgroundColorBGR"
+    },
+    {
+      "name": "SetBackgroundColorIRGB",
+      "signature": "SetBackgroundColorIRGB(value)",
+      "summary": "Set the background color",
+      "remarks": "Set the background color",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Color value as IRGB",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.SetBackgroundColorIRGB"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "PatternProperties",
+          "doc": "PatternProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundColor",
+      "type": "ARGB",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the background color",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.BackgroundColor"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the scale dependent state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.IsScaleDependent"
+    },
+    {
+      "name": "PatternID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the pattern ID",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.PatternID"
+    },
+    {
+      "name": "PlacementType",
+      "type": "PlacementType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the placement type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.PlacementType"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "NemAll_Python_Geometry.Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.ReferencePoint"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "NemAll_Python_Geometry.Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation angle",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.RotationAngle"
+    },
+    {
+      "name": "UseBackgroundColor",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the use background color state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.UseBackgroundColor"
+    },
+    {
+      "name": "UseReferencePoint",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the use reference point state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.UseReferencePoint"
+    },
+    {
+      "name": "XScalingFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the scaling factor in x direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.XScalingFactor"
+    },
+    {
+      "name": "YScalingFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the scaling factor in y direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.YScalingFactor"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

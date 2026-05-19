@@ -1,0 +1,182 @@
+{
+  "name": "Symbol",
+  "namespace": "ProtoCore.Namespace",
+  "kind": "class",
+  "summary": "Symbol class : It represents a symbol with namespace.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs",
+  "constructors": [
+    {
+      "name": "Symbol(string)",
+      "signature": "void Symbol(string fullname)",
+      "summary": "Constructs a FullyQualifiedSymbolName with the given fullname.",
+      "params": [
+        {
+          "name": "fullname",
+          "type": "string",
+          "doc": "fullname for the symbol including namespaces.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "Checks equality based on FullName",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Returns hascode based on FullName",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "GetShortestUniqueNames(System.Collections.Generic.IEnumerable\u003CProtoCore.Namespace.Symbol\u003E)",
+      "signature": "System.Collections.Generic.Dictionary\u003CProtoCore.Namespace.Symbol, string\u003E GetShortestUniqueNames(System.Collections.Generic.IEnumerable\u003CProtoCore.Namespace.Symbol\u003E symbolList)",
+      "summary": "Given a list of conflicting namespaces, finds the shortest partial name for a namespace that can be resolved uniquely. For example, given {\u0022A.B.C.D.E\u0022, \u0022X.Y.A.B.E.C.E\u0022, \u0022X.Y.A.C.B.E\u0022}, all with the same class E, their shortest unique names would be: {\u0022D.E\u0022, \u0022E.E\u0022, \u0022C.B.E\u0022}",
+      "params": [
+        {
+          "name": "symbolList",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Namespace.Symbol\u003E",
+          "doc": "Input list of conflicting namespaces (having same class name)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003CProtoCore.Namespace.Symbol, string\u003E",
+        "doc": "Map of Symbol vs. short name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "Matches(string)",
+      "signature": "bool Matches(string partialname)",
+      "summary": "Checks if all of the namespace prefixes specified in the given partially qualified name appear in this namespace in the same order. For Example: A full namespace \u0022Com.Autodesk.Designscript.ProtoGeometry.Point\u0022 will match all of the following partial namespaces Com.Autodesk.Designscript.ProtoGeometry.Point Point DesignScript.Point ProtoGeometry.Point Autodesk.DesignScript.Point whereas it won\u0027t match Com.DesignScript.Autodesk.Point",
+      "params": [
+        {
+          "name": "partialname",
+          "type": "string",
+          "doc": "Partially qualified symbol name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "returns true if partial name matches this"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "op_Equality(ProtoCore.Namespace.Symbol, ProtoCore.Namespace.Symbol)",
+      "signature": "bool op_Equality(ProtoCore.Namespace.Symbol thisSymbol, ProtoCore.Namespace.Symbol otherSymbol)",
+      "summary": "Equality operator overload to have same equality behaviour as object.Equals() override",
+      "params": [
+        {
+          "name": "thisSymbol",
+          "type": "ProtoCore.Namespace.Symbol",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "otherSymbol",
+          "type": "ProtoCore.Namespace.Symbol",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "op_Inequality(ProtoCore.Namespace.Symbol, ProtoCore.Namespace.Symbol)",
+      "signature": "bool op_Inequality(ProtoCore.Namespace.Symbol thisSymbol, ProtoCore.Namespace.Symbol otherSymbol)",
+      "summary": "Inequality operator overload is needed for every equality operator overload",
+      "params": [
+        {
+          "name": "thisSymbol",
+          "type": "ProtoCore.Namespace.Symbol",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "otherSymbol",
+          "type": "ProtoCore.Namespace.Symbol",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns fully qualified symbol name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns symbol id",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns symbol name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

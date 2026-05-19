@@ -1,0 +1,24 @@
+{
+  "name": "WeldSeamPositionEnum",
+  "namespace": "Tekla.Structures.Model.Welding",
+  "kind": "enum",
+  "summary": "Weld seam position types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/749cb288-e874-f1db-8388-8148151f13c9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SEAM_ABOVE",
+      "value": 1,
+      "summary": "Seam above."
+    },
+    {
+      "name": "SEAM_BELOW",
+      "value": 2,
+      "summary": "Seam below."
+    }
+  ]
+}

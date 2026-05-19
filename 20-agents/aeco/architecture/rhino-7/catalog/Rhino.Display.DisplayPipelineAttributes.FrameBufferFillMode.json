@@ -1,0 +1,42 @@
+{
+  "name": "DisplayPipelineAttributes.FrameBufferFillMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.FrameBufferFillMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayPipelineAttributes_FrameBufferFillMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DefaultColor",
+      "value": 1
+    },
+    {
+      "name": "SolidColor",
+      "value": 2
+    },
+    {
+      "name": "Gradient2Color",
+      "value": 3
+    },
+    {
+      "name": "Gradient4Color",
+      "value": 4
+    },
+    {
+      "name": "Bitmap",
+      "value": 5
+    },
+    {
+      "name": "Renderer",
+      "value": 6
+    },
+    {
+      "name": "Transparent",
+      "value": 7
+    }
+  ]
+}

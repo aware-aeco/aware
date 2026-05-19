@@ -1,0 +1,350 @@
+{
+  "name": "AppearanceSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "snapshot of the values in AppearanceSettings",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_AppearanceSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CommandPromptBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the command prompt background color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_CommandPromptBackgroundColor.htm"
+    },
+    {
+      "name": "CommandPromptFontName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the font used in the command prompt",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_CommandPromptFontName.htm"
+    },
+    {
+      "name": "CommandPromptFontSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Size of the font used in the command prompt (in points)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_CommandPromptFontSize.htm"
+    },
+    {
+      "name": "CommandPromptHypertextColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the command prompt hypertext color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_CommandPromptHypertextColor.htm"
+    },
+    {
+      "name": "CommandPromptTextColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the command prompt text color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_CommandPromptTextColor.htm"
+    },
+    {
+      "name": "CrosshairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crosshair color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_CrosshairColor.htm"
+    },
+    {
+      "name": "CurrentLayerBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color used by the layer manager dialog as the background color for the current layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_CurrentLayerBackgroundColor.htm"
+    },
+    {
+      "name": "DefaultFontFaceName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the default font face.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_DefaultFontFaceName.htm"
+    },
+    {
+      "name": "DefaultLayerColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the default layer color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_DefaultLayerColor.htm"
+    },
+    {
+      "name": "DefaultObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the default object color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_DefaultObjectColor.htm"
+    },
+    {
+      "name": "DirectionArrowIconHeadSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Set the arrow icon head size.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_DirectionArrowIconHeadSize.htm"
+    },
+    {
+      "name": "DirectionArrowIconShaftSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Set the arrow icon shaft size.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_DirectionArrowIconShaftSize.htm"
+    },
+    {
+      "name": "EchoCommandsToHistoryWindow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if command names are written to the history window.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_EchoCommandsToHistoryWindow.htm"
+    },
+    {
+      "name": "EchoPromptsToHistoryWindow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if prompt messages are written to the history window.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_EchoPromptsToHistoryWindow.htm"
+    },
+    {
+      "name": "EditCandidateColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of objects that are eligible to be edited.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_EditCandidateColor.htm"
+    },
+    {
+      "name": "FeedbackColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the feedback color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_FeedbackColor.htm"
+    },
+    {
+      "name": "FrameBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the frame background color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_FrameBackgroundColor.htm"
+    },
+    {
+      "name": "GridThickLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the thick line in the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_GridThickLineColor.htm"
+    },
+    {
+      "name": "GridThinLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the thin line in the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_GridThinLineColor.htm"
+    },
+    {
+      "name": "GridXAxisLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of X axis line in the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_GridXAxisLineColor.htm"
+    },
+    {
+      "name": "GridYAxisLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of Y axis line in the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_GridYAxisLineColor.htm"
+    },
+    {
+      "name": "GridZAxisLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of Z axis line in the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_GridZAxisLineColor.htm"
+    },
+    {
+      "name": "LockedObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color used to draw locked objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_LockedObjectColor.htm"
+    },
+    {
+      "name": "MenuVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Get/Set menu visibility",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_MenuVisible.htm"
+    },
+    {
+      "name": "PageviewPaperColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "CRhinoPageView paper background. A rectangle is drawn into the background of page views to represent the printed area. The alpha portion of the color is used to draw the paper blended into the background",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_PageviewPaperColor.htm"
+    },
+    {
+      "name": "SelectedObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "The color used to draw selected objects. The default is yellow, but this can be customized by the user.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_SelectedObjectColor.htm"
+    },
+    {
+      "name": "SelectionWindowCrossingFillColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color used to fill a crossing selection window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_SelectionWindowCrossingFillColor.htm"
+    },
+    {
+      "name": "SelectionWindowCrossingStrokeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color used to draw the stroke of a crossing selection window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_SelectionWindowCrossingStrokeColor.htm"
+    },
+    {
+      "name": "SelectionWindowFillColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color used to fill a selection window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_SelectionWindowFillColor.htm"
+    },
+    {
+      "name": "SelectionWindowStrokeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color used to draw the stroke of a selection window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_SelectionWindowStrokeColor.htm"
+    },
+    {
+      "name": "ShowCrosshairs",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if cross hairs are visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ShowCrosshairs.htm"
+    },
+    {
+      "name": "ShowFullPathInTitleBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if the full path of the document is shown in the Rhino title bar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ShowFullPathInTitleBar.htm"
+    },
+    {
+      "name": "ShowLayoutDropShadow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Display the drop shadow of layouts",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ShowLayoutDropShadow.htm"
+    },
+    {
+      "name": "ShowStatusBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Get/Set status bar visibility",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ShowStatusBar.htm"
+    },
+    {
+      "name": "ShowTitleBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows or hides title bar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ShowTitleBar.htm"
+    },
+    {
+      "name": "ShowViewportTitles",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Get/Set viewport title visibility",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ShowViewportTitles.htm"
+    },
+    {
+      "name": "TrackingColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tracking color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_TrackingColor.htm"
+    },
+    {
+      "name": "ViewportBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the viewport background color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ViewportBackgroundColor.htm"
+    },
+    {
+      "name": "ViewportTabsVisibleAtStart",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Display viewport tabs at start",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_ViewportTabsVisibleAtStart.htm"
+    },
+    {
+      "name": "WorldCoordIconXAxisColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the world X axis of the world coordinates icon, appearing usually bottom left in viewports.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_WorldCoordIconXAxisColor.htm"
+    },
+    {
+      "name": "WorldCoordIconYAxisColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the world Y axis of the world coordinate icon, appearing usually bottom left in viewports.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_WorldCoordIconYAxisColor.htm"
+    },
+    {
+      "name": "WorldCoordIconZAxisColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the world Z axis of the world coordinate icon, appearing usually bottom left in viewports.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettingsState_WorldCoordIconZAxisColor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

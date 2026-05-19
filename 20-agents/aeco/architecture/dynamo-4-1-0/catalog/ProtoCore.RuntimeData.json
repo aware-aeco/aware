@@ -1,0 +1,145 @@
+{
+  "name": "RuntimeData",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "The RuntimeData is an object that contains properties that is consumed only by the runtime VM It is instantiated prior to execution and is populated with information gathered from the CompileCore The runtime VM is designed to run independently from the front-end (UI, compiler) and the only 2 properties it needs are the RuntimeData and the DSExecutable. The RuntimeData will also contain properties that are populated at runtime and consumed at runtime.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs",
+  "constructors": [
+    {
+      "name": "RuntimeData()",
+      "signature": "void RuntimeData()",
+      "summary": "RuntimeData.RuntimeData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCallSite(int, string, ProtoCore.DSASM.Executable, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.CallSite GetCallSite(int classScope, string methodName, ProtoCore.DSASM.Executable executable, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Retrieves an existing instance of a callsite associated with a UID It creates a new callsite if non was found",
+      "params": [
+        {
+          "name": "classScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "executable",
+          "type": "ProtoCore.DSASM.Executable",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.CallSite",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs"
+    },
+    {
+      "name": "GetCallsitesForNodes(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, ProtoCore.DSASM.Executable)",
+      "signature": "System.Collections.Generic.Dictionary\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite\u003E\u003E GetCallsitesForNodes(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E nodeGuids, ProtoCore.DSASM.Executable executable)",
+      "summary": "This API is used by host integrations such as for Revit and C3D. It is used to get the trace data list for all nodes binding to elements in the host.",
+      "params": [
+        {
+          "name": "nodeGuids",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "executable",
+          "type": "ProtoCore.DSASM.Executable",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs"
+    },
+    {
+      "name": "GetTraceDataForNodes(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, ProtoCore.DSASM.Executable)",
+      "signature": "System.Collections.Generic.IDictionary\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E GetTraceDataForNodes(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E nodeGuids, ProtoCore.DSASM.Executable executable)",
+      "summary": "Call this method to obtain serialized trace data for a list of nodes.",
+      "params": [
+        {
+          "name": "nodeGuids",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "A list of System.Guid of nodes whose serialized trace data is to be retrieved. This parameter cannot be null.",
+          "optional": false
+        },
+        {
+          "name": "executable",
+          "type": "ProtoCore.DSASM.Executable",
+          "doc": "A container of callsite data for the nodes in the graph.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E",
+        "doc": "Returns a dictionary that maps each node Guid to its corresponding list of serialized callsite trace data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs"
+    },
+    {
+      "name": "SetTraceDataForNodes(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E)",
+      "signature": "void SetTraceDataForNodes(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E nodeDataPairs)",
+      "summary": "Call this method to set the list of serialized trace data, possibly loaded from an external storage.",
+      "params": [
+        {
+          "name": "nodeDataPairs",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E",
+          "doc": "A Dictionary that matches a node Guid to its corresponding list of serialized callsite trace data.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CallSiteToNodeMap",
+      "type": "System.Collections.Generic.Dictionary\u003CSystem.Guid, System.Guid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Map from a callsite\u0027s guid to a graph UI node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs"
+    },
+    {
+      "name": "CallsiteCache",
+      "type": "System.Collections.Generic.IDictionary\u003Cstring, ProtoCore.CallSite\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Map from callsite id to callsite.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeData.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

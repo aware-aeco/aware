@@ -1,0 +1,25 @@
+{
+  "name": "BaseLineWithArrowAtEndPointPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The BaseLineWithArrowAtEndPointPlacingType class defines a placing type that places the object using the base line placing. The line is drawn and will have an arrow at the end point.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5a0a60b1-8b68-6762-6183-f1a3e130a7e2",
+  "constructors": [
+    {
+      "name": "BaseLineWithArrowAtEndPointPlacingType",
+      "signature": "public BaseLineWithArrowAtEndPointPlacingType()",
+      "summary": "Creates a new base line with arrow at end point placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/19860a1c-2d2a-a42c-b95a-3b4d538a4d8e"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

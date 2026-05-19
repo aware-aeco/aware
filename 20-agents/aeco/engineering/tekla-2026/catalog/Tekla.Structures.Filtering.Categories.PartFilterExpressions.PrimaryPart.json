@@ -1,0 +1,39 @@
+{
+  "name": "PartFilterExpressions.PrimaryPart",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The PrimaryPart class represents the primary part filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b35cd99a-b708-9008-3bd3-514c508f1ab9",
+  "constructors": [
+    {
+      "name": "PartFilterExpressions.PrimaryPart",
+      "signature": "public PrimaryPart()",
+      "summary": "Initializes a new instance of the PrimaryPart class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/891d13e8-9429-0b4a-2ec6-d176c4b33413"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

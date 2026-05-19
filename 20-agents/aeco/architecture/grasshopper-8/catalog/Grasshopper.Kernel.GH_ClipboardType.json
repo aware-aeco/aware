@@ -1,0 +1,29 @@
+{
+  "name": "GH_ClipboardType",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible clipboards for GH_DocumentIO operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ClipboardType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "System",
+      "value": 0,
+      "summary": "Identifies the Operating System clipboard shared amongst all applications."
+    },
+    {
+      "name": "Local",
+      "value": 1,
+      "summary": "Identifies the DocumentIO clipboard which is only accessible from within a single instance of GH_DocumentIO."
+    },
+    {
+      "name": "Global",
+      "value": 2,
+      "summary": "Identifies the DocumentIO clipboard which is accessible from all instances of GH_DocumentIO in this AppDomain."
+    }
+  ]
+}

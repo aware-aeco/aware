@@ -1,0 +1,31 @@
+{
+  "name": "ImageItem",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ImageItem class defines the images that will be contained in the image combo box.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/dfcffcee-b109-8148-dc82-1b9292dd4f92",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the image name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ede55967-5f65-1e8b-7e40-6524c0e1adca"
+    },
+    {
+      "name": "Picture",
+      "type": "Image",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the image.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b312b8e0-83d4-6d51-16f8-e5b865568e67"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

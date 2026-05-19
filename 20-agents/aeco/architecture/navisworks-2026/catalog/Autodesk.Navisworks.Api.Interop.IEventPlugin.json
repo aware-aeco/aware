@@ -1,0 +1,57 @@
+{
+  "name": "IEventPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "IEventPlugin interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [
+    "Autodesk.Navisworks.Api.Interop.IPlugin"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.IEventPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AppInitialised",
+      "signature": "void AppInitialised()",
+      "summary": "AppInitialised method of IEventPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IEventPlugin.AppInitialised"
+    },
+    {
+      "name": "AppTerminating",
+      "signature": "void AppTerminating()",
+      "summary": "AppTerminating method of IEventPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IEventPlugin.AppTerminating"
+    },
+    {
+      "name": "Initialise",
+      "signature": "void Initialise(string locale, string prefix)",
+      "summary": "Initialise method of IEventPlugin.",
+      "params": [
+        {
+          "name": "locale",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "prefix",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IEventPlugin.Initialise%28System.String%2CSystem.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

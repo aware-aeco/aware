@@ -1,0 +1,55 @@
+{
+  "name": "DrawForegroundEventArgs",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DrawForegroundEventArgs\u0022]",
+  "base": "DrawEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DrawForegroundEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Display",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_Display.htm"
+    },
+    {
+      "name": "DrawWorldAxes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawForegroundEventArgs_DrawWorldAxes.htm"
+    },
+    {
+      "name": "RhinoDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_RhinoDoc.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_Viewport.htm"
+    },
+    {
+      "name": "WorldAxesDrawn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawForegroundEventArgs_WorldAxesDrawn.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

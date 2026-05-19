@@ -1,0 +1,41 @@
+{
+  "name": "Dimensions3D",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Dimensions in 3D.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Dimensions3D",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "x",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "X dimension.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Dimensions3D"
+    },
+    {
+      "name": "y",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Y dimension.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Dimensions3D"
+    },
+    {
+      "name": "z",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Z dimension.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Dimensions3D"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

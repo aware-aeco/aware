@@ -1,0 +1,23 @@
+{
+  "name": "ExpressionDefaultValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Default value of the property in case of an expression based property value.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ExpressionDefaultValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "expressions",
+      "type": "string[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060expressions\u0060 of type \u0060string[]\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ExpressionDefaultValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

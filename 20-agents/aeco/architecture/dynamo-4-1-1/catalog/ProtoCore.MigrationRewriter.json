@@ -1,0 +1,85 @@
+{
+  "name": "MigrationRewriter",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type MigrationRewriter",
+  "base": "ProtoCore.SyntaxAnalysis.AstReplacer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MigrateMethodNames(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E, System.Collections.Generic.IDictionary\u003Cstring, string\u003E, ProtoCore.MigrationRewriter.LogWarningHandler)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E MigrateMethodNames(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E astNodes, System.Collections.Generic.IDictionary\u003Cstring, string\u003E priorNames, ProtoCore.MigrationRewriter.LogWarningHandler logWarningHandler)",
+      "summary": "Migrates old method names to new names based on priorNameHints from LibraryServices",
+      "params": [
+        {
+          "name": "astNodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "priorNames",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "doc": "dictionary of old names vs. new names for node migration",
+          "optional": false
+        },
+        {
+          "name": "logWarningHandler",
+          "type": "ProtoCore.MigrationRewriter.LogWarningHandler",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": "migrated AST nodes after method renaming"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs"
+    },
+    {
+      "name": "VisitFunctionCallNode(ProtoCore.AST.AssociativeAST.FunctionCallNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode VisitFunctionCallNode(ProtoCore.AST.AssociativeAST.FunctionCallNode node)",
+      "summary": "MigrationRewriter.VisitFunctionCallNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionCallNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs"
+    },
+    {
+      "name": "VisitIdentifierListNode(ProtoCore.AST.AssociativeAST.IdentifierListNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode VisitIdentifierListNode(ProtoCore.AST.AssociativeAST.IdentifierListNode node)",
+      "summary": "MigrationRewriter.VisitIdentifierListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

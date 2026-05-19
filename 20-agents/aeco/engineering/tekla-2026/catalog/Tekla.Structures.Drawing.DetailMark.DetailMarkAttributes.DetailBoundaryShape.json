@@ -1,0 +1,29 @@
+{
+  "name": "DetailMark.DetailMarkAttributes.DetailBoundaryShape",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The boundary shapes of the detail mark.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/980abf7f-e806-2baf-41e7-ed51ce84ad3b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "No shape."
+    },
+    {
+      "name": "Circular",
+      "value": 2,
+      "summary": "The circular shape."
+    },
+    {
+      "name": "Rectangular",
+      "value": 3,
+      "summary": "The rectangular shape."
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "name": "ModelAidSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Represents a snapshot of ModelAidSettings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_ModelAidSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AltPlusArrow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true mean Alt\u002Barrow is used for nudging.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_AltPlusArrow.htm"
+    },
+    {
+      "name": "ControlPolygonDisplayDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the control polygon display density.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_ControlPolygonDisplayDensity.htm"
+    },
+    {
+      "name": "CtrlNudgeKeyStep",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Ctrl-key based nudge step amount.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_CtrlNudgeKeyStep.htm"
+    },
+    {
+      "name": "DisplayControlPolygon",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s display control polygon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_DisplayControlPolygon.htm"
+    },
+    {
+      "name": "ExtendToApparentIntersection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s extend to apparent intersections.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_ExtendToApparentIntersection.htm"
+    },
+    {
+      "name": "ExtendTrimLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s extend trim lines.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_ExtendTrimLines.htm"
+    },
+    {
+      "name": "GridSnap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s grid snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_GridSnap.htm"
+    },
+    {
+      "name": "HighlightControlPolygon",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s highlight dialog modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_HighlightControlPolygon.htm"
+    },
+    {
+      "name": "MousePickboxRadius",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of the mouse pick box in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_MousePickboxRadius.htm"
+    },
+    {
+      "name": "NudgeKeyStep",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the nudge step amount.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_NudgeKeyStep.htm"
+    },
+    {
+      "name": "NudgeMode",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "0 = world, 1 = cplane, 2 = view, 3 = UVN, -1 = not set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_NudgeMode.htm"
+    },
+    {
+      "name": "Ortho",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s ortho modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_Ortho.htm"
+    },
+    {
+      "name": "OrthoAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the base orthogonal angle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_OrthoAngle.htm"
+    },
+    {
+      "name": "Osnap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s object snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_Osnap.htm"
+    },
+    {
+      "name": "OsnapCursorMode",
+      "type": "CursorMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the OSnap cursor mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_OsnapCursorMode.htm"
+    },
+    {
+      "name": "OsnapModes",
+      "type": "OsnapModes",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets Rhino\u0027s current object snap mode. The mode is a bitwise value based on the OsnapModes enumeration.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_OsnapModes.htm"
+    },
+    {
+      "name": "OsnapPickboxRadius",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disables Rhino\u0027s planar modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_OsnapPickboxRadius.htm"
+    },
+    {
+      "name": "Planar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s Planar modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_Planar.htm"
+    },
+    {
+      "name": "PointDisplay",
+      "type": "PointDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point display mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_PointDisplay.htm"
+    },
+    {
+      "name": "ProjectSnapToCPlane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s Project modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_ProjectSnapToCPlane.htm"
+    },
+    {
+      "name": "ShiftNudgeKeyStep",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Shift-key based nudge step amount.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_ShiftNudgeKeyStep.htm"
+    },
+    {
+      "name": "SnapToLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the locked state of the snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_SnapToLocked.htm"
+    },
+    {
+      "name": "UniversalConstructionPlaneMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the locked state of the snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_UniversalConstructionPlaneMode.htm"
+    },
+    {
+      "name": "UseHorizontalDialog",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s use horizontal dialog modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ModelAidSettingsState_UseHorizontalDialog.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

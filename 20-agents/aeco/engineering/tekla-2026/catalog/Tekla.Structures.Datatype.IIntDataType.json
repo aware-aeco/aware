@@ -1,0 +1,24 @@
+{
+  "name": "IIntDataType",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "interface",
+  "summary": "The IIntDataType interface is an interface for the Tekla.Structures.Datatype.* types whose value is an integer.",
+  "interfaces": [
+    "IDataType"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/bc1bc7c1-9f61-cd7d-99f7-c672f396f53b",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The integer value of the field.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/11ca7fd9-e655-5d56-dfad-aebc3182d419"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

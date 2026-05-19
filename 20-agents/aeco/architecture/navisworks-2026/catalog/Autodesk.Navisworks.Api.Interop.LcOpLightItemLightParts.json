@@ -1,0 +1,26 @@
+{
+  "name": "LcOpLightItemLightParts",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLightItemLightParts enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItemLightParts",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLIGHT_PART_PROPERTIES",
+      "value": 256
+    },
+    {
+      "name": "eLIGHT_PART_POSTION",
+      "value": 512
+    },
+    {
+      "name": "eLIGHT_PART_TARGET",
+      "value": 1024
+    }
+  ]
+}

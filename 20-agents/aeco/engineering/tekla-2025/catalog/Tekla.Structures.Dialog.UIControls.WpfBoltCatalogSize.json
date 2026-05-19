@@ -1,0 +1,25 @@
+{
+  "name": "WpfBoltCatalogSize",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The WPFBoltCatalogSize class represents a control to select the bolt size using the bolt catalog. Bolt catalog controls always need to be in pairs, meaning in every dialog there has to be a WpfBoltCatalogStandard and a WpfBoltCatalogSize control.",
+  "base": "System.Windows.Controls.ComboBox",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/574e3bb2-2c07-df98-6479-7cb07dbaf7cb",
+  "constructors": [
+    {
+      "name": "WpfBoltCatalogSize",
+      "signature": "public WpfBoltCatalogSize()",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98e5f1b7-20f7-51fa-da7e-e5f6f81f76f9"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

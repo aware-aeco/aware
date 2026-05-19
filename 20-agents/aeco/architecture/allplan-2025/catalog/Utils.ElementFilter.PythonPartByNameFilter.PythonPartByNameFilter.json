@@ -1,0 +1,55 @@
+{
+  "name": "PythonPartByNameFilter",
+  "namespace": "Utils.ElementFilter.PythonPartByNameFilter",
+  "kind": "class",
+  "summary": "implementation of the PythonPart by name filter",
+  "base": "BaseFilterObject",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/PythonPartByNameFilter/",
+  "constructors": [
+    {
+      "name": "PythonPartByNameFilter",
+      "signature": "PythonPartByNameFilter(ref_pyp_ele: BaseElementAdapter)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "ref_pyp_ele",
+          "type": "BaseElementAdapter",
+          "doc": "reference PythonPart",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/PythonPartByNameFilter/#Utils.ElementFilter.PythonPartByNameFilter.PythonPartByNameFilter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__(element: BaseElementAdapter) -\u003E bool",
+      "summary": "execute the filtering",
+      "remarks": "execute the filtering",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "element to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "element fulfills the filter: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/PythonPartByNameFilter/#Utils.ElementFilter.PythonPartByNameFilter.PythonPartByNameFilter.__call__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

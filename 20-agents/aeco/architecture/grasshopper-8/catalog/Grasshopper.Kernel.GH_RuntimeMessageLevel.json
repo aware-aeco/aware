@@ -1,0 +1,34 @@
+{
+  "name": "GH_RuntimeMessageLevel",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Indicates the severity of a runtime message.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_RuntimeMessageLevel.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Blank",
+      "value": 0,
+      "summary": "No warnings or errors were recorded during solver-time processes"
+    },
+    {
+      "name": "Remark",
+      "value": 255,
+      "summary": "One of more messages (but no warnings and no errors) were recorded during solver-time processes."
+    },
+    {
+      "name": "Warning",
+      "value": 10,
+      "summary": "One or more warnings (but no errors) were recorded during solver-time processes"
+    },
+    {
+      "name": "Error",
+      "value": 20,
+      "summary": "One or more errors (and possibly any number of warnings) were recorded during solver-time processes."
+    }
+  ]
+}

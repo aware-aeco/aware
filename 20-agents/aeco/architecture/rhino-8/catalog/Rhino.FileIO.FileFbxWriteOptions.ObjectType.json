@@ -1,0 +1,22 @@
+{
+  "name": "FileFbxWriteOptions.ObjectType",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileFbxWriteOptions.ObjectType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileFbxWriteOptions_ObjectType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Nurbs",
+      "value": 0
+    },
+    {
+      "name": "Mesh",
+      "value": 1
+    }
+  ]
+}

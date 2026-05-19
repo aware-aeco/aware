@@ -1,0 +1,397 @@
+{
+  "name": "ModelEarthAnchorPoint",
+  "namespace": "Grasshopper.Rhinoceros.Model",
+  "kind": "class",
+  "summary": "Represents a Rhino Earth anchor point. Wraps the functionality of the EarthAnchorPoint type.",
+  "base": "ModelContent",
+  "interfaces": [
+    "IGH_BakeAwareData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint.htm",
+  "constructors": [
+    {
+      "name": "ModelEarthAnchorPoint()",
+      "signature": "public ModelEarthAnchorPoint()",
+      "summary": "Initializes a new instance of the ModelEarthAnchorPoint class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint__ctor.htm"
+    },
+    {
+      "name": "ModelEarthAnchorPoint(ModelEarthAnchorPoint.Attributes)",
+      "signature": "public ModelEarthAnchorPoint(ModelEarthAnchorPoint.Attributes attributes)",
+      "summary": "Initializes a new instance of the ModelEarthAnchorPoint class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Model.ModelEarthAnchorPoint.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint__ctor_1.htm"
+    },
+    {
+      "name": "ModelEarthAnchorPoint(EarthAnchorPoint)",
+      "signature": "public ModelEarthAnchorPoint(EarthAnchorPoint anchorPoint)",
+      "summary": "Initializes a new instance of the ModelEarthAnchorPoint class",
+      "params": [
+        {
+          "name": "anchorPoint",
+          "type": "EarthAnchorPoint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static ModelEarthAnchorPoint Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelEarthAnchorPoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Overrides ModelContent.CastTo\u003CT\u003E(T).)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_CastTo__1.htm"
+    },
+    {
+      "name": "Equals(ModelContent)",
+      "signature": "public bool Equals(ModelContent other)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelContent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Equals.htm"
+    },
+    {
+      "name": "Equals(ModelData)",
+      "signature": "public bool Equals(ModelData other)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_GetHashCode.htm"
+    },
+    {
+      "name": "ToAttributes",
+      "signature": "public ModelEarthAnchorPoint.Attributes ToAttributes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ModelEarthAnchorPoint.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_ToAttributes.htm"
+    },
+    {
+      "name": "ToDetails",
+      "signature": "public string ToDetails()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_ToDetails.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public override string TooltipString()",
+      "summary": "(Overrides ModelContent.TooltipString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ModelContent.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelEarthAnchorPoint.Attributes to ModelEarthAnchorPoint)",
+      "signature": "public static implicit operator ModelEarthAnchorPoint (ModelEarthAnchorPoint.Attributes attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Model.ModelEarthAnchorPoint.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelEarthAnchorPoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(EarthAnchorPoint to ModelEarthAnchorPoint)",
+      "signature": "public static implicit operator ModelEarthAnchorPoint (EarthAnchorPoint anchorPoint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "anchorPoint",
+          "type": "EarthAnchorPoint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelEarthAnchorPoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_op_Implicit_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Elevation",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a point elevation on earth, in meters.",
+      "remarks": "In meters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_Elevation.htm"
+    },
+    {
+      "name": "ElevationCoordinateSystem",
+      "type": "Nullable\u003CEarthCoordinateSystem\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value indicating the zero level convention relating to a location on Earth",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_ElevationCoordinateSystem.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Nullable\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Id.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_IsValid.htm"
+    },
+    {
+      "name": "Latitude",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a point latitude on earth, in degrees. [-90, \u002B90]",
+      "remarks": "In degrees.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_Latitude.htm"
+    },
+    {
+      "name": "Longitude",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a point longitude on earth, in degrees. [-180, \u002B180]",
+      "remarks": "In degrees.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_Longitude.htm"
+    },
+    {
+      "name": "ModelCompass",
+      "type": "Nullable\u003CPlane\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the corresponding compass plane in model coordinates",
+      "remarks": "X axis points East, Y axis points North and Z axis points Up",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Model_ModelEarthAnchorPoint_ModelCompass.htm"
+    },
+    {
+      "name": "Name",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Name.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Notes.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Parent.htm"
+    },
+    {
+      "name": "Path",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Path.htm"
+    },
+    {
+      "name": "Tags",
+      "type": "ModelTags",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Tags.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "SubDVertexFacetType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Summarizes the number of edges in faces in the whole object.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDVertexFacetType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not a valid vertex face type."
+    },
+    {
+      "name": "Tri",
+      "value": 3,
+      "summary": "All faces are triangular."
+    },
+    {
+      "name": "Quad",
+      "value": 4,
+      "summary": "All faces are quads."
+    },
+    {
+      "name": "Ngon",
+      "value": 5,
+      "summary": "Edge count of faces is constant and \u003E 4."
+    },
+    {
+      "name": "Mixed",
+      "value": 255,
+      "summary": "Edge count of faces is not constant."
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "name": "EndSymbolsProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of start an end symbols of a ModelElement2D (line, polyline, etc...)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/",
+  "constructors": [
+    {
+      "name": "EndSymbolsProperties",
+      "signature": "EndSymbolsProperties() | EndSymbolsProperties(startID: int, startSize: float, endID: int, endSize: float)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: EndSymbolsProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "EndSymbolsProperties",
+          "doc": "EndSymbolsProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for end symbol ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.EndID"
+    },
+    {
+      "name": "EndSize",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for end symbol size :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.EndSize"
+    },
+    {
+      "name": "StartID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for start symbol ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.StartID"
+    },
+    {
+      "name": "StartSize",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for start symbol size :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.StartSize"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,283 @@
+{
+  "name": "DisplayConduit",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayConduit\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayConduit.htm",
+  "constructors": [
+    {
+      "name": "DisplayConduit",
+      "signature": "protected DisplayConduit()",
+      "summary": "Initializes a new instance of the DisplayConduit class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CalculateBoundingBox",
+      "signature": "protected virtual void CalculateBoundingBox(CalculateBoundingBoxEventArgs e)",
+      "summary": "Library developers should override this function to increase the bounding box of scene so it includes the geometry that you plan to draw in the \u0022Draw\u0022 virtual functions. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.CalculateBoundingBoxEventArgs",
+          "doc": "The event argument contain the current bounding box state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_CalculateBoundingBox.htm"
+    },
+    {
+      "name": "CalculateBoundingBoxZoomExtents",
+      "signature": "protected virtual void CalculateBoundingBoxZoomExtents(CalculateBoundingBoxEventArgs e)",
+      "summary": "If you want to participate in the Zoom Extents command with your display conduit, then you will need to override ZoomExtentsBoundingBox. Typically you could just call your CalculateBoundingBox override, but you may also want to spend a little more time here and compute a tighter bounding box for your conduit geometry if that is needed. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.CalculateBoundingBoxEventArgs",
+          "doc": "The event argument contain the current bounding box state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_CalculateBoundingBoxZoomExtents.htm"
+    },
+    {
+      "name": "DrawForeground",
+      "signature": "protected virtual void DrawForeground(DrawEventArgs e)",
+      "summary": "Called after all non-highlighted objects have been drawn and PostDrawObjects has been called. Depth writing and testing are turned OFF. If you want to draw with depth writing/testing, see PostDrawObjects. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.DrawEventArgs",
+          "doc": "The event argument contains the current viewport and display state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_DrawForeground.htm"
+    },
+    {
+      "name": "DrawOverlay",
+      "signature": "protected virtual void DrawOverlay(DrawEventArgs e)",
+      "summary": "If Rhino is in a feedback mode, the draw overlay call allows for temporary geometry to be drawn on top of everything in the scene. This is similar to the dynamic draw routine that occurs with custom get point. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.DrawEventArgs",
+          "doc": "The event argument contains the current viewport and display state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_DrawOverlay.htm"
+    },
+    {
+      "name": "GetSelectionFilter",
+      "signature": "public void GetSelectionFilter(out bool on, out bool checkSubObjects)",
+      "summary": "The selection filter will make per-object conduit functions only be called for selected objects (when the filter is turned on)",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.GetSelectionFilter(System.Boolean@,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "checkSubObjects",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022checkSubObjects\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.GetSelectionFilter(System.Boolean@,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_GetSelectionFilter.htm"
+    },
+    {
+      "name": "ObjectCulling",
+      "signature": "protected virtual void ObjectCulling(CullObjectEventArgs e)",
+      "summary": "The default implementation does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.CullObjectEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.ObjectCulling(Rhino.Display.CullObjectEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_ObjectCulling.htm"
+    },
+    {
+      "name": "OnEnable",
+      "signature": "protected virtual void OnEnable(bool enable)",
+      "summary": "Called when the enabled state changes for this class instance",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enable\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.OnEnable(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_OnEnable.htm"
+    },
+    {
+      "name": "PostDrawObjects",
+      "signature": "protected virtual void PostDrawObjects(DrawEventArgs e)",
+      "summary": "Called after all non-highlighted objects have been drawn. Depth writing and testing are still turned on. If you want to draw without depth writing/testing, see DrawForeground. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.DrawEventArgs",
+          "doc": "The event argument contains the current viewport and display state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_PostDrawObjects.htm"
+    },
+    {
+      "name": "PreDrawObject",
+      "signature": "protected virtual void PreDrawObject(DrawObjectEventArgs e)",
+      "summary": "Called before every object in the scene is drawn.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.DrawObjectEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.PreDrawObject(Rhino.Display.DrawObjectEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_PreDrawObject.htm"
+    },
+    {
+      "name": "PreDrawObjects",
+      "signature": "protected virtual void PreDrawObjects(DrawEventArgs e)",
+      "summary": "Called before objects are been drawn. Depth writing and testing are on. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.DrawEventArgs",
+          "doc": "The event argument contain the current viewport and display state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_PreDrawObjects.htm"
+    },
+    {
+      "name": "SetObjectIdFilter(IEnumerable\u003CGuid\u003E)",
+      "signature": "public void SetObjectIdFilter(IEnumerable\u003CGuid\u003E ids)",
+      "summary": "Set object Ids that this conduit\u0027s per-object functions will only be called for",
+      "params": [
+        {
+          "name": "ids",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022ids\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.SetObjectIdFilter(System.Collections.Generic.IEnumerable{System.Guid})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_SetObjectIdFilter.htm"
+    },
+    {
+      "name": "SetObjectIdFilter(Guid)",
+      "signature": "public void SetObjectIdFilter(Guid id)",
+      "summary": "Set an object Id that this conduit\u0027s per-object functions will only be called for",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.SetObjectIdFilter(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_SetObjectIdFilter_1.htm"
+    },
+    {
+      "name": "SetSelectionFilter",
+      "signature": "public void SetSelectionFilter(bool on, bool checkSubObjects)",
+      "summary": "The selection filter will make per-object conduit functions only be called for selected objects (when the filter is turned on)",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.SetSelectionFilter(System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "checkSubObjects",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022checkSubObjects\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayConduit.SetSelectionFilter(System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayConduit_SetSelectionFilter.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayConduit_Enabled.htm"
+    },
+    {
+      "name": "GeometryFilter",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": true,
+      "summary": "The geometry filter will ensure that your conduit\u0027s per-object functions will only be called for objects that are of certain geometry type",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayConduit_GeometryFilter.htm"
+    },
+    {
+      "name": "SpaceFilter",
+      "type": "ActiveSpace",
+      "getter": true,
+      "setter": true,
+      "summary": "If you want this conduit to only work in a specific space (model or page), then set this filter to that specific space. The default is None meaning no filter is applied",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayConduit_SpaceFilter.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

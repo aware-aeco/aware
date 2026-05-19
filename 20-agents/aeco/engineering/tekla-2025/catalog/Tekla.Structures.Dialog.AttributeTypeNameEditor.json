@@ -1,0 +1,78 @@
+{
+  "name": "AttributeTypeNameEditor",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The AttributeTypeNameEditor class provides a user interface for selecting a type for the bound attribute.",
+  "base": "System.Drawing.Design.UITypeEditor",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/70d79b05-cbe6-7dff-fd3d-e673eb494245",
+  "constructors": [
+    {
+      "name": "AttributeTypeNameEditor",
+      "signature": "public AttributeTypeNameEditor()",
+      "summary": "Initializes a new instance of the AttributeTypeNameEditor class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff8f4a9f-7247-975e-95cf-6f84a65a20d5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EditValue",
+      "signature": "public override Object EditValue(ITypeDescriptorContext context, IServiceProvider provider, Object value)",
+      "summary": "Edits the specified object\u0027s value using the editor style indicated by the GetEditStyle method.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "An ITypeDescriptorContext that can be used to gain additional context information.",
+          "optional": false
+        },
+        {
+          "name": "provider",
+          "type": "System.IServiceProvider",
+          "doc": "An IServiceProvider that the editor can use to obtain services.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The object to edit.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The new value of the object. If the value of the object has not changed, this should return the same object it was passed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ae0badca-7025-84e6-60fe-bbfe4f8ea159"
+    },
+    {
+      "name": "GetEditStyle",
+      "signature": "public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)",
+      "summary": "Gets the editor style used by the EditValue method.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "An ITypeDescriptorContext that can be used to gain additional context information.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UITypeEditorEditStyle",
+        "doc": "A UITypeEditorEditStyle value that indicates the style of the editor used by the EditValue method. If the UITypeEditor does not support the method, then GetEditStyle will return None."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/95040739-3a4f-19d6-197f-ccc3baae80d2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

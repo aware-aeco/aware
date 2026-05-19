@@ -1,0 +1,54 @@
+{
+  "name": "LoadGroup.Colors",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The possible display colors for loads in a load group.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6f2a89bd-8ba4-973c-a2f5-f7cef79ba412",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BLACK",
+      "value": 0,
+      "summary": "The black display color."
+    },
+    {
+      "name": "WHITE",
+      "value": 1,
+      "summary": "The white display color."
+    },
+    {
+      "name": "RED",
+      "value": 2,
+      "summary": "The red display color."
+    },
+    {
+      "name": "GREEN",
+      "value": 3,
+      "summary": "The green display color."
+    },
+    {
+      "name": "BLUE",
+      "value": 4,
+      "summary": "The blue display color."
+    },
+    {
+      "name": "CYAN",
+      "value": 5,
+      "summary": "The cyan display color."
+    },
+    {
+      "name": "YELLOW",
+      "value": 6,
+      "summary": "The yellow display color."
+    },
+    {
+      "name": "MAGENTA",
+      "value": 7,
+      "summary": "The magenta display color."
+    }
+  ]
+}

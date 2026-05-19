@@ -1,0 +1,22 @@
+{
+  "name": "GH_Viewport.GH_DisplayMatrix",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates the possible Display Transformation matrices.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Viewport_GH_DisplayMatrix.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CanvasToControl",
+      "value": 0
+    },
+    {
+      "name": "ControlToCanvas",
+      "value": 1
+    }
+  ]
+}

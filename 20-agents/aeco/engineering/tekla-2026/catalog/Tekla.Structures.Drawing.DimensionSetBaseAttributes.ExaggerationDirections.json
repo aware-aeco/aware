@@ -1,0 +1,29 @@
+{
+  "name": "DimensionSetBaseAttributes.ExaggerationDirections",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The direction of the exaggeration.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5e0ede78-e2b7-43c8-7d69-c7f8b7f8d112",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LeftDown",
+      "value": 1,
+      "summary": "Left / Down."
+    },
+    {
+      "name": "RightUp",
+      "value": 2,
+      "summary": "Right / Up."
+    },
+    {
+      "name": "Both",
+      "value": 3,
+      "summary": "Both Left/Down and Right / Up."
+    }
+  ]
+}

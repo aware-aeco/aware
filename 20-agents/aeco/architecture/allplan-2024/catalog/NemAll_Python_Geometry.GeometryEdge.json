@@ -1,0 +1,160 @@
+{
+  "name": "GeometryEdge",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Geometry edge Identification of any edge via point indices, not via point coordinates.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/",
+  "constructors": [
+    {
+      "name": "GeometryEdge",
+      "signature": "GeometryEdge() | GeometryEdge(startIndex, endIndex) | GeometryEdge(edge) | GeometryEdge(edge)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEndIndex",
+      "signature": "GetEndIndex()",
+      "summary": "Get end index",
+      "remarks": "Get end index",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "End index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.GetEndIndex"
+    },
+    {
+      "name": "GetStartIndex",
+      "signature": "GetStartIndex()",
+      "summary": "Get start index",
+      "remarks": "Get start index",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Start index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.GetStartIndex"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(edge)",
+      "summary": "Initialize edge from old Allplan structure",
+      "remarks": "Initialize edge from old Allplan structure",
+      "params": [
+        {
+          "name": "edge",
+          "type": "Kanten_t",
+          "doc": "Edge which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.Set"
+    },
+    {
+      "name": "SetEndIndex",
+      "signature": "SetEndIndex(index)",
+      "summary": "Set end index Index is not checked, you set anything.",
+      "remarks": "Set end index Index is not checked, you set anything.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "End index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.SetEndIndex"
+    },
+    {
+      "name": "SetStartIndex",
+      "signature": "SetStartIndex(index)",
+      "summary": "Set start index Index is not checked, you set anything.",
+      "remarks": "Set start index Index is not checked, you set anything.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Start index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.SetStartIndex"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(edge)",
+      "summary": "Comparison of edges without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of edges without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "edge",
+          "type": "GeometryEdge",
+          "doc": "Compared edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when edges are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndIndex",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the end index property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.EndIndex"
+    },
+    {
+      "name": "StartIndex",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the start index property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.StartIndex"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

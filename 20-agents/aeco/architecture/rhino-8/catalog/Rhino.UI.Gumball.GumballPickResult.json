@@ -1,0 +1,33 @@
+{
+  "name": "GumballPickResult",
+  "namespace": "Rhino.UI.Gumball",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Gumball.GumballPickResult\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Gumball_GumballPickResult.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SetToDefault",
+      "signature": "public void SetToDefault()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballPickResult_SetToDefault.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Mode",
+      "type": "GumballMode",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballPickResult_Mode.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

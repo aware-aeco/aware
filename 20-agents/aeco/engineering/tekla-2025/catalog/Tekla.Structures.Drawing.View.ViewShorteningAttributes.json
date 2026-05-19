@@ -1,0 +1,128 @@
+{
+  "name": "View.ViewShorteningAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ViewShorteningAttributes class sets the shortening attributes for the view. If CutParts is set to true, the other values are applied. If it is false, none of the other values matter.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/17b1c7e5-f3c2-f128-ba48-d25e5c1618b4",
+  "constructors": [
+    {
+      "name": "View.ViewShorteningAttributes()",
+      "signature": "public ViewShorteningAttributes()",
+      "summary": "Creates a new default view shortening attributes instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b40ab003-2e5e-0825-2d21-55785c4b5a4f"
+    },
+    {
+      "name": "View.ViewShorteningAttributes(Boolean, Boolean, Double, Double, View.ShorteningCutPartType)",
+      "signature": "public ViewShorteningAttributes(bool CutParts, bool CutSkewParts, double MinimumLength, double Offset, View.ShorteningCutPartType CutPartType = View.ShorteningCutPartType.BothDirections)",
+      "summary": "Creates a new view shortening attributes instance with the given parameters.",
+      "params": [
+        {
+          "name": "CutParts",
+          "type": "System.Boolean",
+          "doc": "A value indicating whether cut parts are enabled.",
+          "optional": false
+        },
+        {
+          "name": "CutSkewParts",
+          "type": "System.Boolean",
+          "doc": "A value indicating whether cut skewed parts are enabled.",
+          "optional": false
+        },
+        {
+          "name": "MinimumLength",
+          "type": "System.Double",
+          "doc": "The minimum cut part length.",
+          "optional": false
+        },
+        {
+          "name": "Offset",
+          "type": "System.Double",
+          "doc": "The space between the cut parts.",
+          "optional": false
+        },
+        {
+          "name": "CutPartType",
+          "type": "Tekla.Structures.Drawing.View.ShorteningCutPartType",
+          "doc": "The optional cut part direction type.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/818cc220-920d-4c94-a5dc-f98a642a3175"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d5db5013-c321-f2b7-34fe-17024157b078"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CutParts",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether cut parts are enabled (true) or disabled (false).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2b795e6c-199f-f088-f64d-136b05d019df"
+    },
+    {
+      "name": "CutPartType",
+      "type": "View.ShorteningCutPartType",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines cut part type. Not used if CutParts is false.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/76ee3e05-e1e8-791f-222f-052296af7aab"
+    },
+    {
+      "name": "CutSkewParts",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether cut skewed parts are enabled (true) or disabled (false).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a581b379-3782-5999-84b3-fe7ffd7e3236"
+    },
+    {
+      "name": "MinimumLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The minimum cut part length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/18a177ac-31c0-bf11-33fe-944f09934cf4"
+    },
+    {
+      "name": "Offset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The space between the cut parts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0cf000e-e610-713d-c76a-a97a4f0a23d0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

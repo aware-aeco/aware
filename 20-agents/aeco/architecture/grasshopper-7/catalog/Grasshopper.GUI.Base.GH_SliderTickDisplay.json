@@ -1,0 +1,29 @@
+{
+  "name": "GH_SliderTickDisplay",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "enum",
+  "summary": "Enumerates the possible slider tick displays.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_SliderTickDisplay.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No slider ticks are drawn."
+    },
+    {
+      "name": "Simple",
+      "value": 1,
+      "summary": "Slider ticks are drawn as single lines."
+    },
+    {
+      "name": "Etched",
+      "value": 2,
+      "summary": "Slider ticks are drawn as etched lines."
+    }
+  ]
+}

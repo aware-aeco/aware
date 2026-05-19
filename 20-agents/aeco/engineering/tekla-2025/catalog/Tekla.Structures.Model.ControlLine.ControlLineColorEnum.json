@@ -1,0 +1,59 @@
+{
+  "name": "ControlLine.ControlLineColorEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different line colors.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5be6efb4-cfe5-6f0b-1ebc-be8609d0bc05",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "YELLOW_RED",
+      "value": -1,
+      "summary": "The yellow/red color."
+    },
+    {
+      "name": "BLACK",
+      "value": 0,
+      "summary": "The black color."
+    },
+    {
+      "name": "WHITE",
+      "value": 1,
+      "summary": "The white color."
+    },
+    {
+      "name": "RED",
+      "value": 2,
+      "summary": "The red color."
+    },
+    {
+      "name": "GREEN",
+      "value": 3,
+      "summary": "The green color."
+    },
+    {
+      "name": "BLUE",
+      "value": 4,
+      "summary": "The blue color."
+    },
+    {
+      "name": "CYAN",
+      "value": 5,
+      "summary": "The cyan color."
+    },
+    {
+      "name": "YELLOW",
+      "value": 6,
+      "summary": "The yellow color."
+    },
+    {
+      "name": "MAGENTA",
+      "value": 7,
+      "summary": "The magenta color."
+    }
+  ]
+}

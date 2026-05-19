@@ -1,0 +1,452 @@
+{
+  "name": "ModelBase",
+  "namespace": "Dynamo.Graph",
+  "kind": "class",
+  "summary": "Base class for all objects with which user can interact in Dynamo.",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [
+    "Dynamo.Selection.ISelectable",
+    "Dynamo.Graph.ILocatable",
+    "Dynamo.Logging.ILogSource"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs",
+  "constructors": [
+    {
+      "name": "ModelBase()",
+      "signature": "void ModelBase()",
+      "summary": "Protected constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateElement(System.Xml.XmlDocument, Dynamo.Graph.SaveContext)",
+      "signature": "System.Xml.XmlElement CreateElement(System.Xml.XmlDocument xmlDocument, Dynamo.Graph.SaveContext context)",
+      "summary": "ModelBase.CreateElement",
+      "params": [
+        {
+          "name": "xmlDocument",
+          "type": "System.Xml.XmlDocument",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Deselect",
+      "signature": "void Deselect()",
+      "summary": "This method sets the isSelected property on the object to false. E.g. when user clicks on canvas.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Deserialize(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void Deserialize(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Deserialize model from xml node.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml node",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "Save context. E.g. save in file, copy node etc.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "ModelBase.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Invokes Dispose on the object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Log(Dynamo.Logging.ILogMessage)",
+      "signature": "void Log(Dynamo.Logging.ILogMessage obj)",
+      "summary": "ModelBase.Log",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Logging.ILogMessage",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Log(string)",
+      "signature": "void Log(string msg)",
+      "summary": "ModelBase.Log",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Log(string, Dynamo.Logging.WarningLevel)",
+      "signature": "void Log(string msg, Dynamo.Logging.WarningLevel severity)",
+      "summary": "ModelBase.Log",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "severity",
+          "type": "Dynamo.Logging.WarningLevel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "OnDeletionStarted(System.ComponentModel.CancelEventArgs)",
+      "signature": "void OnDeletionStarted(System.ComponentModel.CancelEventArgs e)",
+      "summary": "Invokes the DeletionStarted event on this object.",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.ComponentModel.CancelEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "ReportPosition",
+      "signature": "void ReportPosition()",
+      "summary": "Notifies listeners that the position of the object has changed, then all dependant objects will also redraw themselves.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Select",
+      "signature": "void Select()",
+      "summary": "This method sets the isSelected property on the object to true. E.g. when user clicks on node.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Serialize(System.Xml.XmlDocument, Dynamo.Graph.SaveContext)",
+      "signature": "System.Xml.XmlElement Serialize(System.Xml.XmlDocument xmlDocument, Dynamo.Graph.SaveContext context)",
+      "summary": "Serialize model into xml node.",
+      "params": [
+        {
+          "name": "xmlDocument",
+          "type": "System.Xml.XmlDocument",
+          "doc": "Xml document",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "Context in which object is saved",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "xml node"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "ModelBase.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "SetSize(double, double)",
+      "signature": "void SetSize(double w, double h)",
+      "summary": "Set the width and the height of the node model and report once.",
+      "params": [
+        {
+          "name": "w",
+          "type": "double",
+          "doc": "Width",
+          "optional": false
+        },
+        {
+          "name": "h",
+          "type": "double",
+          "doc": "Height",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "ShouldSerializeX",
+      "signature": "bool ShouldSerializeX()",
+      "summary": "Override in derived classes to specify whether to serialize the X property.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "ShouldSerializeY",
+      "signature": "bool ShouldSerializeY()",
+      "summary": "Override in derived classes to specify whether to serialize the Y property.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "UpdateValue(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValue(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "Updates object properties. UpdateValueCore is overridden in derived classes.",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "doc": "Please see UpdateValueParams for details.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true if the call has been handled, or false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "UpdateValueCore(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValueCore(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "This method is supplied as a generic way for command framework to update a given named-value in a ModelBase (which has to work under both user and playback scenarios). During playback, the command framework issues pre-recorded UpdateModelValueCommand that targets a model. Since there is no data-binding at play here, there will not be IValueConverter. This method takes only string input (the way they appear in DynamoTextBox), which overridden method can use for value conversion.",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "doc": "Please see UpdateValueParams for details.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true if the call has been handled, or false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CenterX",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "X coordinate of center point.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "CenterY",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Y coordinate of center point.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "GUID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Unique ID.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Height",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "IsSelected",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the object is selected otherwise false.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Position",
+      "type": "Dynamo.Utilities.Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "A position defined by the x and y components. Used for notification in situations where you don\u0027t want to have property notifications for X and Y",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Rect",
+      "type": "Dynamo.Utilities.Rect2D",
+      "getter": true,
+      "setter": false,
+      "summary": "The bounds of the object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Width",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The X coordinate of the node in canvas space.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The Y coordinate of the node in canvas space.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "DeletionStarted",
+      "delegate": "System.EventHandler\u003CSystem.ComponentModel.CancelEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CSystem.ComponentModel.CancelEventArgs\u003E DeletionStarted",
+      "summary": "Fired when this Model is about to be deleted. Operation can be cancelled by setting the Cancel flag on the args object to true.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Disposed",
+      "delegate": "System.Action\u003CDynamo.Graph.ModelBase\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.ModelBase\u003E Disposed",
+      "summary": "Fired when this Model is disposed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "This event is fired when a message is logged.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

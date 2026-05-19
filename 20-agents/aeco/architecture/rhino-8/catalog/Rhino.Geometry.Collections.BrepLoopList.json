@@ -1,0 +1,145 @@
+{
+  "name": "BrepLoopList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to all the Loops in a Brep object.",
+  "interfaces": [
+    "IEnumerable\u003CBrepLoop\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Collections_BrepLoopList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(BrepLoopType)",
+      "signature": "public BrepLoop Add(BrepLoopType loopType)",
+      "summary": "Create a new empty boundary loop. The new loop will not be part of a face and will not include any trim curves.",
+      "params": [
+        {
+          "name": "loopType",
+          "type": "Rhino.Geometry.BrepLoopType",
+          "doc": "[Missing \u003Cparam name=\u0022loopType\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepLoopList.Add(Rhino.Geometry.BrepLoopType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepLoop",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepLoopList.Add(Rhino.Geometry.BrepLoopType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepLoopList_Add.htm"
+    },
+    {
+      "name": "Add(BrepLoopType, BrepFace)",
+      "signature": "public BrepLoop Add(BrepLoopType loopType, BrepFace face)",
+      "summary": "Create a new boundary loop on a face. After you get this BrepLoop, you still need to create the vertices, edges, and trims that define the loop.",
+      "params": [
+        {
+          "name": "loopType",
+          "type": "Rhino.Geometry.BrepLoopType",
+          "doc": "[Missing \u003Cparam name=\u0022loopType\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepLoopList.Add(Rhino.Geometry.BrepLoopType,Rhino.Geometry.BrepFace)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022face\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepLoopList.Add(Rhino.Geometry.BrepLoopType,Rhino.Geometry.BrepFace)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepLoop",
+        "doc": "New loop that needs to be filled in"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepLoopList_Add_1.htm"
+    },
+    {
+      "name": "AddOuterLoop",
+      "signature": "public BrepLoop AddOuterLoop(int faceIndex)",
+      "summary": "Create a new outer boundary loop that runs along the sides of the face\u0027s surface. All the necessary trims, edges, and vertices are created and added to the brep.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "index of face that needs an outer boundary that runs along the sides of its surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepLoop",
+        "doc": "New outer boundary loop that is complete."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepLoopList_AddOuterLoop.htm"
+    },
+    {
+      "name": "AddPlanarFaceLoop",
+      "signature": "public BrepLoop AddPlanarFaceLoop(int faceIndex, BrepLoopType loopType, IEnumerable\u003CCurve\u003E boundaryCurves)",
+      "summary": "Add a planar trimming loop to a planar face",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "index of planar face. The underlying surface must be a PlaneSurface",
+          "optional": false
+        },
+        {
+          "name": "loopType",
+          "type": "Rhino.Geometry.BrepLoopType",
+          "doc": "type of loop to add. If loopType is Unknown, then the loop direction is tested and the new loops type will be set to Outer or Inner. If the loopType is Outer, then the direction of the new loop is tested and flipped if it is clockwise. If the loopType is Inner, then the direction of the new loop is tested and flipped if it is counter-clockwise.",
+          "optional": false
+        },
+        {
+          "name": "boundaryCurves",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "list of 3d curves that form a simple (no self intersections) closed curve. These curves define the 3d edge geometry and should be near the planar surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepLoop",
+        "doc": "new loop if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepLoopList_AddPlanarFaceLoop.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CBrepLoop\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that visits all edges.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CBrepLoop\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepLoopList_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of brep loops.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_BrepLoopList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "BrepLoop",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the BrepLoop at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_BrepLoopList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

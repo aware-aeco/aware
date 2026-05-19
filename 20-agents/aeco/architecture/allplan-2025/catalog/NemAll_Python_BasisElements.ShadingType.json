@@ -1,0 +1,31 @@
+{
+  "name": "ShadingType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Shading style of filling",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ShadingType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFromCenter",
+      "value": 2
+    },
+    {
+      "name": "eFromCorner",
+      "value": 1
+    },
+    {
+      "name": "eLinear",
+      "value": 0
+    },
+    {
+      "name": "eRound",
+      "value": 3
+    }
+  ]
+}

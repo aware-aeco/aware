@@ -1,0 +1,44 @@
+{
+  "name": "Timer",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "Timer",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/Timer/",
+  "constructors": [
+    {
+      "name": "Timer",
+      "signature": "Timer() | Timer(timer: Timer)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/Timer/#NemAll_Python_Utility.Timer.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PrintTime",
+      "signature": "PrintTime(bReset: bool)",
+      "summary": "Print the time",
+      "remarks": "Print the time",
+      "params": [
+        {
+          "name": "bReset",
+          "type": "bool",
+          "doc": "Reset the timer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/Timer/#NemAll_Python_Utility.Timer.PrintTime"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

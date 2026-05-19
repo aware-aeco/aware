@@ -1,0 +1,345 @@
+{
+  "name": "ProviderIds",
+  "namespace": "Rhino.UI.Controls.DataSource",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.DataSource.ProviderIds\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_DataSource_ProviderIds.htm",
+  "constructors": [
+    {
+      "name": "ProviderIds",
+      "signature": "public ProviderIds()",
+      "summary": "Initializes a new instance of the ProviderIds class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_DataSource_ProviderIds__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ContentChildSlot",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentChildSlot.htm"
+    },
+    {
+      "name": "ContentDatabase",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentDatabase.htm"
+    },
+    {
+      "name": "ContentDisplayCollection",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentDisplayCollection.htm"
+    },
+    {
+      "name": "ContentEditorSettings",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentEditorSettings.htm"
+    },
+    {
+      "name": "ContentLookup",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentLookup.htm"
+    },
+    {
+      "name": "ContentParam",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentParam.htm"
+    },
+    {
+      "name": "ContentPreviewRendered",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentPreviewRendered.htm"
+    },
+    {
+      "name": "ContentSelection",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentSelection.htm"
+    },
+    {
+      "name": "ContentSelectionForSetParams",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentSelectionForSetParams.htm"
+    },
+    {
+      "name": "ContentUIs",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentUIs.htm"
+    },
+    {
+      "name": "ContentUpdatePreviewMarkersEventInfo",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ContentUpdatePreviewMarkersEventInfo.htm"
+    },
+    {
+      "name": "CurrentEnvironment",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_CurrentEnvironment.htm"
+    },
+    {
+      "name": "Decals",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_Decals.htm"
+    },
+    {
+      "name": "Dithering",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_Dithering.htm"
+    },
+    {
+      "name": "GroundPlane",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_GroundPlane.htm"
+    },
+    {
+      "name": "ImageFileInfo",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ImageFileInfo.htm"
+    },
+    {
+      "name": "ImageFileInfo_V8",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_ImageFileInfo_V8.htm"
+    },
+    {
+      "name": "LinearWorkflow",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_LinearWorkflow.htm"
+    },
+    {
+      "name": "NamedItem",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_NamedItem.htm"
+    },
+    {
+      "name": "NewContentControlAssignBy",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_NewContentControlAssignBy.htm"
+    },
+    {
+      "name": "NullGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_NullGuid.htm"
+    },
+    {
+      "name": "PreviewSettings",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_PreviewSettings.htm"
+    },
+    {
+      "name": "RdkEdit",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkEdit.htm"
+    },
+    {
+      "name": "RdkRendering",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRendering.htm"
+    },
+    {
+      "name": "RdkRenderingGamma",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingGamma.htm"
+    },
+    {
+      "name": "RdkRenderingPostEffectBloom",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingPostEffectBloom.htm"
+    },
+    {
+      "name": "RdkRenderingPostEffectDOF",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingPostEffectDOF.htm"
+    },
+    {
+      "name": "RdkRenderingPostEffectFog",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingPostEffectFog.htm"
+    },
+    {
+      "name": "RdkRenderingPostEffectGlare",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingPostEffectGlare.htm"
+    },
+    {
+      "name": "RdkRenderingPostEffectGlow",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingPostEffectGlow.htm"
+    },
+    {
+      "name": "RdkRenderingPostEffects",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingPostEffects.htm"
+    },
+    {
+      "name": "RdkRenderingProgress",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingProgress.htm"
+    },
+    {
+      "name": "RdkRenderingToneMapping",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RdkRenderingToneMapping.htm"
+    },
+    {
+      "name": "RenderChannels",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RenderChannels.htm"
+    },
+    {
+      "name": "RhinoSettings",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_RhinoSettings.htm"
+    },
+    {
+      "name": "SelectionNavigator",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_SelectionNavigator.htm"
+    },
+    {
+      "name": "Skylight",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_Skylight.htm"
+    },
+    {
+      "name": "Sun",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_Sun.htm"
+    },
+    {
+      "name": "Undo",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_Undo.htm"
+    },
+    {
+      "name": "UndoRecord",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_ProviderIds_UndoRecord.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,68 @@
+{
+  "name": "LiveRunnerServices",
+  "namespace": "Dynamo.Engine",
+  "kind": "class",
+  "summary": "This is a helper class that can get mirror data from live runner, update graph etc.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/LiveRunnerServices.cs",
+  "constructors": [
+    {
+      "name": "LiveRunnerServices(Dynamo.Engine.EngineController, string)",
+      "signature": "void LiveRunnerServices(Dynamo.Engine.EngineController controller, string geometryFactoryFileName)",
+      "summary": "Creates LiveRunnerServices.",
+      "params": [
+        {
+          "name": "controller",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "Engine controller",
+          "optional": false
+        },
+        {
+          "name": "geometryFactoryFileName",
+          "type": "string",
+          "doc": "Path to LibG",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/LiveRunnerServices.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose LiveRunner object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/LiveRunnerServices.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Core",
+      "type": "ProtoCore.Core",
+      "getter": true,
+      "setter": false,
+      "summary": "LiveRunnerServices.Core",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/LiveRunnerServices.cs"
+    },
+    {
+      "name": "RuntimeCore",
+      "type": "ProtoCore.RuntimeCore",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore of liveRunner. RuntimeCore is an object that is instantiated once across the lifecycle of the runtime. This is the entry point of the runtime VM and its input is a DS Executable format.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/LiveRunnerServices.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

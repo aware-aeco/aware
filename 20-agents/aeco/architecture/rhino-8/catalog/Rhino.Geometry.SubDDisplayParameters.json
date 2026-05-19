@@ -1,0 +1,456 @@
+{
+  "name": "SubDDisplayParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "A collection of parameters that are passed to functions that calculate a various representations of SubD objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDDisplayParameters.htm",
+  "constructors": [
+    {
+      "name": "SubDDisplayParameters()",
+      "signature": "public SubDDisplayParameters()",
+      "summary": "Initializes a new instance with default values.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters__ctor.htm"
+    },
+    {
+      "name": "SubDDisplayParameters(SerializationInfo, StreamingContext)",
+      "signature": "public SubDDisplayParameters(SerializationInfo info, StreamingContext context)",
+      "summary": "Called by BinaryFormatter.Deserialize to create a new MeshParamaters object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDDisplayParameters.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDDisplayParameters.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AbsoluteDisplayDensityFromSubD",
+      "signature": "public static uint AbsoluteDisplayDensityFromSubD(uint adaptiveSubDDisplayDensity, SubD subd)",
+      "summary": "Gets absolute SubD display density for subd.",
+      "params": [
+        {
+          "name": "adaptiveSubDDisplayDensity",
+          "type": "System.UInt32",
+          "doc": "A value \u003C= SubDDisplayParameters.Density.MaximumDensity. When in doubt, pass SubDDisplayParameters.Density.DefaultDensity.",
+          "optional": false
+        },
+        {
+          "name": "subd",
+          "type": "Rhino.Geometry.SubD",
+          "doc": "In the cases when the SubD in question is not available, like user interface code that applies in general and to unknown SubDs, pass SubD.Empty.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The absolute SubD display density is \u003C= adaptiveSubDDisplayDensity and \u003C= SubDDisplayParameters.Density.MaximumDensity."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_AbsoluteDisplayDensityFromSubD.htm"
+    },
+    {
+      "name": "AbsoluteDisplayDensityFromSubDFaceCount",
+      "signature": "public static uint AbsoluteDisplayDensityFromSubDFaceCount(uint adaptiveSubDDisplayDensity, uint subDFaceCount)",
+      "summary": "Gets the absolute SubD display density for SubD with subdFaceCount faces.",
+      "params": [
+        {
+          "name": "adaptiveSubDDisplayDensity",
+          "type": "System.UInt32",
+          "doc": "A value \u003C= SubDDisplayParameters.Density.MaximumDensity. When in doubt, pass SubDDisplayParameters.Density.DefaultDensity.",
+          "optional": false
+        },
+        {
+          "name": "subDFaceCount",
+          "type": "System.UInt32",
+          "doc": "Number of SubD faces.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The absolute SubD display density is \u003C= adaptiveSubDDisplayDensity and \u003C= SubDDisplayParameters.Density.MaximumDensity."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_AbsoluteDisplayDensityFromSubDFaceCount.htm"
+    },
+    {
+      "name": "ClampDisplayDensity",
+      "signature": "public static uint ClampDisplayDensity(uint displayDensity)",
+      "summary": "Limits display density to a value useful in user interface code.",
+      "params": [
+        {
+          "name": "displayDensity",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022displayDensity\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDDisplayParameters.ClampDisplayDensity(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The clamped value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_ClampDisplayDensity.htm"
+    },
+    {
+      "name": "Coarse",
+      "signature": "public static SubDDisplayParameters Coarse()",
+      "summary": "Parameters for a course limit surface display mesh. SubD display density = adaptive SubDDisplayParameters.Density.CoarseDensity.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Coarse.htm"
+    },
+    {
+      "name": "CreateFromAbsoluteDisplayDensity",
+      "signature": "public static SubDDisplayParameters CreateFromAbsoluteDisplayDensity(uint absoluteSubDDisplayDensity)",
+      "summary": "Use of absolute display density is strongly discouraged. SubDs can have a single face or millions of faces. Adaptive display meshing produces more desirable results in almost all cases.",
+      "params": [
+        {
+          "name": "absoluteSubDDisplayDensity",
+          "type": "System.UInt32",
+          "doc": "A value \u003C= SubDDisplayParameters.Density.MaximumDensity. When in doubt, pass SubDDisplayParameters.Density.DefaultDensity.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_CreateFromAbsoluteDisplayDensity.htm"
+    },
+    {
+      "name": "CreateFromDisplayDensity",
+      "signature": "public static SubDDisplayParameters CreateFromDisplayDensity(uint adaptiveSubDDisplayDensity)",
+      "summary": "In most applications, the caller sets the mesh density and leaves the other parameters set to the default values.",
+      "params": [
+        {
+          "name": "adaptiveSubDDisplayDensity",
+          "type": "System.UInt32",
+          "doc": "A value \u003C= SubDDisplayParameters.Density.MaximumDensity. When in doubt, pass SubDDisplayParameters.Density.DefaultDensity. Values \u003C SubDDisplayParameters.Density.MinimumAdaptiveDensity are treated as SubDDisplayParameters.Density.MinimumAdaptiveDensity. All other invalid input values are treated as SubDDisplayParameters.Density.DefaultDensity.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_CreateFromDisplayDensity.htm"
+    },
+    {
+      "name": "CreateFromMeshDensity",
+      "signature": "public static SubDDisplayParameters CreateFromMeshDensity(double normalizedMeshDensity)",
+      "summary": "This function creates SubDDisplayParameters from a user interface \u0022slider\u0022 like Rhino\u0027s simple mesh controls.",
+      "params": [
+        {
+          "name": "normalizedMeshDensity",
+          "type": "System.Double",
+          "doc": "A double between 0.0 and 1.0.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "A valid ON_SubDDisplayParameters with the specified subd display density."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_CreateFromMeshDensity.htm"
+    },
+    {
+      "name": "Default",
+      "signature": "public static SubDDisplayParameters Default()",
+      "summary": "Parameters for the default limit surface display mesh. SubD display density = adaptive SubDDisplayParameters.Density.DefaultDensity.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Default.htm"
+    },
+    {
+      "name": "DisplayDensity",
+      "signature": "public uint DisplayDensity(SubD subd)",
+      "summary": "Gets the absolute display density to use when creating display meshes for SubD. When adaptive reduction is enabled, subd.Faces.Count is used to determine the appropriate display density.",
+      "params": [
+        {
+          "name": "subd",
+          "type": "Rhino.Geometry.SubD",
+          "doc": "The SubD object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The display density."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_DisplayDensity.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Dispose_1.htm"
+    },
+    {
+      "name": "Empty",
+      "signature": "public static SubDDisplayParameters Empty()",
+      "summary": "Get an empty SubDDisplayParameters.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Empty.htm"
+    },
+    {
+      "name": "ExtraCoarse",
+      "signature": "public static SubDDisplayParameters ExtraCoarse()",
+      "summary": "Parameters for an extra course limit surface display mesh. SubD display density = adaptive SubDDisplayParameters.Density.ExtraCoarseDensity.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_ExtraCoarse.htm"
+    },
+    {
+      "name": "ExtraFine",
+      "signature": "public static SubDDisplayParameters ExtraFine()",
+      "summary": "Parameters for an extra fine limit surface display mesh. SubD display density = adaptive SubDDisplayParameters.Density.ExtraFineDensity.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_ExtraFine.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Finalize.htm"
+    },
+    {
+      "name": "Fine",
+      "signature": "public static SubDDisplayParameters Fine()",
+      "summary": "Parameters for a fine limit surface display mesh. SubD display density = adaptive SubDDisplayParameters.Density.FineDensity.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Fine.htm"
+    },
+    {
+      "name": "FromEncodedString",
+      "signature": "public static SubDDisplayParameters FromEncodedString(string value)",
+      "summary": "Converts encoded serialized string into a MeshingParameters",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Encoded string returned by MeshingParameters.ToString()",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "Returns a new MeshingParameters created by decoding and deserializing the string or null if value is invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_FromEncodedString.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "SecurityException",
+          "when": "The caller does not have the required permission."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_GetObjectData.htm"
+    },
+    {
+      "name": "Medium",
+      "signature": "public static SubDDisplayParameters Medium()",
+      "summary": "Parameters for a medium limit surface display mesh. SubD display density = adaptive SubDDisplayParameters.Density.MediumDensity.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_Medium.htm"
+    },
+    {
+      "name": "SetAbsoluteDisplayDensity",
+      "signature": "public void SetAbsoluteDisplayDensity(uint absoluteDisplayDensity)",
+      "summary": "In almast all cases, you are better off using SetAdaptiveDisplayDensity().",
+      "params": [
+        {
+          "name": "absoluteDisplayDensity",
+          "type": "System.UInt32",
+          "doc": "absoluteDisplayDensity \u003C= SubDDisplayParameters.Density.MaximumDensity.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_SetAbsoluteDisplayDensity.htm"
+    },
+    {
+      "name": "SetAdaptiveDisplayDensity",
+      "signature": "public void SetAdaptiveDisplayDensity(uint adaptiveDisplayDensity)",
+      "summary": "Set an adaptive SubD display density that caps display mesh quad count at SubDDisplayParameters.AdaptiveDisplayMeshQuadMaximum.",
+      "params": [
+        {
+          "name": "adaptiveDisplayDensity",
+          "type": "System.UInt32",
+          "doc": "adaptiveDisplayDensity \u003C= SubDDisplayParameters.Density.MaximumDensity. Values \u003C= SubDDisplayParameters.Density.MinimumAdaptiveDensity will never be adaptively reduced during display mesh creation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_SetAdaptiveDisplayDensity.htm"
+    },
+    {
+      "name": "ToEncodedString",
+      "signature": "public string ToEncodedString()",
+      "summary": "Returns a encoded string that represents the MeshingParameters.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A encoded string that represents the MeshingParameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDDisplayParameters_ToEncodedString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AdaptiveDisplayMeshQuadMaximum",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When the SubD display density is adaptive (default), AdaptiveMeshQuadMaximum specifies the approximate number of display mesh quads to permit before reducing the SubD display mesh density.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDDisplayParameters_AdaptiveDisplayMeshQuadMaximum.htm"
+    },
+    {
+      "name": "DisplayDensityIsAbsolute",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if the SubD display density setting is absolute.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDDisplayParameters_DisplayDensityIsAbsolute.htm"
+    },
+    {
+      "name": "DisplayDensityIsAdaptive",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if the SubD display density setting is adaptive and approximate display mesh quad count is capped at SubDDisplayParameters::AdaptiveDisplayMeshQuadMaximum.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDDisplayParameters_DisplayDensityIsAdaptive.htm"
+    },
+    {
+      "name": "MeshLocation",
+      "type": "SubDComponentLocation",
+      "getter": true,
+      "setter": true,
+      "summary": "The MeshLocation property determines if the mesh is on the SubD\u0027s control net or the SubD\u0027s surface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDDisplayParameters_MeshLocation.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,25 @@
+{
+  "name": "DrawingHandler.MessageExecutionModeEnum",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The message execution modes of Tekla Structures.",
+  "remarks": "The message execution mode of Tekla Structures controls whether messages are executed after each database operation or by an explicit call to execute messages.There may be some speed benefits if the BY_COMMIT mode is used when inserting a lot of objects. The messages are then executed once after the objects have been inserted.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d857408b-12df-e503-3481-cbed0e9cc540",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INSTANT",
+      "value": 0,
+      "summary": "Executes messages after each database operation. All objects appear instantly on the screen when using the INSTANT mode."
+    },
+    {
+      "name": "BY_COMMIT",
+      "value": 1,
+      "summary": "Executes messages only when Drawing.CommitChanges() is called."
+    }
+  ]
+}

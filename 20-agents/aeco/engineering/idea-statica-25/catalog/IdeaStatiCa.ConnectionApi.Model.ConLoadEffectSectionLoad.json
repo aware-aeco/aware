@@ -1,0 +1,62 @@
+{
+  "name": "ConLoadEffectSectionLoad",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConLoadEffectSectionLoad.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffectSectionLoad.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "N",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffectSectionLoad.n.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffectSectionLoad.md"
+    },
+    {
+      "name": "Vy",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffectSectionLoad.vy.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffectSectionLoad.md"
+    },
+    {
+      "name": "Vz",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffectSectionLoad.vz.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffectSectionLoad.md"
+    },
+    {
+      "name": "Mx",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffectSectionLoad.mx.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffectSectionLoad.md"
+    },
+    {
+      "name": "My",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffectSectionLoad.my.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffectSectionLoad.md"
+    },
+    {
+      "name": "Mz",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffectSectionLoad.mz.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffectSectionLoad.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

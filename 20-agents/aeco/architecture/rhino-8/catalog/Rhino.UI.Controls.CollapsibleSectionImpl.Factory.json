@@ -1,0 +1,56 @@
+{
+  "name": "CollapsibleSectionImpl.Factory",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.CollapsibleSectionImpl.Factory\u0022]",
+  "base": "FactoryBase",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_CollapsibleSectionImpl_Factory.htm",
+  "constructors": [
+    {
+      "name": "CollapsibleSectionImpl.Factory",
+      "signature": "public Factory()",
+      "summary": "Initializes a new instance of the CollapsibleSectionImpl.Factory class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_Factory__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_FactoryBase_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public virtual IntPtr Get(Guid id)",
+      "summary": "Override this method to return a new instance of your class for the given ID",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.FactoryBase.Get(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.FactoryBase.Get(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_FactoryBase_Get.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

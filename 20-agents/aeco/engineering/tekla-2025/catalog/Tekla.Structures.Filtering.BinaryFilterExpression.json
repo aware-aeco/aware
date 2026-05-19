@@ -1,0 +1,174 @@
+{
+  "name": "BinaryFilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The BinaryFilterExpression class represents a binary expression between two filter expressions. This class cannot be inherited.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/10ff0aa1-1cac-1cde-56ea-5239f32794b0",
+  "constructors": [
+    {
+      "name": "BinaryFilterExpression(BooleanFilterExpression, BooleanOperatorType, BooleanConstantFilterExpression)",
+      "signature": "public BinaryFilterExpression(BooleanFilterExpression Left, BooleanOperatorType Oper, BooleanConstantFilterExpression Right)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [
+        {
+          "name": "Left",
+          "type": "Tekla.Structures.Filtering.BooleanFilterExpression",
+          "doc": "The left operand of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Oper",
+          "type": "Tekla.Structures.Filtering.BooleanOperatorType",
+          "doc": "The operator of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Right",
+          "type": "Tekla.Structures.Filtering.BooleanConstantFilterExpression",
+          "doc": "The right operand of the filter expression.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null filter expression is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1cc0baa9-cacd-302e-fab3-0de3190daf0f"
+    },
+    {
+      "name": "BinaryFilterExpression(DateTimeFilterExpression, DateTimeOperatorType, DateTimeConstantFilterExpression)",
+      "signature": "public BinaryFilterExpression(DateTimeFilterExpression Left, DateTimeOperatorType Oper, DateTimeConstantFilterExpression Right)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [
+        {
+          "name": "Left",
+          "type": "Tekla.Structures.Filtering.DateTimeFilterExpression",
+          "doc": "The left operand of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Oper",
+          "type": "Tekla.Structures.Filtering.DateTimeOperatorType",
+          "doc": "The operator of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Right",
+          "type": "Tekla.Structures.Filtering.DateTimeConstantFilterExpression",
+          "doc": "The right operand of the filter expression.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null filter expression is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bbb4eaa5-8205-ebec-36d8-db5c873df7cb"
+    },
+    {
+      "name": "BinaryFilterExpression(NumericFilterExpression, NumericOperatorType, NumericConstantFilterExpression)",
+      "signature": "public BinaryFilterExpression(NumericFilterExpression Left, NumericOperatorType Oper, NumericConstantFilterExpression Right)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [
+        {
+          "name": "Left",
+          "type": "Tekla.Structures.Filtering.NumericFilterExpression",
+          "doc": "The left operand of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Oper",
+          "type": "Tekla.Structures.Filtering.NumericOperatorType",
+          "doc": "The operator of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Right",
+          "type": "Tekla.Structures.Filtering.NumericConstantFilterExpression",
+          "doc": "The right operand of the filter expression.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null filter expression is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f74eaac0-7d11-56bb-b694-c63cc7f05309"
+    },
+    {
+      "name": "BinaryFilterExpression(StringFilterExpression, StringOperatorType, StringConstantFilterExpression)",
+      "signature": "public BinaryFilterExpression(StringFilterExpression Left, StringOperatorType Oper, StringConstantFilterExpression Right)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [
+        {
+          "name": "Left",
+          "type": "Tekla.Structures.Filtering.StringFilterExpression",
+          "doc": "The left operand of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Oper",
+          "type": "Tekla.Structures.Filtering.StringOperatorType",
+          "doc": "The operator of the filter expression.",
+          "optional": false
+        },
+        {
+          "name": "Right",
+          "type": "Tekla.Structures.Filtering.StringConstantFilterExpression",
+          "doc": "The right operand of the filter expression.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null filter expression is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/99cef8dc-7b7f-1519-37c9-e474b3ae2417"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fece057a-34f0-fbb1-7184-27f66452ed40"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsEnable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of the filter expression.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a436cbc9-a74e-3b98-1736-723e4f015b27"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

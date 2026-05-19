@@ -1,0 +1,123 @@
+{
+  "name": "TextFile.TextFileAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The TextFileAttributes class contains the attributes for the text file object.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c547587c-07dc-1a38-ccf3-592042bf2205",
+  "constructors": [
+    {
+      "name": "TextFile.TextFileAttributes",
+      "signature": "public TextFileAttributes()",
+      "summary": "Creates a new text file attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/76a15905-680a-2f92-5313-78d75952724a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c631729a-82b1-c6c1-ed34-e077d86a0b6d"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the specified attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ffaa1763-eb69-ab96-d557-fb060ce8b690"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the font.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0e3d09a-f2a5-9dd3-78de-b73bb257bf57"
+    },
+    {
+      "name": "Frame",
+      "type": "EmbeddedObjectFrame",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/109ef16a-142d-b2e2-b8a8-c6af92eadab3"
+    },
+    {
+      "name": "Line",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the line type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f02c0ba5-d1db-01e0-99ee-cb6b0892da54"
+    },
+    {
+      "name": "LineType",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Obsolete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/467793e1-b9d9-f69e-8562-7866a60443c0"
+    },
+    {
+      "name": "Scaling",
+      "type": "ScalingOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scaling.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ae4fc1c6-8794-b3ba-5546-41a9f0ccb30d"
+    },
+    {
+      "name": "XScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X scaling value. Changing this property will set the scaling type to ScaleXY.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d7179a7e-32c5-1e66-4b41-39eb449305b0"
+    },
+    {
+      "name": "YScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y scaling value. Changing this property will set the scaling type to ScaleXY.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7a7adb51-05b5-dfa6-fc01-61a4eea5cde0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

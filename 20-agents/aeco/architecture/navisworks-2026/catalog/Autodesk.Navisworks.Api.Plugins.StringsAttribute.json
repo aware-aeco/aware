@@ -1,0 +1,40 @@
+{
+  "name": "StringsAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Attribute which causes a string localization file to be loaded for a particular plug-in.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.StringsAttribute",
+  "constructors": [
+    {
+      "name": "StringsAttribute(string)",
+      "signature": "StringsAttribute(string fileName)",
+      "summary": "Attribute causes a string localization file to be loaded for a particular plug-in.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.StringsAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The filename containing the strings.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.StringsAttribute.FileName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

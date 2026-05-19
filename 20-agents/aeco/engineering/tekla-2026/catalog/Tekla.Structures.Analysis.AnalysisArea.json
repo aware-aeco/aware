@@ -1,0 +1,219 @@
+{
+  "name": "AnalysisArea",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisArea class contains information related to analysis areas.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fe26f692-3c0c-caac-b3ad-08ae4f6ba405",
+  "constructors": [
+    {
+      "name": "AnalysisArea",
+      "signature": "public AnalysisArea()",
+      "summary": "Initializes a new instance of the AnalysisArea class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f7f705ba-ea6c-7249-7196-3bf143d66bc0"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public void Delete()",
+      "summary": "Deletes an analysis area. Method is not implemented yet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/afc5eb62-d1b4-41e2-f375-2a911ce2aa08"
+    },
+    {
+      "name": "GetAreaHoles",
+      "signature": "public AnalysisObjectEnumerator GetAreaHoles()",
+      "summary": "Gets the area holes of the analysis area.",
+      "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The area holes of the analysis area."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/64f5bd46-62ea-5754-ae19-db73cfc9e27c"
+    },
+    {
+      "name": "GetInnerPositions",
+      "signature": "public AnalysisObjectEnumerator GetInnerPositions()",
+      "summary": "Gets the inner positions of the analysis area.",
+      "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The inner positions of the analysis area."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0447753-dfec-1cab-f755-3015aacddfa6"
+    },
+    {
+      "name": "Modify",
+      "signature": "public void Modify()",
+      "summary": "Modifies an analysis area. Method is not implemented yet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bac7832b-0fb2-0f4a-8ad3-974f53791682"
+    },
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis area. The AnalysisModelName and ID have to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d8032a19-efb2-cd48-99d5-f0bb7895330b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisDesignCode",
+      "type": "AnalysisDesignCode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the design code of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1daae090-cdd4-4141-7aa6-2feac0537f2c"
+    },
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "AnalysisType",
+      "type": "AnalysisPart.AnalysisTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis type of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9bc33bf2-3bba-69ac-93ca-4546663dffd3"
+    },
+    {
+      "name": "Area",
+      "type": "AnalysisAreaPolygon",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area polygon of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a31c48f4-6bd9-d76b-8558-2e19b38757e7"
+    },
+    {
+      "name": "AreaHoles",
+      "type": "List\u003CAnalysisAreaPolygon\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area holes of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/14a1c0cb-7f07-d4ee-6fb9-777095a03060"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "InnerPositions",
+      "type": "List\u003CAnalysisPosition\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the inner positions of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c7c79aac-5264-22e9-b451-17a2cec5857a"
+    },
+    {
+      "name": "Label",
+      "type": "AnalysisLabel",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the label of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b307d80b-4eab-76b8-138e-cd399fdf54e2"
+    },
+    {
+      "name": "Material",
+      "type": "AnalysisMaterial",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the material of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a867a9ed-c161-45c9-d072-88bc20732375"
+    },
+    {
+      "name": "Profile",
+      "type": "AnalysisCrossSection",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the profile of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b95098f4-81bd-6c55-aacc-72d981a72189"
+    },
+    {
+      "name": "RigidDiaphragm",
+      "type": "AnalysisRigidDiaphragm",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rigid diaphragm of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4cb7a9ab-f3ed-460c-f38e-d8ae5de5ea4c"
+    },
+    {
+      "name": "Thickness",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the thickness of the analysis area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17560863-a54e-82f9-e7a4-2ad65f1d6426"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,210 @@
+{
+  "name": "LcOpBackground",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpBackground class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpBackground",
+  "constructors": [
+    {
+      "name": "LcOpBackground()",
+      "signature": "LcOpBackground()",
+      "summary": "Constructs a new LcOpBackground.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.%23ctor"
+    },
+    {
+      "name": "LcOpBackground(Autodesk.Navisworks.Api.Interop.LcOpBackground)",
+      "signature": "LcOpBackground(Autodesk.Navisworks.Api.Interop.LcOpBackground other)",
+      "summary": "Constructs a new LcOpBackground.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBackground",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpBackground%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetColor(Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex index)",
+      "summary": "GetColor method of LcOpBackground.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.GetColor%28Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex%29"
+    },
+    {
+      "name": "GetStyle",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle GetStyle()",
+      "summary": "GetStyle method of LcOpBackground.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.GetStyle"
+    },
+    {
+      "name": "GetDefaultColor",
+      "signature": "static Autodesk.Navisworks.Api.Color GetDefaultColor(Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex index)",
+      "summary": "GetDefaultColor method of LcOpBackground.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.GetDefaultColor%28Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpBackground InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpBackground.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBackground",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "GetDefaultStyle",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle GetDefaultStyle()",
+      "summary": "GetDefaultStyle method of LcOpBackground.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.GetDefaultStyle"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpBackground.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Reset",
+      "signature": "void Reset()",
+      "summary": "Reset method of LcOpBackground.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.Reset"
+    },
+    {
+      "name": "SetColor",
+      "signature": "void SetColor(Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex index, Autodesk.Navisworks.Api.Color color)",
+      "summary": "SetColor method of LcOpBackground.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.SetColor%28Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetStyle",
+      "signature": "void SetStyle(Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle background_style)",
+      "summary": "SetStyle method of LcOpBackground.",
+      "params": [
+        {
+          "name": "background_style",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.SetStyle%28Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpBackground.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpBackground.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

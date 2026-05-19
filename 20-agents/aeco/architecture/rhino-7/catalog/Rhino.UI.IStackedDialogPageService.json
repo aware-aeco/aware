@@ -1,0 +1,191 @@
+{
+  "name": "IStackedDialogPageService",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "For internal use, the IStackedDialogPageService service is implemented in RhinoWindows or RhinoMac as appropriate and handles the communication with core Rhino",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_IStackedDialogPageService.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetImageHandle(Icon, Boolean)",
+      "signature": "IntPtr GetImageHandle(Icon icon, bool canBeNull)",
+      "summary": "Convert image to platform specific unmanaged pointer",
+      "params": [
+        {
+          "name": "icon",
+          "type": "System.Drawing.Icon",
+          "doc": "[Missing \u003Cparam name=\u0022icon\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetImageHandle(System.Drawing.Icon,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "canBeNull",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022canBeNull\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetImageHandle(System.Drawing.Icon,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetImageHandle(System.Drawing.Icon,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IStackedDialogPageService_GetImageHandle.htm"
+    },
+    {
+      "name": "GetImageHandle(Image, Boolean)",
+      "signature": "IntPtr GetImageHandle(Image image, bool canBeNull)",
+      "summary": "Convert image to platform specific unmanaged pointer",
+      "params": [
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "[Missing \u003Cparam name=\u0022image\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetImageHandle(System.Drawing.Image,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "canBeNull",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022canBeNull\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetImageHandle(System.Drawing.Image,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetImageHandle(System.Drawing.Image,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IStackedDialogPageService_GetImageHandle_1.htm"
+    },
+    {
+      "name": "GetNativePageWindow(Object, Boolean, Boolean, Object)",
+      "signature": "IntPtr GetNativePageWindow(Object nativeWindowObject, bool isRhinoPanel, bool applyPanelStyles, out Object host)",
+      "summary": "Get the unmanaged pointer associated with the pages content control",
+      "params": [
+        {
+          "name": "nativeWindowObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022nativeWindowObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "isRhinoPanel",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022isRhinoPanel\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "applyPanelStyles",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022applyPanelStyles\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "host",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022host\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IStackedDialogPageService_GetNativePageWindow.htm"
+    },
+    {
+      "name": "GetNativePageWindow(Object, Boolean, Boolean, Object, Object)",
+      "signature": "IntPtr GetNativePageWindow(Object pageObject, bool isRhinoPanel, bool applyPanelStyles, out Object nativeWindowObject, out Object host)",
+      "summary": "Get the unmanaged pointer associated with the pages content control",
+      "params": [
+        {
+          "name": "pageObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022pageObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@,System.Object@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "isRhinoPanel",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022isRhinoPanel\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@,System.Object@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "applyPanelStyles",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022applyPanelStyles\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@,System.Object@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "nativeWindowObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022nativeWindowObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@,System.Object@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "host",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022host\u0022/\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@,System.Object@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IStackedDialogPageService.GetNativePageWindow(System.Object,System.Boolean,System.Boolean,System.Object@,System.Object@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IStackedDialogPageService_GetNativePageWindow_1.htm"
+    },
+    {
+      "name": "RedrawPageControl",
+      "signature": "void RedrawPageControl(Object pageControl)",
+      "summary": "Redraw the specified control.",
+      "params": [
+        {
+          "name": "pageControl",
+          "type": "System.Object",
+          "doc": "Control to redraw",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IStackedDialogPageService_RedrawPageControl.htm"
+    },
+    {
+      "name": "TryGetControlMinimumSize",
+      "signature": "bool TryGetControlMinimumSize(Object controlObject, out SizeF size)",
+      "summary": "Get the minimum size associated with a control object",
+      "params": [
+        {
+          "name": "controlObject",
+          "type": "System.Object",
+          "doc": "The control object to check for minimum size.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.SizeF",
+          "doc": "The minimum size of the control if provided.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if get control minimum size found, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IStackedDialogPageService_TryGetControlMinimumSize.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

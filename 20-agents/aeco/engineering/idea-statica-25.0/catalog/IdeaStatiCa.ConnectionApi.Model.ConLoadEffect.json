@@ -1,0 +1,54 @@
+{
+  "name": "ConLoadEffect",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConLoadEffect.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffect.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsPercentage",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffect.isPercentage.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffect.md"
+    },
+    {
+      "name": "MemberLoadings",
+      "type": "List\u003CConLoadEffectMemberLoad\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffect.memberLoadings.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffect.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffect.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffect.md"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffect.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffect.md"
+    },
+    {
+      "name": "Active",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadEffect.active.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConLoadEffect.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

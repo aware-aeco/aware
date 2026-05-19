@@ -1,0 +1,170 @@
+{
+  "name": "ReinforcementLabel",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.ReinforcementLabel.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/",
+  "constructors": [
+    {
+      "name": "ReinforcementLabel",
+      "signature": "ReinforcementLabel() | ReinforcementLabel( reinforcementType: ReinforcementType, type: LabelType, positionNumber: int, labelProp: ReinforcementLabelProperties, labelPoint: Point2D, angle: Angle, ) | ReinforcementLabel( reinforcementType: ReinforcementType, type: LabelType, positionNumber: int, labelProp: ReinforcementLabelProperties, shapeSide: int, shapeSideFactor: float, labelOffset: Vector2D, angle: Angle, ) | ReinforcementLabel( reinforcementType: ReinforcementType, type: LabelType, positionNumber: int, labelProp: ReinforcementLabelProperties, bDimLineAtShapeStart: bool, dimLineOffset: float, ) | ReinforcementLabel( reinforcementType: ReinforcementType, type: LabelType, positionNumber: int, labelProp: ReinforcementLabelProperties, pointerProp: ReinforcementLabelPointerProperties, bDimLineAtShapeStart: bool, dimLineOffset: float, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetAdditionalText",
+      "signature": "SetAdditionalText(additionalText: str)",
+      "summary": "Set the additional text",
+      "remarks": "Set the additional text",
+      "params": [
+        {
+          "name": "additionalText",
+          "type": "str",
+          "doc": "Additional text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.SetAdditionalText"
+    },
+    {
+      "name": "SetLabelOffset",
+      "signature": "SetLabelOffset(labelOffset: Vector2D)",
+      "summary": "Set the label offset",
+      "remarks": "Set the label offset",
+      "params": [
+        {
+          "name": "labelOffset",
+          "type": "Vector2D",
+          "doc": "Label offset",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.SetLabelOffset"
+    },
+    {
+      "name": "SetPointerStartPoint",
+      "signature": "SetPointerStartPoint(pointerStartPoint: Point2D)",
+      "summary": "Set the start pointer of the text pointer",
+      "remarks": "Set the start pointer of the text pointer",
+      "params": [
+        {
+          "name": "pointerStartPoint",
+          "type": "Point2D",
+          "doc": "Start point of the text pointer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.SetPointerStartPoint"
+    },
+    {
+      "name": "SetShowTextPointer",
+      "signature": "SetShowTextPointer(showTextPointer: bool)",
+      "summary": "Set the state for showing the text pointer",
+      "remarks": "Set the state for showing the text pointer",
+      "params": [
+        {
+          "name": "showTextPointer",
+          "type": "bool",
+          "doc": "Show the text pointer: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.SetShowTextPointer"
+    },
+    {
+      "name": "SetShowTextPointerEndSymbol",
+      "signature": "SetShowTextPointerEndSymbol(showTextPointerEndSymbol: bool)",
+      "summary": "Set the state for showing the text pointer end symbol",
+      "remarks": "Set the state for showing the text pointer end symbol",
+      "params": [
+        {
+          "name": "showTextPointerEndSymbol",
+          "type": "bool",
+          "doc": "Show the text pointer end symbol: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.SetShowTextPointerEndSymbol"
+    },
+    {
+      "name": "SetTextProperties",
+      "signature": "SetTextProperties(textProperties: TextProperties)",
+      "summary": "Set the text properties",
+      "remarks": "Set the text properties",
+      "params": [
+        {
+          "name": "textProperties",
+          "type": "TextProperties",
+          "doc": "Text properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.SetTextProperties"
+    },
+    {
+      "name": "SetVisibleBars",
+      "signature": "SetVisibleBars(visibleBars: list[int] | VecIntList)",
+      "summary": "Set the vector with the visible bars",
+      "remarks": "Set the vector with the visible bars",
+      "params": [
+        {
+          "name": "visibleBars",
+          "type": "list[int] | VecIntList",
+          "doc": "Vector with the visible bars: 1, 2, 3, .. index from left; -1, -2, -3, ... index from right, 0 = center",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.SetVisibleBars"
+    },
+    {
+      "name": "ShowAllBars",
+      "signature": "ShowAllBars(bShowAllBars: bool)",
+      "summary": "Set the all bars inside the dimension line, ... state",
+      "remarks": "Set the all bars inside the dimension line, ... state",
+      "params": [
+        {
+          "name": "bShowAllBars",
+          "type": "bool",
+          "doc": "Show all bars in the dimension lines, ...: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/#NemAll_Python_Reinforcement.ReinforcementLabel.ShowAllBars"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

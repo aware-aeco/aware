@@ -1,0 +1,49 @@
+{
+  "name": "InstanceDefinitionArchiveFileStatus",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "The archive file of a linked instance definition can have the following possible states. Use InstanceObject.ArchiveFileStatus to query a instance definition\u0027s archive file status.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_InstanceDefinitionArchiveFileStatus.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NotALinkedInstanceDefinition",
+      "value": -3,
+      "summary": "The instance definition is not a linked instance definition."
+    },
+    {
+      "name": "LinkedFileNotReadable",
+      "value": -2,
+      "summary": "The instance definition\u0027s archive file is not readable."
+    },
+    {
+      "name": "LinkedFileNotFound",
+      "value": -1,
+      "summary": "The instance definition\u0027s archive file cannot be found."
+    },
+    {
+      "name": "LinkedFileIsUpToDate",
+      "value": 0,
+      "summary": "The instance definition\u0027s archive file is up-to-date."
+    },
+    {
+      "name": "LinkedFileIsNewer",
+      "value": 1,
+      "summary": "The instance definition\u0027s archive file is newer."
+    },
+    {
+      "name": "LinkedFileIsOlder",
+      "value": 2,
+      "summary": "The instance definition\u0027s archive file is older."
+    },
+    {
+      "name": "LinkedFileIsDifferent",
+      "value": 3,
+      "summary": "The instance definition\u0027s archive file is different."
+    }
+  ]
+}

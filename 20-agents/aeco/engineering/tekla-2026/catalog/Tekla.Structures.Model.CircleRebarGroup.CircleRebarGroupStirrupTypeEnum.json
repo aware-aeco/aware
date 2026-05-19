@@ -1,0 +1,24 @@
+{
+  "name": "CircleRebarGroup.CircleRebarGroupStirrupTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different stirrup types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1053de24-3e25-9b11-8b1c-30adc1a537b7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "STIRRUP_TYPE_CIRCLE",
+      "value": 0,
+      "summary": "The circle type of stirrup."
+    },
+    {
+      "name": "STIRRUP_TYPE_SPIRAL",
+      "value": 1,
+      "summary": "The spiral type of stirrup."
+    }
+  ]
+}

@@ -1,0 +1,1397 @@
+{
+  "name": "Model",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This is the interface to a SketchUp model. The model is the 3D drawing that the user is working with, and it serves as the \u201Centry point\u201D for most Ruby API interactions. The Sketchup.active_model method gives you a handle to the current model, and from there you can use the model-level methods to start getting information and making changes.",
+  "remarks": "Known Bugs: Prior to SketchUp 2019.0 this class would yield TypeError for all method calls if #singleton_class was called on the model object.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "abort_operation",
+      "signature": "abort_operation =\u003E Boolean",
+      "summary": "Note: Never abort a transparent operation.",
+      "remarks": "Note: Never abort a transparent operation. Doing so would abort the operation it chains to. Instead, try to clean up and simply commit in order to make sure the operation is closed. The #abort_operation method aborts the current operation started with the start_operation method. The #abort_operation method is normally called from inside of a rescue clause to cancel an operation if something goes wrong.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#abort_operation-instance_method"
+    },
+    {
+      "name": "active_entities",
+      "signature": "active_entities =\u003E Sketchup::Entities",
+      "summary": "Returns an Entities object which contains the entities in the open group or component instance.",
+      "remarks": "Returns an Entities object which contains the entities in the open group or component instance. If no group or component is open for editing then this will be the same as #entities. To perform actions upon the current set of entities the user is working with then this is the method to use. Entities selected by the user will be a subset of the active entities.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Entities",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#active_entities-instance_method"
+    },
+    {
+      "name": "active_section_planes",
+      "signature": "active_section_planes =\u003E Array\u003CSketchup::SectionPlane\u003E",
+      "summary": "The #active_section_planes method returns all of the active section planes in the model.",
+      "remarks": "The #active_section_planes method returns all of the active section planes in the model.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CSketchup::SectionPlane\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#active_section_planes-instance_method"
+    },
+    {
+      "name": "active_view",
+      "signature": "active_view =\u003E Sketchup::View",
+      "summary": "The #active_view method returns the active View object for this model.",
+      "remarks": "The #active_view method returns the active View object for this model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::View",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#active_view-instance_method"
+    },
+    {
+      "name": "add_note",
+      "signature": "add_note(note, x, y) =\u003E Sketchup::Text",
+      "summary": "Add a text note to the Model.",
+      "remarks": "Add a text note to the Model. The position of the note is given as relative window positions between 0 and 1. For example, the following command would create a note that start 1/10 of the ways down the screen from the upper left corner of the window.",
+      "params": [
+        {
+          "name": "note",
+          "type": "String",
+          "doc": "A string note.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "Numeric",
+          "doc": "A distance along the x axis between 0 and 1.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Numeric",
+          "doc": "A distance along the y axis between 0 and 1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Text",
+        "doc": "a note object or an exception if it is unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#add_note-instance_method"
+    },
+    {
+      "name": "add_observer",
+      "signature": "add_observer(observer) =\u003E Boolean",
+      "summary": "The add_observer method is used to add an observer to the current object.",
+      "remarks": "The add_observer method is used to add an observer to the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#add_observer-instance_method"
+    },
+    {
+      "name": "attribute_dictionaries",
+      "signature": "attribute_dictionaries =\u003E Sketchup::AttributeDictionaries",
+      "summary": "The #attribute_dictionaries method retrieves the AttributeDictionaries object that is associated with the Model.",
+      "remarks": "The #attribute_dictionaries method retrieves the AttributeDictionaries object that is associated with the Model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::AttributeDictionaries",
+        "doc": "the AttributeDictionaries object associated with the entity, or nil if there are no attribute_dictionary objects associated with the model. Care must be taken if nil is returned, for example: invoking attribute_dictionaries.length will throw a NoMethodError exception, not return 0."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#attribute_dictionaries-instance_method"
+    },
+    {
+      "name": "attribute_dictionary",
+      "signature": "attribute_dictionary(name, create = false) =\u003E Sketchup::AttributeDictionary",
+      "summary": "Returns the Sketchup::AttributeDictionary object that is specified by name.",
+      "remarks": "Returns the Sketchup::AttributeDictionary object that is specified by name. If the model does not have an attribute dictionary that corresponds to name, returns either nil, or a creates an attribute dictionary. If the optional second argument is true, and there is no attribute dictionary that corresponds to name, a new attribute dictionary is created.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the dictionary you are attempting to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "create",
+          "type": "Boolean",
+          "doc": "if set to true an attribute dictionary of the given \u201Cname\u201D will be created if not found.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::AttributeDictionary",
+        "doc": "an attribute dictionary object if successful, nil if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#attribute_dictionary-instance_method"
+    },
+    {
+      "name": "axes",
+      "signature": "axes =\u003E Sketchup::Axes",
+      "summary": "The #axes method returns the drawing axes for the model.",
+      "remarks": "The #axes method returns the drawing axes for the model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Axes",
+        "doc": "the axes for the model."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#axes-instance_method"
+    },
+    {
+      "name": "behavior",
+      "signature": "behavior =\u003E Sketchup::Behavior",
+      "summary": "The behavior method retrieves the behavior of the model.",
+      "remarks": "The behavior method retrieves the behavior of the model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Behavior",
+        "doc": "behavior object for the model if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#behavior-instance_method"
+    },
+    {
+      "name": "bounds",
+      "signature": "bounds =\u003E Geom::BoundingBox",
+      "summary": "The #bounds method is used to retrieve the Geom::BoundingBox bounding the contents of a Sketchup::Model.",
+      "remarks": "The #bounds method is used to retrieve the Geom::BoundingBox bounding the contents of a Sketchup::Model.",
+      "params": [],
+      "returns": {
+        "type": "Geom::BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#bounds-instance_method"
+    },
+    {
+      "name": "classifications",
+      "signature": "classifications =\u003E Sketchup::Classifications",
+      "summary": "The #classifications method is used to retrieve the Classifications object for this model.",
+      "remarks": "The #classifications method is used to retrieve the Classifications object for this model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Classifications",
+        "doc": "a Classifications object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#classifications-instance_method"
+    },
+    {
+      "name": "close",
+      "signature": "close(ignore_changes = false) =\u003E nil",
+      "summary": "Note: As of SketchUp 2024.",
+      "remarks": "Note: As of SketchUp 2024.0 this method will ensure the next model window gets focus if there is one. Before that \u0060Sketchup.active_model\u0060 might return \u0060nil\u0060 after calling this method even though more models where open. The #close method is used to close this model. On Mac OS, only the active model can be closed. On Windows, since there can be only one document open, this method will perform a File/New operation.",
+      "params": [
+        {
+          "name": "ignore_changes",
+          "type": "Boolean",
+          "doc": "If \u0060true\u0060, model changes will be ignored and save prompts will be suppressed. If \u0060false\u0060, changes will not be ignored and save prompts will be displayed normally.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#close-instance_method"
+    },
+    {
+      "name": "close_active",
+      "signature": "close_active =\u003E Boolean",
+      "summary": "Note: Before SketchUp 2014 this method had a bug where it didn\u0027t create an undo operation and that could lead to corrupted geometry when undo/redo was used after invoking this method.",
+      "remarks": "Note: Before SketchUp 2014 this method had a bug where it didn\u0027t create an undo operation and that could lead to corrupted geometry when undo/redo was used after invoking this method. The #close_active method is used to close the currently active (open) group or component.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#close_active-instance_method"
+    },
+    {
+      "name": "commit_operation",
+      "signature": "commit_operation =\u003E Boolean",
+      "summary": "The commit_operation method commits an operation for undo.",
+      "remarks": "The commit_operation method commits an operation for undo. The commit_operation method is normally called at the end of a method to commit the operation that the method performs.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#commit_operation-instance_method"
+    },
+    {
+      "name": "definitions",
+      "signature": "definitions =\u003E Sketchup::DefinitionList",
+      "summary": "The #definitions method retrieves a definition list containing all of the component definitions in the model.",
+      "remarks": "The #definitions method retrieves a definition list containing all of the component definitions in the model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::DefinitionList",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#definitions-instance_method"
+    },
+    {
+      "name": "drawing_element_visible?",
+      "signature": "drawing_element_visible?(instance_path) =\u003E Boolean",
+      "summary": "The #drawing_element_visible? method reports whether the given drawing element in an instance path is visible given the current model options.",
+      "remarks": "The #drawing_element_visible? method reports whether the given drawing element in an instance path is visible given the current model options.",
+      "params": [
+        {
+          "name": "instance_path",
+          "type": "Sketchup::InstancePath, Array\u003CSketchup::Drawingelement\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the instance_path is not valid."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#drawing_element_visible?-instance_method"
+    },
+    {
+      "name": "edit_transform",
+      "signature": "edit_transform =\u003E Geom::Transformation",
+      "summary": "Returns the transformation of the current component edit session.",
+      "remarks": "Returns the transformation of the current component edit session. If a user has double-clicked to edit a component\u0027s geometry, this will return the transformation of that component, relative to its parent\u0027s origin. This allows one to correctly calculate \u201Clocal\u201D transformations of a given entity regardless of whether the user is in edit mode.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Transformation",
+        "doc": "the current edit Transformation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#edit_transform-instance_method"
+    },
+    {
+      "name": "entities",
+      "signature": "entities =\u003E Sketchup::Entities",
+      "summary": "Note: This does not return a collection of all the entities in the model, only the top level node of the model hierarchy.",
+      "remarks": "Note: This does not return a collection of all the entities in the model, only the top level node of the model hierarchy. To get to all entities in a model you must recursivly traverse the model. The #entities method returns an Entities object containing the entities in the root of model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Entities",
+        "doc": "an Entities object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#entities-instance_method"
+    },
+    {
+      "name": "environments",
+      "signature": "environments =\u003E Sketchup::Environments",
+      "summary": "The #environments method is used to retrieve the Environments object for this model.",
+      "remarks": "The #environments method is used to retrieve the Environments object for this model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Environments",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#environments-instance_method"
+    },
+    {
+      "name": "export",
+      "signature": "export(path, show_summary = false) =\u003E Boolean | export(path, options) =\u003E Boolean",
+      "summary": "The export method is used to export a given file format.",
+      "remarks": "The export method is used to export a given file format. It knows which format to export based on the file extension you place on the file name. For example, a filename of \u201Cthing.obj\u201D will export an OBJ file, whereas \u201Cthing.dae\u201D will export a COLLADA file. For SketchUp Pro 7.1\u002B, valid extensions include dae, kmz, 3ds, dwg, dxf, fbx, obj, wrl, and xsi. SketchUp Free only supports dae and kmz. Format Support Changes: SketchUp 7.1 added COLLADA (.dae) export capability. SketchUp Pro 2015\u002B added IFC export capability. SketchUp Pro 2016\u002B added PDF export capability. SketchUp Pro 2018\u002B added options for all 3D exporters. SketchUp 2024\u002B added glb and usdz exporters. SketchUp 2026\u002B the IFC exporter has been replaced with a new implementation that provides specific export options. See the Exporter Options file for information on creating a valid hash for the various exporters.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The name of the file to export.",
+          "optional": false
+        },
+        {
+          "name": "show_summary",
+          "type": "Boolean",
+          "doc": "Boolean to show summary dialog.",
+          "optional": true,
+          "default": "false) =\u003E Boolean | export(path, options"
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "If the file extension is unsupported."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#export-instance_method"
+    },
+    {
+      "name": "find_entity_by_id",
+      "signature": "find_entity_by_id(ids_or_array) =\u003E Array\u003CSketchup::Entity, nil\u003E",
+      "summary": "Finds and returns entities by their entityID or GUID.",
+      "remarks": "Finds and returns entities by their entityID or GUID. GUIDs looked up are only relevant to Group and ComponentInstance as these GUIDs are persistent. ComponentDefinition and Model GUIDs are not persistent and are not looked up. When given an array of IDs, an array is returned with a 1:1 mapping to the input arguments. This array may contain nil values if some ids were not found. You cannot look up a mix of entityIDs and GUIDs in the same call.",
+      "params": [
+        {
+          "name": "ids_or_array",
+          "type": "Array\u003CInteger, String\u003E",
+          "doc": "Pass either a series of ids or a single array containing ids. Ids must either be entityID Integers or GUID Strings.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array\u003CSketchup::Entity, nil\u003E",
+        "doc": "Returns an array with Entity objects for each id found and nil otherwise. Single Entity or nil when called with a single id."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#find_entity_by_id-instance_method"
+    },
+    {
+      "name": "find_entity_by_persistent_id",
+      "signature": "find_entity_by_persistent_id(ids_or_array) =\u003E Sketchup::Entity, ... | find_entity_by_persistent_id(ids_or_array, **scope) =\u003E Sketchup::Entity, ...",
+      "summary": "Finds and returns entities by their persistent id.",
+      "remarks": "Finds and returns entities by their persistent id. When given an array of IDs, an array is returned with a 1:1 mapping to the input arguments. This array may contain \u0060nil\u0060 values if some ids were not found.",
+      "params": [
+        {
+          "name": "ids_or_array",
+          "type": "Array\u003CInteger\u003E",
+          "doc": "Pass either a series of ids or a single array containing persistent ids.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Entity, Array\u003CSketchup::Entity\u003E, nil",
+        "doc": "Returns an Entity if a single PID was given or an array of Entity objects for each id found or nil if nothing was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#find_entity_by_persistent_id-instance_method"
+    },
+    {
+      "name": "georeferenced?",
+      "signature": "georeferenced? =\u003E Boolean",
+      "summary": "This methods determines if the model is georeferenced.",
+      "remarks": "This methods determines if the model is georeferenced.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#georeferenced?-instance_method"
+    },
+    {
+      "name": "get_attribute",
+      "signature": "get_attribute(dictname, key, defaultvalue = nil) =\u003E Object?",
+      "summary": "The get_attribute method gets the value of an attribute that in the AttributeDictionary with the given name.",
+      "remarks": "The get_attribute method gets the value of an attribute that in the AttributeDictionary with the given name. If no value is associated with key, or if the model does not have an attribute dictionary specified by name, the optional third parameter will be returned.",
+      "params": [
+        {
+          "name": "dictname",
+          "type": "String",
+          "doc": "The name of the dictionary containing the value.",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "The key containing the value.",
+          "optional": false
+        },
+        {
+          "name": "defaultvalue",
+          "type": "Object",
+          "doc": "default value that will be returned if a value does not exist.",
+          "optional": true,
+          "default": "nil"
+        }
+      ],
+      "returns": {
+        "type": "Object, nil",
+        "doc": "the value for a given key in the given dictionary if a value exists; the default value if a defaultvalue is provided and the value does not exist; nil if the value does not exist and no defaultvalue is provided."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#get_attribute-instance_method"
+    },
+    {
+      "name": "get_datum",
+      "signature": "get_datum =\u003E String",
+      "summary": "the get_datum method retrieves the datum, in the form of a string, used in UTM conversions.",
+      "remarks": "the get_datum method retrieves the datum, in the form of a string, used in UTM conversions.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a datum represented as a string if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#get_datum-instance_method"
+    },
+    {
+      "name": "get_product_family",
+      "signature": "get_product_family =\u003E Integer",
+      "summary": "Returns a value which indicates the product family of the installed SketchUp application.",
+      "remarks": "Returns a value which indicates the product family of the installed SketchUp application. The constants for possible return values since SketchUp 2016: ProTrial ProLicensed MakeTrial Make In earlier SketchUp versions there were no defined constants and additional values could be returned. As of SketchUp 2013, the return values were: 0 = Unknown 1 = Pro Trial 2 = Pro 3 = Pro Expired 4 = Make Trial 5 = Make Expired 6 = Make 7 = Pro License Unavailable",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the product family number."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#get_product_family-instance_method"
+    },
+    {
+      "name": "guid",
+      "signature": "guid =\u003E String",
+      "summary": "The guid method retrieves the globally unique identifier, in the form of a string, for the Model.",
+      "remarks": "The guid method retrieves the globally unique identifier, in the form of a string, for the Model. The guid will change after the model is modified and saved. The Model guid is stored with the SketchUp file; it will not change if the file is moved to another computer.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a globally unique identifier, in the form of a string, for the model"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#guid-instance_method"
+    },
+    {
+      "name": "import",
+      "signature": "import(path, options) =\u003E Boolean | import(path, show_summary = false) =\u003E Boolean",
+      "summary": "The import method is used to load a file by recognizing the file extension and calling appropriate importer.",
+      "remarks": "The import method is used to load a file by recognizing the file extension and calling appropriate importer. See DefinitionList#import for importing a 3d model file as a component definition, without activating the UI for placing an instance. See the Importer Options file for information on creating a valid hash for the various importers.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The input file path.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Hash",
+          "doc": "The options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#import-instance_method"
+    },
+    {
+      "name": "instance_path_from_pid_path",
+      "signature": "instance_path_from_pid_path(pid_path) =\u003E Sketchup::InstancePath",
+      "summary": "The #instance_path_from_pid_path method returns a instance path given a string with persistent ids representing the path to the entity.",
+      "remarks": "The #instance_path_from_pid_path method returns a instance path given a string with persistent ids representing the path to the entity.",
+      "params": [
+        {
+          "name": "pid_path",
+          "type": "String",
+          "doc": "a string with persistent ids delimited by period.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::InstancePath",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if a valid instance path cannot be created from the given input path string."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#instance_path_from_pid_path-instance_method"
+    },
+    {
+      "name": "latlong_to_point",
+      "signature": "latlong_to_point(lnglat_array) =\u003E Geom::Point3d",
+      "summary": "The latlong_to_point method converts a latitude and longitude to a Point3d object in the model.",
+      "remarks": "The latlong_to_point method converts a latitude and longitude to a Point3d object in the model. It does not actually work with a LatLong object, but operates on a 2-element array. The returned point will always be on the ground (z=0).",
+      "params": [
+        {
+          "name": "lnglat_array",
+          "type": "Array(Numeric, Numeric)",
+          "doc": "A 2-element array containing first the longitude then the latitude.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "A Point3d in model coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#latlong_to_point-instance_method"
+    },
+    {
+      "name": "layers",
+      "signature": "layers =\u003E Sketchup::Layers",
+      "summary": "The #layers method retrieves a collection of all Layers objects in the model.",
+      "remarks": "The #layers method retrieves a collection of all Layers objects in the model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Layers",
+        "doc": "a Layers object containing a collection of layers in the model"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#layers-instance_method"
+    },
+    {
+      "name": "line_styles",
+      "signature": "line_styles =\u003E Sketchup::LineStyles",
+      "summary": "The #line_styles method returns the line styles manager.",
+      "remarks": "The #line_styles method returns the line styles manager.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::LineStyles",
+        "doc": "The line styles manager."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#line_styles-instance_method"
+    },
+    {
+      "name": "list_datums",
+      "signature": "list_datums =\u003E Array\u003CString\u003E",
+      "summary": "This method retrieves an Array of all of the datums recognized by SketchUp.",
+      "remarks": "This method retrieves an Array of all of the datums recognized by SketchUp.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "An Array object containing the datums supported by SketchUp"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#list_datums-instance_method"
+    },
+    {
+      "name": "materials",
+      "signature": "materials =\u003E Sketchup::Materials",
+      "summary": "The #materials method returns a collection of all of the materials in the model.",
+      "remarks": "The #materials method returns a collection of all of the materials in the model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Materials",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#materials-instance_method"
+    },
+    {
+      "name": "mipmapping?",
+      "signature": "mipmapping? =\u003E Boolean",
+      "summary": "This method can be used to find out if mipmapping is on or off.",
+      "remarks": "This method can be used to find out if mipmapping is on or off.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#mipmapping?-instance_method"
+    },
+    {
+      "name": "modified?",
+      "signature": "modified? =\u003E Boolean",
+      "summary": "The modified? method determines if the Model has been modified since the last save.",
+      "remarks": "The modified? method determines if the Model has been modified since the last save.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#modified?-instance_method"
+    },
+    {
+      "name": "number_faces",
+      "signature": "number_faces =\u003E Integer",
+      "summary": "Returns the number faces in a model.",
+      "remarks": "Returns the number faces in a model.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#number_faces-instance_method"
+    },
+    {
+      "name": "options",
+      "signature": "options =\u003E Sketchup::OptionsManager",
+      "summary": "The #options method retrieves the options manager that defines the options settings for the model.",
+      "remarks": "The #options method retrieves the options manager that defines the options settings for the model. Use the string keys instead of numerical indicies when accessing the options as the indicies are not consistent between SketchUp versions.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::OptionsManager",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#options-instance_method"
+    },
+    {
+      "name": "overlays",
+      "signature": "overlays =\u003E Sketchup::OverlaysManager",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::OverlaysManager",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#overlays-instance_method"
+    },
+    {
+      "name": "pages",
+      "signature": "pages =\u003E Sketchup::Pages",
+      "summary": "The #pages method retrieves a Pages object containing all of the pages in the model.",
+      "remarks": "The #pages method retrieves a Pages object containing all of the pages in the model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Pages",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#pages-instance_method"
+    },
+    {
+      "name": "path",
+      "signature": "path =\u003E String",
+      "summary": "The path method retrieves the path of the file from which the model was opened.",
+      "remarks": "The path method retrieves the path of the file from which the model was opened. An empty string is returned for a model that has not been saved.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#path-instance_method"
+    },
+    {
+      "name": "place_component",
+      "signature": "place_component(componentdef, repeat = false) =\u003E Sketchup::Model?",
+      "summary": "The place_component method places a new component in the Model using the component placement tool.",
+      "remarks": "The place_component method places a new component in the Model using the component placement tool.",
+      "params": [
+        {
+          "name": "componentdef",
+          "type": "Sketchup::ComponentDefinition",
+          "doc": "A component definition object containing the definition (blueprint) for the component.",
+          "optional": false
+        },
+        {
+          "name": "repeat",
+          "type": "Boolean",
+          "doc": "If set to true, stay in the component placement tool and place multiple components.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Model, nil",
+        "doc": "The model object on success or Nil"
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the component cannot not be placed (for example, if it is an empty component definition). Added in SketchUp 2026.0."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#place_component-instance_method"
+    },
+    {
+      "name": "point_to_latlong",
+      "signature": "point_to_latlong(point) =\u003E Geom::Point3d, Geom::LatLong",
+      "summary": "The point_to_latlong method converts a point in the model to a LatLong so that you can get its latitude and longitude.",
+      "remarks": "The point_to_latlong method converts a point in the model to a LatLong so that you can get its latitude and longitude. This method uses the location information set in ShadowInfo. NOTE: SketchUp 6.0 and higher has a change where this method returns a Point3d instead of a LatLong, where the x and y values contain the LatLong coordinates.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "doc": "A Point3d object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "Point3d[longitude_deg, latitude_deg, altitude_m]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#point_to_latlong-instance_method"
+    },
+    {
+      "name": "point_to_utm",
+      "signature": "point_to_utm(point) =\u003E Geom::UTM",
+      "summary": "This method converts a Point3d object in the Model to UTM coordinates.",
+      "remarks": "This method converts a Point3d object in the Model to UTM coordinates. This method uses the location information set in ShadowInfo. See also UTM.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "doc": "A Point3d object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::UTM",
+        "doc": "a UTM object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#point_to_utm-instance_method"
+    },
+    {
+      "name": "raytest",
+      "signature": "raytest(ray, wysiwyg_flag = true) =\u003E Array(Geom::Point3d, Array\u003CSketchup::Drawingelement\u003E)?",
+      "summary": "The #raytest method is used to cast a ray (line) through the model and return the first thing that the ray hits.",
+      "remarks": "The #raytest method is used to cast a ray (line) through the model and return the first thing that the ray hits. A ray is a two element array containing a point and a vector [Geom::Point3d, Geom::Vector3d]. The point defines the start point of the ray and the vector defines the direction. If direction can not be normalized (e.g. direction = [0, 0, 0]), direction is taken as a point the ray intersects.",
+      "params": [
+        {
+          "name": "ray",
+          "type": "Array(Geom::Point3d, Geom::Vector3d)",
+          "doc": "A two element array containing a point and a vector.",
+          "optional": false
+        },
+        {
+          "name": "wysiwyg_flag",
+          "type": "Boolean",
+          "doc": "An optional boolean, added in SU8 M1, indicating whether or not to consider hidden geometry in intersect computations. If this flag is not specified, it defaults to true (WYSIWYG) - i.e. hidden geometry is not intersected against.",
+          "optional": true,
+          "default": "true) =\u003E Array(Geom::Point3d, Array\u003CSketchup::Drawingelement\u003E"
+        }
+      ],
+      "returns": {
+        "type": "Array(Geom::Point3d, Array\u003CSketchup::Drawingelement\u003E), nil",
+        "doc": "The first value is a Geom::Point3d where the item that the ray passed through exists. The second element is the instance path array of the entity that the ray hit. For example, if the ray hits a face that is contained by a component instance the instance path would be [Component1]. If the ray hit a face that is contained by a component instance, which is contained by another component instance and so on, the instance path would be [Component1, Component2, Component3\u2026]."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#raytest-instance_method"
+    },
+    {
+      "name": "remove_observer",
+      "signature": "remove_observer(observer) =\u003E Boolean",
+      "summary": "The remove_observer method is used to remove an observer from the current object.",
+      "remarks": "The remove_observer method is used to remove an observer from the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#remove_observer-instance_method"
+    },
+    {
+      "name": "rendering_options",
+      "signature": "rendering_options =\u003E Sketchup::RenderingOptions",
+      "summary": "The #rendering_options method retrieves the RenderingOptions object for this model.",
+      "remarks": "The #rendering_options method retrieves the RenderingOptions object for this model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::RenderingOptions",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#rendering_options-instance_method"
+    },
+    {
+      "name": "save",
+      "signature": "save =\u003E Boolean | save(path) =\u003E Boolean | save(path, version) =\u003E Boolean",
+      "summary": "Note: A bug in SketchUp 2016 and older caused the .",
+      "remarks": "Note: A bug in SketchUp 2016 and older caused the .skb backup file written during save to be empty. The .skp file was however valid. Note: Starting with SketchUp 2021, SketchUp is using a the same file format across versions. For instance, SketchUp 2021 can open a file made in SketchUp 2022. This method is used to save the model to a file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "If empty, the model saves to the path it is already associated with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#save-instance_method"
+    },
+    {
+      "name": "save_copy",
+      "signature": "save_copy(path) =\u003E Boolean | save_copy(path, version) =\u003E Boolean",
+      "summary": "This method is used to save the copy of the current model to a file.",
+      "remarks": "This method is used to save the copy of the current model to a file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The path of the file to save the model copy to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#save_copy-instance_method"
+    },
+    {
+      "name": "save_thumbnail",
+      "signature": "save_thumbnail(filename) =\u003E Boolean",
+      "summary": "The save_thumbnail method is used to save a thumbnail image to a file.",
+      "remarks": "The save_thumbnail method is used to save a thumbnail image to a file. The image format is specified by the file extension of filename. Supported formats are bmp, jpg, png, tif, pct, and gif.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The name of the file, with extension, to save the thumbnail as.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#save_thumbnail-instance_method"
+    },
+    {
+      "name": "select_tool",
+      "signature": "select_tool(tool) =\u003E Sketchup::Model",
+      "summary": "Note: If you call select_tool from within the initialize method of a custom tool, the call will be ignored.",
+      "remarks": "Note: If you call select_tool from within the initialize method of a custom tool, the call will be ignored. The #select_tool method is used to select a SketchUp Tool object as the active tool. To activate the native Select tool, pass nil as the argument. Before calling this method, you need to implement the SketchUp Tool interface and create a tool object. Then, pass the tool object to this method to activate it. the native Select tool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Object",
+          "doc": "A tool instance object to activate, or nil to activate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Model",
+        "doc": "The Model object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#select_tool-instance_method"
+    },
+    {
+      "name": "selection",
+      "signature": "selection =\u003E Sketchup::Selection",
+      "summary": "This method retrieves a Selection object for the model, containing the currently selected entities.",
+      "remarks": "This method retrieves a Selection object for the model, containing the currently selected entities. The entries in the selection list are not necessarily in the same order in which the user selected them.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Selection",
+        "doc": "A Selection object with 0 or more entities that are currently selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#selection-instance_method"
+    },
+    {
+      "name": "set_attribute",
+      "signature": "set_attribute(attrdictname, key, value) =\u003E Object",
+      "summary": "This method is used to set the value of an attribute in an attribute dictionary with the given name.",
+      "remarks": "This method is used to set the value of an attribute in an attribute dictionary with the given name. This method can be used create a new AttributeDictionary object, if needed.",
+      "params": [
+        {
+          "name": "attrdictname",
+          "type": "String",
+          "doc": "The name of the attribute dictionary whose attribute you wish to set.",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "The attribute name.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "doc": "The value to set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "the value that was set"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#set_attribute-instance_method"
+    },
+    {
+      "name": "set_datum",
+      "signature": "set_datum(datum) =\u003E nil",
+      "summary": "This method sets the datum used in conversions between the internal coordinate system and UTM.",
+      "remarks": "This method sets the datum used in conversions between the internal coordinate system and UTM. The default datum is WGS84. You can use the method list_datums to get a list of all of the datums supported in SketchUp. If you pass an invalid datum to set_datum, set_datum returns the default datum.",
+      "params": [
+        {
+          "name": "datum",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#set_datum-instance_method"
+    },
+    {
+      "name": "shadow_info",
+      "signature": "shadow_info =\u003E Sketchup::ShadowInfo",
+      "summary": "This method is used to retrieve the shadow information for the Model.",
+      "remarks": "This method is used to retrieve the shadow information for the Model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ShadowInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#shadow_info-instance_method"
+    },
+    {
+      "name": "start_operation",
+      "signature": "start_operation(op_name, disable_ui = false, next_transparent = false, transparent = false) =\u003E Boolean",
+      "summary": "Note: Operations in SketchUp are sequential and cannot be nested.",
+      "remarks": "Note: Operations in SketchUp are sequential and cannot be nested. If you start a new Ruby operation while another is still open, you will implicitly close the first one. The #start_operation method is used to notify SketchUp that a new operation (which can be undone) is starting. The op_name argument is a description for the operation that is displayed adjacent to the Edit \u003E Undo menu item. Make sure to provide a user friendly name for your operation. Starting with SketchUp 7.0, there are three additional booleans that one can pass in when starting an operation. It is recommended to always set disable_ui to true. It\u0027s left to false for default for compatibility reasons.",
+      "params": [
+        {
+          "name": "op_name",
+          "type": "String",
+          "doc": "name of the operation visible in the UI",
+          "optional": false
+        },
+        {
+          "name": "disable_ui",
+          "type": "Boolean",
+          "doc": "if set to true, then SketchUp\u0027s tendency to update the user interface after each geometry change will be suppressed. This can result in much faster Ruby code execution if the operation involves updating the model in any way.",
+          "optional": true,
+          "default": "false"
+        },
+        {
+          "name": "next_transparent",
+          "type": "Boolean",
+          "doc": "Deprecated! if set to true, then whatever operation comes after this one will be appended into one combined operation, allowing the user the undo both actions with a single undo command. This flag is a highly difficult one, since there are so many ways that a SketchUp user can interrupt a given operation with one of their own. Use extreme caution and test thoroughly when setting this to true.",
+          "optional": true,
+          "default": "false"
+        },
+        {
+          "name": "transparent",
+          "type": "Boolean",
+          "doc": "if set to true, then this operation will append to the previous operation. This is particularly useful for creating observers that react to user actions without littering the undo stack with extra steps that Ruby is performing.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [
+        {
+          "type": "RuntimeError",
+          "when": "if called within the context of Entities#build."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#start_operation-instance_method"
+    },
+    {
+      "name": "styles",
+      "signature": "styles =\u003E Sketchup::Styles",
+      "summary": "The #styles method retrieves the styles associated with the model.",
+      "remarks": "The #styles method retrieves the styles associated with the model.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Styles",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#styles-instance_method"
+    },
+    {
+      "name": "title",
+      "signature": "title =\u003E String",
+      "summary": "The #title method retrieves the name of the model.",
+      "remarks": "The #title method retrieves the name of the model. If the model is saved on disk, returns the file name without extension. Otherwise returns an empty string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the title of the model or an empty string (if the title is not set)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#title-instance_method"
+    },
+    {
+      "name": "tools",
+      "signature": "tools =\u003E Sketchup::Tools",
+      "summary": "The #tools method is used to retrieve the current Tools object.",
+      "remarks": "The #tools method is used to retrieve the current Tools object.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Tools",
+        "doc": "a Tools object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#tools-instance_method"
+    },
+    {
+      "name": "utm_to_point",
+      "signature": "utm_to_point(utm) =\u003E Geom::Point3d",
+      "summary": "The utm_to_point method converts a position given in UTM coordinates to a Point3d in the Model.",
+      "remarks": "The utm_to_point method converts a position given in UTM coordinates to a Point3d in the Model.",
+      "params": [
+        {
+          "name": "utm",
+          "type": "Geom::UTM",
+          "doc": "A UTM object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "A Point3d object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#utm_to_point-instance_method"
+    },
+    {
+      "name": "valid?",
+      "signature": "valid? =\u003E Boolean",
+      "summary": "Determine if a model is a valid Sketchup::Model object.",
+      "remarks": "Determine if a model is a valid Sketchup::Model object. Returns false if the model has been closed. This is useful on the mac where one can have multiple models open at the same time. In such a case, this method can tell you if the user has closed the model before you perform operations on it.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#valid?-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "active_layer",
+      "type": "Sketchup::Layer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #active_layer method retrieves the active Layer.",
+      "remarks": "The #active_layer method retrieves the active Layer. The default layer in SketchUp is layer 0.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#active_layer-instance_method"
+    },
+    {
+      "name": "active_path",
+      "type": "Array\u003CSketchup::Drawingelement\u003E, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns an array containing the sequence of entities the user has double-clicked on for editing.",
+      "remarks": "Returns an array containing the sequence of entities the user has double-clicked on for editing. This allows one to determine whether they are in component edit mode and where in the model they are. For example, if a user has double-clicked into a component to edit its geometry, and then double clicked into a sub-group to edit that, the active_path might contain: [\u003CSketchup::ComponentInstance\u003E, \u003CSketchup::Group\u003E]",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#active_path-instance_method"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The description method retrieves a description of the model as found in the Model Info \u003E Files panel.",
+      "remarks": "The description method retrieves a description of the model as found in the Model Info \u003E Files panel. The returned description can be empty. The default description for all models is empty.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#description-instance_method"
+    },
+    {
+      "name": "mipmapping",
+      "type": "Boolean",
+      "getter": false,
+      "setter": true,
+      "summary": "This method can be used to turn mipmapping on or off.",
+      "remarks": "This method can be used to turn mipmapping on or off.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#mipmapping=-instance_method"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #name method retrieves the name of the model.",
+      "remarks": "The #name method retrieves the name of the model. This property can be seen in Model Info and maps to the component name if the model is inserted into another model. This property should not be confused with the model #path.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#name-instance_method"
+    },
+    {
+      "name": "tags",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The tags method retrieves the string tags of the model.",
+      "remarks": "The tags method retrieves the string tags of the model.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#tags-instance_method"
+    },
+    {
+      "name": "VERSION_3",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_3-constant"
+    },
+    {
+      "name": "VERSION_4",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_4-constant"
+    },
+    {
+      "name": "VERSION_5",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_5-constant"
+    },
+    {
+      "name": "VERSION_6",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_6-constant"
+    },
+    {
+      "name": "VERSION_7",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_7-constant"
+    },
+    {
+      "name": "VERSION_8",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_8-constant"
+    },
+    {
+      "name": "VERSION_2013",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2013-constant"
+    },
+    {
+      "name": "VERSION_2014",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2014-constant"
+    },
+    {
+      "name": "VERSION_2015",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2015-constant"
+    },
+    {
+      "name": "VERSION_2016",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2016-constant"
+    },
+    {
+      "name": "VERSION_2017",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2017-constant"
+    },
+    {
+      "name": "VERSION_2018",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2018-constant"
+    },
+    {
+      "name": "VERSION_2019",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2019-constant"
+    },
+    {
+      "name": "VERSION_2020",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2020-constant"
+    },
+    {
+      "name": "VERSION_2021",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#VERSION_2021-constant"
+    },
+    {
+      "name": "ProTrial",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#ProTrial-constant"
+    },
+    {
+      "name": "ProLicensed",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#ProLicensed-constant"
+    },
+    {
+      "name": "MakeTrial",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#MakeTrial-constant"
+    },
+    {
+      "name": "Make",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#Make-constant"
+    },
+    {
+      "name": "LOAD_STATUS_SUCCESS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#LOAD_STATUS_SUCCESS-constant"
+    },
+    {
+      "name": "LOAD_STATUS_SUCCESS_MORE_RECENT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Model.html#LOAD_STATUS_SUCCESS_MORE_RECENT-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

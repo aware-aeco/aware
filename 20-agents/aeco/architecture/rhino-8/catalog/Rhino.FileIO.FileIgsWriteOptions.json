@@ -1,0 +1,367 @@
+{
+  "name": "FileIgsWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for writing a Igs file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileIgsWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileIgsWriteOptions",
+      "signature": "public FileIgsWriteOptions()",
+      "summary": "Initializes a new instance of the FileIgsWriteOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileIgsWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Export function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileIgsWriteOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileIgsWriteOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Author",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_Author.htm"
+    },
+    {
+      "name": "CatiaTolsize",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_CatiaTolsize.htm"
+    },
+    {
+      "name": "CatiaVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_CatiaVersion.htm"
+    },
+    {
+      "name": "ClampCurveEndKnots",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "TRUE means all periodic NURBS will have their end knots clamped.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_ClampCurveEndKnots.htm"
+    },
+    {
+      "name": "ClampSurfaceEndKnots",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_ClampSurfaceEndKnots.htm"
+    },
+    {
+      "name": "CompositeCurvesAsSingleBsplines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_CompositeCurvesAsSingleBsplines.htm"
+    },
+    {
+      "name": "CurveMaxDegree",
+      "type": "FileIgsWriteOptions.MaxDegreeMode",
+      "getter": true,
+      "setter": true,
+      "summary": "d \u003E= 3 means all NURBS curves with degree \u003E d be fit with degree d non-rational cubics.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_CurveMaxDegree.htm"
+    },
+    {
+      "name": "DoublesUseE",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use \u0022E\u0022 instead of the correct \u0022D\u0022 for double scientific notation to get around IGES bug in FastShip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_DoublesUseE.htm"
+    },
+    {
+      "name": "EolType",
+      "type": "FileIgsWriteOptions.EolMode",
+      "getter": true,
+      "setter": true,
+      "summary": "IGES files are ASCII files. You need to specify the flavor of the ASCII end of line marker.Possibilities are: TL_LF: line feed (unix) TL_CRLF: carriage return, line feed (Microsoft) TL_CR: carriage return (Apple)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_EolType.htm"
+    },
+    {
+      "name": "FitRationalCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means all rational NURBS will be fit with non-rational cubics.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_FitRationalCurves.htm"
+    },
+    {
+      "name": "FitRationalSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means non-conic rational surfaces will be fit with non-rational surfaces",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_FitRationalSurfaces.htm"
+    },
+    {
+      "name": "FlagDependentCurvesAs03",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_FlagDependentCurvesAs03.htm"
+    },
+    {
+      "name": "FlagDependentSurfacesAs03",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_FlagDependentSurfacesAs03.htm"
+    },
+    {
+      "name": "ForceBezierKnotsOnCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_ForceBezierKnotsOnCurves.htm"
+    },
+    {
+      "name": "ForceBezierKnotsOnSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means all NURBS surfaces will have their internal knots set to full multiplicity.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_ForceBezierKnotsOnSurfaces.htm"
+    },
+    {
+      "name": "ForceTrimmedSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means all surfaces will be exported as 143 or 144s CATIA may like this better.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_ForceTrimmedSurfaces.htm"
+    },
+    {
+      "name": "HideDependentObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_HideDependentObjects.htm"
+    },
+    {
+      "name": "IgesStringType",
+      "type": "FileIgsWriteOptions.IgesStringTypeMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_IgesStringType.htm"
+    },
+    {
+      "name": "IgesVersion",
+      "type": "FileIgsWriteOptions.IgeswVersionMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Version of IGES spec to write",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_IgesVersion.htm"
+    },
+    {
+      "name": "MaxSurfaceDegree",
+      "type": "FileIgsWriteOptions.MaxDegreeMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_MaxSurfaceDegree.htm"
+    },
+    {
+      "name": "MeshType",
+      "type": "FileIgsWriteOptions.MeshesMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_MeshType.htm"
+    },
+    {
+      "name": "NotesInStartSection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_NotesInStartSection.htm"
+    },
+    {
+      "name": "NoZerosInTSection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The GridTool program used at NASA Langly cannot read IGES files that have leading zeros in the T section.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_NoZerosInTSection.htm"
+    },
+    {
+      "name": "Organization",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_Organization.htm"
+    },
+    {
+      "name": "PointType",
+      "type": "FileIgsWriteOptions.PointObjectsMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_PointType.htm"
+    },
+    {
+      "name": "PolySurfaceType",
+      "type": "FileIgsWriteOptions.PolySurfacesMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_PolySurfaceType.htm"
+    },
+    {
+      "name": "Receiver",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_Receiver.htm"
+    },
+    {
+      "name": "RenderColorAsIgesColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_RenderColorAsIgesColor.htm"
+    },
+    {
+      "name": "Scale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "(model space units)/(real world units) For example, if unit_system = TL_INCHES and 1 model space unit = 8 inches, then scale = 0.125.Note that model space units are stored in the IGES file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_Scale.htm"
+    },
+    {
+      "name": "Sender",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_Sender.htm"
+    },
+    {
+      "name": "SimplifyCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "TRUE means NURBS that are lines or arcs will be written as lines or arcs instead of 126\u0027s",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_SimplifyCurves.htm"
+    },
+    {
+      "name": "SimplifySurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means that NURBS surfaces that are ruled surfaces or surfaces of revolution will be written as ruled surfaces or surfaces of revolution.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_SimplifySurfaces.htm"
+    },
+    {
+      "name": "SolidType",
+      "type": "FileIgsWriteOptions.SolidsMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_SolidType.htm"
+    },
+    {
+      "name": "SplitBiPolarSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_SplitBiPolarSurfaces.htm"
+    },
+    {
+      "name": "SplitClosedSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_SplitClosedSurfaces.htm"
+    },
+    {
+      "name": "SurfaceType",
+      "type": "FileIgsWriteOptions.SurfacesMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_SurfaceType.htm"
+    },
+    {
+      "name": "Tolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "In model space units specified above",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_Tolerance.htm"
+    },
+    {
+      "name": "Units",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_Units.htm"
+    },
+    {
+      "name": "UseParentLabelOnCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "copy parent label to dependent curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_UseParentLabelOnCurves.htm"
+    },
+    {
+      "name": "UseParentLabelOnSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "copy parent label to dependent srfs",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_UseParentLabelOnSurfaces.htm"
+    },
+    {
+      "name": "WriteNonPlanarUnitNormal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means the UnitNormal will be written regardless, even if the curve is non planar",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileIgsWriteOptions_WriteNonPlanarUnitNormal.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

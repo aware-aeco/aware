@@ -1,0 +1,97 @@
+{
+  "name": "LinkFrameAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LinkFrameAttributes class contains the attributes for controlling the appearance of a link frame.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/46352982-8c81-4d2f-b58d-05ef4466176f",
+  "constructors": [
+    {
+      "name": "LinkFrameAttributes",
+      "signature": "public LinkFrameAttributes()",
+      "summary": "Initializes a new instance of the LinkFrameAttributes class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/39e5655a-9ad9-8848-9e2a-31a640bc4a9b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetAxisAlignedBoundingBox()",
+      "summary": "Gets the bounding box of the frame in the global axis coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the global axis coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a41d1798-1556-f561-f40b-79a9118b48f5"
+    },
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetObjectAlignedBoundingBox()",
+      "summary": "Gets the bounding box of the frame in the local coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the local coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6fe41cdb-f28b-9253-d9dc-8fe9a419471c"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b2e4ca25-cc6b-5b25-7ac6-37e67fe95ef6"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "Obsolete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a8515075-8b43-2a9d-b3d8-62b38faaee69"
+    },
+    {
+      "name": "Line",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the line type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f395582-834a-2467-a873-931c2d87eed0"
+    },
+    {
+      "name": "LineType",
+      "type": "LineTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "Obsolete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f904fcf-21fd-7e61-cab6-43954e42aaf1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

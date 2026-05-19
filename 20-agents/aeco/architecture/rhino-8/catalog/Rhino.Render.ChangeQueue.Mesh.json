@@ -1,0 +1,97 @@
+{
+  "name": "Mesh",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "Representation of ChangeQueue Mesh",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_Mesh.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetMeshes",
+      "signature": "public Mesh[] GetMeshes()",
+      "summary": "Get a SimpleArrayMeshPointer containing all meshes for the related Mesh Since Rhino 8.0, this function only ever returns a single mesh. Use the Mesh property to get this single mesh.",
+      "params": [],
+      "returns": {
+        "type": "Mesh[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.Mesh.GetMeshes\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_Mesh_GetMeshes.htm"
+    },
+    {
+      "name": "Id",
+      "signature": "public Guid Id()",
+      "summary": "Get the Object Guid this mesh is for.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "Guid of parent object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_Mesh_Id.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "ObjectAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "Get object attributes of object associated to this mesh. This will be possible only after returning true from ChangeQueue.ProvideOriginalObject()",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Mesh_Attributes.htm"
+    },
+    {
+      "name": "Mapping",
+      "type": "MappingChannelCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the mapping for this mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Mesh_Mapping.htm"
+    },
+    {
+      "name": "Mappings",
+      "type": "MappingChannel[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the mapping channels for this mesh",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Mesh_Mappings.htm"
+    },
+    {
+      "name": "Object",
+      "type": "RhinoObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Get a copy of the original RhinoObject this Mesh is created from. Possible only after return true from ChangeQueue.ProvideOriginalObject(). Access this only with a using(var o = mesh.Object) {} construct. Note that the object is free floating, i.e. not part of a document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Mesh_Object.htm"
+    },
+    {
+      "name": "OcsTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "OCS Transform for the MeshInstance - this is the Object Coordinate System texture mapping transformation set in the texture mapping properties dialog. (identity means no OCS, potentially just simple WCS/WCS Box)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Mesh_OcsTransform.htm"
+    },
+    {
+      "name": "SingleMapping",
+      "type": "MappingChannel",
+      "getter": true,
+      "setter": false,
+      "summary": "Get texture mapping info as single mapping",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Mesh_SingleMapping.htm"
+    },
+    {
+      "name": "SingleMesh",
+      "type": "Mesh",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the single mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Mesh_SingleMesh.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

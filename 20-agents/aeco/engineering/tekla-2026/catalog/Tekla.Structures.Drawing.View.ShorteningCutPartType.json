@@ -1,0 +1,29 @@
+{
+  "name": "View.ShorteningCutPartType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The vertical label position types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/bdeb3e98-0558-a3d5-d224-2b8f0a6eb242",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BothDirections",
+      "value": 1,
+      "summary": "The shortening is done to both x and y directions."
+    },
+    {
+      "name": "X_Direction",
+      "value": 2,
+      "summary": "The shortening is done only to x direction."
+    },
+    {
+      "name": "Y_Direction",
+      "value": 3,
+      "summary": "The shortening is done only to y direction."
+    }
+  ]
+}

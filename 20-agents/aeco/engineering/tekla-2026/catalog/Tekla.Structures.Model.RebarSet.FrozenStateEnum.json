@@ -1,0 +1,29 @@
+{
+  "name": "RebarSet.FrozenStateEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Represents the frozen state of the rebar set.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b9c760df-3f8e-e21b-1d7c-0870b82f6fe0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_FROZEN",
+      "value": 0,
+      "summary": "No leg faces or surface in the rebar set is frozen."
+    },
+    {
+      "name": "FULLY_FROZEN",
+      "value": 1,
+      "summary": "All of the leg faces and surfaces of the rebar set are frozen."
+    },
+    {
+      "name": "PARTIALLY_FROZEN",
+      "value": 2,
+      "summary": "Some, but not all of the leg faces and surfaces of the rebar set are frozen."
+    }
+  ]
+}

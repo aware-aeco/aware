@@ -1,0 +1,49 @@
+{
+  "name": "Part.Representation",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The part representations.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7c7b3c48-8df3-697d-d3d0-a3e06f4c467c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Outline",
+      "value": 1,
+      "summary": "The outline representation."
+    },
+    {
+      "name": "Symbol",
+      "value": 2,
+      "summary": "The symbol representation."
+    },
+    {
+      "name": "WorkshopForm",
+      "value": 4,
+      "summary": "The workshop form representation."
+    },
+    {
+      "name": "Exact",
+      "value": 8,
+      "summary": "The exact representation."
+    },
+    {
+      "name": "BoundingBox",
+      "value": 16,
+      "summary": "The bounding box representation."
+    },
+    {
+      "name": "BaseBox",
+      "value": 32,
+      "summary": "The base box representation."
+    },
+    {
+      "name": "SolidWithPartialProfile",
+      "value": 64,
+      "summary": "The solid with partial profile representation."
+    }
+  ]
+}

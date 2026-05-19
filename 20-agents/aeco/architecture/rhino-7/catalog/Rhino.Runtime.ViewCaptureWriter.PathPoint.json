@@ -1,0 +1,30 @@
+{
+  "name": "ViewCaptureWriter.PathPoint",
+  "namespace": "Rhino.Runtime",
+  "kind": "struct",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.ViewCaptureWriter.PathPoint\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_ViewCaptureWriter_PathPoint.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_ViewCaptureWriter_PathPoint_Location.htm"
+    },
+    {
+      "name": "PointType",
+      "type": "ViewCaptureWriter.PointType",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_ViewCaptureWriter_PathPoint_PointType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

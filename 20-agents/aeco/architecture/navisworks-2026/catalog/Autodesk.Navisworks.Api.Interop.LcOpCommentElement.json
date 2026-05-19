@@ -1,0 +1,281 @@
+{
+  "name": "LcOpCommentElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpCommentElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpCommentElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EditCommentList",
+      "signature": "Autodesk.Navisworks.Api.CommentCollection EditCommentList()",
+      "summary": "EditCommentList method of LcOpCommentElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.CommentCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.EditCommentList"
+    },
+    {
+      "name": "GetCommentList",
+      "signature": "Autodesk.Navisworks.Api.CommentCollection GetCommentList()",
+      "summary": "GetCommentList method of LcOpCommentElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.CommentCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.GetCommentList"
+    },
+    {
+      "name": "Edit",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpCommentElement Edit(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Edit method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpCommentElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.Edit%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "Get",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpCommentElement Get(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Get method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpCommentElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.Get%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpCommentElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpCommentElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "Create",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElement Create()",
+      "summary": "Create method of LcOpCommentElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.Create"
+    },
+    {
+      "name": "GetClass",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElementClass GetClass()",
+      "summary": "GetClass method of LcOpCommentElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.GetClass"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Delete",
+      "signature": "static bool Delete(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Delete method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.Delete%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "GetClassUserName",
+      "signature": "static string GetClassUserName()",
+      "summary": "GetClassUserName method of LcOpCommentElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.GetClassUserName"
+    },
+    {
+      "name": "GetElementClassName",
+      "signature": "static string GetElementClassName()",
+      "summary": "GetElementClassName method of LcOpCommentElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.GetElementClassName"
+    },
+    {
+      "name": "SetActiveCommentIndex",
+      "signature": "void SetActiveCommentIndex(int ndx)",
+      "summary": "SetActiveCommentIndex method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "ndx",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.SetActiveCommentIndex%28System.Int32%29"
+    },
+    {
+      "name": "SetComments",
+      "signature": "void SetComments(Autodesk.Navisworks.Api.CommentCollection comments)",
+      "summary": "SetComments method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "comments",
+          "type": "Autodesk.Navisworks.Api.CommentCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.SetComments%28Autodesk.Navisworks.Api.CommentCollection%29"
+    },
+    {
+      "name": "SetIconMappingIndex",
+      "signature": "void SetIconMappingIndex(int ndx)",
+      "summary": "SetIconMappingIndex method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "ndx",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.SetIconMappingIndex%28System.Int32%29"
+    },
+    {
+      "name": "SetOwner",
+      "signature": "void SetOwner(string new_owner)",
+      "summary": "SetOwner method of LcOpCommentElement.",
+      "params": [
+        {
+          "name": "new_owner",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.SetOwner%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpCommentElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpCommentElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

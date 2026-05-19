@@ -1,0 +1,34 @@
+{
+  "name": "LcOpMeasureToolEValidFlags",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpMeasureToolEValidFlags enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpMeasureToolEValidFlags",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eVALID_NONE",
+      "value": 0
+    },
+    {
+      "name": "eVALID_FIRST",
+      "value": 1
+    },
+    {
+      "name": "eVALID_END",
+      "value": 2
+    },
+    {
+      "name": "eVALID_VALUE",
+      "value": 4
+    },
+    {
+      "name": "eVALID_DIFF",
+      "value": 8
+    }
+  ]
+}

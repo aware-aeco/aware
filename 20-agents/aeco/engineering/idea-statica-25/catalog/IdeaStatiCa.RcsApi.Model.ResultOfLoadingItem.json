@@ -1,0 +1,30 @@
+{
+  "name": "ResultOfLoadingItem",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ResultOfLoadingItem.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfLoadingItem.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Loading",
+      "type": "Loading",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfLoadingItem.loading.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfLoadingItem.md"
+    },
+    {
+      "name": "Coefficient",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ResultOfLoadingItem.coefficient.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ResultOfLoadingItem.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,70 @@
+{
+  "name": "TextureDefinition",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "TextureDefinition class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/",
+  "constructors": [
+    {
+      "name": "TextureDefinition",
+      "signature": "TextureDefinition() | TextureDefinition(surfacePath)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/#NemAll_Python_BasisElements.TextureDefinition.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(props)",
+      "summary": "Compare operator",
+      "remarks": "Compare operator",
+      "params": [
+        {
+          "name": "props",
+          "type": "TextureDefinition",
+          "doc": "Properties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Properties a equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/#NemAll_Python_BasisElements.TextureDefinition.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/#NemAll_Python_BasisElements.TextureDefinition.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SurfacePath",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for surface path :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/#NemAll_Python_BasisElements.TextureDefinition.SurfacePath"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

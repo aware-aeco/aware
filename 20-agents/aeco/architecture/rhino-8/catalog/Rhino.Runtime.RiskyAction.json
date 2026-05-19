@@ -1,0 +1,62 @@
+{
+  "name": "RiskyAction",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Defines risky actions that need to be reported in crash exceptions",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_RiskyAction.htm",
+  "constructors": [
+    {
+      "name": "RiskyAction",
+      "signature": "public RiskyAction(string description, string file = \u0022\u0022, string member = \u0022\u0022, int line = 0)",
+      "summary": "Always create this in a using block",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.Runtime.RiskyAction.#ctor(System.String,System.String,System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "file",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022file\u0022/\u003E documentation for \u0022M:Rhino.Runtime.RiskyAction.#ctor(System.String,System.String,System.String,System.Int32)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "member",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022member\u0022/\u003E documentation for \u0022M:Rhino.Runtime.RiskyAction.#ctor(System.String,System.String,System.String,System.Int32)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "line",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022line\u0022/\u003E documentation for \u0022M:Rhino.Runtime.RiskyAction.#ctor(System.String,System.String,System.String,System.Int32)\u0022]",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RiskyAction__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "IDisposable implementation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RiskyAction_Dispose.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

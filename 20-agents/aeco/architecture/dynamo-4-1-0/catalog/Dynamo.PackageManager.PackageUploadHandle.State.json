@@ -1,0 +1,38 @@
+{
+  "name": "State",
+  "namespace": "Dynamo.PackageManager.PackageUploadHandle",
+  "kind": "enum",
+  "summary": "Type State",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageDownloadHandle.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Compressing",
+      "value": 2
+    },
+    {
+      "name": "Copying",
+      "value": 1
+    },
+    {
+      "name": "Error",
+      "value": 5
+    },
+    {
+      "name": "Ready",
+      "value": 0
+    },
+    {
+      "name": "Uploaded",
+      "value": 4
+    },
+    {
+      "name": "Uploading",
+      "value": 3
+    }
+  ]
+}

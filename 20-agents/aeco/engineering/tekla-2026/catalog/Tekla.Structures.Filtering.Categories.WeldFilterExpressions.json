@@ -1,0 +1,14 @@
+{
+  "name": "WeldFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The WeldFilterExpressions class contains all the weld filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a57ee32c-2ddd-a669-4df3-465c2b806046",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

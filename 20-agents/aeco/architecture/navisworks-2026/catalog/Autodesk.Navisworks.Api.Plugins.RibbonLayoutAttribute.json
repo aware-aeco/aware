@@ -1,0 +1,41 @@
+{
+  "name": "RibbonLayoutAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Defines a new ribbon layout in the GUI system",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.RibbonLayoutAttribute",
+  "constructors": [
+    {
+      "name": "RibbonLayoutAttribute(string)",
+      "signature": "RibbonLayoutAttribute(string xaml)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "xaml",
+          "type": "string",
+          "doc": "The Xaml file that specifies the Ribbon tab",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.RibbonLayoutAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Xaml",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The Xaml file that specifies the Ribbon tab and commands",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonLayoutAttribute.Xaml"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

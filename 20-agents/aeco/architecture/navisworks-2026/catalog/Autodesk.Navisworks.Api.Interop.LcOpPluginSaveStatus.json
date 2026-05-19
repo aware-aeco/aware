@@ -1,0 +1,42 @@
+{
+  "name": "LcOpPluginSaveStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpPluginSaveStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpPluginSaveStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSAVE_OK",
+      "value": 0
+    },
+    {
+      "name": "eSAVE_CANT_OPEN",
+      "value": 1
+    },
+    {
+      "name": "eSAVE_NO_ROOM",
+      "value": 2
+    },
+    {
+      "name": "eSAVE_UNSUPPORTED",
+      "value": 3
+    },
+    {
+      "name": "eSAVE_UNIMPLEMENTED",
+      "value": 4
+    },
+    {
+      "name": "eSAVE_CANCELED",
+      "value": 5
+    },
+    {
+      "name": "eSAVE_RELOAD",
+      "value": 6
+    }
+  ]
+}

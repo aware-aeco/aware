@@ -1,0 +1,343 @@
+{
+  "name": "PreviewSymbols",
+  "namespace": "PreviewSymbols",
+  "kind": "enum",
+  "summary": "implementation of the preview symbols",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/",
+  "constructors": [
+    {
+      "name": "PreviewSymbols",
+      "signature": "PreviewSymbols()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__get_color",
+      "signature": "__get_color(color)",
+      "summary": "get the color as ARGB value",
+      "remarks": "get the color as ARGB value",
+      "params": [
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB or color ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ARGB",
+        "doc": "_color as ARGB value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.__get_color"
+    },
+    {
+      "name": "add_arrow",
+      "signature": "add_arrow(reference_point, width, color, rotation_angle)",
+      "summary": "add an arrow symbol",
+      "remarks": "add an arrow symbol",
+      "params": [
+        {
+          "name": "reference_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "width",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB value or color ID",
+          "optional": false
+        },
+        {
+          "name": "rotation_angle",
+          "type": "Angle",
+          "doc": "rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_arrow"
+    },
+    {
+      "name": "add_circle",
+      "signature": "add_circle(reference_point, radius_pixel, color)",
+      "summary": "add a circle symbol",
+      "remarks": "add a circle symbol",
+      "params": [
+        {
+          "name": "reference_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "radius_pixel",
+          "type": "int",
+          "doc": "radius in pixel",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB value or color ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_circle"
+    },
+    {
+      "name": "add_coord_cross",
+      "signature": "add_coord_cross(plane, arm_length)",
+      "summary": "add a coordinate cross symbol",
+      "remarks": "add a coordinate cross symbol",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Union[Plane3D, AxisPlacement3D]",
+          "doc": "plane of the coordinate cross",
+          "optional": false
+        },
+        {
+          "name": "arm_length",
+          "type": "float",
+          "doc": "length of the arms",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_coord_cross"
+    },
+    {
+      "name": "add_cross",
+      "signature": "add_cross(reference_point, width, color)",
+      "summary": "add a cross symbol",
+      "remarks": "add a cross symbol",
+      "params": [
+        {
+          "name": "reference_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "width",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB value or color ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_cross"
+    },
+    {
+      "name": "add_filled_rectangle",
+      "signature": "add_filled_rectangle(reference_point, width, color, rotation_angle)",
+      "summary": "add a filled rectangle symbol",
+      "remarks": "add a filled rectangle symbol",
+      "params": [
+        {
+          "name": "reference_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "width",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB value or color ID",
+          "optional": false
+        },
+        {
+          "name": "rotation_angle",
+          "type": "Angle",
+          "doc": "rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_filled_rectangle"
+    },
+    {
+      "name": "add_mark",
+      "signature": "add_mark(reference_point, width, color)",
+      "summary": "add mark symbol",
+      "remarks": "add mark symbol",
+      "params": [
+        {
+          "name": "reference_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "width",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB value or color ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_mark"
+    },
+    {
+      "name": "add_polyline",
+      "signature": "add_polyline(reference_point, polyline, color, line_pattern=4095)",
+      "summary": "add a polyline symbol",
+      "remarks": "add a polyline symbol",
+      "params": [
+        {
+          "name": "reference_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "polyline",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB value or color ID",
+          "optional": false
+        },
+        {
+          "name": "line_pattern",
+          "type": "object",
+          "doc": "line pattern as 0/1 patten",
+          "optional": true,
+          "default": "4095"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_polyline"
+    },
+    {
+      "name": "add_text",
+      "signature": "add_text(text, reference_point, ref_pnt_pos, height, color, rotation_angle)",
+      "summary": "add a text symbol",
+      "remarks": "add a text symbol",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text",
+          "optional": false
+        },
+        {
+          "name": "reference_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "ref_pnt_pos",
+          "type": "TextReferencePointPosition",
+          "doc": "point position of the reference point",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "height",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Union[ARGB, int]",
+          "doc": "color as ARGB value or color ID",
+          "optional": false
+        },
+        {
+          "name": "rotation_angle",
+          "type": "Angle",
+          "doc": "rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.add_text"
+    },
+    {
+      "name": "draw",
+      "signature": "draw(insert_matrix, view_projection)",
+      "summary": "draw the symbols",
+      "remarks": "draw the symbols",
+      "params": [
+        {
+          "name": "insert_matrix",
+          "type": "Matrix3D",
+          "doc": "insert matrix",
+          "optional": false
+        },
+        {
+          "name": "view_projection",
+          "type": "ViewWorldProjection",
+          "doc": "view world projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/#PreviewSymbols.PreviewSymbols.draw"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,134 @@
+{
+  "name": "PaintColor",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Contains enumerated constant values to represent logical colors associated with elements of the user interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_PaintColor.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NormalStart",
+      "value": 0,
+      "summary": "Gradient start for active toolbar tab and non-client area of Rhino."
+    },
+    {
+      "name": "NormalEnd",
+      "value": 1,
+      "summary": "Gradient end for active toolbar tab and non-client area of Rhino."
+    },
+    {
+      "name": "NormalBorder",
+      "value": 2,
+      "summary": "Edge color used for grippers, toolbar border, resize bars, status bar pane borders."
+    },
+    {
+      "name": "HotStart",
+      "value": 3,
+      "summary": "Gradient start for inactive toolbar tab."
+    },
+    {
+      "name": "HotEnd",
+      "value": 4,
+      "summary": "Gradient end for inactive toolbar tab."
+    },
+    {
+      "name": "HotBorder",
+      "value": 5,
+      "summary": "Inactive toolbar tab border."
+    },
+    {
+      "name": "PressedStart",
+      "value": 6,
+      "summary": "Pressed gradient start."
+    },
+    {
+      "name": "PressedEnd",
+      "value": 7,
+      "summary": "Pressed gradient end."
+    },
+    {
+      "name": "PressedBorder",
+      "value": 8,
+      "summary": "Pressed border."
+    },
+    {
+      "name": "TextEnabled",
+      "value": 9,
+      "summary": "Toolbar tab text and status bar text."
+    },
+    {
+      "name": "TextDisabled",
+      "value": 10,
+      "summary": "Disabled text color."
+    },
+    {
+      "name": "MouseOverControlStart",
+      "value": 11,
+      "summary": "Color for hovering gradient start."
+    },
+    {
+      "name": "MouseOverControlEnd",
+      "value": 12,
+      "summary": "Color for hovering gradient end."
+    },
+    {
+      "name": "MouseOverControlBorder",
+      "value": 13,
+      "summary": "Color for hovering border."
+    },
+    {
+      "name": "ActiveCaption",
+      "value": 14,
+      "summary": "Active floating window non-client area"
+    },
+    {
+      "name": "InactiveCaption",
+      "value": 15,
+      "summary": "Inactive floating window non-client area"
+    },
+    {
+      "name": "PanelBackground",
+      "value": 16,
+      "summary": "Background color of panels"
+    },
+    {
+      "name": "ActiveViewportTitle",
+      "value": 17,
+      "summary": "Active viewport title."
+    },
+    {
+      "name": "InactiveViewportTitle",
+      "value": 18,
+      "summary": "Inactive viewport title."
+    },
+    {
+      "name": "ModifiedValueControlColor",
+      "value": 19,
+      "summary": "Modified property value label text color"
+    },
+    {
+      "name": "EditBoxBackground",
+      "value": 20,
+      "summary": "Background fill for input elements (edit box, checkbox)"
+    },
+    {
+      "name": "GridLinesOnPanelBackground",
+      "value": 21,
+      "summary": "Grid lines on panel background color"
+    },
+    {
+      "name": "GridLinesOnEditBoxBackground",
+      "value": 22,
+      "summary": "Grid lines on edit box background color"
+    },
+    {
+      "name": "InactiveTabBackground",
+      "value": 23,
+      "summary": "Fill for inactive tabs"
+    }
+  ]
+}

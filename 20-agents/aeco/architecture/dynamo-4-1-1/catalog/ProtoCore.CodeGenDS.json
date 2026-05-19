@@ -1,0 +1,70 @@
+{
+  "name": "CodeGenDS",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "The code generator takes Abstract Syntax Tree and generates the DesignScript code",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeGenDS.cs",
+  "constructors": [
+    {
+      "name": "CodeGenDS(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void CodeGenDS(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E astList)",
+      "summary": "This is used during ProtoAST generation to connect BinaryExpressionNode\u0027s generated from Block nodes to its child AST tree - pratapa",
+      "params": [
+        {
+          "name": "astList",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeGenDS.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EmitCode(string)",
+      "signature": "void EmitCode(string code)",
+      "summary": "This function prints the DS code into the destination stream",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeGenDS.cs"
+    },
+    {
+      "name": "GenerateCode",
+      "signature": "string GenerateCode()",
+      "summary": "CodeGenDS.GenerateCode",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeGenDS.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "astNodeList",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "CodeGenDS.astNodeList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeGenDS.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

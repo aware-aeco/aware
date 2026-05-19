@@ -1,0 +1,14 @@
+{
+  "name": "ViewCaptureWriter.VectorGradientProc",
+  "namespace": "Rhino.Runtime",
+  "kind": "delegate",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.ViewCaptureWriter.VectorGradientProc\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_ViewCaptureWriter_VectorGradientProc.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void VectorGradientProc( IntPtr pEngine, IntPtr pHatch, float strokeWidth, IntPtr pHatchPattern, int gradientCount, IntPtr colors, IntPtr stops, IntPtr points, int linearGradient, int boundaryColor, double effectiveHatchScale )"
+}

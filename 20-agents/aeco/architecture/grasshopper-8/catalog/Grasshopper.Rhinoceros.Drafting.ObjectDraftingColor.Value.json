@@ -1,0 +1,313 @@
+{
+  "name": "ObjectDraftingColor.Value",
+  "namespace": "Grasshopper.Rhinoceros.Drafting",
+  "kind": "struct",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.Drafting.ObjectDraftingColor.Value.)",
+  "base": "GH_ISerializable",
+  "interfaces": [
+    "IEquatable\u003CObjectDraftingColor.Value\u003E",
+    "IComparable\u003CObjectDraftingColor.Value\u003E",
+    "IComparable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value.htm",
+  "constructors": [
+    {
+      "name": "ObjectDraftingColor.Value(ModelColor)",
+      "signature": "public Value(ModelColor color)",
+      "summary": "Initializes a new instance of the ObjectDraftingColor.Value class",
+      "params": [
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value__ctor.htm"
+    },
+    {
+      "name": "ObjectDraftingColor.Value(ObjectPlotColorSource)",
+      "signature": "public Value(ObjectPlotColorSource source)",
+      "summary": "Initializes a new instance of the ObjectDraftingColor.Value class",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectPlotColorSource",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value__ctor_1.htm"
+    },
+    {
+      "name": "ObjectDraftingColor.Value(ObjectPlotColorSource, ModelColor)",
+      "signature": "public Value(ObjectPlotColorSource source, ModelColor color)",
+      "summary": "Initializes a new instance of the ObjectDraftingColor.Value class",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectPlotColorSource",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo(Object)",
+      "signature": "public int CompareTo(Object other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_CompareTo_1.htm"
+    },
+    {
+      "name": "CompareTo(ObjectDraftingColor.Value)",
+      "signature": "public int CompareTo(ObjectDraftingColor.Value other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_CompareTo.htm"
+    },
+    {
+      "name": "Deconstruct",
+      "signature": "public void Deconstruct(out ObjectPlotColorSource source, out ModelColor value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectPlotColorSource",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_Deconstruct.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_Equals_1.htm"
+    },
+    {
+      "name": "Equals(ObjectDraftingColor.Value)",
+      "signature": "public bool Equals(ObjectDraftingColor.Value other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_GetHashCode.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelColor to ObjectDraftingColor.Value)",
+      "signature": "public static implicit operator ObjectDraftingColor.Value (ModelColor color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectDraftingColor.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_op_Implicit_2.htm"
+    },
+    {
+      "name": "Implicit(ObjectPlotColorSource to ObjectDraftingColor.Value)",
+      "signature": "public static implicit operator ObjectDraftingColor.Value (ObjectPlotColorSource source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectPlotColorSource",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectDraftingColor.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_op_Implicit_3.htm"
+    },
+    {
+      "name": "Implicit(ObjectDraftingColor.Value to ModelColor)",
+      "signature": "public static implicit operator ModelColor (ObjectDraftingColor.Value value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_op_Implicit_1.htm"
+    },
+    {
+      "name": "Implicit(ObjectDraftingColor.Value to ObjectPlotColorSource)",
+      "signature": "public static implicit operator ObjectPlotColorSource (ObjectDraftingColor.Value value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectPlotColorSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ByDisplay",
+      "type": "ObjectDraftingColor.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_ByDisplay.htm"
+    },
+    {
+      "name": "ByLayer",
+      "type": "ObjectDraftingColor.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_ByLayer.htm"
+    },
+    {
+      "name": "ByParent",
+      "type": "ObjectDraftingColor.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_ByParent.htm"
+    },
+    {
+      "name": "Color",
+      "type": "ModelColor",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_Color.htm"
+    },
+    {
+      "name": "Source",
+      "type": "ObjectPlotColorSource",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingColor_Value_Source.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

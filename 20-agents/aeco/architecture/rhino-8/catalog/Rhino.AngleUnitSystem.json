@@ -1,0 +1,54 @@
+{
+  "name": "AngleUnitSystem",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "ON::AngleUnitSystem identifies an angle unit system",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_AngleUnitSystem.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "ON::AngleUnitSystem::None indicates no angle unit system is specified and model angle unit system should be used."
+    },
+    {
+      "name": "Turns",
+      "value": 1,
+      "summary": "1 turn = 2pi radians."
+    },
+    {
+      "name": "Radians",
+      "value": 2,
+      "summary": "1 turn = 2pi radians."
+    },
+    {
+      "name": "Degrees",
+      "value": 3,
+      "summary": "360 arc degrees = 1 turn = 2pi radians"
+    },
+    {
+      "name": "Minutes",
+      "value": 4,
+      "summary": "60 arc minutes = 1 arc degree"
+    },
+    {
+      "name": "Seconds",
+      "value": 5,
+      "summary": "60 arc seconds = 1 arc minute"
+    },
+    {
+      "name": "Gradians",
+      "value": 6,
+      "summary": "400 gradians = 2pi radians."
+    },
+    {
+      "name": "Unset",
+      "value": 255,
+      "summary": "The ON::AngleUnitSystem::Unset is used to indicates no angle unit system has been specified in user interface code."
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+agent:        solibri-26.4.1
+version:      0.30.0
+sdk-target:   26.4.1
+display-name: solibri-26.4.1 (raw — 16 types, full coverage)
+
+description: |
+  Auto-generated from vendor docs (scrape: https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml)
+  on 2026-05-19.
+
+  Coverage: 16 types, 26 methods,
+  0 events, 45 properties.
+
+  Behavioral notes from vendor remarks/summary preserved per member.
+  See skills/ for narrative, catalog/ for structured per-type data.
+
+stateful: false
+
+vendor:   solibri
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/solibri-26.4.1
+keywords: [aeco, architecture, solibri, solibri, generated, raw, v0.30, full-coverage]
+
+provenance:
+  generated-by:     aware-agent-builder
+  generator-version: 0.30.0
+  source:
+    type: scrape
+    urls: ["https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml"]
+  generated-at: 2026-05-19T06:08:33.2675203Z
+
+transport:
+  cli:
+    binary: aware-solibri
+
+commands:
+  paths-about-async:
+    lifecycle: single
+    description: Get information about running product
+  paths-add-presentation-async:
+    lifecycle: single
+    description: Adds a new presentation
+  paths-add-slide-async:
+    lifecycle: single
+    description: Adds a new slide to the presentation
+  paths-close-smcproject-async:
+    lifecycle: single
+    description: Close a Solibri project
+  paths-delete-components-async:
+    lifecycle: single
+    description: Delete components matching the given IFC guids
+  paths-get-bcfasync:
+    lifecycle: single
+    description: Access to all, selected or marked issues based on the scope. If no scope is set the scope is all issues. Returns content of a BCF file.
+  paths-get-camera-state-async:
+    lifecycle: single
+    description: Get Camera State
+  paths-get-component-guids-async:
+    lifecycle: single
+    description: Get a list of IFC Global Unique ID (Guid) of the components
+  paths-get-information-async:
+    lifecycle: single
+    description: Get the information for given component.
+  paths-get-metadata-async:
+    lifecycle: single
+    description: Get metadata value of specified key
+  paths-get-models-async:
+    lifecycle: single
+    description: Get current models
+  paths-get-parametric-information-async:
+    lifecycle: single
+    description: Get the parametric information of the component
+  paths-get-selection-async:
+    lifecycle: single
+    description: Get IFC guids of the selected components
+  paths-get-status-async:
+    lifecycle: single
+    description: Get server status information
+  paths-open-ifcmodel-async:
+    lifecycle: single
+    description: Open IFC Model
+  paths-open-smcproject-async:
+    lifecycle: single
+    description: Open a Solibri project
+  paths-partial-update-ifcmodel-async:
+    lifecycle: single
+    description: Partial Update IFC Model
+  paths-ping-async:
+    lifecycle: single
+    description: GET /ping
+  paths-run-checking-async:
+    lifecycle: single
+    description: Runs checking and returns checking results
+  paths-save-smcproject-async:
+    lifecycle: single
+    description: Save a Solibri project
+  paths-set-camera-state-async:
+    lifecycle: single
+    description: Sets Camera State
+  paths-set-metadata-async:
+    lifecycle: single
+    description: Set metadata value for specified key
+  paths-set-selection-async:
+    lifecycle: single
+    description: Select components matching the given IFC guids
+  paths-show-info-async:
+    lifecycle: single
+    description: Show component's info in the Info view of the user interface.
+  paths-shutdown-async:
+    lifecycle: single
+    description: Shutdown the application
+  paths-update-ifcmodel-async:
+    lifecycle: single
+    description: Update IFC Model
+
+skills:
+  - solibri-rest-api.md
+  - solibri-rest-model.md

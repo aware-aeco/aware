@@ -1,0 +1,106 @@
+{
+  "name": "PropertyElement.PropertyElementType.ConnectionMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ConnectionMarkPropertyElementTypes class represents the available property element types for connection marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f89115c8-c097-a5c8-04aa-391b320e0464",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Code",
+      "signature": "public static PropertyElement.PropertyElementType Code()",
+      "summary": "Returns the code property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8d2376c6-6901-71a9-ba28-27f292306f7e"
+    },
+    {
+      "name": "ConnectionError",
+      "signature": "public static PropertyElement.PropertyElementType ConnectionError()",
+      "summary": "Returns the connection error property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f8bdf3b-4d59-8fe0-1d7e-fe4e9a71da8c"
+    },
+    {
+      "name": "ConnectionNumber",
+      "signature": "public static PropertyElement.PropertyElementType ConnectionNumber()",
+      "summary": "Returns the connection number property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/741b1f03-5c3a-ddcb-1717-06ff94a530cf"
+    },
+    {
+      "name": "DSTVCode",
+      "signature": "public static PropertyElement.PropertyElementType DSTVCode()",
+      "summary": "Returns the DSTV code property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bf801068-1b27-64b9-330a-58fc573599a3"
+    },
+    {
+      "name": "Group",
+      "signature": "public static PropertyElement.PropertyElementType Group()",
+      "summary": "Returns the group property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/088f22c9-5c1a-5c16-1265-9aabaf1ae15c"
+    },
+    {
+      "name": "Name",
+      "signature": "public static PropertyElement.PropertyElementType Name()",
+      "summary": "Returns the name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6eba9c44-0042-f5f2-9ca6-6c9c4901c5dd"
+    },
+    {
+      "name": "RunningNumber",
+      "signature": "public static PropertyElement.PropertyElementType RunningNumber()",
+      "summary": "Returns the running number property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6edb1485-4fa1-af78-6cce-6f6ff5b9f89b"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

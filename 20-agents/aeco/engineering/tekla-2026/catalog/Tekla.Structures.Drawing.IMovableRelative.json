@@ -1,0 +1,34 @@
+{
+  "name": "IMovableRelative",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IMovableRelative interface is implemented by objects that can be moved.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dd7c9522-fae4-f292-0602-24131a70b77e",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveObjectRelative",
+      "signature": "bool MoveObjectRelative(Vector MoveVector)",
+      "summary": "Moves the current object using the move vector. The move vector can be calculated as in the following example.",
+      "params": [
+        {
+          "name": "MoveVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The move vector to be used for moving the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/36bb86bc-dd7e-cfd1-9918-1d6962524d59"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

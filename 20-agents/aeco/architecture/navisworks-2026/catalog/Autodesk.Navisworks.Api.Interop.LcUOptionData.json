@@ -1,0 +1,315 @@
+{
+  "name": "LcUOptionData",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUOptionData class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionData",
+  "constructors": [
+    {
+      "name": "LcUOptionData()",
+      "signature": "LcUOptionData()",
+      "summary": "Constructs a new LcUOptionData.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSubOptions",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSet GetSubOptions()",
+      "summary": "GetSubOptions method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetSubOptions"
+    },
+    {
+      "name": "GetFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag GetFlags()",
+      "summary": "GetFlags method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetFlags"
+    },
+    {
+      "name": "GetProfile",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile GetProfile()",
+      "summary": "GetProfile method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetProfile"
+    },
+    {
+      "name": "GetUserFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag GetUserFlags()",
+      "summary": "GetUserFlags method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetUserFlags"
+    },
+    {
+      "name": "GetValidator",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator GetValidator()",
+      "summary": "GetValidator method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetValidator"
+    },
+    {
+      "name": "GetData",
+      "signature": "Autodesk.Navisworks.Api.VariantData GetData()",
+      "summary": "GetData method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetData"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUOptionData InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUOptionData.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUOptionData.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetClassName",
+      "signature": "string GetClassName()",
+      "summary": "GetClassName method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetClassName"
+    },
+    {
+      "name": "GetName",
+      "signature": "string GetName()",
+      "summary": "GetName method of LcUOptionData.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.GetName"
+    },
+    {
+      "name": "SetClassName",
+      "signature": "void SetClassName(string name)",
+      "summary": "SetClassName method of LcUOptionData.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetClassName%28System.String%29"
+    },
+    {
+      "name": "SetData",
+      "signature": "void SetData(Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "SetData method of LcUOptionData.",
+      "params": [
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetData%28Autodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "SetFlags",
+      "signature": "void SetFlags(Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "SetFlags method of LcUOptionData.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetFlags%28Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "SetName",
+      "signature": "void SetName(string name)",
+      "summary": "SetName method of LcUOptionData.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetName%28System.String%29"
+    },
+    {
+      "name": "SetProfile",
+      "signature": "void SetProfile(Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "SetProfile method of LcUOptionData.",
+      "params": [
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetProfile%28Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "SetSubOptions",
+      "signature": "void SetSubOptions(Autodesk.Navisworks.Api.Interop.LcUOptionSet sub_options)",
+      "summary": "SetSubOptions method of LcUOptionData.",
+      "params": [
+        {
+          "name": "sub_options",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetSubOptions%28Autodesk.Navisworks.Api.Interop.LcUOptionSet%29"
+    },
+    {
+      "name": "SetUserFlags",
+      "signature": "void SetUserFlags(Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag flags)",
+      "summary": "SetUserFlags method of LcUOptionData.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetUserFlags%28Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag%29"
+    },
+    {
+      "name": "SetValidator",
+      "signature": "void SetValidator(Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "SetValidator method of LcUOptionData.",
+      "params": [
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.SetValidator%28Autodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUOptionData.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUOptionData.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

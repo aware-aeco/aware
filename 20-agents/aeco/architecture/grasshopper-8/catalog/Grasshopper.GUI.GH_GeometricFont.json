@@ -1,0 +1,708 @@
+{
+  "name": "GH_GeometricFont",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Exposes methods for drawing geometric characters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_GeometricFont.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Draw0",
+      "signature": "public static void Draw0(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00270\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw0.htm"
+    },
+    {
+      "name": "Draw1",
+      "signature": "public static void Draw1(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00271\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw1.htm"
+    },
+    {
+      "name": "Draw2",
+      "signature": "public static void Draw2(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00272\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw2.htm"
+    },
+    {
+      "name": "Draw3",
+      "signature": "public static void Draw3(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00273\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw3.htm"
+    },
+    {
+      "name": "Draw4",
+      "signature": "public static void Draw4(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00274\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw4.htm"
+    },
+    {
+      "name": "Draw5",
+      "signature": "public static void Draw5(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00275\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw5.htm"
+    },
+    {
+      "name": "Draw6",
+      "signature": "public static void Draw6(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00276\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw6.htm"
+    },
+    {
+      "name": "Draw7",
+      "signature": "public static void Draw7(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00277\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw7.htm"
+    },
+    {
+      "name": "Draw8",
+      "signature": "public static void Draw8(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00278\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw8.htm"
+    },
+    {
+      "name": "Draw9",
+      "signature": "public static void Draw9(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u00279\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_Draw9.htm"
+    },
+    {
+      "name": "DrawBracketClose",
+      "signature": "public static void DrawBracketClose(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u0027}\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawBracketClose.htm"
+    },
+    {
+      "name": "DrawBracketOpen",
+      "signature": "public static void DrawBracketOpen(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u0027{\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawBracketOpen.htm"
+    },
+    {
+      "name": "DrawDash",
+      "signature": "public static void DrawDash(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u0027-\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawDash.htm"
+    },
+    {
+      "name": "DrawNumber(Graphics, Int32, Color, PointF)",
+      "signature": "public static void DrawNumber(Graphics graphics, int number, Color colour, PointF position)",
+      "summary": "Draw an integer at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics to draw with.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "Number to draw.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to draw with.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Position for first character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawNumber.htm"
+    },
+    {
+      "name": "DrawNumber(Graphics, Int64, Color, PointF)",
+      "signature": "public static void DrawNumber(Graphics graphics, long number, Color colour, PointF position)",
+      "summary": "Draw an integer at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics to draw with.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Int64",
+          "doc": "Number to draw.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to draw with.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Position for first character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawNumber_1.htm"
+    },
+    {
+      "name": "DrawNumber(Graphics, UInt32, Color, PointF)",
+      "signature": "public static void DrawNumber(Graphics graphics, uint number, Color colour, PointF position)",
+      "summary": "Draw an integer at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics to draw with.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.UInt32",
+          "doc": "Number to draw.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to draw with.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Position for first character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawNumber_2.htm"
+    },
+    {
+      "name": "DrawNumber(Graphics, UInt64, Color, PointF)",
+      "signature": "public static void DrawNumber(Graphics graphics, ulong number, Color colour, PointF position)",
+      "summary": "Draw an integer at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics to draw with.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.UInt64",
+          "doc": "Number to draw.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to draw with.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Position for first character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawNumber_3.htm"
+    },
+    {
+      "name": "DrawPath",
+      "signature": "public static void DrawPath(Graphics graphics, GH_Path path, Color colour, PointF position)",
+      "summary": "Draw an entire path string at a specific location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to draw.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of path.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of opening bracket.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawPath.htm"
+    },
+    {
+      "name": "DrawSemiColon",
+      "signature": "public static void DrawSemiColon(Graphics graphics, Color colour, PointF position)",
+      "summary": "Draw the geometric character \u0027;\u0027 at the specified location.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of character.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of character.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_GeometricFont_DrawSemiColon.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Char0",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00270\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char0.htm"
+    },
+    {
+      "name": "Char1",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00271\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char1.htm"
+    },
+    {
+      "name": "Char2",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00272\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char2.htm"
+    },
+    {
+      "name": "Char3",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00273\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char3.htm"
+    },
+    {
+      "name": "Char4",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00274\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char4.htm"
+    },
+    {
+      "name": "Char5",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00275\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char5.htm"
+    },
+    {
+      "name": "Char6",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00276\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char6.htm"
+    },
+    {
+      "name": "Char7",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00277\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char7.htm"
+    },
+    {
+      "name": "Char8",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00278\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char8.htm"
+    },
+    {
+      "name": "Char9",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u00279\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_Char9.htm"
+    },
+    {
+      "name": "CharBracketClose",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u0027}\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_CharBracketClose.htm"
+    },
+    {
+      "name": "CharBracketOpen",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u0027{\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_CharBracketOpen.htm"
+    },
+    {
+      "name": "CharDash",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u0027-\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_CharDash.htm"
+    },
+    {
+      "name": "CharSemiColon",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default geometry for \u0027;\u0027. Caller is responsible for disposing the path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_GeometricFont_CharSemiColon.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

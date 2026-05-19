@@ -1,0 +1,157 @@
+{
+  "name": "GH_BezierSolver",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Class for evaluating four-point bezier curves as used in GDI\u002B",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_BezierSolver.htm",
+  "constructors": [
+    {
+      "name": "GH_BezierSolver",
+      "signature": "public GH_BezierSolver()",
+      "summary": "Initializes a new instance of the GH_BezierSolver class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_BezierSolver__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AngleAt",
+      "signature": "public static float AngleAt(ref PointF P0, ref PointF P1, ref PointF P2, ref PointF P3, float t)",
+      "summary": "Evaluate the tangent angle of a Bezier span.",
+      "params": [
+        {
+          "name": "P0",
+          "type": "System.Drawing.PointF",
+          "doc": "Start point of bezier.",
+          "optional": false
+        },
+        {
+          "name": "P1",
+          "type": "System.Drawing.PointF",
+          "doc": "Point for start tangent.",
+          "optional": false
+        },
+        {
+          "name": "P2",
+          "type": "System.Drawing.PointF",
+          "doc": "Point for end tangent.",
+          "optional": false
+        },
+        {
+          "name": "P3",
+          "type": "System.Drawing.PointF",
+          "doc": "End point of bezier.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Single",
+          "doc": "Unit parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_BezierSolver_AngleAt.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public static PointF PointAt(ref PointF P0, ref PointF P1, ref PointF P2, ref PointF P3, float t)",
+      "summary": "Evaluate a Bezier span.",
+      "params": [
+        {
+          "name": "P0",
+          "type": "System.Drawing.PointF",
+          "doc": "Start point of bezier.",
+          "optional": false
+        },
+        {
+          "name": "P1",
+          "type": "System.Drawing.PointF",
+          "doc": "Point for start tangent.",
+          "optional": false
+        },
+        {
+          "name": "P2",
+          "type": "System.Drawing.PointF",
+          "doc": "Point for end tangent.",
+          "optional": false
+        },
+        {
+          "name": "P3",
+          "type": "System.Drawing.PointF",
+          "doc": "End point of bezier.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Single",
+          "doc": "Unit parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_BezierSolver_PointAt.htm"
+    },
+    {
+      "name": "TangentAt",
+      "signature": "public static SizeF TangentAt(ref PointF P0, ref PointF P1, ref PointF P2, ref PointF P3, float t)",
+      "summary": "Evaluate the tangent vector of a Bezier span.",
+      "params": [
+        {
+          "name": "P0",
+          "type": "System.Drawing.PointF",
+          "doc": "Start point of bezier.",
+          "optional": false
+        },
+        {
+          "name": "P1",
+          "type": "System.Drawing.PointF",
+          "doc": "Point for start tangent.",
+          "optional": false
+        },
+        {
+          "name": "P2",
+          "type": "System.Drawing.PointF",
+          "doc": "Point for end tangent.",
+          "optional": false
+        },
+        {
+          "name": "P3",
+          "type": "System.Drawing.PointF",
+          "doc": "End point of bezier.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Single",
+          "doc": "Unit parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SizeF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_BezierSolver_TangentAt.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

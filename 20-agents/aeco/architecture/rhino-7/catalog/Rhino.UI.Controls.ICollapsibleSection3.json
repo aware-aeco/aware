@@ -1,0 +1,31 @@
+{
+  "name": "ICollapsibleSection3",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ICollapsibleSection3\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_ICollapsibleSection3.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "UpdateView",
+      "signature": "void UpdateView(uint flags)",
+      "summary": "",
+      "params": [
+        {
+          "name": "flags",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022flags\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection3.UpdateView(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ICollapsibleSection3_UpdateView.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

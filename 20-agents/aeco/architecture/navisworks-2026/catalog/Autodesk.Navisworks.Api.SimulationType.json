@@ -1,0 +1,29 @@
+{
+  "name": "SimulationType",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Type of simulation being run.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SimulationType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No simulation"
+    },
+    {
+      "name": "Timeliner",
+      "value": 1,
+      "summary": "Timeliner simulation"
+    },
+    {
+      "name": "Animator",
+      "value": 2,
+      "summary": "Animator simulation"
+    }
+  ]
+}

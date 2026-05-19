@@ -1,0 +1,1316 @@
+{
+  "name": "Vector3d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the three components of a vector in three-dimensional space, using Double-precision floating point numbers.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Vector3d.htm",
+  "constructors": [
+    {
+      "name": "Vector3d(Point3d)",
+      "signature": "public Vector3d(Point3d point)",
+      "summary": "Initializes a new instance of a vector, copying the three components from the three coordinates of a point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point to copy from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d__ctor.htm"
+    },
+    {
+      "name": "Vector3d(Vector3d)",
+      "signature": "public Vector3d(Vector3d vector)",
+      "summary": "Initializes a new instance of a vector, copying the three components from a vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A double-precision vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d__ctor_1.htm"
+    },
+    {
+      "name": "Vector3d(Vector3f)",
+      "signature": "public Vector3d(Vector3f vector)",
+      "summary": "Initializes a new instance of a vector, copying the three components from a single-precision vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "A single-precision vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d__ctor_2.htm"
+    },
+    {
+      "name": "Vector3d(Double, Double, Double)",
+      "signature": "public Vector3d(double x, double y, double z)",
+      "summary": "Initializes a new instance of a vector, using its three components.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X (first) component.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y (second) component.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "The Z (third) component.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public static Vector3d Add(Vector3d vector1, Vector3d vector2)",
+      "summary": "Sums up two vectors. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that results from the component-wise addition of the two vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Add.htm"
+    },
+    {
+      "name": "AreOrthogonal",
+      "signature": "public static bool AreOrthogonal(Vector3d x, Vector3d y, Vector3d z)",
+      "summary": "Test whether three vectors describe an orthogonal axis system. All vectors must be mutually perpendicular this to be the case.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "X axis vector.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Y axis vector.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Z axis vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all vectors are non-zero and mutually perpendicular."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_AreOrthogonal.htm"
+    },
+    {
+      "name": "AreOrthonormal",
+      "signature": "public static bool AreOrthonormal(Vector3d x, Vector3d y, Vector3d z)",
+      "summary": "Test whether three vectors describe an orthogonal, unit axis system. All vectors must be mutually perpendicular and have unit length for this to be the case.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "X axis vector.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Y axis vector.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Z axis vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all vectors are non-zero and mutually perpendicular."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_AreOrthonormal.htm"
+    },
+    {
+      "name": "AreRighthanded",
+      "signature": "public static bool AreRighthanded(Vector3d x, Vector3d y, Vector3d z)",
+      "summary": "Test whether three vectors describe a right-handed, orthogonal, unit axis system. The vectors must be orthonormal and follow the right-hand ordering; index-finger=x, middle-finger=y, thumb=z.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "X axis vector.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Y axis vector.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Z axis vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all vectors are non-zero and mutually perpendicular."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_AreRighthanded.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Vector3d other)",
+      "summary": "Compares this Vector3d with another Vector3d. Component evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The other Vector3d to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this.X \u003C other.X-1: if this.X == other.X and this.Y \u003C other.Y-1: if this.X == other.X and this.Y == other.Y and this.Z \u003C other.Z\u002B1: otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_CompareTo.htm"
+    },
+    {
+      "name": "CrossProduct",
+      "signature": "public static Vector3d CrossProduct(Vector3d a, Vector3d b)",
+      "summary": "Computes the cross product (or vector product, or exterior product) of two vectors. This operation is not commutative.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is perpendicular to both a and b, has Length == a.Length * b.Length * sin(theta) where theta is the angle between a and b.The resulting vector is oriented according to the right hand rule."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_CrossProduct.htm"
+    },
+    {
+      "name": "Divide",
+      "signature": "public static Vector3d Divide(Vector3d vector, double t)",
+      "summary": "Divides a Vector3d by a number, having the effect of shrinking it. (Provided for languages that do not support operator overloading. You can use the / operator otherwise)",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is component-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Divide.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Vector3d other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector3d",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Vector3d.EpsilonEquals(Rhino.Geometry.Vector3d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified System.Object is a Vector3d and has the same values as the present vector.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The specified object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a Vector3d and has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Vector3d)",
+      "signature": "public bool Equals(Vector3d vector)",
+      "summary": "Determines whether the specified vector has the same value as the present vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The specified vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if vector has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes the hash code for the current vector.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique number that represents the components of this vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_GetHashCode.htm"
+    },
+    {
+      "name": "IsParallelTo(Vector3d)",
+      "signature": "public int IsParallelTo(Vector3d other)",
+      "summary": "Determines whether this vector is parallel to another vector, within one degree (within Pi / 180).",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector to use for comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Parallel indicator: \u002B1 = both vectors are parallel 0 = vectors are not parallel, or at least one of the vectors is zero-1 = vectors are anti-parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_IsParallelTo.htm"
+    },
+    {
+      "name": "IsParallelTo(Vector3d, Double)",
+      "signature": "public int IsParallelTo(Vector3d other, double angleTolerance)",
+      "summary": "Determines whether this vector is parallel to another vector, within a provided tolerance.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector to use for comparison.",
+          "optional": false
+        },
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "Angle tolerance (in radians).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Parallel indicator: \u002B1 = both vectors are parallel.0 = vectors are not parallel or at least one of the vectors is zero.-1 = vectors are anti-parallel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_IsParallelTo_1.htm"
+    },
+    {
+      "name": "IsPerpendicularTo(Vector3d)",
+      "signature": "public bool IsPerpendicularTo(Vector3d other)",
+      "summary": "Test to see whether this vector is perpendicular to within one degree of another one.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector to compare to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if both vectors are perpendicular, false if otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_IsPerpendicularTo.htm"
+    },
+    {
+      "name": "IsPerpendicularTo(Vector3d, Double)",
+      "signature": "public bool IsPerpendicularTo(Vector3d other, double angleTolerance)",
+      "summary": "Determines whether this vector is perpendicular to another vector, within a provided angle tolerance.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector to use for comparison.",
+          "optional": false
+        },
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "Angle tolerance (in radians).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if vectors form Pi-radians (90-degree) angles with each other; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_IsPerpendicularTo_1.htm"
+    },
+    {
+      "name": "IsTiny()",
+      "signature": "public bool IsTiny()",
+      "summary": "Uses RhinoMath.ZeroTolerance for IsTiny calculation.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if vector is very small, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_IsTiny.htm"
+    },
+    {
+      "name": "IsTiny(Double)",
+      "signature": "public bool IsTiny(double tolerance)",
+      "summary": "Determines whether a vector is very short.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A nonzero value used as the coordinate zero tolerance. .",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "(Math.Abs(X) \u003C= tiny_tol) AND (Math.Abs(Y) \u003C= tiny_tol) AND (Math.Abs(Z) \u003C= tiny_tol)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_IsTiny_1.htm"
+    },
+    {
+      "name": "Multiply(Double, Vector3d)",
+      "signature": "public static Vector3d Multiply(double t, Vector3d vector)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Multiply_2.htm"
+    },
+    {
+      "name": "Multiply(Vector3d, Vector3d)",
+      "signature": "public static double Multiply(Vector3d vector1, Vector3d vector2)",
+      "summary": "Multiplies two vectors together, returning the dot product (or inner product). This differs from the cross product. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "A value that results from the evaluation of v1.X*v2.X \u002B v1.Y*v2.Y \u002B v1.Z*v2.Z. This value equals v1.Length * v2.Length * cos(alpha), where alpha is the angle between vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Vector3d, Double)",
+      "signature": "public static Vector3d Multiply(Vector3d vector, double t)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Multiply_1.htm"
+    },
+    {
+      "name": "Negate",
+      "signature": "public static Vector3d Negate(Vector3d vector)",
+      "summary": "Computes the reversed vector. (Provided for languages that do not support operator overloading. You can use the - unary operator otherwise)",
+      "remarks": "Similar to Reverse(), but static for CLR compliance.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector to negate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector where all components were multiplied by -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Negate.htm"
+    },
+    {
+      "name": "PerpendicularTo",
+      "signature": "public bool PerpendicularTo(Vector3d other)",
+      "summary": "Sets this vector to be perpendicular to another vector. Result is not unitized.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector to use as guide.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false if input vector is zero or invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_PerpendicularTo.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public bool Reverse()",
+      "summary": "Reverses this vector in place (reverses the direction). If this vector is Invalid, no changes will occur and false will be returned.",
+      "remarks": "Similar to Negate, that is only provided for CLR language compliance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success or false if the vector is invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Reverse.htm"
+    },
+    {
+      "name": "Rotate",
+      "signature": "public bool Rotate(double angleRadians, Vector3d rotationAxis)",
+      "summary": "Rotates this vector around a given axis.",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Angle of rotation (in radians).",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Rotate.htm"
+    },
+    {
+      "name": "Subtract",
+      "signature": "public static Vector3d Subtract(Vector3d vector1, Vector3d vector2)",
+      "summary": "Subtracts the second vector from the first one. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that results from the component-wise difference of vector1 - vector2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Subtract.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Returns the string representation of the current vector, in the form X,Y,Z.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string with the current location of the point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_ToString_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public void Transform(Transform transformation)",
+      "summary": "Transforms the vector in place. The transformation matrix acts on the left of the vector; i.e.,result = transformation*vector",
+      "params": [
+        {
+          "name": "transformation",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation matrix to apply.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Transform.htm"
+    },
+    {
+      "name": "Unitize",
+      "signature": "public bool Unitize()",
+      "summary": "Unitizes the vector in place. A unit vector has length 1 unit. An invalid or zero length vector cannot be unitized.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success or false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_Unitize.htm"
+    },
+    {
+      "name": "VectorAngle(Vector3d, Vector3d)",
+      "signature": "public static double VectorAngle(Vector3d a, Vector3d b)",
+      "summary": "Compute the angle between two vectors. This operation is commutative.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First vector for angle.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second vector for angle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "If the input is valid, the angle (in radians) between a and b; RhinoMath.UnsetValue otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_VectorAngle.htm"
+    },
+    {
+      "name": "VectorAngle(Vector3d, Vector3d, Plane)",
+      "signature": "public static double VectorAngle(Vector3d a, Vector3d b, Plane plane)",
+      "summary": "Computes the angle on a plane between two vectors.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second vector.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Two-dimensional plane on which to perform the angle measurement.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "On success, the angle (in radians) between a and b as projected onto the plane; RhinoMath.UnsetValue on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_VectorAngle_1.htm"
+    },
+    {
+      "name": "VectorAngle(Vector3d, Vector3d, Vector3d)",
+      "signature": "public static double VectorAngle(Vector3d v1, Vector3d v2, Vector3d vNormal)",
+      "summary": "Computes the angle of v1, v2 with a normal vector.",
+      "params": [
+        {
+          "name": "v1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First vector.",
+          "optional": false
+        },
+        {
+          "name": "v2",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second vector.",
+          "optional": false
+        },
+        {
+          "name": "vNormal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Normal vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "On success, the angle (in radians) between a and b with respect of normal vector; RhinoMath.UnsetValue on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_VectorAngle_2.htm"
+    },
+    {
+      "name": "Addition",
+      "signature": "public static Vector3d operator \u002B(Vector3d vector1, Vector3d vector2)",
+      "summary": "Sums up two vectors.",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that results from the component-wise addition of the two vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Addition.htm"
+    },
+    {
+      "name": "Division",
+      "signature": "public static Vector3d operator /(Vector3d vector, double t)",
+      "summary": "Divides a Vector3d by a number, having the effect of shrinking it.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is component-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Division.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Vector3d a, Vector3d b)",
+      "summary": "Determines whether two vectors have the same value.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Another vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if all coordinates are pairwise equal; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Equality.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(Vector3d a, Vector3d b)",
+      "summary": "Determines whether the first specified vector comes after (has superior sorting value than) the second vector. Components evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The first vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y, or a.X == b.X and a.Y == b.Y and a.Z is larger than b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(Vector3d a, Vector3d b)",
+      "summary": "Determines whether the first specified vector comes after (has superior sorting value than) the second vector, or it is equal to it. Components evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The first vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y, or a.X == b.X and a.Y == b.Y and a.Z \u003E= b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Implicit(Vector3f to Vector3d)",
+      "signature": "public static implicit operator Vector3d (Vector3f vector)",
+      "summary": "Converts a single-precision (float) vector in a double-precision vector, without needing casting.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "A single-precision vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The same vector, expressed using double-precision values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Implicit.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Vector3d a, Vector3d b)",
+      "summary": "Determines whether two vectors have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Another vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if any coordinate pair is different; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(Vector3d a, Vector3d b)",
+      "summary": "Determines whether the first specified vector comes before (has inferior sorting value than) the second vector. Components evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The first vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y, or a.X == b.X and a.Y == b.Y and a.Z is smaller than b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(Vector3d a, Vector3d b)",
+      "summary": "Determines whether the first specified vector comes before (has inferior sorting value than) the second vector, or it is equal to it. Components evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The first vector.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y, or a.X == b.X and a.Y == b.Y and a.Z \u003C= b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_LessThanOrEqual.htm"
+    },
+    {
+      "name": "Multiply(Double, Vector3d)",
+      "signature": "public static Vector3d operator *(double t, Vector3d vector)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Multiply_2.htm"
+    },
+    {
+      "name": "Multiply(Vector3d, Vector3d)",
+      "signature": "public static double operator *(Vector3d vector1, Vector3d vector2)",
+      "summary": "Multiplies two vectors together, returning the dot product (or inner product). This differs from the cross product.",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "A value that results from the evaluation of v1.X*v2.X \u002B v1.Y*v2.Y \u002B v1.Z*v2.Z. This value equals v1.Length * v2.Length * cos(alpha), where alpha is the angle between vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Vector3d, Double)",
+      "signature": "public static Vector3d operator *(Vector3d vector, double t)",
+      "summary": "Multiplies a vector by a number, having the effect of scaling it.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is the original vector coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Multiply_1.htm"
+    },
+    {
+      "name": "Subtraction",
+      "signature": "public static Vector3d operator -(Vector3d vector1, Vector3d vector2)",
+      "summary": "Subtracts the second vector from the first one.",
+      "params": [
+        {
+          "name": "vector1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that results from the component-wise difference of vector1 - vector2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_Subtraction.htm"
+    },
+    {
+      "name": "UnaryNegation",
+      "signature": "public static Vector3d operator -(Vector3d vector)",
+      "summary": "Computes the opposite vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector to negate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector where all components were multiplied by -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Vector3d_op_UnaryNegation.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsUnitVector",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this is a unit vector. A unit vector has length 1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_IsUnitVector.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this vector is valid. A valid vector must be formed of valid component values for x, y and z.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_IsValid.htm"
+    },
+    {
+      "name": "IsZero",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the X, Y, and Z values are all equal to 0.0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_IsZero.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a vector component at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_Item.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Computes the length (or magnitude, or size) of this vector. This is an application of Pythagoras\u0027 theorem. If this vector is invalid, its length is considered 0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_Length.htm"
+    },
+    {
+      "name": "MaximumCoordinate",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the largest (both positive and negative) component value in this vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_MaximumCoordinate.htm"
+    },
+    {
+      "name": "MinimumCoordinate",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the smallest (both positive and negative) component value in this vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_MinimumCoordinate.htm"
+    },
+    {
+      "name": "SquareLength",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Computes the squared length (or magnitude, or size) of this vector. This is an application of Pythagoras\u0027 theorem. While the Length property checks for input validity, this property does not. You should check validity in advance, if this vector can be invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_SquareLength.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the vector with each component set to RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_Unset.htm"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X (first) component of the vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_X.htm"
+    },
+    {
+      "name": "XAxis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the vector with components 1,0,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_XAxis.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y (second) component of the vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_Y.htm"
+    },
+    {
+      "name": "YAxis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the vector with components 0,1,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_YAxis.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z (third) component of the vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_Z.htm"
+    },
+    {
+      "name": "ZAxis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the vector with components 0,0,1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_ZAxis.htm"
+    },
+    {
+      "name": "Zero",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the vector with components 0,0,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Vector3d_Zero.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

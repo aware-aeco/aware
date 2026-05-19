@@ -1,0 +1,94 @@
+{
+  "name": "PropertyPageType",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "IRhinoProperties page type",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_PropertyPageType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Material",
+      "value": 0,
+      "summary": "Replace the material page with this page; only works for the current render plug - in."
+    },
+    {
+      "name": "Light",
+      "value": 1,
+      "summary": "Replace the light page with this page; only works for the current render plug-in."
+    },
+    {
+      "name": "Custom",
+      "value": 2,
+      "summary": "User-defined custom object page."
+    },
+    {
+      "name": "ObjectProperties",
+      "value": 3,
+      "summary": "For internal use only."
+    },
+    {
+      "name": "Dimension",
+      "value": 4,
+      "summary": "If page is provided by Rhino and only dimensions are selected, activate this page."
+    },
+    {
+      "name": "Leader",
+      "value": 5,
+      "summary": "If page is provided by Rhino and leaders are selected, activate this page."
+    },
+    {
+      "name": "Text",
+      "value": 6,
+      "summary": "If page is provided by Rhino and only text objects are selected, activate this page."
+    },
+    {
+      "name": "Hatch",
+      "value": 7,
+      "summary": "If page is provided by Rhino and only hatch objects are selected, activate this page."
+    },
+    {
+      "name": "Dot",
+      "value": 8,
+      "summary": "If page is provided by Rhino and only dot objects are selected, activate this page."
+    },
+    {
+      "name": "TextureMapping",
+      "value": 9,
+      "summary": "Replace the texture mapping page with this page; only works for the current render plug-in."
+    },
+    {
+      "name": "Detail",
+      "value": 10,
+      "summary": "If page is provided by Rhino and only detail objects are selected, activate this page."
+    },
+    {
+      "name": "ClippingPlane",
+      "value": 11,
+      "summary": "If page is provided by Rhino and only clipping plane objects are selected, activate this page."
+    },
+    {
+      "name": "NamedView",
+      "value": 12,
+      "summary": "If page is provided by Rhino and only named view widget objects are selected, activate this page."
+    },
+    {
+      "name": "Decal",
+      "value": 13,
+      "summary": "Decals user interface"
+    },
+    {
+      "name": "View",
+      "value": 14,
+      "summary": "Page is a view properties page and uses view properties methods. Does not use object properties methods."
+    },
+    {
+      "name": "PageCount",
+      "value": 15,
+      "summary": "Reserved, do not use."
+    }
+  ]
+}

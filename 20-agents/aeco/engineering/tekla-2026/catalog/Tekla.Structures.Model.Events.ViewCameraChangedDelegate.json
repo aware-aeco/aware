@@ -1,0 +1,14 @@
+{
+  "name": "Events.ViewCameraChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for view camera changed event",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/42ddeb84-7691-757c-8885-2d307dfa0933",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ViewCameraChangedDelegate( Identifier ViewId )"
+}

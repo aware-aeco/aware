@@ -1,0 +1,238 @@
+{
+  "name": "Replicator",
+  "namespace": "ProtoCore.Lang.Replication",
+  "kind": "class",
+  "summary": "Type Replicator",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs",
+  "constructors": [
+    {
+      "name": "Replicator()",
+      "signature": "void Replicator()",
+      "summary": "Replicator.Replicator",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildAllocation(int, int)",
+      "signature": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E BuildAllocation(int count, int maxAlloc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "count",
+          "type": "int",
+          "doc": "Count is the number of elements left for allocation",
+          "optional": false
+        },
+        {
+          "name": "maxAlloc",
+          "type": "int",
+          "doc": "Max alloc is the maximum potential reductions that can yet be applied",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    },
+    {
+      "name": "BuildPartialReplicationInstructions(System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E BuildPartialReplicationInstructions(System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E partialRepGuides)",
+      "summary": "Calculate partial replication instruciton based on replication guide level. For example, for foo(xs\u003C1\u003E\u003C2\u003E\u003C3\u003E, ys\u003C1\u003E\u003C1\u003E\u003C2\u003E, zs\u003C1\u003E\u003C1\u003E\u003C3\u003E), the guides are: level | 0 | 1 | 2 | ------\u002B-----\u002B-----\u002B-----\u002B xs | 1 | 2 | 3 | ------\u002B-----\u002B-----\u002B-----\u002B ys | 1 | 1 | 2 | ------\u002B-----\u002B-----\u002B-----\u002B zs | 1 | 1 | 3 | This function goes through each level and calculate replication instructions. replication instructions on level 0: Zip replication on (0, 1, 2) (i.e., zip on xs, ys, zs) replication instructions on level 1: Zip replication on (1, 2) (i.e., zip on ys, zs) Cartesian replication on 0 (i.e., on xs) replication instructions on level 2: Cartesian replication on 1 (i.e., on ys) Zip replication on (0, 2) (i.e., zip on xs, zs)",
+      "params": [
+        {
+          "name": "partialRepGuides",
+          "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    },
+    {
+      "name": "BuildReductions(System.Collections.Generic.List\u003Cint\u003E)",
+      "signature": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E BuildReductions(System.Collections.Generic.List\u003Cint\u003E reductionDepths)",
+      "summary": "Replicator.BuildReductions",
+      "params": [
+        {
+          "name": "reductionDepths",
+          "type": "System.Collections.Generic.List\u003Cint\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    },
+    {
+      "name": "BuildReplicationCombinations(System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E\u003E BuildReplicationCombinations(System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E providedControl, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParams, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Build all possible replications based on the rank of parameters and the provided replicatoin guide.",
+      "params": [
+        {
+          "name": "providedControl",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "formalParams",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    },
+    {
+      "name": "ComputeAllReducedParams(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E\u003E ComputeAllReducedParams(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParams, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "For each parameter, if there is a replication instruction for it, and if it is an array, expand parameter list based on the types of elements in that array. For example, for parameters {p1, p2, ..., pk, ..., pn} where pk is an array {a1:int, a2:string, a3:double, ...} and there is a Cartesian replication on pk, the parameter list will be expanded to {p1, p2, ..., a1, ..., pn} {p1, p2, ..., a2, ..., pn} {p1, p2, ..., a3, ..., pn} ...",
+      "params": [
+        {
+          "name": "formalParams",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    },
+    {
+      "name": "EstimateReducedParams(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E EstimateReducedParams(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParams, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Compute the effects of the replication guides on the formal parameter lists The results of this loose data, and will not be correct on jagged arrays of hetrogenius types",
+      "params": [
+        {
+          "name": "formalParams",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    },
+    {
+      "name": "GetMaxReductionDepth(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "int GetMaxReductionDepth(ProtoCore.DSASM.StackValue sv, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns the maximum depth to which an element can be reduced This will include cases where only partial reduction can be performed on jagged arrays",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    },
+    {
+      "name": "ReductionToInstructions(System.Collections.Generic.List\u003Cint\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E ReductionToInstructions(System.Collections.Generic.List\u003Cint\u003E reductions, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E providedControl)",
+      "summary": "Convert reduction to instruction. Using zip-first strategy. For example, 0 2 4 \u003E Zip on 1,2 0 1 3 \u003E Zip on 1,2 0 0 2 \u003E Cartesian on 2 0 0 1 \u003E Cartesian on 2",
+      "params": [
+        {
+          "name": "reductions",
+          "type": "System.Collections.Generic.List\u003Cint\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "providedControl",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/Replicator.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

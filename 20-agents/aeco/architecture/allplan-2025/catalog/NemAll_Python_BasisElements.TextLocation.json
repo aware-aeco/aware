@@ -1,0 +1,65 @@
+{
+  "name": "TextLocation",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Location of the dimension text relative to the dimension line",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextLocation/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBASIS_DIM_BOTTOM_CENTER",
+      "value": -2,
+      "summary": "Below the line, in the middle"
+    },
+    {
+      "name": "eBASIS_DIM_BOTTOM_LEFT",
+      "value": -1,
+      "summary": "Below the line, at the start"
+    },
+    {
+      "name": "eBASIS_DIM_BOTTOM_RIGHT",
+      "value": -3,
+      "summary": "Below the line, at the end"
+    },
+    {
+      "name": "eBASIS_DIM_CENTER",
+      "value": 0,
+      "summary": "On the line, in the middle"
+    },
+    {
+      "name": "eBASIS_DIM_CENTER_LEFT",
+      "value": -4,
+      "summary": "On the line, at the start"
+    },
+    {
+      "name": "eBASIS_DIM_CENTER_RIGHT",
+      "value": -5,
+      "summary": "On the line, at the end"
+    },
+    {
+      "name": "eBASIS_DIM_NONE",
+      "value": 10,
+      "summary": "Undefined"
+    },
+    {
+      "name": "eBASIS_DIM_TOP_CENTER",
+      "value": 2,
+      "summary": "Above the line, in the middle"
+    },
+    {
+      "name": "eBASIS_DIM_TOP_LEFT",
+      "value": 1,
+      "summary": "Above the line, at the start"
+    },
+    {
+      "name": "eBASIS_DIM_TOP_RIGHT",
+      "value": 3,
+      "summary": "Above the line, at the end"
+    }
+  ]
+}

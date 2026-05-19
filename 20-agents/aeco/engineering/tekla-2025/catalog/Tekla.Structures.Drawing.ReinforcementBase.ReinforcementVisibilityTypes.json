@@ -1,0 +1,49 @@
+{
+  "name": "ReinforcementBase.ReinforcementVisibilityTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The available reinforcement visibility types. Only applies to bar groups and meshes. See Tekla Structures help, \u0022Setting the visibility of reinforcement in drawings\u0022, for more information.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4b3131b4-003c-4de6-41ce-787cc77fb8e4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "All",
+      "value": 1,
+      "summary": "Shows all bars in a group or mesh."
+    },
+    {
+      "name": "First",
+      "value": 2,
+      "summary": "Only shows the first bar in the group or mesh."
+    },
+    {
+      "name": "Last",
+      "value": 3,
+      "summary": "Only shows the last bar in the group or mesh."
+    },
+    {
+      "name": "FirstAndLast",
+      "value": 4,
+      "summary": "Shows the first and last bar in the group or mesh."
+    },
+    {
+      "name": "OneInTheMiddle",
+      "value": 5,
+      "summary": "Shows one bar in the middle of the group or mesh."
+    },
+    {
+      "name": "TwoInTheMiddle",
+      "value": 6,
+      "summary": "Shows two bars in the middle of the group or mesh."
+    },
+    {
+      "name": "Customized",
+      "value": 7,
+      "summary": "Indicates that you have specified the location of the only visible reinforcing bar. See \u0022Adjusting reinforcing bars\u0022 in the Tekla Structures help for more information."
+    }
+  ]
+}

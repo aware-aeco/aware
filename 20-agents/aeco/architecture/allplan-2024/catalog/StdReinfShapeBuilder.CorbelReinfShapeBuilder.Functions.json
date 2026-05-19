@@ -1,0 +1,25 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.CorbelReinfShapeBuilder",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.CorbelReinfShapeBuilder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/CorbelReinfShapeBuilder/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "column_corbel_shape_type1",
+      "signature": "column_corbel_shape_type1(column_width, column_thickness, corbel_width, corbel_top, model_angles, shape_props, concrete_cover)",
+      "summary": "Create the shape for the corbel type 1 Return: Bar shape of the corbel in world coordinates",
+      "remarks": "Create the shape for the corbel type 1 Return: Bar shape of the corbel in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/CorbelReinfShapeBuilder/_functions/#StdReinfShapeBuilder.CorbelReinfShapeBuilder.column_corbel_shape_type1"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

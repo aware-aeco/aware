@@ -1,0 +1,42 @@
+{
+  "name": "GH_Style",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "enum",
+  "summary": "Enumerates possible formatting for documentation content.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Documentation_GH_Style.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "WeakEmphasis",
+      "value": 1
+    },
+    {
+      "name": "StrongEmphasis",
+      "value": 2
+    },
+    {
+      "name": "Monospaced",
+      "value": 3
+    },
+    {
+      "name": "Boxed",
+      "value": 4
+    },
+    {
+      "name": "ChapterHeader",
+      "value": 5
+    },
+    {
+      "name": "ParagraphHeader",
+      "value": 6
+    }
+  ]
+}

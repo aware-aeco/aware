@@ -1,0 +1,42 @@
+{
+  "name": "AnalysisDeltaZ",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisDeltaZ class contains delta Z information for an analysis model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d8870681-dfba-d8e5-2e0f-f970fb7b0c35",
+  "constructors": [
+    {
+      "name": "AnalysisDeltaZ",
+      "signature": "public AnalysisDeltaZ()",
+      "summary": "Creates a new instance of an analysis delta Z.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bf4eaa3e-9c25-11df-e8db-f09ceef83e3d"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Bottom",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The delta Z at the bottom.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b7dc497c-2f06-2ba6-8964-da1f39443bb7"
+    },
+    {
+      "name": "Top",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The delta Z at the top.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5cb3801c-b362-b666-bb29-31bf27c52a30"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

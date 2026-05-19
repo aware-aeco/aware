@@ -1,0 +1,305 @@
+{
+  "name": "Path3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D path.",
+  "base": "Path",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/",
+  "constructors": [
+    {
+      "name": "Path3D",
+      "signature": "Path3D() | Path3D(path) | Path3D(point1, point2) | Path3D(point1, point2, point3) | Path3D(point1, point2, point3, point4) | Path3D(point1, point2, point3, point4, point5)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(element) | Add(element_object)",
+      "summary": "Add element into path Path3D",
+      "remarks": "Add element into path Path3D",
+      "params": [
+        {
+          "name": "element",
+          "type": "Path3D",
+          "doc": "Path element to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.Add"
+    },
+    {
+      "name": "IsItPossibleToAddElement",
+      "signature": "IsItPossibleToAddElement(pGeometry_object) | IsItPossibleToAddElement(pGeometry_object, tolerance)",
+      "summary": "Check if the geometry can be added into path Path3D",
+      "remarks": "Check if the geometry can be added into path Path3D",
+      "params": [
+        {
+          "name": "pGeometry_object",
+          "type": "object",
+          "doc": "Pointer to geometry to check",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsItPossibleToAddElement"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element)",
+      "summary": "Append operator",
+      "remarks": "Append operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Path3D",
+          "doc": "Element which will be appended",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Path3D",
+        "doc": "Reference to path."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__"
+    },
+    {
+      "name": "DefinitionPoints",
+      "signature": "DefinitionPoints()",
+      "summary": "Extracts all definition points of the path.",
+      "remarks": "Extracts all definition points of the path.",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "All definition points ( join points of sub curves in this path ) of this path as Polyline3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.DefinitionPoints"
+    },
+    {
+      "name": "FirstDefinitionPoint",
+      "signature": "FirstDefinitionPoint()",
+      "summary": "Extracts the first definition point of the path.",
+      "remarks": "Extracts the first definition point of the path.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "First definition point of this path as Point3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.FirstDefinitionPoint"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint()",
+      "summary": "Get path end point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "remarks": "Get path end point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "const Point3D End point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.GetEndPoint"
+    },
+    {
+      "name": "GetEndRelPoint",
+      "signature": "GetEndRelPoint()",
+      "summary": "Get relative end (last) point of the path",
+      "remarks": "Get relative end (last) point of the path",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "End point (relative)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.GetEndRelPoint"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint()",
+      "summary": "Get path start point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "remarks": "Get path start point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "const Point3D Start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.GetStartPoint"
+    },
+    {
+      "name": "GetStartRelPoint",
+      "signature": "GetStartRelPoint()",
+      "summary": "Get relative start (first) point of the path",
+      "remarks": "Get relative start (first) point of the path",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Start point (relative)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.GetStartRelPoint"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed()",
+      "summary": "Check for closed path, it mean that first point is same as last point",
+      "remarks": "Check for closed path, it mean that first point is same as last point",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when path is closed, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsClosed"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Validity check \\warning Path doesn\u0027t have to be closed to be valid, you have to check this extra",
+      "remarks": "Validity check \\warning Path doesn\u0027t have to be closed to be valid, you have to check this extra",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsValid"
+    },
+    {
+      "name": "IsValidCurveType",
+      "signature": "IsValidCurveType(pGeometry_object)",
+      "summary": "Check if the geometry is supported by Path3D",
+      "remarks": "Check if the geometry is supported by Path3D",
+      "params": [
+        {
+          "name": "pGeometry_object",
+          "type": "object",
+          "doc": "Pointer to geometry to check",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsValidCurveType"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(endpoint)",
+      "summary": "Set end (last) point of the path",
+      "remarks": "Set end (last) point of the path",
+      "params": [
+        {
+          "name": "endpoint",
+          "type": "Point3D",
+          "doc": "E point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "none"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.SetEndPoint"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startpoint)",
+      "summary": "Set start (first) point of the path",
+      "remarks": "Set start (first) point of the path",
+      "params": [
+        {
+          "name": "startpoint",
+          "type": "Point3D",
+          "doc": "Start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "none"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.SetStartPoint"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(path)",
+      "summary": "Comparison of paths without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of paths without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path3D",
+          "doc": "Compared path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when paths are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get path end point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.EndPoint"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get path start point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.StartPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

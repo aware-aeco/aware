@@ -1,0 +1,39 @@
+{
+  "name": "Fonts.Style",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Style for UI font.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Fonts_Style.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Regular",
+      "value": 0,
+      "summary": "Normal"
+    },
+    {
+      "name": "Bold",
+      "value": 1,
+      "summary": "Bold"
+    },
+    {
+      "name": "Italic",
+      "value": 2,
+      "summary": "Italic"
+    },
+    {
+      "name": "Underline",
+      "value": 4,
+      "summary": "Underline"
+    },
+    {
+      "name": "Strikeout",
+      "value": 8,
+      "summary": "Strikeout"
+    }
+  ]
+}

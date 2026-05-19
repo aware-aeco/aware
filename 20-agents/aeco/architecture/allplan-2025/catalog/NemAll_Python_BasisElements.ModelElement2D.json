@@ -1,0 +1,161 @@
+{
+  "name": "ModelElement2D",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of a general two-dimensional model element, such as line, arc or polyline.",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/",
+  "constructors": [
+    {
+      "name": "ModelElement2D",
+      "signature": "ModelElement2D() | ModelElement2D(commonProp: CommonProperties, geometryObject: object) | ModelElement2D( commonProp: CommonProperties, patternCurveProp: PatternCurveProperties, endSymbolProp: EndSymbolsProperties, geometryObject: object, ) | ModelElement2D(element: ModelElement2D)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEndSymbolsProperties",
+      "signature": "GetEndSymbolsProperties() -\u003E EndSymbolsProperties",
+      "summary": "Get the end symbols properties",
+      "remarks": "Get the end symbols properties",
+      "params": [],
+      "returns": {
+        "type": "EndSymbolsProperties",
+        "doc": "End symbols properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.GetEndSymbolsProperties"
+    },
+    {
+      "name": "GetPatternCurveProperties",
+      "signature": "GetPatternCurveProperties() -\u003E PatternCurveProperties",
+      "summary": "Get the pattern curve properties",
+      "remarks": "Get the pattern curve properties",
+      "params": [],
+      "returns": {
+        "type": "PatternCurveProperties",
+        "doc": "Pattern curve properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.GetPatternCurveProperties"
+    },
+    {
+      "name": "GetTransformationList",
+      "signature": "GetTransformationList() -\u003E list",
+      "summary": "Get transformation list",
+      "remarks": "Get transformation list",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "List with the transformations"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.GetTransformationList"
+    },
+    {
+      "name": "SetEndSymbolsProperties",
+      "signature": "SetEndSymbolsProperties(endSymbolsProp: EndSymbolsProperties)",
+      "summary": "Set the end symbols properties",
+      "remarks": "Set the end symbols properties",
+      "params": [
+        {
+          "name": "endSymbolsProp",
+          "type": "EndSymbolsProperties",
+          "doc": "End symbols properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.SetEndSymbolsProperties"
+    },
+    {
+      "name": "SetPatternCurveProperties",
+      "signature": "SetPatternCurveProperties(patternCurveProp: PatternCurveProperties)",
+      "summary": "Set the pattern curve properties",
+      "remarks": "Set the pattern curve properties",
+      "params": [
+        {
+          "name": "patternCurveProp",
+          "type": "PatternCurveProperties",
+          "doc": "Pattern curve properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.SetPatternCurveProperties"
+    },
+    {
+      "name": "SetTransformationList",
+      "signature": "SetTransformationList(transformationList: list)",
+      "summary": "Set the transformation list",
+      "remarks": "Set the transformation list",
+      "params": [
+        {
+          "name": "transformationList",
+          "type": "list",
+          "doc": "List with the transformations",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.SetTransformationList"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndSymbolsProperties",
+      "type": "EndSymbolsProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the end symbols properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.EndSymbolsProperties"
+    },
+    {
+      "name": "PatternCurveProperties",
+      "type": "PatternCurveProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the pattern curve properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.PatternCurveProperties"
+    },
+    {
+      "name": "TransformationList",
+      "type": "list",
+      "getter": true,
+      "setter": true,
+      "summary": "Get transformation list",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/#NemAll_Python_BasisElements.ModelElement2D.TransformationList"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

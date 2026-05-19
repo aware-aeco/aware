@@ -1,0 +1,750 @@
+{
+  "name": "Image",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The Image class defines an image that can be inserted into a drawing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/362655f7-c664-d22f-3246-90d4d910cdaa",
+  "constructors": [
+    {
+      "name": "Image(ViewBase, Point, String)",
+      "signature": "public Image(ViewBase view, Point insertionPoint, string fileName)",
+      "summary": "Initializes a new instance of the Image class with the given parameters.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "insertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The insertion point to be used.",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The filename to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "Thrown if the specified file does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c493ea36-da5e-cb15-e58e-0a6a89b127a3"
+    },
+    {
+      "name": "Image(ViewBase, Point, String, EmbeddedObjectAttributes)",
+      "signature": "public Image(ViewBase view, Point insertionPoint, string fileName, EmbeddedObjectAttributes attributes)",
+      "summary": "Initializes a new instance of the Image class using the specified attributes.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "insertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The insertion point to be used.",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The filename to be used.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Tekla.Structures.Drawing.EmbeddedObjectAttributes",
+          "doc": "The attributes to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "Thrown if the specified file does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e59f08f-e10f-c93c-04af-276915034d06"
+    },
+    {
+      "name": "Image(ViewBase, Point, Size, String)",
+      "signature": "public Image(ViewBase view, Point insertionPoint, Size frameSize, string fileName)",
+      "summary": "Initializes a new instance of the Image class with the given parameters.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "insertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The insertion point to be used.",
+          "optional": false
+        },
+        {
+          "name": "frameSize",
+          "type": "Tekla.Structures.Drawing.Size",
+          "doc": "The frames size.",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The filename to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "Thrown if the specified file does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5f4a9de-031d-1f34-092d-6c1541fd6a07"
+    },
+    {
+      "name": "Image(ViewBase, Point, Size, String, EmbeddedObjectAttributes)",
+      "signature": "public Image(ViewBase view, Point insertionPoint, Size frameSize, string fileName, EmbeddedObjectAttributes attributes)",
+      "summary": "Initializes a new instance of the Image class using the specified attributes.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "insertionPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The insertion point to be used.",
+          "optional": false
+        },
+        {
+          "name": "frameSize",
+          "type": "Tekla.Structures.Drawing.Size",
+          "doc": "The frames size.",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The filename to be used.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Tekla.Structures.Drawing.EmbeddedObjectAttributes",
+          "doc": "The attributes to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "Thrown if the specified file does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/024a984a-e865-151d-879a-e35ea43c881e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public override bool Delete()",
+      "summary": "Deletes the embedded object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5dc2f662-fa9f-431d-d6c4-c8b9fd7cb063"
+    },
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetAxisAlignedBoundingBox()",
+      "summary": "Gets the bounding box for the current object in the global axis coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "A rectangle bounding box for the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/92532071-8507-973e-5e7c-303633870edc"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "public Drawing GetDrawing()",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "Drawing",
+        "doc": "The drawing where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetObjectAlignedBoundingBox()",
+      "summary": "Gets the bounding box for the current object in its local coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "A rectangle bounding box for the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2057db75-e1b4-d5cc-5ba4-5849af223043"
+    },
+    {
+      "name": "GetRelatedObjects()",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type[])",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [
+        {
+          "name": "typeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object that are of certain types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "public bool GetUserProperty(string Name, ref double Value)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "public bool GetUserProperty(string Name, ref int Value)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "public bool GetUserProperty(string Name, ref string Value)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "public ViewBase GetView()",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "ViewBase",
+        "doc": "The view where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "public override bool Insert()",
+      "summary": "Inserts the embedded object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/faa4a0d5-3e63-d983-f5a2-625481575fb4"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/75685c67-29ad-955a-15b8-38e2558bdd89"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "public virtual bool IsSameDatabaseObject(DatabaseObject Object)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Drawing.DatabaseObject",
+          "doc": "The other object to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the objects are referencing the same database object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "public override bool Modify()",
+      "summary": "Modifies the embedded object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dc862b3-4968-e29c-83bf-a84a18c47e84"
+    },
+    {
+      "name": "MoveObjectRelative",
+      "signature": "public bool MoveObjectRelative(Vector moveVector)",
+      "summary": "Moves the object according to the given move vector.",
+      "params": [
+        {
+          "name": "moveVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The move vector to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96087af0-e3e1-88dc-7d10-2aa68bcfe8d8"
+    },
+    {
+      "name": "Resize",
+      "signature": "public bool Resize(Size size)",
+      "summary": "Resizes the object. The scaling type is changed to ScaleToFit.",
+      "params": [
+        {
+          "name": "size",
+          "type": "Tekla.Structures.Drawing.Size",
+          "doc": "The width and height to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/58cefb6f-d78a-089e-e16e-8dc0bdf1bf09"
+    },
+    {
+      "name": "Select",
+      "signature": "public override bool Select()",
+      "summary": "Selects the embedded object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fc0aa530-1e2b-0062-db7b-21f4ff2306d1"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "public bool SetUserProperty(string Name, double Value)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "public bool SetUserProperty(string Name, int Value)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "public bool SetUserProperty(string Name, string Value)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The name of the current drawing object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the angle (in degrees).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4a64bf62-960b-74c0-c7c1-7170876c9bb9"
+    },
+    {
+      "name": "Attributes",
+      "type": "EmbeddedObjectAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4d6deb1c-da18-67aa-2d8c-844565a08d8f"
+    },
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the file name defining the embedded object.",
+      "remarks": "A full path should be used because the application may not be running with the same working directory as Tekla Structures (usually using \\TeklaStructuresModels\\ModelName).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d5d53308-9dbf-6076-fbd7-f2fff0639422"
+    },
+    {
+      "name": "InsertionPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the insertion point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e7fea74-f67e-83f5-9aca-32f4487a2881"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "ReturnValuesEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    },
+    {
+      "name": "Size",
+      "type": "Size",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size of the frame of the embedded object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/da09469b-b14a-dd5c-7871-75a297810a0d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

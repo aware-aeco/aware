@@ -1,0 +1,25 @@
+{
+  "name": "AlongPartCenteredPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The AlongPartCenteredPlacingType class defines a placing type that places the object using the along line placing. The line used will be the part\u0027s edge in the center of that line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/297035d0-7383-a0c6-3c0a-c8f868b7834b",
+  "constructors": [
+    {
+      "name": "AlongPartCenteredPlacingType",
+      "signature": "public AlongPartCenteredPlacingType()",
+      "summary": "Creates a new along part centered placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c3ba1e53-0187-57d1-4ceb-2b8b16f537bb"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

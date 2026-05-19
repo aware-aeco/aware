@@ -1,0 +1,39 @@
+{
+  "name": "PluginBase.InputDefinition.InputTypeEnum",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "The possible input types for a plug-in.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fec18db9-7adc-f90c-030c-1318e59223ff",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INPUT_ONE_POINT",
+      "value": 1,
+      "summary": "The input is one point (x,y,z)."
+    },
+    {
+      "name": "INPUT_TWO_POINTS",
+      "value": 2,
+      "summary": "The input is two points."
+    },
+    {
+      "name": "INPUT_POLYGON",
+      "value": 3,
+      "summary": "The input is multiple points."
+    },
+    {
+      "name": "INPUT_ONE_OBJECT",
+      "value": 4,
+      "summary": "The input is one ID of any type."
+    },
+    {
+      "name": "INPUT_N_OBJECTS",
+      "value": 5,
+      "summary": "The input is N IDs of any type."
+    }
+  ]
+}

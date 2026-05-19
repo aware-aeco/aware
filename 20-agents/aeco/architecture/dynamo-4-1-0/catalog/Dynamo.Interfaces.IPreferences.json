@@ -1,0 +1,294 @@
+{
+  "name": "IPreferences",
+  "namespace": "Dynamo.Interfaces",
+  "kind": "interface",
+  "summary": "An interface which defines preference settings.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetIsBackgroundPreviewActive(string)",
+      "signature": "bool GetIsBackgroundPreviewActive(string name)",
+      "summary": "Returns active state of specified background preview",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Background preview name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "The active state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "Save(string)",
+      "signature": "bool Save(string filePath)",
+      "summary": "Call this method to serialize PreferenceSettings given the output file path.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "The full path of the output file to serialize PreferenceSettings to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true if the serialization is successful, or false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "SetIsBackgroundPreviewActive(string, bool)",
+      "signature": "void SetIsBackgroundPreviewActive(string name, bool value)",
+      "summary": "Sets active state of specified background preview",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Background preview name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "doc": "Active state to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundPreviews",
+      "type": "System.Collections.Generic.List\u003CDynamo.Interfaces.BackgroundPreviewActiveState\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Collection of pairs [BackgroundPreviewName;isActive]",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "BackupFiles",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns list of backup files",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "CollapseToMinSize",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the groups should be collapsed by default.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "ConnectorType",
+      "type": "Dynamo.Graph.Connectors.ConnectorType",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates which type of connector\u0027s should be displayed on canvas. I.e. bezier or polyline",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "ConsoleHeight",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns height of console",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "CustomPackageFolders",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns list of folders containing zero-touch nodes and custom nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "GraphChecksumItemsList",
+      "type": "System.Collections.Generic.List\u003CDynamo.Configuration.GraphChecksumItem\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "IPreferences.GraphChecksumItemsList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "GridScaleFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the scale of the background grid element. Default is 1.0.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "IsADPAnalyticsReportingApproved",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether ADP analytics reporting is approved or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "IsBackgroundGridVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether background grid is visible or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "IsFirstRun",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates first run",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "MaxNumRecentFiles",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns maximal count of recent files which can be displayed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "NumberFormat",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the decimal precision used to display numbers.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "OptionalInPortsCollapsed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the optional input ports are hidden by default.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "PackageDirectoriesToUninstall",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns list of packages used by the Package Manager to determine which packages are scheduled to be deleted or scheduled to be unloaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "PythonTemplateFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Return full path to the Python (.py) file to use as a starting template when creating a new PythonScript Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "RecentFiles",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns list of recent files",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "ShowConnector",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether connector should be displayed on canvas or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "ShowDefaultGroupDescription",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if groups should display the default description.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "ShowEdges",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether surface and solid edges will be rendered.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "ShowPreviewBubbles",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if preview bubbles should be displayed on nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "TemplateFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Return full path of the template directory with template file(s) to use as a starting template when creating a new graph from a template.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "UnconnectedOutPortsCollapsed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the unconnected output ports are hidden by default.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "WindowH",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the last height of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "WindowW",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the last width of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "WindowX",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the last X coordinate of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "WindowY",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the last Y coordinate of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

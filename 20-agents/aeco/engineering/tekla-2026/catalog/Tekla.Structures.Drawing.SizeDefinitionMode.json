@@ -1,0 +1,24 @@
+{
+  "name": "SizeDefinitionMode",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Controls the size definition mode of the drawing sheet. Set the mode to SizeDefinitionMode.SpecifiedSize if you want to force the sheet to a certain size.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ac0235fb-263e-d1b5-334b-283dec46145e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AutoSize",
+      "value": 0,
+      "summary": "The smallest possible drawing sheet is automatically calculated."
+    },
+    {
+      "name": "SpecifiedSize",
+      "value": 1,
+      "summary": "Fixed values are used to control the sheet size."
+    }
+  ]
+}

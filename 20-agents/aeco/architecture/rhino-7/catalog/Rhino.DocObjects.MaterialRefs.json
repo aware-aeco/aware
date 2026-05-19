@@ -1,0 +1,303 @@
+{
+  "name": "MaterialRefs",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "If you are developing a high quality plug-in renderer, and a user is assigning a custom render material to this object, then add rendering material information to the MaterialRefs dictionary. Note to developers: As soon as the MaterialRefs dictionary contains items rendering material queries slow down. Do not populate the MaterialRefs dictionary when setting the MaterialIndex will take care of your needs.",
+  "interfaces": [
+    "IDictionary\u003CGuid, MaterialRef\u003E",
+    "ICollection\u003CKeyValuePair\u003CGuid, MaterialRef\u003E\u003E",
+    "IEnumerable\u003CKeyValuePair\u003CGuid, MaterialRef\u003E\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_MaterialRefs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(KeyValuePair\u003CGuid, MaterialRef\u003E)",
+      "signature": "public void Add(KeyValuePair\u003CGuid, MaterialRef\u003E item)",
+      "summary": "Adds an item to this dictionary.",
+      "params": [
+        {
+          "name": "item",
+          "type": "System.Collections.Generic.KeyValuePair\u003CGuid,MaterialRef\u003E",
+          "doc": "The object to add to this dictionary",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "value is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "key is empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_Add.htm"
+    },
+    {
+      "name": "Add(Guid, MaterialRef)",
+      "signature": "public void Add(Guid key, MaterialRef value)",
+      "summary": "Add or replace an element with the provided key and value to this dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Guid",
+          "doc": "The plug-in associated with this MaterialRef",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.DocObjects.MaterialRef",
+          "doc": "MaterialRef to add to this dictionary",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "value is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "key is empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_Add_1.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all items from this dictionary.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_Clear.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(KeyValuePair\u003CGuid, MaterialRef\u003E item)",
+      "summary": "Determines whether this dictionary contains a specific value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "System.Collections.Generic.KeyValuePair\u003CGuid,MaterialRef\u003E",
+          "doc": "The object to locate in this dictionary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if item is found in this dictionary; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_Contains.htm"
+    },
+    {
+      "name": "ContainsKey",
+      "signature": "public bool ContainsKey(Guid key)",
+      "summary": "Determines whether this dictionary contains an MaterialRef with the specified plug-in id.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Guid",
+          "doc": "The plug-in Id used to locate a MaterialRef in this dictionary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this dictionary contains an element with the specified plug-in Id; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_ContainsKey.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(KeyValuePair\u003CGuid, MaterialRef\u003E[] array, int arrayIndex)",
+      "summary": "Copies the elements of this dictionary to an System.Array, starting at a particular System.Array index.",
+      "params": [
+        {
+          "name": "array",
+          "type": "System.Collections.Generic.KeyValuePair\u003CGuid,MaterialRef\u003E[]",
+          "doc": "The one-dimensional System.Array that is the destination of the elements copied from this dictionary. The System.Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "The zero-based index in array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "array is null"
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "arrayIndex is less than 0."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "The number of elements in the source dictionary is greater than the available space from arrayIndex to the end of the destination array."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_CopyTo.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public MaterialRef Create(MaterialRefCreateParams createParams)",
+      "summary": "Call this method to create a MaterialRef which can be used when calling one of the Add methods.",
+      "params": [
+        {
+          "name": "createParams",
+          "type": "Rhino.DocObjects.MaterialRefCreateParams",
+          "doc": "Values used to initialize the MaterialRef",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MaterialRef",
+        "doc": "A temporary MaterialRef object, the caller is responsible for disposing of this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_Create.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CKeyValuePair\u003CGuid, MaterialRef\u003E\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that iterates through this dictionary.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CKeyValuePair\u003CGuid,MaterialRef\u003E\u003E",
+        "doc": "A IEnumerator that can be used to iterate this dictionary."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_GetEnumerator.htm"
+    },
+    {
+      "name": "Remove(KeyValuePair\u003CGuid, MaterialRef\u003E)",
+      "signature": "public bool Remove(KeyValuePair\u003CGuid, MaterialRef\u003E item)",
+      "summary": "Removes the element with the specified plug-in id from the this dictionary.",
+      "params": [
+        {
+          "name": "item",
+          "type": "System.Collections.Generic.KeyValuePair\u003CGuid,MaterialRef\u003E",
+          "doc": "The object to remove from this dictionary",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.MaterialRefs.Remove(System.Collections.Generic.KeyValuePair{System.Guid,Rhino.DocObjects.MaterialRef})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_Remove.htm"
+    },
+    {
+      "name": "Remove(Guid)",
+      "signature": "public bool Remove(Guid key)",
+      "summary": "Removes the MaterialRef with the specified plug-in Id from this dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Guid",
+          "doc": "The plug-in Id for the MaterialRef to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the MaterialRef is successfully removed; otherwise, false. This method also returns false if key was not found in the original dictionary."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_Remove_1.htm"
+    },
+    {
+      "name": "TryGetValue",
+      "signature": "public bool TryGetValue(Guid key, out MaterialRef value)",
+      "summary": "Gets the value associated with the specified key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Guid",
+          "doc": "The plug-in Id whose MaterialRef to get.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.DocObjects.MaterialRef",
+          "doc": "When this method returns, the MaterialRef associated with the specified key, if the key is found; otherwise, null. This parameter is passed uninitialized.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this dictionary contains a MaterialRef with the specified key; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_MaterialRefs_TryGetValue.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements contained in this dictionary",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRefs_Count.htm"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "IDictionary required property, always returns false for this dictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRefs_IsReadOnly.htm"
+    },
+    {
+      "name": "Item",
+      "type": "MaterialRef",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the element with the specified plug-in Id.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRefs_Item.htm"
+    },
+    {
+      "name": "Keys",
+      "type": "ICollection\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an ICollection containing the plug-in Id\u0027s in this dictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRefs_Keys.htm"
+    },
+    {
+      "name": "Values",
+      "type": "ICollection\u003CMaterialRef\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an ICollection containing the MaterialRef objects in this dictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_MaterialRefs_Values.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

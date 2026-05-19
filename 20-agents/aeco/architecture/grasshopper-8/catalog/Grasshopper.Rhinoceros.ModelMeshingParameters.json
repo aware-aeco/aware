@@ -1,0 +1,220 @@
+{
+  "name": "ModelMeshingParameters",
+  "namespace": "Grasshopper.Rhinoceros",
+  "kind": "class",
+  "summary": "Represents some meshing parameters. Wraps the functionality of the MeshingParameters type.",
+  "base": "ModelValue",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_ModelMeshingParameters.htm",
+  "constructors": [
+    {
+      "name": "ModelMeshingParameters",
+      "signature": "public ModelMeshingParameters()",
+      "summary": "Initializes a new instance of the ModelMeshingParameters class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelMeshingParameters__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static ModelMeshingParameters Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelMeshingParameters",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelMeshingParameters_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Overrides ModelValue.CastTo\u003CT\u003E(T).)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelMeshingParameters_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_CastTo__1.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelMeshingParameters_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides Object.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelMeshingParameters_GetHashCode.htm"
+    },
+    {
+      "name": "ToMeshingParameters",
+      "signature": "public MeshingParameters ToMeshingParameters(RhinoDoc document = null)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "RhinoDoc",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelMeshingParameters_ToMeshingParameters.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public virtual string TooltipString()",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_ToString.htm"
+    },
+    {
+      "name": "Implicit(MeshingParameters to ModelMeshingParameters)",
+      "signature": "public static implicit operator ModelMeshingParameters (MeshingParameters parameters)",
+      "summary": "",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "MeshingParameters",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelMeshingParameters",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelMeshingParameters_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultAnalysis",
+      "type": "ModelMeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelMeshingParameters_DefaultAnalysis.htm"
+    },
+    {
+      "name": "DefaultRender",
+      "type": "ModelMeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelMeshingParameters_DefaultRender.htm"
+    },
+    {
+      "name": "FastRender",
+      "type": "ModelMeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelMeshingParameters_FastRender.htm"
+    },
+    {
+      "name": "QualityRender",
+      "type": "ModelMeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelMeshingParameters_QualityRender.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "ModelMeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelMeshingParameters_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,78 @@
+{
+  "name": "LibraryPartType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "Enumeration of available library part types. \u0027Unknown\u0027 is the schema-valid catch-all returned for any libpart whose typeID is not one of the named values (rare ACAPI sentinels and any future SDK subtype).",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LibraryPartType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Spec",
+      "value": "Spec"
+    },
+    {
+      "name": "Window",
+      "value": "Window"
+    },
+    {
+      "name": "Door",
+      "value": "Door"
+    },
+    {
+      "name": "Object",
+      "value": "Object"
+    },
+    {
+      "name": "Lamp",
+      "value": "Lamp"
+    },
+    {
+      "name": "Room",
+      "value": "Room"
+    },
+    {
+      "name": "Property",
+      "value": "Property"
+    },
+    {
+      "name": "PlanSign",
+      "value": "PlanSign"
+    },
+    {
+      "name": "Label",
+      "value": "Label"
+    },
+    {
+      "name": "Macro",
+      "value": "Macro"
+    },
+    {
+      "name": "Pict",
+      "value": "Pict"
+    },
+    {
+      "name": "Picture",
+      "value": "Picture"
+    },
+    {
+      "name": "ListScheme",
+      "value": "ListScheme"
+    },
+    {
+      "name": "Skylight",
+      "value": "Skylight"
+    },
+    {
+      "name": "OpeningSymbol",
+      "value": "OpeningSymbol"
+    },
+    {
+      "name": "Unknown",
+      "value": "Unknown"
+    }
+  ]
+}

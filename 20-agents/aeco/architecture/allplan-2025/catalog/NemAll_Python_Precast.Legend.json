@@ -1,0 +1,26 @@
+{
+  "name": "Legend",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.Legend.)",
+  "base": "Cell",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Legend/",
+  "constructors": [
+    {
+      "name": "Legend",
+      "signature": "Legend(doc: DocumentAdapter, cellId: int, legendProps: LegendProperties) | Legend( doc: DocumentAdapter, cellId: int, legendProps: LegendProperties, conditionTemplate: str, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Legend/#NemAll_Python_Precast.Legend.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,228 @@
+{
+  "name": "NodeSearchElement",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "Base class for all Dynamo Node search elements.",
+  "interfaces": [
+    "Dynamo.Search.ISearchEntry",
+    "Dynamo.Search.ISource\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+    "System.ICloneable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs",
+  "constructors": [
+    {
+      "name": "NodeSearchElement()",
+      "signature": "void NodeSearchElement()",
+      "summary": "NodeSearchElement.NodeSearchElement",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "object Clone()",
+      "summary": "Clones the NodeSearchElement",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "ConstructNewNodeModel",
+      "signature": "Dynamo.Graph.Nodes.NodeModel ConstructNewNodeModel()",
+      "summary": "Creates a new NodeModel to be inserted into the current Dynamo workspace.",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "GenerateInputParameters",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003Cstring, string\u003E\u003E GenerateInputParameters()",
+      "summary": "NodeSearchElement.GenerateInputParameters",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003Cstring, string\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "GenerateOutputParameters",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GenerateOutputParameters()",
+      "summary": "NodeSearchElement.GenerateOutputParameters",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "OnItemProduced(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnItemProduced(Dynamo.Graph.Nodes.NodeModel obj)",
+      "summary": "NodeSearchElement.OnItemProduced",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Assembly to which Node belongs to",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "Categories",
+      "type": "System.Collections.Generic.ICollection\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "List of nested categories this search element is contained in.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "CreationName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name that is used during node creation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Description of the node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "ElementType",
+      "type": "Dynamo.Search.SearchElements.ElementTypes",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether it is custom node or zero-touch element. And whether this element comes from package or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "FullCategoryName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The category name of this node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The full name of entry which consists of category name and entry name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "Group",
+      "type": "Dynamo.Search.SearchElements.SearchElementGroup",
+      "getter": true,
+      "setter": true,
+      "summary": "Group to which Node belongs to",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "IconName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the node icon.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "InputParameters",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003Cstring, string\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeSearchElement.InputParameters",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "IsVisibleInSearch",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether or not this entry should appear in search.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of this entry as it appears in the library.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "OutputParameters",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeSearchElement.OutputParameters",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "Parameters",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The parameters of this entry, used for overloaded nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "SearchKeywords",
+      "type": "System.Collections.Generic.ICollection\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of keywords which can be used to search for this element.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "ItemProduced",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E ItemProduced",
+      "summary": "Event fired when this search element produces a new NodeModel. This typically happens when it is selected in the library by the user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

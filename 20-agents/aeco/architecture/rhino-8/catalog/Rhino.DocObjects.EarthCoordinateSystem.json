@@ -1,0 +1,44 @@
+{
+  "name": "EarthCoordinateSystem",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "ON::EarthCoordinateSystem identifies the standard used to define Earth latitude, longitude, and elevation coordinates.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_EarthCoordinateSystem.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "ON::EarthCoordinateSystem::Unset"
+    },
+    {
+      "name": "GroundLevel",
+      "value": 1,
+      "summary": "ON::EarthCoordinateSystem::GroundLevel Not well defined, but latitude and longitude will be good enough for architecture sun studies."
+    },
+    {
+      "name": "MeanSeaLevel",
+      "value": 2,
+      "summary": "ON::EarthCoordinateSystem::MeanSeaLevel Not well defined, but latitude and longitude will be good enough for architecture sun studies."
+    },
+    {
+      "name": "CenterOfEarth",
+      "value": 3,
+      "summary": "ON::EarthCoordinateSystem::CenterOfEarth Not well defined. The Earth\u0027s center of mass and center of volume are at different locations."
+    },
+    {
+      "name": "WGS1984",
+      "value": 5,
+      "summary": "ON::EarthCoordinateSystem::WGS1984 World Geodetic System 1984 standard. (Current GPS standard.)"
+    },
+    {
+      "name": "EGM2008",
+      "value": 6,
+      "summary": "ON::EarthCoordinateSystem::EGM2008 Earth Gravitational Model 2008 standard."
+    }
+  ]
+}

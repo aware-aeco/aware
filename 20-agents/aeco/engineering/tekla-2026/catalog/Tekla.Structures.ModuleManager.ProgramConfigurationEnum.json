@@ -1,0 +1,133 @@
+{
+  "name": "ModuleManager.ProgramConfigurationEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The configuration information of the program.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a252a416-c746-9a3f-65f0-aefe05f547f7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CONFIGURATION_VIEWER",
+      "value": 0,
+      "summary": "The viewer configuration."
+    },
+    {
+      "name": "CONFIGURATION_PRODUCTION_PLANNER",
+      "value": 1,
+      "summary": "The production planner configuration."
+    },
+    {
+      "name": "CONFIGURATION_DRAFTER",
+      "value": 2,
+      "summary": "The drafter configuration."
+    },
+    {
+      "name": "CONFIGURATION_PROJECT_MANAGEMENT",
+      "value": 3,
+      "summary": "The project management configuration."
+    },
+    {
+      "name": "CONFIGURATION_ENGINEERING",
+      "value": 4,
+      "summary": "The construction management configuration."
+    },
+    {
+      "name": "CONFIGURATION_REINFORCED_CONCRETE_DETAILING",
+      "value": 5,
+      "summary": "The reinforced concrete detailing configuration."
+    },
+    {
+      "name": "CONFIGURATION_PRECAST_CONCRETE_DETAILING",
+      "value": 6,
+      "summary": "The precast concrete detailing configuration."
+    },
+    {
+      "name": "CONFIGURATION_STEEL_DETAILING",
+      "value": 7,
+      "summary": "The steel detailing configuration."
+    },
+    {
+      "name": "CONFIGURATION_FULL",
+      "value": 8,
+      "summary": "The full detailing configuration."
+    },
+    {
+      "name": "CONFIGURATION_PRIMARY",
+      "value": 9,
+      "summary": "The Primary configuration."
+    },
+    {
+      "name": "CONFIGURATION_EDUCATIONAL",
+      "value": 10,
+      "summary": "The educational configuration."
+    },
+    {
+      "name": "CONFIGURATION_DEVELOPER",
+      "value": 11,
+      "summary": "The developer configuration."
+    },
+    {
+      "name": "CONFIGURATION_CONSTRUCTION_MODELING",
+      "value": 12,
+      "summary": "The construction management configuration with modeling capabilities."
+    },
+    {
+      "name": "CONFIGURATION_STEEL_DETAILING_LIMITED",
+      "value": 9,
+      "summary": "The old steel detailing limited configuration. This definition was left here to enable old macros in 19.0."
+    },
+    {
+      "name": "CONFIGURATION_CONSTRUCTION_VIEWER",
+      "value": 12,
+      "summary": "The construction management configuration restricted to viewer mode."
+    },
+    {
+      "name": "CONFIGURATION_CONSTRUCTION_MANAGEMENT",
+      "value": 12
+    },
+    {
+      "name": "CONFIGURATION_PARTNER",
+      "value": 13,
+      "summary": "The partner configuration."
+    },
+    {
+      "name": "CONFIGURATION_EPM_MODELER",
+      "value": 14,
+      "summary": "The EPM Modeler configuration."
+    },
+    {
+      "name": "CONFIGURATION_CARBON",
+      "value": 15,
+      "summary": "The Carbon configuration."
+    },
+    {
+      "name": "CONFIGURATION_GRAPHITE",
+      "value": 16,
+      "summary": "The Graphite configuration."
+    },
+    {
+      "name": "CONFIGURATION_DIAMOND",
+      "value": 17,
+      "summary": "The Diamond configuration."
+    },
+    {
+      "name": "CONFIGURATION_MEP",
+      "value": 18,
+      "summary": "The MEP configuration."
+    },
+    {
+      "name": "CONFIGURATION_TRIAL",
+      "value": 19,
+      "summary": "The Trial Configuration."
+    },
+    {
+      "name": "CONFIGURATION_PLATFORM",
+      "value": 20,
+      "summary": "The Tekla Platform configuration."
+    }
+  ]
+}

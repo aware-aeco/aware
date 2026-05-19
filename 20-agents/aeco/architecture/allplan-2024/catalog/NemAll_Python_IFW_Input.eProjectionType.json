@@ -1,0 +1,85 @@
+{
+  "name": "eProjectionType",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Projection type of the view",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eProjectionType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eProjectionType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eProjectionType/#NemAll_Python_IFW_Input.eProjectionType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "EAST_VIEW",
+      "value": 3
+    },
+    {
+      "name": "FREE_ONLY_3D",
+      "value": 9
+    },
+    {
+      "name": "FREE_VIEW",
+      "value": 0
+    },
+    {
+      "name": "GROUND_PLAN",
+      "value": 1
+    },
+    {
+      "name": "NORTH_EAST_VIEW",
+      "value": 5
+    },
+    {
+      "name": "NORTH_VIEW",
+      "value": 2
+    },
+    {
+      "name": "NORTH_WEST_VIEW",
+      "value": 6
+    },
+    {
+      "name": "SOUTH_EAST_VIEW",
+      "value": 8
+    },
+    {
+      "name": "SOUTH_VIEW",
+      "value": -2
+    },
+    {
+      "name": "SOUTH_WEST_VIEW",
+      "value": 7
+    },
+    {
+      "name": "WEST_VIEW",
+      "value": -3
+    },
+    {
+      "name": "WORKING_PLANE_VIEW",
+      "value": 4
+    }
+  ]
+}

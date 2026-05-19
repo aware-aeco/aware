@@ -1,0 +1,92 @@
+{
+  "name": "GH_QuickImageEditor",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_QuickImageEditor.)",
+  "base": "Form",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_QuickImageEditor.htm",
+  "constructors": [
+    {
+      "name": "GH_QuickImageEditor",
+      "signature": "public GH_QuickImageEditor()",
+      "summary": "Initializes a new instance of the GH_QuickImageEditor class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_QuickImageEditor__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_QuickImageEditor and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_QuickImageEditor_Dispose.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanvasImage",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the canvas image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_QuickImageEditor_CanvasImage.htm"
+    },
+    {
+      "name": "FrameCrop",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cropping rectangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_QuickImageEditor_FrameCrop.htm"
+    },
+    {
+      "name": "FrameFocus",
+      "type": "Rectangle3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rectangle of the focus frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_QuickImageEditor_FrameFocus.htm"
+    },
+    {
+      "name": "FrameViewport",
+      "type": "Rectangle3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rectangle of the viewport frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_QuickImageEditor_FrameViewport.htm"
+    },
+    {
+      "name": "ViewportImage",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the viewport image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_QuickImageEditor_ViewportImage.htm"
+    },
+    {
+      "name": "ViewportName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the viewport name to include. If the name string is null or empty, the active viewport is used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_QuickImageEditor_ViewportName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

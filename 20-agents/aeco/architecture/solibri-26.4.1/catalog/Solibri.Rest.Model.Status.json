@@ -1,0 +1,46 @@
+{
+  "name": "Status",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.Status.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Status",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Busy",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "True when server is busy",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Status"
+    },
+    {
+      "name": "Filename",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of saved file",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Status"
+    },
+    {
+      "name": "Status",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Status of saved file. One of: UNSAVED, SAVED, MODIFIED",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Status"
+    },
+    {
+      "name": "Timestamp",
+      "type": "DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "Time when model was saved. 0 if model is not saved",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Status"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

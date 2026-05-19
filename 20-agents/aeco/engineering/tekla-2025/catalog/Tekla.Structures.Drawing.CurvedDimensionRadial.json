@@ -1,0 +1,697 @@
+{
+  "name": "CurvedDimensionRadial",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CurvedDimensionRadial class defines a curved dimension with radial reference points. The dimension text on the line can be either a distance or an angle value.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/061b94cd-8971-4993-a437-736478c0a124",
+  "constructors": [
+    {
+      "name": "CurvedDimensionRadial(ViewBase, Point, Point, Point, Point, Point, Double)",
+      "signature": "public CurvedDimensionRadial(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, Point StartPoint, Point EndPoint, double Distance)",
+      "summary": "Creates a new curved dimension with radial reference points using standard attributes.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint3",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "StartPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The start point to be used.",
+          "optional": false
+        },
+        {
+          "name": "EndPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The end point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Distance",
+          "type": "System.Double",
+          "doc": "The distance in paper millimeters.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e6a53cad-5d73-58cc-12eb-afd9427168de"
+    },
+    {
+      "name": "CurvedDimensionRadial(ViewBase, Point, Point, Point, Point, Point, Double, CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes)",
+      "signature": "public CurvedDimensionRadial(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, Point StartPoint, Point EndPoint, double Distance, CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes Attributes)",
+      "summary": "Creates a new curved dimension with radial reference points.",
+      "params": [
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "ArcPoint3",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third arc point to be used.",
+          "optional": false
+        },
+        {
+          "name": "StartPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The start point to be used.",
+          "optional": false
+        },
+        {
+          "name": "EndPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The end point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Distance",
+          "type": "System.Double",
+          "doc": "The distance in paper millimeters.",
+          "optional": false
+        },
+        {
+          "name": "Attributes",
+          "type": "Tekla.Structures.Drawing.CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
+          "doc": "The attributes to be applied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63f1d671-8bef-fcda-7661-210af5f5408f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public override bool Delete()",
+      "summary": "Deletes the straight dimension from the database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0fe9e404-f4b0-1b76-9e4a-e4c0a5e7367c"
+    },
+    {
+      "name": "GetDimensionSet()",
+      "signature": "public override DimensionSetBase GetDimensionSet()",
+      "summary": "Gets the dimension set the current dimension belongs to.",
+      "params": [],
+      "returns": {
+        "type": "DimensionSetBase",
+        "doc": "The dimension set the current dimension belongs to."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/397b6ec6-423b-5262-4f0e-b1a277a5315c"
+    },
+    {
+      "name": "GetDimensionSet(Boolean)",
+      "signature": "public override DimensionSetBase GetDimensionSet(bool Select)",
+      "summary": "Gets the dimension set the current dimension belongs to.",
+      "params": [
+        {
+          "name": "Select",
+          "type": "System.Boolean",
+          "doc": "Whether to select the object from the database or not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionSetBase",
+        "doc": "The dimension set the current dimension belongs to."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/42d0cdfc-a52f-74e8-948d-f41699e2507e"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
+      "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Double\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "public Drawing GetDrawing()",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "Drawing",
+        "doc": "The drawing where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
+      "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,Int32\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetRelatedObjects()",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type[])",
+      "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [
+        {
+          "name": "typeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object that are of certain types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
+      "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "List of names to get the values for.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.Dictionary\u003CString,String\u003E.",
+          "doc": "Dictionary of name/value pairs that contain the values of the found user properties with the given names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the request succeeded (the returned values can still be empty if no such UserProperties were found)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "public bool GetUserProperty(string Name, ref double Value)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "public bool GetUserProperty(string Name, ref int Value)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "public bool GetUserProperty(string Name, ref string Value)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be gotten.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The value of the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was gotten successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "public ViewBase GetView()",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "returns": {
+        "type": "ViewBase",
+        "doc": "The view where the drawing object is."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "public override bool Insert()",
+      "summary": "Inserts the dimension to the database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1cf2f1c7-2de0-5af6-0bf4-3743aa15e0ec"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e844a5e-ab51-0820-ee74-9f36a0182106"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "public virtual bool IsSameDatabaseObject(DatabaseObject Object)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Drawing.DatabaseObject",
+          "doc": "The other object to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the objects are referencing the same database object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "public override bool Modify()",
+      "summary": "The single dimension cannot be modified.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "An exception."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown always."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b90fa807-4bb2-1206-ee8c-d4cdd4499ed9"
+    },
+    {
+      "name": "Select",
+      "signature": "public override bool Select()",
+      "summary": "Selects the straight dimension from the database.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fef12af9-74d4-5ba8-21bc-bd644e554812"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "public bool SetUserProperty(string Name, double Value)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "public bool SetUserProperty(string Name, int Value)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "public bool SetUserProperty(string Name, string Value)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The name of the current drawing object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ArcPoint1",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the first arc point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ab5b4c6e-e58e-e927-de02-48be8d5260e0"
+    },
+    {
+      "name": "ArcPoint2",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the second arc point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b4353c8b-0251-f406-434c-9013aa395e65"
+    },
+    {
+      "name": "ArcPoint3",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the third arc point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/194aacae-1dc7-1db7-4213-b90fc9dfe175"
+    },
+    {
+      "name": "Attributes",
+      "type": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the curved dimension set base attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7bf92fe3-6f13-a1e3-dc66-9cf501cc1a3a"
+    },
+    {
+      "name": "Distance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the distance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b94d8a5a-340a-1b59-b7fc-9d50d87cfa18"
+    },
+    {
+      "name": "EndPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The end point of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/75dfb373-a610-a44b-1b34-0c7a45fe819b"
+    },
+    {
+      "name": "Hideable",
+      "type": "Hideable",
+      "getter": true,
+      "setter": false,
+      "summary": "Accesses the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9fa65217-8255-fb92-4dbf-4259164a3d62"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "ReturnValuesEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The start point of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1bfb3eb5-8515-cd99-8a4c-364448f190e3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

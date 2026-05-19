@@ -1,0 +1,38 @@
+{
+  "name": "LacingStrategy",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "enum",
+  "summary": "Defines Lacing strategy for nodes. Learn more about lacing here: http://dynamoprimer.com/06_Designing-with-Lists/6-1_whats-a-list.html",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Auto",
+      "value": 5
+    },
+    {
+      "name": "CrossProduct",
+      "value": 4
+    },
+    {
+      "name": "Disabled",
+      "value": 0
+    },
+    {
+      "name": "First",
+      "value": 1
+    },
+    {
+      "name": "Longest",
+      "value": 3
+    },
+    {
+      "name": "Shortest",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "State",
+  "namespace": "Dynamo.Graph.Nodes.Statement",
+  "kind": "enum",
+  "summary": "Type State",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/SyncDataManager.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Error",
+      "value": 2
+    },
+    {
+      "name": "Normal",
+      "value": 0
+    },
+    {
+      "name": "Warning",
+      "value": 1
+    }
+  ]
+}

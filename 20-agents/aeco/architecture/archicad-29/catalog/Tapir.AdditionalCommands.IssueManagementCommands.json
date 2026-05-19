@@ -1,0 +1,289 @@
+{
+  "name": "IssueManagementCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Issue Management Commands\u0027 command group \u2014 10 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateIssue",
+      "signature": "CreateIssue(name: string, parentIssueId?: IssueId, tagText?: string): object",
+      "summary": "Creates a new issue.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the issue.",
+          "optional": false
+        },
+        {
+          "name": "parentIssueId",
+          "type": "IssueId",
+          "optional": true
+        },
+        {
+          "name": "tagText",
+          "type": "string",
+          "doc": "Tag text of the issue, optional.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: issueId."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateIssue",
+      "since": "1.0.2"
+    },
+    {
+      "name": "DeleteIssue",
+      "signature": "DeleteIssue(issueId: IssueId, acceptAllElements?: boolean): ExecutionResult",
+      "summary": "Deletes the specified issue.",
+      "params": [
+        {
+          "name": "issueId",
+          "type": "IssueId",
+          "optional": false
+        },
+        {
+          "name": "acceptAllElements",
+          "type": "boolean",
+          "doc": "Accept all creation/deletion/modification of the deleted issue. By default false.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DeleteIssue",
+      "since": "1.0.2"
+    },
+    {
+      "name": "GetIssues",
+      "signature": "GetIssues(): object",
+      "summary": "Retrieves information about existing issues.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: issues."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetIssues",
+      "since": "1.0.2"
+    },
+    {
+      "name": "AddCommentToIssue",
+      "signature": "AddCommentToIssue(issueId: IssueId, author?: string, status?: IssueCommentStatus, text: string): ExecutionResult",
+      "summary": "Adds a new comment to the specified issue.",
+      "params": [
+        {
+          "name": "issueId",
+          "type": "IssueId",
+          "optional": false
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "doc": "The author of the new comment.",
+          "optional": true
+        },
+        {
+          "name": "status",
+          "type": "IssueCommentStatus",
+          "optional": true
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "Comment text to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AddCommentToIssue",
+      "since": "1.0.6"
+    },
+    {
+      "name": "GetCommentsFromIssue",
+      "signature": "GetCommentsFromIssue(issueId: IssueId): object",
+      "summary": "Retrieves comments information from the specified issue.",
+      "params": [
+        {
+          "name": "issueId",
+          "type": "IssueId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: comments."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetCommentsFromIssue",
+      "since": "1.0.6"
+    },
+    {
+      "name": "AttachElementsToIssue",
+      "signature": "AttachElementsToIssue(issueId: IssueId, elements: Elements, type: IssueElementType): ExecutionResult",
+      "summary": "Attaches elements to the specified issue.",
+      "params": [
+        {
+          "name": "issueId",
+          "type": "IssueId",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "IssueElementType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AttachElementsToIssue",
+      "since": "1.0.6"
+    },
+    {
+      "name": "DetachElementsFromIssue",
+      "signature": "DetachElementsFromIssue(issueId: IssueId, elements: Elements): ExecutionResult",
+      "summary": "Detaches elements from the specified issue.",
+      "params": [
+        {
+          "name": "issueId",
+          "type": "IssueId",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DetachElementsFromIssue",
+      "since": "1.0.6"
+    },
+    {
+      "name": "GetElementsAttachedToIssue",
+      "signature": "GetElementsAttachedToIssue(issueId: IssueId, type: IssueElementType): object",
+      "summary": "Retrieves attached elements of the specified issue, filtered by attachment type.",
+      "params": [
+        {
+          "name": "issueId",
+          "type": "IssueId",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "IssueElementType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetElementsAttachedToIssue",
+      "since": "1.0.6"
+    },
+    {
+      "name": "ExportIssuesToBCF",
+      "signature": "ExportIssuesToBCF(issues?: Issues, exportPath: string, useExternalId: boolean, alignBySurveyPoint: boolean): ExecutionResult",
+      "summary": "Exports specified issues to a BCF file.",
+      "params": [
+        {
+          "name": "issues",
+          "type": "Issues",
+          "doc": "Leave it empty to export all issues.",
+          "optional": true
+        },
+        {
+          "name": "exportPath",
+          "type": "string",
+          "doc": "The os path to the bcf file, including it\u0027s name.",
+          "optional": false
+        },
+        {
+          "name": "useExternalId",
+          "type": "boolean",
+          "doc": "Use external IFC ID or Archicad IFC ID as referenced in BCF topics.",
+          "optional": false
+        },
+        {
+          "name": "alignBySurveyPoint",
+          "type": "boolean",
+          "doc": "Align BCF views by Archicad Survey Point or Archicad Project Origin.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ExportIssuesToBCF",
+      "since": "1.0.6"
+    },
+    {
+      "name": "ImportIssuesFromBCF",
+      "signature": "ImportIssuesFromBCF(importPath: string, alignBySurveyPoint: boolean): ExecutionResult",
+      "summary": "Imports issues from the specified BCF file.",
+      "params": [
+        {
+          "name": "importPath",
+          "type": "string",
+          "doc": "The os path to the bcf file, including it\u0027s name.",
+          "optional": false
+        },
+        {
+          "name": "alignBySurveyPoint",
+          "type": "boolean",
+          "doc": "Align BCF views by Archicad Survey Point or Archicad Project Origin.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ImportIssuesFromBCF",
+      "since": "1.0.6"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

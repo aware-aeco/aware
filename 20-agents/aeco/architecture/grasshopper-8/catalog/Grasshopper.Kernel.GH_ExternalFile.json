@@ -1,0 +1,91 @@
+{
+  "name": "GH_ExternalFile",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents information about external files to be loaded.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ExternalFile.htm",
+  "constructors": [
+    {
+      "name": "GH_ExternalFile",
+      "signature": "public GH_ExternalFile(string path)",
+      "summary": "Create a new instance of the file info class",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ExternalFile__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsIdenticalTo",
+      "signature": "public bool IsIdenticalTo(GH_ExternalFile other)",
+      "summary": "Compares two files for content. If the size and the hash or the other file are equal to this one, the files are considered identical.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.GH_ExternalFile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ExternalFile_IsIdenticalTo.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FileHash",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file hash.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ExternalFile_FileHash.htm"
+    },
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file name (without the extension).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ExternalFile_FileName.htm"
+    },
+    {
+      "name": "FilePath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file path.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ExternalFile_FilePath.htm"
+    },
+    {
+      "name": "FileSize",
+      "type": "Int64",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file size (in bytes).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ExternalFile_FileSize.htm"
+    },
+    {
+      "name": "FileType",
+      "type": "GH_ExternalFileType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file type as indicated by the extension.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ExternalFile_FileType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

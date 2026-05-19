@@ -1,0 +1,22 @@
+{
+  "name": "IGH_ContextualComponent",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Base interface for contextual components. This makes accessing non-strongly-typed functionality easier.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_ContextualComponent.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Archive",
+      "type": "GH_Archive",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets instance of embedded Grasshopper GH_Archive",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ContextualComponent_Archive.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

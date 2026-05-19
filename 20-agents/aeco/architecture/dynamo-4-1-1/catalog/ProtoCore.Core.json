@@ -1,0 +1,704 @@
+{
+  "name": "Core",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type Core",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs",
+  "constructors": [
+    {
+      "name": "Core(ProtoCore.Options)",
+      "signature": "void Core(ProtoCore.Options options)",
+      "summary": "Core.Core",
+      "params": [
+        {
+          "name": "options",
+          "type": "ProtoCore.Options",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddContextData(System.Collections.Generic.Dictionary\u003Cstring, object\u003E)",
+      "signature": "void AddContextData(System.Collections.Generic.Dictionary\u003Cstring, object\u003E data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "AddDLLExtensionAppType(System.Type)",
+      "signature": "void AddDLLExtensionAppType(System.Type type)",
+      "summary": "Core.AddDLLExtensionAppType",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "Cleanup",
+      "signature": "void Cleanup()",
+      "summary": "Core.Cleanup",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GenerateExecutable",
+      "signature": "void GenerateExecutable()",
+      "summary": "Core.GenerateExecutable",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GenerateExprExe",
+      "signature": "void GenerateExprExe()",
+      "summary": "Core.GenerateExprExe",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GenerateExprExeInstructions(int)",
+      "signature": "void GenerateExprExeInstructions(int blockScope)",
+      "summary": "Core.GenerateExprExeInstructions",
+      "params": [
+        {
+          "name": "blockScope",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GenerateTempLangageVar",
+      "signature": "string GenerateTempLangageVar()",
+      "summary": "Core.GenerateTempLangageVar",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GenerateTempPropertyVar",
+      "signature": "string GenerateTempPropertyVar()",
+      "summary": "Core.GenerateTempPropertyVar",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GenerateTempVar",
+      "signature": "string GenerateTempVar()",
+      "summary": "Core.GenerateTempVar",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GetFirstVisibleSymbol(string, int, int, ProtoCore.DSASM.CodeBlock)",
+      "signature": "ProtoCore.DSASM.SymbolNode GetFirstVisibleSymbol(string name, int classscope, int function, ProtoCore.DSASM.CodeBlock codeblock)",
+      "summary": "Core.GetFirstVisibleSymbol",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classscope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "function",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "codeblock",
+          "type": "ProtoCore.DSASM.CodeBlock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.SymbolNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IsFunctionCodeBlock(ProtoCore.DSASM.CodeBlock)",
+      "signature": "bool IsFunctionCodeBlock(ProtoCore.DSASM.CodeBlock cblock)",
+      "summary": "Core.IsFunctionCodeBlock",
+      "params": [
+        {
+          "name": "cblock",
+          "type": "ProtoCore.DSASM.CodeBlock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IsTempVar(string)",
+      "signature": "bool IsTempVar(string varName)",
+      "summary": "Core.IsTempVar",
+      "params": [
+        {
+          "name": "varName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ResetForDeltaExecution",
+      "signature": "void ResetForDeltaExecution()",
+      "summary": "Reset the VM state for delta execution.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ResetForPrecompilation",
+      "signature": "void ResetForPrecompilation()",
+      "summary": "Core.ResetForPrecompilation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ResetSSASubscript(System.Guid, int)",
+      "signature": "void ResetSSASubscript(System.Guid guid, int subscript)",
+      "summary": "Core.ResetSSASubscript",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "subscript",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SetFunctionInactive(ProtoCore.AST.AssociativeAST.FunctionDefinitionNode)",
+      "signature": "void SetFunctionInactive(ProtoCore.AST.AssociativeAST.FunctionDefinitionNode functionDef)",
+      "summary": "Sets the function to an inactive state where it can no longer be used by the front-end and backend",
+      "params": [
+        {
+          "name": "functionDef",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionDefinitionNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SetNewEntryPoint(int)",
+      "signature": "void SetNewEntryPoint(int pc)",
+      "summary": "Core.SetNewEntryPoint",
+      "params": [
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AssocNode",
+      "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.AssocNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "BaseOffset",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.BaseOffset",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "BuildStatus",
+      "type": "ProtoCore.BuildStatus",
+      "getter": true,
+      "setter": false,
+      "summary": "Core.BuildStatus",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "CallsiteGuidMap",
+      "type": "System.Collections.Generic.Dictionary\u003CSystem.Guid, int\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.CallsiteGuidMap",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ClassIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ClassIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ClassTable",
+      "type": "ProtoCore.DSASM.ClassTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ClassTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "CodeBlockIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.CodeBlockIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "CodeBlockList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.CodeBlock\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.CodeBlockList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "Compilers",
+      "type": "System.Collections.Generic.Dictionary\u003CProtoCore.Language, ProtoCore.Compiler\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Core.Compilers",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "Configurations",
+      "type": "System.Collections.Generic.IDictionary\u003Cstring, object\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.Configurations",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "CurrentDSFileName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.CurrentDSFileName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DSExecutable",
+      "type": "ProtoCore.DSASM.Executable",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.DSExecutable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DllTypesToLoad",
+      "type": "System.Collections.Generic.List\u003CSystem.Type\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Core.DllTypesToLoad",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DynamicFunctionTable",
+      "type": "ProtoCore.DSASM.DynamicFunctionTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.DynamicFunctionTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DynamicVariableTable",
+      "type": "ProtoCore.DSASM.DynamicVariableTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.DynamicVariableTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ExecutingGraphnode",
+      "type": "ProtoCore.AssociativeGraph.GraphNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ExecutingGraphnode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ExecutionLog",
+      "type": "System.IO.TextWriter",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ExecutionLog",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ExprInterpreterExe",
+      "type": "ProtoCore.DSASM.Executable",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ExprInterpreterExe",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ExpressionUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "ExpressionUID is used as the unique id to identify an expression It is incremented by 1 after mapping its current value to an expression",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ForLoopBlockIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "ForLoopBlockIndex tracks the current number of new for loop blocks created at compile time for every new compile phase It is reset for delta compilation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "FunctionPointerTable",
+      "type": "ProtoCore.DSASM.FunctionPointerTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.FunctionPointerTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "FunctionTable",
+      "type": "ProtoCore.Lang.FunctionTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Properties in under COMPILER_GENERATED_TO_RUNTIME_DATA, are generated at compile time, and passed to RuntimeData/Exe Only Core can initialize these",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GlobHeapOffset",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.GlobHeapOffset",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GlobOffset",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.GlobOffset",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GraphNodeCallList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.GraphNodeCallList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GraphNodeUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.GraphNodeUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "Heap",
+      "type": "ProtoCore.DSASM.Heap",
+      "getter": true,
+      "setter": false,
+      "summary": "Core.Heap",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ImportHandler",
+      "type": "ProtoFFI.ImportModuleHandler",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ImportHandler",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ImportNodes",
+      "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ImportNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "InlineConditionalBodyGraphNodes",
+      "type": "System.Collections.Generic.Stack\u003CSystem.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.InlineConditionalBodyGraphNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IsParsingCodeBlockNode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This is set to true when the temporary core is used for precompilation of CBN\u0027s.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IsParsingPreloadedAssembly",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This flag is set true when we call GraphUtilities.PreloadAssembly to load libraries.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "Options",
+      "type": "ProtoCore.Options",
+      "getter": true,
+      "setter": false,
+      "summary": "Core.Options",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ParsingMode",
+      "type": "ProtoCore.ParseMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ParsingMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ProcNode",
+      "type": "ProtoCore.DSASM.ProcedureNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ProcNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ProcTable",
+      "type": "ProtoCore.DSASM.ProcedureTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.ProcTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "RuntimeTableIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.RuntimeTableIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SSAExprUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.SSAExprUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SSAExpressionUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.SSAExpressionUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SSASubscript",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.SSASubscript",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SSASubscript_GUID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.SSASubscript_GUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "TypeSystem",
+      "type": "ProtoCore.TypeSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.TypeSystem",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "assocCodegen",
+      "type": "ProtoCore.CodeGen",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.assocCodegen",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "builtInsLoaded",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.builtInsLoaded",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "deltaCompileStartPC",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.deltaCompileStartPC",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "internalAttributes",
+      "type": "ProtoCore.InternalAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.internalAttributes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "newEntryPoint",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Core.newEntryPoint",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "watchBaseOffset",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.watchBaseOffset",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "watchFunctionScope",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.watchFunctionScope",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "watchStartPC",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.watchStartPC",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "watchSymbolList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.SymbolNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Core.watchSymbolList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

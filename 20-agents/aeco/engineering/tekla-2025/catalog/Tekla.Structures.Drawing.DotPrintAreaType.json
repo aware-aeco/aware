@@ -1,0 +1,24 @@
+{
+  "name": "DotPrintAreaType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The print area type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2b25de02-ff60-ace9-bb0e-0ad759056350",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "EntireDrawing",
+      "value": 0,
+      "summary": "Print entire drawing."
+    },
+    {
+      "name": "VisibleArea",
+      "value": 1,
+      "summary": "Print visible area."
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+{
+  "name": "StartupUtils",
+  "namespace": "Dynamo.Applications",
+  "kind": "static-class",
+  "summary": "Type StartupUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CheckAssemblyForVersionMismatches(System.Reflection.Assembly)",
+      "signature": "System.Collections.Generic.List\u003CSystem.Exception\u003E CheckAssemblyForVersionMismatches(System.Reflection.Assembly assembly)",
+      "summary": "Checks that an assembly does not have any dependencies that have already been loaded into the appDomain with an incompatible to the one Dynamo requires.",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Exception\u003E",
+        "doc": "returns a list of fileLoad exceptions - if the list is empty no mismatched assemblies were encountered"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "MakeCLIModel(Dynamo.Applications.StartupUtils.CommandLineArguments)",
+      "signature": "Dynamo.Models.DynamoModel MakeCLIModel(Dynamo.Applications.StartupUtils.CommandLineArguments cmdLineArgs)",
+      "summary": "Use this overload to construct a DynamoModel in CLI context when the location of ASM to use is known, host analytics info is known and you want to set data paths.",
+      "params": [
+        {
+          "name": "cmdLineArgs",
+          "type": "Dynamo.Applications.StartupUtils.CommandLineArguments",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Models.DynamoModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "MakeCLIModel(string, string, string, Dynamo.Models.HostAnalyticsInfo)",
+      "signature": "Dynamo.Models.DynamoModel MakeCLIModel(string asmPath, string userDataFolder, string commonDataFolder, Dynamo.Models.HostAnalyticsInfo info)",
+      "summary": "Use this overload to construct a DynamoModel in CLI context when the location of ASM to use is known, host analytics info is known and you want to set data paths.",
+      "params": [
+        {
+          "name": "asmPath",
+          "type": "string",
+          "doc": "Path to directory containing geometry library binaries",
+          "optional": false
+        },
+        {
+          "name": "userDataFolder",
+          "type": "string",
+          "doc": "Path to be used by PathResolver for UserDataFolder",
+          "optional": false
+        },
+        {
+          "name": "commonDataFolder",
+          "type": "string",
+          "doc": "Path to be used by PathResolver for CommonDataFolder",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Models.HostAnalyticsInfo",
+          "doc": "Host analytics info specifying Dynamo launching host related information.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Models.DynamoModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "MakeModel(bool, bool, string, Dynamo.Models.HostAnalyticsInfo)",
+      "signature": "Dynamo.Models.DynamoModel MakeModel(bool CLImode, bool noNetworkMode, string asmPath, Dynamo.Models.HostAnalyticsInfo info)",
+      "summary": "Use this overload to construct a DynamoModel when the location of ASM to use is known and host analytics info is known.",
+      "params": [
+        {
+          "name": "CLImode",
+          "type": "bool",
+          "doc": "CLI mode starts the model in test mode and uses a separate path resolver.",
+          "optional": false
+        },
+        {
+          "name": "noNetworkMode",
+          "type": "bool",
+          "doc": "Option to initialize Dynamo in no-network mode",
+          "optional": false
+        },
+        {
+          "name": "asmPath",
+          "type": "string",
+          "doc": "Path to directory containing geometry library binaries",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Models.HostAnalyticsInfo",
+          "doc": "Host analytics info specifying Dynamo launching host related information.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Models.DynamoModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "MakeModel(bool, string, bool, string, Dynamo.Models.HostAnalyticsInfo)",
+      "signature": "Dynamo.Models.DynamoModel MakeModel(bool CLImode, string CLIlocale, bool noNetworkMode, string asmPath, Dynamo.Models.HostAnalyticsInfo info)",
+      "summary": "Use this overload to construct a DynamoModel when the location of ASM to use is known and host analytics info is known.",
+      "params": [
+        {
+          "name": "CLImode",
+          "type": "bool",
+          "doc": "CLI mode starts the model in test mode and uses a separate path resolver.",
+          "optional": false
+        },
+        {
+          "name": "CLIlocale",
+          "type": "string",
+          "doc": "CLI argument to force dynamo locale",
+          "optional": false
+        },
+        {
+          "name": "noNetworkMode",
+          "type": "bool",
+          "doc": "Option to initialize Dynamo in no-network mode",
+          "optional": false
+        },
+        {
+          "name": "asmPath",
+          "type": "string",
+          "doc": "Path to directory containing geometry library binaries",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Models.HostAnalyticsInfo",
+          "doc": "Host analytics info specifying Dynamo launching host related information.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Models.DynamoModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "MakeModel(bool, string, string)",
+      "signature": "Dynamo.Models.DynamoModel MakeModel(bool CLImode, string asmPath, string hostName)",
+      "summary": "Use this overload to construct a DynamoModel when the location of ASM to use is known and host name is known.",
+      "params": [
+        {
+          "name": "CLImode",
+          "type": "bool",
+          "doc": "CLI mode starts the model in test mode and uses a separate path resolver.",
+          "optional": false
+        },
+        {
+          "name": "asmPath",
+          "type": "string",
+          "doc": "Path to directory containing geometry library binaries",
+          "optional": false
+        },
+        {
+          "name": "hostName",
+          "type": "string",
+          "doc": "Dynamo variation identified by host.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Models.DynamoModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "PreloadShapeManager(ref string, ref string)",
+      "signature": "void PreloadShapeManager(ref string geometryFactoryPath, ref string preloaderLocation)",
+      "summary": "Attempts to load the geometry library binaries using the location params.",
+      "params": [
+        {
+          "name": "geometryFactoryPath",
+          "type": "ref string",
+          "doc": "libG ProtoInterface path",
+          "optional": false
+        },
+        {
+          "name": "preloaderLocation",
+          "type": "ref string",
+          "doc": "libG folder path",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "PreloadShapeManager(ref string, ref string, ref System.Version, ref string)",
+      "signature": "void PreloadShapeManager(ref string geometryFactoryPath, ref string preloaderLocation, ref System.Version asmVersion, ref string asmPath)",
+      "summary": "Attempts to load the geometry library binaries and returns ASM version information.",
+      "params": [
+        {
+          "name": "geometryFactoryPath",
+          "type": "ref string",
+          "doc": "libG ProtoInterface path",
+          "optional": false
+        },
+        {
+          "name": "preloaderLocation",
+          "type": "ref string",
+          "doc": "libG folder path",
+          "optional": false
+        },
+        {
+          "name": "asmVersion",
+          "type": "ref System.Version",
+          "doc": "Version of the loaded ASM, or null if version cannot be determined",
+          "optional": false
+        },
+        {
+          "name": "asmPath",
+          "type": "ref string",
+          "doc": "Path where ASM binaries are located, or empty string if not found",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    },
+    {
+      "name": "SetLocale(Dynamo.Applications.StartupUtils.CommandLineArguments)",
+      "signature": "string SetLocale(Dynamo.Applications.StartupUtils.CommandLineArguments cmdLineArgs)",
+      "summary": "StartupUtils.SetLocale",
+      "params": [
+        {
+          "name": "cmdLineArgs",
+          "type": "Dynamo.Applications.StartupUtils.CommandLineArguments",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "ASMPreloadFailure",
+      "delegate": "System.Action\u003Cstring\u003E",
+      "signature": "public event System.Action\u003Cstring\u003E ASMPreloadFailure",
+      "summary": "Raised when loading of the ASM binaries fails. A failure message is passed as a parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoApplications/StartupUtils.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

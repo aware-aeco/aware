@@ -1,0 +1,58 @@
+{
+  "name": "LayoutMasterStampData",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Representation of a stamp (aka label) inside a print layout.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterStampData/",
+  "constructors": [
+    {
+      "name": "LayoutMasterStampData",
+      "signature": "LayoutMasterStampData()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterStampData/#NemAll_Python_BaseElements.LayoutMasterStampData.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the file ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterStampData/#NemAll_Python_BaseElements.LayoutMasterStampData.FileID"
+    },
+    {
+      "name": "ItemID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the item ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterStampData/#NemAll_Python_BaseElements.LayoutMasterStampData.ItemID"
+    },
+    {
+      "name": "PathID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the path ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterStampData/#NemAll_Python_BaseElements.LayoutMasterStampData.PathID"
+    },
+    {
+      "name": "StampName",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the stamp name :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterStampData/#NemAll_Python_BaseElements.LayoutMasterStampData.StampName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

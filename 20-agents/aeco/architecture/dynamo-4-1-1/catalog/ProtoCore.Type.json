@@ -1,0 +1,102 @@
+{
+  "name": "Type",
+  "namespace": "ProtoCore",
+  "kind": "struct",
+  "summary": "Type Type",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs",
+  "constructors": [
+    {
+      "name": "Type(string, int)",
+      "signature": "void Type(string TypeName, int TypeRank)",
+      "summary": "Constructor of Type using Short string",
+      "params": [
+        {
+          "name": "TypeName",
+          "type": "string",
+          "doc": "Serialized Short String",
+          "optional": false
+        },
+        {
+          "name": "TypeRank",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(ProtoCore.Type)",
+      "signature": "bool Equals(ProtoCore.Type type)",
+      "summary": "Type.Equals",
+      "params": [
+        {
+          "name": "type",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "Initialize",
+      "signature": "void Initialize()",
+      "summary": "Comment Jun: Initialize a type to the default values",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "ToShortString",
+      "signature": "string ToShortString()",
+      "summary": "To its string representation, but using unqualified class class name.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Type.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsIndexable",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Type.IsIndexable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

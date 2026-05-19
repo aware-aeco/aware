@@ -1,0 +1,26 @@
+{
+  "name": "LcUCsvWriterEEncoding",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUCsvWriterEEncoding enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUCsvWriterEEncoding",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMULTISTRING",
+      "value": 0
+    },
+    {
+      "name": "eUTF8",
+      "value": 1
+    },
+    {
+      "name": "eUTF8_WITH_BOM",
+      "value": 2
+    }
+  ]
+}

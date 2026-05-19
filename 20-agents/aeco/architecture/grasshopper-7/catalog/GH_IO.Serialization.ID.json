@@ -1,0 +1,165 @@
+{
+  "name": "ID",
+  "namespace": "GH_IO.Serialization",
+  "kind": "struct",
+  "summary": "An ID is used to uniquely identify a specific item.",
+  "interfaces": [
+    "IComparable\u003CID\u003E",
+    "IEquatable\u003CID\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_Serialization_ID.htm",
+  "constructors": [
+    {
+      "name": "ID(String)",
+      "signature": "public ID(string name)",
+      "summary": "Constuctor for IDs.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of id.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_ID__ctor.htm"
+    },
+    {
+      "name": "ID(String, Int32)",
+      "signature": "public ID(string name, int index)",
+      "summary": "Constructor for IDs.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of id.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of id. Valid values are: -1 = no index0 to int.MaxValue = valid index",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_ID__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(ID other)",
+      "summary": "Compares this ID to another ID.",
+      "params": [
+        {
+          "name": "other",
+          "type": "GH_IO.Serialization.ID",
+          "doc": "The other ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Less than 0, if other comes before this. 0 is other is at the same place. More than zero otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_ID_CompareTo.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public bool Equals(ID other)",
+      "summary": "Determines if two IDs are equal.",
+      "params": [
+        {
+          "name": "other",
+          "type": "GH_IO.Serialization.ID",
+          "doc": "The other ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true is both are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_ID_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets the hash code.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A number representing the hash code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_ID_GetHashCode.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Gets a string representation for this ID.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_ID_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Hash",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the hash code.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_ID_Hash.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the index has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_ID_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the name has been set. Every valid ID must have a name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_ID_HasName.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of this ID, if there is no valid index then -1 is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_ID_Index.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of this ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_ID_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

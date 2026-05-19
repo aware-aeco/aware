@@ -42,6 +42,10 @@ node_modules/
 .aware-cache/
 .tmp/
 
+# Dynamo extractor (Phase B B11) staging directory — NuGet packages + source-archive cache.
+# Re-downloaded on demand by the extractor; not part of the committed artefacts.
+cli-sidecar/Ingest/Output/dynamo-nupkg/
+
 # cli-sidecar build output
 cli-sidecar/bin/
 cli-sidecar/obj/
@@ -49,4 +53,6 @@ cli-sidecar/Tests/bin/
 cli-sidecar/Tests/obj/
 cli-sidecar/Tests/FixtureAssembly/bin/
 cli-sidecar/Tests/FixtureAssembly/obj/
+cli-sidecar/Ingest/Generator/Tests/bin/
+cli-sidecar/Ingest/Generator/Tests/obj/
 *.binlog

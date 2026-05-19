@@ -1,0 +1,46 @@
+{
+  "name": "IGUICommand",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "IGUICommand interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.IGUICommand",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Enabled property of IGUICommand.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IGUICommand.Enabled"
+    },
+    {
+      "name": "On",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "On property of IGUICommand.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IGUICommand.On"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Text property of IGUICommand.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IGUICommand.Text"
+    },
+    {
+      "name": "Visible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Visible property of IGUICommand.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IGUICommand.Visible"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

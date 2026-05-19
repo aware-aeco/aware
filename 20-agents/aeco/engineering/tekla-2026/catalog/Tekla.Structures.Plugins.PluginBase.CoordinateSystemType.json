@@ -1,0 +1,24 @@
+{
+  "name": "PluginBase.CoordinateSystemType",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the coordinate system type for model plug-ins which are using points as an input.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/440d2b29-3abf-36bf-37a4-4d5f845580b8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FROM_FIRST_POINT_AND_GLOBAL",
+      "value": 0,
+      "summary": "Plugin coordinate system is calculated from first input point defining the origin and global coordinates which defines x and y-direction."
+    },
+    {
+      "name": "FROM_FIRST_AND_SECOND_POINT",
+      "value": 1,
+      "summary": "Plugin coordinate system is calculated from first input point defining the origin and second input point which defines x-direction."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "LicenseBuildType",
+  "namespace": "Rhino.PlugIns",
+  "kind": "enum",
+  "summary": "License build contentType enumerations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_LicenseBuildType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unspecified",
+      "value": 0,
+      "summary": "An unspecified build"
+    },
+    {
+      "name": "Release",
+      "value": 100,
+      "summary": "A release build (e.g. commercial, education, NFR, etc.)"
+    },
+    {
+      "name": "Evaluation",
+      "value": 200,
+      "summary": "A evaluation build"
+    },
+    {
+      "name": "Beta",
+      "value": 300,
+      "summary": "A beta build (e.g. WIP)"
+    }
+  ]
+}

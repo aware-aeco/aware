@@ -1,0 +1,24 @@
+{
+  "name": "GH_StateTagLayoutDirection",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible layout directions for parameter state tags.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_StateTagLayoutDirection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Left",
+      "value": 0,
+      "summary": "Floating and Input parameters should be layed out towards the left."
+    },
+    {
+      "name": "Right",
+      "value": 1,
+      "summary": "Output parameters should be layed out towards the right."
+    }
+  ]
+}

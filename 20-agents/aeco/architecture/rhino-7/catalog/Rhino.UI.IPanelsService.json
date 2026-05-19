@@ -1,0 +1,92 @@
+{
+  "name": "IPanelsService",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "For internal use, the IPanels service is implemented in RhinoWindows or RhinoMac as appropriate and handles the communication with core Rhino",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_IPanelsService.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DestroyNativeWindow",
+      "signature": "void DestroyNativeWindow(Object host, Object nativeObject, bool disposeOfNativeObject)",
+      "summary": "",
+      "params": [
+        {
+          "name": "host",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022host\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DestroyNativeWindow(System.Object,System.Object,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "nativeObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022nativeObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DestroyNativeWindow(System.Object,System.Object,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "disposeOfNativeObject",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022disposeOfNativeObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DestroyNativeWindow(System.Object,System.Object,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IPanelsService_DestroyNativeWindow.htm"
+    },
+    {
+      "name": "SetF1Hook",
+      "signature": "void SetF1Hook(Object nativeObject, EventHandler hook)",
+      "summary": "",
+      "params": [
+        {
+          "name": "nativeObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022nativeObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SetF1Hook(System.Object,System.EventHandler)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "hook",
+          "type": "System.EventHandler",
+          "doc": "[Missing \u003Cparam name=\u0022hook\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SetF1Hook(System.Object,System.EventHandler)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IPanelsService_SetF1Hook.htm"
+    },
+    {
+      "name": "SupportedType",
+      "signature": "bool SupportedType(Type type, out string exceptionMessage)",
+      "summary": "",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SupportedType(System.Type,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "exceptionMessage",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022exceptionMessage\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SupportedType(System.Type,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SupportedType(System.Type,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IPanelsService_SupportedType.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,230 @@
+{
+  "name": "TypedParameter",
+  "namespace": "Dynamo.Library",
+  "kind": "class",
+  "summary": "A tuple of parameter and its type.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs",
+  "constructors": [
+    {
+      "name": "TypedParameter(string, ProtoCore.Type, ProtoCore.AST.AssociativeAST.AssociativeNode, string, string)",
+      "signature": "void TypedParameter(string name, ProtoCore.Type type, ProtoCore.AST.AssociativeAST.AssociativeNode defaultValue, string shortArgumentName, string summary)",
+      "summary": "This function creates TypedParameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "parameter name",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "ProtoCore.Type",
+          "doc": "parameter type",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "parameter default value",
+          "optional": false
+        },
+        {
+          "name": "shortArgumentName",
+          "type": "string",
+          "doc": "short name is used as tooltip",
+          "optional": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "doc": "parameter description",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "TypedParameter(string, ProtoCore.Type, ProtoCore.AST.AssociativeAST.AssociativeNode, string, string, bool)",
+      "signature": "void TypedParameter(string name, ProtoCore.Type type, ProtoCore.AST.AssociativeAST.AssociativeNode defaultValue, string shortArgumentName, string summary, bool nameIsValid)",
+      "summary": "This function creates TypedParameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "parameter name",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "ProtoCore.Type",
+          "doc": "parameter type",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "parameter default value",
+          "optional": false
+        },
+        {
+          "name": "shortArgumentName",
+          "type": "string",
+          "doc": "short name is used as tooltip",
+          "optional": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "doc": "parameter description",
+          "optional": false
+        },
+        {
+          "name": "nameIsValid",
+          "type": "bool",
+          "doc": "indicates whether the name can be parsed",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "TypedParameter(string, string, int, string, string)",
+      "signature": "void TypedParameter(string name, string TypeName, int TypeRank, string defaultValue, string summary)",
+      "summary": "This function creates TypedParameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "parameter name",
+          "optional": false
+        },
+        {
+          "name": "TypeName",
+          "type": "string",
+          "doc": "parameter TypeName, serialized name of ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "TypeRank",
+          "type": "int",
+          "doc": "parameter TypeRank, serialized rank of ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "doc": "parameter defaultValue",
+          "optional": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "doc": "parameter Summary, can include comments and documentation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Turns into string.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultValue",
+      "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns default value of the parameter as AST node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "DefaultValueString",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns fully qualified string representation of AST node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns description of the parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "DisplayTypeName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns short type name of the parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "Function",
+      "type": "Dynamo.Engine.FunctionDescriptor",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns DesignScript function.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "NameIsValid",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether a valid name has been set for this parameter. This property is not serialized.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "Summary",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns summary of the parameter. This may include comments or documentation.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    },
+    {
+      "name": "Type",
+      "type": "ProtoCore.Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns type of the parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/TypedParameter.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

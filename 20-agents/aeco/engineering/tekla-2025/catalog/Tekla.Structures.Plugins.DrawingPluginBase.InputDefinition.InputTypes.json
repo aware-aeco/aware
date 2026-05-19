@@ -1,0 +1,39 @@
+{
+  "name": "DrawingPluginBase.InputDefinition.InputTypes",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "The possible input types for a drawing plug-in.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a7c9fa37-3ea6-4acf-dce6-ce37d13c0aff",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INPUT_ONE_POINT",
+      "value": 1,
+      "summary": "The input has one point."
+    },
+    {
+      "name": "INPUT_TWO_POINTS",
+      "value": 2,
+      "summary": "The input has two points."
+    },
+    {
+      "name": "INPUT_THREE_POINTS",
+      "value": 3,
+      "summary": "The input has three points."
+    },
+    {
+      "name": "INPUT_N_POINTS",
+      "value": 4,
+      "summary": "The input has multiple points."
+    },
+    {
+      "name": "INPUT_ONE_OBJECT",
+      "value": 5,
+      "summary": "The input has one drawing object. The supported drawing objects are bolts, parts and rebars. Bolts, parts and rebars are drawing objects derived from model objects. The parts include the beam, the contour plate and the polybeam."
+    }
+  ]
+}

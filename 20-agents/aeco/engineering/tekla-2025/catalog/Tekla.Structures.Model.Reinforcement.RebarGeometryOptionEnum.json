@@ -1,0 +1,34 @@
+{
+  "name": "Reinforcement.RebarGeometryOptionEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Options for the function GetRebarGeometries.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7108e0fe-54a6-1bb5-2c14-3a461eff6bda",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NONE",
+      "value": 0,
+      "summary": "No hooks or clash avoidance or length adjustment."
+    },
+    {
+      "name": "HOOKS",
+      "value": 1,
+      "summary": "Hooks."
+    },
+    {
+      "name": "AVOID_CLASH",
+      "value": 2,
+      "summary": "In case rebar polygon clashes with itself, physical points are moved to avoid clashing."
+    },
+    {
+      "name": "LENGTH_ADJUSTMENTS",
+      "value": 4,
+      "summary": "Length adjustments"
+    }
+  ]
+}

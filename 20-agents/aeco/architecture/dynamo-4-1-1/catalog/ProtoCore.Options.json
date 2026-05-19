@@ -1,0 +1,225 @@
+{
+  "name": "Options",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type Options",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs",
+  "constructors": [
+    {
+      "name": "Options()",
+      "signature": "void Options()",
+      "summary": "Options.Options",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ApplyUpdate",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.ApplyUpdate",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "AssociativeToImperativePropagation",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.AssociativeToImperativePropagation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "BuildOptErrorAsWarning",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.BuildOptErrorAsWarning",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DirectDependencyExecution",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.DirectDependencyExecution",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DumpByteCode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.DumpByteCode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DumpFunctionResolverLogic",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.DumpFunctionResolverLogic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "DumpIL",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Options.DumpIL",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "EmitBreakpoints",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.EmitBreakpoints",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ExecuteSSA",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.ExecuteSSA",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "ExecutionMode",
+      "type": "ProtoCore.ExecutionMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.ExecutionMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "FormatToPrintFloatingPoints",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.FormatToPrintFloatingPoints",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GCTempVarsOnDebug",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.GCTempVarsOnDebug",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "GenerateSSA",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.GenerateSSA",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IDEDebugMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.IDEDebugMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IncludeDirectories",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.IncludeDirectories",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IsDeltaCompile",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "TODO: Aparajit: This flag is true for Delta AST compilation This will be removed once we make this the default and deprecate \u0022deltaCompileStartPC\u0022 which requires recompiling the entire source code for every delta execution",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IsDeltaExecution",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.IsDeltaExecution",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "RootModulePathName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.RootModulePathName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "RunMode",
+      "type": "ProtoCore.DSASM.InterpreterMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.RunMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SuppressBuildOutput",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.SuppressBuildOutput",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "SuppressFunctionResolutionWarning",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.SuppressFunctionResolutionWarning",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "Verbose",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.Verbose",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "WatchTestMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.WatchTestMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "dynamicCycleCheck",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.dynamicCycleCheck",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "staticCycleCheck",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Options.staticCycleCheck",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

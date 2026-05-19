@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisMaterial.MaterialTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The material types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5430e7b6-0a98-1465-cc66-cfee387e5957",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "STEEL",
+      "value": 1,
+      "summary": "The steel material type."
+    },
+    {
+      "name": "CONCRETE",
+      "value": 2,
+      "summary": "The concrete material type."
+    },
+    {
+      "name": "TIMBER",
+      "value": 5,
+      "summary": "The timber material type."
+    }
+  ]
+}

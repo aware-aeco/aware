@@ -1,0 +1,434 @@
+{
+  "name": "HtmlDialog",
+  "namespace": "UI",
+  "kind": "class",
+  "summary": "Note: The window size is not guaranteed to be pixel perfect in all SketchUp versions and operating systems. Prefer responsive designs that can take up some fluctuations in size. The Ruby HtmlDialog class allows you to create and interact with HTML dialog boxes from Ruby. This is the best way to generate complex, embedded UIs inside SketchUp, but it does generally require HTML and JavaScript expertise. If your goal is to simple display a website to your users, consider using #openURL, which will show them a web page in their default browser rather than inside a dialog in SketchUp. The left, top, width, height etc. dimensions of the dialog are in logical units. This means you provide the units as if they where on a monitor with \u201Cnormal\u201D DPI. The units given will be multiplied by the same factor as returned by scale_factor. For usage examples, including how to migrate from the old WebDialog class, see github.com/SketchUp/htmldialog-examples. You may use the Trimble Modus framework for a look and feel of your dialog that matches that of SketchUp\u0027s dialogs. HtmlDialog uses the following versions of CEF (Chromium Embedded Framework): SketchUp 2025.0 CEF 128 SketchUp 2024.0 CEF 112 SketchUp 2021.1 CEF 88 SketchUp 2019.0 CEF 64 SketchUp 2018.0 CEF 56 SketchUp 2017.0 CEF 52 Starting with SketchUp 2026.1, HtmlDialog exposes a small set of built-in callbacks (mirroring the legacy skp: protocol used by WebDialog). sketchup.launchEW(id) \u2013 Opens the Extension Warehouse dialog and show a specified extension\u0027s page. sketchup.installRBZ(url) \u2013 Downloads and installs a Ruby extension from the given .rbz URL. (User will be prompted just like using the Extension Manager.)",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "HtmlDialog(properties)",
+      "summary": "Note: Prefix preference_key with something unique to your extension. Note: If there is no reference kept to the HtmlDialog object, the window will close once the garbage collection runs. This behavior can be confusing in trivial test code but is usually not a concern in real life scenarios. Typically a persistent reference, e.g. an instance variable, should be kept to bring the dialog to front, rather than creating a duplicate, if the user should request it a second time. The new method is used to create a new HtmlDialog. In SketchUp 2021.1 use_content_size was added. When set to true, width, height, min_width, max width, min_height, max_height will represent the size of the content area of the window. This excludes the titlebar and the window frame. When use_content_size is set to false (the default value), the size dimensions will represent the outer frame size. The properties hash accepts an optional key style where the value is one of: UI::HtmlDialog::STYLE_DIALOG HtmlDialog stays at the top of SketchUp. UI::HtmlDialog::STYLE_WINDOW HtmlDialog can go behind SketchUp and doesn\u0027t disappear when SketchUp looses focus. UI::HtmlDialog::STYLE_UTILITY HtmlDialog is shown with small titlebar and stays on top of SketchUp.",
+      "remarks": "Note: Prefix preference_key with something unique to your extension. Note: If there is no reference kept to the HtmlDialog object, the window will close once the garbage collection runs. This behavior can be confusing in trivial test code but is usually not a concern in real life scenarios. Typically a persistent reference, e.g. an instance variable, should be kept to bring the dialog to front, rather than creating a duplicate, if the user should request it a second time. The new method is used to create a new HtmlDialog. In SketchUp 2021.1 use_content_size was added. When set to true, width, height, min_width, max width, min_height, max_height will represent the size of the content area of the window. This excludes the titlebar and the window frame. When use_content_size is set to false (the default value), the size dimensions will represent the outer frame size. The properties hash accepts an optional key style where the value is one of: UI::HtmlDialog::STYLE_DIALOG HtmlDialog stays at the top of SketchUp. UI::HtmlDialog::STYLE_WINDOW HtmlDialog can go behind SketchUp and doesn\u0027t disappear when SketchUp looses focus. UI::HtmlDialog::STYLE_UTILITY HtmlDialog is shown with small titlebar and stays on top of SketchUp.",
+      "params": [
+        {
+          "name": "properties",
+          "type": "Hash",
+          "doc": "A hash containing the initial properties of the newly created dialog.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_action_callback",
+      "signature": "add_action_callback(callback_name) {|action_context, *args| ... } =\u003E Boolean",
+      "summary": "Note: When an HtmlDialog is closed, all callbacks to that instance are cleared.",
+      "remarks": "Note: When an HtmlDialog is closed, all callbacks to that instance are cleared. Attach or re-attach them before you show the dialog. The #add_action_callback method establishes a Ruby callback method that your html dialog can call to perform some function. Use the sketchup.callback_method_name to invoke the callback method from your html dialog. Your JavaScript in the html dialog will invoke the callback with the same number of arguments. The call is asynchronous. JavaScript call might return before Ruby callback even called. Use onCompleted callback to get notified for completion. Basic types such as booleans, numbers, strings, arrays and hashes are automatically converted between Ruby and JavaScript.",
+      "params": [
+        {
+          "name": "callback_name",
+          "type": "String",
+          "doc": "The name of the callback method to be invoked from the html dialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if action added successfully, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#add_action_callback-instance_method"
+    },
+    {
+      "name": "bring_to_front",
+      "signature": "bring_to_front =\u003E nil",
+      "summary": "The #bring_to_front method is used to bring the window to the front, putting it on top of other windows even if its minimized.",
+      "remarks": "The #bring_to_front method is used to bring the window to the front, putting it on top of other windows even if its minimized.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#bring_to_front-instance_method"
+    },
+    {
+      "name": "center",
+      "signature": "center =\u003E true",
+      "summary": "The #center method is used to center the HtmlDialog relative to the active model window.",
+      "remarks": "The #center method is used to center the HtmlDialog relative to the active model window. If there is no active model window, this function doesn\u0027t do anything.",
+      "params": [],
+      "returns": {
+        "type": "true",
+        "doc": "This always return true, never false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#center-instance_method"
+    },
+    {
+      "name": "close",
+      "signature": "close =\u003E nil",
+      "summary": "The #close method is used to close a dialog box.",
+      "remarks": "The #close method is used to close a dialog box.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#close-instance_method"
+    },
+    {
+      "name": "execute_script",
+      "signature": "execute_script(script) =\u003E nil",
+      "summary": "The #execute_script method is used to execute a JavaScript string on the html dialog asynchronously.",
+      "remarks": "The #execute_script method is used to execute a JavaScript string on the html dialog asynchronously.",
+      "params": [
+        {
+          "name": "script",
+          "type": "String",
+          "doc": "The JavaScript script to execute on the HtmlDialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#execute_script-instance_method"
+    },
+    {
+      "name": "get_content_size",
+      "signature": "get_content_size =\u003E Array(Integer, Integer)?",
+      "summary": "The #get_content_size method is used to get the content size of the HtmlDialog, in logical pixels.",
+      "remarks": "The #get_content_size method is used to get the content size of the HtmlDialog, in logical pixels.",
+      "params": [],
+      "returns": {
+        "type": "Array(Integer, Integer), nil",
+        "doc": "Content width and height of the HtmlDialog. A nil value is returned if the HtmlDialog is not visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#get_content_size-instance_method"
+    },
+    {
+      "name": "get_position",
+      "signature": "get_position =\u003E Array(Integer, Integer)?",
+      "summary": "The #get_position method is used to get the position of the HtmlDialog relative to the screen, in logical pixels.",
+      "remarks": "The #get_position method is used to get the position of the HtmlDialog relative to the screen, in logical pixels.",
+      "params": [],
+      "returns": {
+        "type": "Array(Integer, Integer), nil",
+        "doc": "Left and top position of the dialog. A nil value is returned if the HtmlDialog is not visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#get_position-instance_method"
+    },
+    {
+      "name": "get_size",
+      "signature": "get_size =\u003E Array(Integer, Integer)?",
+      "summary": "The #get_size method is used to get the outer frame size of the HtmlDialog, in logical pixels.",
+      "remarks": "The #get_size method is used to get the outer frame size of the HtmlDialog, in logical pixels.",
+      "params": [],
+      "returns": {
+        "type": "Array(Integer, Integer), nil",
+        "doc": "Outer frame width and height of the HtmlDialog. A nil value is returned if the HtmlDialog is not visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#get_size-instance_method"
+    },
+    {
+      "name": "hide",
+      "signature": "hide =\u003E nil",
+      "summary": "Note: Modal dialogs cannot be hidden.",
+      "remarks": "Note: Modal dialogs cannot be hidden. Attempting to hide a modal dialog will raise an ArgumentError. The #hide method is used to hide a dialog box without closing it. This preserves the dialog\u0027s state and allows it to be shown again later without recreating the dialog.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the dialog is modal"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#hide-instance_method"
+    },
+    {
+      "name": "set_can_close",
+      "signature": "set_can_close =\u003E Boolean",
+      "summary": "The #set_can_close method is used to attach a block that is executed just before closing, this block has to return a boolean, if the block returns false the close will be canceled.",
+      "remarks": "The #set_can_close method is used to attach a block that is executed just before closing, this block has to return a boolean, if the block returns false the close will be canceled.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_can_close-instance_method"
+    },
+    {
+      "name": "set_content_size",
+      "signature": "set_content_size(width, height) =\u003E nil",
+      "summary": "The #set_content_size method is used to set the content size of the HtmlDialog, in logical pixels.",
+      "remarks": "The #set_content_size method is used to set the content size of the HtmlDialog, in logical pixels.",
+      "params": [
+        {
+          "name": "width",
+          "type": "Integer",
+          "doc": "Content width of the HtmlDialog.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "doc": "Content height of the HtmlDialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_content_size-instance_method"
+    },
+    {
+      "name": "set_file",
+      "signature": "set_file(filename) =\u003E nil",
+      "summary": "The #set_file method is used to identify a local HTML file to display in the HtmlDialog.",
+      "remarks": "The #set_file method is used to identify a local HTML file to display in the HtmlDialog.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The filename for the HtmlDialog file (HTML file)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_file-instance_method"
+    },
+    {
+      "name": "set_html",
+      "signature": "set_html(html_string) =\u003E nil",
+      "summary": "The #set_html method is used to load a HtmlDialog with a string of provided HTML.",
+      "remarks": "The #set_html method is used to load a HtmlDialog with a string of provided HTML.",
+      "params": [
+        {
+          "name": "html_string",
+          "type": "String",
+          "doc": "A string of valid html to display in your HtmlDialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_html-instance_method"
+    },
+    {
+      "name": "set_on_closed",
+      "signature": "set_on_closed =\u003E Boolean",
+      "summary": "Note: For saving state before window closes use #set_can_close instead.",
+      "remarks": "Note: For saving state before window closes use #set_can_close instead. The #set_on_closed method is used to attach a block that will be executed when a dialog is already in the process of closing, do any last minute operations within this block such as releasing resources or performing cleanup tasks.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_on_closed-instance_method"
+    },
+    {
+      "name": "set_position",
+      "signature": "set_position(left, top) =\u003E true",
+      "summary": "The #set_position method is used to set the position of the HtmlDialog relative to the screen, in pixels.",
+      "remarks": "The #set_position method is used to set the position of the HtmlDialog relative to the screen, in pixels.",
+      "params": [
+        {
+          "name": "left",
+          "type": "Integer",
+          "doc": "The number of pixels from the left.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "Integer",
+          "doc": "The number of pixels from the top of the screen.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "true",
+        "doc": "This always return true, never false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_position-instance_method"
+    },
+    {
+      "name": "set_size",
+      "signature": "set_size(width, height) =\u003E true",
+      "summary": "The #set_size method is used to set the outer frame size of the HtmlDialog, in pixels.",
+      "remarks": "The #set_size method is used to set the outer frame size of the HtmlDialog, in pixels.",
+      "params": [
+        {
+          "name": "width",
+          "type": "Integer",
+          "doc": "Outer frame width of the HtmlDialog.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "doc": "Outer frame height of the HtmlDialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "true",
+        "doc": "This always return true, never false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_size-instance_method"
+    },
+    {
+      "name": "set_url",
+      "signature": "set_url(url) =\u003E nil",
+      "summary": "The #set_url method is used to load a HtmlDialog with the content at a specific URL.",
+      "remarks": "The #set_url method is used to load a HtmlDialog with the content at a specific URL. This method allows you to load web sites in a HtmlDialog.",
+      "params": [
+        {
+          "name": "url",
+          "type": "String",
+          "doc": "The URL for a specific web site.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#set_url-instance_method"
+    },
+    {
+      "name": "show",
+      "signature": "show =\u003E nil",
+      "summary": "The #show method is used to display a non-modal dialog box.",
+      "remarks": "The #show method is used to display a non-modal dialog box.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#show-instance_method"
+    },
+    {
+      "name": "show_modal",
+      "signature": "show_modal =\u003E nil",
+      "summary": "The #show_modal method is used to display a modal dialog box.",
+      "remarks": "The #show_modal method is used to display a modal dialog box.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#show_modal-instance_method"
+    },
+    {
+      "name": "visible?",
+      "signature": "visible? =\u003E Boolean",
+      "summary": "The #visible? method is useful to tell if the dialog is shown and still alive, if the dialog is minimized or not visible on the screen this will still return true.",
+      "remarks": "The #visible? method is useful to tell if the dialog is shown and still alive, if the dialog is minimized or not visible on the screen this will still return true.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the dialog is open."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#visible?-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "STYLE_WINDOW",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#STYLE_WINDOW-constant"
+    },
+    {
+      "name": "STYLE_DIALOG",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#STYLE_DIALOG-constant"
+    },
+    {
+      "name": "STYLE_UTILITY",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#STYLE_UTILITY-constant"
+    },
+    {
+      "name": "CEF_VERSION",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#CEF_VERSION-constant"
+    },
+    {
+      "name": "CHROME_VERSION",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/UI/HtmlDialog.html#CHROME_VERSION-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

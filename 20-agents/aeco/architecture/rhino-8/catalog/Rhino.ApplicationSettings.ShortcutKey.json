@@ -1,0 +1,2404 @@
+{
+  "name": "ShortcutKey",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Shortcut key combinations",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_ShortcutKey.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "F1",
+      "value": 0,
+      "summary": "F1"
+    },
+    {
+      "name": "F2",
+      "value": 1,
+      "summary": "F2"
+    },
+    {
+      "name": "F3",
+      "value": 2,
+      "summary": "F3"
+    },
+    {
+      "name": "F4",
+      "value": 3,
+      "summary": "F4"
+    },
+    {
+      "name": "F5",
+      "value": 4,
+      "summary": "F5"
+    },
+    {
+      "name": "F6",
+      "value": 5,
+      "summary": "F6"
+    },
+    {
+      "name": "F7",
+      "value": 6,
+      "summary": "F7"
+    },
+    {
+      "name": "F8",
+      "value": 7,
+      "summary": "F8"
+    },
+    {
+      "name": "F9",
+      "value": 8,
+      "summary": "F9"
+    },
+    {
+      "name": "F10",
+      "value": 9,
+      "summary": "F10"
+    },
+    {
+      "name": "F11",
+      "value": 10,
+      "summary": "F11"
+    },
+    {
+      "name": "F12",
+      "value": 11,
+      "summary": "F12"
+    },
+    {
+      "name": "CtrlF1",
+      "value": 12,
+      "summary": "Ctrl \u002B F1"
+    },
+    {
+      "name": "CtrlF2",
+      "value": 13,
+      "summary": "Ctrl \u002B F2"
+    },
+    {
+      "name": "CtrlF3",
+      "value": 14,
+      "summary": "Ctrl \u002B F3"
+    },
+    {
+      "name": "CtrlF4",
+      "value": 15,
+      "summary": "Ctrl \u002B F4"
+    },
+    {
+      "name": "CtrlF5",
+      "value": 16,
+      "summary": "Ctrl \u002B F5"
+    },
+    {
+      "name": "CtrlF6",
+      "value": 17,
+      "summary": "Ctrl \u002B F6"
+    },
+    {
+      "name": "CtrlF7",
+      "value": 18,
+      "summary": "Ctrl \u002B F7"
+    },
+    {
+      "name": "CtrlF8",
+      "value": 19,
+      "summary": "Ctrl \u002B F8"
+    },
+    {
+      "name": "CtrlF9",
+      "value": 20,
+      "summary": "Ctrl \u002B F9"
+    },
+    {
+      "name": "CtrlF10",
+      "value": 21,
+      "summary": "Ctrl \u002B F10"
+    },
+    {
+      "name": "CtrlF11",
+      "value": 22,
+      "summary": "Ctrl \u002B F11"
+    },
+    {
+      "name": "CtrlF12",
+      "value": 23,
+      "summary": "Ctrl \u002B F12"
+    },
+    {
+      "name": "ShiftCtrlF1",
+      "value": 24,
+      "summary": "Shift \u002B Ctrl \u002B F1"
+    },
+    {
+      "name": "ShiftCtrlF2",
+      "value": 25,
+      "summary": "Shift \u002B Ctrl \u002B F2"
+    },
+    {
+      "name": "ShiftCtrlF3",
+      "value": 26,
+      "summary": "Shift \u002B Ctrl \u002B F3"
+    },
+    {
+      "name": "ShiftCtrlF4",
+      "value": 27,
+      "summary": "Shift \u002B Ctrl \u002B F4"
+    },
+    {
+      "name": "ShiftCtrlF5",
+      "value": 28,
+      "summary": "Shift \u002B Ctrl \u002B F5"
+    },
+    {
+      "name": "ShiftCtrlF6",
+      "value": 29,
+      "summary": "Shift \u002B Ctrl \u002B F6"
+    },
+    {
+      "name": "ShiftCtrlF7",
+      "value": 30,
+      "summary": "Shift \u002B Ctrl \u002B F7"
+    },
+    {
+      "name": "ShiftCtrlF8",
+      "value": 31,
+      "summary": "Shift \u002B Ctrl \u002B F8"
+    },
+    {
+      "name": "ShiftCtrlF9",
+      "value": 32,
+      "summary": "Shift \u002B Ctrl \u002B F9"
+    },
+    {
+      "name": "ShiftCtrlF10",
+      "value": 33,
+      "summary": "Shift \u002B Ctrl \u002B F10"
+    },
+    {
+      "name": "ShiftCtrlF11",
+      "value": 34,
+      "summary": "Shift \u002B Ctrl \u002B F11"
+    },
+    {
+      "name": "ShiftCtrlF12",
+      "value": 35,
+      "summary": "Shift \u002B Ctrl \u002B F12"
+    },
+    {
+      "name": "AltCtrlF1",
+      "value": 36,
+      "summary": "Alt \u002B Ctrl \u002B F1"
+    },
+    {
+      "name": "AltCtrlF2",
+      "value": 37,
+      "summary": "Alt \u002B Ctrl \u002B F2"
+    },
+    {
+      "name": "AltCtrlF3",
+      "value": 38,
+      "summary": "Alt \u002B Ctrl \u002B F3"
+    },
+    {
+      "name": "AltCtrlF4",
+      "value": 39,
+      "summary": "Alt \u002B Ctrl \u002B F4"
+    },
+    {
+      "name": "AltCtrlF5",
+      "value": 40,
+      "summary": "Alt \u002B Ctrl \u002B F5"
+    },
+    {
+      "name": "AltCtrlF6",
+      "value": 41,
+      "summary": "Alt \u002B Ctrl \u002B F6"
+    },
+    {
+      "name": "AltCtrlF7",
+      "value": 42,
+      "summary": "Alt \u002B Ctrl \u002B F7"
+    },
+    {
+      "name": "AltCtrlF8",
+      "value": 43,
+      "summary": "Alt \u002B Ctrl \u002B F8"
+    },
+    {
+      "name": "AltCtrlF9",
+      "value": 44,
+      "summary": "Alt \u002B Ctrl \u002B F9"
+    },
+    {
+      "name": "AltCtrlF10",
+      "value": 45,
+      "summary": "Alt \u002B Ctrl \u002B F10"
+    },
+    {
+      "name": "AltCtrlF11",
+      "value": 46,
+      "summary": "Alt \u002B Ctrl \u002B F11"
+    },
+    {
+      "name": "AltCtrlF12",
+      "value": 47,
+      "summary": "Alt \u002B Ctrl \u002B F12"
+    },
+    {
+      "name": "CtrlA",
+      "value": 48,
+      "summary": "Ctrl \u002B A"
+    },
+    {
+      "name": "CtrlB",
+      "value": 49,
+      "summary": "Ctrl \u002B B"
+    },
+    {
+      "name": "CtrlC",
+      "value": 50,
+      "summary": "Ctrl \u002B C"
+    },
+    {
+      "name": "CtrlD",
+      "value": 51,
+      "summary": "Ctrl \u002B D"
+    },
+    {
+      "name": "CtrlE",
+      "value": 52,
+      "summary": "Ctrl \u002B E"
+    },
+    {
+      "name": "CtrlF",
+      "value": 53,
+      "summary": "Ctrl \u002B F"
+    },
+    {
+      "name": "CtrlG",
+      "value": 54,
+      "summary": "Ctrl \u002B G"
+    },
+    {
+      "name": "CtrlH",
+      "value": 55,
+      "summary": "Ctrl \u002B H"
+    },
+    {
+      "name": "CtrlI",
+      "value": 56,
+      "summary": "Ctrl \u002B I"
+    },
+    {
+      "name": "CtrlJ",
+      "value": 57,
+      "summary": "Ctrl \u002B J"
+    },
+    {
+      "name": "CtrlK",
+      "value": 58,
+      "summary": "Ctrl \u002B K"
+    },
+    {
+      "name": "CtrlL",
+      "value": 59,
+      "summary": "Ctrl \u002B L"
+    },
+    {
+      "name": "CtrlM",
+      "value": 60,
+      "summary": "Ctrl \u002B M"
+    },
+    {
+      "name": "CtrlN",
+      "value": 61,
+      "summary": "Ctrl \u002B N"
+    },
+    {
+      "name": "CtrlO",
+      "value": 62,
+      "summary": "Ctrl \u002B O"
+    },
+    {
+      "name": "CtrlP",
+      "value": 63,
+      "summary": "Ctrl \u002B P"
+    },
+    {
+      "name": "CtrlQ",
+      "value": 64,
+      "summary": "Ctrl \u002B Q"
+    },
+    {
+      "name": "CtrlR",
+      "value": 65,
+      "summary": "Ctrl \u002B R"
+    },
+    {
+      "name": "CtrlS",
+      "value": 66,
+      "summary": "Ctrl \u002B S"
+    },
+    {
+      "name": "CtrlT",
+      "value": 67,
+      "summary": "Ctrl \u002B T"
+    },
+    {
+      "name": "CtrlU",
+      "value": 68,
+      "summary": "Ctrl \u002B U"
+    },
+    {
+      "name": "CtrlV",
+      "value": 69,
+      "summary": "Ctrl \u002B V"
+    },
+    {
+      "name": "CtrlW",
+      "value": 70,
+      "summary": "Ctrl \u002B W"
+    },
+    {
+      "name": "CtrlX",
+      "value": 71,
+      "summary": "Ctrl \u002B X"
+    },
+    {
+      "name": "CtrlY",
+      "value": 72,
+      "summary": "Ctrl \u002B Y"
+    },
+    {
+      "name": "CtrlZ",
+      "value": 73,
+      "summary": "Ctrl \u002B Z"
+    },
+    {
+      "name": "ShiftCtrlA",
+      "value": 74,
+      "summary": "Shift \u002B Ctrl \u002B A"
+    },
+    {
+      "name": "ShiftCtrlB",
+      "value": 75,
+      "summary": "Shift \u002B Ctrl \u002B B"
+    },
+    {
+      "name": "ShiftCtrlC",
+      "value": 76,
+      "summary": "Shift \u002B Ctrl \u002B C"
+    },
+    {
+      "name": "ShiftCtrlD",
+      "value": 77,
+      "summary": "Shift \u002B Ctrl \u002B D"
+    },
+    {
+      "name": "ShiftCtrlE",
+      "value": 78,
+      "summary": "Shift \u002B Ctrl \u002B E"
+    },
+    {
+      "name": "ShiftCtrlF",
+      "value": 79,
+      "summary": "Shift \u002B Ctrl \u002B F"
+    },
+    {
+      "name": "ShiftCtrlG",
+      "value": 80,
+      "summary": "Shift \u002B Ctrl \u002B G"
+    },
+    {
+      "name": "ShiftCtrlH",
+      "value": 81,
+      "summary": "Shift \u002B Ctrl \u002B H"
+    },
+    {
+      "name": "ShiftCtrlI",
+      "value": 82,
+      "summary": "Shift \u002B Ctrl \u002B I"
+    },
+    {
+      "name": "ShiftCtrlJ",
+      "value": 83,
+      "summary": "Shift \u002B Ctrl \u002B J"
+    },
+    {
+      "name": "ShiftCtrlK",
+      "value": 84,
+      "summary": "Shift \u002B Ctrl \u002B K"
+    },
+    {
+      "name": "ShiftCtrlL",
+      "value": 85,
+      "summary": "Shift \u002B Ctrl \u002B L"
+    },
+    {
+      "name": "ShiftCtrlM",
+      "value": 86,
+      "summary": "Shift \u002B Ctrl \u002B M"
+    },
+    {
+      "name": "ShiftCtrlN",
+      "value": 87,
+      "summary": "Shift \u002B Ctrl \u002B N"
+    },
+    {
+      "name": "ShiftCtrlO",
+      "value": 88,
+      "summary": "Shift \u002B Ctrl \u002B O"
+    },
+    {
+      "name": "ShiftCtrlP",
+      "value": 89,
+      "summary": "Shift \u002B Ctrl \u002B P"
+    },
+    {
+      "name": "ShiftCtrlQ",
+      "value": 90,
+      "summary": "Shift \u002B Ctrl \u002B Q"
+    },
+    {
+      "name": "ShiftCtrlR",
+      "value": 91,
+      "summary": "Shift \u002B Ctrl \u002B R"
+    },
+    {
+      "name": "ShiftCtrlS",
+      "value": 92,
+      "summary": "Shift \u002B Ctrl \u002B S"
+    },
+    {
+      "name": "ShiftCtrlT",
+      "value": 93,
+      "summary": "Shift \u002B Ctrl \u002B T"
+    },
+    {
+      "name": "ShiftCtrlU",
+      "value": 94,
+      "summary": "Shift \u002B Ctrl \u002B U"
+    },
+    {
+      "name": "ShiftCtrlV",
+      "value": 95,
+      "summary": "Shift \u002B Ctrl \u002B V"
+    },
+    {
+      "name": "ShiftCtrlW",
+      "value": 96,
+      "summary": "Shift \u002B Ctrl \u002B W"
+    },
+    {
+      "name": "ShiftCtrlX",
+      "value": 97,
+      "summary": "Shift \u002B Ctrl \u002B X"
+    },
+    {
+      "name": "ShiftCtrlY",
+      "value": 98,
+      "summary": "Shift \u002B Ctrl \u002B Y"
+    },
+    {
+      "name": "ShiftCtrlZ",
+      "value": 99,
+      "summary": "Shift \u002B Ctrl \u002B Z"
+    },
+    {
+      "name": "AltCtrlA",
+      "value": 100,
+      "summary": "Alt \u002B Ctrl \u002B A"
+    },
+    {
+      "name": "AltCtrlB",
+      "value": 101,
+      "summary": "Alt \u002B Ctrl \u002B B"
+    },
+    {
+      "name": "AltCtrlC",
+      "value": 102,
+      "summary": "Alt \u002B Ctrl \u002B C"
+    },
+    {
+      "name": "AltCtrlD",
+      "value": 103,
+      "summary": "Alt \u002B Ctrl \u002B D"
+    },
+    {
+      "name": "AltCtrlE",
+      "value": 104,
+      "summary": "Alt \u002B Ctrl \u002B E"
+    },
+    {
+      "name": "AltCtrlF",
+      "value": 105,
+      "summary": "Alt \u002B Ctrl \u002B F"
+    },
+    {
+      "name": "AltCtrlG",
+      "value": 106,
+      "summary": "Alt \u002B Ctrl \u002B G"
+    },
+    {
+      "name": "AltCtrlH",
+      "value": 107,
+      "summary": "Alt \u002B Ctrl \u002B H"
+    },
+    {
+      "name": "AltCtrlI",
+      "value": 108,
+      "summary": "Alt \u002B Ctrl \u002B I"
+    },
+    {
+      "name": "AltCtrlJ",
+      "value": 109,
+      "summary": "Alt \u002B Ctrl \u002B J"
+    },
+    {
+      "name": "AltCtrlK",
+      "value": 110,
+      "summary": "Alt \u002B Ctrl \u002B K"
+    },
+    {
+      "name": "AltCtrlL",
+      "value": 111,
+      "summary": "Alt \u002B Ctrl \u002B L"
+    },
+    {
+      "name": "AltCtrlM",
+      "value": 112,
+      "summary": "Alt \u002B Ctrl \u002B M"
+    },
+    {
+      "name": "AltCtrlN",
+      "value": 113,
+      "summary": "Alt \u002B Ctrl \u002B N"
+    },
+    {
+      "name": "AltCtrlO",
+      "value": 114,
+      "summary": "Alt \u002B Ctrl \u002B O"
+    },
+    {
+      "name": "AltCtrlP",
+      "value": 115,
+      "summary": "Alt \u002B Ctrl \u002B P"
+    },
+    {
+      "name": "AltCtrlQ",
+      "value": 116,
+      "summary": "Alt \u002B Ctrl \u002B Q"
+    },
+    {
+      "name": "AltCtrlR",
+      "value": 117,
+      "summary": "Alt \u002B Ctrl \u002B R"
+    },
+    {
+      "name": "AltCtrlS",
+      "value": 118,
+      "summary": "Alt \u002B Ctrl \u002B S"
+    },
+    {
+      "name": "AltCtrlT",
+      "value": 119,
+      "summary": "Alt \u002B Ctrl \u002B T"
+    },
+    {
+      "name": "AltCtrlU",
+      "value": 120,
+      "summary": "Alt \u002B Ctrl \u002B U"
+    },
+    {
+      "name": "AltCtrlV",
+      "value": 121,
+      "summary": "Alt \u002B Ctrl \u002B V"
+    },
+    {
+      "name": "AltCtrlW",
+      "value": 122,
+      "summary": "Alt \u002B Ctrl \u002B W"
+    },
+    {
+      "name": "AltCtrlX",
+      "value": 123,
+      "summary": "Alt \u002B Ctrl \u002B X"
+    },
+    {
+      "name": "AltCtrlY",
+      "value": 124,
+      "summary": "Alt \u002B Ctrl \u002B Y"
+    },
+    {
+      "name": "AltCtrlZ",
+      "value": 125,
+      "summary": "Alt \u002B Ctrl \u002B Z"
+    },
+    {
+      "name": "Ctrl0",
+      "value": 126,
+      "summary": "Ctrl \u002B 0"
+    },
+    {
+      "name": "Ctrl1",
+      "value": 127,
+      "summary": "Ctrl \u002B 1"
+    },
+    {
+      "name": "Ctrl2",
+      "value": 128,
+      "summary": "Ctrl \u002B 2"
+    },
+    {
+      "name": "Ctrl3",
+      "value": 129,
+      "summary": "Ctrl \u002B 3"
+    },
+    {
+      "name": "Ctrl4",
+      "value": 130,
+      "summary": "Ctrl \u002B 4"
+    },
+    {
+      "name": "Ctrl5",
+      "value": 131,
+      "summary": "Ctrl \u002B 5"
+    },
+    {
+      "name": "Ctrl6",
+      "value": 132,
+      "summary": "Ctrl \u002B 6"
+    },
+    {
+      "name": "Ctrl7",
+      "value": 133,
+      "summary": "Ctrl \u002B 7"
+    },
+    {
+      "name": "Ctrl8",
+      "value": 134,
+      "summary": "Ctrl \u002B 8"
+    },
+    {
+      "name": "Ctrl9",
+      "value": 135,
+      "summary": "Ctrl \u002B 9"
+    },
+    {
+      "name": "ShiftCtrl0",
+      "value": 136,
+      "summary": "Shift \u002B Ctrl \u002B 0"
+    },
+    {
+      "name": "ShiftCtrl1",
+      "value": 137,
+      "summary": "Shift \u002B Ctrl \u002B 1"
+    },
+    {
+      "name": "ShiftCtrl2",
+      "value": 138,
+      "summary": "Shift \u002B Ctrl \u002B 2"
+    },
+    {
+      "name": "ShiftCtrl3",
+      "value": 139,
+      "summary": "Shift \u002B Ctrl \u002B 3"
+    },
+    {
+      "name": "ShiftCtrl4",
+      "value": 140,
+      "summary": "Shift \u002B Ctrl \u002B 4"
+    },
+    {
+      "name": "ShiftCtrl5",
+      "value": 141,
+      "summary": "Shift \u002B Ctrl \u002B 5"
+    },
+    {
+      "name": "ShiftCtrl6",
+      "value": 142,
+      "summary": "Shift \u002B Ctrl \u002B 6"
+    },
+    {
+      "name": "ShiftCtrl7",
+      "value": 143,
+      "summary": "Shift \u002B Ctrl \u002B 7"
+    },
+    {
+      "name": "ShiftCtrl8",
+      "value": 144,
+      "summary": "Shift \u002B Ctrl \u002B 8"
+    },
+    {
+      "name": "ShiftCtrl9",
+      "value": 145,
+      "summary": "Shift \u002B Ctrl \u002B 9"
+    },
+    {
+      "name": "AltCtrl0",
+      "value": 146,
+      "summary": "Alt \u002B Ctrl \u002B 0"
+    },
+    {
+      "name": "AltCtrl1",
+      "value": 147,
+      "summary": "Alt \u002B Ctrl \u002B 1"
+    },
+    {
+      "name": "AltCtrl2",
+      "value": 148,
+      "summary": "Alt \u002B Ctrl \u002B 2"
+    },
+    {
+      "name": "AltCtrl3",
+      "value": 149,
+      "summary": "Alt \u002B Ctrl \u002B 3"
+    },
+    {
+      "name": "AltCtrl4",
+      "value": 150,
+      "summary": "Alt \u002B Ctrl \u002B 4"
+    },
+    {
+      "name": "AltCtrl5",
+      "value": 151,
+      "summary": "Alt \u002B Ctrl \u002B 5"
+    },
+    {
+      "name": "AltCtrl6",
+      "value": 152,
+      "summary": "Alt \u002B Ctrl \u002B 6"
+    },
+    {
+      "name": "AltCtrl7",
+      "value": 153,
+      "summary": "Alt \u002B Ctrl \u002B 7"
+    },
+    {
+      "name": "AltCtrl8",
+      "value": 154,
+      "summary": "Alt \u002B Ctrl \u002B 8"
+    },
+    {
+      "name": "AltCtrl9",
+      "value": 155,
+      "summary": "Alt \u002B Ctrl \u002B 9"
+    },
+    {
+      "name": "Home",
+      "value": 156,
+      "summary": "Home"
+    },
+    {
+      "name": "End",
+      "value": 157,
+      "summary": "End"
+    },
+    {
+      "name": "CtrlHome",
+      "value": 158,
+      "summary": "Ctrl \u002B Home"
+    },
+    {
+      "name": "CtrlEnd",
+      "value": 159,
+      "summary": "Ctrl \u002B End"
+    },
+    {
+      "name": "ShiftHome",
+      "value": 160,
+      "summary": "Shift \u002B Home"
+    },
+    {
+      "name": "ShiftEnd",
+      "value": 161,
+      "summary": "Shift \u002B End"
+    },
+    {
+      "name": "ShiftCtrlHome",
+      "value": 162,
+      "summary": "Shift \u002B Ctrl \u002B Home"
+    },
+    {
+      "name": "ShiftCtrlEnd",
+      "value": 163,
+      "summary": "Shift \u002B Ctrl \u002B End"
+    },
+    {
+      "name": "AltCtrlHome",
+      "value": 164,
+      "summary": "Alt \u002B Ctrl \u002B Home"
+    },
+    {
+      "name": "AltCtrlEnd",
+      "value": 165,
+      "summary": "Alt \u002B Ctrl \u002B End"
+    },
+    {
+      "name": "Tab",
+      "value": 166,
+      "summary": "Tab"
+    },
+    {
+      "name": "PageUp",
+      "value": 167,
+      "summary": "Page Up"
+    },
+    {
+      "name": "PageDown",
+      "value": 168,
+      "summary": "Page Down"
+    },
+    {
+      "name": "ShiftPageUp",
+      "value": 169,
+      "summary": "Shift \u002B Page Up"
+    },
+    {
+      "name": "ShiftPageDown",
+      "value": 170,
+      "summary": "Shift \u002B Page Down"
+    },
+    {
+      "name": "CtrlPageUp",
+      "value": 171,
+      "summary": "Ctrl \u002B Page Up"
+    },
+    {
+      "name": "CtrlPageDown",
+      "value": 172,
+      "summary": "Ctrl \u002B Page Down"
+    },
+    {
+      "name": "ShiftCtrlPageUp",
+      "value": 173,
+      "summary": "Shift \u002B Ctrl \u002B Page Up"
+    },
+    {
+      "name": "ShiftCtrlPageDown",
+      "value": 174,
+      "summary": "Shift \u002B Ctrl \u002B Page Down"
+    },
+    {
+      "name": "AltCtrlPageUp",
+      "value": 175,
+      "summary": "Alt \u002B Ctrl \u002B Page Up"
+    },
+    {
+      "name": "AltCtrlPageDown",
+      "value": 176,
+      "summary": "Alt \u002B Ctrl \u002B Page Down"
+    },
+    {
+      "name": "None",
+      "value": 177,
+      "summary": "No shortcut key"
+    },
+    {
+      "name": "AltHome",
+      "value": 178,
+      "summary": "Alt \u002B Home"
+    },
+    {
+      "name": "AltEnd",
+      "value": 179,
+      "summary": "Alt \u002B Home"
+    },
+    {
+      "name": "AltA",
+      "value": 180,
+      "summary": "Alt \u002B A"
+    },
+    {
+      "name": "AltB",
+      "value": 181,
+      "summary": "Alt \u002B B"
+    },
+    {
+      "name": "AltC",
+      "value": 182,
+      "summary": "Alt \u002B C"
+    },
+    {
+      "name": "AltD",
+      "value": 183,
+      "summary": "Alt \u002B D"
+    },
+    {
+      "name": "AltE",
+      "value": 184,
+      "summary": "Alt \u002B E"
+    },
+    {
+      "name": "AltF",
+      "value": 185,
+      "summary": "Alt \u002B F"
+    },
+    {
+      "name": "AltG",
+      "value": 186,
+      "summary": "Alt \u002B G"
+    },
+    {
+      "name": "AltH",
+      "value": 187,
+      "summary": "Alt \u002B H"
+    },
+    {
+      "name": "AltI",
+      "value": 188,
+      "summary": "Alt \u002B I"
+    },
+    {
+      "name": "AltJ",
+      "value": 189,
+      "summary": "Alt \u002B J"
+    },
+    {
+      "name": "AltK",
+      "value": 190,
+      "summary": "Alt \u002B K"
+    },
+    {
+      "name": "AltL",
+      "value": 191,
+      "summary": "Alt \u002B L"
+    },
+    {
+      "name": "AltM",
+      "value": 192,
+      "summary": "Alt \u002B M"
+    },
+    {
+      "name": "AltN",
+      "value": 193,
+      "summary": "Alt \u002B N"
+    },
+    {
+      "name": "AltO",
+      "value": 194,
+      "summary": "Alt \u002B O"
+    },
+    {
+      "name": "AltP",
+      "value": 195,
+      "summary": "Alt \u002B P"
+    },
+    {
+      "name": "AltQ",
+      "value": 196,
+      "summary": "Alt \u002B Q"
+    },
+    {
+      "name": "AltR",
+      "value": 197,
+      "summary": "Alt \u002B R"
+    },
+    {
+      "name": "AltS",
+      "value": 198,
+      "summary": "Alt \u002B S"
+    },
+    {
+      "name": "AltT",
+      "value": 199,
+      "summary": "Alt \u002B T"
+    },
+    {
+      "name": "AltU",
+      "value": 200,
+      "summary": "Alt \u002B U"
+    },
+    {
+      "name": "AltV",
+      "value": 201,
+      "summary": "Alt \u002B V"
+    },
+    {
+      "name": "AltW",
+      "value": 202,
+      "summary": "Alt \u002B W"
+    },
+    {
+      "name": "AltX",
+      "value": 203,
+      "summary": "Alt \u002B X"
+    },
+    {
+      "name": "AltY",
+      "value": 204,
+      "summary": "Alt \u002B Y"
+    },
+    {
+      "name": "AltZ",
+      "value": 205,
+      "summary": "Alt \u002B Z"
+    },
+    {
+      "name": "Alt0",
+      "value": 206,
+      "summary": "Alt \u002B 0"
+    },
+    {
+      "name": "Alt1",
+      "value": 207,
+      "summary": "Alt \u002B 1"
+    },
+    {
+      "name": "Alt2",
+      "value": 208,
+      "summary": "Alt \u002B 2"
+    },
+    {
+      "name": "Alt3",
+      "value": 209,
+      "summary": "Alt \u002B 3"
+    },
+    {
+      "name": "Alt4",
+      "value": 210,
+      "summary": "Alt \u002B 4"
+    },
+    {
+      "name": "Alt5",
+      "value": 211,
+      "summary": "Alt \u002B 5"
+    },
+    {
+      "name": "Alt6",
+      "value": 212,
+      "summary": "Alt \u002B 6"
+    },
+    {
+      "name": "Alt7",
+      "value": 213,
+      "summary": "Alt \u002B 7"
+    },
+    {
+      "name": "Alt8",
+      "value": 214,
+      "summary": "Alt \u002B 8"
+    },
+    {
+      "name": "Alt9",
+      "value": 215,
+      "summary": "Alt \u002B 9"
+    },
+    {
+      "name": "AltF1",
+      "value": 216,
+      "summary": "Alt \u002B F1"
+    },
+    {
+      "name": "AltF2",
+      "value": 217,
+      "summary": "Alt \u002B F2"
+    },
+    {
+      "name": "AltF3",
+      "value": 218,
+      "summary": "Alt \u002B F3"
+    },
+    {
+      "name": "AltF4",
+      "value": 219,
+      "summary": "Alt \u002B F4"
+    },
+    {
+      "name": "AltF5",
+      "value": 220,
+      "summary": "Alt \u002B F5"
+    },
+    {
+      "name": "AltF6",
+      "value": 221,
+      "summary": "Alt \u002B F6"
+    },
+    {
+      "name": "AltF7",
+      "value": 222,
+      "summary": "Alt \u002B F7"
+    },
+    {
+      "name": "AltF8",
+      "value": 223,
+      "summary": "Alt \u002B F8"
+    },
+    {
+      "name": "AltF9",
+      "value": 224,
+      "summary": "Alt \u002B F9"
+    },
+    {
+      "name": "AltF10",
+      "value": 225,
+      "summary": "Alt \u002B F10"
+    },
+    {
+      "name": "AltF11",
+      "value": 226,
+      "summary": "Alt \u002B F11"
+    },
+    {
+      "name": "AltF12",
+      "value": 227,
+      "summary": "Alt \u002B F12"
+    },
+    {
+      "name": "AltShiftHome",
+      "value": 228,
+      "summary": "Alt \u002B Shift \u002B Home"
+    },
+    {
+      "name": "AltShiftEnd",
+      "value": 229,
+      "summary": "Alt \u002B Shift \u002B End"
+    },
+    {
+      "name": "AltShiftA",
+      "value": 230,
+      "summary": "Alt \u002B Shift \u002B A"
+    },
+    {
+      "name": "AltShiftB",
+      "value": 231,
+      "summary": "Alt \u002B Shift \u002B B"
+    },
+    {
+      "name": "AltShiftC",
+      "value": 232,
+      "summary": "Alt \u002B Shift \u002B C"
+    },
+    {
+      "name": "AltShiftD",
+      "value": 233,
+      "summary": "Alt \u002B Shift \u002B D"
+    },
+    {
+      "name": "AltShiftE",
+      "value": 234,
+      "summary": "Alt \u002B Shift \u002B E"
+    },
+    {
+      "name": "AltShiftF",
+      "value": 235,
+      "summary": "Alt \u002B Shift \u002B F"
+    },
+    {
+      "name": "AltShiftG",
+      "value": 236,
+      "summary": "Alt \u002B Shift \u002B G"
+    },
+    {
+      "name": "AltShiftH",
+      "value": 237,
+      "summary": "Alt \u002B Shift \u002B H"
+    },
+    {
+      "name": "AltShiftI",
+      "value": 238,
+      "summary": "Alt \u002B Shift \u002B I"
+    },
+    {
+      "name": "AltShiftJ",
+      "value": 239,
+      "summary": "Alt \u002B Shift \u002B J"
+    },
+    {
+      "name": "AltShiftK",
+      "value": 240,
+      "summary": "Alt \u002B Shift \u002B K"
+    },
+    {
+      "name": "AltShiftL",
+      "value": 241,
+      "summary": "Alt \u002B Shift \u002B L"
+    },
+    {
+      "name": "AltShiftM",
+      "value": 242,
+      "summary": "Alt \u002B Shift \u002B M"
+    },
+    {
+      "name": "AltShiftN",
+      "value": 243,
+      "summary": "Alt \u002B Shift \u002B N"
+    },
+    {
+      "name": "AltShiftO",
+      "value": 244,
+      "summary": "Alt \u002B Shift \u002B O"
+    },
+    {
+      "name": "AltShiftP",
+      "value": 245,
+      "summary": "Alt \u002B Shift \u002B P"
+    },
+    {
+      "name": "AltShiftQ",
+      "value": 246,
+      "summary": "Alt \u002B Shift \u002B Q"
+    },
+    {
+      "name": "AltShiftR",
+      "value": 247,
+      "summary": "Alt \u002B Shift \u002B R"
+    },
+    {
+      "name": "AltShiftS",
+      "value": 248,
+      "summary": "Alt \u002B Shift \u002B S"
+    },
+    {
+      "name": "AltShiftT",
+      "value": 249,
+      "summary": "Alt \u002B Shift \u002B T"
+    },
+    {
+      "name": "AltShiftU",
+      "value": 250,
+      "summary": "Alt \u002B Shift \u002B U"
+    },
+    {
+      "name": "AltShiftV",
+      "value": 251,
+      "summary": "Alt \u002B Shift \u002B V"
+    },
+    {
+      "name": "AltShiftW",
+      "value": 252,
+      "summary": "Alt \u002B Shift \u002B W"
+    },
+    {
+      "name": "AltShiftX",
+      "value": 253,
+      "summary": "Alt \u002B Shift \u002B X"
+    },
+    {
+      "name": "AltShiftY",
+      "value": 254,
+      "summary": "Alt \u002B Shift \u002B Y"
+    },
+    {
+      "name": "AltShiftZ",
+      "value": 255,
+      "summary": "Alt \u002B Shift \u002B Z"
+    },
+    {
+      "name": "AltShift0",
+      "value": 256,
+      "summary": "Alt \u002B Shift \u002B 0"
+    },
+    {
+      "name": "AltShift1",
+      "value": 257,
+      "summary": "Alt \u002B Shift \u002B 1"
+    },
+    {
+      "name": "AltShift2",
+      "value": 258,
+      "summary": "Alt \u002B Shift \u002B 2"
+    },
+    {
+      "name": "AltShift3",
+      "value": 259,
+      "summary": "Alt \u002B Shift \u002B 3"
+    },
+    {
+      "name": "AltShift4",
+      "value": 260,
+      "summary": "Alt \u002B Shift \u002B 4"
+    },
+    {
+      "name": "AltShift5",
+      "value": 261,
+      "summary": "Alt \u002B Shift \u002B 5"
+    },
+    {
+      "name": "AltShift6",
+      "value": 262,
+      "summary": "Alt \u002B Shift \u002B 6"
+    },
+    {
+      "name": "AltShift7",
+      "value": 263,
+      "summary": "Alt \u002B Shift \u002B 7"
+    },
+    {
+      "name": "AltShift8",
+      "value": 264,
+      "summary": "Alt \u002B Shift \u002B 8"
+    },
+    {
+      "name": "AltShift9",
+      "value": 265,
+      "summary": "Alt \u002B Shift \u002B 9"
+    },
+    {
+      "name": "AltShiftF1",
+      "value": 266,
+      "summary": "Alt \u002B Shift \u002B F1"
+    },
+    {
+      "name": "AltShiftF2",
+      "value": 267,
+      "summary": "Alt \u002B Shift \u002B F2"
+    },
+    {
+      "name": "AltShiftF3",
+      "value": 268,
+      "summary": "Alt \u002B Shift \u002B F3"
+    },
+    {
+      "name": "AltShiftF4",
+      "value": 269,
+      "summary": "Alt \u002B Shift \u002B F4"
+    },
+    {
+      "name": "AltShiftF5",
+      "value": 270,
+      "summary": "Alt \u002B Shift \u002B F5"
+    },
+    {
+      "name": "AltShiftF6",
+      "value": 271,
+      "summary": "Alt \u002B Shift \u002B F6"
+    },
+    {
+      "name": "AltShiftF7",
+      "value": 272,
+      "summary": "Alt \u002B Shift \u002B F7"
+    },
+    {
+      "name": "AltShiftF8",
+      "value": 273,
+      "summary": "Alt \u002B Shift \u002B F8"
+    },
+    {
+      "name": "AltShiftF9",
+      "value": 274,
+      "summary": "Alt \u002B Shift \u002B F9"
+    },
+    {
+      "name": "AltShiftF10",
+      "value": 275,
+      "summary": "Alt \u002B Shift \u002B F10"
+    },
+    {
+      "name": "AltShiftF11",
+      "value": 276,
+      "summary": "Alt \u002B Shift \u002B F11"
+    },
+    {
+      "name": "AltShiftF12",
+      "value": 277,
+      "summary": "Alt \u002B Shift \u002B F12"
+    },
+    {
+      "name": "MacControlHome",
+      "value": 278,
+      "summary": "Control \u002B Home (Mac)"
+    },
+    {
+      "name": "MacControlEnd",
+      "value": 279,
+      "summary": "Control \u002B End (Mac)"
+    },
+    {
+      "name": "MacControlA",
+      "value": 280,
+      "summary": "Control \u002B A (Mac)"
+    },
+    {
+      "name": "MacControlB",
+      "value": 281,
+      "summary": "Control \u002B B (Mac)"
+    },
+    {
+      "name": "MacControlC",
+      "value": 282,
+      "summary": "Control \u002B C (Mac)"
+    },
+    {
+      "name": "MacControlD",
+      "value": 283,
+      "summary": "Control \u002B D (Mac)"
+    },
+    {
+      "name": "MacControlE",
+      "value": 284,
+      "summary": "Control \u002B E (Mac)"
+    },
+    {
+      "name": "MacControlF",
+      "value": 285,
+      "summary": "Control \u002B F (Mac)"
+    },
+    {
+      "name": "MacControlG",
+      "value": 286,
+      "summary": "Control \u002B G (Mac)"
+    },
+    {
+      "name": "MacControlH",
+      "value": 287,
+      "summary": "Control \u002B H (Mac)"
+    },
+    {
+      "name": "MacControlI",
+      "value": 288,
+      "summary": "Control \u002B I (Mac)"
+    },
+    {
+      "name": "MacControlJ",
+      "value": 289,
+      "summary": "Control \u002B J (Mac)"
+    },
+    {
+      "name": "MacControlK",
+      "value": 290,
+      "summary": "Control \u002B K (Mac)"
+    },
+    {
+      "name": "MacControlL",
+      "value": 291,
+      "summary": "Control \u002B L (Mac)"
+    },
+    {
+      "name": "MacControlM",
+      "value": 292,
+      "summary": "Control \u002B M (Mac)"
+    },
+    {
+      "name": "MacControlN",
+      "value": 293,
+      "summary": "Control \u002B N (Mac)"
+    },
+    {
+      "name": "MacControlO",
+      "value": 294,
+      "summary": "Control \u002B O (Mac)"
+    },
+    {
+      "name": "MacControlP",
+      "value": 295,
+      "summary": "Control \u002B P (Mac)"
+    },
+    {
+      "name": "MacControlQ",
+      "value": 296,
+      "summary": "Control \u002B Q (Mac)"
+    },
+    {
+      "name": "MacControlR",
+      "value": 297,
+      "summary": "Control \u002B R (Mac)"
+    },
+    {
+      "name": "MacControlS",
+      "value": 298,
+      "summary": "Control \u002B S (Mac)"
+    },
+    {
+      "name": "MacControlT",
+      "value": 299,
+      "summary": "Control \u002B T (Mac)"
+    },
+    {
+      "name": "MacControlU",
+      "value": 300,
+      "summary": "Control \u002B U (Mac)"
+    },
+    {
+      "name": "MacControlV",
+      "value": 301,
+      "summary": "Control \u002B V (Mac)"
+    },
+    {
+      "name": "MacControlW",
+      "value": 302,
+      "summary": "Control \u002B W (Mac)"
+    },
+    {
+      "name": "MacControlX",
+      "value": 303,
+      "summary": "Control \u002B X (Mac)"
+    },
+    {
+      "name": "MacControlY",
+      "value": 304,
+      "summary": "Control \u002B Y (Mac)"
+    },
+    {
+      "name": "MacControlZ",
+      "value": 305,
+      "summary": "Control \u002B Z (Mac)"
+    },
+    {
+      "name": "MacControl0",
+      "value": 306,
+      "summary": "Control \u002B 0 (Mac)"
+    },
+    {
+      "name": "MacControl1",
+      "value": 307,
+      "summary": "Control \u002B 1 (Mac)"
+    },
+    {
+      "name": "MacControl2",
+      "value": 308,
+      "summary": "Control \u002B 2 (Mac)"
+    },
+    {
+      "name": "MacControl3",
+      "value": 309,
+      "summary": "Control \u002B 3 (Mac)"
+    },
+    {
+      "name": "MacControl4",
+      "value": 310,
+      "summary": "Control \u002B 4 (Mac)"
+    },
+    {
+      "name": "MacControl5",
+      "value": 311,
+      "summary": "Control \u002B 5 (Mac)"
+    },
+    {
+      "name": "MacControl6",
+      "value": 312,
+      "summary": "Control \u002B 6 (Mac)"
+    },
+    {
+      "name": "MacControl7",
+      "value": 313,
+      "summary": "Control \u002B 7 (Mac)"
+    },
+    {
+      "name": "MacControl8",
+      "value": 314,
+      "summary": "Control \u002B 8 (Mac)"
+    },
+    {
+      "name": "MacControl9",
+      "value": 315,
+      "summary": "Control \u002B 9 (Mac)"
+    },
+    {
+      "name": "MacControlF1",
+      "value": 316,
+      "summary": "Control \u002B F1 (Mac)"
+    },
+    {
+      "name": "MacControlF2",
+      "value": 317,
+      "summary": "Control \u002B F2 (Mac)"
+    },
+    {
+      "name": "MacControlF3",
+      "value": 318,
+      "summary": "Control \u002B F3 (Mac)"
+    },
+    {
+      "name": "MacControlF4",
+      "value": 319,
+      "summary": "Control \u002B F4 (Mac)"
+    },
+    {
+      "name": "MacControlF5",
+      "value": 320,
+      "summary": "Control \u002B F5 (Mac)"
+    },
+    {
+      "name": "MacControlF6",
+      "value": 321,
+      "summary": "Control \u002B F6 (Mac)"
+    },
+    {
+      "name": "MacControlF7",
+      "value": 322,
+      "summary": "Control \u002B F7 (Mac)"
+    },
+    {
+      "name": "MacControlF8",
+      "value": 323,
+      "summary": "Control \u002B F8 (Mac)"
+    },
+    {
+      "name": "MacControlF9",
+      "value": 324,
+      "summary": "Control \u002B F9 (Mac)"
+    },
+    {
+      "name": "MacControlF10",
+      "value": 325,
+      "summary": "Control \u002B F10 (Mac)"
+    },
+    {
+      "name": "MacControlF11",
+      "value": 326,
+      "summary": "Control \u002B F11 (Mac)"
+    },
+    {
+      "name": "MacControlF12",
+      "value": 327,
+      "summary": "Control \u002B F12 (Mac)"
+    },
+    {
+      "name": "MacControlAltHome",
+      "value": 328,
+      "summary": "Control \u002B Alt \u002B Home (Mac)"
+    },
+    {
+      "name": "MacControlAltEnd",
+      "value": 329,
+      "summary": "Control \u002B Alt \u002B End (Mac)"
+    },
+    {
+      "name": "MacControlAltA",
+      "value": 330,
+      "summary": "Control \u002B Alt \u002B A (Mac)"
+    },
+    {
+      "name": "MacControlAltB",
+      "value": 331,
+      "summary": "Control \u002B Alt \u002B B (Mac)"
+    },
+    {
+      "name": "MacControlAltC",
+      "value": 332,
+      "summary": "Control \u002B Alt \u002B C (Mac)"
+    },
+    {
+      "name": "MacControlAltD",
+      "value": 333,
+      "summary": "Control \u002B Alt \u002B D (Mac)"
+    },
+    {
+      "name": "MacControlAltE",
+      "value": 334,
+      "summary": "Control \u002B Alt \u002B E (Mac)"
+    },
+    {
+      "name": "MacControlAltF",
+      "value": 335,
+      "summary": "Control \u002B Alt \u002B F (Mac)"
+    },
+    {
+      "name": "MacControlAltG",
+      "value": 336,
+      "summary": "Control \u002B Alt \u002B G (Mac)"
+    },
+    {
+      "name": "MacControlAltH",
+      "value": 337,
+      "summary": "Control \u002B Alt \u002B H (Mac)"
+    },
+    {
+      "name": "MacControlAltI",
+      "value": 338,
+      "summary": "Control \u002B Alt \u002B I (Mac)"
+    },
+    {
+      "name": "MacControlAltJ",
+      "value": 339,
+      "summary": "Control \u002B Alt \u002B J (Mac)"
+    },
+    {
+      "name": "MacControlAltK",
+      "value": 340,
+      "summary": "Control \u002B Alt \u002B K (Mac)"
+    },
+    {
+      "name": "MacControlAltL",
+      "value": 341,
+      "summary": "Control \u002B Alt \u002B L (Mac)"
+    },
+    {
+      "name": "MacControlAltM",
+      "value": 342,
+      "summary": "Control \u002B Alt \u002B M (Mac)"
+    },
+    {
+      "name": "MacControlAltN",
+      "value": 343,
+      "summary": "Control \u002B Alt \u002B N (Mac)"
+    },
+    {
+      "name": "MacControlAltO",
+      "value": 344,
+      "summary": "Control \u002B Alt \u002B O (Mac)"
+    },
+    {
+      "name": "MacControlAltP",
+      "value": 345,
+      "summary": "Control \u002B Alt \u002B P (Mac)"
+    },
+    {
+      "name": "MacControlAltQ",
+      "value": 346,
+      "summary": "Control \u002B Alt \u002B Q (Mac)"
+    },
+    {
+      "name": "MacControlAltR",
+      "value": 347,
+      "summary": "Control \u002B Alt \u002B R (Mac)"
+    },
+    {
+      "name": "MacControlAltS",
+      "value": 348,
+      "summary": "Control \u002B Alt \u002B S (Mac)"
+    },
+    {
+      "name": "MacControlAltT",
+      "value": 349,
+      "summary": "Control \u002B Alt \u002B T (Mac)"
+    },
+    {
+      "name": "MacControlAltU",
+      "value": 350,
+      "summary": "Control \u002B Alt \u002B U (Mac)"
+    },
+    {
+      "name": "MacControlAltV",
+      "value": 351,
+      "summary": "Control \u002B Alt \u002B Alt \u002B V (Mac)"
+    },
+    {
+      "name": "MacControlAltW",
+      "value": 352,
+      "summary": "Control \u002B Alt \u002B W (Mac)"
+    },
+    {
+      "name": "MacControlAltX",
+      "value": 353,
+      "summary": "Control \u002B Alt \u002B X (Mac)"
+    },
+    {
+      "name": "MacControlAltY",
+      "value": 354,
+      "summary": "Control \u002B Alt \u002B Y (Mac)"
+    },
+    {
+      "name": "MacControlAltZ",
+      "value": 355,
+      "summary": "Control \u002B Alt \u002B Z (Mac)"
+    },
+    {
+      "name": "MacControlAlt0",
+      "value": 356,
+      "summary": "Control \u002B Alt \u002B 0 (Mac)"
+    },
+    {
+      "name": "MacControlAlt1",
+      "value": 357,
+      "summary": "Control \u002B Alt \u002B 1 (Mac)"
+    },
+    {
+      "name": "MacControlAlt2",
+      "value": 358,
+      "summary": "Control \u002B Alt \u002B 2 (Mac)"
+    },
+    {
+      "name": "MacControlAlt3",
+      "value": 359,
+      "summary": "Control \u002B Alt \u002B 3 (Mac)"
+    },
+    {
+      "name": "MacControlAlt4",
+      "value": 360,
+      "summary": "Control \u002B Alt \u002B 4 (Mac)"
+    },
+    {
+      "name": "MacControlAlt5",
+      "value": 361,
+      "summary": "Control \u002B Alt \u002B 5 (Mac)"
+    },
+    {
+      "name": "MacControlAlt6",
+      "value": 362,
+      "summary": "Control \u002B Alt \u002B 6 (Mac)"
+    },
+    {
+      "name": "MacControlAlt7",
+      "value": 363,
+      "summary": "Control \u002B Alt \u002B 7 (Mac)"
+    },
+    {
+      "name": "MacControlAlt8",
+      "value": 364,
+      "summary": "Control \u002B Alt \u002B 8 (Mac)"
+    },
+    {
+      "name": "MacControlAlt9",
+      "value": 365,
+      "summary": "Control \u002B Alt \u002B 9 (Mac)"
+    },
+    {
+      "name": "MacControlAltF1",
+      "value": 366,
+      "summary": "Control \u002B Alt \u002B F1 (Mac)"
+    },
+    {
+      "name": "MacControlAltF2",
+      "value": 367,
+      "summary": "Control \u002B Alt \u002B F2 (Mac)"
+    },
+    {
+      "name": "MacControlAltF3",
+      "value": 368,
+      "summary": "Control \u002B Alt \u002B F3 (Mac)"
+    },
+    {
+      "name": "MacControlAltF4",
+      "value": 369,
+      "summary": "Control \u002B Alt \u002B F4 (Mac)"
+    },
+    {
+      "name": "MacControlAltF5",
+      "value": 370,
+      "summary": "Control \u002B Alt \u002B F5 (Mac)"
+    },
+    {
+      "name": "MacControlAltF6",
+      "value": 371,
+      "summary": "Control \u002B Alt \u002B F6 (Mac)"
+    },
+    {
+      "name": "MacControlAltF7",
+      "value": 372,
+      "summary": "Control \u002B Alt \u002B F7 (Mac)"
+    },
+    {
+      "name": "MacControlAltF8",
+      "value": 373,
+      "summary": "Control \u002B Alt \u002B F8 (Mac)"
+    },
+    {
+      "name": "MacControlAltF9",
+      "value": 374,
+      "summary": "Control \u002B Alt \u002B F9 (Mac)"
+    },
+    {
+      "name": "MacControlAltF10",
+      "value": 375,
+      "summary": "Control \u002B Alt \u002B F10 (Mac)"
+    },
+    {
+      "name": "MacControlAltF11",
+      "value": 376,
+      "summary": "Control \u002B Alt \u002B F11 (Mac)"
+    },
+    {
+      "name": "MacControlAltF12",
+      "value": 377,
+      "summary": "Control \u002B Alt \u002B F12 (Mac)"
+    },
+    {
+      "name": "MacControlOptionHome",
+      "value": 378,
+      "summary": "Control \u002B Option \u002B Home (Mac)"
+    },
+    {
+      "name": "MacControlOptionEnd",
+      "value": 379,
+      "summary": "Control \u002B Option \u002B End (Mac)"
+    },
+    {
+      "name": "MacControlOptionA",
+      "value": 380,
+      "summary": "Control \u002B Option \u002B A (Mac)"
+    },
+    {
+      "name": "MacControlOptionB",
+      "value": 381,
+      "summary": "Control \u002B Option \u002B B (Mac)"
+    },
+    {
+      "name": "MacControlOptionC",
+      "value": 382,
+      "summary": "Control \u002B Option \u002B C (Mac)"
+    },
+    {
+      "name": "MacControlOptionD",
+      "value": 383,
+      "summary": "Control \u002B Option \u002B D (Mac)"
+    },
+    {
+      "name": "MacControlOptionE",
+      "value": 384,
+      "summary": "Control \u002B Option \u002B E (Mac)"
+    },
+    {
+      "name": "MacControlOptionF",
+      "value": 385,
+      "summary": "Control \u002B Option \u002B F (Mac)"
+    },
+    {
+      "name": "MacControlOptionG",
+      "value": 386,
+      "summary": "Control \u002B Option \u002B G (Mac)"
+    },
+    {
+      "name": "MacControlOptionH",
+      "value": 387,
+      "summary": "Control \u002B Option \u002B H (Mac)"
+    },
+    {
+      "name": "MacControlOptionI",
+      "value": 388,
+      "summary": "Control \u002B Option \u002B I (Mac)"
+    },
+    {
+      "name": "MacControlOptionJ",
+      "value": 389,
+      "summary": "Control \u002B Option \u002B J (Mac)"
+    },
+    {
+      "name": "MacControlOptionK",
+      "value": 390,
+      "summary": "Control \u002B Option \u002B K (Mac)"
+    },
+    {
+      "name": "MacControlOptionL",
+      "value": 391,
+      "summary": "Control \u002B Option \u002B L (Mac)"
+    },
+    {
+      "name": "MacControlOptionM",
+      "value": 392,
+      "summary": "Control \u002B Option \u002B M (Mac)"
+    },
+    {
+      "name": "MacControlOptionN",
+      "value": 393,
+      "summary": "Control \u002B Option \u002B N (Mac)"
+    },
+    {
+      "name": "MacControlOptionO",
+      "value": 394,
+      "summary": "Control \u002B Option \u002B O (Mac)"
+    },
+    {
+      "name": "MacControlOptionP",
+      "value": 395,
+      "summary": "Control \u002B Option \u002B P (Mac)"
+    },
+    {
+      "name": "MacControlOptionQ",
+      "value": 396,
+      "summary": "Control \u002B Option \u002B Q (Mac)"
+    },
+    {
+      "name": "MacControlOptionR",
+      "value": 397,
+      "summary": "Control \u002B Option \u002B R (Mac)"
+    },
+    {
+      "name": "MacControlOptionS",
+      "value": 398,
+      "summary": "Control \u002B Option \u002B S (Mac)"
+    },
+    {
+      "name": "MacControlOptionT",
+      "value": 399,
+      "summary": "Control \u002B Option \u002B T (Mac)"
+    },
+    {
+      "name": "MacControlOptionU",
+      "value": 400,
+      "summary": "Control \u002B Option \u002B U (Mac)"
+    },
+    {
+      "name": "MacControlOptionV",
+      "value": 401,
+      "summary": "Control \u002B Option \u002B V (Mac)"
+    },
+    {
+      "name": "MacControlOptionW",
+      "value": 402,
+      "summary": "Control \u002B Option \u002B W (Mac)"
+    },
+    {
+      "name": "MacControlOptionX",
+      "value": 403,
+      "summary": "Control \u002B Option \u002B X (Mac)"
+    },
+    {
+      "name": "MacControlOptionY",
+      "value": 404,
+      "summary": "Control \u002B Option \u002B Y (Mac)"
+    },
+    {
+      "name": "MacControlOptionZ",
+      "value": 405,
+      "summary": "Control \u002B Option \u002B Z (Mac)"
+    },
+    {
+      "name": "MacControlOption0",
+      "value": 406,
+      "summary": "Control \u002B Option \u002B 0 (Mac)"
+    },
+    {
+      "name": "MacControlOption1",
+      "value": 407,
+      "summary": "Control \u002B Option \u002B 1 (Mac)"
+    },
+    {
+      "name": "MacControlOption2",
+      "value": 408,
+      "summary": "Control \u002B Option \u002B 2 (Mac)"
+    },
+    {
+      "name": "MacControlOption3",
+      "value": 409,
+      "summary": "Control \u002B Option \u002B 3 (Mac)"
+    },
+    {
+      "name": "MacControlOption4",
+      "value": 410,
+      "summary": "Control \u002B Option \u002B 4 (Mac)"
+    },
+    {
+      "name": "MacControlOption5",
+      "value": 411,
+      "summary": "Control \u002B Option \u002B 5 (Mac)"
+    },
+    {
+      "name": "MacControlOption6",
+      "value": 412,
+      "summary": "Control \u002B Option \u002B 6 (Mac)"
+    },
+    {
+      "name": "MacControlOption7",
+      "value": 413,
+      "summary": "Control \u002B Option \u002B 7 (Mac)"
+    },
+    {
+      "name": "MacControlOption8",
+      "value": 414,
+      "summary": "Control \u002B Option \u002B 8 (Mac)"
+    },
+    {
+      "name": "MacControlOption9",
+      "value": 415,
+      "summary": "Control \u002B Option \u002B 9 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF1",
+      "value": 416,
+      "summary": "Control \u002B Option \u002B F1 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF2",
+      "value": 417,
+      "summary": "Control \u002B Option \u002B F2 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF3",
+      "value": 418,
+      "summary": "Control \u002B Option \u002B F3 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF4",
+      "value": 419,
+      "summary": "Control \u002B Option \u002B F4 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF5",
+      "value": 420,
+      "summary": "Control \u002B Option \u002B F5 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF6",
+      "value": 421,
+      "summary": "Control \u002B Option \u002B F6 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF7",
+      "value": 422,
+      "summary": "Control \u002B Option \u002B F7 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF8",
+      "value": 423,
+      "summary": "Control \u002B Option \u002B F8 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF9",
+      "value": 424,
+      "summary": "Control \u002B Option \u002B F9 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF10",
+      "value": 425,
+      "summary": "Control \u002B Option \u002B F10 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF11",
+      "value": 426,
+      "summary": "Control \u002B Option \u002B F11 (Mac)"
+    },
+    {
+      "name": "MacControlOptionF12",
+      "value": 427,
+      "summary": "Control \u002B Option \u002B F12 (Mac)"
+    },
+    {
+      "name": "MacControlShiftHome",
+      "value": 428,
+      "summary": "Control \u002B Shift \u002B Home (Mac)"
+    },
+    {
+      "name": "MacControlShiftEnd",
+      "value": 429,
+      "summary": "Control \u002B Shift \u002B End (Mac)"
+    },
+    {
+      "name": "MacControlShiftA",
+      "value": 430,
+      "summary": "Control \u002B Shift \u002B A (Mac)"
+    },
+    {
+      "name": "MacControlShiftB",
+      "value": 431,
+      "summary": "Control \u002B Shift \u002B B (Mac)"
+    },
+    {
+      "name": "MacControlShiftC",
+      "value": 432,
+      "summary": "Control \u002B Shift \u002B C (Mac)"
+    },
+    {
+      "name": "MacControlShiftD",
+      "value": 433,
+      "summary": "Control \u002B Shift \u002B D (Mac)"
+    },
+    {
+      "name": "MacControlShiftE",
+      "value": 434,
+      "summary": "Control \u002B Shift \u002B E (Mac)"
+    },
+    {
+      "name": "MacControlShiftF",
+      "value": 435,
+      "summary": "Control \u002B Shift \u002B F (Mac)"
+    },
+    {
+      "name": "MacControlShiftG",
+      "value": 436,
+      "summary": "Control \u002B Shift \u002B G (Mac)"
+    },
+    {
+      "name": "MacControlShiftH",
+      "value": 437,
+      "summary": "Control \u002B Shift \u002B H (Mac)"
+    },
+    {
+      "name": "MacControlShiftI",
+      "value": 438,
+      "summary": "Control \u002B Shift \u002B I (Mac)"
+    },
+    {
+      "name": "MacControlShiftJ",
+      "value": 439,
+      "summary": "Control \u002B Shift \u002B J (Mac)"
+    },
+    {
+      "name": "MacControlShiftK",
+      "value": 440,
+      "summary": "Control \u002B Shift \u002B K (Mac)"
+    },
+    {
+      "name": "MacControlShiftL",
+      "value": 441,
+      "summary": "Control \u002B Shift \u002B L (Mac)"
+    },
+    {
+      "name": "MacControlShiftM",
+      "value": 442,
+      "summary": "Control \u002B Shift \u002B M (Mac)"
+    },
+    {
+      "name": "MacControlShiftN",
+      "value": 443,
+      "summary": "Control \u002B Shift \u002B N (Mac)"
+    },
+    {
+      "name": "MacControlShiftO",
+      "value": 444,
+      "summary": "Control \u002B Shift \u002B O (Mac)"
+    },
+    {
+      "name": "MacControlShiftP",
+      "value": 445,
+      "summary": "Control \u002B Shift \u002B P (Mac)"
+    },
+    {
+      "name": "MacControlShiftQ",
+      "value": 446,
+      "summary": "Control \u002B Shift \u002B Q (Mac)"
+    },
+    {
+      "name": "MacControlShiftR",
+      "value": 447,
+      "summary": "Control \u002B Shift \u002B R (Mac)"
+    },
+    {
+      "name": "MacControlShiftS",
+      "value": 448,
+      "summary": "Control \u002B Shift \u002B S (Mac)"
+    },
+    {
+      "name": "MacControlShiftT",
+      "value": 449,
+      "summary": "Control \u002B Shift \u002B T (Mac)"
+    },
+    {
+      "name": "MacControlShiftU",
+      "value": 450,
+      "summary": "Control \u002B Shift \u002B U (Mac)"
+    },
+    {
+      "name": "MacControlShiftV",
+      "value": 451,
+      "summary": "Control \u002B Shift \u002B V (Mac)"
+    },
+    {
+      "name": "MacControlShiftW",
+      "value": 452,
+      "summary": "Control \u002B Shift \u002B W (Mac)"
+    },
+    {
+      "name": "MacControlShiftX",
+      "value": 453,
+      "summary": "Control \u002B Shift \u002B X (Mac)"
+    },
+    {
+      "name": "MacControlShiftY",
+      "value": 454,
+      "summary": "Control \u002B Shift \u002B Y (Mac)"
+    },
+    {
+      "name": "MacControlShiftZ",
+      "value": 455,
+      "summary": "Control \u002B Shift \u002B Z (Mac)"
+    },
+    {
+      "name": "MacControlShift0",
+      "value": 456,
+      "summary": "Control \u002B Shift \u002B 0 (Mac)"
+    },
+    {
+      "name": "MacControlShift1",
+      "value": 457,
+      "summary": "Control \u002B Shift \u002B 1 (Mac)"
+    },
+    {
+      "name": "MacControlShift2",
+      "value": 458,
+      "summary": "Control \u002B Shift \u002B 2 (Mac)"
+    },
+    {
+      "name": "MacControlShift3",
+      "value": 459,
+      "summary": "Control \u002B Shift \u002B 3 (Mac)"
+    },
+    {
+      "name": "MacControlShift4",
+      "value": 460,
+      "summary": "Control \u002B Shift \u002B 4 (Mac)"
+    },
+    {
+      "name": "MacControlShift5",
+      "value": 461,
+      "summary": "Control \u002B Shift \u002B 5 (Mac)"
+    },
+    {
+      "name": "MacControlShift6",
+      "value": 462,
+      "summary": "Control \u002B Shift \u002B 6 (Mac)"
+    },
+    {
+      "name": "MacControlShift7",
+      "value": 463,
+      "summary": "Control \u002B Shift \u002B 7 (Mac)"
+    },
+    {
+      "name": "MacControlShift8",
+      "value": 464,
+      "summary": "Control \u002B Shift \u002B 8 (Mac)"
+    },
+    {
+      "name": "MacControlShift9",
+      "value": 465,
+      "summary": "Control \u002B Shift \u002B 9 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF1",
+      "value": 466,
+      "summary": "Control \u002B Shift \u002B F1 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF2",
+      "value": 467,
+      "summary": "Control \u002B Shift \u002B F2 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF3",
+      "value": 468,
+      "summary": "Control \u002B Shift \u002B F3 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF4",
+      "value": 469,
+      "summary": "Control \u002B Shift \u002B F4 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF5",
+      "value": 470,
+      "summary": "Control \u002B Shift \u002B F5 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF6",
+      "value": 471,
+      "summary": "Control \u002B Shift \u002B F6 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF7",
+      "value": 472,
+      "summary": "Control \u002B Shift \u002B F7 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF8",
+      "value": 473,
+      "summary": "Control \u002B Shift \u002B F8 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF9",
+      "value": 474,
+      "summary": "Control \u002B Shift \u002B F9 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF10",
+      "value": 475,
+      "summary": "Control \u002B Shift \u002B F10 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF11",
+      "value": 476,
+      "summary": "Control \u002B Shift \u002B F11 (Mac)"
+    },
+    {
+      "name": "MacControlShiftF12",
+      "value": 477,
+      "summary": "Control \u002B Shift \u002B F12 (Mac)"
+    }
+  ]
+}

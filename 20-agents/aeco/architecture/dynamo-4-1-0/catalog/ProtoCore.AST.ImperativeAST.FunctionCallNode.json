@@ -1,0 +1,144 @@
+{
+  "name": "FunctionCallNode",
+  "namespace": "ProtoCore.AST.ImperativeAST",
+  "kind": "class",
+  "summary": "Type FunctionCallNode",
+  "base": "ProtoCore.AST.ImperativeAST.ArrayNameNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "FunctionCallNode()",
+      "signature": "void FunctionCallNode()",
+      "summary": "FunctionCallNode.FunctionCallNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "FunctionCallNode(ProtoCore.AST.ImperativeAST.FunctionCallNode)",
+      "signature": "void FunctionCallNode(ProtoCore.AST.ImperativeAST.FunctionCallNode rhs)",
+      "summary": "FunctionCallNode.FunctionCallNode",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.ImperativeAST.FunctionCallNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Accept(ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E)",
+      "signature": "TResult Accept\u003CTResult\u003E(ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E visitor)",
+      "summary": "FunctionCallNode.Accept",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Children",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Children()",
+      "summary": "FunctionCallNode.Children",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object other)",
+      "summary": "FunctionCallNode.Equals",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "FunctionCallNode.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "FunctionCallNode.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FormalArguments",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AST.ImperativeAST.ImperativeNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "FunctionCallNode.FormalArguments",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Function",
+      "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+      "getter": true,
+      "setter": true,
+      "summary": "FunctionCallNode.Function",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Kind",
+      "type": "ProtoCore.AST.ImperativeAST.AstKind",
+      "getter": true,
+      "setter": false,
+      "summary": "FunctionCallNode.Kind",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

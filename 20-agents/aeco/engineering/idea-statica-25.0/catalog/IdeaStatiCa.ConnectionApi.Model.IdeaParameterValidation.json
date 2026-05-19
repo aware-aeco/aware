@@ -1,0 +1,78 @@
+{
+  "name": "IdeaParameterValidation",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.IdeaParameterValidation.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ValidationExpression",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.validationExpression.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    },
+    {
+      "name": "ValidationExpressionEvaluated",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.validationExpressionEvaluated.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    },
+    {
+      "name": "LowerBound",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.lowerBound.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    },
+    {
+      "name": "LowerBoundEvaluated",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.lowerBoundEvaluated.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    },
+    {
+      "name": "UpperBound",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.upperBound.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    },
+    {
+      "name": "UpperBoundEvaluated",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.upperBoundEvaluated.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    },
+    {
+      "name": "ValidationStatus",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.validationStatus.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IdeaParameterValidation.message.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IdeaParameterValidation.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

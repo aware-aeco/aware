@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingDeletedDelegate",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing deletion.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/435456fd-f193-48af-e90d-ae45600e2388",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingDeletedDelegate()"
+}

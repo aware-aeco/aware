@@ -1,0 +1,42 @@
+{
+  "name": "GH_PingDocumentEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Event arguments passed during PingDocument events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PingDocumentEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_PingDocumentEventArgs",
+      "signature": "public GH_PingDocumentEventArgs()",
+      "summary": "Initializes a new instance of the GH_PingDocumentEventArgs class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PingDocumentEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": true,
+      "summary": "If you\u0027re a GH_Document that owns this object, you must fill out this field. This is the only way for objects to know which document they belong to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PingDocumentEventArgs_Document.htm"
+    },
+    {
+      "name": "m_document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_PingDocumentEventArgs_m_document.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

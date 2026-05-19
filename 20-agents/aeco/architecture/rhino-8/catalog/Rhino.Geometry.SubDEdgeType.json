@@ -1,0 +1,64 @@
+{
+  "name": "SubDEdgeType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubDEdgeType describes a subdivision edge. ON_SubDEdgeType is typically used when generating text descriptions or filtering edges during selection processes. Do not confuse ON_SubDEdgeType and ON_SubDEdgeTag. The unique types are single bits and suitable for use in bitwise logic.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDEdgeType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Type is unset or the edge is not valid."
+    },
+    {
+      "name": "Wire",
+      "value": 1,
+      "summary": "The edge has zero faces and the tag is ON_SubDEdgeTag::Crease."
+    },
+    {
+      "name": "Boundary",
+      "value": 2,
+      "summary": "The edge has one face and the tag is ON_SubDEdgeTag::Crease."
+    },
+    {
+      "name": "InteriorSmooth",
+      "value": 4,
+      "summary": "The edge has two faces, the tag is ON_SubDEdgeTag::Smooth or ON_SubDEdgeTag::SmoothX, and the edge sharpness is zero. Note that ON_SubEdge::IsSmoothNotSharp() returns true if and only if ON_SubEdge::EdgeType() is InteriorSmooth."
+    },
+    {
+      "name": "InteriorSharp",
+      "value": 8,
+      "summary": "The edge has two faces, the tag is ON_SubDEdgeTag::Smooth or ON_SubDEdgeTag::SmoothX, and the edge sharpness is nonzero. Note that ON_SubEdge::IsSharp() returns true if and only if ON_SubEdge::EdgeType() is InteriorSharp."
+    },
+    {
+      "name": "InteriorCrease",
+      "value": 16,
+      "summary": "The edge has two faces and the tag is ON_SubDEdgeTag::Crease."
+    },
+    {
+      "name": "Nonmanifold",
+      "value": 32,
+      "summary": "The edge has three or more faces and the tag is ON_SubDEdgeTag::Crease."
+    },
+    {
+      "name": "Invalid",
+      "value": 64,
+      "summary": "The edge has an invalid combination of face count, tag, and sharpness properties."
+    },
+    {
+      "name": "InteriorMask",
+      "value": 28,
+      "summary": "A mask for all interior edge types. Interior edges have 2 faces."
+    },
+    {
+      "name": "ValidTypesMask",
+      "value": 63,
+      "summary": "A mask for all valid edge types."
+    }
+  ]
+}

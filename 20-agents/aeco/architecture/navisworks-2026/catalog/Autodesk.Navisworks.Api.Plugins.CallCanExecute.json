@@ -1,0 +1,34 @@
+{
+  "name": "CallCanExecute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "enum",
+  "summary": "Determines logic used to determine if a command is Enabled",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.CallCanExecute",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Always",
+      "value": 0,
+      "summary": "Command is Enabled unless specifically disabled by CanExecute implementation"
+    },
+    {
+      "name": "DocumentNotClear",
+      "value": 1,
+      "summary": "Command is disabled if the doument is Clear"
+    },
+    {
+      "name": "CurrentSelectionSingle",
+      "value": 2,
+      "summary": "Command is Disabled unless there is a single selection"
+    },
+    {
+      "name": "CurrentSelectionMultiple",
+      "value": 3,
+      "summary": "Command is Disabled unless there are multiple selections"
+    }
+  ]
+}

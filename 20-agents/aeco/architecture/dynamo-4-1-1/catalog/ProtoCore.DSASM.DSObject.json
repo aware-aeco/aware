@@ -1,0 +1,127 @@
+{
+  "name": "DSObject",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type DSObject",
+  "base": "ProtoCore.DSASM.HeapElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSObject.cs",
+  "constructors": [
+    {
+      "name": "DSObject(ProtoCore.DSASM.StackValue[], ProtoCore.DSASM.Heap)",
+      "signature": "void DSObject(ProtoCore.DSASM.StackValue[] values, ProtoCore.DSASM.Heap heap)",
+      "summary": "DSObject.DSObject",
+      "params": [
+        {
+          "name": "values",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSObject.cs"
+    },
+    {
+      "name": "DSObject(int, ProtoCore.DSASM.Heap)",
+      "signature": "void DSObject(int size, ProtoCore.DSASM.Heap heap)",
+      "summary": "DSObject.DSObject",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSObject.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExpandBySize(int)",
+      "signature": "void ExpandBySize(int size)",
+      "summary": "Expand the memory by specified size so that the object can contain extra information. Exception ProtoCore.Exceptions.RunOutOfMemoryException",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSObject.cs"
+    },
+    {
+      "name": "GetValueFromIndex(int, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueFromIndex(int index, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "DSObject.GetValueFromIndex",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSObject.cs"
+    },
+    {
+      "name": "SetValueAtIndex(int, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue SetValueAtIndex(int index, ProtoCore.DSASM.StackValue value, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "DSObject.SetValueAtIndex",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSObject.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,190 @@
+{
+  "name": "IGH_FieldElement",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "interface",
+  "summary": "Represents the basic interface for field elements.",
+  "interfaces": [
+    "GH_ISerializable",
+    "IGH_PreviewData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_IGH_FieldElement.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "Implement this function to draw all shaded meshes. If the viewport does not support shading, this function will not be called.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "doc": "Drawing arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewData_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "Implement this function to draw all wire and point previews.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "doc": "Drawing arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewData_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "IGH_FieldElement Duplicate()",
+      "summary": "Create an exact copy of this element.",
+      "params": [],
+      "returns": {
+        "type": "IGH_FieldElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_IGH_FieldElement_Duplicate.htm"
+    },
+    {
+      "name": "Force",
+      "signature": "Vector3d Force(Point3d location)",
+      "summary": "Compute the force at a given location.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_IGH_FieldElement_Force.htm"
+    },
+    {
+      "name": "IsCoincident",
+      "signature": "bool IsCoincident(Point3d point, double tolerance)",
+      "summary": "Computes whether the point can be considered coincident with the element.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3d",
+          "doc": "Point to test.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the point is coincident within tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_IGH_FieldElement_IsCoincident.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "bool Read(GH_IReader reader)",
+      "summary": "This method is called whenever the instance is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Reader object to deserialize from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_GH_ISerializable_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "bool Write(GH_IWriter writer)",
+      "summary": "This method is called whenever the instance is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Writer object to serialize with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_GH_ISerializable_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the visual boundingbox of all the geometry used to represent this element in 3D.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_FieldElement_BoundingBox.htm"
+    },
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the clipping box for this data. The clipping box is typically the same as the boundingbox.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewData_ClippingBox.htm"
+    },
+    {
+      "name": "ElementGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the element Guid for this element.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_FieldElement_ElementGuid.htm"
+    },
+    {
+      "name": "IsLimited",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether this element affects a limited region.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_FieldElement_IsLimited.htm"
+    },
+    {
+      "name": "Limits",
+      "type": "Box",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the limits of this region. Unless IsLimited equals true, the Limits property is ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_FieldElement_Limits.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

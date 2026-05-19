@@ -1,0 +1,29 @@
+{
+  "name": "GH_AnimationPhase",
+  "namespace": "Grasshopper.GUI",
+  "kind": "enum",
+  "summary": "Enumerates the possible phases in which an animation can occur.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_AnimationPhase.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Before",
+      "value": 0,
+      "summary": "Animation hasn\u0027t started yet."
+    },
+    {
+      "name": "During",
+      "value": 1,
+      "summary": "Animation currently in progress."
+    },
+    {
+      "name": "After",
+      "value": 2,
+      "summary": "Animation has finished."
+    }
+  ]
+}

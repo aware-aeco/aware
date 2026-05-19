@@ -1,0 +1,24 @@
+{
+  "name": "PluginBase.SymbolVisibility",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the symbol visibility for model plug-ins in model views.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/277a0471-12da-93d9-7307-c550a3086201",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DRAW_SYMBOL",
+      "value": 0,
+      "summary": "Symbol is visible in model view."
+    },
+    {
+      "name": "DO_NOT_DRAW_SYMBOL",
+      "value": 1,
+      "summary": "Symbol is not drawn to model view. Plug-in must be selected from the view using created objects only."
+    }
+  ]
+}

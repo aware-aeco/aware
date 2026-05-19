@@ -1,0 +1,133 @@
+{
+  "name": "DisplayBitmapDrawList",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayBitmapDrawList\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayBitmapDrawList.htm",
+  "constructors": [
+    {
+      "name": "DisplayBitmapDrawList",
+      "signature": "public DisplayBitmapDrawList()",
+      "summary": "Initializes a new instance of the DisplayBitmapDrawList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayBitmapDrawList__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetPoints(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public void SetPoints(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayBitmapDrawList.SetPoints(System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayBitmapDrawList_SetPoints.htm"
+    },
+    {
+      "name": "SetPoints(IEnumerable\u003CPoint3d\u003E, IEnumerable\u003CColor\u003E)",
+      "signature": "public void SetPoints(IEnumerable\u003CPoint3d\u003E points, IEnumerable\u003CColor\u003E colors)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayBitmapDrawList.SetPoints(System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d},System.Collections.Generic.IEnumerable{System.Drawing.Color})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "colors",
+          "type": "System.Collections.Generic.IEnumerable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022colors\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayBitmapDrawList.SetPoints(System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d},System.Collections.Generic.IEnumerable{System.Drawing.Color})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayBitmapDrawList_SetPoints_1.htm"
+    },
+    {
+      "name": "SetPoints(IEnumerable\u003CPoint3d\u003E, Color)",
+      "signature": "public void SetPoints(IEnumerable\u003CPoint3d\u003E points, Color blendColor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayBitmapDrawList.SetPoints(System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d},System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "blendColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022blendColor\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayBitmapDrawList.SetPoints(System.Collections.Generic.IEnumerable{Rhino.Geometry.Point3d},System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayBitmapDrawList_SetPoints_2.htm"
+    },
+    {
+      "name": "Sort",
+      "signature": "public int[] Sort(Vector3d cameraDirection)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cameraDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022cameraDirection\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayBitmapDrawList.Sort(Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayBitmapDrawList.Sort(Rhino.Geometry.Vector3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayBitmapDrawList_Sort.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayBitmapDrawList_BoundingBox.htm"
+    },
+    {
+      "name": "MaximumCachedSortLists",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Maximum number of cached sort order index lists stored on this class. Default is 10, but depending on the number of points in this list you may get better performance by setting this value to a certain percentage of the point count.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayBitmapDrawList_MaximumCachedSortLists.htm"
+    },
+    {
+      "name": "SortAngleTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Angle in radians used to determine if an index list is \u0022parallel enough\u0022 to a viewports camera angle. Default is 0.0873 radians (5 degrees)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayBitmapDrawList_SortAngleTolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,214 @@
+{
+  "name": "PropertyDialogs",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.PropertyDialogs.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLastSymbolPath",
+      "signature": "GetLastSymbolPath()",
+      "summary": "Get the last symbol path",
+      "remarks": "Get the last symbol path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Last symbol path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.GetLastSymbolPath"
+    },
+    {
+      "name": "GetSymbolName",
+      "signature": "GetSymbolName(symbolPath)",
+      "summary": "Get the symbol name",
+      "remarks": "Get the symbol name",
+      "params": [
+        {
+          "name": "symbolPath",
+          "type": "str",
+          "doc": "Symbol path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Symbol name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.GetSymbolName"
+    },
+    {
+      "name": "GetTradeDescription",
+      "signature": "GetTradeDescription(tradeID)",
+      "summary": "Get the trade description",
+      "remarks": "Get the trade description",
+      "params": [
+        {
+          "name": "tradeID",
+          "type": "int",
+          "doc": "Trade ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Trade description"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.GetTradeDescription"
+    },
+    {
+      "name": "OpenBottomPlaneReferenceDialog",
+      "signature": "OpenBottomPlaneReferenceDialog(refElement, doc, planeRefs)",
+      "summary": "Open the plane references dialog",
+      "remarks": "Open the plane references dialog",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element (empty element if not exist)",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeRefs",
+          "type": "PlaneReferences",
+          "doc": "Plane references",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "bottom height"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.OpenBottomPlaneReferenceDialog"
+    },
+    {
+      "name": "OpenPlaneReferencesDialog",
+      "signature": "OpenPlaneReferencesDialog(refElement, doc, planeRefs)",
+      "summary": "Open the plane references dialog",
+      "remarks": "Open the plane references dialog",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element (empty element if not exist)",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeRefs",
+          "type": "PlaneReferences",
+          "doc": "Plane references",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.OpenPlaneReferencesDialog"
+    },
+    {
+      "name": "OpenSymbolDialog",
+      "signature": "OpenSymbolDialog(symbolPath)",
+      "summary": "Open the symbol library dialog",
+      "remarks": "Open the symbol library dialog",
+      "params": [
+        {
+          "name": "symbolPath",
+          "type": "str",
+          "doc": "Path to .sym file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "result path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.OpenSymbolDialog"
+    },
+    {
+      "name": "OpenTopPlaneReferenceDialog",
+      "signature": "OpenTopPlaneReferenceDialog(refElement, doc, planeRefs)",
+      "summary": "Open the plane references dialog",
+      "remarks": "Open the plane references dialog",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element (empty element if not exist)",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeRefs",
+          "type": "PlaneReferences",
+          "doc": "Plane references",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "top height"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.OpenTopPlaneReferenceDialog"
+    },
+    {
+      "name": "OpenTradeDialog",
+      "signature": "OpenTradeDialog(doc, tradeID)",
+      "summary": "Open the trade dialog",
+      "remarks": "Open the trade dialog",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "tradeID",
+          "type": "int",
+          "doc": "Current trade ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Trade ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PropertyDialogs/#NemAll_Python_ArchElements.PropertyDialogs.OpenTradeDialog"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

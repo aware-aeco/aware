@@ -1,0 +1,2078 @@
+{
+  "name": "RhinoDoc",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Represents an active model.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_RhinoDoc.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddCustomUndoEvent(String, EventHandler\u003CCustomUndoEventArgs\u003E)",
+      "signature": "public bool AddCustomUndoEvent(string description, EventHandler\u003CCustomUndoEventArgs\u003E handler)",
+      "summary": "",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AddCustomUndoEvent(System.String,System.EventHandler{Rhino.Commands.CustomUndoEventArgs})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "handler",
+          "type": "System.EventHandler\u003CCustomUndoEventArgs\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022handler\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AddCustomUndoEvent(System.String,System.EventHandler{Rhino.Commands.CustomUndoEventArgs})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.AddCustomUndoEvent(System.String,System.EventHandler{Rhino.Commands.CustomUndoEventArgs})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_AddCustomUndoEvent.htm"
+    },
+    {
+      "name": "AddCustomUndoEvent(String, EventHandler\u003CCustomUndoEventArgs\u003E, Object)",
+      "signature": "public bool AddCustomUndoEvent(string description, EventHandler\u003CCustomUndoEventArgs\u003E handler, Object tag)",
+      "summary": "Add a custom undo event so you can undo private plug-in data when the user performs an undo or redo",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AddCustomUndoEvent(System.String,System.EventHandler{Rhino.Commands.CustomUndoEventArgs},System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "handler",
+          "type": "System.EventHandler\u003CCustomUndoEventArgs\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022handler\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AddCustomUndoEvent(System.String,System.EventHandler{Rhino.Commands.CustomUndoEventArgs},System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022tag\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AddCustomUndoEvent(System.String,System.EventHandler{Rhino.Commands.CustomUndoEventArgs},System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.AddCustomUndoEvent(System.String,System.EventHandler{Rhino.Commands.CustomUndoEventArgs},System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_AddCustomUndoEvent_1.htm"
+    },
+    {
+      "name": "AdjustModelUnitSystem",
+      "signature": "public void AdjustModelUnitSystem(UnitSystem newUnitSystem, bool scale)",
+      "summary": "",
+      "params": [
+        {
+          "name": "newUnitSystem",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022newUnitSystem\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AdjustModelUnitSystem(Rhino.UnitSystem,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022scale\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AdjustModelUnitSystem(Rhino.UnitSystem,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_AdjustModelUnitSystem.htm"
+    },
+    {
+      "name": "AdjustPageUnitSystem",
+      "signature": "public void AdjustPageUnitSystem(UnitSystem newUnitSystem, bool scale)",
+      "summary": "",
+      "params": [
+        {
+          "name": "newUnitSystem",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022newUnitSystem\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AdjustPageUnitSystem(Rhino.UnitSystem,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022scale\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.AdjustPageUnitSystem(Rhino.UnitSystem,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_AdjustPageUnitSystem.htm"
+    },
+    {
+      "name": "BeginUndoRecord",
+      "signature": "public uint BeginUndoRecord(string description)",
+      "summary": "Instructs Rhino to begin recording undo information when the document is changed outside of a command. We use this, e.g., to save changes caused by the modeless layer or object properties dialogs when commands are not running.",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "A text describing the record.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "Serial number of record. Returns 0 if record is not started because undo information is already being recorded or undo is disabled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_BeginUndoRecord.htm"
+    },
+    {
+      "name": "ClearRedoRecords",
+      "signature": "public void ClearRedoRecords()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_ClearRedoRecords.htm"
+    },
+    {
+      "name": "ClearUndoRecords(Boolean)",
+      "signature": "public void ClearUndoRecords(bool purgeDeletedObjects)",
+      "summary": "",
+      "params": [
+        {
+          "name": "purgeDeletedObjects",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022purgeDeletedObjects\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.ClearUndoRecords(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_ClearUndoRecords.htm"
+    },
+    {
+      "name": "ClearUndoRecords(UInt32, Boolean)",
+      "signature": "public void ClearUndoRecords(uint undoSerialNumber, bool purgeDeletedObjects)",
+      "summary": "",
+      "params": [
+        {
+          "name": "undoSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022undoSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.ClearUndoRecords(System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "purgeDeletedObjects",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022purgeDeletedObjects\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.ClearUndoRecords(System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_ClearUndoRecords_1.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public static RhinoDoc Create(string modelTemplateFileName)",
+      "summary": "Creates a new RhinoDoc",
+      "params": [
+        {
+          "name": "modelTemplateFileName",
+          "type": "System.String",
+          "doc": "Name of a Rhino model to use as a template to initialize the document. If the template contains views, those views are created. If null, an empty document with no views is created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.Create(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Create.htm"
+    },
+    {
+      "name": "CreateDefaultAttributes",
+      "signature": "public ObjectAttributes CreateDefaultAttributes()",
+      "summary": "Gets the default object attributes for this document. The attributes will be linked to the currently active layer and they will inherit the Document WireDensity setting.",
+      "params": [],
+      "returns": {
+        "type": "ObjectAttributes",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.CreateDefaultAttributes\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_CreateDefaultAttributes.htm"
+    },
+    {
+      "name": "CreateHeadless",
+      "signature": "public static RhinoDoc CreateHeadless(string file3dmTemplatePath)",
+      "summary": "Create a new headless RhinoDoc from a template file",
+      "params": [
+        {
+          "name": "file3dmTemplatePath",
+          "type": "System.String",
+          "doc": "Name of a Rhino model to use as a template to initialize the document. If null, an empty document is created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc",
+        "doc": "New RhinoDoc on success. Note that this is a \u0022headless\u0022 RhinoDoc and it\u0027s lifetime is under your control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_CreateHeadless.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RhinoDoc",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Dispose.htm"
+    },
+    {
+      "name": "EndUndoRecord",
+      "signature": "public bool EndUndoRecord(uint undoRecordSerialNumber)",
+      "summary": "Ends the undo record.",
+      "params": [
+        {
+          "name": "undoRecordSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The serial number of the undo record.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_EndUndoRecord.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.Equals(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.Equals(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Equals.htm"
+    },
+    {
+      "name": "Export",
+      "signature": "public bool Export(string filePath)",
+      "summary": "Export the entire document to a file. All file formats that Rhino can export to are supported by this function.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filePath\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.Export(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Export.htm"
+    },
+    {
+      "name": "ExportSelected",
+      "signature": "public bool ExportSelected(string filePath)",
+      "summary": "Export selected geometry to a file. All file formats that Rhino can export to are supported by this function.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filePath\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.ExportSelected(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_ExportSelected.htm"
+    },
+    {
+      "name": "ExtractPreviewImage",
+      "signature": "public static Bitmap ExtractPreviewImage(string path)",
+      "summary": "Extracts the bitmap preview image from the specified model (3DM).",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The model (3DM) from which to extract the preview image. If null, the currently loaded model is used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_ExtractPreviewImage.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Finalize.htm"
+    },
+    {
+      "name": "FindFile",
+      "signature": "public string FindFile(string filename)",
+      "summary": "Search for a file using Rhino\u0027s search path. Rhino will look in the following places: 1. Current model folder 2. Path specified in options dialog/File tab 3. Rhino system folders 4. Rhino executable folder",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.FindFile(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Path to existing file if found, an empty string if no file was found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_FindFile.htm"
+    },
+    {
+      "name": "FromFilePath",
+      "signature": "public static RhinoDoc FromFilePath(string filePath)",
+      "summary": "Search the open document list for a document with a Path equal to the specified file path.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "The full path to the file to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc",
+        "doc": "The file name to search for"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_FromFilePath.htm"
+    },
+    {
+      "name": "FromId",
+      "signature": "[ObsoleteAttribute(\u0022Use FromRuntimeSerialNumber\u0022)] public static RhinoDoc FromId(int docId)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "docId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022docId\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.FromId(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.FromId(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_FromId.htm"
+    },
+    {
+      "name": "FromRuntimeSerialNumber",
+      "signature": "public static RhinoDoc FromRuntimeSerialNumber(uint serialNumber)",
+      "summary": "",
+      "params": [
+        {
+          "name": "serialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022serialNumber\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.FromRuntimeSerialNumber(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.FromRuntimeSerialNumber(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_FromRuntimeSerialNumber.htm"
+    },
+    {
+      "name": "GetAnalysisMeshingParameters",
+      "signature": "public MeshingParameters GetAnalysisMeshingParameters()",
+      "summary": "Get analysis meshing parameters currently used by the document",
+      "params": [],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetAnalysisMeshingParameters\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetAnalysisMeshingParameters.htm"
+    },
+    {
+      "name": "GetCurrentMeshingParameters",
+      "signature": "public MeshingParameters GetCurrentMeshingParameters()",
+      "summary": "Get the custom meshing parameters that this document will use.",
+      "params": [],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetCurrentMeshingParameters\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetCurrentMeshingParameters.htm"
+    },
+    {
+      "name": "GetCustomUnitSystem",
+      "signature": "public bool GetCustomUnitSystem(bool modelUnits, out string customUnitName, out double metersPerCustomUnit)",
+      "summary": "Get the custom unit system name and custom unit scale.",
+      "params": [
+        {
+          "name": "modelUnits",
+          "type": "System.Boolean",
+          "doc": "Set true to get values from the document\u0027s model unit system. Set false to get values from the document\u0027s page unit system.",
+          "optional": false
+        },
+        {
+          "name": "customUnitName",
+          "type": "System.String",
+          "doc": "The custom unit system name.",
+          "optional": false
+        },
+        {
+          "name": "metersPerCustomUnit",
+          "type": "System.Double",
+          "doc": "The meters per custom unit scale.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetCustomUnitSystem.htm"
+    },
+    {
+      "name": "GetEmbeddedFilesList",
+      "signature": "public string[] GetEmbeddedFilesList(bool missingOnly)",
+      "summary": "",
+      "params": [
+        {
+          "name": "missingOnly",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022missingOnly\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.GetEmbeddedFilesList(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetEmbeddedFilesList(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetEmbeddedFilesList.htm"
+    },
+    {
+      "name": "GetGumballPlane",
+      "signature": "public bool GetGumballPlane(out Plane plane)",
+      "summary": "Returns the active plane of Rhino\u0027s auto-gumball widget. Note, when calling from a Rhino command, make sure the command class has the Rhino.Commands.Style.Transparent command style attribute.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The active plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the auto-gumball widget is enabled and visible. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetGumballPlane.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides Object.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetHashCode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetHashCode.htm"
+    },
+    {
+      "name": "GetMeshingParameters",
+      "signature": "public MeshingParameters GetMeshingParameters(MeshingParameterStyle style)",
+      "summary": "Get MeshingParameters currently used by the document",
+      "params": [
+        {
+          "name": "style",
+          "type": "Rhino.Geometry.MeshingParameterStyle",
+          "doc": "[Missing \u003Cparam name=\u0022style\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.GetMeshingParameters(Rhino.Geometry.MeshingParameterStyle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetMeshingParameters(Rhino.Geometry.MeshingParameterStyle)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetMeshingParameters.htm"
+    },
+    {
+      "name": "GetRenderPrimitiveList",
+      "signature": "public RenderPrimitiveList GetRenderPrimitiveList(ViewportInfo viewport, DisplayPipelineAttributes attrs)",
+      "summary": "Build custom render mesh(es) for this document (i.e. - GH meshes).",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "Attributes for the view mode you are supplying meshes for. Will be null if this is a modal rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderPrimitiveList",
+        "doc": "Returns a RenderPrimitiveList if successful otherwise returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetRenderPrimitiveList.htm"
+    },
+    {
+      "name": "GetRenderPrimitives(Boolean, Boolean)",
+      "signature": "public IEnumerable\u003CRenderPrimitive\u003E GetRenderPrimitives(bool forceTriangleMeshes, bool quietly)",
+      "summary": "Get a enumerable list of custom mesh primitives",
+      "params": [
+        {
+          "name": "forceTriangleMeshes",
+          "type": "System.Boolean",
+          "doc": "If true all mesh faces will be triangulated",
+          "optional": false
+        },
+        {
+          "name": "quietly",
+          "type": "System.Boolean",
+          "doc": "Iterate quietly, if true then no user interface will be displayed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CRenderPrimitive\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetRenderPrimitives(System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetRenderPrimitives_1.htm"
+    },
+    {
+      "name": "GetRenderPrimitives(ViewportInfo, Boolean, Boolean)",
+      "signature": "public IEnumerable\u003CRenderPrimitive\u003E GetRenderPrimitives(ViewportInfo viewport, bool forceTriangleMeshes, bool quietly)",
+      "summary": "Get a enumerable list of custom mesh primitives",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The rendering view camera.",
+          "optional": false
+        },
+        {
+          "name": "forceTriangleMeshes",
+          "type": "System.Boolean",
+          "doc": "If true all mesh faces will be triangulated",
+          "optional": false
+        },
+        {
+          "name": "quietly",
+          "type": "System.Boolean",
+          "doc": "Iterate quietly, if true then no user interface will be displayed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CRenderPrimitive\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetRenderPrimitives(Rhino.DocObjects.ViewportInfo,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetRenderPrimitives.htm"
+    },
+    {
+      "name": "GetRenderPrimitives(Guid, ViewportInfo, Boolean, Boolean)",
+      "signature": "public IEnumerable\u003CRenderPrimitive\u003E GetRenderPrimitives(Guid plugInId, ViewportInfo viewport, bool forceTriangleMeshes, bool quietly)",
+      "summary": "Get a enumerable list of custom mesh primitives",
+      "params": [
+        {
+          "name": "plugInId",
+          "type": "System.Guid",
+          "doc": "The Id of the plug-in creating the iterator.",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The rendering view camera.",
+          "optional": false
+        },
+        {
+          "name": "forceTriangleMeshes",
+          "type": "System.Boolean",
+          "doc": "If true all mesh faces will be triangulated",
+          "optional": false
+        },
+        {
+          "name": "quietly",
+          "type": "System.Boolean",
+          "doc": "Iterate quietly, if true then no user interface will be displayed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CRenderPrimitive\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetRenderPrimitives(System.Guid,Rhino.DocObjects.ViewportInfo,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetRenderPrimitives_2.htm"
+    },
+    {
+      "name": "GetUnitSystemName",
+      "signature": "public string GetUnitSystemName(bool modelUnits, bool capitalize, bool singular, bool abbreviate)",
+      "summary": "",
+      "params": [
+        {
+          "name": "modelUnits",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022modelUnits\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.GetUnitSystemName(System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capitalize",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022capitalize\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.GetUnitSystemName(System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "singular",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022singular\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.GetUnitSystemName(System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "abbreviate",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022abbreviate\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.GetUnitSystemName(System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.GetUnitSystemName(System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_GetUnitSystemName.htm"
+    },
+    {
+      "name": "Import",
+      "signature": "public bool Import(string filePath)",
+      "summary": "Import geometry into a RhinoDoc from a file. This can be any file format that Rhino can import",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filePath\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.Import(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Import.htm"
+    },
+    {
+      "name": "Open",
+      "signature": "public static RhinoDoc Open(string filePath, out bool wasAlreadyOpen)",
+      "summary": "Opens a 3dm file and makes it the active document. If called on windows the active document will be saved and closed and the new document will be opened and become the active document. If called on the Mac the file will be opened in a new document window.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Full path to the 3dm file to open",
+          "optional": false
+        },
+        {
+          "name": "wasAlreadyOpen",
+          "type": "System.Boolean",
+          "doc": "Will get set to true if there is a currently open document with the specified path; otherwise it will get set to false.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc",
+        "doc": "Returns the newly opened document on success or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Open.htm"
+    },
+    {
+      "name": "OpenDocuments()",
+      "signature": "public static RhinoDoc[] OpenDocuments()",
+      "summary": "Returns a list of currently open Rhino documents",
+      "params": [],
+      "returns": {
+        "type": "RhinoDoc[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.OpenDocuments\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_OpenDocuments.htm"
+    },
+    {
+      "name": "OpenDocuments(Boolean)",
+      "signature": "public static RhinoDoc[] OpenDocuments(bool includeHeadless)",
+      "summary": "Returns a list of currently open Rhino documents",
+      "params": [
+        {
+          "name": "includeHeadless",
+          "type": "System.Boolean",
+          "doc": "pass true to include headless docs in the list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.OpenDocuments(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_OpenDocuments_1.htm"
+    },
+    {
+      "name": "OpenFile",
+      "signature": "[ObsoleteAttribute(\u0022OpenFile is obsolete, use Open instead\u0022)] public static bool OpenFile(string path)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.OpenFile(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.OpenFile(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_OpenFile.htm"
+    },
+    {
+      "name": "OpenHeadless",
+      "signature": "public static RhinoDoc OpenHeadless(string file3dmPath)",
+      "summary": "Opens a 3DM file into a new headless RhinoDoc.",
+      "params": [
+        {
+          "name": "file3dmPath",
+          "type": "System.String",
+          "doc": "Path of a Rhino model to load.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoDoc",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.OpenHeadless(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_OpenHeadless.htm"
+    },
+    {
+      "name": "ReadFile",
+      "signature": "public static bool ReadFile(string path, FileReadOptions options)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.ReadFile(System.String,Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileReadOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.ReadFile(System.String,Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.ReadFile(System.String,Rhino.FileIO.FileReadOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_ReadFile.htm"
+    },
+    {
+      "name": "ReadFileVersion",
+      "signature": "public int ReadFileVersion()",
+      "summary": "Returns the file version of the current document. Use this function to determine which version of Rhino last saved the document.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The file version (e.g. 1, 2, 3, 4, etc.) or -1 if the document has not been read from disk."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_ReadFileVersion.htm"
+    },
+    {
+      "name": "Redo",
+      "signature": "public bool Redo()",
+      "summary": "Redo the last action that was \u0022undone\u0022",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Redo.htm"
+    },
+    {
+      "name": "Save",
+      "signature": "public bool Save()",
+      "summary": "Save doc to disk using the document\u0027s Path",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoDoc.Save\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Save.htm"
+    },
+    {
+      "name": "SaveAs(String)",
+      "signature": "public bool SaveAs(string file3dmPath)",
+      "summary": "Save doc as a 3dm to a specified path using the current Rhino file version",
+      "params": [
+        {
+          "name": "file3dmPath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022file3dmPath\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.SaveAs(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_SaveAs.htm"
+    },
+    {
+      "name": "SaveAs(String, Int32)",
+      "signature": "public bool SaveAs(string file3dmPath, int version)",
+      "summary": "Save doc as a 3dm to a specified path",
+      "params": [
+        {
+          "name": "file3dmPath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022file3dmPath\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.SaveAs(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": "Rhino file version",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_SaveAs_1.htm"
+    },
+    {
+      "name": "SaveAsTemplate(String)",
+      "signature": "public bool SaveAsTemplate(string file3dmTemplatePath)",
+      "summary": "Save this document as a template",
+      "params": [
+        {
+          "name": "file3dmTemplatePath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022file3dmTemplatePath\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.SaveAsTemplate(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_SaveAsTemplate.htm"
+    },
+    {
+      "name": "SaveAsTemplate(String, Int32)",
+      "signature": "public bool SaveAsTemplate(string file3dmTemplatePath, int version)",
+      "summary": "Save this document as a template to a specific Rhino file version",
+      "params": [
+        {
+          "name": "file3dmTemplatePath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022file3dmTemplatePath\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.SaveAsTemplate(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022version\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.SaveAsTemplate(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_SaveAsTemplate_1.htm"
+    },
+    {
+      "name": "SetCustomMeshingParameters",
+      "signature": "public void SetCustomMeshingParameters(MeshingParameters mp)",
+      "summary": "Set the custom meshing parameters that this document will use. You must also modify the MeshingParameterStyle property on the document to Custom if you want these meshing parameters to be used",
+      "params": [
+        {
+          "name": "mp",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "[Missing \u003Cparam name=\u0022mp\u0022/\u003E documentation for \u0022M:Rhino.RhinoDoc.SetCustomMeshingParameters(Rhino.Geometry.MeshingParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_SetCustomMeshingParameters.htm"
+    },
+    {
+      "name": "SetCustomUnitSystem",
+      "signature": "public bool SetCustomUnitSystem(bool modelUnits, string customUnitName, double metersPerCustomUnit, bool scale)",
+      "summary": "Changes the unit system to custom units and sets the custom unit scale.",
+      "params": [
+        {
+          "name": "modelUnits",
+          "type": "System.Boolean",
+          "doc": "Set true to set values from the document\u0027s model unit system. Set false to set values from the document\u0027s page unit system.",
+          "optional": false
+        },
+        {
+          "name": "customUnitName",
+          "type": "System.String",
+          "doc": "The custom unit system name.",
+          "optional": false
+        },
+        {
+          "name": "metersPerCustomUnit",
+          "type": "System.Double",
+          "doc": "The meters per custom unit scale.",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Boolean",
+          "doc": "Set true to scale existing objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_SetCustomUnitSystem.htm"
+    },
+    {
+      "name": "SupportsRenderPrimitiveList",
+      "signature": "public bool SupportsRenderPrimitiveList(ViewportInfo viewport, DisplayPipelineAttributes attrs)",
+      "summary": "Determines if custom render meshes will be built for this document (i.e. - GH meshes).",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "Type of mesh to build. If attrs is non-null then a smaller mesh may be generated in less time, false is meant when actually rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if custom render mesh(es) will get built for this document."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_SupportsRenderPrimitiveList.htm"
+    },
+    {
+      "name": "TryGetRenderPrimitiveBoundingBox",
+      "signature": "public bool TryGetRenderPrimitiveBoundingBox(ViewportInfo viewport, DisplayPipelineAttributes attrs, out BoundingBox boundingBox)",
+      "summary": "Get the bounding box for the custom render meshes associated with this document (i.e. - GH meshes).",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "Attributes for the view mode you are supplying meshes for. Will be null if this is a modal rendering.",
+          "optional": false
+        },
+        {
+          "name": "boundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "This will be set to BoundingBox.Unset on failure otherwise it will be the bounding box for the custom render meshes associated with this object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the bounding box was successfully calculated otherwise returns false on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_TryGetRenderPrimitiveBoundingBox.htm"
+    },
+    {
+      "name": "Undo",
+      "signature": "public bool Undo()",
+      "summary": "Undo the last action",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Undo.htm"
+    },
+    {
+      "name": "Write3dmFile",
+      "signature": "public bool Write3dmFile(string path, FileWriteOptions options)",
+      "summary": "Write information in this document to a .3dm file. Note, the active document\u0027s name will not be changed.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The name of the .3dm file to write.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "The file writing options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_Write3dmFile.htm"
+    },
+    {
+      "name": "WriteFile",
+      "signature": "public bool WriteFile(string path, FileWriteOptions options)",
+      "summary": "Write information in this document to a file. Note, the active document\u0027s name will be changed to that of the path provided.",
+      "remarks": "This is the best choice for general file writing. It handles making backups using temporary files, locking and unlocking, loading file writing plug-ins, and many other details.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The name of the file to write.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "The file writing options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoDoc_WriteFile.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": true,
+      "summary": "WARNING!! Do not use the ActiveDoc if you don\u0027t have to. Under Mac Rhino the ActiveDoc can change while a command is running. Use the doc that is passed to you in your RunCommand function or continue to use the same doc after the first call to ActiveDoc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ActiveDoc.htm"
+    },
+    {
+      "name": "AnimationProperties",
+      "type": "AnimationProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_AnimationProperties.htm"
+    },
+    {
+      "name": "Bitmaps",
+      "type": "BitmapTable",
+      "getter": true,
+      "setter": false,
+      "summary": "bitmaps used in textures, backgrounds, wallpapers, ...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Bitmaps.htm"
+    },
+    {
+      "name": "CurrentEnvironment",
+      "type": "ICurrentEnvironment",
+      "getter": true,
+      "setter": false,
+      "summary": "Access to the current environment for various uses",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_CurrentEnvironment.htm"
+    },
+    {
+      "name": "CurrentUndoRecordSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "\u003E0: undo recording is active and being saved on the undo record with the specified serial number. 0: undo recording is not active. (Disabled or nothing is being recorded.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_CurrentUndoRecordSerialNumber.htm"
+    },
+    {
+      "name": "CustomRenderSizes",
+      "type": "List\u003CSize\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_CustomRenderSizes.htm"
+    },
+    {
+      "name": "DateCreated",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_DateCreated.htm"
+    },
+    {
+      "name": "DateLastEdited",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the date the document was created in Coordinated Universal Time (UTC). Use DateTime.ToLocalTime to convert to local time.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_DateLastEdited.htm"
+    },
+    {
+      "name": "DimStyles",
+      "type": "DimStyleTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_DimStyles.htm"
+    },
+    {
+      "name": "DistanceDisplayPrecision",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_DistanceDisplayPrecision.htm"
+    },
+    {
+      "name": "EarthAnchorPoint",
+      "type": "EarthAnchorPoint",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_EarthAnchorPoint.htm"
+    },
+    {
+      "name": "Fonts",
+      "type": "FontTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Fonts.htm"
+    },
+    {
+      "name": "GroundPlane",
+      "type": "GroundPlane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ground plane of this document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_GroundPlane.htm"
+    },
+    {
+      "name": "Groups",
+      "type": "GroupTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Groups.htm"
+    },
+    {
+      "name": "HatchPatterns",
+      "type": "HatchPatternTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_HatchPatterns.htm"
+    },
+    {
+      "name": "InstanceDefinitions",
+      "type": "InstanceDefinitionTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_InstanceDefinitions.htm"
+    },
+    {
+      "name": "IsAvailable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsAvailable.htm"
+    },
+    {
+      "name": "IsClosing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsClosing.htm"
+    },
+    {
+      "name": "IsCommandRunning",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Rhino is currently running a command.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsCommandRunning.htm"
+    },
+    {
+      "name": "IsCreating",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsCreating.htm"
+    },
+    {
+      "name": "IsHeadless",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsHeadless.htm"
+    },
+    {
+      "name": "IsInitializing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsInitializing.htm"
+    },
+    {
+      "name": "IsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Check to see if the file associated with this document is locked. If it is locked then this is the only document that will be able to write the file. Other instances of Rhino will fail to write this document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsLocked.htm"
+    },
+    {
+      "name": "IsOpening",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsOpening.htm"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Current read-only mode for this document. true if the document can be viewed but NOT saved. false if document can be viewed and saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsReadOnly.htm"
+    },
+    {
+      "name": "IsSendingMail",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if Rhino is in the process of sending this document as an email attachment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_IsSendingMail.htm"
+    },
+    {
+      "name": "Layers",
+      "type": "LayerTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Layers in the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Layers.htm"
+    },
+    {
+      "name": "LayoutSpaceAnnotationScalingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If LayoutSpaceAnnotationScaling is on, sizes in dimstyles are multiplied by dimscale when the annotation is displayed in a detail viewport not in a detail",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_LayoutSpaceAnnotationScalingEnabled.htm"
+    },
+    {
+      "name": "Lights",
+      "type": "LightTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Lights.htm"
+    },
+    {
+      "name": "Linetypes",
+      "type": "LinetypeTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Linetypes in the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Linetypes.htm"
+    },
+    {
+      "name": "Manifest",
+      "type": "ManifestTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Manifest.htm"
+    },
+    {
+      "name": "Materials",
+      "type": "MaterialTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Materials in the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Materials.htm"
+    },
+    {
+      "name": "MeshingParameterStyle",
+      "type": "MeshingParameterStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Type of MeshingParameters currently used by the document to mesh objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_MeshingParameterStyle.htm"
+    },
+    {
+      "name": "ModelAbsoluteTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Model space absolute tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelAbsoluteTolerance.htm"
+    },
+    {
+      "name": "ModelAngleToleranceDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Model space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelAngleToleranceDegrees.htm"
+    },
+    {
+      "name": "ModelAngleToleranceRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Model space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelAngleToleranceRadians.htm"
+    },
+    {
+      "name": "ModelBasepoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "The base point in the model that is used when inserting the model into another as a block definition. By default the base point in any model is 0,0,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelBasepoint.htm"
+    },
+    {
+      "name": "ModelDistanceDisplayPrecision",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelDistanceDisplayPrecision.htm"
+    },
+    {
+      "name": "ModelRelativeTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Model space relative tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelRelativeTolerance.htm"
+    },
+    {
+      "name": "ModelSpaceAnnotationScalingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If ModelSpaceAnnotationScaling is on, sizes in dimstyles are multiplied by dimscale when the annotation is displayed in a model space viewport not in a detail",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelSpaceAnnotationScalingEnabled.htm"
+    },
+    {
+      "name": "ModelSpaceHatchScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale factor for hatches in model space when Hatch Scaling is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelSpaceHatchScale.htm"
+    },
+    {
+      "name": "ModelSpaceHatchScalingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if hatch scaling is enabled, false if not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelSpaceHatchScalingEnabled.htm"
+    },
+    {
+      "name": "ModelSpaceTextScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale factor for text in model space when Annotation Scaling is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelSpaceTextScale.htm"
+    },
+    {
+      "name": "ModelUnitSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_ModelUnitSystem.htm"
+    },
+    {
+      "name": "Modified",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets the document\u0027s modified flag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Modified.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the currently loaded Rhino document (3DM file).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Name.htm"
+    },
+    {
+      "name": "NamedConstructionPlanes",
+      "type": "NamedConstructionPlaneTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of named construction planes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_NamedConstructionPlanes.htm"
+    },
+    {
+      "name": "NamedLayerStates",
+      "type": "NamedLayerStateTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of named layer states.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_NamedLayerStates.htm"
+    },
+    {
+      "name": "NamedPositions",
+      "type": "NamedPositionTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of named positions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_NamedPositions.htm"
+    },
+    {
+      "name": "NamedViews",
+      "type": "NamedViewTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of named views.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_NamedViews.htm"
+    },
+    {
+      "name": "NextUndoRecordSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "The serial number that will be assigned to the next undo record that is constructed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_NextUndoRecordSerialNumber.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets the document\u0027s notes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Notes.htm"
+    },
+    {
+      "name": "Objects",
+      "type": "ObjectTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Objects.htm"
+    },
+    {
+      "name": "PageAbsoluteTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Page space absolute tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_PageAbsoluteTolerance.htm"
+    },
+    {
+      "name": "PageAngleToleranceDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Page space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_PageAngleToleranceDegrees.htm"
+    },
+    {
+      "name": "PageAngleToleranceRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Page space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_PageAngleToleranceRadians.htm"
+    },
+    {
+      "name": "PageDistanceDisplayPrecision",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_PageDistanceDisplayPrecision.htm"
+    },
+    {
+      "name": "PageRelativeTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Page space relative tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_PageRelativeTolerance.htm"
+    },
+    {
+      "name": "PageUnitSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_PageUnitSystem.htm"
+    },
+    {
+      "name": "Path",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the path of the currently loaded Rhino document (3DM file).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Path.htm"
+    },
+    {
+      "name": "PostEffects",
+      "type": "IPostEffects",
+      "getter": true,
+      "setter": false,
+      "summary": "Access to the post effects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_PostEffects.htm"
+    },
+    {
+      "name": "RedoActive",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Redo is currently active.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_RedoActive.htm"
+    },
+    {
+      "name": "RenderEnvironments",
+      "type": "RenderEnvironmentTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_RenderEnvironments.htm"
+    },
+    {
+      "name": "RenderMaterials",
+      "type": "RenderMaterialTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_RenderMaterials.htm"
+    },
+    {
+      "name": "RenderSettings",
+      "type": "RenderSettings",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_RenderSettings.htm"
+    },
+    {
+      "name": "RenderTextures",
+      "type": "RenderTextureTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_RenderTextures.htm"
+    },
+    {
+      "name": "RuntimeData",
+      "type": "RuntimeDocumentDataTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of document runtime data. This is a good place to put non-serializable, per document data, such as panel view models. Note well: This data will be dispose with the document and does not get serialized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_RuntimeData.htm"
+    },
+    {
+      "name": "RuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique serialNumber for the document while the application is running. This is not a persistent value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_RuntimeSerialNumber.htm"
+    },
+    {
+      "name": "Snapshots",
+      "type": "SnapshotTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of snapshots.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Snapshots.htm"
+    },
+    {
+      "name": "Strings",
+      "type": "StringTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of document user data strings in this document",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Strings.htm"
+    },
+    {
+      "name": "SubDAppearance",
+      "type": "SubDComponentLocation",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets the appearance of all SubD objects in the document.",
+      "remarks": "When setting this property, if the document contains SubD objects, then the document will be redrawn automatically.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_SubDAppearance.htm"
+    },
+    {
+      "name": "TemplateFileUsed",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "name of the template file used to create this document. This is a runtime value only present if the document was newly created.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_TemplateFileUsed.htm"
+    },
+    {
+      "name": "UndoActive",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Undo is currently active.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_UndoActive.htm"
+    },
+    {
+      "name": "UndoRecordingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_UndoRecordingEnabled.htm"
+    },
+    {
+      "name": "UndoRecordingIsActive",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if undo recording is actually happening now.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_UndoRecordingIsActive.htm"
+    },
+    {
+      "name": "Views",
+      "type": "ViewTable",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Views.htm"
+    },
+    {
+      "name": "Worksession",
+      "type": "Worksession",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to the document\u0027s worksession.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoDoc_Worksession.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ActiveDocumentChanged",
+      "delegate": "System.EventHandler\u003CDocumentEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentEventArgs\u003E ActiveDocumentChanged",
+      "summary": "This event is raised when the active document used by modeless user interface changes. On Mac Rhino this will get raised before the NewDocument, BeginOpenDocument and EndOpenDocument events. Mac Rhino will also raise this event with 0 for the document Id and a null document pointer when the last document is closed. Windows Rhino will raise this event after the NewDocument, BeginOpenDocument and EndOpenDocument events when a new or existing model is opened.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_ActiveDocumentChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "AddRhinoObject",
+      "delegate": "System.EventHandler\u003CRhinoObjectEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoObjectEventArgs\u003E AddRhinoObject",
+      "summary": "Called if a new object is added to the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_AddRhinoObject.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "BeforeTransformObjects",
+      "delegate": "System.EventHandler\u003CRhinoTransformObjectsEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoTransformObjectsEventArgs\u003E BeforeTransformObjects",
+      "summary": "Called before objects are being transformed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_BeforeTransformObjects.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "BeginOpenDocument",
+      "delegate": "System.EventHandler\u003CDocumentOpenEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentOpenEventArgs\u003E BeginOpenDocument",
+      "summary": "This event is raised when the document open operation begins. NOTE: On Windows, this event will be fired when a clipboard paste operation occurs, as Rhino opens a .tmp file in the User\u0027s Local folder with the contents of the pasted document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_BeginOpenDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "BeginSaveDocument",
+      "delegate": "System.EventHandler\u003CDocumentSaveEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentSaveEventArgs\u003E BeginSaveDocument",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_BeginSaveDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CloseDocument",
+      "delegate": "System.EventHandler\u003CDocumentEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentEventArgs\u003E CloseDocument",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_CloseDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DeleteRhinoObject",
+      "delegate": "System.EventHandler\u003CRhinoObjectEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoObjectEventArgs\u003E DeleteRhinoObject",
+      "summary": "Called if an object is deleted. At some later point the object can be un-deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_DeleteRhinoObject.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DeselectAllObjects",
+      "delegate": "System.EventHandler\u003CRhinoDeselectAllObjectsEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoDeselectAllObjectsEventArgs\u003E DeselectAllObjects",
+      "summary": "Called when all objects are deselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_DeselectAllObjects.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DeselectObjects",
+      "delegate": "System.EventHandler\u003CRhinoObjectSelectionEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoObjectSelectionEventArgs\u003E DeselectObjects",
+      "summary": "Called when object(s) are deselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_DeselectObjects.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DimensionStyleTableEvent",
+      "delegate": "System.EventHandler\u003CDimStyleTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDimStyleTableEventArgs\u003E DimensionStyleTableEvent",
+      "summary": "Called when any modification happens to a document\u0027s dimension style table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_DimensionStyleTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DocumentPropertiesChanged",
+      "delegate": "System.EventHandler\u003CDocumentEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentEventArgs\u003E DocumentPropertiesChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_DocumentPropertiesChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EndOpenDocument",
+      "delegate": "System.EventHandler\u003CDocumentOpenEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentOpenEventArgs\u003E EndOpenDocument",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_EndOpenDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EndOpenDocumentInitialViewUpdate",
+      "delegate": "System.EventHandler\u003CDocumentOpenEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentOpenEventArgs\u003E EndOpenDocumentInitialViewUpdate",
+      "summary": "This event is raised after EndOpenDocument when the documents initial views have been created and initialized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_EndOpenDocumentInitialViewUpdate.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EndSaveDocument",
+      "delegate": "System.EventHandler\u003CDocumentSaveEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentSaveEventArgs\u003E EndSaveDocument",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_EndSaveDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "GroupTableEvent",
+      "delegate": "System.EventHandler\u003CGroupTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CGroupTableEventArgs\u003E GroupTableEvent",
+      "summary": "Called when any modification happens to a document\u0027s group table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_GroupTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "InstanceDefinitionTableEvent",
+      "delegate": "System.EventHandler\u003CInstanceDefinitionTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CInstanceDefinitionTableEventArgs\u003E InstanceDefinitionTableEvent",
+      "summary": "Called when any modification happens to a document\u0027s instance definition table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_InstanceDefinitionTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayerTableEvent",
+      "delegate": "System.EventHandler\u003CLayerTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CLayerTableEventArgs\u003E LayerTableEvent",
+      "summary": "Called when any modification happens to a document\u0027s layer table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_LayerTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LightTableEvent",
+      "delegate": "System.EventHandler\u003CLightTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CLightTableEventArgs\u003E LightTableEvent",
+      "summary": "Called when any modification happens to a document\u0027s light table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_LightTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MaterialTableEvent",
+      "delegate": "System.EventHandler\u003CMaterialTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CMaterialTableEventArgs\u003E MaterialTableEvent",
+      "summary": "Called when any modification happens to a document\u0027s material table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_MaterialTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModifyObjectAttributes",
+      "delegate": "System.EventHandler\u003CRhinoModifyObjectAttributesEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoModifyObjectAttributesEventArgs\u003E ModifyObjectAttributes",
+      "summary": "Called when all object attributes are changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_ModifyObjectAttributes.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NewDocument",
+      "delegate": "System.EventHandler\u003CDocumentEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CDocumentEventArgs\u003E NewDocument",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_NewDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PurgeRhinoObject",
+      "delegate": "System.EventHandler\u003CRhinoObjectEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoObjectEventArgs\u003E PurgeRhinoObject",
+      "summary": "Called if an object is being purged from a document. The object will cease to exist forever.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_PurgeRhinoObject.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RenderEnvironmentTableEvent",
+      "delegate": "System.EventHandler\u003CRhinoDoc.RenderContentTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoDoc.RenderContentTableEventArgs\u003E RenderEnvironmentTableEvent",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_RenderEnvironmentTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RenderMaterialsTableEvent",
+      "delegate": "System.EventHandler\u003CRhinoDoc.RenderContentTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoDoc.RenderContentTableEventArgs\u003E RenderMaterialsTableEvent",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_RenderMaterialsTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RenderTextureTableEvent",
+      "delegate": "System.EventHandler\u003CRhinoDoc.RenderContentTableEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoDoc.RenderContentTableEventArgs\u003E RenderTextureTableEvent",
+      "summary": "Called when the RenderTextureTable has been loaded, is about to be cleared or has been cleared. See RhinoDoc.RenderContentTableEventType for more information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_RenderTextureTableEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ReplaceRhinoObject",
+      "delegate": "System.EventHandler\u003CRhinoReplaceObjectEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoReplaceObjectEventArgs\u003E ReplaceRhinoObject",
+      "summary": "Called if an object is about to be replaced. If both RhinoDoc.UndoActive() and RhinoDoc.RedoActive() return false, then immediately after the ReplaceObject event, there will be a DeleteObject event followed by an AddObject event. If either RhinoDoc.UndoActive() or RhinoDoc::RedoActive() return true, then immediately after the ReplaceObject event, there will be a DeleteObject event followed by an UndeleteObject event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_ReplaceRhinoObject.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectObjects",
+      "delegate": "System.EventHandler\u003CRhinoObjectSelectionEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoObjectSelectionEventArgs\u003E SelectObjects",
+      "summary": "Called when object(s) are selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_SelectObjects.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TextureMappingEvent",
+      "delegate": "System.EventHandler\u003CRhinoDoc.TextureMappingEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoDoc.TextureMappingEventArgs\u003E TextureMappingEvent",
+      "summary": "Called when any modification happens to a document objects texture mapping.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_TextureMappingEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "UndeleteRhinoObject",
+      "delegate": "System.EventHandler\u003CRhinoObjectEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoObjectEventArgs\u003E UndeleteRhinoObject",
+      "summary": "Called if an object is un-deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_UndeleteRhinoObject.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "UserStringChanged",
+      "delegate": "System.EventHandler\u003CRhinoDoc.UserStringChangedArgs\u003E",
+      "signature": "public static event EventHandler\u003CRhinoDoc.UserStringChangedArgs\u003E UserStringChanged",
+      "summary": "This event is raised when document user text strings are changed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_RhinoDoc_UserStringChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

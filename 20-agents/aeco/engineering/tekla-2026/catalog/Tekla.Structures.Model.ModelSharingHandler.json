@@ -1,0 +1,357 @@
+{
+  "name": "ModelSharingHandler",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "Handles operations related to model sharing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/60cc1fcf-a879-b4b3-10f8-cb27e1a52da4",
+  "constructors": [
+    {
+      "name": "ModelSharingHandler",
+      "signature": "public ModelSharingHandler()",
+      "summary": "Initializes a new instance of the ModelSharingHandler class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2254dee5-32df-fc40-bbce-df50c9d56625"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateBaselineAsync",
+      "signature": "public Task\u003CISharingResult\u003E CreateBaselineAsync(string code, string comment, string releaseNextWriteOutComment = null)",
+      "summary": "Make a new baseline and upload it to the service with the specified code and comment.",
+      "params": [
+        {
+          "name": "code",
+          "type": "System.String",
+          "doc": "The code for the write-out operation.",
+          "optional": false
+        },
+        {
+          "name": "comment",
+          "type": "System.String",
+          "doc": "A comment describing the write-out.",
+          "optional": false
+        },
+        {
+          "name": "releaseNextWriteOutComment",
+          "type": "System.String",
+          "doc": "Optional. A comment for releasing the next write-out reservation. If provided, must not be empty.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": "An awaitable task that returns an ISharingResult indicating the result of the making baseline operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cb604e29-4672-1aa7-6063-7fedbdcf7510"
+    },
+    {
+      "name": "ExcludeAndOpen",
+      "signature": "public ISharingResult ExcludeAndOpen(string modelPath)",
+      "summary": "Excludes the specified model from sharing and opens it. The currently opened model is closed.",
+      "params": [
+        {
+          "name": "modelPath",
+          "type": "System.String",
+          "doc": "The path to the model to exclude from sharing and open.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ISharingResult",
+        "doc": "An ISharingResult indicating the result of the operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/252881cd-c926-f1dd-d6c0-43d250b09934"
+    },
+    {
+      "name": "GetLocationsAsync",
+      "signature": "public Task\u003CISharingResult\u003CISharingLocationsInformation\u003E\u003E GetLocationsAsync()",
+      "summary": "Gets the list of available locations for shared models.",
+      "params": [],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003CISharingLocationsInformation\u003E\u003E",
+        "doc": "An awaitable task that returns information about available locations."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3ebe852a-f1d7-97ad-6015-3ed8cb534fcd"
+    },
+    {
+      "name": "GetModelsAsync",
+      "signature": "public Task\u003CISharingResult\u003CIEnumerable\u003CISharedModel\u003E\u003E\u003E GetModelsAsync()",
+      "summary": "Gets the list of shared models available for the current user.",
+      "params": [],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003CIEnumerable\u003CISharedModel\u003E\u003E\u003E",
+        "doc": "An awaitable task that returns an ISharingResult containing a collection of ISharedModel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ad157052-8f0f-1a44-904e-6b445728cb7a"
+    },
+    {
+      "name": "GetSharingEvents",
+      "signature": "public ISharingEvents GetSharingEvents()",
+      "summary": "Gets an instance of ISharingEvents to subscribe to sharing-related events.",
+      "params": [],
+      "returns": {
+        "type": "ISharingEvents",
+        "doc": "An ISharingEvents instance for handling sharing events such as SharedModelStateChanged."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e80e39c-d769-e7f8-facf-1ac2af7f27dc"
+    },
+    {
+      "name": "GetUpdatesAsync",
+      "signature": "public Task\u003CISharingResult\u003CIEnumerable\u003CISharingUpdate\u003E\u003E\u003E GetUpdatesAsync(Guid? modelId = null)",
+      "summary": "Get available updates for the model.",
+      "params": [
+        {
+          "name": "modelId",
+          "type": "System.Nullable\u003CGuid\u003E",
+          "doc": "The model id. If not provided or empty, the currently opened model is used.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003CIEnumerable\u003CISharingUpdate\u003E\u003E\u003E",
+        "doc": "An awaitable task that returns a list of udpates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2b0eb561-5a91-b03c-af2d-f81a8d335ef7"
+    },
+    {
+      "name": "InviteUserAsync",
+      "signature": "public Task\u003CISharingResult\u003E InviteUserAsync(string userEmail, SharingRole role, bool sendEmail, string customEmailMessage, Guid? modelId = null)",
+      "summary": "Invite sharing user.",
+      "params": [
+        {
+          "name": "userEmail",
+          "type": "System.String",
+          "doc": "The user email.",
+          "optional": false
+        },
+        {
+          "name": "role",
+          "type": "Tekla.Structures.Model.SharingRole",
+          "doc": "The user role.",
+          "optional": false
+        },
+        {
+          "name": "sendEmail",
+          "type": "System.Boolean",
+          "doc": "If set, send an invitation email to the new user.",
+          "optional": false
+        },
+        {
+          "name": "customEmailMessage",
+          "type": "System.String",
+          "doc": "If non-empty, add the message to the invitation email. HTML markup can be used.",
+          "optional": false
+        },
+        {
+          "name": "modelId",
+          "type": "System.Nullable\u003CGuid\u003E",
+          "doc": "If set and nonempty, the model id to invite user to. If not set or empty, user is added to the currently opened model.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": "Awaitable task with the operation result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/51d37ad7-f0fa-b085-33d5-552b2883e1a8"
+    },
+    {
+      "name": "JoinAsync",
+      "signature": "public Task\u003CISharingResult\u003E JoinAsync(Guid modelId, string joinFolder, Guid? targetUpdate = null)",
+      "summary": "Joins a shared model using the specified model identifier and join folder.",
+      "params": [
+        {
+          "name": "modelId",
+          "type": "System.Guid",
+          "doc": "The model identifier.",
+          "optional": false
+        },
+        {
+          "name": "joinFolder",
+          "type": "System.String",
+          "doc": "The folder to join to.",
+          "optional": false
+        },
+        {
+          "name": "targetUpdate",
+          "type": "System.Nullable\u003CGuid\u003E",
+          "doc": "The update to join to. If not set or empty, join to the latest update.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fe2cf713-f044-cdd1-665e-ee6c6367e98b"
+    },
+    {
+      "name": "ReadInAsync",
+      "signature": "public Task\u003CISharingResult\u003E ReadInAsync(Guid? targetUpdate = null)",
+      "summary": "Reads in updates to the shared model.",
+      "params": [
+        {
+          "name": "targetUpdate",
+          "type": "System.Nullable\u003CGuid\u003E",
+          "doc": "The update to read in. If not set or empty, reads in to the latest update.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": "An awaitable task that returns an ISharingResult indicating the result of the read-in operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9ca10bdf-71e2-77b9-d825-de333c557e3d"
+    },
+    {
+      "name": "ReleaseNextWriteOutAsync",
+      "signature": "public Task\u003CISharingResult\u003E ReleaseNextWriteOutAsync(string comment)",
+      "summary": "Releases a previously reserved next write-out for the current user with the specified comment.",
+      "params": [
+        {
+          "name": "comment",
+          "type": "System.String",
+          "doc": "A comment describing the reason for the release. Must not be empty or whitespace.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": "An awaitable task that returns an ISharingResult indicating the result of the release operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3a3cc590-0fba-7993-d1c9-b29691708f7c"
+    },
+    {
+      "name": "RemoveModelAsync",
+      "signature": "public Task\u003CISharingResult\u003E RemoveModelAsync(Guid modelId)",
+      "summary": "Removes the shared model from the system.",
+      "params": [
+        {
+          "name": "modelId",
+          "type": "System.Guid",
+          "doc": "The identifier of the model to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": "An awaitable task that returns an ISharingResult indicating the result of the remove operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3d1df04-d59c-eb1a-1758-f8e0852df753"
+    },
+    {
+      "name": "ReserveNextWriteOutAsync",
+      "signature": "public Task\u003CISharingResult\u003E ReserveNextWriteOutAsync(string comment)",
+      "summary": "Reserves the next write-out for the current user with the specified comment.",
+      "params": [
+        {
+          "name": "comment",
+          "type": "System.String",
+          "doc": "A comment describing the reason for the reservation. Must not be empty or whitespace.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": "An awaitable task that returns an ISharingResult indicating the result of the reserve operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8033a381-f7ce-e0e8-28fd-27c59f00991b"
+    },
+    {
+      "name": "StartSharingAsync",
+      "signature": "public Task\u003CISharingResult\u003CGuid\u003E\u003E StartSharingAsync(string code, string description, Guid? location = null)",
+      "summary": "Starts sharing a model with the specified code, description, and location.",
+      "params": [
+        {
+          "name": "code",
+          "type": "System.String",
+          "doc": "The sharing code for the model.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "A description for the shared model.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "System.Nullable\u003CGuid\u003E",
+          "doc": "The location of the shared model. If not provided or empty, the default location is used.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003CGuid\u003E\u003E",
+        "doc": "An awaitable task that returns an ISharingResult\u003CT\u003E containing the unique identifier of the shared model."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/673ada8b-5db9-e755-a708-faf0bd5da254"
+    },
+    {
+      "name": "WriteOutAsync",
+      "signature": "public Task\u003CISharingResult\u003E WriteOutAsync(string code, string comment, string releaseNextWriteOutComment = null)",
+      "summary": "Writes out changes to the service with the specified code and comment. Automatically release the next write-out reservation if there is one.",
+      "params": [
+        {
+          "name": "code",
+          "type": "System.String",
+          "doc": "The code for the write-out operation.",
+          "optional": false
+        },
+        {
+          "name": "comment",
+          "type": "System.String",
+          "doc": "A comment describing the write-out.",
+          "optional": false
+        },
+        {
+          "name": "releaseNextWriteOutComment",
+          "type": "System.String",
+          "doc": "Optional. A comment for releasing the next write-out reservation. If provided, must not be empty.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CISharingResult\u003E",
+        "doc": "An awaitable task that returns an ISharingResult indicating the result of the write-out operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3d421c71-06c9-187f-672c-b25e386b9e05"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

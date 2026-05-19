@@ -1,0 +1,30 @@
+{
+  "name": "ConNonConformityIssueSeverity",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConNonConformityIssueSeverity.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConNonConformityIssueSeverity.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "info",
+      "value": "info"
+    },
+    {
+      "name": "warning",
+      "value": "warning"
+    },
+    {
+      "name": "error",
+      "value": "error"
+    },
+    {
+      "name": "terminatedError",
+      "value": "terminatedError"
+    }
+  ]
+}

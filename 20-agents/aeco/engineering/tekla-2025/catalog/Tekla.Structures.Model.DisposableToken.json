@@ -1,0 +1,45 @@
+{
+  "name": "DisposableToken",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "IDisposable delegate adapter.",
+  "base": "System.Object",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6fceaf49-8ef1-a334-d72d-a109a1a627d9",
+  "constructors": [
+    {
+      "name": "DisposableToken",
+      "signature": "public DisposableToken(Action disposed)",
+      "summary": "Initializes a new instance of the DisposableToken class.",
+      "params": [
+        {
+          "name": "disposed",
+          "type": "System.Action",
+          "doc": "The delegate to a method that is invoked on dispose.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b9847a1-33bf-a69b-b899-19c9fc64b67d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Invokes the callback.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b2e9549-6519-5ab3-d049-137eacefe337"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

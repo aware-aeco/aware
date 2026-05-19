@@ -1,0 +1,95 @@
+{
+  "name": "BuiltInFunctionEndPoint",
+  "namespace": "ProtoCore.Lang",
+  "kind": "class",
+  "summary": "Type BuiltInFunctionEndPoint",
+  "base": "ProtoCore.FunctionEndPoint",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInFunctionEndPoint.cs",
+  "constructors": [
+    {
+      "name": "BuiltInFunctionEndPoint(ProtoCore.Lang.BuiltInMethods.MethodID)",
+      "signature": "void BuiltInFunctionEndPoint(ProtoCore.Lang.BuiltInMethods.MethodID id)",
+      "summary": "BuiltInFunctionEndPoint.BuiltInFunctionEndPoint",
+      "params": [
+        {
+          "name": "id",
+          "type": "ProtoCore.Lang.BuiltInMethods.MethodID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInFunctionEndPoint.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DoesPredicateMatch(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E)",
+      "signature": "bool DoesPredicateMatch(ProtoCore.Runtime.Context c, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions)",
+      "summary": "BuiltInFunctionEndPoint.DoesPredicateMatch",
+      "params": [
+        {
+          "name": "c",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInFunctionEndPoint.cs"
+    },
+    {
+      "name": "Execute(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue Execute(ProtoCore.Runtime.Context c, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "BuiltInFunctionEndPoint.Execute",
+      "params": [
+        {
+          "name": "c",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInFunctionEndPoint.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

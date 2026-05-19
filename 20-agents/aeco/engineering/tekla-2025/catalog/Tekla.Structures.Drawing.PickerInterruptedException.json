@@ -1,0 +1,25 @@
+{
+  "name": "PickerInterruptedException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInterruptedException class defines the exception that is thrown when a user interrupts the picker.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a6d20ff1-fe2d-6ade-2eec-3a729b104222",
+  "constructors": [
+    {
+      "name": "PickerInterruptedException",
+      "signature": "public PickerInterruptedException()",
+      "summary": "Creates a new picker interrupted exception instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ee0d3c4f-7eb4-9b21-94d2-9415d6ac8d8b"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

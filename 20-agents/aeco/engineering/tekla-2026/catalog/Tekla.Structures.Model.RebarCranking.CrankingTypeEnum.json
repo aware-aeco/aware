@@ -1,0 +1,24 @@
+{
+  "name": "RebarCranking.CrankingTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The cranking type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/416eb182-2d11-0104-67c9-68a6a368a264",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CUSTOM_CRANKING",
+      "value": 0,
+      "summary": "Custom cranking."
+    },
+    {
+      "name": "STANDARD_CRANKING",
+      "value": 1,
+      "summary": "Standard cranking."
+    }
+  ]
+}

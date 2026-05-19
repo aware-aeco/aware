@@ -1,0 +1,70 @@
+{
+  "name": "IUserInterfaceSection",
+  "namespace": "Rhino.Render.UI",
+  "kind": "interface",
+  "summary": "Implement this interface in your user control to get UserInterfaceSection event notification.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_UI_IUserInterfaceSection.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnUserInterfaceSectionExpanding",
+      "signature": "void OnUserInterfaceSectionExpanding(UserInterfaceSection userInterfaceSection, bool expanding)",
+      "summary": "The UserInterfaceSection object that called this interface method.",
+      "params": [
+        {
+          "name": "userInterfaceSection",
+          "type": "Rhino.Render.UI.UserInterfaceSection",
+          "doc": "The UserInterfaceSection object that called this interface method.",
+          "optional": false
+        },
+        {
+          "name": "expanding",
+          "type": "System.Boolean",
+          "doc": "Will be true if the control has been createExpanded or false if it was collapsed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_UI_IUserInterfaceSection_OnUserInterfaceSectionExpanding.htm"
+    },
+    {
+      "name": "UserInterfaceDisplayData",
+      "signature": "void UserInterfaceDisplayData(UserInterfaceSection userInterfaceSection, RenderContent[] renderContentList)",
+      "summary": "Called by UserInterfaceSection when the selected content changes or a content field property value changes.",
+      "params": [
+        {
+          "name": "userInterfaceSection",
+          "type": "Rhino.Render.UI.UserInterfaceSection",
+          "doc": "The UserInterfaceSection object that called this interface method.",
+          "optional": false
+        },
+        {
+          "name": "renderContentList",
+          "type": "Rhino.Render.RenderContent[]",
+          "doc": "The currently selected list of content items to edit.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_UI_IUserInterfaceSection_UserInterfaceDisplayData.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Hidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Return true if the section should be hidden, else return false.",
+      "remarks": "This is not to be confused with IsShown(). Hidden tells the holder whether or not to hide the section. IsShown reports the current physical state of the control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_UI_IUserInterfaceSection_Hidden.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,71 @@
+{
+  "name": "BrowserInternalElement",
+  "namespace": "Dynamo.Search",
+  "kind": "class",
+  "summary": "This class represents internal elements of browser item",
+  "base": "Dynamo.Search.BrowserItem",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FullCategoryName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns full category name consisting of root and all sub categories names",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs"
+    },
+    {
+      "name": "Items",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Search.BrowserItem\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The items inside of the browser item",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns name of the node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs"
+    },
+    {
+      "name": "OldParent",
+      "type": "Dynamo.Search.BrowserItem",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns previous parent item",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs"
+    },
+    {
+      "name": "Parent",
+      "type": "Dynamo.Search.BrowserItem",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns browser item representing category which this element belongs to",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs"
+    },
+    {
+      "name": "Siblings",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Search.BrowserItem\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns items which are in the same category as the browser item",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs"
+    },
+    {
+      "name": "UIParent",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The framework element hosting the extension",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserInternalElement.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

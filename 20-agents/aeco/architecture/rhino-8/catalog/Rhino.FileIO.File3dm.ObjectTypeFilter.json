@@ -1,0 +1,87 @@
+{
+  "name": "File3dm.ObjectTypeFilter",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.File3dm.ObjectTypeFilter\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dm_ObjectTypeFilter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Point",
+      "value": 1,
+      "summary": "some type of Point"
+    },
+    {
+      "name": "Pointset",
+      "value": 2,
+      "summary": "some type of PointCloud, PointGrid, ..."
+    },
+    {
+      "name": "Curve",
+      "value": 4,
+      "summary": "some type of Curve like LineCurve, NurbsCurve, etc."
+    },
+    {
+      "name": "Surface",
+      "value": 8,
+      "summary": "some type of Surface like PlaneSurface, NurbsSurface, etc."
+    },
+    {
+      "name": "Brep",
+      "value": 16,
+      "summary": "some type of Brep"
+    },
+    {
+      "name": "Mesh",
+      "value": 32,
+      "summary": "some type of Mesh"
+    },
+    {
+      "name": "Annotation",
+      "value": 512,
+      "summary": "some type of Annotation"
+    },
+    {
+      "name": "InstanceDefinition",
+      "value": 2048,
+      "summary": "some type of InstanceDefinition"
+    },
+    {
+      "name": "InstanceReference",
+      "value": 4096,
+      "summary": "some type of InstanceReference"
+    },
+    {
+      "name": "TextDot",
+      "value": 8192,
+      "summary": "some type of TextDot"
+    },
+    {
+      "name": "DetailView",
+      "value": 32768,
+      "summary": "some type of DetailView"
+    },
+    {
+      "name": "Hatch",
+      "value": 65536,
+      "summary": "some type of Hatch"
+    },
+    {
+      "name": "Extrusion",
+      "value": 1073741824,
+      "summary": "some type of Extrusion"
+    },
+    {
+      "name": "Any",
+      "value": "4294967295"
+    }
+  ]
+}

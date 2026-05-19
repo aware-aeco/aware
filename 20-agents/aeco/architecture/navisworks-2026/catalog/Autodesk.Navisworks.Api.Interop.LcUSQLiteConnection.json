@@ -1,0 +1,236 @@
+{
+  "name": "LcUSQLiteConnection",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUSQLiteConnection class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Close",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Close()",
+      "summary": "Close method of LcUSQLiteConnection.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.Close"
+    },
+    {
+      "name": "GetIndexColumnInfo",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus GetIndexColumnInfo(string databaseName, string indexName, string columnName, out int sortMode, out int onError, out string collationSequence)",
+      "summary": "GetIndexColumnInfo method of LcUSQLiteConnection.",
+      "params": [
+        {
+          "name": "databaseName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "indexName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "columnName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "sortMode",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "onError",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "collationSequence",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.GetIndexColumnInfo%28System.String%2CSystem.String%2CSystem.String%2CSystem.Int32%40%2CSystem.Int32%40%2CSystem.String%40%29"
+    },
+    {
+      "name": "Open",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Open(string filename, int flags, string vfs)",
+      "summary": "Open method of LcUSQLiteConnection.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "vfs",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.Open%28System.String%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "IsValid",
+      "signature": "bool IsValid()",
+      "summary": "IsValid method of LcUSQLiteConnection.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.IsValid"
+    },
+    {
+      "name": "GetChanges",
+      "signature": "int GetChanges()",
+      "summary": "GetChanges method of LcUSQLiteConnection.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.GetChanges"
+    },
+    {
+      "name": "GetError",
+      "signature": "int GetError()",
+      "summary": "GetError method of LcUSQLiteConnection.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.GetError"
+    },
+    {
+      "name": "GetUserErrorCode",
+      "signature": "int GetUserErrorCode()",
+      "summary": "GetUserErrorCode method of LcUSQLiteConnection.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.GetUserErrorCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUSQLiteConnection.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUSQLiteConnection.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetErrorMsg",
+      "signature": "string GetErrorMsg()",
+      "summary": "GetErrorMsg method of LcUSQLiteConnection.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.GetErrorMsg"
+    },
+    {
+      "name": "GetUserErrorMsg",
+      "signature": "string GetUserErrorMsg()",
+      "summary": "GetUserErrorMsg method of LcUSQLiteConnection.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.GetUserErrorMsg"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUSQLiteConnection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteConnection.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

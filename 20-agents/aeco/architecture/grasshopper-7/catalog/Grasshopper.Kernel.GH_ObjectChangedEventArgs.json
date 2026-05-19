@@ -1,0 +1,174 @@
+{
+  "name": "GH_ObjectChangedEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Event arguments passed during ObjectChanged events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ObjectChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_ObjectChangedEventArgs(IGH_DocumentObject, GH_ObjectEventType)",
+      "signature": "public GH_ObjectChangedEventArgs(IGH_DocumentObject eSender, GH_ObjectEventType eType)",
+      "summary": "Initializes a new instance of the GH_ObjectChangedEventArgs class",
+      "params": [
+        {
+          "name": "eSender",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "eType",
+          "type": "Grasshopper.Kernel.GH_ObjectEventType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ObjectChangedEventArgs__ctor.htm"
+    },
+    {
+      "name": "GH_ObjectChangedEventArgs(IGH_DocumentObject, String)",
+      "signature": "public GH_ObjectChangedEventArgs(IGH_DocumentObject eSender, string eCustomDescription)",
+      "summary": "Initializes a new instance of the GH_ObjectChangedEventArgs class",
+      "params": [
+        {
+          "name": "eSender",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "eCustomDescription",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ObjectChangedEventArgs__ctor_2.htm"
+    },
+    {
+      "name": "GH_ObjectChangedEventArgs(IGH_DocumentObject, GH_ObjectEventType, Object)",
+      "signature": "public GH_ObjectChangedEventArgs(IGH_DocumentObject eSender, GH_ObjectEventType eType, Object eTag)",
+      "summary": "Initializes a new instance of the GH_ObjectChangedEventArgs class",
+      "params": [
+        {
+          "name": "eSender",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "eType",
+          "type": "Grasshopper.Kernel.GH_ObjectEventType",
+          "optional": false
+        },
+        {
+          "name": "eTag",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ObjectChangedEventArgs__ctor_1.htm"
+    },
+    {
+      "name": "GH_ObjectChangedEventArgs(IGH_DocumentObject, String, Object)",
+      "signature": "public GH_ObjectChangedEventArgs(IGH_DocumentObject eSender, string eCustomDescription, Object eTag)",
+      "summary": "Initializes a new instance of the GH_ObjectChangedEventArgs class",
+      "params": [
+        {
+          "name": "eSender",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "eCustomDescription",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "eTag",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ObjectChangedEventArgs__ctor_3.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CustomType",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the customised type description of this event. This field is only set when the Type is GH_ObjectEventType.Custom.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ObjectChangedEventArgs_CustomType.htm"
+    },
+    {
+      "name": "Sender",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the object which raised this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ObjectChangedEventArgs_Sender.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the tag for this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ObjectChangedEventArgs_Tag.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_ObjectEventType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ObjectChangedEventArgs_Type.htm"
+    },
+    {
+      "name": "m_custom",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_ObjectChangedEventArgs_m_custom.htm"
+    },
+    {
+      "name": "m_sender",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_ObjectChangedEventArgs_m_sender.htm"
+    },
+    {
+      "name": "m_tag",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_ObjectChangedEventArgs_m_tag.htm"
+    },
+    {
+      "name": "m_type",
+      "type": "GH_ObjectEventType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_ObjectChangedEventArgs_m_type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

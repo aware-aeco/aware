@@ -1,0 +1,29 @@
+{
+  "name": "PlaneFitResult",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Enumerates all possible outcomes of a Least-Squares plane fitting operation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_PlaneFitResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Failure",
+      "value": -1,
+      "summary": "No plane could be found."
+    },
+    {
+      "name": "Success",
+      "value": 0,
+      "summary": "A plane was successfully fitted."
+    },
+    {
+      "name": "Inconclusive",
+      "value": 1,
+      "summary": "A valid plane was found, but it is an inconclusive result. This might happen with co-linear points for example."
+    }
+  ]
+}

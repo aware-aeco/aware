@@ -1,0 +1,55 @@
+{
+  "name": "Edge",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The Edge class represents a single global edge in a solid.",
+  "base": "System.Object",
+  "interfaces": [
+    "ICloneable"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4d366e24-93b4-cd9e-139b-06c8be0434f1",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public Object Clone()",
+      "summary": "Method for cloning the current object.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Cloned object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/edc70204-4a28-e97c-bdc8-3fb27d1f9f50"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end point of the edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/34e41609-8626-e5b4-c70c-0c90c06ac4f5"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the start point of the edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2dfaa8ce-aff5-808e-15ef-4d3ae77a653c"
+    },
+    {
+      "name": "Type",
+      "type": "Edge.EdgeTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of the edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/61368191-f550-2b76-384d-7ce8ff1b969c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

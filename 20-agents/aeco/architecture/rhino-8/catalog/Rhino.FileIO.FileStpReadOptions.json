@@ -1,0 +1,63 @@
+{
+  "name": "FileStpReadOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options used when reading a STP file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileStpReadOptions.htm",
+  "constructors": [
+    {
+      "name": "FileStpReadOptions",
+      "signature": "public FileStpReadOptions()",
+      "summary": "Initializes a new instance of the FileStpReadOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileStpReadOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Import function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileStpReadOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileStpReadOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "JoinSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileStpReadOptions_JoinSurfaces.htm"
+    },
+    {
+      "name": "LimitFaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileStpReadOptions_LimitFaces.htm"
+    },
+    {
+      "name": "MaxFaceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileStpReadOptions_MaxFaceCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

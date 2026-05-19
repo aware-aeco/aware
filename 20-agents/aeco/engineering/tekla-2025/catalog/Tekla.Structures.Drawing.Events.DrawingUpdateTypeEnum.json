@@ -1,0 +1,29 @@
+{
+  "name": "Events.DrawingUpdateTypeEnum",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The types of drawing update event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/91548dcb-f7f5-b43e-fbf8-4040e94bf6d9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INSERTED",
+      "value": 0,
+      "summary": "Drawing created"
+    },
+    {
+      "name": "MODIFIED",
+      "value": 1,
+      "summary": "Drawing modified"
+    },
+    {
+      "name": "DELETED",
+      "value": 2,
+      "summary": "Drawing deleted"
+    }
+  ]
+}

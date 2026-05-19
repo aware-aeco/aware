@@ -1,0 +1,257 @@
+{
+  "name": "GH_PatternMatching",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.GH_PatternMatching.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PatternMatching.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Contains",
+      "signature": "public static bool Contains(string value, string pattern, bool ignoreCase, CultureInfo culture)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PatternMatching_Contains.htm"
+    },
+    {
+      "name": "EndsWith",
+      "signature": "public static bool EndsWith(string value, string pattern, bool ignoreCase, CultureInfo culture)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PatternMatching_EndsWith.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public static bool Equals(string value, string pattern, bool ignoreCase, CultureInfo culture)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PatternMatching_Equals.htm"
+    },
+    {
+      "name": "IsMatch",
+      "signature": "public static bool IsMatch(GH_PatternMatching.MatchingMode mode, string value, string pattern, bool ignoreCase, CultureInfo culture)",
+      "summary": "",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Grasshopper.Kernel.GH_PatternMatching.MatchingMode",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PatternMatching_IsMatch.htm"
+    },
+    {
+      "name": "MatchRegex",
+      "signature": "public static bool MatchRegex(string value, string pattern, bool ignoreCase, CultureInfo culture)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PatternMatching_MatchRegex.htm"
+    },
+    {
+      "name": "MatchWildcards",
+      "signature": "public static bool MatchWildcards(string value, string pattern, bool ignoreCase, CultureInfo culture)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PatternMatching_MatchWildcards.htm"
+    },
+    {
+      "name": "StartsWith",
+      "signature": "public static bool StartsWith(string value, string pattern, bool ignoreCase, CultureInfo culture)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PatternMatching_StartsWith.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

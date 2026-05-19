@@ -1,0 +1,29 @@
+{
+  "name": "FileObjWriteOptions.ObjGroupNames",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileObjWriteOptions.ObjGroupNames\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileObjWriteOptions_ObjGroupNames.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoGroups",
+      "value": 0,
+      "summary": "Neither layer or group names are exported as OBJ groups"
+    },
+    {
+      "name": "LayerAsGroup",
+      "value": 1,
+      "summary": "Rhino layer names are exported as OBJ groups"
+    },
+    {
+      "name": "GroupAsGroup",
+      "value": 2,
+      "summary": "Rhino group names are exported as OBJ groups"
+    }
+  ]
+}

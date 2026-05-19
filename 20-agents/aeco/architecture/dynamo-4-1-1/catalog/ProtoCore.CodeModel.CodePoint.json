@@ -1,0 +1,100 @@
+{
+  "name": "CodePoint",
+  "namespace": "ProtoCore.CodeModel",
+  "kind": "struct",
+  "summary": "Type CodePoint",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodePoint.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "CodePoint.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodePoint.cs"
+    },
+    {
+      "name": "op_Equality(ProtoCore.CodeModel.CodePoint, ProtoCore.CodeModel.CodePoint)",
+      "signature": "bool op_Equality(ProtoCore.CodeModel.CodePoint lhs, ProtoCore.CodeModel.CodePoint rhs)",
+      "summary": "CodePoint.op_Equality",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.CodeModel.CodePoint",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.CodeModel.CodePoint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodePoint.cs"
+    },
+    {
+      "name": "op_Inequality(ProtoCore.CodeModel.CodePoint, ProtoCore.CodeModel.CodePoint)",
+      "signature": "bool op_Inequality(ProtoCore.CodeModel.CodePoint lhs, ProtoCore.CodeModel.CodePoint rhs)",
+      "summary": "CodePoint.op_Inequality",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.CodeModel.CodePoint",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.CodeModel.CodePoint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodePoint.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CharNo",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "CodePoint.CharNo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodePoint.cs"
+    },
+    {
+      "name": "LineNo",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "CodePoint.LineNo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodePoint.cs"
+    },
+    {
+      "name": "SourceLocation",
+      "type": "ProtoCore.CodeModel.CodeFile",
+      "getter": true,
+      "setter": true,
+      "summary": "CodePoint.SourceLocation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodePoint.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

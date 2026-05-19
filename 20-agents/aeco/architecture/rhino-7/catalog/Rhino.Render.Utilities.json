@@ -1,0 +1,523 @@
+{
+  "name": "Utilities",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.Utilities\u0022]",
+  "remarks": "This is a replacement for CRhinoFileUtilities::FindFile().",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_Utilities.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ChangeContentType",
+      "signature": "public static RenderContent ChangeContentType(RenderContent oldContent, Guid newType, bool harvestParameters)",
+      "summary": "Changes the type of a content. This deletes the content and creates a replacement of the specified type allowing the caller to decide about harvesting.",
+      "params": [
+        {
+          "name": "oldContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "oldContent is the old content which is deleted.",
+          "optional": false
+        },
+        {
+          "name": "newType",
+          "type": "System.Guid",
+          "doc": "The type of content to replace pOldContent with.",
+          "optional": false
+        },
+        {
+          "name": "harvestParameters",
+          "type": "System.Boolean",
+          "doc": "Determines whether or not parameter harvesting will be performed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "A new persistent render content."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_ChangeContentType.htm"
+    },
+    {
+      "name": "FindFile(RhinoDoc, String)",
+      "signature": "public static string FindFile(RhinoDoc doc, string fullPathToFile)",
+      "summary": "Finds a file and also handles network shares. RemarksThis is a replacement for CRhinoFileUtilities::FindFile().",
+      "remarks": "This is a replacement for CRhinoFileUtilities::FindFile().",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Document to use for locating .3dm file\u0027s folder.",
+          "optional": false
+        },
+        {
+          "name": "fullPathToFile",
+          "type": "System.String",
+          "doc": "The file to be found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The found file."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_FindFile.htm"
+    },
+    {
+      "name": "FindFile(RhinoDoc, String, Boolean)",
+      "signature": "public static string FindFile(RhinoDoc doc, string fullPathToFile, bool unpackFromBitmapTableIfNecessary)",
+      "summary": "Finds a file and also handles network shares. RemarksThis is a replacement for CRhinoFileUtilities::FindFile().",
+      "remarks": "This is a replacement for CRhinoFileUtilities::FindFile().",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Document to use for locating .3dm file\u0027s folder.",
+          "optional": false
+        },
+        {
+          "name": "fullPathToFile",
+          "type": "System.String",
+          "doc": "The file to be found.",
+          "optional": false
+        },
+        {
+          "name": "unpackFromBitmapTableIfNecessary",
+          "type": "System.Boolean",
+          "doc": "True to seasch for the file in the bitmap table and unpack it into the temp folder if not found in the initial search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The found file."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_FindFile_1.htm"
+    },
+    {
+      "name": "IsCachedTextureFileInUse",
+      "signature": "public static bool IsCachedTextureFileInUse(string textureFileName)",
+      "summary": "Determines if any texture in any persistent content list is using the specified file name for caching.",
+      "params": [
+        {
+          "name": "textureFileName",
+          "type": "System.String",
+          "doc": "The file name to check for. The extension is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the texture is present."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_IsCachedTextureFileInUse.htm"
+    },
+    {
+      "name": "LoadPersistentRenderContentFromFile",
+      "signature": "public static RenderContent LoadPersistentRenderContentFromFile(uint docSerialNumber, string filename)",
+      "summary": "Loads a content from a library file and adds it to the persistent content list of a particular document.",
+      "params": [
+        {
+          "name": "docSerialNumber",
+          "type": "System.UInt32",
+          "doc": "identifies the document into which the content should be loaded.",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "is the full path to the file to be loaded.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "The loaded content or null if an error occurred."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_LoadPersistentRenderContentFromFile.htm"
+    },
+    {
+      "name": "MoveWindow",
+      "signature": "public static void MoveWindow(IntPtr hwnd, Rectangle rect, bool bRepaint, bool bRepaintNC)",
+      "summary": "",
+      "params": [
+        {
+          "name": "hwnd",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022hwnd\u0022/\u003E documentation for \u0022M:Rhino.Render.Utilities.MoveWindow(System.IntPtr,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rect",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.Render.Utilities.MoveWindow(System.IntPtr,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bRepaint",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bRepaint\u0022/\u003E documentation for \u0022M:Rhino.Render.Utilities.MoveWindow(System.IntPtr,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bRepaintNC",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bRepaintNC\u0022/\u003E documentation for \u0022M:Rhino.Render.Utilities.MoveWindow(System.IntPtr,System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_MoveWindow.htm"
+    },
+    {
+      "name": "PromptForSaveImageFileParameters",
+      "signature": "public static string PromptForSaveImageFileParameters(string filename, ref int width, ref int height, ref int colorDepth)",
+      "summary": "Prompts the user for a save file name and the width, height and depth of an image to be saved.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "The original file path.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "A width.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "An height.",
+          "optional": false
+        },
+        {
+          "name": "colorDepth",
+          "type": "System.Int32",
+          "doc": "A color depth.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The new file name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_PromptForSaveImageFileParameters.htm"
+    },
+    {
+      "name": "SafeFrameEnabled",
+      "signature": "public static bool SafeFrameEnabled(RhinoDoc doc)",
+      "summary": "Queries whether or not the Safe Frame is visible.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.Utilities.SafeFrameEnabled(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Utilities.SafeFrameEnabled(Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_SafeFrameEnabled.htm"
+    },
+    {
+      "name": "SetDefaultRenderPlugIn",
+      "signature": "public static bool SetDefaultRenderPlugIn(Guid pluginId)",
+      "summary": "Set default render application",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "ID of render plug-in",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if plug-in found and loaded successfully. False if pluginId is invalid or was unable to load plug-in"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_SetDefaultRenderPlugIn.htm"
+    },
+    {
+      "name": "ShowContentChooser(Guid, Guid, RenderContentKind, Guid, RenderContent.ShowContentChooserFlags, RhinoDoc)",
+      "signature": "public static Utilities.ShowContentChooserResults ShowContentChooser(Guid defaultType, Guid defaultInstanceId, RenderContentKind kinds, ref Guid instanceIdOut, RenderContent.ShowContentChooserFlags flags, RhinoDoc doc)",
+      "summary": "Shows the content chooser to allow the user to select a new or existing content.",
+      "params": [
+        {
+          "name": "defaultType",
+          "type": "System.Guid",
+          "doc": "The content type that will be initially selected in the \u0027New\u0027 tab.",
+          "optional": false
+        },
+        {
+          "name": "defaultInstanceId",
+          "type": "System.Guid",
+          "doc": "The content instance that will be initially selected in the \u0027Existing\u0027 tab.",
+          "optional": false
+        },
+        {
+          "name": "kinds",
+          "type": "Rhino.Render.RenderContentKind",
+          "doc": "Semicolon-delimited string specifying which content kinds will be displayed.",
+          "optional": false
+        },
+        {
+          "name": "instanceIdOut",
+          "type": "System.Guid",
+          "doc": "The UUID of the chosen item. Depending on eRhRdkSccResult, this can be the type id of a content type or the instance id of an existing content.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Rhino.Render.RenderContent.ShowContentChooserFlags",
+          "doc": "Flags controlling the chooser. Multiple selection is not valid for this call.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Utilities.ShowContentChooserResults",
+        "doc": "The result of displaying the chooser."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_ShowContentChooser_2.htm"
+    },
+    {
+      "name": "ShowContentChooser(RhinoDoc, Guid, Guid, RenderContentKind, RenderContent.ShowContentChooserFlags, String, IEnumerable\u003CString\u003E, IEnumerable\u003CGuid\u003E, Guid[])",
+      "signature": "public static Utilities.ShowContentChooserResults ShowContentChooser(RhinoDoc doc, Guid defaultType, Guid defaultInstanceId, RenderContentKind kinds, RenderContent.ShowContentChooserFlags flags, string presetCategory, IEnumerable\u003Cstring\u003E categories, IEnumerable\u003CGuid\u003E types, out Guid[] instanceIdsOut)",
+      "summary": "Shows the content chooser to allow the user to select a new or existing content, or multiple contents.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document.",
+          "optional": false
+        },
+        {
+          "name": "defaultType",
+          "type": "System.Guid",
+          "doc": "The content type that will be initially selected in the \u0027New\u0027 tab.",
+          "optional": false
+        },
+        {
+          "name": "defaultInstanceId",
+          "type": "System.Guid",
+          "doc": "The content instance that will be initially selected in the \u0027Existing\u0027 tab.",
+          "optional": false
+        },
+        {
+          "name": "kinds",
+          "type": "Rhino.Render.RenderContentKind",
+          "doc": "Semicolon-delimited string specifying which content kinds will be displayed.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Rhino.Render.RenderContent.ShowContentChooserFlags",
+          "doc": "Flags controlling the chooser (tabs to hide, type of selection).",
+          "optional": false
+        },
+        {
+          "name": "presetCategory",
+          "type": "System.String",
+          "doc": "Specifies the category to preset in the drop-down list on the \u0027New\u0027 tab. If this string is empty, the preset category will be \u0027All\u0027.",
+          "optional": false
+        },
+        {
+          "name": "categories",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "Specifies the categories to display. Render contents that do not belong to one of these categories will not be listed. If this array is empty, all render contents from all categories will be listed.",
+          "optional": false
+        },
+        {
+          "name": "types",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "Specifies content types to display. Contents that are not one of these types will not be listed. If this array is empty, all content types will be listed.",
+          "optional": false
+        },
+        {
+          "name": "instanceIdsOut",
+          "type": "System.Guid[]",
+          "doc": "Array of UUID(s) of the chosen item(s). Depending on eRhRdkSccResult, this can accept type id(s) of content type(s) or instance id(s) of existing content(s).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Utilities.ShowContentChooserResults",
+        "doc": "The result of displaying the chooser."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_ShowContentChooser.htm"
+    },
+    {
+      "name": "ShowContentChooser(RhinoDoc, Guid, Guid, RenderContentKind, Utilities.ContentChooserFlags, String, IEnumerable\u003CString\u003E, IEnumerable\u003CGuid\u003E, Guid[])",
+      "signature": "public static Utilities.ShowContentChooserResults ShowContentChooser(RhinoDoc doc, Guid defaultType, Guid defaultInstanceId, RenderContentKind kinds, Utilities.ContentChooserFlags flags, string presetCategory, IEnumerable\u003Cstring\u003E categories, IEnumerable\u003CGuid\u003E types, out Guid[] instanceIdsOut)",
+      "summary": "Shows the content chooser to allow the user to select a new or existing content, or multiple contents.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document.",
+          "optional": false
+        },
+        {
+          "name": "defaultType",
+          "type": "System.Guid",
+          "doc": "The content type that will be initially selected in the \u0027New\u0027 tab.",
+          "optional": false
+        },
+        {
+          "name": "defaultInstanceId",
+          "type": "System.Guid",
+          "doc": "The content instance that will be initially selected in the \u0027Existing\u0027 tab.",
+          "optional": false
+        },
+        {
+          "name": "kinds",
+          "type": "Rhino.Render.RenderContentKind",
+          "doc": "Semicolon-delimited string specifying which content kinds will be displayed.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Rhino.Render.Utilities.ContentChooserFlags",
+          "doc": "Flags controlling the chooser (tabs to hide, type of selection).",
+          "optional": false
+        },
+        {
+          "name": "presetCategory",
+          "type": "System.String",
+          "doc": "Specifies the category to preset in the drop-down list on the \u0027New\u0027 tab. If this string is empty, the preset category will be \u0027All\u0027.",
+          "optional": false
+        },
+        {
+          "name": "categories",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "Specifies the categories to display. Render contents that do not belong to one of these categories will not be listed. If this array is empty, all render contents from all categories will be listed.",
+          "optional": false
+        },
+        {
+          "name": "types",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "Specifies content types to display. Contents that are not one of these types will not be listed. If this array is empty, all content types will be listed.",
+          "optional": false
+        },
+        {
+          "name": "instanceIdsOut",
+          "type": "System.Guid[]",
+          "doc": "Array of UUID(s) of the chosen item(s). Depending on eRhRdkSccResult, this can accept type id(s) of content type(s) or instance id(s) of existing content(s).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Utilities.ShowContentChooserResults",
+        "doc": "The result of displaying the chooser."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_ShowContentChooser_1.htm"
+    },
+    {
+      "name": "ShowIORMenu",
+      "signature": "public static bool ShowIORMenu(IntPtr hwnd, Point pt, ref double outIOR, ref string outString)",
+      "summary": "Display and track the context menu.",
+      "params": [
+        {
+          "name": "hwnd",
+          "type": "System.IntPtr",
+          "doc": "The window that displays the menu, for example an edit box.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.Point",
+          "doc": "The position to display the menu at inside the window",
+          "optional": false
+        },
+        {
+          "name": "outIOR",
+          "type": "System.Double",
+          "doc": "Accepts the IOR value of the user\u0027s chosen substance",
+          "optional": false
+        },
+        {
+          "name": "outString",
+          "type": "System.String",
+          "doc": "Accepts the name of the user\u0027s chosen substance. Can be null if not required.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the function showed the IOR menu and something was picked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Utilities_ShowIORMenu.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultRenderPlugInId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the plug-in Id for the default render plug-in",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Utilities_DefaultRenderPlugInId.htm"
+    },
+    {
+      "name": "ShowIncompatibleEnvironments",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether incompatible content should be shown in the corresponding editor.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Utilities_ShowIncompatibleEnvironments.htm"
+    },
+    {
+      "name": "ShowIncompatibleMaterials",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether incompatible content should be shown in the corresponding editor.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Utilities_ShowIncompatibleMaterials.htm"
+    },
+    {
+      "name": "ShowIncompatibleTextures",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether incompatible content should be shown in the corresponding editor.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Utilities_ShowIncompatibleTextures.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ArrowheadPositions",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The positions of the arrowheads on the line.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/24eef0f3-f2ad-7860-664a-7bc488a78dfb",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No arrowheads on the line."
+    },
+    {
+      "name": "Start",
+      "value": 1,
+      "summary": "One arrowhead at the start of the line."
+    },
+    {
+      "name": "End",
+      "value": 2,
+      "summary": "One arrowhead at the end of the line."
+    },
+    {
+      "name": "Both",
+      "value": 3,
+      "summary": "Arrowheads at both ends of the line."
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "name": "AnalysisDecomposedLoad.AnalysisLoadTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the analysis load types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/568646ff-3247-512a-4629-433b141d7459",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_DEFINED",
+      "value": 0,
+      "summary": "The analysis load type is not defined."
+    },
+    {
+      "name": "ANALYSIS_NODAL_LOAD",
+      "value": 1001,
+      "summary": "The analysis nodal load."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_LINE_LOADX",
+      "value": 1,
+      "summary": "The analysis member line load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_LINE_LOADY",
+      "value": 2,
+      "summary": "The analysis member line load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_LINE_LOADZ",
+      "value": 3,
+      "summary": "The analysis member line load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_LINE_MOMENTX",
+      "value": 4,
+      "summary": "The analysis member line moment load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_LINE_MOMENTY",
+      "value": 5,
+      "summary": "The analysis member line moment load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_LINE_MOMENTZ",
+      "value": 6,
+      "summary": "The analysis member line moment load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_POINT_LOADX",
+      "value": 7,
+      "summary": "The analysis member point load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_POINT_LOADY",
+      "value": 8,
+      "summary": "The analysis member point load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_POINT_LOADZ",
+      "value": 9,
+      "summary": "The analysis member point load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_POINT_MOMENTX",
+      "value": 10,
+      "summary": "The analysis member point moment load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_POINT_MOMENTY",
+      "value": 11,
+      "summary": "The analysis member point moment load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_POINT_MOMENTZ",
+      "value": 12,
+      "summary": "The analysis member point moment load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_MEMBER_TEMPERATURE_LOAD",
+      "value": 13,
+      "summary": "The analysis member temperature load."
+    },
+    {
+      "name": "ANALYSIS_PLATE_POINT_LOAD",
+      "value": 14,
+      "summary": "The analysis area point load."
+    },
+    {
+      "name": "ANALYSIS_PLATE_LINE_LOAD",
+      "value": 15,
+      "summary": "The analysis area line load."
+    },
+    {
+      "name": "ANALYSIS_PLATE_PRESSURE_LOAD",
+      "value": 16,
+      "summary": "The analysis area pressure load."
+    },
+    {
+      "name": "ANALYSIS_BAR_LINE_LOADX",
+      "value": 21,
+      "summary": "The analysis bar line load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_LINE_LOADY",
+      "value": 22,
+      "summary": "The analysis bar line load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_LINE_LOADZ",
+      "value": 23,
+      "summary": "The analysis bar line load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_LINE_MOMENTX",
+      "value": 24,
+      "summary": "The analysis bar line moment load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_LINE_MOMENTY",
+      "value": 25,
+      "summary": "The analysis bar line moment load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_LINE_MOMENTZ",
+      "value": 26,
+      "summary": "The analysis bar line moment load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_POINT_LOADX",
+      "value": 27,
+      "summary": "The analysis bar point load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_POINT_LOADY",
+      "value": 28,
+      "summary": "The analysis bar point load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_POINT_LOADZ",
+      "value": 29,
+      "summary": "The analysis bar point load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_POINT_MOMENTX",
+      "value": 30,
+      "summary": "The analysis bar point moment load in the X direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_POINT_MOMENTY",
+      "value": 31,
+      "summary": "The analysis bar point moment load in the Y direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_POINT_MOMENTZ",
+      "value": 32,
+      "summary": "The analysis bar point moment load in the Z direction."
+    },
+    {
+      "name": "ANALYSIS_BAR_TEMPERATURE_LOAD",
+      "value": 33,
+      "summary": "The analysis bar temperature load."
+    }
+  ]
+}

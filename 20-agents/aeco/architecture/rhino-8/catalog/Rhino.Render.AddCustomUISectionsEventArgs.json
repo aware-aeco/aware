@@ -1,0 +1,31 @@
+{
+  "name": "AddCustomUISectionsEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Used as Rhino.Render Custom Events args.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_AddCustomUISectionsEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EventType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The type of the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_AddCustomUISectionsEventArgs_EventType.htm"
+    },
+    {
+      "name": "ExpandableContentUI",
+      "type": "ExpandableContentUI",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_AddCustomUISectionsEventArgs_ExpandableContentUI.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

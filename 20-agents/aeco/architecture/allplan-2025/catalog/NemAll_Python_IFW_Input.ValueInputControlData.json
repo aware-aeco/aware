@@ -1,0 +1,198 @@
+{
+  "name": "ValueInputControlData",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Data class with settings of the input control, that can be optionally displayed in the dialog line e.g. along with the XYZ coordinate input fields.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/",
+  "constructors": [
+    {
+      "name": "ValueInputControlData",
+      "signature": "ValueInputControlData() | ValueInputControlData( ctrlType: eValueInputControlType, bSetFocus: bool = True, bDisableCoord: bool = True, ) | ValueInputControlData( ctrlType: eValueInputControlType, minValue: float, maxValue: float, bSetFocus: bool, bDisableCoord: bool, ) | ValueInputControlData( ctrlType: eValueInputControlType, minValue: int, maxValue: int, bSetFocus: bool, bDisableCoord: bool, ) | ValueInputControlData( ctrlType: eValueInputControlType, initValue: float, minValue: float, maxValue: float, bSetFocus: bool, bDisableCoord: bool, ) | ValueInputControlData( ctrlType: eValueInputControlType, initValue: int, minValue: int, maxValue: int, bSetFocus: bool, bDisableCoord: bool, ) | ValueInputControlData( ctrlType: eValueInputControlType, initValue: float, bSetFocus: bool, bDisableCoord: bool, ) | ValueInputControlData( ctrlType: eValueInputControlType, initText: object, minTextLen: int, maxTextLen: int, bSetFocus: bool = True, bDisableCoord: bool = False, ) | ValueInputControlData(element: ValueInputControlData)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddShortcutControl",
+      "signature": "AddShortcutControl(ctrlType: eValueInputControlType)",
+      "summary": "Add a shortcut control to the coordinate input dialog",
+      "remarks": "Add a shortcut control to the coordinate input dialog",
+      "params": [
+        {
+          "name": "ctrlType",
+          "type": "eValueInputControlType",
+          "doc": "Type of the shortcut control",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.AddShortcutControl"
+    },
+    {
+      "name": "GetControlType",
+      "signature": "GetControlType() -\u003E eValueInputControlType",
+      "summary": "Get the type of the input control",
+      "remarks": "Get the type of the input control",
+      "params": [],
+      "returns": {
+        "type": "eValueInputControlType",
+        "doc": "Type of the input control"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetControlType"
+    },
+    {
+      "name": "GetInitText",
+      "signature": "GetInitText() -\u003E object",
+      "summary": "Get the init input text",
+      "remarks": "Get the init input text",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Init input text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetInitText"
+    },
+    {
+      "name": "GetInitValue",
+      "signature": "GetInitValue() -\u003E float",
+      "summary": "Get the init input value",
+      "remarks": "Get the init input value",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Init input value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetInitValue"
+    },
+    {
+      "name": "GetMaxTextLen",
+      "signature": "GetMaxTextLen() -\u003E int",
+      "summary": "Get the maximal length of the input text",
+      "remarks": "Get the maximal length of the input text",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Maximal length of the input text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetMaxTextLen"
+    },
+    {
+      "name": "GetMaxValue",
+      "signature": "GetMaxValue() -\u003E float",
+      "summary": "Get the maximal input value",
+      "remarks": "Get the maximal input value",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Maximal input value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetMaxValue"
+    },
+    {
+      "name": "GetMinTextLen",
+      "signature": "GetMinTextLen() -\u003E int",
+      "summary": "Get the minimal length of the input text",
+      "remarks": "Get the minimal length of the input text",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Minimal length of the input text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetMinTextLen"
+    },
+    {
+      "name": "GetMinValue",
+      "signature": "GetMinValue() -\u003E float",
+      "summary": "Get the minimal input value",
+      "remarks": "Get the minimal input value",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Minimal input value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetMinValue"
+    },
+    {
+      "name": "GetShortcutControlType",
+      "signature": "GetShortcutControlType() -\u003E eValueInputControlType",
+      "summary": "Get the type of the shortcut input control",
+      "remarks": "Get the type of the shortcut input control",
+      "params": [],
+      "returns": {
+        "type": "eValueInputControlType",
+        "doc": "Type of the shortcut input control"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.GetShortcutControlType"
+    },
+    {
+      "name": "IsDisableCoord",
+      "signature": "IsDisableCoord() -\u003E bool",
+      "summary": "Get the disable coordinate input state",
+      "remarks": "Get the disable coordinate input state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Disable the coordinate input in case of value input: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.IsDisableCoord"
+    },
+    {
+      "name": "IsEmptyControl",
+      "signature": "IsEmptyControl() -\u003E bool",
+      "summary": "Get the empty input control state",
+      "remarks": "Get the empty input control state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Set an empty value to the input control: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.IsEmptyControl"
+    },
+    {
+      "name": "IsSetFocus",
+      "signature": "IsSetFocus() -\u003E bool",
+      "summary": "Get the input focus state",
+      "remarks": "Get the input focus state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Set the input focus to the control: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.IsSetFocus"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

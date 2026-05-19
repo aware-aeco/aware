@@ -1,0 +1,73 @@
+{
+  "name": "DynamicFunction",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "It represents an unresolved function in the code. For any unresolved function, a DynamicFunction instance will be created and be added to DynamicFunctionTable. At runtime, callr will fetch the corresponding DynamicFunction instance from DynamicFunctionTable, and based on its name/argument number/class scope to resolves function dynamically.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DynamicFunctionTable.cs",
+  "constructors": [
+    {
+      "name": "DynamicFunction(string, int, int)",
+      "signature": "void DynamicFunction(string name, int argumentNumber, int classIndex)",
+      "summary": "DynamicFunction.DynamicFunction",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argumentNumber",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ArgumentNumber",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "DynamicFunction.ArgumentNumber",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    },
+    {
+      "name": "ClassIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "DynamicFunction.ClassIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    },
+    {
+      "name": "Index",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "DynamicFunction.Index",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DynamicFunction.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

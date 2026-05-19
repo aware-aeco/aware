@@ -1,0 +1,26 @@
+{
+  "name": "GH_GetterResult",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates typical getter results.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_GetterResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "accept",
+      "value": 0
+    },
+    {
+      "name": "success",
+      "value": 1
+    },
+    {
+      "name": "cancel",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "name": "Reflection",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "static-class",
+  "summary": "Type Reflection",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Reflection.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Reflect(string, System.Collections.Generic.IList\u003CProtoCore.DSASM.ClassNode\u003E, ProtoCore.Core)",
+      "signature": "ProtoCore.Mirror.LibraryMirror Reflect(string assemblyName, System.Collections.Generic.IList\u003CProtoCore.DSASM.ClassNode\u003E classNodes, ProtoCore.Core core)",
+      "summary": "Returns a library mirror that can be reflected upon The LibraryMirror is used for static reflection of classes etc.",
+      "params": [
+        {
+          "name": "assemblyName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classNodes",
+          "type": "System.Collections.Generic.IList\u003CProtoCore.DSASM.ClassNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Mirror.LibraryMirror",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Reflection.cs"
+    },
+    {
+      "name": "Reflect(string, int, ProtoCore.RuntimeCore, ProtoCore.Core)",
+      "signature": "ProtoCore.Mirror.RuntimeMirror Reflect(string varname, int blockDecl, ProtoCore.RuntimeCore runtimeCore, ProtoCore.Core core)",
+      "summary": "Returns a runtime mirror that can be reflected upon",
+      "params": [
+        {
+          "name": "varname",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "blockDecl",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Mirror.RuntimeMirror",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Reflection.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

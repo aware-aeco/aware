@@ -1,0 +1,67 @@
+{
+  "name": "BrepCurveList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to all the underlying curves in a Brep object.",
+  "interfaces": [
+    "IEnumerable\u003CCurve\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_BrepCurveList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public int Add(Curve curve)",
+      "summary": "Adds a curve",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A copy of the curve is added to this brep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Index that should be used to reference the geometry. -1 is returned if the input is not acceptable."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepCurveList_Add.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CCurve\u003E GetEnumerator()",
+      "summary": "Get an enumerator that visits all curves.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CCurve\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepCurveList_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of curves in this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepCurveList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Curve",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Curve at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepCurveList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

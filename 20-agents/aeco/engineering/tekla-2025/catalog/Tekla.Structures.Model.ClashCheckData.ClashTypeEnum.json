@@ -1,0 +1,59 @@
+{
+  "name": "ClashCheckData.ClashTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "An enumeration for the different clash types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ef3402da-08ed-9713-6f0e-fcd6e9bfe78f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CLASH_TYPE_INVALID",
+      "value": 0,
+      "summary": "The invalid clash type."
+    },
+    {
+      "name": "CLASH_TYPE_ISINSIDE",
+      "value": 1,
+      "summary": "One object is inside the other object."
+    },
+    {
+      "name": "CLASH_TYPE_EXACTMATCH",
+      "value": 2,
+      "summary": "The exact match clash type."
+    },
+    {
+      "name": "CLASH_TYPE_CLASH",
+      "value": 3,
+      "summary": "The unidentified clash type."
+    },
+    {
+      "name": "CLASH_TYPE_MINDISTANCE",
+      "value": 4,
+      "summary": "The minimum distance clash type."
+    },
+    {
+      "name": "CLASH_TYPE_FAILEDSOLID",
+      "value": 5,
+      "summary": "The failed solid clash type."
+    },
+    {
+      "name": "CLASH_TYPE_CUTTHROUGH",
+      "value": 6,
+      "summary": "The cut through clash type."
+    },
+    {
+      "name": "CLASH_TYPE_COMPLEXCLASH",
+      "value": 7,
+      "summary": "The complex clash type."
+    },
+    {
+      "name": "CLASH_TYPE_FAILEDTEST",
+      "value": 8,
+      "summary": "The failed test clash type."
+    }
+  ]
+}

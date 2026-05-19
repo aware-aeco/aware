@@ -1,0 +1,1021 @@
+{
+  "name": "Task",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Task class defines a single building site task. It may contain parts, assemblies or other tasks. Tasks may have a hierarchy between them i.e. there are other tasks as subtasks for a parent task. Tasks may also depend on each other, have resources assigned to them or have a single worktype.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c36a21f1-71b0-e3ab-8db5-2f10414db8bb",
+  "constructors": [
+    {
+      "name": "Task()",
+      "signature": "public Task()",
+      "summary": "Creates a new task instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5b21df13-43dd-acbc-1109-6f4f6fdb56cb"
+    },
+    {
+      "name": "Task(Identifier)",
+      "signature": "public Task(Identifier ID)",
+      "summary": "Creates a task instance with a known identifier. Select the task after the creation.",
+      "params": [
+        {
+          "name": "ID",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier of an existing task.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a496d9f8-e925-157c-63ea-42f58d1c51c0"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddObjectsToTask",
+      "signature": "public bool AddObjectsToTask(ArrayList ModelObjects)",
+      "summary": "Adds objects to the task.",
+      "params": [
+        {
+          "name": "ModelObjects",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list of model objects to be added to the task.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d2f3929b-a826-934f-1336-10d85ce949ef"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Object obj)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The model object to be used in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 if object Identifiers are the same, 1 if given object Identifier is bigger, -1 otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "public override bool Delete()",
+      "summary": "Deletes the task instance from the model. The identifier must be set.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7d60cc20-1b40-93f5-0ea1-fe82a172e1b8"
+    },
+    {
+      "name": "Equals",
+      "signature": "public bool Equals(ModelObject other)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to be used in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if object Identifiers are the same, false otherwise,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "public bool GetAllReportProperties(ArrayList stringNames, ArrayList doubleNames, ArrayList integerNames, ref Hashtable values)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [
+        {
+          "name": "stringNames",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the string properties.",
+          "optional": false
+        },
+        {
+          "name": "doubleNames",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the double properties.",
+          "optional": false
+        },
+        {
+          "name": "integerNames",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the integer properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table list that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllTasksOfSelectedObjects",
+      "signature": "public static ModelObjectEnumerator GetAllTasksOfSelectedObjects()",
+      "summary": "Returns an enumerator of all the tasks related to the selected objects.",
+      "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d1155055-20c0-fd93-5e98-c6a5a0511266"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "public bool GetAllUserProperties(ref Hashtable values)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "public virtual ModelObjectEnumerator GetChildren()",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "public CoordinateSystem GetCoordinateSystem()",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "returns": {
+        "type": "CoordinateSystem",
+        "doc": "The coordinate system for the given model object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "public string GetCustomObjectType()",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "Type name string, empty string if type is not set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDependencies",
+      "signature": "public ModelObjectEnumerator GetDependencies()",
+      "summary": "Returns an enumerator of all the task dependency objects where the task is involved.",
+      "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cf66446e-5bfc-df55-67d8-cb61054f9725"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "public bool GetDoubleReportProperties(ArrayList names, ref Hashtable values)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "public bool GetDoubleUserProperties(ref Hashtable values)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "public bool GetDynamicStringProperty(string name, ref string value)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String.",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "public BaseComponent GetFatherComponent()",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "returns": {
+        "type": "BaseComponent",
+        "doc": "A base component on success, otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetFathers",
+      "signature": "public ModelObjectEnumerator GetFathers()",
+      "summary": "Returns an enumerator of all the task type fathers for the task object.",
+      "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9bb56a6a-ceee-e866-6061-c893ff40df93"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "public ModelObjectEnumerator GetHierarchicObjects()",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "public bool GetIntegerReportProperties(ArrayList names, ref Hashtable values)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "public bool GetIntegerUserProperties(ref Hashtable values)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "public bool GetPhase(out Phase phase)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [
+        {
+          "name": "phase",
+          "type": "Tekla.Structures.Model.Phase.",
+          "doc": "The returned phase.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "public bool GetReportProperty(string name, ref double value)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "public bool GetReportProperty(string name, ref int value)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "public bool GetReportProperty(string name, ref string value)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "public bool GetStringReportProperties(ArrayList names, ref Hashtable values)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "public bool GetStringUserProperties(ref Hashtable values)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "public bool GetUserProperty(string name, ref double value)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "public bool GetUserProperty(string name, ref int value)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "public bool GetUserProperty(string name, ref string value)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "Insert",
+      "signature": "public override bool Insert()",
+      "summary": "Inserts the task instance in the model.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f920abce-e962-3943-fe36-d59462b35867"
+    },
+    {
+      "name": "Modify",
+      "signature": "public override bool Modify()",
+      "summary": "Modifies the task instance in the model. The identifier must be set.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0f954b0c-b15f-981d-fb0f-a181706c9e6b"
+    },
+    {
+      "name": "RemoveObjectsFromTask",
+      "signature": "public bool RemoveObjectsFromTask(ArrayList ModelObjects)",
+      "summary": "Removes objects from the task.",
+      "params": [
+        {
+          "name": "ModelObjects",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list of model objects to be removed from the task.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/61a841b1-43f7-9bc0-18ec-570766ee577e"
+    },
+    {
+      "name": "Select",
+      "signature": "public override bool Select()",
+      "summary": "Selects the task instance from the model. The identifier must be set.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f8aa6f7-2504-0b38-1a09-e0971e848586"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "public bool SetCustomObjectType(string type)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.String",
+          "doc": "The custom obect type name to set to the model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "public bool SetDynamicStringProperty(string name, string value)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "public bool SetLabel(string label)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The label to set to the model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "public bool SetPhase(Phase phase)",
+      "summary": "Sets the phase of the model object.",
+      "params": [
+        {
+          "name": "phase",
+          "type": "Tekla.Structures.Model.Phase",
+          "doc": "The new phase. A phase with this phase\u0027s number must exist in the database.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "public bool SetUserProperties(List\u003Cstring\u003E stringPropertyNames, List\u003Cstring\u003E stringValues, List\u003Cstring\u003E doublePropertyNames, List\u003Cdouble\u003E doubleValues, List\u003Cstring\u003E intPropertyNames, List\u003Cint\u003E intValues)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [
+        {
+          "name": "stringPropertyNames",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The names of the string properties to be set.",
+          "optional": false
+        },
+        {
+          "name": "stringValues",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The new values for the string properties.",
+          "optional": false
+        },
+        {
+          "name": "doublePropertyNames",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The names of the double properties to be set.",
+          "optional": false
+        },
+        {
+          "name": "doubleValues",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The new values for the double properties.",
+          "optional": false
+        },
+        {
+          "name": "intPropertyNames",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The names of the int properties to be set.",
+          "optional": false
+        },
+        {
+          "name": "intValues",
+          "type": "System.Collections.Generic.List\u003CInt32\u003E",
+          "doc": "The new values for the int properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "public bool SetUserProperty(string name, double value)",
+      "summary": "Sets a double property for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "public bool SetUserProperty(string name, int value)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "public bool SetUserProperty(string name, string value)",
+      "summary": "Sets a string property for the model object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActualEndDate",
+      "type": "DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "The actual end date of the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/14419bea-8298-9abb-521b-023af9ea7480"
+    },
+    {
+      "name": "ActualStartDate",
+      "type": "DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "The actual start date of the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0a7399f0-cc84-ff9e-a57f-556c67a3953f"
+    },
+    {
+      "name": "ActualWorkAmount",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The amount of work already used for the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5e10cbdc-acbc-c5fc-d2ad-623b3946298e"
+    },
+    {
+      "name": "Completeness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The percentage of the completeness of the task on the scale from 0 to 100.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0332e6e6-5e0d-816c-688f-3f3615d8a45e"
+    },
+    {
+      "name": "Critical",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The criticality of the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/55d2de14-dcd7-c170-b131-f5da0b6bafb4"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "A short textual description of the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9de9195-93df-762e-998d-569fb9313087"
+    },
+    {
+      "name": "Identifier",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "Local",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The locality indicates if the task was created in Tekla Structures and Task Manager or imported.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/95d1c980-6de4-19a5-b57d-c0b50c1790d5"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets latest time of the object was modified or created.",
+      "remarks": "The returned time is time of history revision which the object belongs to. For Sharing it is WriteOut time, for multiuser is save time. If history it not written then this method returns null.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5200e330-3999-b87a-d1d2-2264421a29a4"
+    },
+    {
+      "name": "PlannedEndDate",
+      "type": "DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "The planned end date of the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/06284441-0c16-9ce0-7692-af56f52b3b1d"
+    },
+    {
+      "name": "PlannedStartDate",
+      "type": "DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "The planned start date of the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2385d6bd-479d-681b-b891-af3bfe5930fa"
+    },
+    {
+      "name": "PlannedWorkAmount",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The amount of work planned to be used for the task.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db6fa0e6-706c-3bf1-cc0a-3643fe48e502"
+    },
+    {
+      "name": "Scenario",
+      "type": "HierarchicObject",
+      "getter": true,
+      "setter": true,
+      "summary": "The scenario which the task belongs to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3051bc22-a539-3b9f-d312-47ee5a16e544"
+    },
+    {
+      "name": "Url",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "A link to material or data related to the task. The link can be a hyperlink or a file system link.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b402f10-3bab-c2e5-77cb-bbf96301cd7e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

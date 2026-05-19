@@ -1,0 +1,68 @@
+{
+  "name": "TextFields.InstanceAttributeField",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.TextFields.InstanceAttributeField\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_TextFields_InstanceAttributeField.htm",
+  "constructors": [
+    {
+      "name": "TextFields.InstanceAttributeField",
+      "signature": "public InstanceAttributeField(string key, string prompt, string defaultValue)",
+      "summary": "Block attribute definition.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Attribute key",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt displayed by the UI when inserting a block",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "Default value used when inserting a block",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_InstanceAttributeField__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultValue",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Default value used when inserting a block",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_TextFields_InstanceAttributeField_DefaultValue.htm"
+    },
+    {
+      "name": "Key",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Attribute key",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_TextFields_InstanceAttributeField_Key.htm"
+    },
+    {
+      "name": "Prompt",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Prompt displayed by the UI when inserting a block",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_TextFields_InstanceAttributeField_Prompt.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

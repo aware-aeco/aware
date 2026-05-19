@@ -1,0 +1,70 @@
+openapi: 3.0.4
+info:
+  title: Test API
+  version: "1.0"
+  description: "A mini spec for parser exercise — has one class schema, one enum schema, and\
+    \ a small set of paths exercising the path-grouping logic by tag."
+servers:
+- url: /
+paths:
+  /api/1/items/{itemId}:
+    get:
+      operationId: GetItem
+      parameters:
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleModel'
+          description: OK
+      tags:
+      - Item
+  /api/1/items:
+    post:
+      operationId: CreateItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimpleModel'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleModel'
+          description: OK
+      tags:
+      - Item
+components:
+  schemas:
+    SimpleModel:
+      additionalProperties: false
+      properties:
+        id:
+          format: int32
+          type: integer
+        name:
+          nullable: true
+          type: string
+        color:
+          $ref: '#/components/schemas/Color'
+        isActive:
+          deprecated: true
+          readOnly: true
+          type: boolean
+      type: object
+    Color:
+      enum:
+      - red
+      - green
+      - blue
+      type: string

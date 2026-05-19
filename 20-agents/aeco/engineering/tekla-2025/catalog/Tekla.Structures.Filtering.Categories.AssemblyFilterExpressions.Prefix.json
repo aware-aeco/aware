@@ -1,0 +1,39 @@
+{
+  "name": "AssemblyFilterExpressions.Prefix",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Prefix class represents the prefix filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a900d3da-7086-4531-c865-19c3eb7bd7ae",
+  "constructors": [
+    {
+      "name": "AssemblyFilterExpressions.Prefix",
+      "signature": "public Prefix()",
+      "summary": "Initializes a new instance of the Prefix class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c92ea6c-8c92-87e9-967c-ae8de080568a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

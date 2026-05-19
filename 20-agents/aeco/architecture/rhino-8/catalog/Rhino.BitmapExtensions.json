@@ -1,0 +1,104 @@
+{
+  "name": "BitmapExtensions",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Rhino specific extension methods for System.Drawing.Bitmap",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_BitmapExtensions.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BitmapAsTextureFileReference",
+      "signature": "public static FileReference BitmapAsTextureFileReference(this Bitmap bitmap, uint crc)",
+      "summary": "Inserts bitmap into Rhino\u0027s texture manager and returns a FileReference.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "The bitmap which will be referenced by the FileReference.",
+          "optional": false
+        },
+        {
+          "name": "crc",
+          "type": "System.UInt32",
+          "doc": "The crc of the bitmap. This should be a unique number which changes if the contents of the bitmap changes. NOTE: if a different bitmap is provided using the same crc as a previous bitmap, then the previous bitmap will be overwritten in the texture manager and both previously returned FileReferences will reference the newly provided bitmap.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FileReference",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.BitmapExtensions.BitmapAsTextureFileReference(System.Drawing.Bitmap,System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_BitmapExtensions_BitmapAsTextureFileReference.htm"
+    },
+    {
+      "name": "ConvertToNormalMap",
+      "signature": "public static Bitmap ConvertToNormalMap(this Bitmap bitmap, bool bLossyCompressionSource, out bool bPositiveZComponent)",
+      "summary": "Use this function to convert a System.Drawing.Bitmap from a bump to a normal texture",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022bitmap\u0022/\u003E documentation for \u0022M:Rhino.BitmapExtensions.ConvertToNormalMap(System.Drawing.Bitmap,System.Boolean,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bLossyCompressionSource",
+          "type": "System.Boolean",
+          "doc": "True if the source of the bitmap is an image with lossy compression (e.g. jpg). False otherwise. The check will be less strict if the image can contain errors due to lossy compression.",
+          "optional": false
+        },
+        {
+          "name": "bPositiveZComponent",
+          "type": "System.Boolean",
+          "doc": "True if the image is a normal map with the z-component mapped to the range 0 .. \u002B1. False if the image is a normal map with the z-component mapped to the range -1 .. \u002B1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.BitmapExtensions.ConvertToNormalMap(System.Drawing.Bitmap,System.Boolean,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_BitmapExtensions_ConvertToNormalMap.htm"
+    },
+    {
+      "name": "IsNormalMap",
+      "signature": "public static bool IsNormalMap(this Bitmap bitmap, bool bLossyCompressionSource, out bool bPositiveZComponent)",
+      "summary": "Call this method to see if the DIB appears to be a normal map.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022bitmap\u0022/\u003E documentation for \u0022M:Rhino.BitmapExtensions.IsNormalMap(System.Drawing.Bitmap,System.Boolean,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bLossyCompressionSource",
+          "type": "System.Boolean",
+          "doc": "True if the source of the bitmap is an image with lossy compression (e.g. jpg). False otherwise. The check will be less strict if the image can contain errors due to lossy compression.",
+          "optional": false
+        },
+        {
+          "name": "bPositiveZComponent",
+          "type": "System.Boolean",
+          "doc": "True if the image is a normal map with the z-component mapped to the range 0 .. \u002B1. False if the image is a normal map with the z-component mapped to the range -1 .. \u002B1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the bitmap appears to be a normal map. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_BitmapExtensions_IsNormalMap.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

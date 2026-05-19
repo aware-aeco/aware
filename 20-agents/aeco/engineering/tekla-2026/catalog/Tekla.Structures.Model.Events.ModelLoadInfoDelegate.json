@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelLoadInfoDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for extended model load.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/aecd1bab-ce8a-ec50-1752-8338234d5baa",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelLoadInfoDelegate( string ModelLoadInfo )"
+}

@@ -1,0 +1,248 @@
+{
+  "name": "IPathManager",
+  "namespace": "Dynamo.Interfaces",
+  "kind": "interface",
+  "summary": "This interface provides the most common paths. E.g. core directory, package directory etc.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddResolutionPath(string)",
+      "signature": "void AddResolutionPath(string path)",
+      "summary": "Call this method to add additional path for consideration when path resolution take place.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "The full path to be considered when PathManager attempts to resolve a file path. If this argument does not represent a valid directory path, this method throws an exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "ResolveDocumentPath(ref string)",
+      "signature": "bool ResolveDocumentPath(ref string document)",
+      "summary": "Given an initial RTF document file name, this method returns the absolute path of the file, if one exists.",
+      "params": [
+        {
+          "name": "document",
+          "type": "ref string",
+          "doc": "The name of the RTF file. This argument cannot be null or empty.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true if the requested document can be located, or false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "ResolveLibraryPath(ref string)",
+      "signature": "bool ResolveLibraryPath(ref string library)",
+      "summary": "Given an initial file path with the file name, resolve the full path to the target file.",
+      "params": [
+        {
+          "name": "library",
+          "type": "ref string",
+          "doc": "The initial library file path. This argument can optionally include the full path with a target file name. If a full path is given and it represents an invalid file path, the file name will be searched for in additional resolution paths.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true if the requested file can be located, or false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackupDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The directory where the automatically saved files will be stored.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "CommonDataDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The local directory that contains common data files among users.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "CommonDefinitions",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The local directory that contains custom nodes created by all users.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "DefaultPackagesDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The default directory for saving packages downloaded through the package manager. This directory is specific to the current user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "DefaultUserDefinitions",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The default directory that contains custom nodes created by the user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "DefinitionDirectories",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Directories from where custom nodes are to be loaded. The implementor of this interface method should always guarantee that a non-empty list is returned, and that the first entry represents the default custom node directory. Custom nodes created are stored in the default directory, which is specific to the current user. Changes to custom nodes may or may not be saved to their current location depending on write access.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "DynamoCoreDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The directory in which DynamoCore.dll is guaranteed to be found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "ExtensionsDirectories",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The directories, which contains ExtensionDefinition .xml files",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "HostApplicationDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The directory in which the host application such as DynamoRevit or DynamoStudio could be found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "LogDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The local directory where log files are generated. This directory is specific to the current user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "MajorFileVersion",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Major version of assembly file",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "MinorFileVersion",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Minor version of assembly file",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "NodeDirectories",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Folders in which node assemblies can be located.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "PackagesDirectories",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Directories from where packages are to be loaded. The implementor of this interface method should always guarantee that a non-empty list is returned, and that the first entry represents the default package directory. Packages downloaded through package manager are stored in the default package directory, which is specific to the current user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "PathResolver",
+      "type": "Dynamo.Interfaces.IPathResolver",
+      "getter": true,
+      "setter": false,
+      "summary": "Integration specific PathResolver",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "PreferenceFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Full path to the preference xml file. This setting file is specific to the current user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "PreloadedLibraries",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A list of node assembly names to be preloaded with Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "PythonTemplateFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Full path to the python template py file. This setting file is specific to the current user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "SamplesDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The root directory where all sample files are stored. This directory is common to all users on the machine.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "TemplatesDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The root directory where all template files are stored",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "UserDataDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The local directory that contains user specific data files.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "ViewExtensionsDirectories",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The directories, which contains ViewExtensionDefinition.xml files",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

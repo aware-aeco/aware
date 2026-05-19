@@ -1,0 +1,49 @@
+{
+  "name": "PolymeshEnumerator",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The PolymeshEnumerator class is used to enumerate the polymesh of a pour\u0027s merged faces.",
+  "base": "System.Object",
+  "interfaces": [
+    "IEnumerator"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/03636ab7-e0d2-62e7-0be0-0ec9962228c9",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82dc58b4-4e6b-925a-725d-545c3b19448f"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0b194b30-9327-5016-a078-7e7ca52171c2"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current polymesh.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/16dab8e1-71e3-b15b-6bd7-ec33a96e454e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

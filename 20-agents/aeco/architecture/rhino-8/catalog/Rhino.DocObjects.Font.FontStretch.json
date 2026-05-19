@@ -1,0 +1,56 @@
+{
+  "name": "Font.FontStretch",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Horizontal expansion or contraction of font",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Font_FontStretch.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not set."
+    },
+    {
+      "name": "Ultracondensed",
+      "value": 1
+    },
+    {
+      "name": "Extracondensed",
+      "value": 2
+    },
+    {
+      "name": "Condensed",
+      "value": 3
+    },
+    {
+      "name": "Semicondensed",
+      "value": 4
+    },
+    {
+      "name": "Medium",
+      "value": 5,
+      "summary": "Default font stretch."
+    },
+    {
+      "name": "Semiexpanded",
+      "value": 6
+    },
+    {
+      "name": "Expanded",
+      "value": 7
+    },
+    {
+      "name": "Extraexpanded",
+      "value": 8
+    },
+    {
+      "name": "Ultraexpanded",
+      "value": 9
+    }
+  ]
+}

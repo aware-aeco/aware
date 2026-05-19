@@ -1,0 +1,102 @@
+{
+  "name": "ContentFactory",
+  "namespace": "Rhino.Render.DataSources",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DataSources.ContentFactory\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_DataSources_ContentFactory.htm",
+  "constructors": [
+    {
+      "name": "ContentFactory",
+      "signature": "public ContentFactory(IntPtr pRdkContentFactory)",
+      "summary": "Initializes a new instance of the ContentFactory class",
+      "params": [
+        {
+          "name": "pRdkContentFactory",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRdkContentFactory\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactory.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactory__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ContentTypeId",
+      "signature": "public Guid ContentTypeId()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactory.ContentTypeId\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactory_ContentTypeId.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the ContentFactory",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactory_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactory_Finalize.htm"
+    },
+    {
+      "name": "Kind",
+      "signature": "public RenderContentKind Kind()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "RenderContentKind",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactory.Kind\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactory_Kind.htm"
+    },
+    {
+      "name": "NewContent",
+      "signature": "public RenderContent NewContent()",
+      "summary": "New Content returns a new content, which is Initialized with the Initialize() function. The content should be unitilized after use with the Unitialize function.",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactory.NewContent\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactory_NewContent.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_DataSources_ContentFactory_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

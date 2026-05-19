@@ -1,0 +1,148 @@
+{
+  "name": "BuildingElementStringTable",
+  "namespace": "BuildingElementStringTable",
+  "kind": "class",
+  "summary": "Definition of class StringTable",
+  "base": "BuildingElementStringTableBase",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementStringTable/",
+  "constructors": [
+    {
+      "name": "BuildingElementStringTable",
+      "signature": "BuildingElementStringTable(path: str, numeric: bool, lang: str, force_lang_name: bool = False)",
+      "summary": "Initialization of class StringTable",
+      "remarks": "Initialization of class StringTable",
+      "params": [
+        {
+          "name": "path",
+          "type": "str",
+          "doc": "path of according .py file. The file name will be set internally to _xyz.xml",
+          "optional": false
+        },
+        {
+          "name": "numeric",
+          "type": "bool",
+          "doc": "the string table will be created only from numeric (123..) text ids or not numeric text ids (e_THE_VALUE)",
+          "optional": false
+        },
+        {
+          "name": "lang",
+          "type": "str",
+          "doc": "language shortcut",
+          "optional": false
+        },
+        {
+          "name": "force_lang_name",
+          "type": "bool",
+          "doc": "force global table with language specific key (useful when working with more language mutations at once)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementStringTable/#BuildingElementStringTable.BuildingElementStringTable.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_entry",
+      "signature": "add_entry(val_number: str, val_str: str) -\u003E bool",
+      "summary": "Creates an string table entry",
+      "remarks": "Creates an string table entry",
+      "params": [
+        {
+          "name": "val_number",
+          "type": "str",
+          "doc": "index number in the list",
+          "optional": false
+        },
+        {
+          "name": "val_str",
+          "type": "str",
+          "doc": "string value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True for success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementStringTable/#BuildingElementStringTable.BuildingElementStringTable.add_entry"
+    },
+    {
+      "name": "get_entry",
+      "signature": "get_entry(str_val_number: Union[str, int]) -\u003E Tuple[str, bool]",
+      "summary": "Returns a string table entry",
+      "remarks": "Returns a string table entry",
+      "params": [
+        {
+          "name": "str_val_number",
+          "type": "Union[str, int]",
+          "doc": "value or number of the string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple[str, bool]",
+        "doc": "(string entry, True/False for success)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementStringTable/#BuildingElementStringTable.BuildingElementStringTable.get_entry"
+    },
+    {
+      "name": "get_key",
+      "signature": "get_key(entry: str) -\u003E Optional[str]",
+      "summary": "Returns the key for a string table entry",
+      "remarks": "Returns the key for a string table entry",
+      "params": [
+        {
+          "name": "entry",
+          "type": "str",
+          "doc": "entry to search corresponding key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[str]",
+        "doc": "Key, None if not found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementStringTable/#BuildingElementStringTable.BuildingElementStringTable.get_key"
+    },
+    {
+      "name": "get_string",
+      "signature": "get_string(string_id: str, default_string: str) -\u003E str",
+      "summary": "Get a string from the table",
+      "remarks": "Get a string from the table",
+      "params": [
+        {
+          "name": "string_id",
+          "type": "str",
+          "doc": "String ID (if empty, take it from {...} part of the string",
+          "optional": false
+        },
+        {
+          "name": "default_string",
+          "type": "str",
+          "doc": "Default string in case of no existing ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "String from the ID if exist, default string otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementStringTable/#BuildingElementStringTable.BuildingElementStringTable.get_string"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

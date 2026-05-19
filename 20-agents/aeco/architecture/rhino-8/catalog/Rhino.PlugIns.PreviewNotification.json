@@ -1,0 +1,31 @@
+{
+  "name": "PreviewNotification",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.PlugIns.PreviewNotification\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_PreviewNotification.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "NotifyIntermediateUpdate",
+      "signature": "public void NotifyIntermediateUpdate(RenderWindow rw)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rw",
+          "type": "Rhino.Render.RenderWindow",
+          "doc": "[Missing \u003Cparam name=\u0022rw\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PreviewNotification.NotifyIntermediateUpdate(Rhino.Render.RenderWindow)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PreviewNotification_NotifyIntermediateUpdate.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

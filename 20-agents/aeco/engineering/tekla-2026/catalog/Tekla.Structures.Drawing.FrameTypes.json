@@ -1,0 +1,59 @@
+{
+  "name": "FrameTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The available frame styles around the object.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a054014a-abc5-d549-300d-00be30967f5e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No frame."
+    },
+    {
+      "name": "Rectangular",
+      "value": 1,
+      "summary": "The rectangular frame."
+    },
+    {
+      "name": "Line",
+      "value": 2,
+      "summary": "A line under the object."
+    },
+    {
+      "name": "Round",
+      "value": 3,
+      "summary": "The frame with rounded ends."
+    },
+    {
+      "name": "Circle",
+      "value": 4,
+      "summary": "The circular frame."
+    },
+    {
+      "name": "Diamond",
+      "value": 5,
+      "summary": "The frame looking like a diamond."
+    },
+    {
+      "name": "Hexagon",
+      "value": 6,
+      "summary": "The hexagonally shaped frame."
+    },
+    {
+      "name": "Triangle",
+      "value": 7,
+      "summary": "The triangular frame."
+    },
+    {
+      "name": "Sharpened",
+      "value": 8,
+      "summary": "The frame with sharpened ends."
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "name": "LcOpKernelProgressImpl",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpKernelProgressImpl class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetProgress",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKernelProgress GetProgress()",
+      "summary": "GetProgress method of LcOpKernelProgressImpl.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelProgress",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.GetProgress"
+    },
+    {
+      "name": "ReportErrorImpl",
+      "signature": "bool ReportErrorImpl(int error_code, string message, bool append_filename)",
+      "summary": "ReportErrorImpl method of LcOpKernelProgressImpl.",
+      "params": [
+        {
+          "name": "error_code",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "append_filename",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.ReportErrorImpl%28System.Int32%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ReportProgressImpl",
+      "signature": "bool ReportProgressImpl(double total_frac, double sub_frac)",
+      "summary": "ReportProgressImpl method of LcOpKernelProgressImpl.",
+      "params": [
+        {
+          "name": "total_frac",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sub_frac",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.ReportProgressImpl%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpKernelProgressImpl.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpKernelProgressImpl.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "MessageImpl",
+      "signature": "void MessageImpl(string message)",
+      "summary": "MessageImpl method of LcOpKernelProgressImpl.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.MessageImpl%28System.String%29"
+    },
+    {
+      "name": "SetProgress",
+      "signature": "void SetProgress(Autodesk.Navisworks.Api.Interop.LcOpKernelProgress progress)",
+      "summary": "SetProgress method of LcOpKernelProgressImpl.",
+      "params": [
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelProgress",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.SetProgress%28Autodesk.Navisworks.Api.Interop.LcOpKernelProgress%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpKernelProgressImpl.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpKernelProgressImpl.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

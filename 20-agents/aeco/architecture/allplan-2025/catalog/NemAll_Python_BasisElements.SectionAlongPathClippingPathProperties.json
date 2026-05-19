@@ -1,0 +1,168 @@
+{
+  "name": "SectionAlongPathClippingPathProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Clipping path properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathClippingPathProperties",
+      "signature": "SectionAlongPathClippingPathProperties(bInitFromSTW: bool = False) | SectionAlongPathClippingPathProperties(B: SectionAlongPathClippingPathProperties)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetClippingPathGeometryTolerance",
+      "signature": "GetClippingPathGeometryTolerance() -\u003E float",
+      "summary": "Access tolerances",
+      "remarks": "Access tolerances",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "ClippingPathGeometryTolerance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.GetClippingPathGeometryTolerance"
+    },
+    {
+      "name": "GetPathLength",
+      "signature": "GetPathLength() -\u003E float",
+      "summary": "Get length of path",
+      "remarks": "Get length of path",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.GetPathLength"
+    },
+    {
+      "name": "GetResultPathLength",
+      "signature": "GetResultPathLength() -\u003E float",
+      "summary": "Get length of the part of path limited by EndCoord and StartCoord",
+      "remarks": "Get length of the part of path limited by EndCoord and StartCoord",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.GetResultPathLength"
+    },
+    {
+      "name": "RestrictEmptySectionId",
+      "signature": "RestrictEmptySectionId()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.RestrictEmptySectionId"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BottomLevel",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the BottomLevel for section Vertical or Horizontal_From_Top",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.BottomLevel"
+    },
+    {
+      "name": "ClippingPathViewProperties",
+      "type": "SectionAlongPathClippingPathViewProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the SectionAlongPathClippingPathViewProperties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.ClippingPathViewProperties"
+    },
+    {
+      "name": "EndCoord",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the EndCoord value",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.EndCoord"
+    },
+    {
+      "name": "IsChangeViewDirectionOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the IsChangeViewDirectionOn status : ON/OFF",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.IsChangeViewDirectionOn"
+    },
+    {
+      "name": "IsClippingLineOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is clipping path line on",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.IsClippingLineOn"
+    },
+    {
+      "name": "IsHeightFromElementOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the IsHeightFromElementOn status : ON/OFF",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.IsHeightFromElementOn"
+    },
+    {
+      "name": "SectionIdentifier",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section identifier",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.SectionIdentifier"
+    },
+    {
+      "name": "StartCoord",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the StartCoord value",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.StartCoord"
+    },
+    {
+      "name": "StationingEnd",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end stationing",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.StationingEnd"
+    },
+    {
+      "name": "StationingStart",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start stationing",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.StationingStart"
+    },
+    {
+      "name": "TopLevel",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the TopLevel for section Vertical or Horizontal_From_Bottom",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.TopLevel"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

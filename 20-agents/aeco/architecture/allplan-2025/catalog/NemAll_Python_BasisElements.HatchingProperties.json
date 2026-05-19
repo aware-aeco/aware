@@ -1,0 +1,167 @@
+{
+  "name": "HatchingProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of the hatching",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/",
+  "constructors": [
+    {
+      "name": "HatchingProperties",
+      "signature": "HatchingProperties() | HatchingProperties(element: HatchingProperties)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetBackgroundColorBGR",
+      "signature": "SetBackgroundColorBGR(value: int)",
+      "summary": "Set the background color",
+      "remarks": "Set the background color",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Color value as BGR",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.SetBackgroundColorBGR"
+    },
+    {
+      "name": "SetBackgroundColorIRGB",
+      "signature": "SetBackgroundColorIRGB(value: int)",
+      "summary": "Set the background color",
+      "remarks": "Set the background color",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Color value as IRGB",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.SetBackgroundColorIRGB"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: HatchingProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "HatchingProperties",
+          "doc": "HatchingProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundColor",
+      "type": "ARGB",
+      "getter": true,
+      "setter": true,
+      "summary": "Background color. Relevant, when UseBackgroundColor is set to True.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.BackgroundColor"
+    },
+    {
+      "name": "DirectionToReferenceLine",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The edge index of the outline polyline to align the hatching to.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.DirectionToReferenceLine"
+    },
+    {
+      "name": "ExistAlignment",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to align the hatching to a certain edge of the outline polyline. When set to True, the index of the edge is to be specified in DirectionToReferenceLine.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.ExistAlignment"
+    },
+    {
+      "name": "HatchID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "ID of the hatch",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.HatchID"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the hatch is to be scaled according to drawing file scale",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.IsScaleDependent"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "the point of origin, when property UseReferencePoint is set to True",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.ReferencePoint"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Rotation angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.RotationAngle"
+    },
+    {
+      "name": "UseBackgroundColor",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to use background color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.UseBackgroundColor"
+    },
+    {
+      "name": "UseReferencePoint",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to use a specific point as the origin of the hatching. When set to False, the origin is (0,0). When set to True, the point is to be specified in the property ReferencePoint.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.UseReferencePoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

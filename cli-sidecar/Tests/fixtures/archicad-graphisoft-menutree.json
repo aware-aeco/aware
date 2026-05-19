@@ -1,0 +1,31 @@
+{
+	"defaultitem" : "Introduction",
+	"menuitems" : [
+		{
+			"name" : "Introduction",
+			"htmldocumentation" : "introduction.html"
+		},
+		{
+			"name" : "AddOn Commands",
+			"menuitems" : [
+				{
+					"name" : "ExecuteAddOnCommand",
+					"commanddocumentation" : "API.ExecuteAddOnCommand.json"
+				},
+				{
+					"name" : "IsAddOnCommandAvailable",
+					"commanddocumentation" : "API.IsAddOnCommandAvailable.json"
+				}
+			]
+		},
+		{
+			"name" : "Attribute Commands",
+			"menuitems" : [
+				{
+					"name" : "CreateAttributeFolders",
+					"commanddocumentation" : "API.CreateAttributeFolders.json"
+				}
+			]
+		}
+	]
+}

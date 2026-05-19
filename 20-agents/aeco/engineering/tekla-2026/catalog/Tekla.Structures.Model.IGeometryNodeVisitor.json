@@ -1,0 +1,62 @@
+{
+  "name": "IGeometryNodeVisitor",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "The IGeometryNodeVisitor interface is implemented by classes visiting geometry nodes",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/526199de-8d7e-02d0-0e3a-2a1a0793cf8d",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Visit(SpiralNode)",
+      "signature": "void Visit(SpiralNode node)",
+      "summary": "Visits a node that is an instance of HelixNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "SpiralNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7043fa01-8442-e7a4-7c63-b3486b1ff65f"
+    },
+    {
+      "name": "Visit(CylindricalSurfaceNode)",
+      "signature": "void Visit(CylindricalSurfaceNode node)",
+      "summary": "Visits a node that is an instance of CylindricalSurfaceNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "Tekla.Structures.Model.CylindricalSurfaceNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3958d1f8-7497-672d-80c9-0bbf60724b1c"
+    },
+    {
+      "name": "Visit(PolygonNode)",
+      "signature": "void Visit(PolygonNode node)",
+      "summary": "Visits a node that is an instance of PolygonNode node",
+      "params": [
+        {
+          "name": "node",
+          "type": "Tekla.Structures.Model.PolygonNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/458e978f-9b0c-1bfd-0807-acbddaa02233"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -14,7 +14,9 @@ fn describes_tekla_agent() {
         .success()
         .stdout(predicate::str::contains("agent:"))
         .stdout(predicate::str::contains("tekla"))
-        .stdout(predicate::str::contains("2025.0.1"))
+        // The curated tekla manifest uses the version-agnostic `2025+` shorthand for
+        // sdk-target (a structured form will land in a later hardening pass).
+        .stdout(predicate::str::contains("2025+"))
         .stdout(predicate::str::contains("stateful:"))
         .stdout(predicate::str::contains("watch"))
         .stdout(predicate::str::contains("insert"))
@@ -49,6 +51,9 @@ fn json_describe_returns_envelope() {
     let v: serde_json::Value = serde_json::from_slice(&output).unwrap();
     assert_eq!(v["ok"], true);
     assert_eq!(v["data"]["agent"], "tekla");
-    assert_eq!(v["data"]["skill_count"], 31);
-    assert_eq!(v["data"]["command_count"], 20);
+    // v0.29 added 2 runtime skills + 2 runtime verbs to the curated tekla manifest
+    // (33 skills total, 22 commands). The v0.28 baseline was 31 / 20. The agent.rs unit
+    // tests have the same expectation — see `cli/src/manifest/agent.rs`.
+    assert_eq!(v["data"]["skill_count"], 33);
+    assert_eq!(v["data"]["command_count"], 22);
 }

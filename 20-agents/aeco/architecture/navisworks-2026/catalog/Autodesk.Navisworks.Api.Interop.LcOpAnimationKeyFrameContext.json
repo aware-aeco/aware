@@ -1,0 +1,170 @@
+{
+  "name": "LcOpAnimationKeyFrameContext",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAnimationKeyFrameContext class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext",
+  "constructors": [
+    {
+      "name": "LcOpAnimationKeyFrameContext()",
+      "signature": "LcOpAnimationKeyFrameContext()",
+      "summary": "Constructs a new LcOpAnimationKeyFrameContext.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetParts",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts GetParts()",
+      "summary": "GetParts method of LcOpAnimationKeyFrameContext.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.GetParts"
+    },
+    {
+      "name": "GetToolTransform",
+      "signature": "Autodesk.Navisworks.Api.Transform3D GetToolTransform()",
+      "summary": "GetToolTransform method of LcOpAnimationKeyFrameContext.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.GetToolTransform"
+    },
+    {
+      "name": "GetHasTool",
+      "signature": "bool GetHasTool()",
+      "summary": "GetHasTool method of LcOpAnimationKeyFrameContext.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.GetHasTool"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAnimationKeyFrameContext.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAnimationKeyFrameContext.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SetHasTool",
+      "signature": "void SetHasTool(bool value)",
+      "summary": "SetHasTool method of LcOpAnimationKeyFrameContext.",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.SetHasTool%28System.Boolean%29"
+    },
+    {
+      "name": "SetParts",
+      "signature": "void SetParts(Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts value)",
+      "summary": "SetParts method of LcOpAnimationKeyFrameContext.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.SetParts%28Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts%29"
+    },
+    {
+      "name": "SetToolTransform",
+      "signature": "void SetToolTransform(Autodesk.Navisworks.Api.Transform3D value)",
+      "summary": "SetToolTransform method of LcOpAnimationKeyFrameContext.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.SetToolTransform%28Autodesk.Navisworks.Api.Transform3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAnimationKeyFrameContext.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

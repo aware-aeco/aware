@@ -1,0 +1,47 @@
+{
+  "name": "Functions",
+  "namespace": "TestHelper.UnitTestRunner",
+  "kind": "static-class",
+  "summary": "Module-level functions of TestHelper.UnitTestRunner",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestRunner/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "execute_tests",
+      "signature": "execute_tests( unit_test_fct: Callable, module_name: str, load_resources: bool ) -\u003E bool",
+      "summary": "run the unit tests",
+      "remarks": "run the unit tests",
+      "params": [
+        {
+          "name": "unit_test_fct",
+          "type": "Callable",
+          "doc": "unit test function",
+          "optional": false
+        },
+        {
+          "name": "module_name",
+          "type": "str",
+          "doc": "module name",
+          "optional": false
+        },
+        {
+          "name": "load_resources",
+          "type": "bool",
+          "doc": "load the resources state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "test result state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestRunner/#TestHelper.UnitTestRunner.execute_tests"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,56 @@
+{
+  "name": "UnitService",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Unit service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/UnitService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConvertToMM",
+      "signature": "ConvertToMM(lengthString: str) -\u003E tuple",
+      "summary": "Convert a value string to mm",
+      "remarks": "Convert a value string to mm",
+      "params": [
+        {
+          "name": "lengthString",
+          "type": "str",
+          "doc": "Length as string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Length in mm"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/UnitService/#NemAll_Python_AllplanSettings.UnitService.ConvertToMM"
+    },
+    {
+      "name": "ToLengthUnitString",
+      "signature": "ToLengthUnitString(length: float) -\u003E str",
+      "summary": "Convert a length(mm) to a string by the current length unit",
+      "remarks": "Convert a length(mm) to a string by the current length unit",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length in mm",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "String with the value in the current length unit"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/UnitService/#NemAll_Python_AllplanSettings.UnitService.ToLengthUnitString"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

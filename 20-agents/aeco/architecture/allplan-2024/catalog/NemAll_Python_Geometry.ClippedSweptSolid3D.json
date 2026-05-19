@@ -1,0 +1,257 @@
+{
+  "name": "ClippedSweptSolid3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for solid created by extrusion of area with borders of a plane at the bottom and a plane at the top in world z - axis direction",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/",
+  "constructors": [
+    {
+      "name": "ClippedSweptSolid3D",
+      "signature": "ClippedSweptSolid3D() | ClippedSweptSolid3D(area, bottom, top) | ClippedSweptSolid3D(solid) | ClippedSweptSolid3D(refPoint, solid)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBottomPlane",
+      "signature": "GetBottomPlane()",
+      "summary": "Get bottom clipping plane",
+      "remarks": "Get bottom clipping plane",
+      "params": [],
+      "returns": {
+        "type": "Plane3D",
+        "doc": "Plane3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.GetBottomPlane"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint()",
+      "summary": "Get the reference point",
+      "remarks": "Get the reference point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.GetRefPoint"
+    },
+    {
+      "name": "GetSweptArea",
+      "signature": "GetSweptArea()",
+      "summary": "Get Swept area",
+      "remarks": "Get Swept area",
+      "params": [],
+      "returns": {
+        "type": "PolygonalArea2D",
+        "doc": "PolygonalArea2D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.GetSweptArea"
+    },
+    {
+      "name": "GetTopPlane",
+      "signature": "GetTopPlane()",
+      "summary": "Get top clipping plane",
+      "remarks": "Get top clipping plane",
+      "params": [],
+      "returns": {
+        "type": "Plane3D",
+        "doc": "Plane3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.GetTopPlane"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Check if the Solid is valid",
+      "remarks": "Check if the Solid is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if it is a valid solid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.IsValid"
+    },
+    {
+      "name": "SetBottomPlane",
+      "signature": "SetBottomPlane(plane)",
+      "summary": "Set bottom clipping plane",
+      "remarks": "Set bottom clipping plane",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Plane3D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.SetBottomPlane"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint)",
+      "summary": "Set reference point",
+      "remarks": "Set reference point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "New reference point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.SetRefPoint"
+    },
+    {
+      "name": "SetSweptArea",
+      "signature": "SetSweptArea(area)",
+      "summary": "Set Swept area",
+      "remarks": "Set Swept area",
+      "params": [
+        {
+          "name": "area",
+          "type": "PolygonalArea2D",
+          "doc": "PolygonalArea2D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.SetSweptArea"
+    },
+    {
+      "name": "SetTopPlane",
+      "signature": "SetTopPlane(plane)",
+      "summary": "Set top clipping plane",
+      "remarks": "Set top clipping plane",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Plane3D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.SetTopPlane"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(clippedSweptSolid)",
+      "summary": "Comparison of clippedSweptSolids without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of clippedSweptSolids without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "clippedSweptSolid",
+          "type": "ClippedSweptSolid3D",
+          "doc": "Compared clippedSweptSolid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when clippedSweptSolids are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.__eq__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix)",
+      "summary": "Matrix transformation",
+      "remarks": "Matrix transformation",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "Transformation 3D matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Transformed ClippedSweptSolid3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BottomPlane",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the bottom plane as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.BottomPlane"
+    },
+    {
+      "name": "RefPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the reference point as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.RefPoint"
+    },
+    {
+      "name": "SweptArea",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the swept area as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.SweptArea"
+    },
+    {
+      "name": "TopPlane",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the top plane as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.TopPlane"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

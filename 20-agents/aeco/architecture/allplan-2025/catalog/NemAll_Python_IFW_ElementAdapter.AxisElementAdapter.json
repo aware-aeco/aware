@@ -1,0 +1,153 @@
+{
+  "name": "AxisElementAdapter",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "Implementation of the axis element adapter",
+  "base": "BaseElementAdapter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/",
+  "constructors": [
+    {
+      "name": "AxisElementAdapter",
+      "signature": "AxisElementAdapter() | AxisElementAdapter(element: BaseElementAdapter) | AxisElementAdapter(element: AxisElementAdapter)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAxis",
+      "signature": "GetAxis() -\u003E Any",
+      "summary": "Get wall axis",
+      "remarks": "Get wall axis",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "IGeometry2D arbitrary curve pointer"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetAxis"
+    },
+    {
+      "name": "GetGeometry",
+      "signature": "GetGeometry() -\u003E Any",
+      "summary": "Get elements geometry",
+      "remarks": "Get elements geometry",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "Geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetGeometry"
+    },
+    {
+      "name": "GetOffset",
+      "signature": "GetOffset() -\u003E float",
+      "summary": "Get the element offset from the axis",
+      "remarks": "Get the element offset from the axis",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Element offset from the axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetOffset"
+    },
+    {
+      "name": "GetThickness",
+      "signature": "GetThickness() -\u003E float",
+      "summary": "Get the element thickness",
+      "remarks": "Get the element thickness",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Element thickness"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetThickness"
+    },
+    {
+      "name": "GetTierThickness",
+      "signature": "GetTierThickness() -\u003E VecDoubleList",
+      "summary": "Get the thickness of the tiers",
+      "remarks": "Get the thickness of the tiers",
+      "params": [],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "Thickness of the tiers"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetTierThickness"
+    },
+    {
+      "name": "GetTiersCount",
+      "signature": "GetTiersCount() -\u003E int",
+      "summary": "Get the amount of tiers",
+      "remarks": "Get the amount of tiers",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "number of tiers of this axis element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.GetTiersCount"
+    },
+    {
+      "name": "HasAxis",
+      "signature": "HasAxis() -\u003E bool",
+      "summary": "Check, if this element has an axis",
+      "remarks": "Check, if this element has an axis",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if axis element has an axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.HasAxis"
+    },
+    {
+      "name": "IsElementParallelToAxis",
+      "signature": "IsElementParallelToAxis() -\u003E bool",
+      "summary": "Is element direction parallel to axis direction",
+      "remarks": "Is element direction parallel to axis direction",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Is element direction parallel to axis direction state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.IsElementParallelToAxis"
+    },
+    {
+      "name": "IsNull",
+      "signature": "IsNull() -\u003E bool",
+      "summary": "Check for an empty element",
+      "remarks": "Check for an empty element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is empty: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.IsNull"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

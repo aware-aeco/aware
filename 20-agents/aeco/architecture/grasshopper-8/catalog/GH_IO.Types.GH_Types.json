@@ -1,0 +1,164 @@
+{
+  "name": "GH_Types",
+  "namespace": "GH_IO.Types",
+  "kind": "enum",
+  "summary": "Contains flags for all data types currently supported by GH_IO.dll",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Types_GH_Types.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "unset",
+      "value": 0,
+      "summary": "Represents an unset type. GH_Items with this type will throw exceptions during serialization."
+    },
+    {
+      "name": "gh_bool",
+      "value": 1,
+      "summary": "boolean"
+    },
+    {
+      "name": "gh_byte",
+      "value": 2,
+      "summary": "byte"
+    },
+    {
+      "name": "gh_int32",
+      "value": 3,
+      "summary": "32 bit integer"
+    },
+    {
+      "name": "gh_int64",
+      "value": 4,
+      "summary": "64 bit integer"
+    },
+    {
+      "name": "gh_single",
+      "value": 5,
+      "summary": "single precision floating point number"
+    },
+    {
+      "name": "gh_double",
+      "value": 6,
+      "summary": "double precision floating point number"
+    },
+    {
+      "name": "gh_decimal",
+      "value": 7,
+      "summary": "decimal number"
+    },
+    {
+      "name": "gh_date",
+      "value": 8,
+      "summary": "date time structure"
+    },
+    {
+      "name": "gh_guid",
+      "value": 9,
+      "summary": "128 bit globally unique identifier"
+    },
+    {
+      "name": "gh_string",
+      "value": 10,
+      "summary": "unicode string"
+    },
+    {
+      "name": "gh_bytearray",
+      "value": 20,
+      "summary": "an array of bytes"
+    },
+    {
+      "name": "gh_doublearray",
+      "value": 21,
+      "summary": "an array of doubles"
+    },
+    {
+      "name": "gh_drawing_point",
+      "value": 30,
+      "summary": "gdi\u002B integer precision point"
+    },
+    {
+      "name": "gh_drawing_pointf",
+      "value": 31,
+      "summary": "gdi\u002B single precision point"
+    },
+    {
+      "name": "gh_drawing_size",
+      "value": 32,
+      "summary": "gdi\u002B integer precision size"
+    },
+    {
+      "name": "gh_drawing_sizef",
+      "value": 33,
+      "summary": "gdi\u002B single precision size"
+    },
+    {
+      "name": "gh_drawing_rectangle",
+      "value": 34,
+      "summary": "gdi\u002B integer precision rectangle"
+    },
+    {
+      "name": "gh_drawing_rectanglef",
+      "value": 35,
+      "summary": "gdi\u002B single precision rectangle"
+    },
+    {
+      "name": "gh_drawing_color",
+      "value": 36,
+      "summary": "gdi\u002B argb color"
+    },
+    {
+      "name": "gh_drawing_bitmap",
+      "value": 37,
+      "summary": "gdi\u002B bitmap (png format bytestream)"
+    },
+    {
+      "name": "gh_point2d",
+      "value": 50,
+      "summary": "double precision two-dimensional point"
+    },
+    {
+      "name": "gh_point3d",
+      "value": 51,
+      "summary": "double precision three-dimensional point"
+    },
+    {
+      "name": "gh_point4d",
+      "value": 52,
+      "summary": "double precision four-dimensional point"
+    },
+    {
+      "name": "gh_interval1d",
+      "value": 60,
+      "summary": "double precision one-dimensional numeric interval"
+    },
+    {
+      "name": "gh_interval2d",
+      "value": 61,
+      "summary": "double precision two-dimensional numeric interval"
+    },
+    {
+      "name": "gh_line",
+      "value": 70,
+      "summary": "double precision three-dimensional line segment"
+    },
+    {
+      "name": "gh_boundingbox",
+      "value": 71,
+      "summary": "double precision three-dimensional box volume"
+    },
+    {
+      "name": "gh_plane",
+      "value": 72,
+      "summary": "double precision three-dimensional plane construct"
+    },
+    {
+      "name": "gh_version",
+      "value": 80,
+      "summary": "version structure with major, minor and revision fields"
+    }
+  ]
+}

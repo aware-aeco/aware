@@ -1,0 +1,235 @@
+{
+  "name": "GH_ExpressionString",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_ExpressionString.)",
+  "base": "List\u003Cchar\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_ExpressionString.htm",
+  "constructors": [
+    {
+      "name": "GH_ExpressionString",
+      "signature": "public GH_ExpressionString(string in)",
+      "summary": "Initializes a new instance of the GH_ExpressionString class",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionString__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildLUT",
+      "signature": "public void BuildLUT()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionString_BuildLUT.htm"
+    },
+    {
+      "name": "IsWhiteSpace",
+      "signature": "public bool IsWhiteSpace(int index)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionString_IsWhiteSpace.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionString_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Char",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ExpressionString_Char.htm"
+    },
+    {
+      "name": "Next",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ExpressionString_Next.htm"
+    },
+    {
+      "name": "Prev",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ExpressionString_Prev.htm"
+    },
+    {
+      "name": "bracket_closed",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_bracket_closed.htm"
+    },
+    {
+      "name": "bracket_open",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_bracket_open.htm"
+    },
+    {
+      "name": "colon",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_colon.htm"
+    },
+    {
+      "name": "comma",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_comma.htm"
+    },
+    {
+      "name": "dot",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_dot.htm"
+    },
+    {
+      "name": "dquote",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_dquote.htm"
+    },
+    {
+      "name": "invalid",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_invalid.htm"
+    },
+    {
+      "name": "linefeed",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_linefeed.htm"
+    },
+    {
+      "name": "m_t",
+      "type": "List\u003CGH_CharType\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_m_t.htm"
+    },
+    {
+      "name": "paren_close",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_paren_close.htm"
+    },
+    {
+      "name": "paren_open",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_paren_open.htm"
+    },
+    {
+      "name": "quote",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_quote.htm"
+    },
+    {
+      "name": "return",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_return.htm"
+    },
+    {
+      "name": "scolon",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_scolon.htm"
+    },
+    {
+      "name": "space",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_space.htm"
+    },
+    {
+      "name": "tab",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_tab.htm"
+    },
+    {
+      "name": "underbar",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ExpressionString_underbar.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,92 @@
+{
+  "name": "EdgeChamfer.EdgeChamferAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The EdgeChamferAttributes class is the attributes class for the edge chamfer.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/21329c5d-35e7-6835-32de-03df1084b0a0",
+  "constructors": [
+    {
+      "name": "EdgeChamfer.EdgeChamferAttributes()",
+      "signature": "public EdgeChamferAttributes()",
+      "summary": "Creates a new default edge chamfer attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/94fea28b-edba-700b-6792-d62427dfce2b"
+    },
+    {
+      "name": "EdgeChamfer.EdgeChamferAttributes(String)",
+      "signature": "public EdgeChamferAttributes(string AttributeFile)",
+      "summary": "Creates a new edge chamfer attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f885c6d4-dfd3-d7d9-1e8e-e1ffeba6791b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0788720f-031d-788b-92e8-a85d95a2701c"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96a9aab9-8841-803d-8bc5-7c0688350dff"
+    }
+  ],
+  "properties": [
+    {
+      "name": "VisibleLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the chamfer.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc91e279-8af3-c1e9-dc2d-ca34c7aad605"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,27 @@
+{
+  "name": "SubType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Sub types of the element group property",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SubType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMultiLine3D",
+      "value": 1
+    },
+    {
+      "name": "eMultiLine3D_Group",
+      "value": 2
+    },
+    {
+      "name": "eUseNoSpecialSubType",
+      "value": 0
+    }
+  ]
+}

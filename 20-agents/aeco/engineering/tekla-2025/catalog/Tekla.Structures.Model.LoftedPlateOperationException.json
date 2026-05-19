@@ -1,0 +1,32 @@
+{
+  "name": "LoftedPlateOperationException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This empty class serves as a base (marker class) for all the exception thrown in lofted plate operations",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/de853339-6173-37a9-4b73-fc8db446420f",
+  "constructors": [
+    {
+      "name": "LoftedPlateOperationException",
+      "signature": "public LoftedPlateOperationException(string message)",
+      "summary": "Constructs an instance of the class",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Exception message",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8a8a7afb-94a0-62d8-f411-54ba9faa05a5"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

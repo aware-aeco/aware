@@ -1,0 +1,30 @@
+{
+  "name": "LcOpFindResult",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpFindResult enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpFindResult",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eRESULT_OK",
+      "value": 0
+    },
+    {
+      "name": "eRESULT_NONE",
+      "value": 1
+    },
+    {
+      "name": "eRESULT_ABORT",
+      "value": 2
+    },
+    {
+      "name": "eRESULT_NO_SPEC",
+      "value": 3
+    }
+  ]
+}

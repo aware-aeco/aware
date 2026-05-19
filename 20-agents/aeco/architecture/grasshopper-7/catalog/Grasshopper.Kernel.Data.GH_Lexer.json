@@ -1,0 +1,185 @@
+{
+  "name": "GH_Lexer",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Represents a lexical mask for path operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_Lexer.htm",
+  "constructors": [
+    {
+      "name": "GH_Lexer()",
+      "signature": "public GH_Lexer()",
+      "summary": "Blank constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Lexer__ctor.htm"
+    },
+    {
+      "name": "GH_Lexer(String)",
+      "signature": "public GH_Lexer(string mask)",
+      "summary": "Create a new mask from a textual string.",
+      "params": [
+        {
+          "name": "mask",
+          "type": "System.String",
+          "doc": "Mask string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Lexer__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EvaluatePath",
+      "signature": "public bool EvaluatePath(GH_ExpressionParser evaluator, ref GH_Path path, ref int index)",
+      "summary": "Evaluate the variables in this mask with the provided expression solver.",
+      "params": [
+        {
+          "name": "evaluator",
+          "type": "Grasshopper.Kernel.Expressions.GH_ExpressionParser",
+          "doc": "Evaluator to use. Must have all variables properly set up.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path result.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index result. If the lexer contains no item representation then the index remains unmolested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Lexer_EvaluatePath.htm"
+    },
+    {
+      "name": "PerformLexicalReplace\u003CT\u003E(GH_Lexer, GH_Lexer, DataTree\u003CT\u003E, DataTree\u003CT\u003E)",
+      "signature": "public static void PerformLexicalReplace\u003CT\u003E(GH_Lexer source, GH_Lexer target, DataTree\u003CT\u003E tree_in, DataTree\u003CT\u003E tree_out)",
+      "summary": "Lexical Find..Replace operations.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.Data.GH_Lexer",
+          "doc": "Search mask.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.Data.GH_Lexer",
+          "doc": "Replace pattern.",
+          "optional": false
+        },
+        {
+          "name": "tree_in",
+          "type": "Grasshopper.DataTree\u003CT\u003E",
+          "doc": "Source data tree.",
+          "optional": false
+        },
+        {
+          "name": "tree_out",
+          "type": "Grasshopper.DataTree\u003CT\u003E",
+          "doc": "Target data tree.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Lexer_PerformLexicalReplace__1.htm"
+    },
+    {
+      "name": "PerformLexicalReplace\u003CT\u003E(GH_Lexer, GH_Lexer, IGH_Structure, GH_Structure\u003CT\u003E)",
+      "signature": "public static void PerformLexicalReplace\u003CT\u003E(GH_Lexer source, GH_Lexer target, IGH_Structure structure_in, GH_Structure\u003CT\u003E structure_out) where T : IGH_Goo",
+      "summary": "Lexical Find..Replace operations.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.Data.GH_Lexer",
+          "doc": "Search mask.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.Data.GH_Lexer",
+          "doc": "Replace pattern.",
+          "optional": false
+        },
+        {
+          "name": "structure_in",
+          "type": "Grasshopper.Kernel.Data.IGH_Structure",
+          "doc": "Source data tree.",
+          "optional": false
+        },
+        {
+          "name": "structure_out",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "doc": "Target data tree.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Lexer_PerformLexicalReplace__1_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsItem",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the item portion of the lexer has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Lexer_IsItem.htm"
+    },
+    {
+      "name": "IsPath",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the path portion of the lexer has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Lexer_IsPath.htm"
+    },
+    {
+      "name": "Item",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the item string that was extracted from the mask. The default is \u0022append\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Lexer_Item.htm"
+    },
+    {
+      "name": "Mask",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the original string that represents the user input for this lexer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Lexer_Mask.htm"
+    },
+    {
+      "name": "Path",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of path strings that was extracted from the mask. If the mask hasn\u0027t been parsed yet, it will be parsed now. If the returned list is still nothing, parsing failed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_Lexer_Path.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

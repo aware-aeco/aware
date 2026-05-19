@@ -1,0 +1,1322 @@
+{
+  "name": "NodeModel",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Type NodeModel",
+  "base": "Dynamo.Graph.ModelBase",
+  "interfaces": [
+    "Dynamo.Visualization.IRenderPackageSource\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+  "constructors": [
+    {
+      "name": "NodeModel()",
+      "signature": "void NodeModel()",
+      "summary": "Protected constructor used during deserialization.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "NodeModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E)",
+      "signature": "void NodeModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E inPorts, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E outPorts)",
+      "summary": "Protected constructor used during deserialization.",
+      "params": [
+        {
+          "name": "inPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "outPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildOutputAst(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E BuildOutputAst(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes)",
+      "summary": "Override this to declare the outputs for each of this Node\u0027s output ports.",
+      "params": [
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Ast for inputs indexed by input port index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+        "doc": "Sequence of AssociativeNodes representing this Node\u0027s code output."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ClearDirtyFlag",
+      "signature": "void ClearDirtyFlag()",
+      "summary": "NodeModel.ClearDirtyFlag",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ClearErrorsAndWarnings",
+      "signature": "void ClearErrorsAndWarnings()",
+      "summary": "Clears the errors/warnings that are generated when running the graph.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ClearInfoMessages",
+      "signature": "void ClearInfoMessages()",
+      "summary": "Clears the info messages that are generated when running the graph. If the current State is Info or PersistentInfo, it will be set to Active. If the current State is Warning, Error, or another non-info state, it is preserved.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ConfigureSnapEdges(System.Collections.Generic.IList\u003CDynamo.Graph.Nodes.PortModel\u003E)",
+      "signature": "void ConfigureSnapEdges(System.Collections.Generic.IList\u003CDynamo.Graph.Nodes.PortModel\u003E ports)",
+      "summary": "Configures the snap edges. This class was made protected during refactoring for serialization. When RegisterInputPorts and RegisterOutputPorts are finally removed, this method should be called in a collection changed event handler on InPorts and OutPorts.",
+      "params": [
+        {
+          "name": "ports",
+          "type": "System.Collections.Generic.IList\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "doc": "The ports.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Deselect",
+      "signature": "void Deselect()",
+      "summary": "NodeModel.Deselect",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "NodeModel.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "DispatchOnUIThread(System.Action)",
+      "signature": "void DispatchOnUIThread(System.Action a)",
+      "summary": "Called by nodes for behavior that they want to dispatch on the UI thread Triggers event to be received by the UI. If no UI exists, behavior will not be executed.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Action",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "NodeModel.Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Error(string)",
+      "signature": "void Error(string p)",
+      "summary": "NodeModel.Error",
+      "params": [
+        {
+          "name": "p",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "GetAstIdentifierForOutputIndex(int)",
+      "signature": "ProtoCore.AST.AssociativeAST.IdentifierNode GetAstIdentifierForOutputIndex(int outputIndex)",
+      "summary": "Fetches the ProtoAST Identifier for a given output port.",
+      "params": [
+        {
+          "name": "outputIndex",
+          "type": "int",
+          "doc": "Index of the output port.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+        "doc": "Identifier corresponding to the given output port."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "GetDescriptionStringFromAttributes",
+      "signature": "string GetDescriptionStringFromAttributes()",
+      "summary": "Returns the description from type information",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "The value or \u0022No description provided\u0022"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "GetExecutionHintsCore",
+      "signature": "Dynamo.Graph.Nodes.NodeModel.ExecutionHints GetExecutionHintsCore()",
+      "summary": "NodeModel.GetExecutionHintsCore",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeModel.ExecutionHints",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "GetTypeHintForOutput(int)",
+      "signature": "ProtoCore.Type GetTypeHintForOutput(int index)",
+      "summary": "The possible type of output at specified port. This type information is not necessary to be accurate.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "GetValue(int, Dynamo.Engine.EngineController)",
+      "signature": "ProtoCore.Mirror.MirrorData GetValue(int outPortIndex, Dynamo.Engine.EngineController engine)",
+      "summary": "Returns the most recent value of this node stored in an EngineController that has evaluated it.",
+      "params": [
+        {
+          "name": "outPortIndex",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Mirror.MirrorData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Info(string, bool)",
+      "signature": "void Info(string p, bool isPersistent)",
+      "summary": "Set an info on a node.",
+      "params": [
+        {
+          "name": "p",
+          "type": "string",
+          "doc": "The info text.",
+          "optional": false
+        },
+        {
+          "name": "isPersistent",
+          "type": "bool",
+          "doc": "Is the info persistent? If true, the info will not be cleared when the node is next evaluated. If false, the info will be cleared on the next evaluation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "MarkNodeAsModified(bool)",
+      "signature": "void MarkNodeAsModified(bool forceExecute)",
+      "summary": "NodeModel.MarkNodeAsModified",
+      "params": [
+        {
+          "name": "forceExecute",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "MigrateShortestLacingToAutoLacing(Dynamo.Migration.NodeMigrationData)",
+      "signature": "Dynamo.Migration.NodeMigrationData MigrateShortestLacingToAutoLacing(Dynamo.Migration.NodeMigrationData data)",
+      "summary": "NodeModel.MigrateShortestLacingToAutoLacing",
+      "params": [
+        {
+          "name": "data",
+          "type": "Dynamo.Migration.NodeMigrationData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Migration.NodeMigrationData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "MigrateToDsFunction(Dynamo.Migration.NodeMigrationData, string, string)",
+      "signature": "Dynamo.Migration.NodeMigrationData MigrateToDsFunction(Dynamo.Migration.NodeMigrationData data, string name, string funcName)",
+      "summary": "NodeModel.MigrateToDsFunction",
+      "params": [
+        {
+          "name": "data",
+          "type": "Dynamo.Migration.NodeMigrationData",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "funcName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Migration.NodeMigrationData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "MigrateToDsFunction(Dynamo.Migration.NodeMigrationData, string, string, string)",
+      "signature": "Dynamo.Migration.NodeMigrationData MigrateToDsFunction(Dynamo.Migration.NodeMigrationData data, string assembly, string name, string funcName)",
+      "summary": "NodeModel.MigrateToDsFunction",
+      "params": [
+        {
+          "name": "data",
+          "type": "Dynamo.Migration.NodeMigrationData",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "funcName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Migration.NodeMigrationData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "MigrateToDsVarArgFunction(Dynamo.Migration.NodeMigrationData, string, string, string)",
+      "signature": "Dynamo.Migration.NodeMigrationData MigrateToDsVarArgFunction(Dynamo.Migration.NodeMigrationData data, string assembly, string name, string funcName)",
+      "summary": "NodeModel.MigrateToDsVarArgFunction",
+      "params": [
+        {
+          "name": "data",
+          "type": "Dynamo.Migration.NodeMigrationData",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "funcName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Migration.NodeMigrationData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "NotifyAstBuildBroken(string)",
+      "signature": "void NotifyAstBuildBroken(string p)",
+      "summary": "Change the state of node to ElementState.AstBuildBroken and display \u0022p\u0022 in tooltip window.",
+      "params": [
+        {
+          "name": "p",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OnBuilt",
+      "signature": "void OnBuilt()",
+      "summary": "Callback for when this NodeModel has been compiled.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OnConnectorAdded(Dynamo.Graph.Connectors.ConnectorModel)",
+      "signature": "void OnConnectorAdded(Dynamo.Graph.Connectors.ConnectorModel obj)",
+      "summary": "NodeModel.OnConnectorAdded",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Connectors.ConnectorModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OnNodeModified(bool)",
+      "signature": "void OnNodeModified(bool forceExecute)",
+      "summary": "NodeModel.OnNodeModified",
+      "params": [
+        {
+          "name": "forceExecute",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OnSave",
+      "signature": "void OnSave()",
+      "summary": "Called when the node\u0027s Workspace has been saved.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OnUpdateASTCollection",
+      "signature": "void OnUpdateASTCollection()",
+      "summary": "NodeModel.OnUpdateASTCollection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "RegisterAllPorts",
+      "signature": "void RegisterAllPorts()",
+      "summary": "Updates UI so that all ports reflect current state of node ports.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "RegisterInputPorts(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortData\u003E)",
+      "signature": "void RegisterInputPorts(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortData\u003E portDatas)",
+      "summary": "Reads inputs list and adds ports for each input. TODO: DYN-6445 - evaluate if this API can be removed.",
+      "params": [
+        {
+          "name": "portDatas",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortData\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "RegisterOutputPorts(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortData\u003E)",
+      "signature": "void RegisterOutputPorts(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortData\u003E portDatas)",
+      "summary": "Reads outputs list and adds ports for each output TODO: DYN-6445 - evaluate if this API can be removed.",
+      "params": [
+        {
+          "name": "portDatas",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortData\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "RequestVisualUpdateAsync(Dynamo.Scheduler.IScheduler, Dynamo.Engine.EngineController, Dynamo.Visualization.IRenderPackageFactory, bool)",
+      "signature": "bool RequestVisualUpdateAsync(Dynamo.Scheduler.IScheduler scheduler, Dynamo.Engine.EngineController engine, Dynamo.Visualization.IRenderPackageFactory factory, bool forceUpdate)",
+      "summary": "Call this method to asynchronously regenerate render package for this node. This method accesses core properties of a NodeModel and therefore is typically called on the main/UI thread.",
+      "params": [
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.IScheduler",
+          "doc": "An IScheduler on which the task will be scheduled.",
+          "optional": false
+        },
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "The EngineController which will be used to get MirrorData for the node.",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Visualization.IRenderPackageFactory",
+          "doc": "An IRenderPackageFactory which will be used to generate IRenderPackage objects.",
+          "optional": false
+        },
+        {
+          "name": "forceUpdate",
+          "type": "bool",
+          "doc": "Normally, render packages are only generated when the node\u0027s IsUpdated parameter is true. By setting forceUpdate to true, the render packages will be updated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Flag which indicates if geometry update has been scheduled"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "RequestVisualUpdateAsync(Dynamo.Scheduler.IScheduler, Dynamo.Engine.EngineController, Dynamo.Visualization.IRenderPackageFactory, bool, bool)",
+      "signature": "bool RequestVisualUpdateAsync(Dynamo.Scheduler.IScheduler scheduler, Dynamo.Engine.EngineController engine, Dynamo.Visualization.IRenderPackageFactory factory, bool forceUpdate, bool ignoreIsVisible)",
+      "summary": "Call this method to asynchronously regenerate render package for this node. This method accesses core properties of a NodeModel and therefore is typically called on the main/UI thread.",
+      "params": [
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.IScheduler",
+          "doc": "An IScheduler on which the task will be scheduled.",
+          "optional": false
+        },
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "The EngineController which will be used to get MirrorData for the node.",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Visualization.IRenderPackageFactory",
+          "doc": "An IRenderPackageFactory which will be used to generate IRenderPackage objects.",
+          "optional": false
+        },
+        {
+          "name": "forceUpdate",
+          "type": "bool",
+          "doc": "Normally, render packages are only generated when the node\u0027s IsUpdated parameter is true. By setting forceUpdate to true, the render packages will be updated.",
+          "optional": false
+        },
+        {
+          "name": "ignoreIsVisible",
+          "type": "bool",
+          "doc": "Normally, render packages are only generated when the node\u0027s IsVisible parameter is true. By setting ignore to true, the render package will be updated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Flag which indicates if geometry update has been scheduled"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "SelectDownstreamNeighbours",
+      "signature": "void SelectDownstreamNeighbours()",
+      "summary": "Recursively selects all nodes downstream to this node",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "SelectNeighbors",
+      "signature": "void SelectNeighbors()",
+      "summary": "Selects all neighboring nodes ans connector pins to this node",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "SelectUpstreamAndDownstreamNeighbours",
+      "signature": "void SelectUpstreamAndDownstreamNeighbours()",
+      "summary": "Recursively selects all nodes upstream and downstream to this node",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "SelectUpstreamNeighbours",
+      "signature": "void SelectUpstreamNeighbours()",
+      "summary": "Recursively selects all nodes upstream to this node",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "NodeModel.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "SetNameFromNodeNameAttribute",
+      "signature": "void SetNameFromNodeNameAttribute()",
+      "summary": "Sets the name of this node from the attributes on the class definining it.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "SetNodeStateBasedOnConnectionAndDefaults",
+      "signature": "void SetNodeStateBasedOnConnectionAndDefaults()",
+      "summary": "Sets the Dynamo.Graph.Nodes.ElementState for the node based on the port\u0027s default value status and connectivity.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ShouldSerializeX",
+      "signature": "bool ShouldSerializeX()",
+      "summary": "The default behavior for ModelBase objects is to not serialize the X and Y properties. This overload allows the serialization of the X property for NodeModel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ShouldSerializeY",
+      "signature": "bool ShouldSerializeY()",
+      "summary": "The default behavior for ModelBase objects is to not serialize the X and Y properties. This overload allows the serialization of the Y property for NodeModel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "TryGetInput(int, ref System.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E)",
+      "signature": "bool TryGetInput(int data, ref System.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E input)",
+      "summary": "Attempts to get the input for a certain port.",
+      "params": [
+        {
+          "name": "data",
+          "type": "int",
+          "doc": "PortData to look for an input for.",
+          "optional": false
+        },
+        {
+          "name": "input",
+          "type": "ref System.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "If an input is found, it will be assigned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if there is an input, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "TryGetOutput(int, ref System.Collections.Generic.HashSet\u003CSystem.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E\u003E)",
+      "signature": "bool TryGetOutput(int output, ref System.Collections.Generic.HashSet\u003CSystem.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E\u003E newOutputs)",
+      "summary": "Attempts to get the output for a certain port.",
+      "params": [
+        {
+          "name": "output",
+          "type": "int",
+          "doc": "Index to look for an output for.",
+          "optional": false
+        },
+        {
+          "name": "newOutputs",
+          "type": "ref System.Collections.Generic.HashSet\u003CSystem.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E\u003E",
+          "doc": "If an output is found, it will be assigned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if there is an output, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "UpdateValueCore(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValueCore(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "NodeModel.UpdateValueCore",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "UseLevelAndReplicationGuide(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void UseLevelAndReplicationGuide(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputs)",
+      "summary": "Apppend replication guide to the input parameter based on lacing strategy.",
+      "params": [
+        {
+          "name": "inputs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Warning(string, bool)",
+      "signature": "void Warning(string p, bool isPersistent)",
+      "summary": "Set a warning on a node.",
+      "params": [
+        {
+          "name": "p",
+          "type": "string",
+          "doc": "The warning text.",
+          "optional": false
+        },
+        {
+          "name": "isPersistent",
+          "type": "bool",
+          "doc": "Is the warning persistent? If true, the warning will not be cleared when the node is next evaluated and any additional warning messages will be concatenated to the persistent error message. If false, the warning will be cleared on the next evaluation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllConnectors",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All of the connectors entering and exiting the NodeModel.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "AreAllOutputsConnected",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Are all the outputs of this node connected?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ArgumentLacing",
+      "type": "Dynamo.Graph.Nodes.LacingStrategy",
+      "getter": true,
+      "setter": false,
+      "summary": "Control how arguments lists of various sizes are laced.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "AstIdentifierBase",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Return a variable whose value will be displayed in preview window. Derived nodes may overwrite this function to display default value of this node. E.g., code block node may want to display the value of the left hand side variable of last statement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "AstIdentifierForPreview",
+      "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+      "getter": true,
+      "setter": false,
+      "summary": "ProtoAST Identifier for result of the node before any output unpacking has taken place. If there is only one output for the node, this is equivalent to GetAstIdentifierForOutputIndex(0).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "AstIdentifierGuid",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "A unique ID that will be appended to all identifiers of this node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "CachedValue",
+      "type": "ProtoCore.Mirror.MirrorData",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of this node after the most recent computation As this property could be modified by the virtual machine, it\u0027s dangerous to access this value without using the active Scheduler. Use the Scheduler to remove the possibility of race conditions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "CanUpdatePeriodically",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "NodeModel.CanUpdatePeriodically",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Category",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Category property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "CreationName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The unique name that was created the node by",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Description of this Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "DictionaryLink",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Dictionary Link property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "DismissedAlerts",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "NodeModel.DismissedAlerts",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "DismissedAlertsCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of dismissed error/warning/info messages.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "DisplayLabels",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable or disable label display. Default is false.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "GUID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Id for this node, must be unique within the graph.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "InPorts",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Graph.Nodes.PortModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of PortModels representing all Input ports.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "InputData",
+      "type": "Dynamo.Graph.Nodes.NodeInputData",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModel.InputData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "InputNodes",
+      "type": "System.Collections.Generic.IDictionary\u003Cint, System.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModel.InputNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsConvertible",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "If this node is allowed to be converted to AST node in nodes to code conversion.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsCustomFunction",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns whether this node represents a built-in or custom function.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsFrozen",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "A flag indicating whether the node is frozen. When a node is frozen, the node, and all nodes downstream will not participate in execution. This will return true if any upstream node is frozen or if the node was explicitly frozen.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsInErrorState",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "If the state of node is Error or AstBuildBroken",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsInputNode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Input nodes are used in Customizer and Presets. Input nodes can be numbers, number sliders, strings, bool, code blocks, custom nodes and color palette node. This property is true for nodes that are potential inputs for Customizers and Presets.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsModified",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModel.IsModified",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsOutputNode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Output nodes are used by applications that consume graphs outside of Dynamo such as Optioneering, Optimization, and Dynamo Player. Output nodes can be any node that returns a single output or a dictionary. Code block nodes and Custom nodes are specifically excluded at this time even though they can return a single output for sake of clarity.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsPartiallyApplied",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this node being applied partially, resulting in a partial function?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsResizable",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether this node supports user-resizable UI elements",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsSetAsInput",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This property is user-controllable via a checkbox and is set to true when a user wishes to include this node in a Customizer as an interactive control.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsSetAsOutput",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This property is user-controllable via a checkbox and is set to true when a user wishes to include this node in the OutputData block of the Dyn file.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsTopMostNode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "If node is connected to some other node(other than Output) then it is not a \u0027top\u0027 node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "IsVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns whether the node is to be included in visualizations.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name that is displayed in the UI for this NodeModel.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "NeedsForceExecution",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModel.NeedsForceExecution",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "NodeInfos",
+      "type": "System.Collections.Generic.List\u003CDynamo.Graph.Nodes.Info\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A publicly accessible collector of all Info/Warning/Error data",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "NodeType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The NodeType property provides a name which maps to the server type for the node. This property should only be used for serialization.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OutPorts",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Graph.Nodes.PortModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of PortModels representing all Output ports.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OutputData",
+      "type": "Dynamo.Graph.Nodes.NodeOutputData",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModel.OutputData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "OutputNodes",
+      "type": "System.Collections.Generic.IDictionary\u003Cint, System.Collections.Generic.HashSet\u003CSystem.Tuple\u003Cint, Dynamo.Graph.Nodes.NodeModel\u003E\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModel.OutputNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "PreviewPinned",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if node preview is pinned",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "RaisesModificationEvents",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicate if the node should respond to NodeModified event. It always should be true, unless is temporarily set to false to avoid flood of Modified event.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "ShouldDisplayPreview",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModel.ShouldDisplayPreview",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "State",
+      "type": "Dynamo.Graph.Nodes.ElementState",
+      "getter": true,
+      "setter": true,
+      "summary": "The Node\u0027s state, which determines the coloring of the Node in the canvas.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    },
+    {
+      "name": "Tags",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Search tags for this Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "ConnectorAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E ConnectorAdded",
+      "summary": "Event fired when a new ConnectorModel has been attached to one of this node\u0027s inputs.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Modified",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E Modified",
+      "summary": "Event fired when the node\u0027s DesignScript AST should be recompiled",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeExecutionBegin",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeExecutionBegin",
+      "summary": "Event triggered before a node is executed. Note: This event will only be triggered when profiling is active.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeExecutionEnd",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeExecutionEnd",
+      "summary": "Event triggered after a node is executed. Note: This event will only be triggered when profiling is active.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeInfoMessagesClearing",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeInfoMessagesClearing",
+      "summary": "Event triggered whenever the node re-executes to clear its info messages",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeMessagesClearing",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeMessagesClearing",
+      "summary": "Event triggered whenever the node re-executes to clear its warnings and errors.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeWarningMessagesClearing",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeWarningMessagesClearing",
+      "summary": "Event triggered when the node clears only warning messages",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PortConnected",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.PortModel, Dynamo.Graph.Connectors.ConnectorModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.PortModel, Dynamo.Graph.Connectors.ConnectorModel\u003E PortConnected",
+      "summary": "Event triggered when a port is connected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PortDisconnected",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.PortModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.PortModel\u003E PortDisconnected",
+      "summary": "Event triggered when a port is disconnected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RenderPackagesUpdated",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel, Dynamo.Visualization.RenderPackageCache\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel, Dynamo.Visualization.RenderPackageCache\u003E RenderPackagesUpdated",
+      "summary": "NodeModel.RenderPackagesUpdated",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestRenderPackages",
+      "delegate": "System.Func\u003CDynamo.Visualization.RenderPackageCache\u003E",
+      "signature": "public event System.Func\u003CDynamo.Visualization.RenderPackageCache\u003E RequestRenderPackages",
+      "summary": "",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "UpdateASTCollection",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E UpdateASTCollection",
+      "summary": "Event fired when the node\u0027s DesignScript AST should be updated. This event deletes the frozen nodes from AST collection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

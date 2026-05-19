@@ -1,0 +1,65 @@
+{
+  "name": "ViewCaptureWriter.Pen",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.ViewCaptureWriter.Pen\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_ViewCaptureWriter_Pen.htm",
+  "constructors": [
+    {
+      "name": "ViewCaptureWriter.Pen",
+      "signature": "public Pen()",
+      "summary": "Initializes a new instance of the ViewCaptureWriter.Pen class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_ViewCaptureWriter_Pen__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Cap",
+      "type": "LineCapStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ViewCaptureWriter_Pen_Cap.htm"
+    },
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ViewCaptureWriter_Pen_Color.htm"
+    },
+    {
+      "name": "Join",
+      "type": "LineJoinStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ViewCaptureWriter_Pen_Join.htm"
+    },
+    {
+      "name": "Pattern",
+      "type": "Single[]",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ViewCaptureWriter_Pen_Pattern.htm"
+    },
+    {
+      "name": "Width",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_ViewCaptureWriter_Pen_Width.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

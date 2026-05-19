@@ -1,0 +1,59 @@
+{
+  "name": "LineTypesEnum",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The line types (the presentation of the line).",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/74868e4d-6ded-4dee-92eb-c69c3abb316c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UndefinedLine",
+      "value": 0,
+      "summary": "The line type is undefined."
+    },
+    {
+      "name": "SolidLine",
+      "value": 1,
+      "summary": "The solid line (default)."
+    },
+    {
+      "name": "DashedLine",
+      "value": 2,
+      "summary": "The dashed line (-----)."
+    },
+    {
+      "name": "SlashedLine",
+      "value": 3,
+      "summary": "The slashed line (- - -)."
+    },
+    {
+      "name": "DashDot",
+      "value": 4,
+      "summary": "The dash dotted line (--.--.)."
+    },
+    {
+      "name": "DottedLine",
+      "value": 5,
+      "summary": "The dotted line (.....)."
+    },
+    {
+      "name": "DashDoubleDot",
+      "value": 6,
+      "summary": "The dash double dotted line (-..-..-)."
+    },
+    {
+      "name": "SlashDash",
+      "value": 7,
+      "summary": "The slash dash line (-- - -- -)."
+    },
+    {
+      "name": "Custom",
+      "value": 9999,
+      "summary": "The custom line type (it will also transport the custom line type name)"
+    }
+  ]
+}

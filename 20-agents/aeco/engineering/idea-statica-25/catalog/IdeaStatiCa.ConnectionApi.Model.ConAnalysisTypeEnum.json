@@ -1,0 +1,50 @@
+{
+  "name": "ConAnalysisTypeEnum",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConAnalysisTypeEnum.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConAnalysisTypeEnum.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "stress_Strain",
+      "value": "stress_Strain"
+    },
+    {
+      "name": "stiffness",
+      "value": "stiffness"
+    },
+    {
+      "name": "capacity_Design",
+      "value": "capacity_Design"
+    },
+    {
+      "name": "fatigues",
+      "value": "fatigues"
+    },
+    {
+      "name": "total_Design",
+      "value": "total_Design"
+    },
+    {
+      "name": "horizontalTying",
+      "value": "horizontalTying"
+    },
+    {
+      "name": "capacityLoadLevels",
+      "value": "capacityLoadLevels"
+    },
+    {
+      "name": "fireRestance",
+      "value": "fireRestance"
+    },
+    {
+      "name": "buckling",
+      "value": "buckling"
+    }
+  ]
+}

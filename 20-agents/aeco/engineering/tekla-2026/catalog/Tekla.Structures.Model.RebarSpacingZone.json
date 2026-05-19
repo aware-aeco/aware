@@ -1,0 +1,74 @@
+{
+  "name": "RebarSpacingZone",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarSpacingZone class defines the properties of a single spacing zone. The spacing properties of number of spaces, spacing and length are proposed properties that the spacing algorithm uses as input when calculating the final reinforcing bars spacing. Depending on the RebarSpacingZone properties and any other rebar spacing zones defined on the associated RebarGuideline the spacing algorithm may determine a different final reinforcing bars spacing from the original proposed properties. However the RebarSpacingZone properties will always contain the original proposed values.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cf189735-28cc-b497-1dac-feb92431104f",
+  "constructors": [
+    {
+      "name": "RebarSpacingZone",
+      "signature": "public RebarSpacingZone()",
+      "summary": "Initializes a new instance of the RebarSpacingZone class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/264e583c-2371-ada9-3e8f-d008130aef6e"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the proposed overall spacing zone length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/63fbc9d5-9b84-b7a8-c610-a26f7f25210a"
+    },
+    {
+      "name": "LengthType",
+      "type": "RebarSpacingZone.LengthEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the length is absolute or relative. If the length is relative the length property is treated as a proportion of the overall available spacing length (from the associated RebarGuideline). The available spacing length is the guideline length less the calculated start and end offsets and less any fixed length spacing zones. An example of how relative length values are handled: With two relative length zones with proposed length values of 10 and 20 respectively the final calculated lengths will normally be \u0027available spacing length\u0027*10/(10\u002B20) and \u0027available spacing length\u0027*20/(10\u002B20) though the spacing algorithm may determine a different result in some situations.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1a6923ef-dac5-bfc2-e2d2-747581d30427"
+    },
+    {
+      "name": "NumberOfSpaces",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the proposed number of spaces in the spacing zone.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1aa619e8-c922-b57f-6618-31f5e6d9a4e1"
+    },
+    {
+      "name": "NumberOfSpacesType",
+      "type": "RebarSpacingZone.SpacingEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the number of spaces is exact or target. If the number of spaces is target the spacing algorithm may determine a different number of spaces to use.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01023b71-9441-4289-e4cc-daa80e8621bc"
+    },
+    {
+      "name": "Spacing",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the proposed spacing (the space between each reinforcing bar centerline) in the spacing zone.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9393c7c6-81ef-2aaf-a7aa-6e3174a7d3a8"
+    },
+    {
+      "name": "SpacingType",
+      "type": "RebarSpacingZone.SpacingEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the spacing is exact or target. If the spacing is target the spacing algorithm may determine a different spacing to use.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/342688cd-15b6-b370-69b7-50dfd080074f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

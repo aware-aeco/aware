@@ -1,0 +1,39 @@
+{
+  "name": "SubDEndCapStyle",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubDEndCapStyle enumerates the type of end caps functions like ON_SubD::CreateCylinder will create. Use ON_SubDEndCapStyleFromUnsigned(integer value) to convert integer values to an ON_SubDEndCapStyle. Use ON_SubDEndCapStyleToString(end_cap_style) to convert ON_SubDEndCapStyle values to string descriptions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDEndCapStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Used to indicate the end cap style is not set."
+    },
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "Ends are not capped."
+    },
+    {
+      "name": "Triangles",
+      "value": 2,
+      "summary": "Ends are capped with triangles."
+    },
+    {
+      "name": "Quads",
+      "value": 3,
+      "summary": "When the end has an even number of edges, is will be capped with quads. Otherwise it will be capped with triangles."
+    },
+    {
+      "name": "Ngon",
+      "value": 4,
+      "summary": "Ends are capped with a n-gon. This is a poor choice when there are a large number of edges in the end boundary."
+    }
+  ]
+}

@@ -1,0 +1,288 @@
+{
+  "name": "RenderContentSerializer",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Used to import and export custom render content such as materials, environments and textures. You must override RenderPlugIn.RenderContentSerializers() and return an array of derived RenderContentSerializer class types to add to the content browsers.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderContentSerializer.htm",
+  "constructors": [
+    {
+      "name": "RenderContentSerializer",
+      "signature": "protected RenderContentSerializer(string fileExtension, RenderContentKind contentKind, bool canRead, bool canWrite)",
+      "summary": "Protected constructor to be called from derived class",
+      "params": [
+        {
+          "name": "fileExtension",
+          "type": "System.String",
+          "doc": "File extension associated with this serialize object",
+          "optional": false
+        },
+        {
+          "name": "contentKind",
+          "type": "Rhino.Render.RenderContentKind",
+          "doc": "Kind of content created when importing or exporting this file type.",
+          "optional": false
+        },
+        {
+          "name": "canRead",
+          "type": "System.Boolean",
+          "doc": "If true then the file type can be imported and will be included in the file open box when importing the specified render content kind.",
+          "optional": false
+        },
+        {
+          "name": "canWrite",
+          "type": "System.Boolean",
+          "doc": "If true then the file type can be exported and will be included in the file save box when exporting the specified render content kind.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanLoadMultiple",
+      "signature": "public virtual bool CanLoadMultiple()",
+      "summary": "If true the plug-in is capable of loading multiple contents.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentSerializer.CanLoadMultiple\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer_CanLoadMultiple.htm"
+    },
+    {
+      "name": "LoadMultiple",
+      "signature": "public virtual bool LoadMultiple(RhinoDoc doc, IEnumerable\u003Cstring\u003E fileNames, RenderContentKind contentKind, RenderContentSerializer.LoadMultipleFlags flags)",
+      "summary": "Create any number of new render contents loaded from any number of files.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Rhino document",
+          "optional": false
+        },
+        {
+          "name": "fileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "A list of filenames to load from. Each file can contain any number of render contents.",
+          "optional": false
+        },
+        {
+          "name": "contentKind",
+          "type": "Rhino.Render.RenderContentKind",
+          "doc": "Only used by I/O plug-ins that support multiple kinds. It tells the plug-in which content kind to create. If the plug-in only supports a single content kind, it can ignore this parameter.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Rhino.Render.RenderContentSerializer.LoadMultipleFlags",
+          "doc": "A set of flags from the enum above.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentSerializer.LoadMultiple(Rhino.RhinoDoc,System.Collections.Generic.IEnumerable{System.String},Rhino.Render.RenderContentKind,Rhino.Render.RenderContentSerializer.LoadMultipleFlags)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer_LoadMultiple.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public abstract RenderContent Read(string pathToFile)",
+      "summary": "Called to when importing a file, file should be parsed and converted to a valid RenderContent object.",
+      "params": [
+        {
+          "name": "pathToFile",
+          "type": "System.String",
+          "doc": "Full path of the file to load.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "Returns a valid RenderContent object such as RenderMaterial if the file was successfully parsed otherwise returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer_Read.htm"
+    },
+    {
+      "name": "RegisterSerializer",
+      "signature": "public bool RegisterSerializer(Guid id)",
+      "summary": "Register the RenderContentSerializer",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Plug-in id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentSerializer.RegisterSerializer(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer_RegisterSerializer.htm"
+    },
+    {
+      "name": "ReportContentAndFile",
+      "signature": "public virtual void ReportContentAndFile(RenderContent renderContent, string pathToFile, int flags)",
+      "summary": "This is called from your implementation of LoadMultiple() to add a content and the file it was loaded from when the LoadMultipleFlags.Preload flag is NOT set. See LoadMultiple() for an explanation of this method\u0027s use.",
+      "params": [
+        {
+          "name": "renderContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Render content that was loaded from the file.",
+          "optional": false
+        },
+        {
+          "name": "pathToFile",
+          "type": "System.String",
+          "doc": "Full path of the file that the render content was loaded from.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "System.Int32",
+          "doc": "Flags for future use; should be passed as zero.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer_ReportContentAndFile.htm"
+    },
+    {
+      "name": "ReportDeferredContentAndFile",
+      "signature": "public virtual void ReportDeferredContentAndFile(RenderContent renderContent, string pathToFile, int flags)",
+      "summary": "This is called from your implementation of LoadMultiple() to add a \u0027deferred\u0027 content and the file it will be loaded from, when the LoadMultipleFlags.Preload flag is set. See LoadMultiple() for an explanation of this method\u0027s use. \\param c is the deferred content. \\param wszFullPath is the full path to the file that \u0027c\u0027 will be loaded from. \\param flags is reserved for future use; you should pass zero. \\param pReserved is reserved for future use; you should pass nullptr. */",
+      "params": [
+        {
+          "name": "renderContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Deferred render content - represents all contents that will be loaded from the file.",
+          "optional": false
+        },
+        {
+          "name": "pathToFile",
+          "type": "System.String",
+          "doc": "Full path of the file that render contents will be loaded from.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "System.Int32",
+          "doc": "Flags for future use; should be passed as zero.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer_ReportDeferredContentAndFile.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public abstract bool Write(string pathToFile, RenderContent renderContent, CreatePreviewEventArgs previewArgs)",
+      "summary": "Called to save a custom RenderContent object as an external file.",
+      "params": [
+        {
+          "name": "pathToFile",
+          "type": "System.String",
+          "doc": "Full path of file to write",
+          "optional": false
+        },
+        {
+          "name": "renderContent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Render content to save",
+          "optional": false
+        },
+        {
+          "name": "previewArgs",
+          "type": "Rhino.Render.CreatePreviewEventArgs",
+          "doc": "Parameters used to generate a preview image which may be embedded in the exported file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentSerializer.Write(System.String,Rhino.Render.RenderContent,Rhino.Render.CreatePreviewEventArgs)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentSerializer_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanRead",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true then the file type can be imported and will be included in the file open box when importing the specified render content kind.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentSerializer_CanRead.htm"
+    },
+    {
+      "name": "CanWrite",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true then the file type can be exported and will be included in the file save box when exporting the specified render content kind.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentSerializer_CanWrite.htm"
+    },
+    {
+      "name": "ContentKind",
+      "type": "RenderContentKind",
+      "getter": true,
+      "setter": false,
+      "summary": "Kind of content created when importing or exporting this file type - ie, Material, Texture or Environment",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentSerializer_ContentKind.htm"
+    },
+    {
+      "name": "ContentType",
+      "type": "RenderContentKind",
+      "getter": true,
+      "setter": false,
+      "summary": "Kind of content created when importing or exporting this file type. Obsolete - use ContentKind",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentSerializer_ContentType.htm"
+    },
+    {
+      "name": "EnglishDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "English string describing this plug-in",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentSerializer_EnglishDescription.htm"
+    },
+    {
+      "name": "FileExtension",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "File extension associated with this serialize object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentSerializer_FileExtension.htm"
+    },
+    {
+      "name": "LocalDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Localized plug-in description",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentSerializer_LocalDescription.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

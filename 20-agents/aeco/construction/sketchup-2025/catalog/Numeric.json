@@ -1,0 +1,281 @@
+{
+  "name": "Numeric",
+  "namespace": "",
+  "kind": "class",
+  "summary": "A number of methods have been added to the Ruby Numeric class to do units conversions.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Numeric.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "cm",
+      "signature": "cm =\u003E Length",
+      "summary": "The cm method is used to convert from centimeters to inches.",
+      "remarks": "The cm method is used to convert from centimeters to inches.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a value in inches if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#cm-instance_method"
+    },
+    {
+      "name": "degrees",
+      "signature": "degrees =\u003E Float",
+      "summary": "The degrees method is used to convert from degrees to radians.",
+      "remarks": "The degrees method is used to convert from degrees to radians. For example 90.degrees would return 1.5707963267949",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in radians if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#degrees-instance_method"
+    },
+    {
+      "name": "feet",
+      "signature": "feet =\u003E Length",
+      "summary": "The feet method is used to convert from feet to inches.",
+      "remarks": "The feet method is used to convert from feet to inches.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a value in inches if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#feet-instance_method"
+    },
+    {
+      "name": "inch",
+      "signature": "inch =\u003E Length",
+      "summary": "The to_l is used to convert from a number to a length.",
+      "remarks": "The to_l is used to convert from a number to a length.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a Length object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#inch-instance_method"
+    },
+    {
+      "name": "km",
+      "signature": "km =\u003E Length",
+      "summary": "The km method is used to convert from kilometers to inches.",
+      "remarks": "The km method is used to convert from kilometers to inches.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a value in inches if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#km-instance_method"
+    },
+    {
+      "name": "m",
+      "signature": "m =\u003E Length",
+      "summary": "The m method is used to convert from meters to inches.",
+      "remarks": "The m method is used to convert from meters to inches.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a value in inches if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#m-instance_method"
+    },
+    {
+      "name": "mile",
+      "signature": "mile =\u003E Length",
+      "summary": "The mile method is used to convert from miles to inches.",
+      "remarks": "The mile method is used to convert from miles to inches.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a value in inches if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#mile-instance_method"
+    },
+    {
+      "name": "mm",
+      "signature": "mm =\u003E Length",
+      "summary": "The mm method is used to convert from millimeters to inches.",
+      "remarks": "The mm method is used to convert from millimeters to inches. It returns a Length value which is the same length as the given value. For example len = 25.4.mm returns 1 inch.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a value in millimeters if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#mm-instance_method"
+    },
+    {
+      "name": "radians",
+      "signature": "radians =\u003E Float",
+      "summary": "The radians method is used to convert from radians to degrees.",
+      "remarks": "The radians method is used to convert from radians to degrees. For example, 1.5707963267949.radians would return 90.0",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in degrees if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#radians-instance_method"
+    },
+    {
+      "name": "to_cm",
+      "signature": "to_cm =\u003E Float",
+      "summary": "The to_cm method is used to convert from inches to centimeters.",
+      "remarks": "The to_cm method is used to convert from inches to centimeters.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in centimeters if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_cm-instance_method"
+    },
+    {
+      "name": "to_feet",
+      "signature": "to_feet =\u003E Float",
+      "summary": "The to_feet method is used to convert from inches to feet.",
+      "remarks": "The to_feet method is used to convert from inches to feet.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in feet if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_feet-instance_method"
+    },
+    {
+      "name": "to_inch",
+      "signature": "to_inch =\u003E Float",
+      "summary": "The to_inch method converts from inches to inches.",
+      "remarks": "The to_inch method converts from inches to inches. This does not change the value.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in inches if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_inch-instance_method"
+    },
+    {
+      "name": "to_km",
+      "signature": "to_km =\u003E Float",
+      "summary": "The to_km method is used to convert from inches to kilometers.",
+      "remarks": "The to_km method is used to convert from inches to kilometers.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in kilometers if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_km-instance_method"
+    },
+    {
+      "name": "to_l",
+      "signature": "to_l =\u003E Length",
+      "summary": "The to_l is used to convert from a number to a length.",
+      "remarks": "The to_l is used to convert from a number to a length.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a Length object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_l-instance_method"
+    },
+    {
+      "name": "to_m",
+      "signature": "to_m =\u003E Float",
+      "summary": "The to_m method is used to convert from inches to meters.",
+      "remarks": "The to_m method is used to convert from inches to meters.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in meters if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_m-instance_method"
+    },
+    {
+      "name": "to_mile",
+      "signature": "to_mile =\u003E Float",
+      "summary": "The to_mile method is used to convert from inches to miles.",
+      "remarks": "The to_mile method is used to convert from inches to miles.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in miles if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_mile-instance_method"
+    },
+    {
+      "name": "to_mm",
+      "signature": "to_mm =\u003E Float",
+      "summary": "The to_mm method is used to convert from inches to millimeters.",
+      "remarks": "The to_mm method is used to convert from inches to millimeters.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in millimeters if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_mm-instance_method"
+    },
+    {
+      "name": "to_yard",
+      "signature": "to_yard =\u003E Float",
+      "summary": "The to_yard method is used to convert from inches to yards.",
+      "remarks": "The to_yard method is used to convert from inches to yards.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "a value in yards if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#to_yard-instance_method"
+    },
+    {
+      "name": "yard",
+      "signature": "yard =\u003E Length",
+      "summary": "The yard method is used to convert from yards to inches.",
+      "remarks": "The yard method is used to convert from yards to inches.",
+      "params": [],
+      "returns": {
+        "type": "Length",
+        "doc": "a value in inches if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Numeric.html#yard-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

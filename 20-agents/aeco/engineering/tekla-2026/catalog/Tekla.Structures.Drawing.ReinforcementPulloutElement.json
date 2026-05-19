@@ -1,0 +1,169 @@
+{
+  "name": "ReinforcementPulloutElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ReinforcementPulloutElement class illustrates the shape and dimensions of a reinforcing bar in a drawing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/952320a4-528c-1bc2-b9da-e4eaf2c29ebd",
+  "constructors": [
+    {
+      "name": "ReinforcementPulloutElement",
+      "signature": "public ReinforcementPulloutElement()",
+      "summary": "Creates a new reinforcement pull-out element instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/873aaf7f-7233-de4d-ad0d-04a537a59d01"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public override Object Clone()",
+      "summary": "Clones the object.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4832526c-92cd-e1e1-5081-96cb7c97339d"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "public override string GetUnformattedString()",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/499b4a65-9122-8014-eb20-cb8c7f90d748"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c93af0e-c5f6-9da0-a4ed-bfeb2dc34331"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutomaticScaling",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the pull-out is scaled automatically or to a specified value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f2c2aef-85f5-4d19-d084-e5a2ca36c2b1"
+    },
+    {
+      "name": "BendingAngle",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to show the pull-out bending angles.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/81c47376-8acb-0e09-0dea-3f971d67ab1d"
+    },
+    {
+      "name": "BendingRadius",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to show the pull-out bending radii.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1638db4a-2ebf-706e-ce51-027e02dd236c"
+    },
+    {
+      "name": "CouplersEndAnchorSymbols",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to show coupler/anchor symbols or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e01daab-8e60-cd41-e159-ab3d1c352543"
+    },
+    {
+      "name": "CouplersScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scale of coupler/anchor symbols.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/afbfa7ec-61a7-c638-15f5-451a5e8b704c"
+    },
+    {
+      "name": "Dimensioning",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to show the pull-out dimensions.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50430951-db10-7897-7b7c-5d43cc1ba4b0"
+    },
+    {
+      "name": "EndSymbolType",
+      "type": "ReinforcementPulloutElement.EndSymbols",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the ending marks.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67e0977c-8549-8473-55a9-3a900b89e3e9"
+    },
+    {
+      "name": "Exaggeration",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the pull-out is exaggerated.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/af57a8c0-0c76-5229-7404-d654c62db015"
+    },
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the font of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24098dfd-853f-a695-fc9d-af9e63704ec6"
+    },
+    {
+      "name": "RotationAxis",
+      "type": "ReinforcementPulloutElement.Rotation",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotation of the pull-out.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/140553ad-d0d5-3deb-3b6d-58b1c7896e38"
+    },
+    {
+      "name": "ScaleX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scaling of the pull-out in the X direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6d2abc4e-8b3c-3f6a-1296-b2432a8d7402"
+    },
+    {
+      "name": "ScaleY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scaling of the pull-out in the Y direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/15e2673c-3be6-e441-36cf-327c3605a00e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

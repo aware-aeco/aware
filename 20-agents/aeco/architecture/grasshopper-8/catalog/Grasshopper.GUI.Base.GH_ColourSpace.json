@@ -1,0 +1,30 @@
+{
+  "name": "GH_ColourSpace",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "enum",
+  "summary": "Enumerates the different colour spaces supported by the GH_ColourPickerBase class.",
+  "remarks": "See AlsoReferenceGrasshopper.GUI.Base Namespace",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_ColourSpace.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Unset value. Do not use. Seriously. Stay away."
+    },
+    {
+      "name": "RGB",
+      "value": 1,
+      "summary": "Colour picker operates in RGB mode."
+    },
+    {
+      "name": "HSV",
+      "value": 2,
+      "summary": "Colour picker operates in HSV mode."
+    }
+  ]
+}

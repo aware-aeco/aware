@@ -1,0 +1,46 @@
+{
+  "name": "IGH_TagArtist",
+  "namespace": "Grasshopper.GUI.Canvas.TagArtists",
+  "kind": "interface",
+  "summary": "Defines the interface for TagArtist objects. TagArtists can be used to paint additional stuff onto a GH_Canvas.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_TagArtists_IGH_TagArtist.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Paint",
+      "signature": "void Paint(GH_Canvas canvas, GH_CanvasChannel channel)",
+      "summary": "This method is called whenever a Canvas channel is painted",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas that is currently painting.",
+          "optional": false
+        },
+        {
+          "name": "channel",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasChannel",
+          "doc": "Channel that is currently being painted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_TagArtists_IGH_TagArtist_Paint.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ID",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of this Tag Artist object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_TagArtists_IGH_TagArtist_ID.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

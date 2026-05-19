@@ -1,0 +1,29 @@
+{
+  "name": "GH_LineParserAction",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible actions a line parser can invoke.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_LineParserAction.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Include",
+      "value": 0,
+      "summary": "Include the return code of the parser function."
+    },
+    {
+      "name": "Ignore",
+      "value": 1,
+      "summary": "Ignore this line of text and move on to the next line."
+    },
+    {
+      "name": "Abort",
+      "value": 2,
+      "summary": "Ignore this line of text and don\u0027t parse all subsequent lines."
+    }
+  ]
+}

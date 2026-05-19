@@ -1,0 +1,38 @@
+{
+  "name": "DisplayRenderSettings",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "ChangeQueue DisplayRenderSettings",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_DisplayRenderSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CullBackFaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if backfaces should be culled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_DisplayRenderSettings_CullBackFaces.htm"
+    },
+    {
+      "name": "ForceFlatShading",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if flat shading is forced",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_DisplayRenderSettings_ForceFlatShading.htm"
+    },
+    {
+      "name": "SceneLightingOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if scene lighting is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_DisplayRenderSettings_SceneLightingOn.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

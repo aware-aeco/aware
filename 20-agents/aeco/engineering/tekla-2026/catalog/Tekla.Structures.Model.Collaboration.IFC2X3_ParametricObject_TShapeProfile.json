@@ -1,0 +1,143 @@
+{
+  "name": "IFC2X3_ParametricObject_TShapeProfile",
+  "namespace": "Tekla.Structures.Model.Collaboration",
+  "kind": "class",
+  "summary": "The IFC2X3_ParametricObject_TShapeProfile class contains the T-shape profile definition.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0cfd51a2-981e-508f-59d7-ff84ef6fe101",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The depth.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1f560985-e33c-e99a-a081-09101074afe4"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The description of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4ef1a853-3a08-64d7-d9e1-7a972a0d95e5"
+    },
+    {
+      "name": "Extrusion",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The extrusion vector.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3e9298b4-f968-cb57-f5ac-956c82e4c313"
+    },
+    {
+      "name": "FilletRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The fillet radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/37d1dcb6-1dae-27d3-704e-87adb45d929a"
+    },
+    {
+      "name": "FlangeEdgeRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The flange edge radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d3c9f148-96d2-3842-dcf3-e020f10689c8"
+    },
+    {
+      "name": "FlangeSlope",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The flange slope.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0cb82c74-b815-d513-ec68-8fad7815d429"
+    },
+    {
+      "name": "FlangeThickness",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The flange thickness.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6186aec0-bfad-2bf7-4741-e48c9ce2700e"
+    },
+    {
+      "name": "FlangeWidth",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The flange width.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fa4f32f6-b787-2d02-0fa1-b2dded0b8a1b"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/43a7f690-62b8-9b4e-e09e-0eeed73914fa"
+    },
+    {
+      "name": "ObjectType",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The object type of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0fd3c96-e406-88ca-3007-cfc1aad8e489"
+    },
+    {
+      "name": "Origin",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "The origin of the extrusion.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/79c545ba-bb67-a069-6955-04b7403bc9b8"
+    },
+    {
+      "name": "ProfileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the profile (often empty).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9c5b500f-8651-e219-ab65-8a5297a10e01"
+    },
+    {
+      "name": "WebEdgeRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The web edge radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/602784c9-2953-b034-cb93-03453ffb4e57"
+    },
+    {
+      "name": "WebSlope",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The web slope.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/664bda64-5ccc-e15d-1002-fd4986a2e062"
+    },
+    {
+      "name": "WebThickness",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The web thickness.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20ece518-74a1-11c5-119b-7fb6dd1b98e0"
+    },
+    {
+      "name": "xDir",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The X-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1c58725d-7f05-89c1-bbe6-5ad2ed4e00eb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

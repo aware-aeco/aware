@@ -1,0 +1,29 @@
+{
+  "name": "SweepMiter",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Miter types for creating swept surfaces",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SweepMiter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No mitering"
+    },
+    {
+      "name": "Trimmed",
+      "value": 1,
+      "summary": "If the sweep creates a polysurface with kinks, the component surfaces will be trimmed."
+    },
+    {
+      "name": "Untrimmed",
+      "value": 2,
+      "summary": "If the sweep creates a polysurface with kinks, the component surfaces will be untrimmed."
+    }
+  ]
+}

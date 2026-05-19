@@ -1,0 +1,65 @@
+{
+  "name": "CSModuleHelper",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Helper class to load CLR modules.",
+  "base": "ProtoFFI.ModuleHelper",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs",
+  "constructors": [
+    {
+      "name": "CSModuleHelper()",
+      "signature": "void CSModuleHelper()",
+      "summary": "CSModuleHelper.CSModuleHelper",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetMarshaler(ProtoCore.RuntimeCore)",
+      "signature": "ProtoFFI.FFIObjectMarshaler GetMarshaler(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "CSModuleHelper.GetMarshaler",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIObjectMarshaler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "getModule(string)",
+      "signature": "ProtoFFI.DLLModule getModule(string name)",
+      "summary": "Returns a CLRDLLModule after loading the given assembly.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of assembly.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.DLLModule",
+        "doc": "CLRDLLModule for given assembly/module name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,205 @@
+{
+  "name": "Context",
+  "namespace": "ProtoCore.CompileTime",
+  "kind": "class",
+  "summary": "Type Context",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs",
+  "constructors": [
+    {
+      "name": "Context()",
+      "signature": "void Context()",
+      "summary": "Context.Context",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "Context(string, System.Collections.Generic.Dictionary\u003Cstring, object\u003E, System.Collections.Generic.Dictionary\u003Cstring, bool\u003E)",
+      "signature": "void Context(string source, System.Collections.Generic.Dictionary\u003Cstring, object\u003E context, System.Collections.Generic.Dictionary\u003Cstring, bool\u003E flagList)",
+      "summary": "Context.Context",
+      "params": [
+        {
+          "name": "source",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+          "optional": false
+        },
+        {
+          "name": "flagList",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetData(string, System.Collections.Generic.Dictionary\u003Cstring, object\u003E, System.Collections.Generic.Dictionary\u003Cstring, bool\u003E)",
+      "signature": "void SetData(string source, System.Collections.Generic.Dictionary\u003Cstring, object\u003E context, System.Collections.Generic.Dictionary\u003Cstring, bool\u003E flagList)",
+      "summary": "Context.SetData",
+      "params": [
+        {
+          "name": "source",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+          "optional": false
+        },
+        {
+          "name": "flagList",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "SetExprInterpreterProperties(int, ProtoCore.Runtime.RuntimeMemory, int, ProtoCore.DebugProperties)",
+      "signature": "void SetExprInterpreterProperties(int currentBlockID, ProtoCore.Runtime.RuntimeMemory memState, int watchScope, ProtoCore.DebugProperties debugProps)",
+      "summary": "Context.SetExprInterpreterProperties",
+      "params": [
+        {
+          "name": "currentBlockID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "memState",
+          "type": "ProtoCore.Runtime.RuntimeMemory",
+          "optional": false
+        },
+        {
+          "name": "watchScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "debugProps",
+          "type": "ProtoCore.DebugProperties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentBlockId",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Context.CurrentBlockId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "DebugProps",
+      "type": "ProtoCore.DebugProperties",
+      "getter": true,
+      "setter": false,
+      "summary": "Context.DebugProps",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "DependentVariablesInScope",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Context.DependentVariablesInScope",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "GlobalVarList",
+      "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Context.GlobalVarList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "MemoryState",
+      "type": "ProtoCore.Runtime.RuntimeMemory",
+      "getter": true,
+      "setter": false,
+      "summary": "Context.MemoryState",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "SourceCode",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Context.SourceCode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "WatchClassScope",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "When compiling expression interpreter code, the codegen needs a copy of certain runtime values",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "applySSATransform",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This flag controls whether we want a full codeblock to apply SSA Transform. Currently it is used to prevent SSA on inline conditional bodies. This will be resolved when inline replication is fixed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "execFlagList",
+      "type": "System.Collections.Generic.Dictionary\u003Cstring, bool\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Context.execFlagList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "exprExecutionFlags",
+      "type": "System.Collections.Generic.Dictionary\u003Cint, bool\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Context.exprExecutionFlags",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Context.guid",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    },
+    {
+      "name": "symbolTable",
+      "type": "ProtoCore.DSASM.SymbolTable",
+      "getter": true,
+      "setter": true,
+      "summary": "Context.symbolTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Context.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

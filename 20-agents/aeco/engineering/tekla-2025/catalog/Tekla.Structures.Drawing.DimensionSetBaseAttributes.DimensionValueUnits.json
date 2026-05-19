@@ -1,0 +1,39 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionValueUnits",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The units usable with the dimensions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5a830ac6-5c02-ae18-226d-39080e9b07f0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Automatic",
+      "value": 0,
+      "summary": "The unit of the value is selected automatically."
+    },
+    {
+      "name": "Millimeter",
+      "value": 1,
+      "summary": "The value is shown in millimeters."
+    },
+    {
+      "name": "Centimeter",
+      "value": 2,
+      "summary": "The value is shown in centimeters."
+    },
+    {
+      "name": "Meter",
+      "value": 3,
+      "summary": "The value is shown in meters."
+    },
+    {
+      "name": "Inch",
+      "value": 4,
+      "summary": "The value is shown in inches."
+    }
+  ]
+}

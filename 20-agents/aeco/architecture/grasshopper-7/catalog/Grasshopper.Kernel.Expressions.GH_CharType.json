@@ -1,0 +1,90 @@
+{
+  "name": "GH_CharType",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_CharType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_CharType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "undefined",
+      "value": 0
+    },
+    {
+      "name": "whitespace",
+      "value": 1
+    },
+    {
+      "name": "dot",
+      "value": 2
+    },
+    {
+      "name": "comma",
+      "value": 3
+    },
+    {
+      "name": "colon",
+      "value": 4
+    },
+    {
+      "name": "semicolon",
+      "value": 5
+    },
+    {
+      "name": "continuation",
+      "value": 6
+    },
+    {
+      "name": "newline",
+      "value": 7
+    },
+    {
+      "name": "operator",
+      "value": 20
+    },
+    {
+      "name": "parenthesis_open",
+      "value": 21
+    },
+    {
+      "name": "parenthesis_close",
+      "value": 22
+    },
+    {
+      "name": "bracket_open",
+      "value": 23
+    },
+    {
+      "name": "bracket_close",
+      "value": 24
+    },
+    {
+      "name": "stringstart",
+      "value": 50
+    },
+    {
+      "name": "stringend",
+      "value": 51
+    },
+    {
+      "name": "stringbody",
+      "value": 52
+    },
+    {
+      "name": "commentstart",
+      "value": 60
+    },
+    {
+      "name": "commentend",
+      "value": 61
+    },
+    {
+      "name": "commentbody",
+      "value": 62
+    }
+  ]
+}

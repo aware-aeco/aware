@@ -1,0 +1,63 @@
+{
+  "name": "ZeroTouchSearchElement",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "Search element for a Zero Touch node (DSFunction / DSVarArgFunction)",
+  "base": "Dynamo.Search.SearchElements.NodeSearchElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/ZeroTouchSearchElement.cs",
+  "constructors": [
+    {
+      "name": "ZeroTouchSearchElement(Dynamo.Engine.FunctionDescriptor)",
+      "signature": "void ZeroTouchSearchElement(Dynamo.Engine.FunctionDescriptor functionDescriptor)",
+      "summary": "Initializes a new instance of the Dynamo.Search.SearchElements.ZeroTouchSearchElement class with the DesignScript function description",
+      "params": [
+        {
+          "name": "functionDescriptor",
+          "type": "Dynamo.Engine.FunctionDescriptor",
+          "doc": "Dynamo.Engine.FunctionDescriptor object describing DesignScript function.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/ZeroTouchSearchElement.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstructNewNodeModel",
+      "signature": "Dynamo.Graph.Nodes.NodeModel ConstructNewNodeModel()",
+      "summary": "ZeroTouchSearchElement.ConstructNewNodeModel",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/ZeroTouchSearchElement.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CreationName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name that is used during node creation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/ZeroTouchSearchElement.cs"
+    },
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The full name of entry which consists of assembly name and qualified name for function descriptor.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/ZeroTouchSearchElement.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

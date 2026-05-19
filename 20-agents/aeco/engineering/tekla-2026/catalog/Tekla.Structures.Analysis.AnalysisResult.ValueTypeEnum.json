@@ -1,0 +1,249 @@
+{
+  "name": "AnalysisResult.ValueTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The value type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e35fbe0b-b7da-a269-dbfc-8705df64e4f4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "VALUETYPE_AXIAL",
+      "value": 1,
+      "summary": "The axial (FX) (N) value type."
+    },
+    {
+      "name": "VALUETYPE_SHEAR_Y",
+      "value": 2,
+      "summary": "The shear Y (FY) (N) value type."
+    },
+    {
+      "name": "VALUETYPE_SHEAR_Z",
+      "value": 3,
+      "summary": "The shear Z (FZ) (N) value type."
+    },
+    {
+      "name": "VALUETYPE_TORSION_MOMENT",
+      "value": 4,
+      "summary": "The torsion moment (MX) (Nm) value type."
+    },
+    {
+      "name": "VALUETYPE_MOMENT_Y",
+      "value": 5,
+      "summary": "The bending moment Y (MY) (Nm) value type."
+    },
+    {
+      "name": "VALUETYPE_MOMENT_Z",
+      "value": 6,
+      "summary": "The bending moment Z (MZ) (Nm) value type."
+    },
+    {
+      "name": "VALUETYPE_SHEAR_YZ",
+      "value": 51,
+      "summary": "The shear resultant (positive) (N) value type."
+    },
+    {
+      "name": "VALUETYPE_MOMENT_YZ",
+      "value": 52,
+      "summary": "The moment resultant (positive) (Nm) value type."
+    },
+    {
+      "name": "VALUETYPE_ECC_MOMENT_Y",
+      "value": 53,
+      "summary": "The eccentricity moment Y (Nm) value type."
+    },
+    {
+      "name": "VALUETYPE_ECC_MOMENT_Z",
+      "value": 54,
+      "summary": "The eccentricity moment Z (Nm) value type."
+    },
+    {
+      "name": "VALUETYPE_STEEL_UTILITY_RATIO",
+      "value": 101,
+      "summary": "The utility ratio value type."
+    },
+    {
+      "name": "VALUETYPE_GLOBAL_REACTION_X",
+      "value": 201,
+      "summary": "The reaction in global X (N) value type."
+    },
+    {
+      "name": "VALUETYPE_GLOBAL_REACTION_Y",
+      "value": 202,
+      "summary": "The reaction in global Y (N) value type."
+    },
+    {
+      "name": "VALUETYPE_GLOBAL_REACTION_Z",
+      "value": 203,
+      "summary": "The reaction in global Z (N) value type."
+    },
+    {
+      "name": "VALUETYPE_DISPLACEMENT_X",
+      "value": 301,
+      "summary": "The displacement in global X (mm) value type."
+    },
+    {
+      "name": "VALUETYPE_DISPLACEMENT_Y",
+      "value": 302,
+      "summary": "The displacement in global Y (mm) value type."
+    },
+    {
+      "name": "VALUETYPE_DISPLACEMENT_Z",
+      "value": 303,
+      "summary": "The displacement in global Z (mm) value type."
+    },
+    {
+      "name": "VALUETYPE_ROTATION_X",
+      "value": 304,
+      "summary": "The rotation around global X (rad) value type."
+    },
+    {
+      "name": "VALUETYPE_ROTATION_Y",
+      "value": 305,
+      "summary": "The rotation around global Y (rad) value type."
+    },
+    {
+      "name": "VALUETYPE_ROTATION_Z",
+      "value": 306,
+      "summary": "The rotation around global Z (rad) value type."
+    },
+    {
+      "name": "VALUETYPE_REINFORCEMENT_AREA",
+      "value": 400,
+      "summary": "The reinforcement area (total) (mm2) value type."
+    },
+    {
+      "name": "VALUETYPE_REINFORCEMENT_BOTTOM",
+      "value": 401,
+      "summary": "The bottom reinforcement area (mm2) value type."
+    },
+    {
+      "name": "VALUETYPE_REINFORCEMENT_TOP",
+      "value": 402,
+      "summary": "The top reinforcement area (mm2) value type."
+    },
+    {
+      "name": "VALUETYPE_REINFORCEMENT_SHEAR",
+      "value": 403,
+      "summary": "The shear reinforcement area (mm2/m) value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_MAIN_DIRECTION_X",
+      "value": 421,
+      "summary": "The slab main direction cosine, X component, value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_MAIN_DIRECTION_Y",
+      "value": 422,
+      "summary": "The slab main direction cosine, Y component, value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_MAIN_DIRECTION_Z",
+      "value": 423,
+      "summary": "The slab main direction cosine, Z component, value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_SECONDARY_DIRECTION_X",
+      "value": 424,
+      "summary": "The slab secondary direction cosine, X component, value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_SECONDARY_MAIN_DIRECTION_Y",
+      "value": 425,
+      "summary": "The slab secondary direction cosine, Y component, value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_SECONDARY_MAIN_DIRECTION_Z",
+      "value": 426,
+      "summary": "The slab secondary direction cosine, Z component, value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_MAIN_REINFORCEMENT_BOTTOM",
+      "value": 427,
+      "summary": "The slab main reinforcement, bottom (mm2/m), value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_MAIN_REINFORCEMENT_TOP",
+      "value": 428,
+      "summary": "The slab main reinforcement, top (mm2/m), value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_SEC_REINFORCEMENT_BOTTOM",
+      "value": 429,
+      "summary": "The slab secondary reinforcement, bottom (mm2/m), value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_SEC_REINFORCEMENT_TOP",
+      "value": 430,
+      "summary": "The slab secondary reinforcement, top (mm2/m), value type."
+    },
+    {
+      "name": "VALUETYPE_SLAB_SHEAR_REINFORCEMENT",
+      "value": 431,
+      "summary": "The slab shear reinforcement (mm2/m) value type."
+    },
+    {
+      "name": "VALUETYPE_AXIAL_MINUS",
+      "value": 11,
+      "summary": "The axial (FX), minus side (N), value type."
+    },
+    {
+      "name": "VALUETYPE_SHEAR_Y_MINUS",
+      "value": 12,
+      "summary": "The shear Y (FY), minus side (N), value type."
+    },
+    {
+      "name": "VALUETYPE_SHEAR_Z_MINUS",
+      "value": 13,
+      "summary": "The shear Z (FZ), minus side (N), value type."
+    },
+    {
+      "name": "VALUETYPE_TORSION_MOMENT_MINUS",
+      "value": 14,
+      "summary": "The torsion moment (MX), minus side (Nm), value type."
+    },
+    {
+      "name": "VALUETYPE_MOMENT_Y_MINUS",
+      "value": 15,
+      "summary": "The bending moment Y (MY), minus side (Nm), value type."
+    },
+    {
+      "name": "VALUETYPE_MOMENT_Z_MINUS",
+      "value": 16,
+      "summary": "The bending moment Z (MZ), minus side (Nm), value type."
+    },
+    {
+      "name": "VALUETYPE_AXIAL_PLUS",
+      "value": 21,
+      "summary": "The axial (FX), plus side (N), value type."
+    },
+    {
+      "name": "VALUETYPE_SHEAR_Y_PLUS",
+      "value": 22,
+      "summary": "The shear Y (FY), plus side (N), value type."
+    },
+    {
+      "name": "VALUETYPE_SHEAR_Z_PLUS",
+      "value": 23,
+      "summary": "The shear Z (FZ), plus side (N), value type."
+    },
+    {
+      "name": "VALUETYPE_TORSION_MOMENT_PLUS",
+      "value": 24,
+      "summary": "The torsion moment (MX), plus side (Nm), value type."
+    },
+    {
+      "name": "VALUETYPE_MOMENT_Y_PLUS",
+      "value": 25,
+      "summary": "The bending moment Y (MY), plus side (Nm), value type."
+    },
+    {
+      "name": "VALUETYPE_MOMENT_Z_PLUS",
+      "value": 26,
+      "summary": "The bending moment Z (MZ), plus side (Nm), value type."
+    }
+  ]
+}

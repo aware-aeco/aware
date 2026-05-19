@@ -1,0 +1,22 @@
+{
+  "name": "IHasCppImplementation",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.IHasCppImplementation\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_IHasCppImplementation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IHasCppImplementation_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

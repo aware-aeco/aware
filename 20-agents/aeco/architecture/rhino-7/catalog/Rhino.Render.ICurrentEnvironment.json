@@ -1,0 +1,56 @@
+{
+  "name": "ICurrentEnvironment",
+  "namespace": "Rhino.Render",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.ICurrentEnvironment\u0022]",
+  "interfaces": [
+    "ICurrentEnvironment_Get"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_ICurrentEnvironment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ForAnyUsage",
+      "type": "RenderEnvironment",
+      "getter": false,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ICurrentEnvironment_ForAnyUsage.htm"
+    },
+    {
+      "name": "ForBackground",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ICurrentEnvironment_ForBackground.htm"
+    },
+    {
+      "name": "ForBackground_CheckMode",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ICurrentEnvironment_ForBackground_CheckMode.htm"
+    },
+    {
+      "name": "ForLighting",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ICurrentEnvironment_ForLighting.htm"
+    },
+    {
+      "name": "ForReflectionAndRefraction",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ICurrentEnvironment_ForReflectionAndRefraction.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

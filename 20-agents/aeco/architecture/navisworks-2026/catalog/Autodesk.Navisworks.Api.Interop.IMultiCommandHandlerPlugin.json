@@ -1,0 +1,147 @@
+{
+  "name": "IMultiCommandHandlerPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "IMultiCommandHandlerPlugin interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [
+    "Autodesk.Navisworks.Api.Interop.IPlugin"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Handles",
+      "signature": "bool Handles(string CmdId)",
+      "summary": "Handles method of IMultiCommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "CmdId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin.Handles%28System.String%29"
+    },
+    {
+      "name": "InitialStatusText",
+      "signature": "string InitialStatusText(string CmdId)",
+      "summary": "InitialStatusText method of IMultiCommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "CmdId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin.InitialStatusText%28System.String%29"
+    },
+    {
+      "name": "InitialText",
+      "signature": "string InitialText(string CmdId)",
+      "summary": "InitialText method of IMultiCommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "CmdId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin.InitialText%28System.String%29"
+    },
+    {
+      "name": "OnCmd",
+      "signature": "void OnCmd(string CmdId, Autodesk.Navisworks.Api.Interop.IGUICommand cmd)",
+      "summary": "OnCmd method of IMultiCommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "CmdId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "cmd",
+          "type": "Autodesk.Navisworks.Api.Interop.IGUICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin.OnCmd%28System.String%2CAutodesk.Navisworks.Api.Interop.IGUICommand%29"
+    },
+    {
+      "name": "OnPopup",
+      "signature": "void OnPopup(string CmdId)",
+      "summary": "OnPopup method of IMultiCommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "CmdId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin.OnPopup%28System.String%29"
+    },
+    {
+      "name": "OnPopupClosed",
+      "signature": "void OnPopupClosed(string CmdId)",
+      "summary": "OnPopupClosed method of IMultiCommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "CmdId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin.OnPopupClosed%28System.String%29"
+    },
+    {
+      "name": "OnUpdateCmd",
+      "signature": "void OnUpdateCmd(string CmdId, Autodesk.Navisworks.Api.Interop.IGUICommand cmd)",
+      "summary": "OnUpdateCmd method of IMultiCommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "CmdId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "cmd",
+          "type": "Autodesk.Navisworks.Api.Interop.IGUICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IMultiCommandHandlerPlugin.OnUpdateCmd%28System.String%2CAutodesk.Navisworks.Api.Interop.IGUICommand%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

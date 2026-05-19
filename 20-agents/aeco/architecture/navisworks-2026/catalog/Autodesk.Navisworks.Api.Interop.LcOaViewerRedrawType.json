@@ -1,0 +1,54 @@
+{
+  "name": "LcOaViewerRedrawType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOaViewerRedrawType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eREDRAW_WINDOW",
+      "value": 1
+    },
+    {
+      "name": "eREDRAW_UPDATE",
+      "value": 2
+    },
+    {
+      "name": "eREDRAW_USER_RENDER",
+      "value": 2
+    },
+    {
+      "name": "eREDRAW_USER_RENDER_MODEL_SPACE",
+      "value": 2
+    },
+    {
+      "name": "eREDRAW_OVERLAY_RENDER_MODEL_SPACE",
+      "value": 2
+    },
+    {
+      "name": "eREDRAW_INTERRUPT",
+      "value": 4
+    },
+    {
+      "name": "eREDRAW_EXPECTED",
+      "value": 8
+    },
+    {
+      "name": "eREDRAW_RESIZE",
+      "value": 16
+    },
+    {
+      "name": "eREDRAW_OVERLAY",
+      "value": 32
+    },
+    {
+      "name": "eREDRAW_OVERLAY_RENDER",
+      "value": 32
+    }
+  ]
+}

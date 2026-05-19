@@ -1,0 +1,59 @@
+{
+  "name": "GH_VariantType",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "enum",
+  "summary": "Lists all possible variable types supported in the Grasshopper Expression Parser.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_VariantType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "unknown",
+      "value": -1,
+      "summary": "Unknown type."
+    },
+    {
+      "name": "null",
+      "value": 0,
+      "summary": "Variant is a null reference."
+    },
+    {
+      "name": "bool",
+      "value": 1,
+      "summary": "Variant is of type System.Boolean"
+    },
+    {
+      "name": "int",
+      "value": 2,
+      "summary": "Variant is of type System.Int32"
+    },
+    {
+      "name": "double",
+      "value": 4,
+      "summary": "Variant is of type System.Double"
+    },
+    {
+      "name": "string",
+      "value": 8,
+      "summary": "Variant is of type System.String"
+    },
+    {
+      "name": "point",
+      "value": 16,
+      "summary": "Variant is of type Rhino.Geometry.Point3d"
+    },
+    {
+      "name": "plane",
+      "value": 32,
+      "summary": "Variant is of type Rhino.Geometry.Plane"
+    },
+    {
+      "name": "complex",
+      "value": 64,
+      "summary": "Variant is of type Grasshopper.Types.GH_Complex"
+    }
+  ]
+}

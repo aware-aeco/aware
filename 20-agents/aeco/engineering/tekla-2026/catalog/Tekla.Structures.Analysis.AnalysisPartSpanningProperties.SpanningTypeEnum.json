@@ -1,0 +1,24 @@
+{
+  "name": "AnalysisPartSpanningProperties.SpanningTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The spanning types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f61bcc98-8df1-fb60-e56d-9c1b51bcb940",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SPANNING_TYPE_SINGLE",
+      "value": 1,
+      "summary": "The single spanning type."
+    },
+    {
+      "name": "SPANNING_TYPE_DOUBLE",
+      "value": 2,
+      "summary": "The double spanning type."
+    }
+  ]
+}

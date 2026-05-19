@@ -1,0 +1,88 @@
+{
+  "name": "InputViewDocumentData",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the functions for the input view and document data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewDocumentData/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EnableAssistWndClick",
+      "signature": "EnableAssistWndClick(bEnable: bool)",
+      "summary": "Enable/disable a click inside the assist window",
+      "remarks": "Enable/disable a click inside the assist window",
+      "params": [
+        {
+          "name": "bEnable",
+          "type": "bool",
+          "doc": "Enable a click inside the assist window: 1/0",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewDocumentData/#NemAll_Python_IFW_Input.InputViewDocumentData.EnableAssistWndClick"
+    },
+    {
+      "name": "GetActiveViewDocument",
+      "signature": "GetActiveViewDocument() -\u003E DocumentAdapter",
+      "summary": "Get the active view document",
+      "remarks": "Get the active view document",
+      "params": [],
+      "returns": {
+        "type": "DocumentAdapter",
+        "doc": "Active view document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewDocumentData/#NemAll_Python_IFW_Input.InputViewDocumentData.GetActiveViewDocument"
+    },
+    {
+      "name": "GetInputViewDocument",
+      "signature": "GetInputViewDocument() -\u003E DocumentAdapter",
+      "summary": "Get the input view document",
+      "remarks": "Get the input view document",
+      "params": [],
+      "returns": {
+        "type": "DocumentAdapter",
+        "doc": "Input view document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewDocumentData/#NemAll_Python_IFW_Input.InputViewDocumentData.GetInputViewDocument"
+    },
+    {
+      "name": "GetInputViewDocumentID",
+      "signature": "GetInputViewDocumentID() -\u003E int",
+      "summary": "Get the document ID of the current input view.",
+      "remarks": "Get the document ID of the current input view.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Document ID of the current input view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewDocumentData/#NemAll_Python_IFW_Input.InputViewDocumentData.GetInputViewDocumentID"
+    },
+    {
+      "name": "GetViewWorldProjection",
+      "signature": "GetViewWorldProjection() -\u003E ViewWorldProjection",
+      "summary": "Get the view-world projection object",
+      "remarks": "Get the view-world projection object",
+      "params": [],
+      "returns": {
+        "type": "ViewWorldProjection",
+        "doc": "View-world projection object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewDocumentData/#NemAll_Python_IFW_Input.InputViewDocumentData.GetViewWorldProjection"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

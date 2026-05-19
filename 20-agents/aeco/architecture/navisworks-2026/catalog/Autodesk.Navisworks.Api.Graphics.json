@@ -1,0 +1,2207 @@
+{
+  "name": "Graphics",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Class encapsulating API for the rendering of client graphics.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Graphics",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Text2D",
+      "signature": "Autodesk.Navisworks.Api.TextExtents2D Text2D(Autodesk.Navisworks.Api.TextFontInfo fontInfo, string text, Autodesk.Navisworks.Api.Point2D origin, int offsetX, int offsetY)",
+      "summary": "Renders 2D text.Text is rendered in 2D as bitmaps. It always faces the viewer.",
+      "params": [
+        {
+          "name": "fontInfo",
+          "type": "Autodesk.Navisworks.Api.TextFontInfo",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        },
+        {
+          "name": "offsetX",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "offsetY",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.TextExtents2D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027fontInfo\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Text2D%28Autodesk.Navisworks.Api.TextFontInfo%2CSystem.String%2CAutodesk.Navisworks.Api.Point2D%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Text2DExtents",
+      "signature": "Autodesk.Navisworks.Api.TextExtents2D Text2DExtents(Autodesk.Navisworks.Api.TextFontInfo fontInfo, string text)",
+      "summary": "Returns the extents of 2D text.",
+      "params": [
+        {
+          "name": "fontInfo",
+          "type": "Autodesk.Navisworks.Api.TextFontInfo",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.TextExtents2D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027fontInfo\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Text2DExtents%28Autodesk.Navisworks.Api.TextFontInfo%2CSystem.String%29"
+    },
+    {
+      "name": "CanRenderText2D",
+      "signature": "bool CanRenderText2D(Autodesk.Navisworks.Api.TextFontInfo fontInfo, string text)",
+      "summary": "Check to see if you can render a given text string with given font info.",
+      "params": [
+        {
+          "name": "fontInfo",
+          "type": "Autodesk.Navisworks.Api.TextFontInfo",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027fontInfo\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.CanRenderText2D%28Autodesk.Navisworks.Api.TextFontInfo%2CSystem.String%29"
+    },
+    {
+      "name": "GetFontMetrics",
+      "signature": "bool GetFontMetrics(Autodesk.Navisworks.Api.TextFontInfo fontInfo, Autodesk.Navisworks.Api.TextFontMetrics metrics)",
+      "summary": "Returns font metrics.",
+      "params": [
+        {
+          "name": "fontInfo",
+          "type": "Autodesk.Navisworks.Api.TextFontInfo",
+          "optional": false
+        },
+        {
+          "name": "metrics",
+          "type": "Autodesk.Navisworks.Api.TextFontMetrics",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027fontInfo\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027metrics\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.GetFontMetrics%28Autodesk.Navisworks.Api.TextFontInfo%2CAutodesk.Navisworks.Api.TextFontMetrics%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Graphics InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Graphics.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Graphics",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Graphics.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Arc",
+      "signature": "void Arc(Autodesk.Navisworks.Api.Point2D centre, Autodesk.Navisworks.Api.Point2D start, Autodesk.Navisworks.Api.Point2D end, bool filled)",
+      "summary": "Renders a 2D arc in the XY plane at the current Z depth.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Centre point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Start point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "End point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the arc be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027centre\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027centre\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027start\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027start\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027end\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027end\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Arc%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Arc",
+      "signature": "void Arc(Autodesk.Navisworks.Api.Point3D center, Autodesk.Navisworks.Api.Point3D start, Autodesk.Navisworks.Api.Point3D end, Autodesk.Navisworks.Api.Vector3D normal, bool filled)",
+      "summary": "Renders a 3D arc.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Center point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Start point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "End point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "Normal for arc.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the arc be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027center\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027center\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027start\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027start\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027end\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027end\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027normal\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Arc%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Vector3D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "BeginComplexPolygon",
+      "signature": "void BeginComplexPolygon(Autodesk.Navisworks.Api.VertexProperties vertexProperties)",
+      "summary": "Begin rendering a complex polygon.",
+      "params": [
+        {
+          "name": "vertexProperties",
+          "type": "Autodesk.Navisworks.Api.VertexProperties",
+          "doc": "Vertex properties for the polygon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BeginComplexPolygon%28Autodesk.Navisworks.Api.VertexProperties%29"
+    },
+    {
+      "name": "BeginComplexPolygonContour",
+      "signature": "void BeginComplexPolygonContour()",
+      "summary": "Begin complex polygon contour.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BeginComplexPolygonContour"
+    },
+    {
+      "name": "BeginModelContext",
+      "signature": "void BeginModelContext()",
+      "summary": "Begin rendering in the Model Context.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BeginModelContext"
+    },
+    {
+      "name": "BeginPolygon",
+      "signature": "void BeginPolygon(Autodesk.Navisworks.Api.VertexProperties vertexProperties)",
+      "summary": "Begins a convex polygon.",
+      "params": [
+        {
+          "name": "vertexProperties",
+          "type": "Autodesk.Navisworks.Api.VertexProperties",
+          "doc": "Vertex properties for the polygon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BeginPolygon%28Autodesk.Navisworks.Api.VertexProperties%29"
+    },
+    {
+      "name": "BeginUserContext",
+      "signature": "void BeginUserContext()",
+      "summary": "Begin rendering in a user-defined context.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BeginUserContext"
+    },
+    {
+      "name": "BeginWindowContext",
+      "signature": "void BeginWindowContext()",
+      "summary": "Begin rendering in the Window Context.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BeginWindowContext"
+    },
+    {
+      "name": "BezierSegment",
+      "signature": "void BezierSegment(Autodesk.Navisworks.Api.Point2D start, Autodesk.Navisworks.Api.Point2D control, Autodesk.Navisworks.Api.Point2D end)",
+      "summary": "Renders a 2D segment of a 3rd order Bezier curve.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Start point of the segment.",
+          "optional": false
+        },
+        {
+          "name": "control",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Control point for segment.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027start\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027start\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027control\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027control\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027end\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027end\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BezierSegment%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "BezierSegment",
+      "signature": "void BezierSegment(Autodesk.Navisworks.Api.Point2D start, Autodesk.Navisworks.Api.Point2D control, Autodesk.Navisworks.Api.Point2D end, int resolution)",
+      "summary": "Renders a 2D segment of a 3rd order Bezier curve.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Start point of the segment.",
+          "optional": false
+        },
+        {
+          "name": "control",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Control point for segment.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        },
+        {
+          "name": "resolution",
+          "type": "int",
+          "doc": "Number of points to evaluate along the Bezier.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027start\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027start\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027control\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027control\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027end\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027end\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.BezierSegment%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CSystem.Int32%29"
+    },
+    {
+      "name": "Bitmap",
+      "signature": "void Bitmap(int index, Autodesk.Navisworks.Api.Point2D origin, double alpha)",
+      "summary": "Renders a registered bitmap",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the registered bitmap to render.",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Origin point of the bitmap.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "double",
+          "doc": "Overall alpha value for the bitmap.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Bitmap%28System.Int32%2CAutodesk.Navisworks.Api.Point2D%2CSystem.Double%29"
+    },
+    {
+      "name": "Bitmap",
+      "signature": "void Bitmap(int index, Autodesk.Navisworks.Api.Point2D origin, uint width, uint height, double alpha)",
+      "summary": "Renders a registered bitmap",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the registered bitmap to render.",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Origin point of the bitmap.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "uint",
+          "doc": "Width of the image you want to render.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "uint",
+          "doc": "Height of the image you want to render.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "double",
+          "doc": "Overall alpha value for the bitmap.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Bitmap%28System.Int32%2CAutodesk.Navisworks.Api.Point2D%2CSystem.UInt32%2CSystem.UInt32%2CSystem.Double%29"
+    },
+    {
+      "name": "Blend",
+      "signature": "void Blend(bool blendOn)",
+      "summary": "Enables or disables blending.",
+      "params": [
+        {
+          "name": "blendOn",
+          "type": "bool",
+          "doc": "Should blending be enabled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Blend%28System.Boolean%29"
+    },
+    {
+      "name": "Circle",
+      "signature": "void Circle(Autodesk.Navisworks.Api.Point2D centre, double radius, bool filled)",
+      "summary": "Renders a 2D circle in the XY plane at the current Z depth.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Centre point of the circle.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "doc": "Radius of circle.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the circle be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027centre\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027centre\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Circle%28Autodesk.Navisworks.Api.Point2D%2CSystem.Double%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Circle",
+      "signature": "void Circle(Autodesk.Navisworks.Api.Point3D centre, Autodesk.Navisworks.Api.Vector3D normal, double radius, bool filled)",
+      "summary": "Renders a 3D circle in the model space.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Centre point of the circle.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "normal for the circle.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "doc": "Radius of circle.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the circle be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027centre\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027centre\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027normal\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Circle%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Vector3D%2CSystem.Double%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Color",
+      "signature": "void Color(Autodesk.Navisworks.Api.Color colorValue, double alphaValue)",
+      "summary": "Sets the current render color.",
+      "params": [
+        {
+          "name": "colorValue",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "doc": "Color value.",
+          "optional": false
+        },
+        {
+          "name": "alphaValue",
+          "type": "double",
+          "doc": "Alpha value. Range of 0.0 to 1.0. 0.0 is fully transparent, 1.0 is fully opaque.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027colorValue\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027colorValue\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Color%28Autodesk.Navisworks.Api.Color%2CSystem.Double%29"
+    },
+    {
+      "name": "Cone",
+      "signature": "void Cone(Autodesk.Navisworks.Api.Point3D start, Autodesk.Navisworks.Api.Point3D end, double startRadius, double endRadius)",
+      "summary": "Renders a 3D cone.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Start point of centre axis.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "End point of centre axis.",
+          "optional": false
+        },
+        {
+          "name": "startRadius",
+          "type": "double",
+          "doc": "Radius at start point of cone.",
+          "optional": false
+        },
+        {
+          "name": "endRadius",
+          "type": "double",
+          "doc": "Radius at end point of cone.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027start\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027start\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027end\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027end\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Cone%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "Cuboid",
+      "signature": "void Cuboid(Autodesk.Navisworks.Api.Point3D origin, Autodesk.Navisworks.Api.Vector3D xVector, Autodesk.Navisworks.Api.Vector3D yVector, Autodesk.Navisworks.Api.Vector3D zVector, bool filled)",
+      "summary": "Renders a 3D cuboid.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Origin point of rectangle.",
+          "optional": false
+        },
+        {
+          "name": "xVector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "Vector representing \u0027x\u0027 side of cuboid.",
+          "optional": false
+        },
+        {
+          "name": "yVector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "Vector representing \u0027y\u0027 side of cuboid.",
+          "optional": false
+        },
+        {
+          "name": "zVector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "Vector representing \u0027y\u0027 side of cuboid.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the cuboid be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027xVector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027xVector\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027yVector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027yVector\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027zVector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027zVector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Cuboid%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Cylinder",
+      "signature": "void Cylinder(Autodesk.Navisworks.Api.Point3D start, Autodesk.Navisworks.Api.Point3D end, double radius)",
+      "summary": "Renders a 3D cylinder.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Start point of centre axis.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "End point of centre axis.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "doc": "Radius of cylinder.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027start\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027start\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027end\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027end\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Cylinder%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CSystem.Double%29"
+    },
+    {
+      "name": "DepthMask",
+      "signature": "void DepthMask(bool depthMaskOn)",
+      "summary": "Enables or disables depth buffer writing.",
+      "params": [
+        {
+          "name": "depthMaskOn",
+          "type": "bool",
+          "doc": "Should writing to the depth buffer be enabled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.DepthMask%28System.Boolean%29"
+    },
+    {
+      "name": "DepthTest",
+      "signature": "void DepthTest(bool depthTestOn)",
+      "summary": "Enables or disables depth testing.",
+      "params": [
+        {
+          "name": "depthTestOn",
+          "type": "bool",
+          "doc": "Should depth testing be enabled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.DepthTest%28System.Boolean%29"
+    },
+    {
+      "name": "Ellipse",
+      "signature": "void Ellipse(Autodesk.Navisworks.Api.Point2D centre, double xRadius, double yRadius, bool filled)",
+      "summary": "Renders a 2D axis-aligned ellipse in the XY plane at the current Z depth.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Centre point of the ellipse.",
+          "optional": false
+        },
+        {
+          "name": "xRadius",
+          "type": "double",
+          "doc": "Length of X radius.",
+          "optional": false
+        },
+        {
+          "name": "yRadius",
+          "type": "double",
+          "doc": "Length of Y radius.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the ellipse be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027centre\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027centre\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Ellipse%28Autodesk.Navisworks.Api.Point2D%2CSystem.Double%2CSystem.Double%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Ellipse",
+      "signature": "void Ellipse(Autodesk.Navisworks.Api.Point2D centre, double xRadius, double yRadius, bool filled, int resolution)",
+      "summary": "Renders a 2D axis-aligned ellipse in the XY plane at the current Z depth.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Centre point of the ellipse.",
+          "optional": false
+        },
+        {
+          "name": "xRadius",
+          "type": "double",
+          "doc": "Length of X radius.",
+          "optional": false
+        },
+        {
+          "name": "yRadius",
+          "type": "double",
+          "doc": "Length of Y radius.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the ellipse be filled in or an outline.",
+          "optional": false
+        },
+        {
+          "name": "resolution",
+          "type": "int",
+          "doc": "Number of points used to draw ellipse.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027centre\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027centre\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Ellipse%28Autodesk.Navisworks.Api.Point2D%2CSystem.Double%2CSystem.Double%2CSystem.Boolean%2CSystem.Int32%29"
+    },
+    {
+      "name": "EndComplexPolygon",
+      "signature": "void EndComplexPolygon()",
+      "summary": "Ends current complex polygon.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.EndComplexPolygon"
+    },
+    {
+      "name": "EndComplexPolygonContour",
+      "signature": "void EndComplexPolygonContour()",
+      "summary": "Ends current complex polygon contour.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.EndComplexPolygonContour"
+    },
+    {
+      "name": "EndModelContext",
+      "signature": "void EndModelContext()",
+      "summary": "End rendering in the Model context.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.EndModelContext"
+    },
+    {
+      "name": "EndPolygon",
+      "signature": "void EndPolygon()",
+      "summary": "End current convex polygon.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.EndPolygon"
+    },
+    {
+      "name": "EndUserContext",
+      "signature": "void EndUserContext()",
+      "summary": "End rendering in the User context.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.EndUserContext"
+    },
+    {
+      "name": "EndWindowContext",
+      "signature": "void EndWindowContext()",
+      "summary": "End rendering in the Window Context.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.EndWindowContext"
+    },
+    {
+      "name": "Lighting",
+      "signature": "void Lighting(bool lightingOn)",
+      "summary": "Enables or disables lighting.",
+      "params": [
+        {
+          "name": "lightingOn",
+          "type": "bool",
+          "doc": "Should lighting be enabled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Lighting%28System.Boolean%29"
+    },
+    {
+      "name": "Line",
+      "signature": "void Line(Autodesk.Navisworks.Api.Point2D point1, Autodesk.Navisworks.Api.Point2D point2)",
+      "summary": "Renders a 2D line in the XY plane at the current depth.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "First point of line.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Second point of line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point1\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point1\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point2\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point2\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Line%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "Line",
+      "signature": "void Line(Autodesk.Navisworks.Api.Point3D start, Autodesk.Navisworks.Api.Point3D end)",
+      "summary": "Renders a 3D line.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Start point.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "End point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027start\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027start\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027end\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027end\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Line%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "LineStipple",
+      "signature": "void LineStipple(int factor, ushort pattern)",
+      "summary": "Sets the current line stipple mode.",
+      "params": [
+        {
+          "name": "factor",
+          "type": "int",
+          "doc": "Factor to stretch pattern by. May be clamped.",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "ushort",
+          "doc": "Bit pattern to stipple line with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.LineStipple%28System.Int32%2CSystem.UInt16%29"
+    },
+    {
+      "name": "LineWidth",
+      "signature": "void LineWidth(double width)",
+      "summary": "Sets the current line width.",
+      "params": [
+        {
+          "name": "width",
+          "type": "double",
+          "doc": "line width to render with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.LineWidth%28System.Double%29"
+    },
+    {
+      "name": "Point",
+      "signature": "void Point(Autodesk.Navisworks.Api.Point2D point2D)",
+      "summary": "Renders a 2D point in the XY plane at the current depth.",
+      "params": [
+        {
+          "name": "point2D",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Position to render point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point2D\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point2D\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Point%28Autodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "Point",
+      "signature": "void Point(Autodesk.Navisworks.Api.Point3D point3D)",
+      "summary": "Renders a 3D point.",
+      "params": [
+        {
+          "name": "point3D",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Position to render point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point3D\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point3D\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Point%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "Polyline2D",
+      "signature": "void Polyline2D(Autodesk.Navisworks.Api.Point2DList points)",
+      "summary": "Renders a 2D polyline in the XY plane at the current depth.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Autodesk.Navisworks.Api.Point2DList",
+          "doc": "Array of each point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027points\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027points\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Polyline2D%28Autodesk.Navisworks.Api.Point2DList%29"
+    },
+    {
+      "name": "Polyline3D",
+      "signature": "void Polyline3D(Autodesk.Navisworks.Api.Point3DList points)",
+      "summary": "Renders a 3D polyline.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Autodesk.Navisworks.Api.Point3DList",
+          "doc": "Array of each point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027points\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027points\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Polyline3D%28Autodesk.Navisworks.Api.Point3DList%29"
+    },
+    {
+      "name": "Rectangle",
+      "signature": "void Rectangle(Autodesk.Navisworks.Api.Point2D bottomLeft, Autodesk.Navisworks.Api.Point2D topRight, bool filled)",
+      "summary": "Renders a 2D rectangle in the XY plane at the current Z depth.",
+      "params": [
+        {
+          "name": "bottomLeft",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Bottom-left coordinate of rectangle.",
+          "optional": false
+        },
+        {
+          "name": "topRight",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Top-right coordinate of rectangle.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the rectangle be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027bottomLeft\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027bottomLeft\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027topRight\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027topRight\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Rectangle%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Rectangle",
+      "signature": "void Rectangle(Autodesk.Navisworks.Api.Point3D origin, Autodesk.Navisworks.Api.Vector3D xVector, Autodesk.Navisworks.Api.Vector3D yVector, bool filled)",
+      "summary": "Renders a 3D rectangle.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Origin point of rectangle.",
+          "optional": false
+        },
+        {
+          "name": "xVector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "Vector representing \u0027x\u0027 side of rectangle.",
+          "optional": false
+        },
+        {
+          "name": "yVector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "Vector representing \u0027y\u0027 side of rectangle.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the rectangle be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027origin\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027origin\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027xVector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027xVector\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027yVector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027yVector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Rectangle%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetTexture",
+      "signature": "void SetTexture(int imageId)",
+      "summary": "Set texture image index.",
+      "params": [
+        {
+          "name": "imageId",
+          "type": "int",
+          "doc": "image index registered by Application.RegisterBitmap API.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.SetTexture%28System.Int32%29"
+    },
+    {
+      "name": "Sphere",
+      "signature": "void Sphere(Autodesk.Navisworks.Api.Point3D center, double radius)",
+      "summary": "Renders a 3D sphere.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Center of sphere.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "doc": "Radius of sphere.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027center\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027center\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Sphere%28Autodesk.Navisworks.Api.Point3D%2CSystem.Double%29"
+    },
+    {
+      "name": "TextureCoordinate",
+      "signature": "void TextureCoordinate(Autodesk.Navisworks.Api.Point2D coordinate)",
+      "summary": "Specifies texture co-ordinate for next polygon vertex.",
+      "params": [
+        {
+          "name": "coordinate",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Texture co-ordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027coordinate\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027coordinate\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.TextureCoordinate%28Autodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "Triangle",
+      "signature": "void Triangle(Autodesk.Navisworks.Api.Point2D point1, Autodesk.Navisworks.Api.Point2D point2, Autodesk.Navisworks.Api.Point2D point3, bool filled)",
+      "summary": "Renders a 2D triangle in the XY plane at the current Z depth.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "First point of triangle.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Second point of triangle.",
+          "optional": false
+        },
+        {
+          "name": "point3",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "doc": "Third point of triangle.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the triangle be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point1\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point1\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point2\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point2\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point3\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point3\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Triangle%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Triangle",
+      "signature": "void Triangle(Autodesk.Navisworks.Api.Point3D point1, Autodesk.Navisworks.Api.Point3D point2, Autodesk.Navisworks.Api.Point3D point3, bool filled)",
+      "summary": "Renders a 3D triangle.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "First point on triangle.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Second point on triangle.",
+          "optional": false
+        },
+        {
+          "name": "point3",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Third point on triangle.",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "doc": "Should the triangle be filled in or an outline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point1\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point1\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point2\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point2\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point3\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point3\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Triangle%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Vertex",
+      "signature": "void Vertex(Autodesk.Navisworks.Api.Point3D coordinate)",
+      "summary": "Specifies polygon vertex.",
+      "params": [
+        {
+          "name": "coordinate",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "Vertex co-ordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027coordinate\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027coordinate\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.Vertex%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "VertexColor",
+      "signature": "void VertexColor(Autodesk.Navisworks.Api.Color color, double alpha)",
+      "summary": "Specifies color of next polygon vertex.",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "doc": "Vertex color.",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "double",
+          "doc": "Vertex alpha value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027color\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027color\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.VertexColor%28Autodesk.Navisworks.Api.Color%2CSystem.Double%29"
+    },
+    {
+      "name": "VertexNormal",
+      "signature": "void VertexNormal(Autodesk.Navisworks.Api.Vector3D normal)",
+      "summary": "Specifies normal of next polygon vertex.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "Vertex normal.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027normal\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027normal\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Graphics.VertexNormal%28Autodesk.Navisworks.Api.Vector3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Graphics.IsReadOnly"
+    },
+    {
+      "name": "PolygonTessellationWindingRule",
+      "type": "Autodesk.Navisworks.Api.TessellationWindingRule",
+      "getter": true,
+      "setter": true,
+      "summary": "Tessellation winding rule",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Graphics.PolygonTessellationWindingRule"
+    },
+    {
+      "name": "WindowHeight",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns height of window.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Graphics.WindowHeight"
+    },
+    {
+      "name": "WindowWidth",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns width of window.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Graphics.WindowWidth"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

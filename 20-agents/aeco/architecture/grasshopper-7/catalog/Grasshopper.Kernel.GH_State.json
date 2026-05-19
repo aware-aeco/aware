@@ -1,0 +1,198 @@
+{
+  "name": "GH_State",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents a single recorded document state. A state contains values for an arbitrary set of objects inside the document.",
+  "base": "GH_ISerializable",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_State.htm",
+  "constructors": [
+    {
+      "name": "GH_State()",
+      "signature": "public GH_State()",
+      "summary": "Initializes a new instance of the GH_State class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State__ctor.htm"
+    },
+    {
+      "name": "GH_State(GH_State)",
+      "signature": "public GH_State(GH_State other)",
+      "summary": "Initializes a new instance of the GH_State class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.GH_State",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddStateObject",
+      "signature": "public void AddStateObject(IGH_StateAwareObject obj, Guid obj_id)",
+      "summary": "Append a new object to the database.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_StateAwareObject",
+          "doc": "Object to append.",
+          "optional": false
+        },
+        {
+          "name": "obj_id",
+          "type": "System.Guid",
+          "doc": "Instance GUID of object in document.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State_AddStateObject.htm"
+    },
+    {
+      "name": "ClearStates",
+      "signature": "public void ClearStates()",
+      "summary": "Removes all items from the state database.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State_ClearStates.htm"
+    },
+    {
+      "name": "CreateStateFromDocument",
+      "signature": "public int CreateStateFromDocument(GH_Document doc)",
+      "summary": "Creates a state database from a document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of states saved or -1 if the user aborted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State_CreateStateFromDocument.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State_Read.htm"
+    },
+    {
+      "name": "RemoveStateObject",
+      "signature": "public void RemoveStateObject(Guid obj_id)",
+      "summary": "Remove an object from the database.",
+      "params": [
+        {
+          "name": "obj_id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State_RemoveStateObject.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_State_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Data[Guid]",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the state data stored under the specified ID",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_State_Data.htm"
+    },
+    {
+      "name": "Data[Int32]",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the state data stored under the specified index",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_State_Data_1.htm"
+    },
+    {
+      "name": "LastModified",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the date at which this state was last modified.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_State_LastModified.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of this state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_State_Name.htm"
+    },
+    {
+      "name": "StateCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of items stored in the state database.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_State_StateCount.htm"
+    },
+    {
+      "name": "StateData",
+      "type": "SortedList\u003CGuid,String\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the internal database of states.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_State_StateData.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

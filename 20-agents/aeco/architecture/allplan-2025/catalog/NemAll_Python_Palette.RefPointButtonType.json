@@ -1,0 +1,50 @@
+{
+  "name": "RefPointButtonType",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "enum",
+  "summary": "Definition of available positions of the reference point on a reference point button.",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/RefPointButtonType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAllNinePositions",
+      "value": 0,
+      "summary": "All nine positions of the reference point are available."
+    },
+    {
+      "name": "eAllTenPositions",
+      "value": 6,
+      "summary": "All nine positions of the reference point are available, plus tenth option. of an undefined point."
+    },
+    {
+      "name": "eCorners",
+      "value": 2,
+      "summary": "Only four positions in the corners possible."
+    },
+    {
+      "name": "eCornersCenter",
+      "value": 3,
+      "summary": "Five positions possible. Four in the corners plus in the center."
+    },
+    {
+      "name": "eLeftRightCenter",
+      "value": 4,
+      "summary": "Three positions possible. Center-left, center-center and center-right."
+    },
+    {
+      "name": "eNoCorners",
+      "value": 1,
+      "summary": "Five positions possible. In the middle and on the center of each edge."
+    },
+    {
+      "name": "eTopBottomCenter",
+      "value": 5,
+      "summary": "Three positions possible. Top-center, center-center and bottom-center."
+    }
+  ]
+}

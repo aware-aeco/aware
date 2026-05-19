@@ -1,0 +1,19 @@
+{
+  "name": "VariableFormat",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "enum",
+  "summary": "Data formats for variables, currently only XML format is supported",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-variableformat-41856",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Xml",
+      "value": 1,
+      "summary": "XML format"
+    }
+  ]
+}

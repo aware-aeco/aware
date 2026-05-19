@@ -1,0 +1,44 @@
+{
+  "name": "SpiralBeam.ErrorStatus",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Define possible statuses for geometry creation/modification commands.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/96dd1b8d-e2ec-e21a-a908-854a9748bd21",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DataMissing",
+      "value": 0,
+      "summary": "Status when some part data is missing."
+    },
+    {
+      "name": "DefinitionPointsTooClose",
+      "value": 1,
+      "summary": "Status when definition points are too close."
+    },
+    {
+      "name": "DefinitionPointsCannotBeAligned",
+      "value": 2,
+      "summary": "Status when definition points are on line with sweep direction."
+    },
+    {
+      "name": "ZeroTotalRiseWithMore360Degrees",
+      "value": 3,
+      "summary": "Status when total rise is zero and rotation angle more than 360 degrees."
+    },
+    {
+      "name": "RotationAngleIs0Degrees",
+      "value": 4,
+      "summary": "Status when rotation angle is 0 degrees."
+    },
+    {
+      "name": "InvalidGeometry",
+      "value": 5,
+      "summary": "Status when helix has invalid geometry."
+    }
+  ]
+}

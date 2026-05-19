@@ -1,0 +1,933 @@
+{
+  "name": "LcUSQLiteStatement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUSQLiteStatement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSQLiteStatement",
+  "constructors": [
+    {
+      "name": "LcUSQLiteStatement()",
+      "signature": "LcUSQLiteStatement()",
+      "summary": "Constructs a new LcUSQLiteStatement.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ColumnType",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteDataType ColumnType(int index)",
+      "summary": "ColumnType method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteDataType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnType%28System.Int32%29"
+    },
+    {
+      "name": "BindBlob",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindBlob(int index, byte[] data)",
+      "summary": "BindBlob method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "byte[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindBlob%28System.Int32%2CSystem.Byte%5B%5D%29"
+    },
+    {
+      "name": "BindDouble",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindDouble(int index, double value)",
+      "summary": "BindDouble method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindDouble%28System.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "BindGuid",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindGuid(int index, System.Guid guid)",
+      "summary": "BindGuid method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindGuid%28System.Int32%2CSystem.Guid%29"
+    },
+    {
+      "name": "BindInt",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindInt(int index, int value)",
+      "summary": "BindInt method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindInt%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "BindInt64",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindInt64(int index, long value)",
+      "summary": "BindInt64 method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindInt64%28System.Int32%2CSystem.Int64%29"
+    },
+    {
+      "name": "BindNull",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindNull(int index)",
+      "summary": "BindNull method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindNull%28System.Int32%29"
+    },
+    {
+      "name": "BindString",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindString(int index, string value)",
+      "summary": "BindString method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindString%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "BindString",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindString(int index, string value, int length)",
+      "summary": "BindString method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindString%28System.Int32%2CSystem.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "BindString",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus BindString(int index, string value, int length, bool copy_value)",
+      "summary": "BindString method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "copy_value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindString%28System.Int32%2CSystem.String%2CSystem.Int32%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ColumnMetaData",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus ColumnMetaData(string databaseName, string tableName, string columnName, out string dataType, out string collSeq, out bool isNotNull, out bool isPrimaryKey, out bool ispAutoinc)",
+      "summary": "ColumnMetaData method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "databaseName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "tableName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "columnName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "dataType",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "collSeq",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "isNotNull",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "isPrimaryKey",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "ispAutoinc",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnMetaData%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%40%2CSystem.String%40%2CSystem.Boolean%40%2CSystem.Boolean%40%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "Prepare",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Prepare(Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection db, string statement)",
+      "summary": "Prepare method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "db",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+          "optional": false
+        },
+        {
+          "name": "statement",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.Prepare%28Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection%2CSystem.String%29"
+    },
+    {
+      "name": "Prepare",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Prepare(Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection db, string statement, out string remain)",
+      "summary": "Prepare method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "db",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+          "optional": false
+        },
+        {
+          "name": "statement",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "remain",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.Prepare%28Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "PrepareQuery",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus PrepareQuery(Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection db, string statement)",
+      "summary": "PrepareQuery method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "db",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+          "optional": false
+        },
+        {
+          "name": "statement",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.PrepareQuery%28Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection%2CSystem.String%29"
+    },
+    {
+      "name": "Release",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Release()",
+      "summary": "Release method of LcUSQLiteStatement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.Release"
+    },
+    {
+      "name": "Reset",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Reset()",
+      "summary": "Reset method of LcUSQLiteStatement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.Reset"
+    },
+    {
+      "name": "Step",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Step()",
+      "summary": "Step method of LcUSQLiteStatement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.Step"
+    },
+    {
+      "name": "ColumnGuid",
+      "signature": "System.Guid ColumnGuid(int index)",
+      "summary": "ColumnGuid method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnGuid%28System.Int32%29"
+    },
+    {
+      "name": "IsValid",
+      "signature": "bool IsValid()",
+      "summary": "IsValid method of LcUSQLiteStatement.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.IsValid"
+    },
+    {
+      "name": "ColumnBlob",
+      "signature": "byte[] ColumnBlob(int index)",
+      "summary": "ColumnBlob method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "byte[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnBlob%28System.Int32%29"
+    },
+    {
+      "name": "ColumnDouble",
+      "signature": "double ColumnDouble(int index)",
+      "summary": "ColumnDouble method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnDouble%28System.Int32%29"
+    },
+    {
+      "name": "BindParameterCount",
+      "signature": "int BindParameterCount()",
+      "summary": "BindParameterCount method of LcUSQLiteStatement.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindParameterCount"
+    },
+    {
+      "name": "ColumnBlobSize",
+      "signature": "int ColumnBlobSize(int index)",
+      "summary": "ColumnBlobSize method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnBlobSize%28System.Int32%29"
+    },
+    {
+      "name": "ColumnCount",
+      "signature": "int ColumnCount()",
+      "summary": "ColumnCount method of LcUSQLiteStatement.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnCount"
+    },
+    {
+      "name": "ColumnInt32",
+      "signature": "int ColumnInt32(int index)",
+      "summary": "ColumnInt32 method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnInt32%28System.Int32%29"
+    },
+    {
+      "name": "ColumnStringLength",
+      "signature": "int ColumnStringLength(int index)",
+      "summary": "ColumnStringLength method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnStringLength%28System.Int32%29"
+    },
+    {
+      "name": "FindColumnByName",
+      "signature": "int FindColumnByName(string name)",
+      "summary": "FindColumnByName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.FindColumnByName%28System.String%29"
+    },
+    {
+      "name": "FindParameterByName",
+      "signature": "int FindParameterByName(string name)",
+      "summary": "FindParameterByName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.FindParameterByName%28System.String%29"
+    },
+    {
+      "name": "ColumnInt64",
+      "signature": "long ColumnInt64(int index)",
+      "summary": "ColumnInt64 method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnInt64%28System.Int32%29"
+    },
+    {
+      "name": "GetBytes",
+      "signature": "long GetBytes(int index, long dataOffset, byte[] buffer, int bufferOffset, int length)",
+      "summary": "GetBytes method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "dataOffset",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "byte[]",
+          "optional": false
+        },
+        {
+          "name": "bufferOffset",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.GetBytes%28System.Int32%2CSystem.Int64%2CSystem.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetChars",
+      "signature": "long GetChars(int index, long dataOffset, char[] buffer, int bufferOffset, int length)",
+      "summary": "GetChars method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "dataOffset",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "char[]",
+          "optional": false
+        },
+        {
+          "name": "bufferOffset",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.GetChars%28System.Int32%2CSystem.Int64%2CSystem.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUSQLiteStatement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "BindParameterName",
+      "signature": "void BindParameterName(int index, out string parametername)",
+      "summary": "BindParameterName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "parametername",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.BindParameterName%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ColumnDatabaseName",
+      "signature": "void ColumnDatabaseName(int index, out string name)",
+      "summary": "ColumnDatabaseName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnDatabaseName%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ColumnName",
+      "signature": "void ColumnName(int index, out string name)",
+      "summary": "ColumnName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnName%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ColumnOriginalName",
+      "signature": "void ColumnOriginalName(int index, out string name)",
+      "summary": "ColumnOriginalName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnOriginalName%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ColumnString",
+      "signature": "void ColumnString(int index, out string value)",
+      "summary": "ColumnString method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnString%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ColumnTableName",
+      "signature": "void ColumnTableName(int index, out string name)",
+      "summary": "ColumnTableName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnTableName%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ColumnTypeName",
+      "signature": "void ColumnTypeName(int index, out string name)",
+      "summary": "ColumnTypeName method of LcUSQLiteStatement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.ColumnTypeName%28System.Int32%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUSQLiteStatement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteStatement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

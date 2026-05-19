@@ -1,0 +1,369 @@
+{
+  "name": "SectionAlongPathLabelingStripSetting",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Labeling strip settings",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathLabelingStripSetting",
+      "signature": "SectionAlongPathLabelingStripSetting(bInitFromSTW: bool = False) | SectionAlongPathLabelingStripSetting(B: SectionAlongPathLabelingStripSetting)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Distance_1",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance 1 in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.Distance_1"
+    },
+    {
+      "name": "Distance_2",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance 2 in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.Distance_2"
+    },
+    {
+      "name": "Distance_3",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance 3 in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.Distance_3"
+    },
+    {
+      "name": "Distance_4",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance 4 in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.Distance_4"
+    },
+    {
+      "name": "Distance_5",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance 5 in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.Distance_5"
+    },
+    {
+      "name": "Distance_6",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance 6 in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.Distance_6"
+    },
+    {
+      "name": "Distance_7",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance 7 in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.Distance_7"
+    },
+    {
+      "name": "HeightLines_Color",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height lines color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightLines_Color"
+    },
+    {
+      "name": "HeightLines_HeightZone",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height lines height zone",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightLines_HeightZone"
+    },
+    {
+      "name": "HeightLines_LineType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height lines line type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightLines_LineType"
+    },
+    {
+      "name": "HeightLines_Pen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height lines pen",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightLines_Pen"
+    },
+    {
+      "name": "HeightLines_ProfileZone",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height lines profile zone",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightLines_ProfileZone"
+    },
+    {
+      "name": "HeightLines_Splay",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height lines splay",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightLines_Splay"
+    },
+    {
+      "name": "HeightLines_StationZone",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height lines station zone",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightLines_StationZone"
+    },
+    {
+      "name": "HeightText_Color",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height text color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightText_Color"
+    },
+    {
+      "name": "HeightText_Distance",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height text distance in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightText_Distance"
+    },
+    {
+      "name": "HeightText_Height",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height text height in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightText_Height"
+    },
+    {
+      "name": "HeightText_Pen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height text pen",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightText_Pen"
+    },
+    {
+      "name": "HeightText_Precision",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height text decimals",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightText_Precision"
+    },
+    {
+      "name": "HeightText_Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height text width in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.HeightText_Width"
+    },
+    {
+      "name": "ProfileAx_Color",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile axis color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileAx_Color"
+    },
+    {
+      "name": "ProfileAx_LineType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile axis line type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileAx_LineType"
+    },
+    {
+      "name": "ProfileAx_Pen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile axis pen",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileAx_Pen"
+    },
+    {
+      "name": "ProfileFrame_Color",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile frame color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileFrame_Color"
+    },
+    {
+      "name": "ProfileFrame_LineType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile frame line type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileFrame_LineType"
+    },
+    {
+      "name": "ProfileFrame_Pen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile frame pen",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileFrame_Pen"
+    },
+    {
+      "name": "ProfileLine_Color",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile line color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileLine_Color"
+    },
+    {
+      "name": "ProfileLine_LineType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile line line type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileLine_LineType"
+    },
+    {
+      "name": "ProfileLine_Muster",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile line pattern",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileLine_Muster"
+    },
+    {
+      "name": "ProfileLine_Pen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Profile line pen",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.ProfileLine_Pen"
+    },
+    {
+      "name": "RefererenzeHeight_Distance",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Reference height text distance in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.RefererenzeHeight_Distance"
+    },
+    {
+      "name": "RefererenzeHeight_Height",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Reference height text height in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.RefererenzeHeight_Height"
+    },
+    {
+      "name": "RefererenzeHeight_TextColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Reference height text color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.RefererenzeHeight_TextColor"
+    },
+    {
+      "name": "RefererenzeHeight_TextPen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Reference height text pen",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.RefererenzeHeight_TextPen"
+    },
+    {
+      "name": "RefererenzeHeight_TextPrecision",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Reference height text decimals",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.RefererenzeHeight_TextPrecision"
+    },
+    {
+      "name": "RefererenzeHeight_Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Reference height text width in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.RefererenzeHeight_Width"
+    },
+    {
+      "name": "StationText_Color",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Station text color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.StationText_Color"
+    },
+    {
+      "name": "StationText_Distance",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Station text distance in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.StationText_Distance"
+    },
+    {
+      "name": "StationText_Height",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Station text height in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.StationText_Height"
+    },
+    {
+      "name": "StationText_Pen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Station text pen",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.StationText_Pen"
+    },
+    {
+      "name": "StationText_Precision",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Station text decimals",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.StationText_Precision"
+    },
+    {
+      "name": "StationText_Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Station text width in mm",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/#NemAll_Python_BasisElements.SectionAlongPathLabelingStripSetting.StationText_Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

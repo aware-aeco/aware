@@ -1,0 +1,58 @@
+{
+  "name": "SecondaryTypeAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The SecondaryTypeAttribute class is used for storing the number of needed secondaries in the connection. Based on the type the system can then correctly ask for user input in the creation. The attribute is initialized from the custom attribute i.e. [SecondaryType(ConnectionBase.SecondaryType.SECONDARYTYPE_ONE)] in the connection source.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/babb5ce4-8ff1-4e7a-5190-f4ea99b35406",
+  "constructors": [
+    {
+      "name": "SecondaryTypeAttribute(Int32)",
+      "signature": "public SecondaryTypeAttribute(int Type)",
+      "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The secondary type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5424aae8-6671-f1ad-e3d4-c3ac9a5aacd3"
+    },
+    {
+      "name": "SecondaryTypeAttribute(ConnectionBase.SecondaryType)",
+      "signature": "public SecondaryTypeAttribute(ConnectionBase.SecondaryType Type)",
+      "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.ConnectionBase.SecondaryType",
+          "doc": "The secondary type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/264333a9-e56b-fdb4-b9c6-2c0ac33960c7"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "ConnectionBase.SecondaryType",
+      "getter": true,
+      "setter": false,
+      "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a03023de-7110-0046-aee4-f1a0fc3149db"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

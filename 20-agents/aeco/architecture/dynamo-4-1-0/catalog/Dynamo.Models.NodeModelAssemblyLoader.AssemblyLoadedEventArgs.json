@@ -1,0 +1,40 @@
+{
+  "name": "AssemblyLoadedEventArgs",
+  "namespace": "Dynamo.Models.NodeModelAssemblyLoader",
+  "kind": "class",
+  "summary": "Type AssemblyLoadedEventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NodeModelAssemblyLoader.cs",
+  "constructors": [
+    {
+      "name": "AssemblyLoadedEventArgs(System.Reflection.Assembly)",
+      "signature": "void AssemblyLoadedEventArgs(System.Reflection.Assembly assembly)",
+      "summary": "Creates AssemblyLoadedEventArgs",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "loaded assembly",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "System.Reflection.Assembly",
+      "getter": true,
+      "setter": false,
+      "summary": "Loaded assembly.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

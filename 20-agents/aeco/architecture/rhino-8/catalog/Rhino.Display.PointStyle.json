@@ -1,0 +1,134 @@
+{
+  "name": "PointStyle",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Defines styles used for drawing points.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_PointStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Simple",
+      "value": 0,
+      "summary": "Square"
+    },
+    {
+      "name": "ControlPoint",
+      "value": 1,
+      "summary": "Square with white center"
+    },
+    {
+      "name": "ActivePoint",
+      "value": 2,
+      "summary": "Like a control point but includes vertical/horizontal crosshair lines."
+    },
+    {
+      "name": "X",
+      "value": 3,
+      "summary": "X shape"
+    },
+    {
+      "name": "RoundSimple",
+      "value": 4,
+      "summary": "Circular"
+    },
+    {
+      "name": "RoundControlPoint",
+      "value": 5,
+      "summary": "Circular with white center"
+    },
+    {
+      "name": "RoundActivePoint",
+      "value": 6,
+      "summary": "Round control point with crosshair lines"
+    },
+    {
+      "name": "Circle",
+      "value": 4,
+      "summary": "Circle or ring shape when secondarySize is set"
+    },
+    {
+      "name": "Square",
+      "value": 0,
+      "summary": "Square or diamond shape when rotated"
+    },
+    {
+      "name": "Triangle",
+      "value": 7,
+      "summary": "Triangular shape"
+    },
+    {
+      "name": "Heart",
+      "value": 8,
+      "summary": "Heart shape"
+    },
+    {
+      "name": "Chevron",
+      "value": 9,
+      "summary": "Chevron shape (two directional arrows)"
+    },
+    {
+      "name": "Clover",
+      "value": 10,
+      "summary": "Three unioned circles"
+    },
+    {
+      "name": "Tag",
+      "value": 11,
+      "summary": "Tag shape"
+    },
+    {
+      "name": "Asterisk",
+      "value": 12,
+      "summary": "* shape"
+    },
+    {
+      "name": "Pin",
+      "value": 13,
+      "summary": "Map style pin symbol. secondarySize defines hole zie in pin"
+    },
+    {
+      "name": "ArrowTail",
+      "value": 14,
+      "summary": "Arrow shape with tail as definition point. Shape is offset from tail by secondarySize."
+    },
+    {
+      "name": "ArrowTip",
+      "value": 15,
+      "summary": "Arrow shape with tip as definition point. Shape is offset from tip by secondarySize."
+    },
+    {
+      "name": "VariableDot",
+      "value": 50,
+      "summary": "Solid filled, single color square"
+    },
+    {
+      "name": "SolidSquare",
+      "value": 50,
+      "summary": "Solid filled, single color square"
+    },
+    {
+      "name": "RoundDot",
+      "value": 51,
+      "summary": "Solid filled, single color circle, same as SolidRound"
+    },
+    {
+      "name": "SolidRound",
+      "value": 51,
+      "summary": "Solid filled, single color circle"
+    },
+    {
+      "name": "SolidCircle",
+      "value": 51,
+      "summary": "Solid filled, single color circle"
+    },
+    {
+      "name": "None",
+      "value": 1000,
+      "summary": "No style (unset)"
+    }
+  ]
+}

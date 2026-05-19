@@ -1,0 +1,14 @@
+{
+  "name": "Events.ClashCheckDoneDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for clash check completion.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7beeecd1-ba63-d100-5429-958333a736e9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ClashCheckDoneDelegate( int NumbersOfClashes )"
+}

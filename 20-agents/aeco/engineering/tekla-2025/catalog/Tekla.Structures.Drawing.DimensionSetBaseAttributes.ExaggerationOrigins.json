@@ -1,0 +1,24 @@
+{
+  "name": "DimensionSetBaseAttributes.ExaggerationOrigins",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The origin of the exaggeration.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bd6376a4-a1fa-6119-c7fd-d82be4ed70c7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NearDimensionLine",
+      "value": 1,
+      "summary": "Start the exaggeration close to the dimension line."
+    },
+    {
+      "name": "NearMeasuredObject",
+      "value": 2,
+      "summary": "Start the exaggeration as soon as possible as seen from the measured part."
+    }
+  ]
+}

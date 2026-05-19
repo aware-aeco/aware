@@ -1,0 +1,42 @@
+{
+  "name": "AnalysisLabel",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisLabel class contains information related to analysis labels.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b21f9ac8-644c-e9c7-9f10-eef6a5a7e270",
+  "constructors": [
+    {
+      "name": "AnalysisLabel",
+      "signature": "public AnalysisLabel()",
+      "summary": "Initializes a new instance of the AnalysisLabel class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b230ba6f-5181-d987-957d-971a98a8d7a3"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Number",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of the analysis label.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9e3169a6-175f-9ae4-47f4-669178af9d79"
+    },
+    {
+      "name": "Prefix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The prefix of the analysis label.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0061a4a4-e935-7ceb-d2e4-48048df382ad"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

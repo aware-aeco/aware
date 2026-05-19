@@ -1,0 +1,332 @@
+{
+  "name": "GH_IndexRange",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "struct",
+  "summary": "Represents a range of indices.",
+  "base": "GH_ISerializable",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_IndexRange.htm",
+  "constructors": [
+    {
+      "name": "GH_IndexRange(Int32)",
+      "signature": "public GH_IndexRange(int index)",
+      "summary": "Create a new singular range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of range start and end.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange__ctor.htm"
+    },
+    {
+      "name": "GH_IndexRange(Int32, Int32)",
+      "signature": "public GH_IndexRange(int index0, int index1)",
+      "summary": "Create a new range.",
+      "params": [
+        {
+          "name": "index0",
+          "type": "System.Int32",
+          "doc": "First index in range.",
+          "optional": false
+        },
+        {
+          "name": "index1",
+          "type": "System.Int32",
+          "doc": "Last index in range.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AdjacentTo",
+      "signature": "public bool AdjacentTo(GH_IndexRange range)",
+      "summary": "Tests whether this range is adjacent to another.",
+      "params": [
+        {
+          "name": "range",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the ranges are adjacent and not intersecting."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_AdjacentTo.htm"
+    },
+    {
+      "name": "Contains(Int32)",
+      "signature": "public bool Contains(int index)",
+      "summary": "Tests whether a specified index is defined by this range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the index is inside this range."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_Contains_1.htm"
+    },
+    {
+      "name": "Contains(GH_IndexRange)",
+      "signature": "public bool Contains(GH_IndexRange range)",
+      "summary": "Tests whether a specified range is entirely contained within this range.",
+      "params": [
+        {
+          "name": "range",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the range is inside this one."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_Contains.htm"
+    },
+    {
+      "name": "Intersection",
+      "signature": "public static GH_IndexRange Intersection(GH_IndexRange range0, GH_IndexRange range1)",
+      "summary": "Create the intersection between two ranges.",
+      "params": [
+        {
+          "name": "range0",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "First range to intersect.",
+          "optional": false
+        },
+        {
+          "name": "range1",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Second range to intersect.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_IndexRange",
+        "doc": "The intersection or an invalid range if the input doesn\u0027t intersect."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_Intersection.htm"
+    },
+    {
+      "name": "IntersectsWith",
+      "signature": "public bool IntersectsWith(GH_IndexRange range)",
+      "summary": "Tests whether certain indices are described by both this and another range.",
+      "params": [
+        {
+          "name": "range",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to intersect with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the ranges intersect."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_IntersectsWith.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_Read.htm"
+    },
+    {
+      "name": "Split",
+      "signature": "public static int Split(GH_IndexRange range, GH_IndexRange splitter, out GH_IndexRange result0, out GH_IndexRange result1)",
+      "summary": "Split a range into two using an integer index.",
+      "params": [
+        {
+          "name": "range",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to split.",
+          "optional": false
+        },
+        {
+          "name": "splitter",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to split with.",
+          "optional": false
+        },
+        {
+          "name": "result0",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "First split result if successful, or an invalid range if not.",
+          "optional": false
+        },
+        {
+          "name": "result1",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Second split result if successful, or an invalid range if not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of valid split results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_Split.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_ToString.htm"
+    },
+    {
+      "name": "Union",
+      "signature": "public static GH_IndexRange Union(GH_IndexRange range0, GH_IndexRange range1)",
+      "summary": "Create a range which contains both input ranges.",
+      "params": [
+        {
+          "name": "range0",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "optional": false
+        },
+        {
+          "name": "range1",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_IndexRange",
+        "doc": "Smallest range big enough to contain both range0 and range1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_Union.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRange_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Index0",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the first index in the range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRange_Index0.htm"
+    },
+    {
+      "name": "Index1",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the last index in the range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRange_Index1.htm"
+    },
+    {
+      "name": "InvalidRange",
+      "type": "GH_IndexRange",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the predefined invalid range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRange_InvalidRange.htm"
+    },
+    {
+      "name": "IsSingular",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the range has zero length.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRange_IsSingular.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this range is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRange_IsValid.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the length of the range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRange_Length.htm"
+    },
+    {
+      "name": "MaxValue",
+      "type": "GH_IndexRange",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRange_MaxValue.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

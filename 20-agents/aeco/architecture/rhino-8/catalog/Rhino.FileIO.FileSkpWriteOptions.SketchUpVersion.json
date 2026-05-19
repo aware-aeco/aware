@@ -1,0 +1,74 @@
+{
+  "name": "FileSkpWriteOptions.SketchUpVersion",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "SketchUp Versions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileSkpWriteOptions_SketchUpVersion.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SketchUp3",
+      "value": 0
+    },
+    {
+      "name": "SketchUp4",
+      "value": 1
+    },
+    {
+      "name": "SketchUp5",
+      "value": 2
+    },
+    {
+      "name": "SketchUp6",
+      "value": 3
+    },
+    {
+      "name": "SketchUp7",
+      "value": 4
+    },
+    {
+      "name": "SketchUp8",
+      "value": 5
+    },
+    {
+      "name": "SketchUp2013",
+      "value": 6
+    },
+    {
+      "name": "SketchUp2014",
+      "value": 7
+    },
+    {
+      "name": "SketchUp2015",
+      "value": 8
+    },
+    {
+      "name": "SketchUp2016",
+      "value": 9
+    },
+    {
+      "name": "SketchUp2017",
+      "value": 10
+    },
+    {
+      "name": "SketchUp2018",
+      "value": 11
+    },
+    {
+      "name": "SketchUp2019",
+      "value": 12
+    },
+    {
+      "name": "SketchUp2020",
+      "value": 13
+    },
+    {
+      "name": "SketchUp2021",
+      "value": 14
+    }
+  ]
+}

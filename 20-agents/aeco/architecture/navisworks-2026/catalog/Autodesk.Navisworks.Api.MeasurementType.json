@@ -1,0 +1,34 @@
+{
+  "name": "MeasurementType",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The type of measurement tool being used.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.MeasurementType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No measurement type"
+    },
+    {
+      "name": "Distance",
+      "value": 1,
+      "summary": "Distance measurement type"
+    },
+    {
+      "name": "Angle",
+      "value": 2,
+      "summary": "Angle measurement type"
+    },
+    {
+      "name": "Area",
+      "value": 3,
+      "summary": "Area measurement type"
+    }
+  ]
+}

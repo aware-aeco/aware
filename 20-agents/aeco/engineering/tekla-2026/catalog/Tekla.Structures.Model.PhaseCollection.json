@@ -1,0 +1,93 @@
+{
+  "name": "PhaseCollection",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The PhaseCollection class handles the collection of the model phases.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8501ccf0-5464-8ee1-0155-52e30d1742a4",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(Array Array, int Index)",
+      "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
+      "params": [
+        {
+          "name": "Array",
+          "type": "System.Array",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from the ICollection. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "Index",
+          "type": "System.Int32",
+          "doc": "The zero-based index in the array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the array is null."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "Thrown when the index is less than zero."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the array is multidimensional, or the index is equal to or greater than the length of the array, or the number of elements in the source ICollection is greater than the available space from the index to the end of the destination array."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown when the type of the source ICollection cannot be cast automatically to the type of the destination array."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7a2ef0eb-1767-2b9a-13a9-1b9f88cafa46"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator GetEnumerator()",
+      "summary": "Returns an enumerator that iterates through a collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "An IEnumerator object that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d9061c80-73fd-e533-e1c5-68d47d4873dc"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements contained in the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1ecf9544-773c-20bf-bffe-2c8719f96c12"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/29165ace-c57e-ee2b-50e7-4c883548695b"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an object that can be used to synchronize access to the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2802c9ae-7c56-60f6-da4d-d6fab630389c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "PackageDependencyState",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "enum",
+  "summary": "Enum containing the different types of package dependency states.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IncorrectVersion",
+      "value": 1
+    },
+    {
+      "name": "Loaded",
+      "value": 0
+    },
+    {
+      "name": "Missing",
+      "value": 2
+    },
+    {
+      "name": "RequiresRestart",
+      "value": 4
+    },
+    {
+      "name": "Warning",
+      "value": 3
+    }
+  ]
+}

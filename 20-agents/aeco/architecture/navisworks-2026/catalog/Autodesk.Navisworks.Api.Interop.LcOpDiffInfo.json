@@ -1,0 +1,128 @@
+{
+  "name": "LcOpDiffInfo",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpDiffInfo class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDiffInfo",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDiffInfo InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpDiffInfo.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpDiffInfo.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "TypeName",
+      "signature": "void TypeName(out string buffer)",
+      "summary": "TypeName method of LcOpDiffInfo.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.TypeName%28System.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description property of LcOpDiffInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.Description"
+    },
+    {
+      "name": "Detail",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Detail property of LcOpDiffInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.Detail"
+    },
+    {
+      "name": "DiffType",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffInfoDiffType",
+      "getter": true,
+      "setter": false,
+      "summary": "DiffType property of LcOpDiffInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.DiffType"
+    },
+    {
+      "name": "Geometry",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffInfoGeometry",
+      "getter": true,
+      "setter": false,
+      "summary": "Geometry property of LcOpDiffInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.Geometry"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpDiffInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.IsReadOnly"
+    },
+    {
+      "name": "PropertyCategories",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpPropertyCategoryInfoVector",
+      "getter": true,
+      "setter": false,
+      "summary": "PropertyCategories property of LcOpDiffInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffInfo.PropertyCategories"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

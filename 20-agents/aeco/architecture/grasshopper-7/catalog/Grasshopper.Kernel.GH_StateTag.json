@@ -1,0 +1,170 @@
+{
+  "name": "GH_StateTag",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Abstract implementation of the IGH_StateTag interface. Derive from this class rather than implementing IGH_StateTag.",
+  "interfaces": [
+    "IGH_StateTag"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_StateTag.htm",
+  "constructors": [
+    {
+      "name": "GH_StateTag",
+      "signature": "protected GH_StateTag()",
+      "summary": "Initializes a new instance of the GH_StateTag class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTag__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Render",
+      "signature": "public virtual void Render(Graphics graphics)",
+      "summary": "",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTag_Render.htm"
+    },
+    {
+      "name": "RenderFreeformIcon",
+      "signature": "protected void RenderFreeformIcon(Graphics graphics, GraphicsPath path)",
+      "summary": "Render a filled path with default shading.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "System.Drawing.Drawing2D.GraphicsPath",
+          "doc": "Path to draw.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTag_RenderFreeformIcon.htm"
+    },
+    {
+      "name": "RenderTagBlankIcon(Graphics)",
+      "signature": "protected void RenderTagBlankIcon(Graphics graphics)",
+      "summary": "Render a blank rectangle icon.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTag_RenderTagBlankIcon.htm"
+    },
+    {
+      "name": "RenderTagBlankIcon(Graphics, GH_StateTag.DrawCallback)",
+      "signature": "protected void RenderTagBlankIcon(Graphics graphics, GH_StateTag.DrawCallback drawCallBack)",
+      "summary": "Render a blank rectangle icon.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "drawCallBack",
+          "type": "Grasshopper.Kernel.GH_StateTag.DrawCallback",
+          "doc": "Callback (can be null) that will be called between background and foreground shapes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTag_RenderTagBlankIcon_1.htm"
+    },
+    {
+      "name": "RenderTagPolygonIcon",
+      "signature": "protected void RenderTagPolygonIcon(Graphics graphics, PointF[] polygon)",
+      "summary": "Render a filled polygon with default shading.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "System.Drawing.PointF[]",
+          "doc": "Polygon corners.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTag_RenderTagPolygonIcon.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateTag_Description.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateTag_Icon.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateTag_Name.htm"
+    },
+    {
+      "name": "Stage",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the stage rectangle for this tag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateTag_Stage.htm"
+    },
+    {
+      "name": "StateDescription",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the state description for this tag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateTag_StateDescription.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,99 @@
+{
+  "name": "StraightDimension.StraightDimensionAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The StraightDimensionAttributes class contains the attributes of the straight dimension.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c95a6a34-4067-25fa-8453-60b87f64c66f",
+  "constructors": [
+    {
+      "name": "StraightDimension.StraightDimensionAttributes",
+      "signature": "public StraightDimensionAttributes()",
+      "summary": "Initializes a new instance of the StraightDimension.StraightDimensionAttributes class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e965618b-69fd-5139-d5d3-9badad4752d5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb6f2f50-1a59-6848-90c1-f19b5adcc489"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "The attributes can\u0027t be loaded.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3725a98d-a2e9-323f-4362-4123b635085f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DimensionValuePostfix",
+      "type": "ContainerElement",
+      "getter": true,
+      "setter": true,
+      "summary": "The postfix for the dimension\u0027s value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ea9dad1-d800-495e-df95-84e66cd292f2"
+    },
+    {
+      "name": "DimensionValuePrefix",
+      "type": "ContainerElement",
+      "getter": true,
+      "setter": true,
+      "summary": "The prefix for the dimension\u0027s value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ecbe0c2-ffe1-cc84-739a-f9d32bc92d89"
+    },
+    {
+      "name": "Exaggeration",
+      "type": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The exaggeration attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c60b508d-d1f2-7b2a-ec30-db8f7c5a5a4e"
+    },
+    {
+      "name": "MiddleLowerTag",
+      "type": "ContainerElement",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension tag placed under the dimension value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3df1b07c-9fed-f9ca-f2d9-42314be07c59"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

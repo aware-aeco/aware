@@ -1,0 +1,93 @@
+{
+  "name": "ZoneDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Shared schema type \u0060ZoneDetails\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the zone.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "numberStr",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Zone number.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "categoryAttributeId",
+      "type": "AttributeId",
+      "getter": true,
+      "setter": false,
+      "summary": "The identifier of the zone category attribute.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "stampPosition",
+      "type": "Coordinate2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Position of the origin of the zone stamp.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "isManual",
+      "type": "boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is the coordinates of the zone manually placed?",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "polygonCoordinates",
+      "type": "Coordinate2D[]",
+      "getter": true,
+      "setter": false,
+      "summary": "The 2D coordinates of the edge of the zone.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "polygonArcs",
+      "type": "PolyArc[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Polygon outline arcs of the zone.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "holes",
+      "type": "Holes2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Property \u0060holes\u0060 of type \u0060Holes2D\u0060 (optional).",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    },
+    {
+      "name": "zCoordinate",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060zCoordinate\u0060 of type \u0060number\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ZoneDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

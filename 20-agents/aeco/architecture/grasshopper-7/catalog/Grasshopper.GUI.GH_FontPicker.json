@@ -1,0 +1,117 @@
+{
+  "name": "GH_FontPicker",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_FontPicker.)",
+  "base": "UserControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_FontPicker.htm",
+  "constructors": [
+    {
+      "name": "GH_FontPicker",
+      "signature": "public GH_FontPicker()",
+      "summary": "Initializes a new instance of the GH_FontPicker class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontPicker__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFontPickerWindow",
+      "signature": "public static Form CreateFontPickerWindow(Font defaultFont)",
+      "summary": "Create a new window containing a Font Picker object and OK, Cancel buttons. Picked fonts will be stored in the Tag field of the form.",
+      "params": [
+        {
+          "name": "defaultFont",
+          "type": "System.Drawing.Font",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Form",
+        "doc": "A window with a font picker."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontPicker_CreateFontPickerWindow.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_FontPicker and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontPicker_Dispose.htm"
+    },
+    {
+      "name": "ShowFontPickerWindow(Font)",
+      "signature": "public static Font ShowFontPickerWindow(Font font)",
+      "summary": "Display the fontpicker in a window.",
+      "params": [
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Default font.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": "A newly picked font."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontPicker_ShowFontPickerWindow.htm"
+    },
+    {
+      "name": "ShowFontPickerWindow(Font, Form)",
+      "signature": "public static Font ShowFontPickerWindow(Font font, Form parent)",
+      "summary": "Display the fontpicker in a window.",
+      "params": [
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Default font.",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "System.Windows.Forms.Form",
+          "doc": "Parent window.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": "A newly picked font."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontPicker_ShowFontPickerWindow_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SelectedFont",
+      "type": "Font",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_FontPicker_SelectedFont.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

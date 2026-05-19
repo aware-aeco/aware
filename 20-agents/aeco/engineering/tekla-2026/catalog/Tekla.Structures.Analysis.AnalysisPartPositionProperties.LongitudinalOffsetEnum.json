@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisPartPositionProperties.LongitudinalOffsetEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The longitudinal offsets.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a84274ce-172a-f056-3d8a-73a96ef7235c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LONGITUDINAL_OFFSET_NONE",
+      "value": 0,
+      "summary": "The longitudinal offset is \u0022none\u0022."
+    },
+    {
+      "name": "LONGITUDINAL_OFFSET_EXTEND_ONLY",
+      "value": 1,
+      "summary": "The longitudinal offset is \u0022extend only\u0022."
+    },
+    {
+      "name": "LONGITUDINAL_OFFSET_ALWAYS",
+      "value": 2,
+      "summary": "The longitudinal offset is \u0022always\u0022."
+    }
+  ]
+}

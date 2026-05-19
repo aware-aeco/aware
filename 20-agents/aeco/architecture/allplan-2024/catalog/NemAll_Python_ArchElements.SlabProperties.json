@@ -1,0 +1,45 @@
+{
+  "name": "SlabProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the Slab properties",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabProperties/",
+  "constructors": [
+    {
+      "name": "SlabProperties",
+      "signature": "SlabProperties() | SlabProperties(slabProp)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabProperties/#NemAll_Python_ArchElements.SlabProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetAttribute",
+      "signature": "SetAttribute(attrib)",
+      "summary": "Set the attribute",
+      "remarks": "Set the attribute",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "object",
+          "doc": "Attribute",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabProperties/#NemAll_Python_ArchElements.SlabProperties.SetAttribute"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

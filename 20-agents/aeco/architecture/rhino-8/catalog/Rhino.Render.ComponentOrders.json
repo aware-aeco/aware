@@ -1,0 +1,59 @@
+{
+  "name": "ComponentOrders",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Pixel component order for channels in the RenderWindow and PostEffects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ComponentOrders.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Irrelevant",
+      "value": 0,
+      "summary": "Used in single-value channels."
+    },
+    {
+      "name": "RGBA",
+      "value": 1,
+      "summary": "This is the default (to match Rhino 5)"
+    },
+    {
+      "name": "ARGB",
+      "value": 2,
+      "summary": "ARGB component order"
+    },
+    {
+      "name": "RGB",
+      "value": 3,
+      "summary": "This will only access 3 components, even in the case of the RGBA channel"
+    },
+    {
+      "name": "BGR",
+      "value": 4,
+      "summary": "This will only access 3 components, even in the case of the RGBA channel."
+    },
+    {
+      "name": "ABGR",
+      "value": 5,
+      "summary": "ABGR component order"
+    },
+    {
+      "name": "BGRA",
+      "value": 6,
+      "summary": "BGRA component order"
+    },
+    {
+      "name": "XYZ",
+      "value": 3,
+      "summary": "For readability when using the Normal XYZ channel. Same as RGB"
+    },
+    {
+      "name": "ZYX",
+      "value": 4,
+      "summary": "For readability when using the Normal XYZ channel. Same as BGR"
+    }
+  ]
+}

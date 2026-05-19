@@ -1,0 +1,72 @@
+{
+  "name": "TeklaStructuresVariables",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "The EnvironmentVariables class contains a sorted list specializing in getting active environment variables and advanced option settings. It also checks options.ini files in the active model folder as well as options_user.ini files.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a2b71094-2e13-c03d-5ddd-723c90c5e43f",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public static void Add(string key)",
+      "summary": "Adds a variable to the list.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The variable to be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6be71bf8-01ce-7aef-1c32-22ba3f8ff426"
+    },
+    {
+      "name": "ContainsVariable",
+      "signature": "public static bool ContainsVariable(string key)",
+      "summary": "Gets a key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The key."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/35e0bbbf-008d-7f5d-f202-52276614aa3d"
+    },
+    {
+      "name": "Get",
+      "signature": "public static string Get(string key)",
+      "summary": "Gets a key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The key."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f8b3823f-87a5-7e86-68b1-36598d8403f9"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

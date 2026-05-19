@@ -1,0 +1,24 @@
+{
+  "name": "DatabaseChangedAction",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "enum",
+  "summary": "Determines which action should do after transaction",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.DatabaseChangedAction",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Edited",
+      "value": 0,
+      "summary": "Undoable update database, insert|update|delete row"
+    },
+    {
+      "name": "Reset",
+      "value": 1,
+      "summary": "Non undoable database operate, like create table"
+    }
+  ]
+}

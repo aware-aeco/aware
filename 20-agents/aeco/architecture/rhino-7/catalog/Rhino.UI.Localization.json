@@ -1,0 +1,580 @@
+{
+  "name": "Localization",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Localization\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Localization.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FormatArea",
+      "signature": "public static string FormatArea(double area, UnitSystem units, DimensionStyle dimStyle, bool alternate)",
+      "summary": "Format an Area string from a number",
+      "params": [
+        {
+          "name": "area",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022area\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatArea(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatArea(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dimStyle",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "[Missing \u003Cparam name=\u0022dimStyle\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatArea(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "alternate",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022alternate\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatArea(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.FormatArea(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_FormatArea.htm"
+    },
+    {
+      "name": "FormatDistanceAndTolerance",
+      "signature": "public static string FormatDistanceAndTolerance(double distance, UnitSystem units, DimensionStyle dimStyle, bool alternate)",
+      "summary": "",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022distance\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatDistanceAndTolerance(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatDistanceAndTolerance(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dimStyle",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "[Missing \u003Cparam name=\u0022dimStyle\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatDistanceAndTolerance(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "alternate",
+          "type": "System.Boolean",
+          "doc": "primary or alternate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.FormatDistanceAndTolerance(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_FormatDistanceAndTolerance.htm"
+    },
+    {
+      "name": "FormatNumber",
+      "signature": "public static string FormatNumber(double x, UnitSystem units, DistanceDisplayMode mode, int precision, bool appendUnitSystemName)",
+      "summary": "Get a string version of a number in a given unit system / display mode.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The number to format into a string.",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "Rhino.UnitSystem",
+          "doc": "The unit system for the number.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.UI.DistanceDisplayMode",
+          "doc": "How the number should be formatted.",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "System.Int32",
+          "doc": "The precision of the number.",
+          "optional": false
+        },
+        {
+          "name": "appendUnitSystemName",
+          "type": "System.Boolean",
+          "doc": "Adds unit system name to the end of the number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The formatted number."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_FormatNumber.htm"
+    },
+    {
+      "name": "FormatVolume",
+      "signature": "public static string FormatVolume(double volume, UnitSystem units, DimensionStyle dimStyle, bool alternate)",
+      "summary": "Format a Volume string from a number",
+      "params": [
+        {
+          "name": "volume",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022volume\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatVolume(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatVolume(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dimStyle",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "[Missing \u003Cparam name=\u0022dimStyle\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatVolume(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "alternate",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022alternate\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.FormatVolume(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.FormatVolume(System.Double,Rhino.UnitSystem,Rhino.DocObjects.DimensionStyle,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_FormatVolume.htm"
+    },
+    {
+      "name": "LocalizeCommandName(String)",
+      "signature": "public static string LocalizeCommandName(string english)",
+      "summary": "Commands that need to be localized should call this function.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The localized command name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeCommandName.htm"
+    },
+    {
+      "name": "LocalizeCommandName(String, Object)",
+      "signature": "public static string LocalizeCommandName(string english, Object assemblyOrObject)",
+      "summary": "",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandName(System.String,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "assemblyOrObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022assemblyOrObject\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandName(System.String,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandName(System.String,System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeCommandName_1.htm"
+    },
+    {
+      "name": "LocalizeCommandOptionName(String, Int32)",
+      "signature": "public static LocalizeStringPair LocalizeCommandOptionName(string english, int contextId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionName(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022contextId\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionName(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionName(System.String,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeCommandOptionName.htm"
+    },
+    {
+      "name": "LocalizeCommandOptionName(String, Int32, Int32)",
+      "signature": "[ObsoleteAttribute(\u0022Don\u0027t copy and paste context IDs\u0022, true)] public static LocalizeStringPair LocalizeCommandOptionName(string english, int wrongcontextId, int contextId)",
+      "summary": "DO NOT use this function, it is a trap to determine where context IDs have been copied from other, already extracted, strings.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The text in English.",
+          "optional": false
+        },
+        {
+          "name": "wrongcontextId",
+          "type": "System.Int32",
+          "doc": "The copied ID.",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "The context ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "The english string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeCommandOptionName_1.htm"
+    },
+    {
+      "name": "LocalizeCommandOptionName(String, Object, Int32)",
+      "signature": "public static LocalizeStringPair LocalizeCommandOptionName(string english, Object assemblyOrObject, int contextId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionName(System.String,System.Object,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "assemblyOrObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022assemblyOrObject\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionName(System.String,System.Object,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022contextId\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionName(System.String,System.Object,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionName(System.String,System.Object,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeCommandOptionName_2.htm"
+    },
+    {
+      "name": "LocalizeCommandOptionValue(String, Int32)",
+      "signature": "public static LocalizeStringPair LocalizeCommandOptionValue(string english, int contextId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionValue(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022contextId\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionValue(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionValue(System.String,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeCommandOptionValue.htm"
+    },
+    {
+      "name": "LocalizeCommandOptionValue(String, Object, Int32)",
+      "signature": "public static LocalizeStringPair LocalizeCommandOptionValue(string english, Object assemblyOrObject, int contextId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionValue(System.String,System.Object,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "assemblyOrObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022assemblyOrObject\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionValue(System.String,System.Object,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022contextId\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionValue(System.String,System.Object,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LocalizeStringPair",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeCommandOptionValue(System.String,System.Object,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeCommandOptionValue_1.htm"
+    },
+    {
+      "name": "LocalizeDialogItem",
+      "signature": "public static string LocalizeDialogItem(Object assemblyOrObject, string key, string english)",
+      "summary": "Look in the dialog item list for the specified key and return the translated localized string if the key is found otherwise return the English string.",
+      "params": [
+        {
+          "name": "assemblyOrObject",
+          "type": "System.Object",
+          "doc": "An assembly or an object from an assembly.",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeDialogItem(System.Object,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The text in English.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Look in the dialog item list for the specified key and return the translated localized string if the key is found otherwise return the English string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeDialogItem.htm"
+    },
+    {
+      "name": "LocalizeForm",
+      "signature": "public static void LocalizeForm(Object formOrUserControl)",
+      "summary": "Look in the dialog item list for the specified key and return the translated localized string if the key is found otherwise return the English string.",
+      "params": [
+        {
+          "name": "formOrUserControl",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022formOrUserControl\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.LocalizeForm(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeForm.htm"
+    },
+    {
+      "name": "LocalizeString(String, Int32)",
+      "signature": "public static string LocalizeString(string english, int contextId)",
+      "summary": "Returns localized version of a given English string. This function should be auto-generated by the RmaLDotNetLocalizationProcessor application for every function that uses RMASTR.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The text in English.",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "The context ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The localized string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeString.htm"
+    },
+    {
+      "name": "LocalizeString(String, Int32, Int32)",
+      "signature": "[ObsoleteAttribute(\u0022Don\u0027t copy and paste context IDs\u0022, true)] public static string LocalizeString(string english, int wrongcontextId, int contextId)",
+      "summary": "DO NOT use this function, it is a trap to determine where context IDs have been copied from other, already extracted, strings.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The text in English.",
+          "optional": false
+        },
+        {
+          "name": "wrongcontextId",
+          "type": "System.Int32",
+          "doc": "The copied ID.",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "The context ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The english string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeString_1.htm"
+    },
+    {
+      "name": "LocalizeString(String, Object, Int32)",
+      "signature": "public static string LocalizeString(string english, Object assemblyOrObject, int contextId)",
+      "summary": "Returns localized version of a given English string. This function should be auto-generated by the RmaLDotNetLocalizationProcessor application for every function that uses RMASTR.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "The text in English.",
+          "optional": false
+        },
+        {
+          "name": "assemblyOrObject",
+          "type": "System.Object",
+          "doc": "An assembly or an object from an assembly.",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "The context ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The localized string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_LocalizeString_2.htm"
+    },
+    {
+      "name": "SetLanguageId",
+      "signature": "public static bool SetLanguageId(int id)",
+      "summary": "Sets the Id used for Localization in RhinoCommon. Only useful for when using RhinoCommon outside of the Rhino process",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.UI.Localization.SetLanguageId(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the language id could be set"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_SetLanguageId.htm"
+    },
+    {
+      "name": "UnitSystemName",
+      "signature": "public static string UnitSystemName(UnitSystem units, bool capitalize, bool singular, bool abbreviate)",
+      "summary": "Gets localized unit system name. Uses current application locale id.",
+      "params": [
+        {
+          "name": "units",
+          "type": "Rhino.UnitSystem",
+          "doc": "The unit system.",
+          "optional": false
+        },
+        {
+          "name": "capitalize",
+          "type": "System.Boolean",
+          "doc": "true if the name should be capitalized.",
+          "optional": false
+        },
+        {
+          "name": "singular",
+          "type": "System.Boolean",
+          "doc": "true if the name is expressed for a singular element.",
+          "optional": false
+        },
+        {
+          "name": "abbreviate",
+          "type": "System.Boolean",
+          "doc": "true if name should be the abbreviation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The unit system name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Localization_UnitSystemName.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentLanguageId",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Localization_CurrentLanguageId.htm"
+    },
+    {
+      "name": "RunningAsEnglish",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Localization_RunningAsEnglish.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

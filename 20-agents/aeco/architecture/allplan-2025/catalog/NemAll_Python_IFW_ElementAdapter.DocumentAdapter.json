@@ -1,0 +1,54 @@
+{
+  "name": "DocumentAdapter",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.DocumentAdapter.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentAdapter/",
+  "constructors": [
+    {
+      "name": "DocumentAdapter",
+      "signature": "DocumentAdapter()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentAdapter/#NemAll_Python_IFW_ElementAdapter.DocumentAdapter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDocumentID",
+      "signature": "GetDocumentID() -\u003E int",
+      "summary": "Get the document ID",
+      "remarks": "Get the document ID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Document ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentAdapter/#NemAll_Python_IFW_ElementAdapter.DocumentAdapter.GetDocumentID"
+    },
+    {
+      "name": "GetScalingFactor",
+      "signature": "GetScalingFactor() -\u003E float",
+      "summary": "Get the scaling factor",
+      "remarks": "Get the scaling factor",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Scaling factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentAdapter/#NemAll_Python_IFW_ElementAdapter.DocumentAdapter.GetScalingFactor"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,54 @@
+{
+  "name": "Light",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "ChangeQueue Light change representation",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_Light.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ChangeType",
+      "type": "Light.Event",
+      "getter": true,
+      "setter": false,
+      "summary": "Get what type of light change this represents",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Light_ChangeType.htm"
+    },
+    {
+      "name": "Data",
+      "type": "Light",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the actual light data",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Light_Data.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the light object id",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Light_Id.htm"
+    },
+    {
+      "name": "IdCrc",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get CRC computed from Id",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Light_IdCrc.htm"
+    },
+    {
+      "name": "MaterialId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get material ID of the material assigned to the light. Material ID is 0 if no material was assigned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_Light_MaterialId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

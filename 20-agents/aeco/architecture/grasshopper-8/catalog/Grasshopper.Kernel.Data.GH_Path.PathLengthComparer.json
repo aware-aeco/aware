@@ -1,0 +1,51 @@
+{
+  "name": "GH_Path.PathLengthComparer",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Use this comparer to sort lists of paths using a topological approach. Shorter paths are favoured over longer paths. Equal length paths use the default comparer.",
+  "interfaces": [
+    "IComparer\u003CGH_Path\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_Path_PathLengthComparer.htm",
+  "constructors": [
+    {
+      "name": "GH_Path.PathLengthComparer",
+      "signature": "public PathLengthComparer()",
+      "summary": "Initializes a new instance of the GH_Path.PathLengthComparer class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Path_PathLengthComparer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Compare",
+      "signature": "public int Compare(GH_Path x, GH_Path y)",
+      "summary": "",
+      "params": [
+        {
+          "name": "x",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_Path_PathLengthComparer_Compare.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

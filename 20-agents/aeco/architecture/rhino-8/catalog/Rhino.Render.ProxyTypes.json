@@ -1,0 +1,34 @@
+{
+  "name": "ProxyTypes",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Defines the proxy type of the render content",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ProxyTypes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No proxy type specified."
+    },
+    {
+      "name": "Single",
+      "value": 1,
+      "summary": "A proxy that represents a single material in the CRhinoDoc::m_material_table"
+    },
+    {
+      "name": "Multi",
+      "value": 2,
+      "summary": "A proxy that represents multiple materials - all similar."
+    },
+    {
+      "name": "Texture",
+      "value": 3,
+      "summary": "A proxy that represents textures, either in the texture table, or attached to materials or environments."
+    }
+  ]
+}

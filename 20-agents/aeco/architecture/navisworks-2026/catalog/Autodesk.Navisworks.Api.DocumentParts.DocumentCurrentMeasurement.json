@@ -1,0 +1,146 @@
+{
+  "name": "DocumentCurrentMeasurement",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The current measurement state in a Document",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddRedlinesToCurrentSavedViewpoint",
+      "signature": "void AddRedlinesToCurrentSavedViewpoint()",
+      "summary": "Converts the measurement to redlines. Then adds the redlines to the current saved viewpoint. If there is no current saved viewpoint, then one is created.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Cannot convert to Redlines"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "No active viewer"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Failed to add redlines to current saved viewpoint"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Cannot convert to Redlines"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "No active viewer"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Failed to add redlines to current saved viewpoint"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.AddRedlinesToCurrentSavedViewpoint"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanConvertToRedlines",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the measurement can be converted to redlines",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.CanConvertToRedlines"
+    },
+    {
+      "name": "Difference",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the difference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.Difference"
+    },
+    {
+      "name": "EndPoint",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the end point",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.EndPoint"
+    },
+    {
+      "name": "FirstPoint",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the first point",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.FirstPoint"
+    },
+    {
+      "name": "HasDifference",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the difference is available",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.HasDifference"
+    },
+    {
+      "name": "HasEndPoint",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the end point is available",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.HasEndPoint"
+    },
+    {
+      "name": "HasFirstPoint",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the first point is available",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.HasFirstPoint"
+    },
+    {
+      "name": "HasMeasurement",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the MeasurementValue and MeasurementType are available",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.HasMeasurement"
+    },
+    {
+      "name": "MeasurementType",
+      "type": "Autodesk.Navisworks.Api.MeasurementType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the measurement type",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.MeasurementType"
+    },
+    {
+      "name": "MeasurementValue",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the measurement value",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.MeasurementValue"
+    },
+    {
+      "name": "Tool",
+      "type": "Autodesk.Navisworks.Api.Tool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the measurement tool in use",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.Tool"
+    },
+    {
+      "name": "ToolMeasurementType",
+      "type": "Autodesk.Navisworks.Api.MeasurementType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the tool measurement type",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement.ToolMeasurementType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

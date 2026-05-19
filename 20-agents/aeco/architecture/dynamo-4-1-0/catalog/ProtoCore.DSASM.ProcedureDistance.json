@@ -1,0 +1,50 @@
+{
+  "name": "ProcedureDistance",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type ProcedureDistance",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/ProcedureTable.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CoerceBaseClass",
+      "value": 40
+    },
+    {
+      "name": "CoerceDoubleToIntScore",
+      "value": 5
+    },
+    {
+      "name": "CoerceIntToDoubleScore",
+      "value": 30
+    },
+    {
+      "name": "CoerceScore",
+      "value": 10
+    },
+    {
+      "name": "ExactMatchDistance",
+      "value": 0
+    },
+    {
+      "name": "ExactMatchScore",
+      "value": 50
+    },
+    {
+      "name": "InvalidDistance",
+      "value": -1
+    },
+    {
+      "name": "MaxDistance",
+      "value": 2147483647
+    },
+    {
+      "name": "NotMatchScore",
+      "value": 0
+    }
+  ]
+}

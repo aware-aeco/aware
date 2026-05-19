@@ -1,0 +1,41 @@
+{
+  "name": "GH_StringMismatchException",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Exception used during Rule Set parsing.",
+  "base": "Exception",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_StringMismatchException.htm",
+  "constructors": [
+    {
+      "name": "GH_StringMismatchException()",
+      "signature": "public GH_StringMismatchException()",
+      "summary": "Initializes a new instance of the GH_StringMismatchException class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_StringMismatchException__ctor.htm"
+    },
+    {
+      "name": "GH_StringMismatchException(String)",
+      "signature": "public GH_StringMismatchException(string message)",
+      "summary": "Initializes a new instance of the GH_StringMismatchException class",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_StringMismatchException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

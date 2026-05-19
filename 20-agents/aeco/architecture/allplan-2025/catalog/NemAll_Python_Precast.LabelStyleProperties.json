@@ -1,0 +1,58 @@
+{
+  "name": "LabelStyleProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.LabelStyleProperties.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/",
+  "constructors": [
+    {
+      "name": "LabelStyleProperties",
+      "signature": "LabelStyleProperties() | LabelStyleProperties(fileEntryPath: FileEntryPath, fileNr: int, entryNr: int) | LabelStyleProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, location: Location )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/#NemAll_Python_Precast.LabelStyleProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EntryNr",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Entry number of labelStyle props Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/#NemAll_Python_Precast.LabelStyleProperties.EntryNr"
+    },
+    {
+      "name": "FileEntrPath",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "File entry path of labelStyle props Value type: EFileEntryPath enum :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/#NemAll_Python_Precast.LabelStyleProperties.FileEntrPath"
+    },
+    {
+      "name": "FileNr",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "File number of labelStyle props Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/#NemAll_Python_Precast.LabelStyleProperties.FileNr"
+    },
+    {
+      "name": "Location",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Location of labelStyle props Value type: Location enum :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/#NemAll_Python_Precast.LabelStyleProperties.Location"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

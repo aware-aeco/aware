@@ -1,0 +1,31 @@
+{
+  "name": "StartEndPlacementRule",
+  "namespace": "StdReinfShapeBuilder.LinearBarPlacementBuilder",
+  "kind": "enum",
+  "summary": "Class with the definition of the handle input directions",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/StartEndPlacementRule/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AdaptDistance",
+      "value": 4
+    },
+    {
+      "name": "AdditionalCover",
+      "value": 1
+    },
+    {
+      "name": "AdditionalCoverLeft",
+      "value": 2
+    },
+    {
+      "name": "AdditionalCoverRight",
+      "value": 3
+    }
+  ]
+}

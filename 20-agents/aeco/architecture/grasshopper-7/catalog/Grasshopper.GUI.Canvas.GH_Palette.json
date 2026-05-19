@@ -1,0 +1,62 @@
+{
+  "name": "GH_Palette",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Lists all possible Capsule Palette styles in Grasshopper.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Palette.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0
+    },
+    {
+      "name": "Hidden",
+      "value": 1
+    },
+    {
+      "name": "Locked",
+      "value": 2
+    },
+    {
+      "name": "Warning",
+      "value": 3
+    },
+    {
+      "name": "Error",
+      "value": 4
+    },
+    {
+      "name": "White",
+      "value": 5
+    },
+    {
+      "name": "Grey",
+      "value": 6
+    },
+    {
+      "name": "Black",
+      "value": 7
+    },
+    {
+      "name": "Brown",
+      "value": 8
+    },
+    {
+      "name": "Pink",
+      "value": 9
+    },
+    {
+      "name": "Blue",
+      "value": 10
+    },
+    {
+      "name": "Transparent",
+      "value": 11
+    }
+  ]
+}

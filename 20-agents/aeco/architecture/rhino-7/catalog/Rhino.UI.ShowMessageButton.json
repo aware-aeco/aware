@@ -1,0 +1,38 @@
+{
+  "name": "ShowMessageButton",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ShowMessageButton\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ShowMessageButton.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OK",
+      "value": 0
+    },
+    {
+      "name": "OKCancel",
+      "value": 1
+    },
+    {
+      "name": "AbortRetryIgnore",
+      "value": 2
+    },
+    {
+      "name": "YesNoCancel",
+      "value": 3
+    },
+    {
+      "name": "YesNo",
+      "value": 4
+    },
+    {
+      "name": "RetryCancel",
+      "value": 5
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "LabelingProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of labeling settings of a UVS",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/",
+  "constructors": [
+    {
+      "name": "LabelingProperties",
+      "signature": "LabelingProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AddProjectionName",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to display the section identifier",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.AddProjectionName"
+    },
+    {
+      "name": "HeadingOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to display the heading",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.HeadingOn"
+    },
+    {
+      "name": "HeadingText",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Additional heading text, prior to the section identifier",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.HeadingText"
+    },
+    {
+      "name": "IsScaleOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to display the UVS scale",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.IsScaleOn"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

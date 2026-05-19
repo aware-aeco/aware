@@ -1,0 +1,23 @@
+{
+  "name": "PropertyDefinitionArrayItem",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A wrapper containing a property definition",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDefinitionArrayItem",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "propertyDefinition",
+      "type": "PropertyDefinition",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyDefinition\u0060 of type \u0060PropertyDefinition\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDefinitionArrayItem"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

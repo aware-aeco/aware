@@ -1,0 +1,49 @@
+{
+  "name": "PackageLoadState",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Describes a package\u0027s load state",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs",
+  "constructors": [
+    {
+      "name": "PackageLoadState()",
+      "signature": "void PackageLoadState()",
+      "summary": "PackageLoadState.PackageLoadState",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ErrorMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageLoadState.ErrorMessage",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "ScheduledState",
+      "type": "Dynamo.PackageManager.PackageLoadState.ScheduledTypes",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageLoadState.ScheduledState",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "State",
+      "type": "Dynamo.PackageManager.PackageLoadState.StateTypes",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageLoadState.State",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

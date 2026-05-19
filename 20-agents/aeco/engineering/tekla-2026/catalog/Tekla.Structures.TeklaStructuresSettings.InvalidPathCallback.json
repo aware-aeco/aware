@@ -1,0 +1,14 @@
+{
+  "name": "TeklaStructuresSettings.InvalidPathCallback",
+  "namespace": "Tekla.Structures",
+  "kind": "delegate",
+  "summary": "The invalid path callback - provides error logging for GetAdvancedOptionPaths when a string is found to be invalid as a path",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/390aea79-c14b-54ea-a412-7624c2061f40",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void InvalidPathCallback( string advancedOption, string invalidString, string exceptionMessage )"
+}

@@ -1,0 +1,44 @@
+{
+  "name": "BaseWeld.WeldNDTInspectionEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The weld NDT inspection level.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6d6eec0c-e0d5-cdca-9d63-08477735be8b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WELD_NDT_INSPECTION_NONE",
+      "value": 0,
+      "summary": "No NDT inspection level."
+    },
+    {
+      "name": "WELD_NDT_INSPECTION_A",
+      "value": 1,
+      "summary": "The NDT inspection level A."
+    },
+    {
+      "name": "WELD_NDT_INSPECTION_B",
+      "value": 2,
+      "summary": "The NDT inspection level B."
+    },
+    {
+      "name": "WELD_NDT_INSPECTION_C",
+      "value": 3,
+      "summary": "The NDT inspection level C."
+    },
+    {
+      "name": "WELD_NDT_INSPECTION_D",
+      "value": 4,
+      "summary": "The NDT inspection level D."
+    },
+    {
+      "name": "WELD_NDT_INSPECTION_E",
+      "value": 5,
+      "summary": "The NDT inspection level E."
+    }
+  ]
+}

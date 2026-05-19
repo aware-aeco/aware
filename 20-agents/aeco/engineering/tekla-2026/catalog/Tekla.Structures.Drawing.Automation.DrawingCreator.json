@@ -1,0 +1,105 @@
+{
+  "name": "DrawingCreator",
+  "namespace": "Tekla.Structures.Drawing.Automation",
+  "kind": "class",
+  "summary": "The DrawingCreator class is for handling the creation of drawings using the built-in logic of Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f976051e-3068-321a-e408-f370c1ac0bf5",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateDrawings(AutoDrawingRule, Identifier)",
+      "signature": "public static bool CreateDrawings(AutoDrawingRule Rule, Identifier ModelObjectIdentifier)",
+      "summary": "Creates drawings using the AutoDrawing tool of Tekla Structures.",
+      "params": [
+        {
+          "name": "Rule",
+          "type": "Tekla.Structures.Drawing.Automation.AutoDrawingRule",
+          "doc": "The AutoDrawing rule to be used.",
+          "optional": false
+        },
+        {
+          "name": "ModelObjectIdentifier",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The model object identifier to be used. Part identifier to create single part drawing or assembly identifier to create assembly drawing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/76d514c8-aa1c-c10a-014a-62dd24b119ed"
+    },
+    {
+      "name": "CreateDrawings(AutoDrawingRule, List\u003CIdentifier\u003E, AutoDrawingsStatusEnum.)",
+      "signature": "public static bool CreateDrawings(AutoDrawingRule Rule, List\u003CIdentifier\u003E aModelObjectIdentifier, out AutoDrawingsStatusEnum OperationStatus)",
+      "summary": "Creates drawings using the AutoDrawing tool of Tekla Structures.",
+      "params": [
+        {
+          "name": "Rule",
+          "type": "Tekla.Structures.Drawing.Automation.AutoDrawingRule",
+          "doc": "The AutoDrawing rule to be used.",
+          "optional": false
+        },
+        {
+          "name": "aModelObjectIdentifier",
+          "type": "System.Collections.Generic.List\u003CIdentifier\u003E",
+          "doc": "The model object identifier list to be used. Part identifiers to create single part drawings or assembly identifiers to create assembly drawings.",
+          "optional": false
+        },
+        {
+          "name": "OperationStatus",
+          "type": "Tekla.Structures.Drawing.Automation.AutoDrawingsStatusEnum.",
+          "doc": "The operation status to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/be9b7c58-c015-fd84-1bb8-ec0094be3a92"
+    },
+    {
+      "name": "CreateDrawings(AutoDrawingRule, Identifier, AutoDrawingsStatusEnum.)",
+      "signature": "public static bool CreateDrawings(AutoDrawingRule Rule, Identifier ModelObjectIdentifier, out AutoDrawingsStatusEnum OperationStatus)",
+      "summary": "Creates drawings using the AutoDrawing tool of Tekla Structures.",
+      "params": [
+        {
+          "name": "Rule",
+          "type": "Tekla.Structures.Drawing.Automation.AutoDrawingRule",
+          "doc": "The AutoDrawing rule to be used.",
+          "optional": false
+        },
+        {
+          "name": "ModelObjectIdentifier",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The model object identifier to be used. Part identifier to create single part drawing or assembly identifier to create assembly drawing.",
+          "optional": false
+        },
+        {
+          "name": "OperationStatus",
+          "type": "Tekla.Structures.Drawing.Automation.AutoDrawingsStatusEnum.",
+          "doc": "The operation status to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7eac6939-0fe3-e07b-3dc7-7bc1804527c8"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

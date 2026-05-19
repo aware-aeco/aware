@@ -1,0 +1,550 @@
+{
+  "name": "BoundingBox2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "2D boundingBox Representation class for 2D bounding box.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/",
+  "constructors": [
+    {
+      "name": "BoundingBox2D",
+      "signature": "BoundingBox2D() | BoundingBox2D(angle) | BoundingBox2D(min, max, angle) | BoundingBox2D(boundingBox2D) | BoundingBox2D(minMax2D)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Deflate",
+      "signature": "Deflate(x, y) | Deflate(size)",
+      "summary": "Deflate in x and y axis",
+      "remarks": "Deflate in x and y axis",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "deflate in X axis",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "deflate in Y axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Deflate"
+    },
+    {
+      "name": "Inflate",
+      "signature": "Inflate(x, y) | Inflate(size)",
+      "summary": "Inflate in x and y axis",
+      "remarks": "Inflate in x and y axis",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "inflate in X axis",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "inflate in Y axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Inflate"
+    },
+    {
+      "name": "IsContaining",
+      "signature": "IsContaining(point) | IsContaining(box) | IsContaining(minmax)",
+      "summary": "Is point inside this box",
+      "remarks": "Is point inside this box",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "point in world coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if is inside, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsContaining"
+    },
+    {
+      "name": "Overlaps",
+      "signature": "Overlaps(box) | Overlaps(minmax)",
+      "summary": "Does box overlap this box",
+      "remarks": "Does box overlap this box",
+      "params": [
+        {
+          "name": "box",
+          "type": "BoundingBox2D",
+          "doc": "bounding box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if boxes overlap, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Overlaps"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(boundingBox) | __add__(minMax)",
+      "summary": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
+      "remarks": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "BoundingBox2D",
+          "doc": "BoundingBox2D to be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "BoundingBox2D box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__add__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(boundingBox) | __iadd__(minmax) | __iadd__(point)",
+      "summary": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
+      "remarks": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "BoundingBox2D",
+          "doc": "BoundingBox2D to be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "reference to BoundingBox2D box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__iadd__"
+    },
+    {
+      "name": "Get",
+      "signature": "Get()",
+      "summary": "Get minimum point, maximum point and angle",
+      "remarks": "Get minimum point, maximum point and angle",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "minimum point in local coordinate system,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Get"
+    },
+    {
+      "name": "GetAngle",
+      "signature": "GetAngle()",
+      "summary": "Get direction of X axis of new coordinate system",
+      "remarks": "Get direction of X axis of new coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "angle direction of X axis of new coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetAngle"
+    },
+    {
+      "name": "GetBoxPoint",
+      "signature": "GetBoxPoint(arg2)",
+      "summary": "Get world point of a dedicated location of the box",
+      "remarks": "Get world point of a dedicated location of the box",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point2D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetBoxPoint"
+    },
+    {
+      "name": "GetCenter",
+      "signature": "GetCenter()",
+      "summary": "Get box center point in local coordinate system",
+      "remarks": "Get box center point in local coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "center point in local coordinates system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetCenter"
+    },
+    {
+      "name": "GetCenterPoint",
+      "signature": "GetCenterPoint()",
+      "summary": "Get world point at center of box",
+      "remarks": "Get world point at center of box",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point2D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetCenterPoint"
+    },
+    {
+      "name": "GetHeight",
+      "signature": "GetHeight()",
+      "summary": "Get height of box in local system",
+      "remarks": "Get height of box in local system",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetHeight"
+    },
+    {
+      "name": "GetMax",
+      "signature": "GetMax()",
+      "summary": "Get maximum point in local coordinate system",
+      "remarks": "Get maximum point in local coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "maximum point in local coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetMax"
+    },
+    {
+      "name": "GetMaxPoint",
+      "signature": "GetMaxPoint()",
+      "summary": "Get world point at maximum of box",
+      "remarks": "Get world point at maximum of box",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point2D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetMaxPoint"
+    },
+    {
+      "name": "GetMin",
+      "signature": "GetMin()",
+      "summary": "Get minimum point in local coordinate system",
+      "remarks": "Get minimum point in local coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "minimum point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetMin"
+    },
+    {
+      "name": "GetMinPoint",
+      "signature": "GetMinPoint()",
+      "summary": "Get world point at maximum of box",
+      "remarks": "Get world point at maximum of box",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Point2D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetMinPoint"
+    },
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth()",
+      "summary": "Get width of box in local system",
+      "remarks": "Get width of box in local system",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetWidth"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Test if box is valid",
+      "remarks": "Test if box is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if box valid, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsValid"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(angle)",
+      "summary": "Reset bounding box and set initial angle When bounding box is reseted, then min point is initialized to [DBL_MAX,DBL_MAX], max point to [-DBL_MAX,-DBL_MAX], This method is using when previous initialized bounding box start accept a new point values.",
+      "remarks": "Reset bounding box and set initial angle When bounding box is reseted, then min point is initialized to [DBL_MAX,DBL_MAX], max point to [-DBL_MAX,-DBL_MAX], This method is using when previous initialized bounding box start accept a new point values.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Initial angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Reset"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(min, max, angle)",
+      "summary": "Set minimum point, maximum point and angle",
+      "remarks": "Set minimum point, maximum point and angle",
+      "params": [
+        {
+          "name": "min",
+          "type": "Point2D",
+          "doc": "minimum point in local coordinate system",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "Point2D",
+          "doc": "maximum point in local coordinate system",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle between world X and local X coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Set"
+    },
+    {
+      "name": "SetAngle",
+      "signature": "SetAngle(angle)",
+      "summary": "Set direction of X axis of new coordinate system",
+      "remarks": "Set direction of X axis of new coordinate system",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "direction of X axis of new coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.SetAngle"
+    },
+    {
+      "name": "SetHeight",
+      "signature": "SetHeight(height)",
+      "summary": "Set height of box in local system. Computed from Min point",
+      "remarks": "Set height of box in local system. Computed from Min point",
+      "params": [
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "Height",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.SetHeight"
+    },
+    {
+      "name": "SetMax",
+      "signature": "SetMax(max)",
+      "summary": "Set maximum point in local coordinate system",
+      "remarks": "Set maximum point in local coordinate system",
+      "params": [
+        {
+          "name": "max",
+          "type": "Point2D",
+          "doc": "maximum point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.SetMax"
+    },
+    {
+      "name": "SetMin",
+      "signature": "SetMin(min)",
+      "summary": "Set minimum point",
+      "remarks": "Set minimum point",
+      "params": [
+        {
+          "name": "min",
+          "type": "Point2D",
+          "doc": "minimum point in local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.SetMin"
+    },
+    {
+      "name": "SetWidth",
+      "signature": "SetWidth(width)",
+      "summary": "Set width of box in local system. Computed from Min point",
+      "remarks": "Set width of box in local system. Computed from Min point",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width",
+          "optional": false
+        },
+        {
+          "name": "-----------------------------------------------------------------------------",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.SetWidth"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(boundingBox)",
+      "summary": "Comparison of boundingBoxs without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of boundingBoxs without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "BoundingBox2D",
+          "doc": "Compared boundingBox.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when boundingBoxs are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__eq__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index)",
+      "summary": "Get the corners of bounding box. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "remarks": "Get the corners of bounding box. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "corner index (0-left bottom, 1-right bottom, 2-right top, 3-left top)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "corner as Point2D in world coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__getitem__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the angle property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Angle"
+    },
+    {
+      "name": "Max",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the max point property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Max"
+    },
+    {
+      "name": "Min",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the min point property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Min"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "PortEventType",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "enum",
+  "summary": "Defines Enum for Mouse events. Used in port snapping.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MouseEnter",
+      "value": 0
+    },
+    {
+      "name": "MouseLeave",
+      "value": 1
+    },
+    {
+      "name": "MouseLeftButtonDown",
+      "value": 2
+    }
+  ]
+}

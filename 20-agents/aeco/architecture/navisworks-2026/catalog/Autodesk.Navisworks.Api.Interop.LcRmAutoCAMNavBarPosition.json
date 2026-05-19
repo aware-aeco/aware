@@ -1,0 +1,30 @@
+{
+  "name": "LcRmAutoCAMNavBarPosition",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcRmAutoCAMNavBarPosition enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNAVBAR_POSITION_TOPRIGHT",
+      "value": 0
+    },
+    {
+      "name": "eNAVBAR_POSITION_BOTTOMRIGHT",
+      "value": 1
+    },
+    {
+      "name": "eNAVBAR_POSITION_TOPLEFT",
+      "value": 2
+    },
+    {
+      "name": "eNAVBAR_POSITION_BOTTOMLEFT",
+      "value": 3
+    }
+  ]
+}

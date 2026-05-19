@@ -1,0 +1,29 @@
+{
+  "name": "RebarLapping.LapSideEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The side of the split that the lap is located.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/36e35f69-31fb-a0d7-8168-eeda986ce68d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LAP_LEFT",
+      "value": 0,
+      "summary": "Lap left."
+    },
+    {
+      "name": "LAP_RIGHT",
+      "value": 1,
+      "summary": "Lap right."
+    },
+    {
+      "name": "LAP_MIDDLE",
+      "value": 2,
+      "summary": "Lap middle."
+    }
+  ]
+}

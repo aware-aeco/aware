@@ -1,0 +1,29 @@
+{
+  "name": "RebarMesh.RebarMeshSpacingMethodEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The ways to distribute the reinforcing bars with different spacings.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/202198a8-2a54-900b-26a8-3b25c55db19f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SPACING_TYPE_UNDEFINED",
+      "value": 0,
+      "summary": "The undefined spacing type."
+    },
+    {
+      "name": "SPACING_TYPE_SAME_DISTANCE",
+      "value": 1,
+      "summary": "Distributes the bars using the same distance for all bars."
+    },
+    {
+      "name": "SPACING_TYPE_MULTIPLE_VARYING_DISTANCES",
+      "value": 2,
+      "summary": "Varying distribution of the bars."
+    }
+  ]
+}

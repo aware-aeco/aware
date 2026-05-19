@@ -1,0 +1,25 @@
+{
+  "name": "InsidePartAlongPartPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The InsidePartAlongPartPlacingType class defines a placing type that places the object using the base line placing. The base line used is in the middle of the part, aligned with the part.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a372b6c0-8b52-bfb8-a605-da56b1d601e8",
+  "constructors": [
+    {
+      "name": "InsidePartAlongPartPlacingType",
+      "signature": "public InsidePartAlongPartPlacingType()",
+      "summary": "Creates a new inside part along part placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7bd0caed-bb59-421f-e5eb-73d2fa3285f5"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

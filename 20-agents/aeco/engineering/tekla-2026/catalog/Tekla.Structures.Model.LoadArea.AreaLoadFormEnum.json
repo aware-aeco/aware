@@ -1,0 +1,24 @@
+{
+  "name": "LoadArea.AreaLoadFormEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The area load form.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/38b0eec5-e459-c5fd-12d3-806d0256c95e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOAD_FORM_AREA_PARALLELOGRAM",
+      "value": 1002,
+      "summary": "The area load form is a parallelogram."
+    },
+    {
+      "name": "LOAD_FORM_AREA_TRIANGLE",
+      "value": 1003,
+      "summary": "The area load form is a triangle."
+    }
+  ]
+}

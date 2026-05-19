@@ -1,0 +1,34 @@
+{
+  "name": "RefitTrimSectionMode",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "The mode for dividing the surface into sections",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_RefitTrimSectionMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoSections",
+      "value": 0,
+      "summary": "just output one \u0022upper\u0022 and one \u0022lower\u0022 surface"
+    },
+    {
+      "name": "DivideAtInputKnots",
+      "value": 1,
+      "summary": "divide into sections at each of the input surface\u0027s existing knots"
+    },
+    {
+      "name": "DivideAtAddedKnots",
+      "value": 2,
+      "summary": "Yes, divide into sections at each of the \u0022nKnot\u0022 added knot values"
+    },
+    {
+      "name": "DivideAtAllKnots",
+      "value": 3,
+      "summary": "Yes, divide into sections at ALL knot values (i.e. both 1 and 2)"
+    }
+  ]
+}

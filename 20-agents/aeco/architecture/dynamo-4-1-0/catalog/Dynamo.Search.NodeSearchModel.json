@@ -1,0 +1,14 @@
+{
+  "name": "NodeSearchModel",
+  "namespace": "Dynamo.Search",
+  "kind": "class",
+  "summary": "Searchable library of NodeSearchElements that can produce NodeModels.",
+  "base": "Dynamo.Search.SearchLibrary\u003CDynamo.Search.SearchElements.NodeSearchElement, Dynamo.Graph.Nodes.NodeModel\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/NodeSearchModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

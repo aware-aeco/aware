@@ -1,0 +1,34 @@
+{
+  "name": "Font.FontStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Vertical angle of font Upright, Italic, or Oblique",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Font_FontStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not set."
+    },
+    {
+      "name": "Upright",
+      "value": 1,
+      "summary": "Default font style."
+    },
+    {
+      "name": "Italic",
+      "value": 2,
+      "summary": "The face is sloped so the top is to the right of the base. Face names sometimes use the word \u0022oblique\u0022 for italic faces."
+    },
+    {
+      "name": "Oblique",
+      "value": 3,
+      "summary": "The face is sloped so the top is to the left of the base. This is extremely rare. NOTE WELL: Face names sometimes use the word \u0022oblique\u0022 for italic faces."
+    }
+  ]
+}

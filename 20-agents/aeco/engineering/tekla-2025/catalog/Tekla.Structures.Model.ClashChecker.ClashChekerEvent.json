@@ -1,0 +1,28 @@
+{
+  "name": "ClashChekerEvent",
+  "namespace": "Tekla.Structures.Model.ClashChecker",
+  "kind": "class",
+  "summary": "The ClashChekerEvent class contains methods related to clash check events.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/41019c1f-840e-5c3e-22ec-42581c30115b",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetClashCheckHandler",
+      "signature": "public static ClashCheckHandler GetClashCheckHandler()",
+      "summary": "Returns a new clash check handler.",
+      "params": [],
+      "returns": {
+        "type": "ClashCheckHandler",
+        "doc": "The new clash check handler instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/342b4318-e005-3d4d-41a1-fa54fcac1276"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

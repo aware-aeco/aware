@@ -1,0 +1,24 @@
+{
+  "name": "RebarCranking.CrankSideEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The crank side.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/59095750-aed2-11db-e365-1bbd36c7edb6",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CRANK_LEFT",
+      "value": 0,
+      "summary": "Crank left."
+    },
+    {
+      "name": "CRANK_RIGHT",
+      "value": 1,
+      "summary": "Crank right."
+    }
+  ]
+}

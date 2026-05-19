@@ -1,0 +1,54 @@
+{
+  "name": "InterfaceRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Record that declares a plugin implements a particular interface or behaviour.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.InterfaceRecord",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DeveloperId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 4 character ADN developer code or a GUID. The combination of this and Name is used to form Id that identifies which interface is being supported.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceRecord.DeveloperId"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Optional additional information about the interface implementation",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceRecord.DisplayName"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The full identifier of the interface being supported. This is formed as Name.DeveloperId",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceRecord.Id"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the Inteface. The combination of this and DeveloperId is used to form Id that identifies which interface is being supported.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceRecord.Name"
+    },
+    {
+      "name": "UserData",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Optional additional information about the interface implementation",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceRecord.UserData"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

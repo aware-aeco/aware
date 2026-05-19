@@ -1,0 +1,54 @@
+{
+  "name": "GH_Compression",
+  "namespace": "GH_IO.Serialization",
+  "kind": "class",
+  "summary": "Provides static methods for compression of byte-arrays.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Serialization_GH_Compression.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Compress",
+      "signature": "public static byte[] Compress(byte[] data)",
+      "summary": "Compress an array of bytes using the Deflate algorithm.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Byte[]",
+          "doc": "Byte array to compress.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "An array of compressed bytes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Compression_Compress.htm"
+    },
+    {
+      "name": "Decompress",
+      "signature": "public static byte[] Decompress(byte[] compressedData)",
+      "summary": "Decompress an array of bytes using the Deflate algorithm.",
+      "params": [
+        {
+          "name": "compressedData",
+          "type": "System.Byte[]",
+          "doc": "Byte array to decompress.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "An array of decompressed bytes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_Compression_Decompress.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

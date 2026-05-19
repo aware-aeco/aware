@@ -1,0 +1,53 @@
+{
+  "name": "OutlineShape",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "outline shapes",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/OutlineShape/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "OutlineShape",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/OutlineShape/#NemAll_Python_Precast.OutlineShape.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBUILTIN_OUTLINE_SHAPE_NOTHING",
+      "value": 0
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_SHAPE_RECTANGLE",
+      "value": 1
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_SHAPE_SYMBOL",
+      "value": 3
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_SHAPE_TRAPEZOID",
+      "value": 2
+    }
+  ]
+}

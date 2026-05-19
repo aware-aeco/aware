@@ -1,0 +1,129 @@
+{
+  "name": "JobsApi",
+  "namespace": "Bluebeam.StudioApi.Jobs",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Jobs endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetJob",
+      "signature": "Task GetJob(Guid id)",
+      "summary": "Get a single job metadata",
+      "remarks": "HTTP GET \u0060/publicapi/v1/jobs/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/jobs/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetResult",
+      "signature": "Task GetResult(Guid id, int resultId)",
+      "summary": "Get a single job result metadata",
+      "remarks": "HTTP GET \u0060/publicapi/v1/jobs/{id}/results/{resultId}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/jobs/{id}/results/{resultId}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "resultId",
+          "type": "int",
+          "doc": "Path parameter \u0060resultId\u0060 from \u0060/publicapi/v1/jobs/{id}/results/{resultId}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListJobResults",
+      "signature": "Task ListJobResults(Guid id)",
+      "summary": "Get a list of all job results metadata",
+      "remarks": "HTTP GET \u0060/publicapi/v1/jobs/{id}/results\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/jobs/{id}/results\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListJobs",
+      "signature": "Task ListJobs()",
+      "summary": "Get a list of jobs",
+      "remarks": "HTTP GET \u0060/publicapi/v1/jobs\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CancelJob",
+      "signature": "Task CancelJob(Guid id)",
+      "summary": "Cancel a job",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/jobs/{id}/cancel\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/jobs/{id}/cancel\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,149 @@
+{
+  "name": "ReinforcementShapeProperties",
+  "namespace": "StdReinfShapeBuilder.ReinforcementShapeProperties",
+  "kind": "class",
+  "summary": "Implementation of the reinforcement shape properties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/",
+  "constructors": [
+    {
+      "name": "ReinforcementShapeProperties",
+      "signature": "ReinforcementShapeProperties(diameter, bending_roller, steel_grade, concrete_grade, bending_shape_type, mesh_type, mesh_bending_direction)",
+      "summary": "Set the properties of a reinforcement bar",
+      "remarks": "Set the properties of a reinforcement bar",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(other)",
+      "summary": "comparision operator",
+      "remarks": "comparision operator",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.__eq__"
+    },
+    {
+      "name": "deep_copy",
+      "signature": "deep_copy()",
+      "summary": "execute a deep copy of the data",
+      "remarks": "execute a deep copy of the data",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.deep_copy"
+    },
+    {
+      "name": "mesh",
+      "signature": "mesh(mesh_type, mesh_bending_direction, bending_roller, concrete_grade, bending_shape_type)",
+      "summary": "Set the properties of a reinforcement mesh",
+      "remarks": "Set the properties of a reinforcement mesh",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.mesh"
+    },
+    {
+      "name": "rebar",
+      "signature": "rebar(diameter, bending_roller, steel_grade, concrete_grade, bending_shape_type)",
+      "summary": "Set the properties of a reinforcement bar",
+      "remarks": "Set the properties of a reinforcement bar",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.rebar"
+    },
+    {
+      "name": "to_reinforcementshapebarproperties_string",
+      "signature": "to_reinforcementshapebarproperties_string()",
+      "summary": "convert to a string for the reinforcementshapebarproperties value type",
+      "remarks": "convert to a string for the reinforcementshapebarproperties value type",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.to_reinforcementshapebarproperties_string"
+    },
+    {
+      "name": "to_reinforcementshapemeshproperties_string",
+      "signature": "to_reinforcementshapemeshproperties_string()",
+      "summary": "convert to a string for the reinforcementshapemeshproperties value type",
+      "remarks": "convert to a string for the reinforcementshapemeshproperties value type",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.to_reinforcementshapemeshproperties_string"
+    }
+  ],
+  "properties": [
+    {
+      "name": "bending_roller",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bending roller",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.bending_roller"
+    },
+    {
+      "name": "bending_shape_type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bending shape type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.bending_shape_type"
+    },
+    {
+      "name": "concrete_grade",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the concrete grade",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.concrete_grade"
+    },
+    {
+      "name": "diameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the diameter",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.diameter"
+    },
+    {
+      "name": "mesh_bending_direction",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the mesh bending direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.mesh_bending_direction"
+    },
+    {
+      "name": "mesh_type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the mesh type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.mesh_type"
+    },
+    {
+      "name": "steel_grade",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the steel grade",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/#StdReinfShapeBuilder.ReinforcementShapeProperties.ReinforcementShapeProperties.steel_grade"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

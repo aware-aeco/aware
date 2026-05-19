@@ -1,0 +1,2253 @@
+{
+  "name": "NamedViewWidgetObject",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.NamedViewWidgetObject\u0022]",
+  "base": "RhinoObject",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_NamedViewWidgetObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ClearId",
+      "signature": "public void ClearId()",
+      "summary": "Resets the HasId property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the ID is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearId.htm"
+    },
+    {
+      "name": "ClearIndex",
+      "signature": "public void ClearIndex()",
+      "summary": "Resets the HasIndex property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the index is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearIndex.htm"
+    },
+    {
+      "name": "ClearName",
+      "signature": "public void ClearName()",
+      "summary": "Resets the HasName property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the name is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearName.htm"
+    },
+    {
+      "name": "CommitChanges",
+      "signature": "public bool CommitChanges()",
+      "summary": "Moves changes made to this RhinoObject into the RhinoDoc.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if changes were made."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_CommitChanges.htm"
+    },
+    {
+      "name": "ConstructConstObject",
+      "signature": "protected void ConstructConstObject(Object parentObject, int subobjectIndex)",
+      "summary": "Assigns a parent object and a sub-object index to this.",
+      "params": [
+        {
+          "name": "parentObject",
+          "type": "System.Object",
+          "doc": "The parent object.",
+          "optional": false
+        },
+        {
+          "name": "subobjectIndex",
+          "type": "System.Int32",
+          "doc": "The sub-object index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ConstructConstObject.htm"
+    },
+    {
+      "name": "CopyHistoryOnReplace",
+      "signature": "public bool CopyHistoryOnReplace()",
+      "summary": "Gets the setting of the CopyOnReplace field in this object\u0027s history",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object has history and the field is set false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_CopyHistoryOnReplace.htm"
+    },
+    {
+      "name": "CreateMeshes",
+      "signature": "public virtual int CreateMeshes(MeshType meshType, MeshingParameters parameters, bool ignoreCustomParameters)",
+      "summary": "Create meshes used to render and analyze surface and polysurface objects.",
+      "params": [
+        {
+          "name": "meshType",
+          "type": "Rhino.Geometry.MeshType",
+          "doc": "type of meshes to create",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "in parameters that control the quality of the meshes that are created",
+          "optional": false
+        },
+        {
+          "name": "ignoreCustomParameters",
+          "type": "System.Boolean",
+          "doc": "Default should be false. Should the object ignore any custom meshing parameters on the object\u0027s attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "number of meshes created"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_CreateMeshes.htm"
+    },
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint currentRemainder)",
+      "summary": "Increments the Cyclic Redundancy Check value by this instance.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The current remainder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The updated remainder value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_DataCRC.htm"
+    },
+    {
+      "name": "Description",
+      "signature": "public void Description(TextLog textLog)",
+      "summary": "Get a brief description of a object, including it\u0027s attributes and geometry.",
+      "params": [
+        {
+          "name": "textLog",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "A text log for collecting the description.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_Description.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose_1.htm"
+    },
+    {
+      "name": "DuplicateGeometry",
+      "signature": "public GeometryBase DuplicateGeometry()",
+      "summary": "Constructs a deep (full) copy of the geometry.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "A copy of the internal geometry."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_DuplicateGeometry.htm"
+    },
+    {
+      "name": "EnableCustomGrips",
+      "signature": "public bool EnableCustomGrips(CustomObjectGrips customGrips)",
+      "summary": "Turns on/off the object\u0027s editing grips.",
+      "params": [
+        {
+          "name": "customGrips",
+          "type": "Rhino.DocObjects.Custom.CustomObjectGrips",
+          "doc": "The custom object grips.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the call succeeded. If you attempt to add custom grips to an object that does not support custom grips, then false is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_EnableCustomGrips.htm"
+    },
+    {
+      "name": "EnableVisualAnalysisMode",
+      "signature": "public bool EnableVisualAnalysisMode(VisualAnalysisMode mode, bool enable)",
+      "summary": "Used to turn analysis modes on and off.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Rhino.Display.VisualAnalysisMode",
+          "doc": "A visual analysis mode.",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if the mode should be activated; false otherwise.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object supports the analysis mode."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_EnableVisualAnalysisMode.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Finalize.htm"
+    },
+    {
+      "name": "GetActiveVisualAnalysisModes",
+      "signature": "public VisualAnalysisMode[] GetActiveVisualAnalysisModes()",
+      "summary": "Gets a list of currently enabled analysis modes for this object.",
+      "params": [],
+      "returns": {
+        "type": "VisualAnalysisMode[]",
+        "doc": "An array of visual analysis modes. The array can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetActiveVisualAnalysisModes.htm"
+    },
+    {
+      "name": "GetCustomRenderMeshParameter",
+      "signature": "public virtual IConvertible GetCustomRenderMeshParameter(Guid providerId, string parameterName)",
+      "summary": "Query the object for the value of a given named custom render mesh parameter.",
+      "params": [
+        {
+          "name": "providerId",
+          "type": "System.Guid",
+          "doc": "Id of the custom render mesh provider",
+          "optional": false
+        },
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "Name of the parameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IConvertible",
+        "doc": "IConvertible. Note that you can\u0027t directly cast from object, instead you have to use the Convert mechanism."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetCustomRenderMeshParameter.htm"
+    },
+    {
+      "name": "GetDynamicTransform",
+      "signature": "public bool GetDynamicTransform(out Transform transform)",
+      "summary": "While an object is being dynamically transformed (dragged, rotated, ...), the current transformation can be retrieved and used for creating dynamic display.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022transform\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetDynamicTransform(Rhino.Geometry.Transform@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the object is being edited and its transformation is available. False if the object is not being edited, in which case the identity transform is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetDynamicTransform.htm"
+    },
+    {
+      "name": "GetGrips",
+      "signature": "public GripObject[] GetGrips()",
+      "summary": "Returns grips for this object If grips are enabled. If grips are not enabled, returns null.",
+      "params": [],
+      "returns": {
+        "type": "GripObject[]",
+        "doc": "An array of grip objects; or null if there are no grips."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetGrips.htm"
+    },
+    {
+      "name": "GetGroupList",
+      "signature": "public int[] GetGroupList()",
+      "summary": "Allocates an array of group indices of length GroupCount. If GroupCount is 0, then this method returns null.",
+      "params": [],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of group indices, or null if GroupCount is 0."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetGroupList.htm"
+    },
+    {
+      "name": "GetHighlightedSubObjects",
+      "signature": "public ComponentIndex[] GetHighlightedSubObjects()",
+      "summary": "Gets a list of all highlighted sub-objects.",
+      "params": [],
+      "returns": {
+        "type": "ComponentIndex[]",
+        "doc": "An array of all highlighted sub-objects; or null is there are none."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetHighlightedSubObjects.htm"
+    },
+    {
+      "name": "GetMaterial(Boolean)",
+      "signature": "public Material GetMaterial(bool frontMaterial)",
+      "summary": "Gets material that this object uses based on it\u0027s attributes and the document that the object is associated with. In the rare case that a document is not associated with this object, null will be returned.",
+      "params": [
+        {
+          "name": "frontMaterial",
+          "type": "System.Boolean",
+          "doc": "If true, gets the material used to render the object\u0027s front side",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Material",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetMaterial(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetMaterial_3.htm"
+    },
+    {
+      "name": "GetMaterial(ComponentIndex)",
+      "signature": "public Material GetMaterial(ComponentIndex componentIndex)",
+      "summary": "Get the Material associated with the sub object identified by componentIndex if the component index is set to ComponentIndex.Unset then the top level material is returned.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Returns the material associated with the specified sub object or the objects top level material if it is set to ComponentIndex.Unset",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Material",
+        "doc": "Returns the Material associated with the sub object identified by componentIndex if the component index is set to ComponentIndex.Unset then the top level material is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetMaterial.htm"
+    },
+    {
+      "name": "GetMaterial(ComponentIndex, Guid)",
+      "signature": "public Material GetMaterial(ComponentIndex componentIndex, Guid plugInId)",
+      "summary": "Get the Material associated with the sub object identified by componentIndex if the component index is set to ComponentIndex.Unset then the top level material is returned.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Returns the material associated with the specified sub object or the objects top level material if it is set to ComponentIndex.Unset",
+          "optional": false
+        },
+        {
+          "name": "plugInId",
+          "type": "System.Guid",
+          "doc": "The plug-in specific material to look for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Material",
+        "doc": "Returns the Material associated with the sub object identified by componentIndex if the component index is set to ComponentIndex.Unset then the top level material is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetMaterial_1.htm"
+    },
+    {
+      "name": "GetMaterial(ComponentIndex, Guid, ObjectAttributes)",
+      "signature": "public Material GetMaterial(ComponentIndex componentIndex, Guid plugInId, ObjectAttributes attributes)",
+      "summary": "Get the Material associated with the sub object identified by componentIndex if the component index is set to ComponentIndex.Unset then the top level material is returned.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Returns the material associated with the specified sub object or the objects top level material if it is set to ComponentIndex.Unset",
+          "optional": false
+        },
+        {
+          "name": "plugInId",
+          "type": "System.Guid",
+          "doc": "The plug-in specific material to look for.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Optional object attributes used to determine the material source, if null the objects attributes are used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Material",
+        "doc": "Returns the Material associated with the sub object identified by componentIndex if the component index is set to ComponentIndex.Unset then the top level material is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetMaterial_2.htm"
+    },
+    {
+      "name": "GetMeshes",
+      "signature": "public virtual Mesh[] GetMeshes(MeshType meshType)",
+      "summary": "Get existing meshes used to render and analyze surface and polysurface objects.",
+      "params": [
+        {
+          "name": "meshType",
+          "type": "Rhino.Geometry.MeshType",
+          "doc": "[Missing \u003Cparam name=\u0022meshType\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetMeshes(Rhino.Geometry.MeshType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh[]",
+        "doc": "An array of meshes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetMeshes.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetRenderMaterial(Boolean)",
+      "signature": "public RenderMaterial GetRenderMaterial(bool frontMaterial)",
+      "summary": "Gets the RenderMaterial that this object uses based on it\u0027s attributes and the document that the object is associated with. If there is no RenderMaterial associated with this object then null is returned. If null is returned you should call GetMaterial to get the material used to render this object.",
+      "params": [
+        {
+          "name": "frontMaterial",
+          "type": "System.Boolean",
+          "doc": "If true, gets the material used to render the object\u0027s front side otherwise; gets the material used to render the back side of the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMaterial",
+        "doc": "If there is a RenderMaterial associated with this objects\u0027 associated Material then it is returned otherwise; null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderMaterial_3.htm"
+    },
+    {
+      "name": "GetRenderMaterial(ComponentIndex)",
+      "signature": "public RenderMaterial GetRenderMaterial(ComponentIndex componentIndex)",
+      "summary": "Gets the RenderMaterial associated with this object if there is one. If there is no RenderMaterial associated with this object then null is returned. If null is returned you should call GetMaterial to get the material used to render this object.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Returns the RenderMaterial associated with the specified sub object or the objects top level material if it is set to ComponentIndex.Unset",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMaterial",
+        "doc": "Returns the RenderMaterial associated with the sub object identified by componentIndex if the component index is set to then the top level RenderMaterail is returned. If this method returns null it means there is no RenderMaterial associated with the object or sub object so you should may GetMaterial get the objects generic material."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderMaterial.htm"
+    },
+    {
+      "name": "GetRenderMaterial(ComponentIndex, Guid)",
+      "signature": "public RenderMaterial GetRenderMaterial(ComponentIndex componentIndex, Guid plugInId)",
+      "summary": "Gets the RenderMaterial associated with this object if there is one. If there is no RenderMaterial associated with this object then null is returned. If null is returned you should call GetMaterial to get the material used to render this object.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Returns the RenderMaterial associated with the specified sub object or the objects top level material if it is set to",
+          "optional": false
+        },
+        {
+          "name": "plugInId",
+          "type": "System.Guid",
+          "doc": "The plug-in specific material to look for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMaterial",
+        "doc": "Returns the RenderMaterial associated with the sub object identified by componentIndex if the component index is set to then the top level RenderMaterail is returned. If this method returns null it means there is no RenderMaterial associated with the object or sub object so you should may GetMaterial get the objects generic material."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderMaterial_1.htm"
+    },
+    {
+      "name": "GetRenderMaterial(ComponentIndex, Guid, ObjectAttributes)",
+      "signature": "public RenderMaterial GetRenderMaterial(ComponentIndex componentIndex, Guid plugInId, ObjectAttributes attributes)",
+      "summary": "Gets the RenderMaterial associated with this object if there is one. If there is no RenderMaterial associated with this object then null is returned. If null is returned you should call GetMaterial to get the material used to render this object.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Returns the RenderMaterial associated with the specified sub object or the objects top level material if it is set to",
+          "optional": false
+        },
+        {
+          "name": "plugInId",
+          "type": "System.Guid",
+          "doc": "The plug-in specific material to look for.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Optional object attributes used to determine the material source, if null the objects attributes are used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMaterial",
+        "doc": "Returns the RenderMaterial associated with the sub object identified by componentIndex if the component index is set to then the top level RenderMaterail is returned. If this method returns null it means there is no RenderMaterial associated with the object or sub object so you should may GetMaterial get the objects generic material."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderMaterial_2.htm"
+    },
+    {
+      "name": "GetRenderMeshParameters()",
+      "signature": "public MeshingParameters GetRenderMeshParameters()",
+      "summary": "Returns the meshing parameters that this object uses for generating render meshes. If this object does not have per-object meshing parameters, then the document\u0027s meshing parameters are returned.",
+      "params": [],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": "The render meshing parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderMeshParameters.htm"
+    },
+    {
+      "name": "GetRenderMeshParameters(Boolean)",
+      "signature": "public MeshingParameters GetRenderMeshParameters(bool returnDocumentParametersIfUnset)",
+      "summary": "Returns the meshing parameters that this object uses for generating render meshes.",
+      "params": [
+        {
+          "name": "returnDocumentParametersIfUnset",
+          "type": "System.Boolean",
+          "doc": "If true, then return the per-object meshing parameters for this object. If this object does not have per-object meshing parameters, then the document\u0027s meshing parameters are returned. If false, then return the per-object meshing parameters for this object. If this object does not have per-object meshing parameters, then null is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": "The render meshing parameters if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderMeshParameters_1.htm"
+    },
+    {
+      "name": "GetRenderPrimitiveList(ViewportInfo, DisplayPipelineAttributes)",
+      "signature": "public RenderPrimitiveList GetRenderPrimitiveList(ViewportInfo viewport, DisplayPipelineAttributes attrs)",
+      "summary": "Build custom render mesh(es) for this object.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "Attributes for the view mode you are supplying meshes for. Will be null if this is a modal rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderPrimitiveList",
+        "doc": "Returns a RenderPrimitiveList if successful otherwise returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderPrimitiveList.htm"
+    },
+    {
+      "name": "GetRenderPrimitiveList(ViewportInfo, Boolean)",
+      "signature": "[ObsoleteAttribute] public RenderPrimitiveList GetRenderPrimitiveList(ViewportInfo viewport, bool preview)",
+      "summary": "Build custom render mesh(es) for this object.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "Type of mesh to build, if preview is true then a smaller mesh may be generated in less time, false is meant when actually rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderPrimitiveList",
+        "doc": "Returns a RenderPrimitiveList if successful otherwise returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetRenderPrimitiveList_1.htm"
+    },
+    {
+      "name": "GetSelectedSubObjects",
+      "signature": "public ComponentIndex[] GetSelectedSubObjects()",
+      "summary": "Get a list of all selected sub-objects.",
+      "params": [],
+      "returns": {
+        "type": "ComponentIndex[]",
+        "doc": "An array of sub-object indices, or null if there are none."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetSelectedSubObjects.htm"
+    },
+    {
+      "name": "GetSubObjects",
+      "signature": "public RhinoObject[] GetSubObjects()",
+      "summary": "Explodes the object into sub-objects. It is up to the caller to add the returned objects to the document.",
+      "params": [],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "An array of Rhino objects, or null if this object cannot be exploded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetSubObjects.htm"
+    },
+    {
+      "name": "GetTextureChannels",
+      "signature": "public int[] GetTextureChannels()",
+      "summary": "Get a list of the texture mapping channel Id\u0027s associated with object.",
+      "params": [],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Returns an array of channel Id\u0027s or an empty list if there are not mappings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetTextureChannels.htm"
+    },
+    {
+      "name": "GetTextureMapping(Int32)",
+      "signature": "public TextureMapping GetTextureMapping(int channel)",
+      "summary": "(Inherited from RhinoObject.)",
+      "params": [
+        {
+          "name": "channel",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022channel\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetTextureMapping(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetTextureMapping(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetTextureMapping.htm"
+    },
+    {
+      "name": "GetTextureMapping(Int32, Transform)",
+      "signature": "public TextureMapping GetTextureMapping(int channel, out Transform objectTransform)",
+      "summary": "Get objects texture mapping",
+      "params": [
+        {
+          "name": "channel",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022channel\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetTextureMapping(System.Int32,Rhino.Geometry.Transform@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "objectTransform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022objectTransform\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetTextureMapping(System.Int32,Rhino.Geometry.Transform@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.GetTextureMapping(System.Int32,Rhino.Geometry.Transform@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_GetTextureMapping_1.htm"
+    },
+    {
+      "name": "HasHistoryRecord",
+      "signature": "public bool HasHistoryRecord()",
+      "summary": "Returns whether this object has a history record",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.HasHistoryRecord\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_HasHistoryRecord.htm"
+    },
+    {
+      "name": "HasTextureMapping",
+      "signature": "public bool HasTextureMapping()",
+      "summary": "Returns true if this object has a texture mapping form any source (pluginId)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.HasTextureMapping\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_HasTextureMapping.htm"
+    },
+    {
+      "name": "Highlight",
+      "signature": "public bool Highlight(bool enable)",
+      "summary": "Modifies the highlighting of the object.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if highlighting should be enabled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the object is now highlighted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_Highlight.htm"
+    },
+    {
+      "name": "HighlightSubObject",
+      "signature": "public bool HighlightSubObject(ComponentIndex componentIndex, bool highlight)",
+      "summary": "Highlights a sub-object.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "A sub-object component index.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Boolean",
+          "doc": "true if the sub-object should be highlighted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the sub-object is now highlighted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_HighlightSubObject.htm"
+    },
+    {
+      "name": "InVisualAnalysisMode()",
+      "signature": "public bool InVisualAnalysisMode()",
+      "summary": "Reports if any visual analysis mode is currently active for an object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if an analysis mode is active; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_InVisualAnalysisMode.htm"
+    },
+    {
+      "name": "InVisualAnalysisMode(VisualAnalysisMode)",
+      "signature": "public bool InVisualAnalysisMode(VisualAnalysisMode mode)",
+      "summary": "Reports if a visual analysis mode is currently active for an object.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Rhino.Display.VisualAnalysisMode",
+          "doc": "The mode to check for. Use null if you want to see if any mode is active.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the specified analysis mode is active; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_InVisualAnalysisMode_1.htm"
+    },
+    {
+      "name": "IsActiveInViewport",
+      "signature": "public virtual bool IsActiveInViewport(RhinoViewport viewport)",
+      "summary": "Determine if this object is active in a particular viewport.",
+      "remarks": "The default implementation tests for space and viewport id. This handles things like testing if a page space object is visible in a modeling view.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.IsActiveInViewport(Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the object is active in viewport"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsActiveInViewport.htm"
+    },
+    {
+      "name": "IsHighlighted",
+      "signature": "public int IsHighlighted(bool checkSubObjects)",
+      "summary": "Check highlight state.",
+      "params": [
+        {
+          "name": "checkSubObjects",
+          "type": "System.Boolean",
+          "doc": "If true and the entire object is not highlighted, and some subset of the object is highlighted, like some edges of a surface, then 3 is returned. If false and the entire object is not highlighted, then zero is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: object is not highlighted.1: entire object is highlighted.3: one or more proper sub-objects are highlighted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsHighlighted.htm"
+    },
+    {
+      "name": "IsMeshable",
+      "signature": "public virtual bool IsMeshable(MeshType meshType)",
+      "summary": "Returns true if the object is capable of having a mesh of the specified type",
+      "params": [
+        {
+          "name": "meshType",
+          "type": "Rhino.Geometry.MeshType",
+          "doc": "[Missing \u003Cparam name=\u0022meshType\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.IsMeshable(Rhino.Geometry.MeshType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.IsMeshable(Rhino.Geometry.MeshType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsMeshable.htm"
+    },
+    {
+      "name": "IsSelectable()",
+      "signature": "public bool IsSelectable()",
+      "summary": "Reports if an object can be selected.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then an that object is not selectable if it has grips turned on.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if object is capable of being selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsSelectable.htm"
+    },
+    {
+      "name": "IsSelectable(Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public bool IsSelectable(bool ignoreSelectionState, bool ignoreGripsState, bool ignoreLayerLocking, bool ignoreLayerVisibility)",
+      "summary": "Reports if an object can be selected.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then an that object is not selectable if it has grips turned on.",
+      "params": [
+        {
+          "name": "ignoreSelectionState",
+          "type": "System.Boolean",
+          "doc": "If true, then selected objects are selectable. If false, then selected objects are not selectable.",
+          "optional": false
+        },
+        {
+          "name": "ignoreGripsState",
+          "type": "System.Boolean",
+          "doc": "If true, then objects with grips on can be selected. If false, then the value returned by the object\u0027s IsSelectableWithGripsOn() function decides if the object can be selected.",
+          "optional": false
+        },
+        {
+          "name": "ignoreLayerLocking",
+          "type": "System.Boolean",
+          "doc": "If true, then objects on locked layers are selectable. If false, then objects on locked layers are not selectable.",
+          "optional": false
+        },
+        {
+          "name": "ignoreLayerVisibility",
+          "type": "System.Boolean",
+          "doc": "If true, then objects on hidden layers are selectable. If false, then objects on hidden layers are not selectable.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if object is capable of being selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsSelectable_1.htm"
+    },
+    {
+      "name": "IsSelected",
+      "signature": "public int IsSelected(bool checkSubObjects)",
+      "summary": "Check selection state.",
+      "params": [
+        {
+          "name": "checkSubObjects",
+          "type": "System.Boolean",
+          "doc": "(false is good default) If true and the entire object is not selected, and some subset of the object is selected, like some edges of a surface, then 3 is returned. If false and the entire object is not selected, then zero is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 = object is not selected. 1 = object is selected. 2 = entire object is selected persistently. 3 = one or more proper sub-objects are selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsSelected.htm"
+    },
+    {
+      "name": "IsSubObjectHighlighted",
+      "signature": "public bool IsSubObjectHighlighted(ComponentIndex componentIndex)",
+      "summary": "Determines if a sub-object is highlighted.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "A sub-object component index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the sub-object is highlighted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsSubObjectHighlighted.htm"
+    },
+    {
+      "name": "IsSubObjectSelectable",
+      "signature": "public bool IsSubObjectSelectable(ComponentIndex componentIndex, bool ignoreSelectionState)",
+      "summary": "Reports if a sub-object can be selected.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then that object is not selectable if it has grips turned on.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "index of sub-object to check.",
+          "optional": false
+        },
+        {
+          "name": "ignoreSelectionState",
+          "type": "System.Boolean",
+          "doc": "If true, then selected objects are selectable. If false, then selected objects are not selectable.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the specified sub-object can be selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsSubObjectSelectable.htm"
+    },
+    {
+      "name": "IsSubObjectSelected",
+      "signature": "public bool IsSubObjectSelected(ComponentIndex componentIndex)",
+      "summary": "Check sub-object selection state.",
+      "remarks": "A sub-object cannot be persistently selected.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Index of sub-object to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the sub-object is selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_IsSubObjectSelected.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "LockId",
+      "signature": "public void LockId()",
+      "summary": "Locks the component Id property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockId.htm"
+    },
+    {
+      "name": "LockIndex",
+      "signature": "public void LockIndex()",
+      "summary": "Locks the component Index property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockIndex.htm"
+    },
+    {
+      "name": "LockName",
+      "signature": "public void LockName()",
+      "summary": "Locks the component Name property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockName.htm"
+    },
+    {
+      "name": "MemoryEstimate",
+      "signature": "public uint MemoryEstimate()",
+      "summary": "Computes an estimate of the number of bytes that this object is using in memory. Note that this is a runtime memory estimate and does not directly compare to the amount of space take up by the object when saved to a file.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The estimated number of bytes this object occupies in memory."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_MemoryEstimate.htm"
+    },
+    {
+      "name": "MeshCount",
+      "signature": "public virtual int MeshCount(MeshType meshType, MeshingParameters parameters)",
+      "summary": "RhinoObjects can have several different types of meshes and different numbers of meshes. A b-rep can have a render and an analysis mesh on each face. A mesh object has a single render mesh and no analysis mesh. Curve, point, and annotation objects have no meshes.",
+      "params": [
+        {
+          "name": "meshType",
+          "type": "Rhino.Geometry.MeshType",
+          "doc": "type of mesh to count",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "if not null and if the object can change its mesh (like a brep), then only meshes that were created with these mesh parameters are counted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "number of meshes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_MeshCount.htm"
+    },
+    {
+      "name": "NonConstOperation",
+      "signature": "protected virtual void NonConstOperation()",
+      "summary": "For derived classes implementers. Defines the necessary implementation to free the instance from being constant.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_NonConstOperation.htm"
+    },
+    {
+      "name": "OnAddToDocument",
+      "signature": "protected virtual void OnAddToDocument(RhinoDoc doc)",
+      "summary": "This call informs an object it is about to be added to the list of active objects in the document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnAddToDocument(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnAddToDocument.htm"
+    },
+    {
+      "name": "OnDeleteFromDocument",
+      "signature": "protected virtual void OnDeleteFromDocument(RhinoDoc doc)",
+      "summary": "This call informs an object it is about to be deleted. Some objects, like clipping planes, need to do a little extra cleanup before they are deleted.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnDeleteFromDocument(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnDeleteFromDocument.htm"
+    },
+    {
+      "name": "OnDraw",
+      "signature": "protected virtual void OnDraw(DrawEventArgs e)",
+      "summary": "Called when Rhino wants to draw this object",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.DrawEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnDraw(Rhino.Display.DrawEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnDraw.htm"
+    },
+    {
+      "name": "OnDuplicate",
+      "signature": "protected virtual void OnDuplicate(RhinoObject source)",
+      "summary": "Called when this a new instance of this object is created and copied from an existing object",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022source\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnDuplicate(Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnDuplicate.htm"
+    },
+    {
+      "name": "OnPick",
+      "signature": "protected virtual IEnumerable\u003CObjRef\u003E OnPick(PickContext context)",
+      "summary": "Called to determine if this object or some sub-portion of this object should be picked given a pick context.",
+      "params": [
+        {
+          "name": "context",
+          "type": "Rhino.Input.Custom.PickContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnPick(Rhino.Input.Custom.PickContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CObjRef\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnPick(Rhino.Input.Custom.PickContext)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnPick.htm"
+    },
+    {
+      "name": "OnPicked",
+      "signature": "protected virtual void OnPicked(PickContext context, IEnumerable\u003CObjRef\u003E pickedItems)",
+      "summary": "Called when this object has been picked",
+      "params": [
+        {
+          "name": "context",
+          "type": "Rhino.Input.Custom.PickContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnPicked(Rhino.Input.Custom.PickContext,System.Collections.Generic.IEnumerable{Rhino.DocObjects.ObjRef})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pickedItems",
+          "type": "System.Collections.Generic.IEnumerable\u003CObjRef\u003E",
+          "doc": "Items that were picked. This parameter is enumerable because there may have been multiple sub-objects picked",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnPicked.htm"
+    },
+    {
+      "name": "OnSelectionChanged",
+      "signature": "protected virtual void OnSelectionChanged()",
+      "summary": "Called when the selection state of this object has changed",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnSelectionChanged.htm"
+    },
+    {
+      "name": "OnSpaceMorph",
+      "signature": "protected virtual void OnSpaceMorph(SpaceMorph morph)",
+      "summary": "Called when a space morph has been applied to the geometry. Currently this only works for CustomMeshObject instances",
+      "params": [
+        {
+          "name": "morph",
+          "type": "Rhino.Geometry.SpaceMorph",
+          "doc": "[Missing \u003Cparam name=\u0022morph\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnSpaceMorph(Rhino.Geometry.SpaceMorph)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnSpaceMorph.htm"
+    },
+    {
+      "name": "OnSwitchToNonConst",
+      "signature": "protected virtual void OnSwitchToNonConst()",
+      "summary": "Is called when a non-constant operation first occurs.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_OnSwitchToNonConst.htm"
+    },
+    {
+      "name": "OnTransform",
+      "signature": "protected virtual void OnTransform(Transform transform)",
+      "summary": "Called when a transformation has been applied to the geometry",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022transform\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.OnTransform(Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_OnTransform.htm"
+    },
+    {
+      "name": "Select(Boolean)",
+      "signature": "public int Select(bool on)",
+      "summary": "Selects an object.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then an that object is not selectable if it has grips turned on.",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "The new selection state; true activates selection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: object is not selected.1: object is selected.2: object is selected persistently."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_Select.htm"
+    },
+    {
+      "name": "Select(Boolean, Boolean)",
+      "signature": "public int Select(bool on, bool syncHighlight)",
+      "summary": "Selects an object.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then an that object is not selectable if it has grips turned on.",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "The new selection state; true activates selection.",
+          "optional": false
+        },
+        {
+          "name": "syncHighlight",
+          "type": "System.Boolean",
+          "doc": "If true, then the object is highlighted if it is selected and not highlighted if is not selected. Highlighting can be and stay out of sync, as its specification is independent.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: object is not selected.1: object is selected.2: object is selected persistently."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_Select_1.htm"
+    },
+    {
+      "name": "Select(Boolean, Boolean, Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public int Select(bool on, bool syncHighlight, bool persistentSelect, bool ignoreGripsState, bool ignoreLayerLocking, bool ignoreLayerVisibility)",
+      "summary": "Selects an object.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then an that object is not selectable if it has grips turned on.",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "The new selection state; true activates selection.",
+          "optional": false
+        },
+        {
+          "name": "syncHighlight",
+          "type": "System.Boolean",
+          "doc": "If true, then the object is highlighted if it is selected and unhighlighted if is not selected. Highlighting can be and stay out of sync, as its specification is independent.",
+          "optional": false
+        },
+        {
+          "name": "persistentSelect",
+          "type": "System.Boolean",
+          "doc": "Objects that are persistently selected stay selected when a command terminates.",
+          "optional": false
+        },
+        {
+          "name": "ignoreGripsState",
+          "type": "System.Boolean",
+          "doc": "If true, then objects with grips on can be selected. If false, then the value returned by the object\u0027s IsSelectableWithGripsOn() function decides if the object can be selected when it has grips turned on.",
+          "optional": false
+        },
+        {
+          "name": "ignoreLayerLocking",
+          "type": "System.Boolean",
+          "doc": "If true, then objects on locked layers can be selected. If false, then objects on locked layers cannot be selected.",
+          "optional": false
+        },
+        {
+          "name": "ignoreLayerVisibility",
+          "type": "System.Boolean",
+          "doc": "If true, then objects on hidden layers can be selectable. If false, then objects on hidden layers cannot be selected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: object is not selected.1: object is selected.2: object is selected persistently."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_Select_2.htm"
+    },
+    {
+      "name": "SelectSubObject(ComponentIndex, Boolean, Boolean)",
+      "signature": "public int SelectSubObject(ComponentIndex componentIndex, bool select, bool syncHighlight)",
+      "summary": "Reports if an object can be selected.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then an that object is not selectable if it has grips turned on.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Index of sub-object to check.",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Boolean",
+          "doc": "The new selection state; true activates selection.",
+          "optional": false
+        },
+        {
+          "name": "syncHighlight",
+          "type": "System.Boolean",
+          "doc": "(default=true) If true, then the object is highlighted if it is selected and unhighlighted if is not selected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: object is not selected 1: object is selected 2: object is selected persistently."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SelectSubObject.htm"
+    },
+    {
+      "name": "SelectSubObject(ComponentIndex, Boolean, Boolean, Boolean)",
+      "signature": "public int SelectSubObject(ComponentIndex componentIndex, bool select, bool syncHighlight, bool persistentSelect)",
+      "summary": "Reports if an object can be selected.",
+      "remarks": "Objects that are locked, hidden, or on locked or hidden layers cannot be selected. If IsSelectableWithGripsOn() returns false, then an that object is not selectable if it has grips turned on.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "Index of sub-object to check.",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Boolean",
+          "doc": "The new selection state; true activates selection.",
+          "optional": false
+        },
+        {
+          "name": "syncHighlight",
+          "type": "System.Boolean",
+          "doc": "(default=true) If true, then the object is highlighted if it is selected and unhighlighted if is not selected.",
+          "optional": false
+        },
+        {
+          "name": "persistentSelect",
+          "type": "System.Boolean",
+          "doc": "When true, selection persists even after the current command terminates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: object is not selected1: object is selected2: object is selected persistently."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SelectSubObject_1.htm"
+    },
+    {
+      "name": "SetCopyHistoryOnReplace",
+      "signature": "public void SetCopyHistoryOnReplace(bool bCopy)",
+      "summary": "If this object has a history record, the CopyOnReplace field is set When an object is replaced in a document and the old object has a history record with this field set, the history record is copied and attached to the new object. That allows a descendant object to continue the history linkage after it is edited.",
+      "params": [
+        {
+          "name": "bCopy",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bCopy\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetCopyHistoryOnReplace(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SetCopyHistoryOnReplace.htm"
+    },
+    {
+      "name": "SetCustomRenderMeshParameter",
+      "signature": "public virtual void SetCustomRenderMeshParameter(Guid providerId, string parameterName, Object value)",
+      "summary": "Set the named custom render mesh parameter value for this object.",
+      "params": [
+        {
+          "name": "providerId",
+          "type": "System.Guid",
+          "doc": "Id of the custom render mesh provider",
+          "optional": false
+        },
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022parameterName\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetCustomRenderMeshParameter(System.Guid,System.String,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetCustomRenderMeshParameter(System.Guid,System.String,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SetCustomRenderMeshParameter.htm"
+    },
+    {
+      "name": "SetRenderMeshParameters",
+      "signature": "public bool SetRenderMeshParameters(MeshingParameters mp)",
+      "summary": "Sets the per-object meshing parameters for this object. When set, this object will use these meshing parameters when generating a render mesh, instead of those provided by the document.",
+      "params": [
+        {
+          "name": "mp",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "The per-object meshing parameters. Note: if null, then the per-object meshing parameters will be removed, and this object will revert to using the meshing parameters provided by the document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SetRenderMeshParameters.htm"
+    },
+    {
+      "name": "SetTextureMapping(Int32, TextureMapping)",
+      "signature": "public int SetTextureMapping(int channel, TextureMapping tm)",
+      "summary": "(Inherited from RhinoObject.)",
+      "params": [
+        {
+          "name": "channel",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022channel\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetTextureMapping(System.Int32,Rhino.Render.TextureMapping)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tm",
+          "type": "Rhino.Render.TextureMapping",
+          "doc": "[Missing \u003Cparam name=\u0022tm\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetTextureMapping(System.Int32,Rhino.Render.TextureMapping)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetTextureMapping(System.Int32,Rhino.Render.TextureMapping)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SetTextureMapping.htm"
+    },
+    {
+      "name": "SetTextureMapping(Int32, TextureMapping, Transform)",
+      "signature": "public int SetTextureMapping(int channel, TextureMapping tm, Transform objectTransform)",
+      "summary": "Sets texture mapping and mapping object transform for a channel",
+      "params": [
+        {
+          "name": "channel",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022channel\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetTextureMapping(System.Int32,Rhino.Render.TextureMapping,Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tm",
+          "type": "Rhino.Render.TextureMapping",
+          "doc": "[Missing \u003Cparam name=\u0022tm\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetTextureMapping(System.Int32,Rhino.Render.TextureMapping,Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "objectTransform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Mapping channel object transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.RhinoObject.SetTextureMapping(System.Int32,Rhino.Render.TextureMapping,Rhino.Geometry.Transform)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SetTextureMapping_1.htm"
+    },
+    {
+      "name": "ShortDescription",
+      "signature": "public virtual string ShortDescription(bool plural)",
+      "summary": "Gets a localized short descriptive name of the object.",
+      "params": [
+        {
+          "name": "plural",
+          "type": "System.Boolean",
+          "doc": "true if the descriptive name should in plural.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string with the short localized descriptive name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_ShortDescription.htm"
+    },
+    {
+      "name": "SupportsRenderPrimitiveList(ViewportInfo, DisplayPipelineAttributes)",
+      "signature": "public bool SupportsRenderPrimitiveList(ViewportInfo viewport, DisplayPipelineAttributes attrs)",
+      "summary": "Determines if custom render meshes will be built for a particular object.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "Type of mesh to build. If attributes is non-null then a smaller mesh may be generated in less time, false is meant when actually rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if custom render mesh(es) will get built for this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SupportsRenderPrimitiveList.htm"
+    },
+    {
+      "name": "SupportsRenderPrimitiveList(ViewportInfo, Boolean)",
+      "signature": "[ObsoleteAttribute] public bool SupportsRenderPrimitiveList(ViewportInfo viewport, bool preview)",
+      "summary": "Determines if custom render meshes will be built for a particular object.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "Type of mesh to build. If attributes is non-null then a smaller mesh may be generated in less time, false is meant when actually rendering.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if custom render mesh(es) will get built for this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_SupportsRenderPrimitiveList_1.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns the name of the model component type, and then its name and index.",
+      "remarks": "This is provided as a visual aid. Do not rely on this for serialization.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ModelComponent.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ToString.htm"
+    },
+    {
+      "name": "TryGetGumballFrame",
+      "signature": "public bool TryGetGumballFrame(out GumballFrame frame)",
+      "summary": "If a Rhino object has been manipulated by Rhino\u0027s gumball, and the gumball is not in its default position, then the object\u0027s repositioned gumball frame is returned.",
+      "params": [
+        {
+          "name": "frame",
+          "type": "Rhino.UI.Gumball.GumballFrame",
+          "doc": "The gumball frame.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the object has a gumball frame, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_TryGetGumballFrame.htm"
+    },
+    {
+      "name": "TryGetRenderPrimitiveBoundingBox(ViewportInfo, DisplayPipelineAttributes, BoundingBox)",
+      "signature": "public bool TryGetRenderPrimitiveBoundingBox(ViewportInfo viewport, DisplayPipelineAttributes attrs, out BoundingBox boundingBox)",
+      "summary": "Get the bounding box for the custom render meshes associated with this object.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "Attributes for the view mode you are supplying meshes for. Will be null if this is a modal rendering.",
+          "optional": false
+        },
+        {
+          "name": "boundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "This will be set to BoundingBox.Unset on failure otherwise it will be the bounding box for the custom render meshes associated with this object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the bounding box was successfully calculated otherwise returns false on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_TryGetRenderPrimitiveBoundingBox.htm"
+    },
+    {
+      "name": "TryGetRenderPrimitiveBoundingBox(ViewportInfo, Boolean, BoundingBox)",
+      "signature": "[ObsoleteAttribute] public bool TryGetRenderPrimitiveBoundingBox(ViewportInfo viewport, bool preview, out BoundingBox boundingBox)",
+      "summary": "Get the bounding box for the custom render meshes associated with this object.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "Type of mesh to build, if preview is true then a smaller mesh may be generated in less time, false is meant when actually rendering.",
+          "optional": false
+        },
+        {
+          "name": "boundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "This will be set to BoundingBox.Unset on failure otherwise it will be the bounding box for the custom render meshes associated with this object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the bounding box was successfully calculated otherwise returns false on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_TryGetRenderPrimitiveBoundingBox_1.htm"
+    },
+    {
+      "name": "UnhighlightAllSubObjects",
+      "signature": "public int UnhighlightAllSubObjects()",
+      "summary": "Removes highlighting from all sub-objects.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of changed sub-objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_UnhighlightAllSubObjects.htm"
+    },
+    {
+      "name": "UnselectAllSubObjects",
+      "signature": "public int UnselectAllSubObjects()",
+      "summary": "Removes selection from all sub-objects.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of unselected sub-objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_RhinoObject_UnselectAllSubObjects.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AssociatedNamedView",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_NamedViewWidgetObject_AssociatedNamedView.htm"
+    },
+    {
+      "name": "Attributes",
+      "type": "ObjectAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the object attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_Attributes.htm"
+    },
+    {
+      "name": "ComponentStatus",
+      "type": "ComponentStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the component status of the model component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_ComponentStatus.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns ModelGeometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_ComponentType.htm"
+    },
+    {
+      "name": "DeletedName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of a component that is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_DeletedName.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that owns this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_Document.htm"
+    },
+    {
+      "name": "Geometry",
+      "type": "GeometryBase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the underlying geometry for this object. All rhino objects are composed of geometry and attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_Geometry.htm"
+    },
+    {
+      "name": "GripsOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the activation state of object default editing grips.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_GripsOn.htm"
+    },
+    {
+      "name": "GripsSelected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if grips are turned on and at least one is selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_GripsSelected.htm"
+    },
+    {
+      "name": "GroupCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of groups object belongs to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_GroupCount.htm"
+    },
+    {
+      "name": "HasDynamicTransform",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if the object has a dynamic transformation",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_HasDynamicTransform.htm"
+    },
+    {
+      "name": "HasId",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasId.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an Index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has a Name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasName.htm"
+    },
+    {
+      "name": "HasSubobjectMaterials",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Will be true if the object contains sub object meshes with materials that are different than the top level object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_HasSubobjectMaterials.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Every object has a Guid (globally unique identifier, also known as UUID, or universally unique identifier). The default value is Guid.Empty. When an object is added to a model, the value is checked. If the value is Guid.Empty, a new Guid is created. If the value is not null but it is already used by another object in the model, a new Guid is created. If the value is not Guid.Empty and it is not used by another object in the model, then that value persists. When an object is updated, by a move for example, the value of ObjectId persists. This value is the same as the one returned by this.Attributes.ObjectId.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_Id.htm"
+    },
+    {
+      "name": "IdIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component ID is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IdIsLocked.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model component index attribute.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_Index.htm"
+    },
+    {
+      "name": "IndexIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Index is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IndexIsLocked.htm"
+    },
+    {
+      "name": "InstanceDefinitionModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model as part of the information required for a linked instance definition, this value identifies the linked instance definition reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_InstanceDefinitionModelSerialNumber.htm"
+    },
+    {
+      "name": "IsComponentStatusLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The component status itself can be locked. This returns an indication.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IsComponentStatusLocked.htm"
+    },
+    {
+      "name": "IsDeletable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Some objects cannot be deleted, like grips on lights and annotation objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsDeletable.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if the object is deleted. Deleted objects are kept by the document for undo purposes. Call RhinoDoc.UndeleteObject to undelete an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsDeleted.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsHidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "An object must be in one of three modes: normal, locked or hidden. If an object is in normal mode, then the object\u0027s layer controls visibility and selectability. If an object is locked, then the object\u0027s layer controls visibility by the object cannot be selected. If the object is hidden, it is not visible and it cannot be selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsHidden.htm"
+    },
+    {
+      "name": "IsInstanceDefinitionGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if the object is used as part of an instance definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsInstanceDefinitionGeometry.htm"
+    },
+    {
+      "name": "IsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "An object must be in one of three modes: normal, locked or hidden. If an object is in normal mode, then the object\u0027s layer controls visibility and selectability. If an object is locked, then the object\u0027s layer controls visibility by the object cannot be selected. If the object is hidden, it is not visible and it cannot be selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsLocked.htm"
+    },
+    {
+      "name": "IsNormal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "An object must be in one of three modes: normal, locked or hidden. If an object is in normal mode, then the object\u0027s layer controls visibility and selectability. If an object is locked, then the object\u0027s layer controls visibility by the object cannot be selected. If the object is hidden, it is not visible and it cannot be selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsNormal.htm"
+    },
+    {
+      "name": "IsPictureFrame",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the object is a picture frame. A picture frame object is an object that displays a texture map in all views.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsPictureFrame.htm"
+    },
+    {
+      "name": "IsReference",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating if an object is a reference object. An object from a work session reference model is a reference object and cannot be modified. An object is a reference object if, and only if, it is on a reference layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsReference.htm"
+    },
+    {
+      "name": "IsSolid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if object is a closed solid, otherwise false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_IsSolid.htm"
+    },
+    {
+      "name": "IsSystemComponent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this model component is a system constant. An incomplete list of system constant model components is below:ON_ModelComponent::Unset ON_InstanceDefinition::Empty ON_Linetype::UnsetON_Linetype::ContinuousON_Linetype::ByLayerON_Linetype::ByParent ON_Layer::UnsetON_Layer::Default ON_TextStyle::UnsetON_TextStyle::DefaultON_TextStyle::ByLayerON_TextStyle::ByParent ON_DimStyle::UnsetON_DimStyle::DefaultON_DimStyle::DefaultInchDecimalON_DimStyle::DefaultInchFractionalON_DimStyle::DefaultFootInchArchitectureON_DimStyle::DefaultMillimeterSmallON_DimStyle::DefaultMillimeterLargeON_DimStyle::DefaultMillimeterArchitecture",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IsSystemComponent.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "ModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "A value identifying the model that manages this component.",
+      "remarks": "If the component is being managed by a model, this value identifies the model. In Rhino, this value is the document runtime serial number. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_ModelSerialNumber.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Rhino objects have optional text names. More than one object in a model can have the same name and some objects may have no name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_Name.htm"
+    },
+    {
+      "name": "NameIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Name is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_NameIsLocked.htm"
+    },
+    {
+      "name": "ObjectType",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Rhino-based object type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_ObjectType.htm"
+    },
+    {
+      "name": "ReferenceModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model for reference, this value identifies the reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_ReferenceModelSerialNumber.htm"
+    },
+    {
+      "name": "RenderMaterial",
+      "type": "RenderMaterial",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the render material associated with this object or null if there is none. This does not pay attention to the material source and will not check parent objects or layers for a RenderMaterial.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_RenderMaterial.htm"
+    },
+    {
+      "name": "RuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the objects runtime serial number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_RuntimeSerialNumber.htm"
+    },
+    {
+      "name": "SubobjectMaterialComponents",
+      "type": "ComponentIndex[]",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RhinoObject.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_SubobjectMaterialComponents.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use sharable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "Visible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the object visibility.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_Visible.htm"
+    },
+    {
+      "name": "WorksessionReferenceSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete - use ReferenceModelSerialNumber",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoObject_WorksessionReferenceSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

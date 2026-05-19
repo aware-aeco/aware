@@ -1,0 +1,86 @@
+{
+  "name": "AutoCompletionNodeMachineLearningInfo",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "This class will support the Machine Learning info related to a node element of Auto-completion feature.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs",
+  "constructors": [
+    {
+      "name": "AutoCompletionNodeMachineLearningInfo()",
+      "signature": "void AutoCompletionNodeMachineLearningInfo()",
+      "summary": "default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "AutoCompletionNodeMachineLearningInfo(bool, bool, double)",
+      "signature": "void AutoCompletionNodeMachineLearningInfo(bool displayIcon, bool isByRecommendation, double confidenceScore)",
+      "summary": "Creates ML info object using DisplayIcon, IsByRecommendation and ConfidenceScore params",
+      "params": [
+        {
+          "name": "displayIcon",
+          "type": "bool",
+          "doc": "True if the user can view the confidence score or the recent use icon, otherwise False",
+          "optional": false
+        },
+        {
+          "name": "isByRecommendation",
+          "type": "bool",
+          "doc": "True if the Node is part of the ML recommendation, otherwise False",
+          "optional": false
+        },
+        {
+          "name": "confidenceScore",
+          "type": "double",
+          "doc": "Confidence Score",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ConfidenceScore",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Confidence score in percentage",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "DisplayIcon",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the icon is displayed to show the condifent score or by-usage",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "IsByRecommendation",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the Node is part of the ML result per recommendation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    },
+    {
+      "name": "IsByUse",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the Node is part of ML result per use",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

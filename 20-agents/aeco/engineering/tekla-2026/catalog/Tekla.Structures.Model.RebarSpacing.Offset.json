@@ -1,0 +1,37 @@
+{
+  "name": "RebarSpacing.Offset",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "struct",
+  "summary": "Defines parameters associated with the start and end of the spacing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/62642faf-3c5e-66fd-2e26-bd3811a02ee9",
+  "constructors": [
+    {
+      "name": "RebarSpacing.Offset",
+      "signature": "public Offset(bool automatic, double distance)",
+      "summary": "Initializes a new instance of the RebarSpacing.Offset struct.",
+      "params": [
+        {
+          "name": "automatic",
+          "type": "System.Boolean",
+          "doc": "Whether or not the offset should be calculated automatically.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The distance.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b5add492-9940-04bd-997b-cac8abfcb027"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

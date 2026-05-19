@@ -1,0 +1,80 @@
+{
+  "name": "ZeroTouchVarArgNodeController\u003CT\u003E",
+  "namespace": "Dynamo.Graph.Nodes.ZeroTouch",
+  "kind": "class",
+  "summary": "Controller that extends Zero Touch synchronization with VarArg function compilation.",
+  "base": "Dynamo.Graph.Nodes.ZeroTouch.ZeroTouchNodeController\u003CT\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs",
+  "constructors": [
+    {
+      "name": "ZeroTouchVarArgNodeController(T)",
+      "signature": "void ZeroTouchVarArgNodeController(T zeroTouchDef)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.ZeroTouch.ZeroTouchVarArgNodeController\u00601 class with FunctionDescriptor.",
+      "params": [
+        {
+          "name": "zeroTouchDef",
+          "type": "T",
+          "doc": "FunctionDescriptor describing the function that this controller will call.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildOutputAst(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void BuildOutputAst(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E resultAst)",
+      "summary": "ZeroTouchVarArgNodeController.BuildOutputAst",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        },
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "resultAst",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    },
+    {
+      "name": "InitializeFunctionParameters(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E)",
+      "signature": "void InitializeFunctionParameters(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E parameters)",
+      "summary": "ZeroTouchVarArgNodeController.InitializeFunctionParameters",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

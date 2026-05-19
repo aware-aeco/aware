@@ -5,6 +5,7 @@
 #![allow(dead_code)]
 
 pub mod cli_help;
+pub mod coverage;
 pub mod npm;
 pub mod nuget;
 pub mod openapi;

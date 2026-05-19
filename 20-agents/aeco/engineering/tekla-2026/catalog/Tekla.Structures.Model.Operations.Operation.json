@@ -1,0 +1,2740 @@
+{
+  "name": "Operation",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "class",
+  "summary": "The Operation class implements Tekla Structures level operations.",
+  "remarks": "Using this method is much faster than checking each object individually.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d5bbc096-a164-49ea-16a8-3820e40b00be",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddToPourUnit",
+      "signature": "public static bool AddToPourUnit(PourUnit inputPourUnit, List\u003CModelObject\u003E objectsToBeAdded)",
+      "summary": "Adds model objects as part of a pour unit Model object types accepted are assembly types except cast in situ, reinforcements of different kind, components and bolts",
+      "params": [
+        {
+          "name": "inputPourUnit",
+          "type": "Tekla.Structures.Model.PourUnit",
+          "doc": "the instance of pour unit to add objects to.",
+          "optional": false
+        },
+        {
+          "name": "objectsToBeAdded",
+          "type": "System.Collections.Generic.List\u003CModelObject\u003E",
+          "doc": "the list of model objects to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Throw exceptions if Pour or object has invalid ID, do not exist in model or not valid object type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0d977f1-f6d9-4b5d-09ff-39534452abbd"
+    },
+    {
+      "name": "CalculatePourUnits",
+      "signature": "public static bool CalculatePourUnits()",
+      "summary": "Calculate and assign objects to pour unit Model object types that are associated with pour unit are assembly types except cast in situ, reinforcements of different kind, components and screws",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/90216a45-57e6-4bd6-6338-f18371c6b2c2"
+    },
+    {
+      "name": "Combine(Beam, Beam)",
+      "signature": "public static Beam Combine(Beam ObjectToCombineTo, Beam ObjectToBeCombined)",
+      "summary": "Combines two beams into one beam.",
+      "params": [
+        {
+          "name": "ObjectToCombineTo",
+          "type": "Tekla.Structures.Model.Beam",
+          "doc": "The beam to be combined to.",
+          "optional": false
+        },
+        {
+          "name": "ObjectToBeCombined",
+          "type": "Tekla.Structures.Model.Beam",
+          "doc": "The beam which will be deleted after a successful operation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Beam",
+        "doc": "The combined beam on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ee549780-0d63-26ba-456a-49cfdb50da7b"
+    },
+    {
+      "name": "Combine(RebarGroup, RebarGroup)",
+      "signature": "public static RebarGroup Combine(RebarGroup ObjectToCombineTo, RebarGroup ObjectToBeCombined)",
+      "summary": "Combines two rebar groups into one rebar group.",
+      "params": [
+        {
+          "name": "ObjectToCombineTo",
+          "type": "Tekla.Structures.Model.RebarGroup",
+          "doc": "The rebar group to be combined to.",
+          "optional": false
+        },
+        {
+          "name": "ObjectToBeCombined",
+          "type": "Tekla.Structures.Model.RebarGroup",
+          "doc": "The rebar group which will be deleted after a successful operation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarGroup",
+        "doc": "The combined rebar group on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3147d034-cbbc-cd89-46ee-142d4658e591"
+    },
+    {
+      "name": "Combine(SingleRebar, SingleRebar)",
+      "signature": "public static SingleRebar Combine(SingleRebar ObjectToCombineTo, SingleRebar ObjectToBeCombined)",
+      "summary": "Combines two single rebars into one rebar.",
+      "params": [
+        {
+          "name": "ObjectToCombineTo",
+          "type": "Tekla.Structures.Model.SingleRebar",
+          "doc": "The rebar to be combined to.",
+          "optional": false
+        },
+        {
+          "name": "ObjectToBeCombined",
+          "type": "Tekla.Structures.Model.SingleRebar",
+          "doc": "The rebar which will be deleted after a successful operation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SingleRebar",
+        "doc": "The combined single rebar on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/102fb25d-b5f4-6506-136d-36f88a02eb85"
+    },
+    {
+      "name": "ConvertPartToItem",
+      "signature": "public static bool ConvertPartToItem(in Part originalPart, out Brep newItem)",
+      "summary": "Convert a part to an item. This will also create a new shape in the shape catalog.",
+      "params": [
+        {
+          "name": "originalPart",
+          "type": "Tekla.Structures.Model.Part.",
+          "doc": "Original part",
+          "optional": false
+        },
+        {
+          "name": "newItem",
+          "type": "Tekla.Structures.Model.Brep.",
+          "doc": "Newly created item",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the originalPart is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/92da650f-fa05-8dc5-d313-ca063058634d"
+    },
+    {
+      "name": "CopyObject(ModelObject, Vector)",
+      "signature": "public static ModelObject CopyObject(ModelObject Object, Vector CopyVector)",
+      "summary": "Copies the model object using the given translation vector.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to copy.",
+          "optional": false
+        },
+        {
+          "name": "CopyVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The translation vector for copying.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObject",
+        "doc": "The copied model object on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9ff01c4b-9f9a-aedd-731b-c8e5b04f50e0"
+    },
+    {
+      "name": "CopyObject(ModelObject, CoordinateSystem, CoordinateSystem)",
+      "signature": "public static ModelObject CopyObject(ModelObject Object, CoordinateSystem StartCoordinateSystem, CoordinateSystem EndCoordinateSystem)",
+      "summary": "Copies the model object between the given translation coordinate systems.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to copy.",
+          "optional": false
+        },
+        {
+          "name": "StartCoordinateSystem",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to copy the object from.",
+          "optional": false
+        },
+        {
+          "name": "EndCoordinateSystem",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to copy the object to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObject",
+        "doc": "The copied model object on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d67c7649-00ef-f48a-bbf8-5bedf53ce30d"
+    },
+    {
+      "name": "CopyObjectMirror",
+      "signature": "public static ModelObject CopyObjectMirror(ModelObject modelObject, double x, double y, double angle)",
+      "summary": "Creates a mirrored copy of the given model object.",
+      "params": [
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to copy.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The x coordinate of a point on the mirror line.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The y coordinate of a point on the mirror line.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "The angle of the mirror line in radians to the x axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObject",
+        "doc": "The copied model object if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d75b51c-f658-03f0-dadb-7e2588e98461"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E)",
+      "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2)",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, BentPlate.BendShape).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the second part.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d1f228a-de86-1150-f8eb-12ab1cfc98f9"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, Face, Part, Face)",
+      "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, Face face1, Part part2, Face face2)",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, Face, Part, Face, BentPlate.BendShape).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected face on the second part.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f401c9ed-80c1-f692-6736-73d779c8577e"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, Double)",
+      "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, double radius)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the second part.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The target radius for the created cylindrical section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when faces have incorrect number of face points or received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c7e50f00-b8cd-3418-4bfb-561fdf9bae0c"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, BentPlate.BendShape)",
+      "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, BentPlate.BendShape bendShape)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, BentPlate.BendShape).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the second part.",
+          "optional": false
+        },
+        {
+          "name": "bendShape",
+          "type": "Tekla.Structures.Model.BentPlate.BendShape",
+          "doc": "Shape of the bend (cylindrical or conical)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when faces have incorrect number of face points or received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0dca7df4-8430-6f6c-e648-2d40134a06a7"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, Face, Part, Face, Double)",
+      "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, Face face1, Part part2, Face face2, double radius)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected solid face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected solid face on the second part.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The target radius for the created cylindrical section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when faces have incorrect number of face points or received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3001ef45-94f0-0b94-2843-907272f839e5"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, Face, Part, Face, BentPlate.BendShape)",
+      "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, Face face1, Part part2, Face face2, BentPlate.BendShape bendShape)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, BentPlate.BendShape).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected solid face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected solid face on the second part.",
+          "optional": false
+        },
+        {
+          "name": "bendShape",
+          "type": "Tekla.Structures.Model.BentPlate.BendShape",
+          "doc": "Shape of the bend (cylindrical or conical)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when faces have incorrect number of face points or received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/621e8e34-f192-2b5e-4be6-03ef655300ca"
+    },
+    {
+      "name": "CreateBentPlateByParts(Part, Part)",
+      "signature": "public static BentPlate CreateBentPlateByParts(Part part1, Part part2)",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts. See CreateBentPlateByParts(Part, Part, BentPlate.BendShape).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "One part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The other part used for creating the bent plate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/693a8447-9e68-ed71-dc28-fb0a1753e45a"
+    },
+    {
+      "name": "CreateBentPlateByParts(Part, Part, Double)",
+      "signature": "public static BentPlate CreateBentPlateByParts(Part part1, Part part2, double radius)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and a radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, ConnectiveGeometry, Double).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "One part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The other part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The target radius for the created cylindrical section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise"
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/49a6d6e3-83ec-e179-c4c0-7545a44723d6"
+    },
+    {
+      "name": "CreateBentPlateByParts(Part, Part, BentPlate.BendShape)",
+      "signature": "public static BentPlate CreateBentPlateByParts(Part part1, Part part2, BentPlate.BendShape bendShape)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, ConnectiveGeometry, BentPlate.BendShape).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "One part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The other part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "bendShape",
+          "type": "Tekla.Structures.Model.BentPlate.BendShape",
+          "doc": "Shape of the bend (cylindrical or conical)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9f4e2ea-0881-3278-a468-ff1d483544d3"
+    },
+    {
+      "name": "CreateConicalBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, Double, Double)",
+      "signature": "public static BentPlate CreateConicalBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, double largestRadius, double halfAperture)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "System.Collections.Generic.IList\u003CPoint\u003E",
+          "doc": "The selected face on the second part.",
+          "optional": false
+        },
+        {
+          "name": "largestRadius",
+          "type": "System.Double",
+          "doc": "The largest target radius for the created conical section.",
+          "optional": false
+        },
+        {
+          "name": "halfAperture",
+          "type": "System.Double",
+          "doc": "Angle between a generatrix of the cone and its center line (i.e. axis)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when faces have incorrect number of face points or received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b70630f0-c290-2237-1249-f37b1e6d4469"
+    },
+    {
+      "name": "CreateConicalBentPlateByFaces(Part, Face, Part, Face, Double, Double)",
+      "signature": "public static BentPlate CreateConicalBentPlateByFaces(Part part1, Face face1, Part part2, Face face2, double largestRadius, double halfAperture)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part, and the largest radius of the conical section and the cone aperture. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The first part.",
+          "optional": false
+        },
+        {
+          "name": "face1",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected solid face on the first part.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The second part.",
+          "optional": false
+        },
+        {
+          "name": "face2",
+          "type": "Tekla.Structures.Solid.Face",
+          "doc": "The selected solid face on the second part.",
+          "optional": false
+        },
+        {
+          "name": "largestRadius",
+          "type": "System.Double",
+          "doc": "Largest radius of the conical section",
+          "optional": false
+        },
+        {
+          "name": "halfAperture",
+          "type": "System.Double",
+          "doc": "Angle between a generatrix of the cone and its center line (i.e. axis)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when faces have incorrect number of face points or received unsupported bent plate creation input."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3e17cb16-5db2-96ff-a9bc-7b6ac320e2b9"
+    },
+    {
+      "name": "CreateConicalBentPlateByPartsAndAperture",
+      "signature": "public static BentPlate CreateConicalBentPlateByPartsAndAperture(Part part1, Part part2, double largestRadius, double halfAperture)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts. The resulting bend will have the given aperture and the provided larger radius.",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "One part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The other part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "largestRadius",
+          "type": "System.Double",
+          "doc": "Radius of the largest section of the cone",
+          "optional": false
+        },
+        {
+          "name": "halfAperture",
+          "type": "System.Double",
+          "doc": "Angle between a generatrix of the cone and its center line (i.e. axis)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ec65a439-38a2-82af-b6bf-a97b395a9b70"
+    },
+    {
+      "name": "CreateConicalBentPlateByPartsAndTwoRadiuses",
+      "signature": "public static BentPlate CreateConicalBentPlateByPartsAndTwoRadiuses(Part part1, Part part2, double firstRadius, double secondRadius)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts. The resulting bend will have the two given radiuses.",
+      "params": [
+        {
+          "name": "part1",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "One part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "part2",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The other part used for creating the bent plate.",
+          "optional": false
+        },
+        {
+          "name": "firstRadius",
+          "type": "System.Double",
+          "doc": "Radius of one section of the cone",
+          "optional": false
+        },
+        {
+          "name": "secondRadius",
+          "type": "System.Double",
+          "doc": "Radius of the other section of the cone",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BentPlate",
+        "doc": "The bent plate object if successful, null otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/986edfe5-9465-7814-159b-cef1dee20d5a"
+    },
+    {
+      "name": "CreateDGNv8Export",
+      "signature": "public static bool CreateDGNv8Export(string FileName, string Folder, Operation.ExportBasePoint BasePoint, string BasePointGuid, string ObjectColoring, string ExportLayersAs, bool OnlyFromSelectedObjects)",
+      "summary": "Dgn export from all or selected objects.",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The file name.",
+          "optional": false
+        },
+        {
+          "name": "Folder",
+          "type": "System.String",
+          "doc": "The folder.",
+          "optional": false
+        },
+        {
+          "name": "BasePoint",
+          "type": "Tekla.Structures.Model.Operations.Operation.ExportBasePoint",
+          "doc": "Defines which base point is used in export.",
+          "optional": false
+        },
+        {
+          "name": "BasePointGuid",
+          "type": "System.String",
+          "doc": "Base point guid if BasePoint parameter is set to BASE_POINT.",
+          "optional": false
+        },
+        {
+          "name": "ObjectColoring",
+          "type": "System.String",
+          "doc": "Defines which object coloring filter is to be used in export.",
+          "optional": false
+        },
+        {
+          "name": "ExportLayersAs",
+          "type": "System.String",
+          "doc": "Defines which report field to use for layers export.",
+          "optional": false
+        },
+        {
+          "name": "OnlyFromSelectedObjects",
+          "type": "System.Boolean",
+          "doc": "Defines if only selected (value true) or all (value false) objects are exported.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if Dgn export was successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/470aa2f9-a4d1-5ba5-9675-7f88e88a08d7"
+    },
+    {
+      "name": "CreateIFC2x3Export",
+      "signature": "public static bool CreateIFC2x3Export(string fullPathAndFileName, Operation.IFC2x3ExportViewTypeEnum exportViewType, IEnumerable\u003Cstring\u003E attributesOverridesFileNames, string additionalPropertySetFileName, Operation.ExportBasePoint locationByValue, bool layersNamesAsPartNames, bool useViewColors, Operation.IFC2x3ExportFlags flags, string basePointGuid)",
+      "summary": "Creates IFC2x3 export using the given file name. See Tekla Structures Help for more information about IFC2x3 export files.",
+      "params": [
+        {
+          "name": "fullPathAndFileName",
+          "type": "System.String",
+          "doc": "The full path and file name including extension (.ifc, .ifczip or .ifcxml).",
+          "optional": false
+        },
+        {
+          "name": "exportViewType",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFC2x3ExportViewTypeEnum",
+          "doc": "The export view type.",
+          "optional": false
+        },
+        {
+          "name": "attributesOverridesFileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The collection of full paths and file names of the attributes overrides files (*_overrideSetData.attributeoverride and *_overrideData.attributeoverride) to use in export. Empty for none.",
+          "optional": false
+        },
+        {
+          "name": "additionalPropertySetFileName",
+          "type": "System.String",
+          "doc": "The full path and file name of the property set file (.xml) to use in export. Empty for none.",
+          "optional": false
+        },
+        {
+          "name": "locationByValue",
+          "type": "Tekla.Structures.Model.Operations.Operation.ExportBasePoint",
+          "doc": "The location by value.",
+          "optional": false
+        },
+        {
+          "name": "layersNamesAsPartNames",
+          "type": "System.Boolean",
+          "doc": "True for layers names as part names. False for default.",
+          "optional": false
+        },
+        {
+          "name": "useViewColors",
+          "type": "System.Boolean",
+          "doc": "True for using view colors in export. False for default.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFC2x3ExportFlags",
+          "doc": "The additional flags.",
+          "optional": false
+        },
+        {
+          "name": "basePointGuid",
+          "type": "System.String",
+          "doc": "Base point guid, if a base point used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if IFC2x3 export was successful, otherwise false. See log for additional info in case of failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d455e837-b27d-de76-3f8f-f4c8c98bc344"
+    },
+    {
+      "name": "CreateIFC4ExportFromAll(String, Operation.IFCExportViewTypeEnum, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "signature": "public static bool CreateIFC4ExportFromAll(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
+      "summary": "Creates IFC4 export from all objects using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
+      "params": [
+        {
+          "name": "fullPathAndFileName",
+          "type": "System.String",
+          "doc": "The full path and file name including extension (.ifc or .ifcZip).",
+          "optional": false
+        },
+        {
+          "name": "exportViewType",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportViewTypeEnum",
+          "doc": "The export view type.",
+          "optional": false
+        },
+        {
+          "name": "propertySets",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The full path and file name of the property set files (.xml) to use in export.",
+          "optional": false
+        },
+        {
+          "name": "locationByValue",
+          "type": "Tekla.Structures.Model.Operations.Operation.ExportBasePoint",
+          "doc": "The location by value.",
+          "optional": false
+        },
+        {
+          "name": "exportLayersAsValue",
+          "type": "System.String",
+          "doc": "The export layers as value: __Name__, __Phase__ or UDA value.",
+          "optional": false
+        },
+        {
+          "name": "objectColoring",
+          "type": "System.String",
+          "doc": "The object coloring value: Use \u0022ByObjectClass\u0022 for color by object class. For additional coloring, use the name of the object representation.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportFlags",
+          "doc": "The additional flags.",
+          "optional": false
+        },
+        {
+          "name": "basePointGuid",
+          "type": "System.String",
+          "doc": "Base point guid, if a base point used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if Ifc4 export was successful, otherwise false. See session log for additional info in case failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/35b592da-834c-6c6f-b8ee-5cb14b2d8df0"
+    },
+    {
+      "name": "CreateIFC4ExportFromAll(String, Operation.IFCExportViewTypeEnum, Operation.IFCExportVersionEnum, IEnumerable\u003CString\u003E, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "signature": "public static bool CreateIFC4ExportFromAll(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, Operation.IFCExportVersionEnum exportVersion, IEnumerable\u003Cstring\u003E attributesOverridesFileNames, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
+      "summary": "Creates IFC4 export from all objects using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
+      "params": [
+        {
+          "name": "fullPathAndFileName",
+          "type": "System.String",
+          "doc": "The full path and file name including extension (.ifc or .ifcZip).",
+          "optional": false
+        },
+        {
+          "name": "exportViewType",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportViewTypeEnum",
+          "doc": "The export view type.",
+          "optional": false
+        },
+        {
+          "name": "exportVersion",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportVersionEnum",
+          "doc": "The IFC export version.",
+          "optional": false
+        },
+        {
+          "name": "attributesOverridesFileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The collection of full paths and file names of the attributes overrides files (*_overrideSetData.attributeoverride and *_overrideData.attributeoverride) to use in export. Empty for none.",
+          "optional": false
+        },
+        {
+          "name": "propertySets",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The full path and file name of the property set files (.xml) to use in export.",
+          "optional": false
+        },
+        {
+          "name": "locationByValue",
+          "type": "Tekla.Structures.Model.Operations.Operation.ExportBasePoint",
+          "doc": "The location by value.",
+          "optional": false
+        },
+        {
+          "name": "exportLayersAsValue",
+          "type": "System.String",
+          "doc": "The export layers as value: __Name__, __Phase__ or UDA value.",
+          "optional": false
+        },
+        {
+          "name": "objectColoring",
+          "type": "System.String",
+          "doc": "The object coloring value: Use \u0022ByObjectClass\u0022 for color by object class. For additional coloring, use the name of the object representation.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportFlags",
+          "doc": "The additional flags.",
+          "optional": false
+        },
+        {
+          "name": "basePointGuid",
+          "type": "System.String",
+          "doc": "Base point guid, if a base point used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if Ifc4 export was successful, otherwise false. See session log for additional info in case failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/84a2b76e-89c5-4976-c391-de09f4f12712"
+    },
+    {
+      "name": "CreateIFC4ExportFromSelected(String, Operation.IFCExportViewTypeEnum, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "signature": "public static bool CreateIFC4ExportFromSelected(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
+      "summary": "Creates IFC4 export from the selected parts using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
+      "params": [
+        {
+          "name": "fullPathAndFileName",
+          "type": "System.String",
+          "doc": "The full path and file name including extension (.ifc or .ifcZip).",
+          "optional": false
+        },
+        {
+          "name": "exportViewType",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportViewTypeEnum",
+          "doc": "The export view type.",
+          "optional": false
+        },
+        {
+          "name": "propertySets",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The full path and file name of the property set files (.xml) to use in export.",
+          "optional": false
+        },
+        {
+          "name": "locationByValue",
+          "type": "Tekla.Structures.Model.Operations.Operation.ExportBasePoint",
+          "doc": "The location by value.",
+          "optional": false
+        },
+        {
+          "name": "exportLayersAsValue",
+          "type": "System.String",
+          "doc": "The export layers as value: __Name__, __Phase__ or UDA value.",
+          "optional": false
+        },
+        {
+          "name": "objectColoring",
+          "type": "System.String",
+          "doc": "The object coloring value: Use \u0022ByObjectClass\u0022 for color by object class. For additional coloring, use the name of the object representation.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportFlags",
+          "doc": "The additional flags.",
+          "optional": false
+        },
+        {
+          "name": "basePointGuid",
+          "type": "System.String",
+          "doc": "Base point guid, if a base point used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if Ifc4 export was successful, otherwise false. See session log for additional info in case failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e42dad3-18a9-cf38-79a7-f9ca7ddbee07"
+    },
+    {
+      "name": "CreateIFC4ExportFromSelected(String, Operation.IFCExportViewTypeEnum, Operation.IFCExportVersionEnum, IEnumerable\u003CString\u003E, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "signature": "public static bool CreateIFC4ExportFromSelected(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, Operation.IFCExportVersionEnum exportVersion, IEnumerable\u003Cstring\u003E attributesOverridesFileNames, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
+      "summary": "Creates IFC4 export from the selected parts only using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
+      "params": [
+        {
+          "name": "fullPathAndFileName",
+          "type": "System.String",
+          "doc": "The full path and file name including extension (.ifc or .ifcZip).",
+          "optional": false
+        },
+        {
+          "name": "exportViewType",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportViewTypeEnum",
+          "doc": "The export view type.",
+          "optional": false
+        },
+        {
+          "name": "exportVersion",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportVersionEnum",
+          "doc": "The IFC export version.",
+          "optional": false
+        },
+        {
+          "name": "attributesOverridesFileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The collection of full paths and file names of the attributes overrides files (*_overrideSetData.attributeoverride and *_overrideData.attributeoverride) to use in export. Empty for none.",
+          "optional": false
+        },
+        {
+          "name": "propertySets",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The full path and file name of the property set files (.xml) to use in export.",
+          "optional": false
+        },
+        {
+          "name": "locationByValue",
+          "type": "Tekla.Structures.Model.Operations.Operation.ExportBasePoint",
+          "doc": "The location by value.",
+          "optional": false
+        },
+        {
+          "name": "exportLayersAsValue",
+          "type": "System.String",
+          "doc": "The export layers as value: __Name__, __Phase__ or UDA value.",
+          "optional": false
+        },
+        {
+          "name": "objectColoring",
+          "type": "System.String",
+          "doc": "The object coloring value: Use \u0022ByObjectClass\u0022 for color by object class. For additional coloring, use the name of the object representation.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportFlags",
+          "doc": "The additional flags.",
+          "optional": false
+        },
+        {
+          "name": "basePointGuid",
+          "type": "System.String",
+          "doc": "Base point guid, if a base point used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if Ifc4 export was successful, otherwise false. See session log for additional info in case failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0fbe065a-e49b-bd3e-850c-655f7934a85c"
+    },
+    {
+      "name": "CreateIFC4ExportFromSelectedAndTheirAssemblies",
+      "signature": "public static bool CreateIFC4ExportFromSelectedAndTheirAssemblies(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, Operation.IFCExportVersionEnum exportVersion, IEnumerable\u003Cstring\u003E attributesOverridesFileNames, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
+      "summary": "Creates IFC4 export from the selected parts and their assemblies using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
+      "params": [
+        {
+          "name": "fullPathAndFileName",
+          "type": "System.String",
+          "doc": "The full path and file name including extension (.ifc or .ifcZip).",
+          "optional": false
+        },
+        {
+          "name": "exportViewType",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportViewTypeEnum",
+          "doc": "The export view type.",
+          "optional": false
+        },
+        {
+          "name": "exportVersion",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportVersionEnum",
+          "doc": "The IFC export version.",
+          "optional": false
+        },
+        {
+          "name": "attributesOverridesFileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The collection of full paths and file names of the attributes overrides files (*_overrideSetData.attributeoverride and *_overrideData.attributeoverride) to use in export. Empty for none.",
+          "optional": false
+        },
+        {
+          "name": "propertySets",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The full path and file name of the property set files (.xml) to use in export.",
+          "optional": false
+        },
+        {
+          "name": "locationByValue",
+          "type": "Tekla.Structures.Model.Operations.Operation.ExportBasePoint",
+          "doc": "The location by value.",
+          "optional": false
+        },
+        {
+          "name": "exportLayersAsValue",
+          "type": "System.String",
+          "doc": "The export layers as value: __Name__, __Phase__ or UDA value.",
+          "optional": false
+        },
+        {
+          "name": "objectColoring",
+          "type": "System.String",
+          "doc": "The object coloring value: Use \u0022ByObjectClass\u0022 for color by object class. For additional coloring, use the name of the object representation.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Tekla.Structures.Model.Operations.Operation.IFCExportFlags",
+          "doc": "The additional flags.",
+          "optional": false
+        },
+        {
+          "name": "basePointGuid",
+          "type": "System.String",
+          "doc": "Base point guid, if a base point used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if Ifc4 export was successful, otherwise false. See session log for additional info in case failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/194b2297-3487-1711-3a17-5c6d7a3ec795"
+    },
+    {
+      "name": "CreateMISFileFromAll",
+      "signature": "public static bool CreateMISFileFromAll(Operation.MISExportTypeEnum MISType, string FileName)",
+      "summary": "Creates MIS files from all parts using the given file name. See Tekla Structures Help for more information about MIS files.",
+      "params": [
+        {
+          "name": "MISType",
+          "type": "Tekla.Structures.Model.Operations.Operation.MISExportTypeEnum",
+          "doc": "The type of the MIS export.",
+          "optional": false
+        },
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the MIS file to be used in creation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the MIS files are created, false if the numbering is not up-to-date or the used configuration is wrong."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the FileName is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the FileName is not defined."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3090fd50-4614-041c-e0cf-85edc182e5c5"
+    },
+    {
+      "name": "CreateMISFileFromSelected",
+      "signature": "public static bool CreateMISFileFromSelected(Operation.MISExportTypeEnum MISType, string FileName)",
+      "summary": "Creates MIS files from the selected parts using the given file name. See Tekla Structures Help for more information about MIS files.",
+      "params": [
+        {
+          "name": "MISType",
+          "type": "Tekla.Structures.Model.Operations.Operation.MISExportTypeEnum",
+          "doc": "The type of the MIS export.",
+          "optional": false
+        },
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the MIS file to be used in creation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the MIS files are created, false if the numbering is not up-to-date or the used configuration is wrong."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the FileName is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the FileName is not defined."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4d66ce5b-826f-0efd-a9cd-e6ca304e2d93"
+    },
+    {
+      "name": "CreateNCFilesByPartId",
+      "signature": "public static bool CreateNCFilesByPartId(string NCFileSettings, string DestinationFolder, Identifier PartID, out string DstvOutput, bool CreatePopMarks = false, string PopMarkSettingsFileName = \u0022\u0022, bool CreateContourMarking = false, string ContourMarkingSettingsFileName = \u0022\u0022)",
+      "summary": "Creates NC files from the selected parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [
+        {
+          "name": "NCFileSettings",
+          "type": "System.String",
+          "doc": "The name of the NC setting template to be used in creation.",
+          "optional": false
+        },
+        {
+          "name": "DestinationFolder",
+          "type": "System.String",
+          "doc": "The name of the folder where NC files are created. If defined, overrides the default folder in the setting template.",
+          "optional": false
+        },
+        {
+          "name": "PartID",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier of the part.",
+          "optional": false
+        },
+        {
+          "name": "DstvOutput",
+          "type": "System.String.",
+          "doc": "The DSTV output as string.",
+          "optional": false
+        },
+        {
+          "name": "CreatePopMarks",
+          "type": "System.Boolean",
+          "doc": "Create pop-marks during export.",
+          "optional": true
+        },
+        {
+          "name": "PopMarkSettingsFileName",
+          "type": "System.String",
+          "doc": "The name of the pop-mark setting file to be used in creation.",
+          "optional": true
+        },
+        {
+          "name": "CreateContourMarking",
+          "type": "System.Boolean",
+          "doc": "Create contour marking during export.",
+          "optional": true
+        },
+        {
+          "name": "ContourMarkingSettingsFileName",
+          "type": "System.String",
+          "doc": "The name of the contour marking setting file to be used in creation.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the NC files are created, false if the numbering is not up-to-date or the used configuration is wrong."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the NCFileSettings is not defined."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the NCFileSettings is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/39156aa2-9243-836c-f5cd-66cef7b6728f"
+    },
+    {
+      "name": "CreateNCFilesFromAll(String, String)",
+      "signature": "public static bool CreateNCFilesFromAll(string NCFileSettings, string DestinationFolder)",
+      "summary": "Creates NC files from all parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [
+        {
+          "name": "NCFileSettings",
+          "type": "System.String",
+          "doc": "The name of the NC setting template to be used in creation.",
+          "optional": false
+        },
+        {
+          "name": "DestinationFolder",
+          "type": "System.String",
+          "doc": "The name of the folder where NC files are created. If defined, overrides the default folder in the setting template.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the NC files are created, false if the numbering is not up-to-date or the used configuration is wrong."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the NCFileSettings is not defined."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the NCFileSettings is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/736ca893-968e-c433-7b5d-4830dd055711"
+    },
+    {
+      "name": "CreateNCFilesFromAll(String, String, Boolean, String, Boolean, String)",
+      "signature": "public static bool CreateNCFilesFromAll(string NCFileSettings, string DestinationFolder, bool CreatePopMarks = false, string PopMarkSettingsFileName = \u0022\u0022, bool CreateContourMarking = false, string ContourMarkingSettingsFileName = \u0022\u0022)",
+      "summary": "Creates NC files from all parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [
+        {
+          "name": "NCFileSettings",
+          "type": "System.String",
+          "doc": "The name of the NC setting template to be used in creation.",
+          "optional": false
+        },
+        {
+          "name": "DestinationFolder",
+          "type": "System.String",
+          "doc": "The name of the folder where NC files are created. If defined, overrides the default folder in the setting template.",
+          "optional": false
+        },
+        {
+          "name": "CreatePopMarks",
+          "type": "System.Boolean",
+          "doc": "Create pop-marks during export.",
+          "optional": true
+        },
+        {
+          "name": "PopMarkSettingsFileName",
+          "type": "System.String",
+          "doc": "The name of the pop-mark setting file to be used in creation.",
+          "optional": true
+        },
+        {
+          "name": "CreateContourMarking",
+          "type": "System.Boolean",
+          "doc": "Create contour marking during export.",
+          "optional": true
+        },
+        {
+          "name": "ContourMarkingSettingsFileName",
+          "type": "System.String",
+          "doc": "The name of the contour marking setting file to be used in creation.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the NC files are created, false if the numbering is not up-to-date or the used configuration is wrong."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the NCFileSettings is not defined."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the NCFileSettings is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1b185764-bea1-d294-a375-c32ab26d4d64"
+    },
+    {
+      "name": "CreateNCFilesFromSelected(String, String)",
+      "signature": "public static bool CreateNCFilesFromSelected(string NCFileSettings, string DestinationFolder)",
+      "summary": "Creates NC files from the selected parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [
+        {
+          "name": "NCFileSettings",
+          "type": "System.String",
+          "doc": "The name of the NC setting template to be used in creation.",
+          "optional": false
+        },
+        {
+          "name": "DestinationFolder",
+          "type": "System.String",
+          "doc": "The name of the folder where NC files are created. If defined, overrides the default folder in the setting template.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the NC files are created, false if the numbering is not up-to-date or the used configuration is wrong."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the NCFileSettings is not defined."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the NCFileSettings is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a832ed01-97e7-61c8-ee9e-bfdb0d0239ad"
+    },
+    {
+      "name": "CreateNCFilesFromSelected(String, String, Boolean, String, Boolean, String)",
+      "signature": "public static bool CreateNCFilesFromSelected(string NCFileSettings, string DestinationFolder, bool CreatePopMarks = false, string PopMarkSettingsFileName = \u0022\u0022, bool CreateContourMarking = false, string ContourMarkingSettingsFileName = \u0022\u0022)",
+      "summary": "Creates NC files from the selected parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [
+        {
+          "name": "NCFileSettings",
+          "type": "System.String",
+          "doc": "The name of the NC setting template to be used in creation.",
+          "optional": false
+        },
+        {
+          "name": "DestinationFolder",
+          "type": "System.String",
+          "doc": "The name of the folder where NC files are created. If defined, overrides the default folder in the setting template.",
+          "optional": false
+        },
+        {
+          "name": "CreatePopMarks",
+          "type": "System.Boolean",
+          "doc": "Create pop-marks during export.",
+          "optional": true
+        },
+        {
+          "name": "PopMarkSettingsFileName",
+          "type": "System.String",
+          "doc": "The name of the pop-mark setting file to be used in creation.",
+          "optional": true
+        },
+        {
+          "name": "CreateContourMarking",
+          "type": "System.Boolean",
+          "doc": "Create contour marking during export.",
+          "optional": true
+        },
+        {
+          "name": "ContourMarkingSettingsFileName",
+          "type": "System.String",
+          "doc": "The name of the contour marking setting file to be used in creation.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the NC files are created, false if the numbering is not up-to-date or the used configuration is wrong."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the NCFileSettings is not defined."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the NCFileSettings is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8f4e08b2-41eb-d6a1-859d-ddb50111d9e5"
+    },
+    {
+      "name": "CreateReport",
+      "signature": "public static bool CreateReport(Operation.ReportParameters parameters)",
+      "summary": "Creates a report using the given report parameters. A template with the name given in the TemplateName parameter must exist in model folder or in the folder defined with the advanced option XS_TEMPLATE_DIRECTORY.If a path is not given in the filename, the file is created to the folder defined with the advanced option XS_REPORT_OUTPUT_DIRECTORY.If the given folder does not exist, the report creation fails.See Tekla Structures Help for more information about reports.",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "Tekla.Structures.Model.Operations.Operation.ReportParameters",
+          "doc": "The report parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the report is created."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the parameters.TemplateName.TemplateName or parameters.FileName.FileName is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the parameters.TemplateName.TemplateName or parameters.FileName.FileName is too short."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3235aaad-349c-8cc1-1222-5f4e3c994561"
+    },
+    {
+      "name": "CreateReportFromAll",
+      "signature": "public static bool CreateReportFromAll(string TemplateName, string FileName, string Title1, string Title2, string Title3)",
+      "summary": "Creates a report from all the objects using the given template name and filename. A template with the name given in the TemplateName parameter must exist in model folder or in the folder defined with the advanced option XS_TEMPLATE_DIRECTORY.If a path is not given in the filename, the file is created to the folder defined with the advanced option XS_REPORT_OUTPUT_DIRECTORY.If the given folder does not exist, the report creation fails.Internally, this method is asynchronous, and because of that the output file cannot be immediately available.See Tekla Structures Help for more information about reports.",
+      "params": [
+        {
+          "name": "TemplateName",
+          "type": "System.String",
+          "doc": "The name of the report template to be used in report creation. The name must contain more than three characters.",
+          "optional": false
+        },
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the created report. The name must contain more than three characters.",
+          "optional": false
+        },
+        {
+          "name": "Title1",
+          "type": "System.String",
+          "doc": "The first title for the created report.",
+          "optional": false
+        },
+        {
+          "name": "Title2",
+          "type": "System.String",
+          "doc": "The second title for the created report.",
+          "optional": false
+        },
+        {
+          "name": "Title3",
+          "type": "System.String",
+          "doc": "The third title for the created report.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the report is created."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the TemplateName or FileName is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the TemplateName or FileName is too short."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b4ff470c-a784-75b1-3204-0bfe7cfcdf04"
+    },
+    {
+      "name": "CreateReportFromSelected",
+      "signature": "public static bool CreateReportFromSelected(string TemplateName, string FileName, string Title1, string Title2, string Title3)",
+      "summary": "Creates a report from the selected objects using the given template name and filename. A template with the name given in the TemplateName parameter must exist in model folder or in the folder defined with the advanced option XS_TEMPLATE_DIRECTORY.If a path is not given in the filename, the file is created to the folder defined with the advanced option XS_REPORT_OUTPUT_DIRECTORY.If the given folder does not exist, the report creation fails.See Tekla Structures Help for more information about reports.",
+      "params": [
+        {
+          "name": "TemplateName",
+          "type": "System.String",
+          "doc": "The name of the report template to be used in report creation. The name must contain more than three characters.",
+          "optional": false
+        },
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the created report. The name must contain more than three characters.",
+          "optional": false
+        },
+        {
+          "name": "Title1",
+          "type": "System.String",
+          "doc": "The first title for the created report.",
+          "optional": false
+        },
+        {
+          "name": "Title2",
+          "type": "System.String",
+          "doc": "The second title for the created report.",
+          "optional": false
+        },
+        {
+          "name": "Title3",
+          "type": "System.String",
+          "doc": "The third title for the created report.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the report is created."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the TemplateName or FileName is null."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the TemplateName or FileName is too short."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20138139-84ec-063b-734f-d73210a43196"
+    },
+    {
+      "name": "CreateShapeFromGeometry",
+      "signature": "public static string CreateShapeFromGeometry(Part originalPart)",
+      "summary": "Create a new shape in the shape catalog, based on the part geometry.",
+      "params": [
+        {
+          "name": "originalPart",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "Original part",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The newly created shape name, or empty string on failure"
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the originalPart is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f742bc27-2758-364e-bab3-51554907d1d3"
+    },
+    {
+      "name": "DisplayPrintReportDialog",
+      "signature": "public static bool DisplayPrintReportDialog(string FileName)",
+      "summary": "Opens the print dialog for a report with the given filename.",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": ""
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e7486cf-b2bd-3400-3d72-5f7003a421dd"
+    },
+    {
+      "name": "DisplayPrompt",
+      "signature": "public static bool DisplayPrompt(string Message)",
+      "summary": "Displays a message in the status bar.",
+      "remarks": "Prompts Tekla Structures prefixes the given prompt with \u0022prompt_\u0022 and looks for a translation in the prompts.ail file. If the translation (e.g. \u0022prompt_Pick_first_position\u0022) is not found in the prompts.ail file, the prompt string is displayed as such. This feature can be used to give already translated strings to the picker.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The message to display.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the message could be displayed."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the Message is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0be24953-f509-559d-1682-51d772836434"
+    },
+    {
+      "name": "DisplayReport",
+      "signature": "public static bool DisplayReport(string FileName)",
+      "summary": "Opens and displays a report with the given name. If a path is not given in the filename, the file is searched from the folder defined with the advanced option XS_REPORT_OUTPUT_DIRECTORY.See Tekla Structures Help for more information about reports.",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the report to display. The name must contain more than three characters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the report existed."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the file specified in the FileName is not found or when the FileName is too short."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0341426-3054-511a-e795-d26e240bcd95"
+    },
+    {
+      "name": "ExplodeBentPlate",
+      "signature": "public static bool ExplodeBentPlate(BentPlate bentPlate)",
+      "summary": "Deletes bentPlate and inserts ContourPlates instances equivalent to the ones used to create bentPlate. The ContourPlate created from the main polygon has the same identifier as bentPlate.",
+      "params": [
+        {
+          "name": "bentPlate",
+          "type": "Tekla.Structures.Model.BentPlate",
+          "doc": "the BentPlate instance to explode.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when bentPlate is invalid."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/90695733-55df-251e-05cd-b9115f915769"
+    },
+    {
+      "name": "Freeze",
+      "signature": "public static bool Freeze(RebarSet rebarSet, bool value)",
+      "summary": "Freezes or unfreezes a rebar set.",
+      "params": [
+        {
+          "name": "rebarSet",
+          "type": "Tekla.Structures.Model.RebarSet",
+          "doc": "The rebar set to be frozen or unfrozen.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "True if it is to be frozen, false if it is to be unfrozen.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the frozen state has been successfully changed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0ed78310-48b6-2e28-a003-5ab7932edfcb"
+    },
+    {
+      "name": "GetHandlePoints",
+      "signature": "public static List\u003CPoint\u003E GetHandlePoints(string guid)",
+      "summary": "Get the Shape Item Handle Points",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.String",
+          "doc": "The guid of the shape",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CPoint\u003E",
+        "doc": "List of Handle Points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/75751ea1-681e-d44e-de08-475b46d257df"
+    },
+    {
+      "name": "GetSimilarNumberedObjects",
+      "signature": "public static List\u003CModelObject\u003E GetSimilarNumberedObjects(ModelObject ObjectToCompare)",
+      "summary": "Gets similar objects based on numbering of given object.",
+      "remarks": "This method works currently only with parts and assemblies.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The object for comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CModelObject\u003E",
+        "doc": "List of similar objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5f906cbe-5507-55e3-d31f-00043acf148a"
+    },
+    {
+      "name": "Group",
+      "signature": "public static RebarGroup Group(IEnumerable RebarList)",
+      "summary": "Groups a list of single rebars or rebar groups and creates a new rebar group.",
+      "params": [
+        {
+          "name": "RebarList",
+          "type": "System.Collections.IEnumerable",
+          "doc": "The list of single rebars and rebar groups to be grouped.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarGroup",
+        "doc": "The created rebar group on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/179f6a0a-95ea-6517-ddcd-b9a82c374d25"
+    },
+    {
+      "name": "Highlight",
+      "signature": "public static bool Highlight(List\u003CModelObject\u003E ModelObjects)",
+      "summary": "Highlight the list of objects from the user interface. Only the list of objects will be highlighted, the rest will be unhighlighted. But it will keep the status of the selected objects. To unhighlight give an empty list as a parameter.",
+      "params": [
+        {
+          "name": "ModelObjects",
+          "type": "System.Collections.Generic.List\u003CModelObject\u003E",
+          "doc": "The list of model objects to highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b67e14f2-d5c5-c685-d527-b9d451460899"
+    },
+    {
+      "name": "IsMacroRunning",
+      "signature": "public static bool IsMacroRunning()",
+      "summary": "Returns true if a macro is running, false otherwise. Macros are saved as *.cs files in the folder defined with the XS_MACRO_DIRECTORY variable.See Tekla Structures Help for more information about macros.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a macro is running."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f242e58-9e53-908e-5f49-6e67f27b3ae4"
+    },
+    {
+      "name": "IsModelAutoSaved",
+      "signature": "[ObsoleteAttribute(\u0022Use the method in ModelHandler class instead. Will be removed in near future.\u0022)] public static bool IsModelAutoSaved(string ModelFolder)",
+      "summary": "Tells whether a model has auto saved information.",
+      "params": [
+        {
+          "name": "ModelFolder",
+          "type": "System.String",
+          "doc": "The model folder to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if there is auto saved information."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/afcedc6c-a2a5-12a2-f8f3-03f0a83283fa"
+    },
+    {
+      "name": "IsNumberingAllowed",
+      "signature": "public static bool IsNumberingAllowed()",
+      "summary": "Checks whether the numbering is allowed or not in the current configuration.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the numbering is allowed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3bc7887e-5852-1d2f-1de8-b0eebb84b6f7"
+    },
+    {
+      "name": "IsNumberingUpToDate",
+      "signature": "public static bool IsNumberingUpToDate(ModelObject InputModelObject)",
+      "summary": "Checks whether the numbering is up-to-date for an assembly, part, rebar, surface treatment, pour object or break.",
+      "params": [
+        {
+          "name": "InputModelObject",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to check. The object must be an assembly, a part, a rebar or an inherited object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the numbering information is up-to-date."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if the InputModelObject is not of a correct type or if it is not valid."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/27f48c6d-a775-ddf5-c54c-f168fc904322"
+    },
+    {
+      "name": "IsNumberingUpToDateAll",
+      "signature": "public static bool IsNumberingUpToDateAll()",
+      "summary": "Checks whether the numbering is up-to-date for every assembly, part and rebar on the model. Remarks Using this method is much faster than checking each object individually.",
+      "remarks": "Using this method is much faster than checking each object individually.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the numbering information is up-to-date."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/92637418-2b30-ce77-7dc1-038322a9544a"
+    },
+    {
+      "name": "MoveObject(ModelObject, Vector)",
+      "signature": "public static bool MoveObject(ModelObject Object, Vector TranslationVector)",
+      "summary": "Moves the model object using the given translation vector.",
+      "remarks": "Note that the object is moved and updated in the view so ModelObject.Modify() is not needed. Call Modify() only after the object\u0027s data has been updated with the ModelObject.Select() method.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to move.",
+          "optional": false
+        },
+        {
+          "name": "TranslationVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The vector for moving the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0d1a2cd-6145-ff68-a8f0-f0e74c1dc78f"
+    },
+    {
+      "name": "MoveObject(ModelObject, CoordinateSystem, CoordinateSystem)",
+      "signature": "public static bool MoveObject(ModelObject Object, CoordinateSystem StartCoordinateSystem, CoordinateSystem EndCoordinateSystem)",
+      "summary": "Moves the model object between the given translation coordinate systems.",
+      "remarks": "Note that the object is moved and updated in the view so ModelObject.Modify() is not needed. Call Modify() only after the object\u0027s data has been updated with the ModelObject.Select() method.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to move.",
+          "optional": false
+        },
+        {
+          "name": "StartCoordinateSystem",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to move the object from.",
+          "optional": false
+        },
+        {
+          "name": "EndCoordinateSystem",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to move the object to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c8c000f1-f5d4-0429-45c4-021bdf02036c"
+    },
+    {
+      "name": "MoveObjectMirror",
+      "signature": "public static bool MoveObjectMirror(ModelObject modelObject, double x, double y, double angle)",
+      "summary": "Mirrors the object in the plane defined by the given data is the current workplane.",
+      "params": [
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to mirror.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The x coordinate of a point on the mirror line.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The y coordinate of a point on the mirror line.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "The angle of the mirror line in radians to the x axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/515aa261-bbf2-764d-45c2-a2ebddace452"
+    },
+    {
+      "name": "ObjectMatchesToFilter(ModelObject, String)",
+      "signature": "public static bool ObjectMatchesToFilter(ModelObject ModelObject, string FilterName)",
+      "summary": "Checks whether the object matches to the criteria in the given filter.",
+      "params": [
+        {
+          "name": "ModelObject",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to check.",
+          "optional": false
+        },
+        {
+          "name": "FilterName",
+          "type": "System.String",
+          "doc": "The filter file to check against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the object matches to the given filter criteria."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the ModelObject is not valid."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25fb8b93-31f3-5c3e-3538-263151971be2"
+    },
+    {
+      "name": "ObjectMatchesToFilter(ModelObject, FilterExpression)",
+      "signature": "public static bool ObjectMatchesToFilter(ModelObject ModelObject, FilterExpression FilterExpression)",
+      "summary": "Checks whether the object matches to the criteria in the given filter.",
+      "params": [
+        {
+          "name": "ModelObject",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to check.",
+          "optional": false
+        },
+        {
+          "name": "FilterExpression",
+          "type": "Tekla.Structures.Filtering.FilterExpression",
+          "doc": "The definition of a selection filter to check against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the object matches to the given filter criteria."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the ModelObject is not valid."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/05260766-8da9-47ba-7421-8dc18edce140"
+    },
+    {
+      "name": "Open(String)",
+      "signature": "[ObsoleteAttribute(\u0022Use the method in ModelHandler class instead. Will be removed in near future.\u0022)] public static bool Open(string ModelFolder)",
+      "summary": "Opens a new model to Tekla Structures ignoring auto saved information.",
+      "params": [
+        {
+          "name": "ModelFolder",
+          "type": "System.String",
+          "doc": "The model folder to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2c908a15-5315-833e-9794-bf16a0687e3d"
+    },
+    {
+      "name": "Open(String, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Use the method in ModelHandler class instead. Will be removed in near future.\u0022)] public static bool Open(string ModelFolder, bool OpenAutoSaved)",
+      "summary": "Opens a new model to Tekla Structures.",
+      "params": [
+        {
+          "name": "ModelFolder",
+          "type": "System.String",
+          "doc": "The model folder to be used.",
+          "optional": false
+        },
+        {
+          "name": "OpenAutoSaved",
+          "type": "System.Boolean",
+          "doc": "Tells whether to open auto saved information or not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/90bb1f01-bf9a-9bab-6a7e-12ce9ca36a0b"
+    },
+    {
+      "name": "RemoveFromPourUnit",
+      "signature": "public static bool RemoveFromPourUnit(List\u003CModelObject\u003E objectsToBeRemoved)",
+      "summary": "Removes model object from pour unit Model object types accepted are assembly types except cast in situ, reinforcements of different kind, components and bolts",
+      "params": [
+        {
+          "name": "objectsToBeRemoved",
+          "type": "System.Collections.Generic.List\u003CModelObject\u003E",
+          "doc": "the list of model objects to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Throw exceptions if object has invalid ID, do not exist in model or not valid object type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed267ff7-02e0-bd4c-36a8-bc7e258d3c83"
+    },
+    {
+      "name": "RunMacro",
+      "signature": "public static bool RunMacro(string FileName)",
+      "summary": "Starts a macro with the given name. Throws an exception if the file is not found. Macros are saved as *.cs files in the folder defined with the XS_MACRO_DIRECTORY variable.It is possible to run drawing macros using relative paths.See Tekla Structures Help for more information about macros.",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the macro to start.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the macro existed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/42bee48d-632b-6b20-6c82-3e88af869716"
+    },
+    {
+      "name": "SaveAsWebModel",
+      "signature": "public static bool SaveAsWebModel(string Filename)",
+      "summary": "Saves the current model as a web model. You can save the model as a web model that can be viewed via the Internet using a web browser (e.g. Internet Explorer).",
+      "params": [
+        {
+          "name": "Filename",
+          "type": "System.String",
+          "doc": "The filename to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/00aec8f7-3875-a8db-f76a-967ac47d9496"
+    },
+    {
+      "name": "SaveSelectedAsWebModel",
+      "signature": "public static bool SaveSelectedAsWebModel(string Filename)",
+      "summary": "Saves the selected objects as a web model. You can save the selected objects as a web model that can be viewed via the Internet using a web browser (e.g. Internet Explorer).",
+      "params": [
+        {
+          "name": "Filename",
+          "type": "System.String",
+          "doc": "The filename to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7c54947d-03b0-32c4-5562-57889c799cf2"
+    },
+    {
+      "name": "SetHandlePoints",
+      "signature": "public static bool SetHandlePoints(string guid, List\u003CPoint\u003E HandlePoints)",
+      "summary": "Set the Shape Item Handle Points",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.String",
+          "doc": "The guid of the shape",
+          "optional": false
+        },
+        {
+          "name": "HandlePoints",
+          "type": "System.Collections.Generic.List\u003CPoint\u003E",
+          "doc": "An array of handle points",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the appending operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7baa03fe-b8f6-c104-8642-747666367f6e"
+    },
+    {
+      "name": "ShowOnlySelected",
+      "signature": "public static void ShowOnlySelected(Operation.UnselectedModeEnum UnselectedMode)",
+      "summary": "Show Only Selected objects in current view.",
+      "params": [
+        {
+          "name": "UnselectedMode",
+          "type": "Tekla.Structures.Model.Operations.Operation.UnselectedModeEnum",
+          "doc": "Specify what to do with unselected parts.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef58f1d7-1bc2-ad42-f1f5-21f092444369"
+    },
+    {
+      "name": "Split(Beam, Point)",
+      "signature": "public static Beam Split(Beam Object, Point SplitPoint)",
+      "summary": "Splits the beam and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.Beam",
+          "doc": "The beam object to be split.",
+          "optional": false
+        },
+        {
+          "name": "SplitPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The position where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Beam",
+        "doc": "The created beam on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ade59197-8112-9d79-3d9d-0de5673413f1"
+    },
+    {
+      "name": "Split(CircleRebarGroup, Line)",
+      "signature": "public static CircleRebarGroup Split(CircleRebarGroup Object, Line SplitLine)",
+      "summary": "Splits the circle rebar group and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.CircleRebarGroup",
+          "doc": "The circle rebar group object to be splitted.",
+          "optional": false
+        },
+        {
+          "name": "SplitLine",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CircleRebarGroup",
+        "doc": "The created circle rebar group on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/38823af2-3c64-c8c2-5399-b43e45fb039f"
+    },
+    {
+      "name": "Split(ContourPlate, Polygon)",
+      "signature": "public static ContourPlate Split(ContourPlate Object, Polygon SplitPolygon)",
+      "summary": "Splits the contour plate and creates a new one along the given polygon.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.ContourPlate",
+          "doc": "The contour plate object to be splitted.",
+          "optional": false
+        },
+        {
+          "name": "SplitPolygon",
+          "type": "Tekla.Structures.Model.Polygon",
+          "doc": "The position where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ContourPlate",
+        "doc": "The created contour plate on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cc26cef4-45ff-a6aa-dc13-ba549930cf47"
+    },
+    {
+      "name": "Split(CurvedRebarGroup, Line)",
+      "signature": "public static CurvedRebarGroup Split(CurvedRebarGroup Object, Line SplitLine)",
+      "summary": "Splits the curved rebar group and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.CurvedRebarGroup",
+          "doc": "The curved rebar group object to be splitted.",
+          "optional": false
+        },
+        {
+          "name": "SplitLine",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurvedRebarGroup",
+        "doc": "The created curved rebar group on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2aadb317-0235-c6e1-778a-dd605cf16913"
+    },
+    {
+      "name": "Split(LoftedPlate, Point)",
+      "signature": "public static LoftedPlate Split(LoftedPlate Object, Point SplitPoint)",
+      "summary": "Splits the lofted plate and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.LoftedPlate",
+          "doc": "The lofted plate to be split.",
+          "optional": false
+        },
+        {
+          "name": "SplitPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The position where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LoftedPlate",
+        "doc": "The created lofted plate on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9f4fe99c-fdef-f833-52be-627717373b13"
+    },
+    {
+      "name": "Split(PolyBeam, Point)",
+      "signature": "public static PolyBeam Split(PolyBeam Object, Point SplitPoint)",
+      "summary": "Splits the polybeam and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.PolyBeam",
+          "doc": "The beam object to be split.",
+          "optional": false
+        },
+        {
+          "name": "SplitPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The position where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolyBeam",
+        "doc": "The created polybeam on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/060e6ed9-cce7-0799-e26b-19403dde7f61"
+    },
+    {
+      "name": "Split(RebarGroup, Line)",
+      "signature": "public static RebarGroup Split(RebarGroup Object, Line SplitLine)",
+      "summary": "Splits the rebar group and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.RebarGroup",
+          "doc": "The rebar group object to be splitted.",
+          "optional": false
+        },
+        {
+          "name": "SplitLine",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarGroup",
+        "doc": "The created rebar group on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0678430-540d-a572-190e-7d35dfdae18d"
+    },
+    {
+      "name": "Split(RebarSet, Line)",
+      "signature": "public static RebarSet Split(RebarSet Object, Line SplitLine)",
+      "summary": "Splits the rebar set and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.RebarSet",
+          "doc": "The rebar set object to be split.",
+          "optional": false
+        },
+        {
+          "name": "SplitLine",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarSet",
+        "doc": "The created rebar set on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ff23c743-8528-91b0-41d0-7b84c96407ed"
+    },
+    {
+      "name": "Split(SingleRebar, Line)",
+      "signature": "public static SingleRebar Split(SingleRebar Object, Line SplitLine)",
+      "summary": "Splits the single rebar and creates a new one in the given position.",
+      "params": [
+        {
+          "name": "Object",
+          "type": "Tekla.Structures.Model.SingleRebar",
+          "doc": "The single rebar object to be splitted.",
+          "optional": false
+        },
+        {
+          "name": "SplitLine",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line where splitting is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SingleRebar",
+        "doc": "The created single rebar on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e4368110-15e9-c24a-02d2-1bcee426db55"
+    },
+    {
+      "name": "SplitSlab",
+      "signature": "public static bool SplitSlab(int PartId, FacetedBrep Polymesh)",
+      "summary": "This command is meant for specifically splitting a concrete slab with advanced solid operations to create more robust and user friendly results than the command: public static ContourPlate Split(ContourPlate Object, Polygon SplitPolygon). No validation is done for the type, it is the caller\u0027s responsibility to call this only for valid types (slabs). Behavior for non-slabs is undetermined.",
+      "params": [
+        {
+          "name": "PartId",
+          "type": "System.Int32",
+          "doc": "The part ID that identifies the slab to be split",
+          "optional": false
+        },
+        {
+          "name": "Polymesh",
+          "type": "Tekla.Structures.Geometry3d.FacetedBrep",
+          "doc": "The polymesh that defines the splitting surface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82d2dc9c-b4c0-d413-4570-9c2e6ecb7f91"
+    },
+    {
+      "name": "Ungrouping(RebarGroup)",
+      "signature": "public static ModelObjectEnumerator Ungrouping(RebarGroup Reinforcement)",
+      "summary": "Ungroups the rebar group and creates new single rebars.",
+      "params": [
+        {
+          "name": "Reinforcement",
+          "type": "Tekla.Structures.Model.RebarGroup",
+          "doc": "The rebar group to be ungrouped.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "An enumerator of single rebars."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9c5db27f-c493-c9b1-2493-91cfc61bfb83"
+    },
+    {
+      "name": "Ungrouping(RebarMesh)",
+      "signature": "public static ModelObjectEnumerator Ungrouping(RebarMesh Reinforcement)",
+      "summary": "Ungroups the rebar mesh and creates new single rebars.",
+      "params": [
+        {
+          "name": "Reinforcement",
+          "type": "Tekla.Structures.Model.RebarMesh",
+          "doc": "The rebar mesh to be ungrouped.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "An enumerator of single rebars."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/02acb6c5-8915-ea56-1399-1a112a57961e"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

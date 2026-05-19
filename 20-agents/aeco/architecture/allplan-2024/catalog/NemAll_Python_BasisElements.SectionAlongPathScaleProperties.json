@@ -1,0 +1,65 @@
+{
+  "name": "SectionAlongPathScaleProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Scale properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathScaleProperties",
+      "signature": "SectionAlongPathScaleProperties(bInitFromSTW=False) | SectionAlongPathScaleProperties(B)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/#NemAll_Python_BasisElements.SectionAlongPathScaleProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetScaleFactorTolerance",
+      "signature": "GetScaleFactorTolerance()",
+      "summary": "Access tolerance",
+      "remarks": "Access tolerance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "scale factor tolerance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/#NemAll_Python_BasisElements.SectionAlongPathScaleProperties.GetScaleFactorTolerance"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ScaleFactorX",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the resizing factor X in Longitudinal direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/#NemAll_Python_BasisElements.SectionAlongPathScaleProperties.ScaleFactorX"
+    },
+    {
+      "name": "ScaleFactorY",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the resizing factor Y in Transversal direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/#NemAll_Python_BasisElements.SectionAlongPathScaleProperties.ScaleFactorY"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

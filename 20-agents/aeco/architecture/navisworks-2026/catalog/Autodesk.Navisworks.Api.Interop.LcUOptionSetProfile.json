@@ -1,0 +1,22 @@
+{
+  "name": "LcUOptionSetProfile",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetProfile enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePROFILE_NORMAL",
+      "value": 0
+    },
+    {
+      "name": "ePROFILE_HIDDEN",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "FileProtocolOpenMode",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "enum",
+  "summary": "Open mode for FileProtocolPlugin interface.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.FileProtocolOpenMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Read",
+      "value": 0,
+      "summary": "Open for read"
+    },
+    {
+      "name": "Write",
+      "value": 1,
+      "summary": "Open for write"
+    }
+  ]
+}

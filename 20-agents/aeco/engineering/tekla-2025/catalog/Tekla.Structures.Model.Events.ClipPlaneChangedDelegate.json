@@ -1,0 +1,14 @@
+{
+  "name": "Events.ClipPlaneChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for clip plane events.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/44f3eba6-9931-7ac8-c2dc-947c5f894488",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ClipPlaneChangedDelegate( int viewId, int clipPlaneId, ChangeData.ChangeTypeEnum operation )"
+}

@@ -1,0 +1,41 @@
+{
+  "name": "NormalNumberListPropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A number list property value containing numbers in an array.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberListPropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060type\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberListPropertyValue"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060status\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberListPropertyValue"
+    },
+    {
+      "name": "value",
+      "type": "number[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060value\u0060 of type \u0060number[]\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberListPropertyValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

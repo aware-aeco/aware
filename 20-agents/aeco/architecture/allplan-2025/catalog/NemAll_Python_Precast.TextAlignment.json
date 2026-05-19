@@ -1,0 +1,55 @@
+{
+  "name": "TextAlignment",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "Alignments for text of labeling for view",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/TextAlignment/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBottomCenter",
+      "value": 6
+    },
+    {
+      "name": "eCenter",
+      "value": 5
+    },
+    {
+      "name": "eLeftBottom",
+      "value": 1
+    },
+    {
+      "name": "eLeftCenter",
+      "value": 9
+    },
+    {
+      "name": "eLeftTop",
+      "value": 4
+    },
+    {
+      "name": "eRightBottom",
+      "value": 2
+    },
+    {
+      "name": "eRightCenter",
+      "value": 7
+    },
+    {
+      "name": "eRightTop",
+      "value": 3
+    },
+    {
+      "name": "eTopCenter",
+      "value": 8
+    },
+    {
+      "name": "eUnknownAlignment",
+      "value": 0
+    }
+  ]
+}

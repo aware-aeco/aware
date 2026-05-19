@@ -1,0 +1,14 @@
+{
+  "name": "Events.ViewDeletedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for view deleted event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6b948817-f373-a874-c0f7-ff2dbee472b6",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ViewDeletedDelegate( int viewId )"
+}

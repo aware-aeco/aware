@@ -1,0 +1,299 @@
+{
+  "name": "GumballObject",
+  "namespace": "Rhino.UI.Gumball",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Gumball.GumballObject\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Gumball_GumballObject.htm",
+  "constructors": [
+    {
+      "name": "GumballObject",
+      "signature": "public GumballObject()",
+      "summary": "Initializes a new instance of the GumballObject class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the GumballObject",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GumballObject and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_Finalize.htm"
+    },
+    {
+      "name": "SetFromArc",
+      "signature": "public bool SetFromArc(Arc arc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "[Missing \u003Cparam name=\u0022arc\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromArc(Rhino.Geometry.Arc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromArc(Rhino.Geometry.Arc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromArc.htm"
+    },
+    {
+      "name": "SetFromBoundingBox(BoundingBox)",
+      "signature": "public bool SetFromBoundingBox(BoundingBox boundingBox)",
+      "summary": "",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "[Missing \u003Cparam name=\u0022boundingBox\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromBoundingBox(Rhino.Geometry.BoundingBox)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromBoundingBox(Rhino.Geometry.BoundingBox)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromBoundingBox.htm"
+    },
+    {
+      "name": "SetFromBoundingBox(Plane, BoundingBox)",
+      "signature": "public bool SetFromBoundingBox(Plane frame, BoundingBox frameBoundingBox)",
+      "summary": "Sets the gumball bounding box with respect to a frame.",
+      "params": [
+        {
+          "name": "frame",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The frame.",
+          "optional": false
+        },
+        {
+          "name": "frameBoundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Bounding box with respect to frame.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if input is valid and gumball is set. false if input is not valid. In this case, gumball is set to the default."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromBoundingBox_1.htm"
+    },
+    {
+      "name": "SetFromCircle",
+      "signature": "public bool SetFromCircle(Circle circle)",
+      "summary": "",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "[Missing \u003Cparam name=\u0022circle\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromCircle(Rhino.Geometry.Circle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromCircle(Rhino.Geometry.Circle)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromCircle.htm"
+    },
+    {
+      "name": "SetFromCurve",
+      "signature": "public bool SetFromCurve(Curve curve)",
+      "summary": "",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022curve\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromCurve(Rhino.Geometry.Curve)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromCurve(Rhino.Geometry.Curve)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromCurve.htm"
+    },
+    {
+      "name": "SetFromEllipse",
+      "signature": "public bool SetFromEllipse(Ellipse ellipse)",
+      "summary": "",
+      "params": [
+        {
+          "name": "ellipse",
+          "type": "Rhino.Geometry.Ellipse",
+          "doc": "[Missing \u003Cparam name=\u0022ellipse\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromEllipse(Rhino.Geometry.Ellipse)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromEllipse(Rhino.Geometry.Ellipse)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromEllipse.htm"
+    },
+    {
+      "name": "SetFromExtrusion",
+      "signature": "public bool SetFromExtrusion(Extrusion extrusion)",
+      "summary": "",
+      "params": [
+        {
+          "name": "extrusion",
+          "type": "Rhino.Geometry.Extrusion",
+          "doc": "[Missing \u003Cparam name=\u0022extrusion\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromExtrusion(Rhino.Geometry.Extrusion)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromExtrusion(Rhino.Geometry.Extrusion)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromExtrusion.htm"
+    },
+    {
+      "name": "SetFromHatch",
+      "signature": "public bool SetFromHatch(Hatch hatch)",
+      "summary": "",
+      "params": [
+        {
+          "name": "hatch",
+          "type": "Rhino.Geometry.Hatch",
+          "doc": "[Missing \u003Cparam name=\u0022hatch\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromHatch(Rhino.Geometry.Hatch)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromHatch(Rhino.Geometry.Hatch)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromHatch.htm"
+    },
+    {
+      "name": "SetFromLight",
+      "signature": "public bool SetFromLight(Light light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromLight(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromLight(Rhino.Geometry.Light)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromLight.htm"
+    },
+    {
+      "name": "SetFromLine",
+      "signature": "public bool SetFromLine(Line line)",
+      "summary": "",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "[Missing \u003Cparam name=\u0022line\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromLine(Rhino.Geometry.Line)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromLine(Rhino.Geometry.Line)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromLine.htm"
+    },
+    {
+      "name": "SetFromPlane",
+      "signature": "public bool SetFromPlane(Plane plane)",
+      "summary": "",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022plane\u0022/\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromPlane(Rhino.Geometry.Plane)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Gumball.GumballObject.SetFromPlane(Rhino.Geometry.Plane)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Gumball_GumballObject_SetFromPlane.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Frame",
+      "type": "GumballFrame",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Gumball_GumballObject_Frame.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

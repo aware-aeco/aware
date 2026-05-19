@@ -1,0 +1,34 @@
+{
+  "name": "RhinoDoc.RenderContentTableEventType",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "Type of content table event",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_RhinoDoc_RenderContentTableEventType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Loaded",
+      "value": 0,
+      "summary": "The document has been read and the table has been loaded"
+    },
+    {
+      "name": "Clearing",
+      "value": 1,
+      "summary": "The table is about to be cleared"
+    },
+    {
+      "name": "Cleared",
+      "value": 2,
+      "summary": "The table has been cleared"
+    },
+    {
+      "name": "MaterialAssignmentChanged",
+      "value": 3,
+      "summary": "Object or layer material assignment changed"
+    }
+  ]
+}

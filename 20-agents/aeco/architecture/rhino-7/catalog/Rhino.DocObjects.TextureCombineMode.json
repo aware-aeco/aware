@@ -1,0 +1,33 @@
+{
+  "name": "TextureCombineMode",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Determines how this texture is combined with others in a material\u0027s texture list.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_TextureCombineMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Modulate",
+      "value": 1,
+      "summary": "Modulate with material diffuse color"
+    },
+    {
+      "name": "Decal",
+      "value": 2,
+      "summary": "Decal"
+    },
+    {
+      "name": "Blend",
+      "value": 3,
+      "summary": "Blend texture with others in the material To \u0022add\u0022 a texture, set BlendAmount = \u002B1 To \u0022subtract\u0022 a texture, set BlendAmount = -1"
+    }
+  ]
+}

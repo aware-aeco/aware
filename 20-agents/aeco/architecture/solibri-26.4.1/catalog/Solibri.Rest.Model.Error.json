@@ -1,0 +1,30 @@
+{
+  "name": "Error",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.Error.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Error",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Code",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Error.code.)",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Error"
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Error.message.)",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Error"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

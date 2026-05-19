@@ -1,0 +1,62 @@
+{
+  "name": "TangentCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Tangent calculation at an element point",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate(line) | Calculate(line) | Calculate(polyline, inputPnt) | Calculate(polyline, inputPnt) | Calculate(polygon, inputPnt) | Calculate(arc, inputPnt) | Calculate(arc, inputPnt) | Calculate(spline, inputPnt) | Calculate(spline, inputPnt) | Calculate(bspline, inputPnt) | Calculate(bspline, inputPnt) | Calculate(clothoid, inputPnt) | Calculate(path, inputPnt) | Calculate(brep, inputPnt) | Calculate(geoObject, inputPnt)",
+      "summary": "Calculates tangent vector of Line2D",
+      "remarks": "Calculates tangent vector of Line2D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D on which to calculate tangent vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "CalculateNormal",
+      "signature": "CalculateNormal(brep, inputPnt)",
+      "summary": "Calculates normal vector of BRep3D at given point",
+      "remarks": "Calculates normal vector of BRep3D at given point",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "Brep body",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for normal calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "normal vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.CalculateNormal"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

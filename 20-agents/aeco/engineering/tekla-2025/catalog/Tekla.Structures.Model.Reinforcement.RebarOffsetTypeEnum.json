@@ -1,0 +1,24 @@
+{
+  "name": "Reinforcement.RebarOffsetTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different types of offsets.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a0e850ad-1bda-6e5d-09b5-e64010191033",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OFFSET_TYPE_COVER_THICKNESS",
+      "value": 0,
+      "summary": "The concrete cover thickness."
+    },
+    {
+      "name": "OFFSET_TYPE_LEG_LENGTH",
+      "value": 1,
+      "summary": "The leg length."
+    }
+  ]
+}

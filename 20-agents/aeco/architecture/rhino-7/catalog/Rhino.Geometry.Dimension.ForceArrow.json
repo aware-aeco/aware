@@ -1,0 +1,26 @@
+{
+  "name": "Dimension.ForceArrow",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "OBSOLETE enum do not use.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Dimension_ForceArrow.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Auto",
+      "value": 0
+    },
+    {
+      "name": "Inside",
+      "value": 1
+    },
+    {
+      "name": "Outside",
+      "value": 2
+    }
+  ]
+}

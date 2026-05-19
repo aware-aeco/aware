@@ -1,0 +1,34 @@
+{
+  "name": "FilePdfReadOptions.PDF_UNITS",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FilePdfReadOptions.PDF_UNITS\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FilePdfReadOptions_PDF_UNITS.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "inches",
+      "value": 0,
+      "summary": "inches"
+    },
+    {
+      "name": "centimeters",
+      "value": 1,
+      "summary": "centimeters"
+    },
+    {
+      "name": "millimeters",
+      "value": 2,
+      "summary": "millimeters"
+    },
+    {
+      "name": "points",
+      "value": 3,
+      "summary": "points"
+    }
+  ]
+}

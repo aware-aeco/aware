@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VMDataBridge</name>
+    </assembly>
+    <members>
+        <member name="T:VMDataBridge.DataBridge">
+            <summary>
+                Provides callback registration by GUID, allows for hooking Actions into the VM.
+            </summary>
+        </member>
+        <member name="P:VMDataBridge.DataBridge.Instance">
+            <summary>
+                DataBridge Singleton
+            </summary>
+        </member>
+        <member name="M:VMDataBridge.DataBridge.RegisterCallback(System.String,System.Action{System.Object})">
+            <summary>
+                Registers a callback for a given GUID, to be invoked by the VM on
+                an arbitrary thread. There are no guarantees as to what thread
+                the callback will be invoked on.
+            </summary>
+            <param name="id">Guid used to identify the callback.</param>
+            <param name="callback">Action to be invoked with data from the VM.</param>
+        </member>
+        <member name="M:VMDataBridge.DataBridge.UnregisterCallback(System.String)">
+            <summary>
+                Unregisters a callback for a given GUID.
+            </summary>
+            <param name="id">Guid identifying the callback to be removed.</param>
+        </member>
+        <member name="M:VMDataBridge.DataBridge.BridgeData(System.String,System.Object)">
+            <summary>
+                Calls the registered callback for the given guid string with the given data.
+                This is safe to include in standalone DS scripts, since if there are no callbacks
+                registered then the method will do nothing.
+            </summary>
+            <param name="id">String identifying which registered callback to invoke.</param>
+            <param name="data">Data to be passed to the callback.</param>
+        </member>
+        <member name="M:VMDataBridge.DataBridge.GenerateBridgeDataAst(System.String,ProtoCore.AST.AssociativeAST.AssociativeNode)">
+            <summary>
+                Produces AST that, when executed by the VM, will perform Data Bridging
+                by calling BridgeData.
+            </summary>
+            <param name="id">Guid identifying which registered callback to be invoked.</param>
+            <param name="input">AST representing the data to be passed to the callback.</param>
+        </member>
+    </members>
+</doc>

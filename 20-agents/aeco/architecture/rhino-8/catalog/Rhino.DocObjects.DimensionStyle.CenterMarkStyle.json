@@ -1,0 +1,29 @@
+{
+  "name": "DimensionStyle.CenterMarkStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Style for drawing centermark for Radial dimensions and Centermark objects",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DimensionStyle_CenterMarkStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No centermark display"
+    },
+    {
+      "name": "Mark",
+      "value": 1,
+      "summary": "\u002B mark only"
+    },
+    {
+      "name": "MarkAndLines",
+      "value": 2,
+      "summary": "\u002B mark and lines to radius"
+    }
+  ]
+}

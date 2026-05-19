@@ -1,0 +1,24 @@
+{
+  "name": "DotPrintScalingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The print scaling type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c4113e81-eef4-b513-2830-ad91a6cd6df4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Auto",
+      "value": 0,
+      "summary": "Auto scale."
+    },
+    {
+      "name": "Scale",
+      "value": 1,
+      "summary": "Use defined scale."
+    }
+  ]
+}

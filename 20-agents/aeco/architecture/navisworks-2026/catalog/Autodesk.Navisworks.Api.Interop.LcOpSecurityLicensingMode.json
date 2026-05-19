@@ -1,0 +1,22 @@
+{
+  "name": "LcOpSecurityLicensingMode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSecurityLicensingMode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSecurityLicensingMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMODE_ADLM",
+      "value": 0
+    },
+    {
+      "name": "eMODE_BIM360",
+      "value": 1
+    }
+  ]
+}

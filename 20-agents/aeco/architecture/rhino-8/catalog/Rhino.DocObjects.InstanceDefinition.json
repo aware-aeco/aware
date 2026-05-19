@@ -1,0 +1,1048 @@
+{
+  "name": "InstanceDefinition",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "This is the same as InstanceDefinitionGeometry, but in a Rhino document.",
+  "base": "InstanceDefinitionGeometry",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_InstanceDefinition.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ClearId",
+      "signature": "public void ClearId()",
+      "summary": "Resets the HasId property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the ID is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearId.htm"
+    },
+    {
+      "name": "ClearIndex",
+      "signature": "public void ClearIndex()",
+      "summary": "Resets the HasIndex property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the index is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearIndex.htm"
+    },
+    {
+      "name": "ClearName",
+      "signature": "public void ClearName()",
+      "summary": "Resets the HasName property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the name is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearName.htm"
+    },
+    {
+      "name": "CreatePreviewBitmap(DefinedViewportProjection, Size)",
+      "signature": "public Bitmap CreatePreviewBitmap(DefinedViewportProjection definedViewportProjection, Size bitmapSize)",
+      "summary": "Creates a wireframe preview bitmap of the instance definition.",
+      "params": [
+        {
+          "name": "definedViewportProjection",
+          "type": "Rhino.Display.DefinedViewportProjection",
+          "doc": "The view projection.",
+          "optional": false
+        },
+        {
+          "name": "bitmapSize",
+          "type": "System.Drawing.Size",
+          "doc": "The bitmap size in pixels.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The preview bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_CreatePreviewBitmap_2.htm"
+    },
+    {
+      "name": "CreatePreviewBitmap(DefinedViewportProjection, DisplayMode, Size)",
+      "signature": "public Bitmap CreatePreviewBitmap(DefinedViewportProjection definedViewportProjection, DisplayMode displayMode, Size bitmapSize)",
+      "summary": "Creates a preview bitmap of the instance definition.",
+      "params": [
+        {
+          "name": "definedViewportProjection",
+          "type": "Rhino.Display.DefinedViewportProjection",
+          "doc": "The view projection.",
+          "optional": false
+        },
+        {
+          "name": "displayMode",
+          "type": "Rhino.DocObjects.DisplayMode",
+          "doc": "The display mode.",
+          "optional": false
+        },
+        {
+          "name": "bitmapSize",
+          "type": "System.Drawing.Size",
+          "doc": "The bitmap size in pixels.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The preview bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_CreatePreviewBitmap.htm"
+    },
+    {
+      "name": "CreatePreviewBitmap(DefinedViewportProjection, Size, Boolean)",
+      "signature": "public Bitmap CreatePreviewBitmap(DefinedViewportProjection definedViewportProjection, Size bitmapSize, bool applyDpiScaling)",
+      "summary": "Creates a wireframe preview bitmap of the instance definition.",
+      "params": [
+        {
+          "name": "definedViewportProjection",
+          "type": "Rhino.Display.DefinedViewportProjection",
+          "doc": "The view projection.",
+          "optional": false
+        },
+        {
+          "name": "bitmapSize",
+          "type": "System.Drawing.Size",
+          "doc": "The bitmap size in pixels.",
+          "optional": false
+        },
+        {
+          "name": "applyDpiScaling",
+          "type": "System.Boolean",
+          "doc": "Specify true to apply DPI scaling (Windows-only).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The preview bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_CreatePreviewBitmap_3.htm"
+    },
+    {
+      "name": "CreatePreviewBitmap(DefinedViewportProjection, DisplayMode, Size, Boolean)",
+      "signature": "public Bitmap CreatePreviewBitmap(DefinedViewportProjection definedViewportProjection, DisplayMode displayMode, Size bitmapSize, bool applyDpiScaling)",
+      "summary": "Creates a preview bitmap of the instance definition.",
+      "params": [
+        {
+          "name": "definedViewportProjection",
+          "type": "Rhino.Display.DefinedViewportProjection",
+          "doc": "The view projection.",
+          "optional": false
+        },
+        {
+          "name": "displayMode",
+          "type": "Rhino.DocObjects.DisplayMode",
+          "doc": "The display mode.",
+          "optional": false
+        },
+        {
+          "name": "bitmapSize",
+          "type": "System.Drawing.Size",
+          "doc": "The bitmap size in pixels.",
+          "optional": false
+        },
+        {
+          "name": "applyDpiScaling",
+          "type": "System.Boolean",
+          "doc": "Specify true to apply DPI scaling (Windows-only).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The preview bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_CreatePreviewBitmap_1.htm"
+    },
+    {
+      "name": "CreatePreviewBitmap(Guid, DefinedViewportProjection, DisplayMode, Size, Boolean)",
+      "signature": "public Bitmap CreatePreviewBitmap(Guid definitionObjectId, DefinedViewportProjection viewportProjection, DisplayMode displayMode, Size bitmapSize, bool applyDpiScaling)",
+      "summary": "Creates a preview bitmap of the instance definition.",
+      "params": [
+        {
+          "name": "definitionObjectId",
+          "type": "System.Guid",
+          "doc": "Id of one of this definition\u0027s objects to draw selected.",
+          "optional": false
+        },
+        {
+          "name": "viewportProjection",
+          "type": "Rhino.Display.DefinedViewportProjection",
+          "doc": "The view projection.",
+          "optional": false
+        },
+        {
+          "name": "displayMode",
+          "type": "Rhino.DocObjects.DisplayMode",
+          "doc": "The display mode.",
+          "optional": false
+        },
+        {
+          "name": "bitmapSize",
+          "type": "System.Drawing.Size",
+          "doc": "The bitmap size in pixels.",
+          "optional": false
+        },
+        {
+          "name": "applyDpiScaling",
+          "type": "System.Boolean",
+          "doc": "Specify true to apply DPI scaling (Windows-only).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The preview bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_CreatePreviewBitmap_5.htm"
+    },
+    {
+      "name": "CreatePreviewBitmap(Guid, DefinedViewportProjection, IsometricCamera, Boolean, Size, Boolean)",
+      "signature": "public Bitmap CreatePreviewBitmap(Guid displayModeId, DefinedViewportProjection viewportProjection, IsometricCamera isometricCamera, bool drawDecorations, Size bitmapSize, bool applyDpiScaling)",
+      "summary": "Creates a preview bitmap of the instance definition.",
+      "params": [
+        {
+          "name": "displayModeId",
+          "type": "System.Guid",
+          "doc": "The id of the display mode to draw with.",
+          "optional": false
+        },
+        {
+          "name": "viewportProjection",
+          "type": "Rhino.Display.DefinedViewportProjection",
+          "doc": "The view projection.",
+          "optional": false
+        },
+        {
+          "name": "isometricCamera",
+          "type": "Rhino.Display.IsometricCamera",
+          "doc": "The isometric camera angle.",
+          "optional": false
+        },
+        {
+          "name": "drawDecorations",
+          "type": "System.Boolean",
+          "doc": "Specify true to draw viewport decorations, such as grid and axes.",
+          "optional": false
+        },
+        {
+          "name": "bitmapSize",
+          "type": "System.Drawing.Size",
+          "doc": "The bitmap size in pixels.",
+          "optional": false
+        },
+        {
+          "name": "applyDpiScaling",
+          "type": "System.Boolean",
+          "doc": "Specify true to apply DPI scaling (Windows-only).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The preview bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_CreatePreviewBitmap_4.htm"
+    },
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint currentRemainder)",
+      "summary": "Increments the Cyclic Redundancy Check value by this instance.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The current remainder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The updated remainder value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_DataCRC.htm"
+    },
+    {
+      "name": "DeleteAllUserStrings",
+      "signature": "public void DeleteAllUserStrings()",
+      "summary": "Deletes all user strings attached to this geometry.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_InstanceDefinitionGeometry_DeleteAllUserStrings.htm"
+    },
+    {
+      "name": "DeleteUserString",
+      "signature": "public bool DeleteUserString(string key)",
+      "summary": "Deletes the user string with the specified key from this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key of the user string to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the user string was deleted or did not exist; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_InstanceDefinitionGeometry_DeleteUserString.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Equality is checked against InstanceDefinition.Id",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if obj.Id equals Id"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_Equals.htm"
+    },
+    {
+      "name": "GetContainers",
+      "signature": "public InstanceDefinition[] GetContainers()",
+      "summary": "Gets a list of all the InstanceDefinitions that contain a reference this InstanceDefinition.",
+      "params": [],
+      "returns": {
+        "type": "InstanceDefinition[]",
+        "doc": "An array of instance definitions. The returned array can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_GetContainers.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Use Id.GetHashCode()",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.InstanceDefinition.GetHashCode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_GetHashCode.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetObjectIds",
+      "signature": "public Guid[] GetObjectIds()",
+      "summary": "Returns the unique identifiers of all objects that are part of this instance definition\u0027s geometry table.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "An array of Guid values representing the object IDs in the instance geometry table."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_InstanceDefinitionGeometry_GetObjectIds.htm"
+    },
+    {
+      "name": "GetObjects",
+      "signature": "public RhinoObject[] GetObjects()",
+      "summary": "Gets an array with the objects that belong to this instance definition.",
+      "params": [],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "An array of Rhino objects. The returned array can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_GetObjects.htm"
+    },
+    {
+      "name": "GetReferences",
+      "signature": "public InstanceObject[] GetReferences(int wheretoLook)",
+      "summary": "Gets a list of the CRhinoInstanceObjects (inserts) that contains a reference this instance definition.",
+      "params": [
+        {
+          "name": "wheretoLook",
+          "type": "System.Int32",
+          "doc": "0 = get top level references in active document.1 = get top level and nested references in active document.2 = check for references from other instance definitions.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "InstanceObject[]",
+        "doc": "An array of instance objects. The returned array can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_GetReferences.htm"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "public string GetUserString(string key)",
+      "summary": "Gets user string from this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve the string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "string associated with the key if successful. null if no key was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_InstanceDefinitionGeometry_GetUserString.htm"
+    },
+    {
+      "name": "GetUserStrings",
+      "signature": "public NameValueCollection GetUserStrings()",
+      "summary": "Gets a copy of all (user key string, user value string) pairs attached to this geometry.",
+      "params": [],
+      "returns": {
+        "type": "NameValueCollection",
+        "doc": "A new collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_InstanceDefinitionGeometry_GetUserStrings.htm"
+    },
+    {
+      "name": "InUse",
+      "signature": "public bool InUse(int wheretoLook)",
+      "summary": "Determines whether the instance definition is referenced.",
+      "params": [
+        {
+          "name": "wheretoLook",
+          "type": "System.Int32",
+          "doc": "0 = check for top level references in active document.1 = check for top level and nested references in active document.2 = check for references in other instance definitions.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the instance definition is used; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_InUse.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "LockId",
+      "signature": "public void LockId()",
+      "summary": "Locks the component Id property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockId.htm"
+    },
+    {
+      "name": "LockIndex",
+      "signature": "public void LockIndex()",
+      "summary": "Locks the component Index property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockIndex.htm"
+    },
+    {
+      "name": "LockName",
+      "signature": "public void LockName()",
+      "summary": "Locks the component Name property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockName.htm"
+    },
+    {
+      "name": "Object",
+      "signature": "public RhinoObject Object(int index)",
+      "summary": "returns an object used as part of this definition.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "0 \u003C= index \u003C ObjectCount.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject",
+        "doc": "Returns an object that is used to define the geometry. Does NOT return an object that references this definition.count the number of references to this instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_Object.htm"
+    },
+    {
+      "name": "SetUserString",
+      "signature": "public bool SetUserString(string key, string value)",
+      "summary": "Attach a user string (key,value combination) to this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve this string.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "string associated with key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_InstanceDefinitionGeometry_SetUserString.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns the name of the model component type, and then its name and index.",
+      "remarks": "This is provided as a visual aid. Do not rely on this for serialization.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ModelComponent.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ToString.htm"
+    },
+    {
+      "name": "UseCount()",
+      "signature": "public int UseCount()",
+      "summary": "Returns the number of references of this instance definition in the model. Both top-level references and nested instances are included in the count.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of references of this instance definition in the model."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_UseCount.htm"
+    },
+    {
+      "name": "UseCount(Int32, Int32)",
+      "signature": "public int UseCount(out int topLevelReferenceCount, out int nestedReferenceCount)",
+      "summary": "Returns the number of references of this instance definition in the model. Both top-level references and nested instances are included in the count.",
+      "params": [
+        {
+          "name": "topLevelReferenceCount",
+          "type": "System.Int32",
+          "doc": "The number of top-level references.",
+          "optional": false
+        },
+        {
+          "name": "nestedReferenceCount",
+          "type": "System.Int32",
+          "doc": "The number of nested instances.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of references of this instance definition in the model."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_UseCount_1.htm"
+    },
+    {
+      "name": "UsesDefinition",
+      "signature": "public int UsesDefinition(int otherIdefIndex)",
+      "summary": "Determines if this instance definition contains a reference to another instance definition.",
+      "params": [
+        {
+          "name": "otherIdefIndex",
+          "type": "System.Int32",
+          "doc": "index of another instance definition.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 no 1 other_idef_index is the index of this instance definition \u003E1 This InstanceDefinition uses the instance definition and the returned value is the nesting depth."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_UsesDefinition.htm"
+    },
+    {
+      "name": "UsesLayer",
+      "signature": "public bool UsesLayer(int layerIndex)",
+      "summary": "Returns true if some object in the instance definition is on the layer with the specified layer index.",
+      "params": [
+        {
+          "name": "layerIndex",
+          "type": "System.Int32",
+          "doc": "The index of layer to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if there is an object in the instance definition that is on the layer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_UsesLayer.htm"
+    },
+    {
+      "name": "UsesLinetype",
+      "signature": "public bool UsesLinetype(int linetypeIndex)",
+      "summary": "Returns true if some object in the instance definition references the linetype with the specified linetype index.",
+      "params": [
+        {
+          "name": "linetypeIndex",
+          "type": "System.Int32",
+          "doc": "The index of linetype to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if there is an object in the instance definition that references that linetype."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_InstanceDefinition_UsesLinetype.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ArchiveFileStatus",
+      "type": "InstanceDefinitionArchiveFileStatus",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the archive file status of a linked instance definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_ArchiveFileStatus.htm"
+    },
+    {
+      "name": "ComponentStatus",
+      "type": "ComponentStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the component status of the model component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ComponentStatus.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns InstanceDefinition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_ComponentType.htm"
+    },
+    {
+      "name": "DeletedName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of a component that is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_DeletedName.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the description of the definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_InstanceDefinitionGeometry_Description.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "HasId",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasId.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an Index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has a Name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasName.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ID of the current instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_Id.htm"
+    },
+    {
+      "name": "IdIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component ID is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IdIsLocked.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of this instance definition in the index definition table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_Index.htm"
+    },
+    {
+      "name": "IndexIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Index is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IndexIsLocked.htm"
+    },
+    {
+      "name": "InstanceDefinitionModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model as part of the information required for a linked instance definition, this value identifies the linked instance definition reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_InstanceDefinitionModelSerialNumber.htm"
+    },
+    {
+      "name": "IsComponentStatusLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The component status itself can be locked. This returns an indication.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsComponentStatusLocked.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if this instance definition is deleted. Deleted object are not saved to a file archive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_IsDeleted.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsReference",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "An object from a work session reference model is reference a reference object and cannot be modified. An object is a reference object if, and only if, it is on a reference layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_IsReference.htm"
+    },
+    {
+      "name": "IsSystemComponent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this model component is a system constant. An incomplete list of system constant model components is below:ON_ModelComponent::Unset ON_InstanceDefinition::Empty ON_Linetype::UnsetON_Linetype::ContinuousON_Linetype::ByLayerON_Linetype::ByParent ON_Layer::UnsetON_Layer::Default ON_TextStyle::UnsetON_TextStyle::DefaultON_TextStyle::ByLayerON_TextStyle::ByParent ON_DimStyle::UnsetON_DimStyle::DefaultON_DimStyle::DefaultInchDecimalON_DimStyle::DefaultInchFractionalON_DimStyle::DefaultFootInchArchitectureON_DimStyle::DefaultMillimeterSmallON_DimStyle::DefaultMillimeterLargeON_DimStyle::DefaultMillimeterArchitecture",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsSystemComponent.htm"
+    },
+    {
+      "name": "IsTenuous",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this instance definition is from a linked file. It will be saved only if it is referenced by an instance reference object that is in the active geometry list and is being saved. Note that there can be multiple linked instance definitions with references to tenuous instance definitions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_IsTenuous.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "LayerStyle",
+      "type": "InstanceDefinitionLayerStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how model components (layers, materials, dimension styles, etc.) from linked instance definition files appear in the active model.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_LayerStyle.htm"
+    },
+    {
+      "name": "ModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "A value identifying the model that manages this component.",
+      "remarks": "If the component is being managed by a model, this value identifies the model. In Rhino, this value is the document runtime serial number. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ModelSerialNumber.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_Name.htm"
+    },
+    {
+      "name": "NameIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Name is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_NameIsLocked.htm"
+    },
+    {
+      "name": "ObjectCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of objects this definition uses. This counts the objects that are used to define the geometry. This does NOT count the number of references to this instance definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_ObjectCount.htm"
+    },
+    {
+      "name": "ReferenceModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model for reference, this value identifies the reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ReferenceModelSerialNumber.htm"
+    },
+    {
+      "name": "SkipNestedLinkedDefinitions",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "This property applies when an instance definition is linked. If true, when reading the file that defines the content of the linked instance definition, skip any linked instance definitions found in that file. If false, when reading the file that defines the content of the linked instance definition, recursively load linked instance definitions found in that file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_SkipNestedLinkedDefinitions.htm"
+    },
+    {
+      "name": "SourceArchive",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the full file path for linked instance definitions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_SourceArchive.htm"
+    },
+    {
+      "name": "UnitSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the unit system of the instance definition. If the instance definition was imported from another 3dm file, the unit system may differ from that of the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_UnitSystem.htm"
+    },
+    {
+      "name": "UpdateType",
+      "type": "InstanceDefinitionUpdateType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_InstanceDefinition_UpdateType.htm"
+    },
+    {
+      "name": "Url",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the URL or hyperlink of the definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_InstanceDefinitionGeometry_Url.htm"
+    },
+    {
+      "name": "UrlDescription",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the description of the URL or hyperlink of the definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_InstanceDefinitionGeometry_UrlDescription.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use shareable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UserStringCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of user strings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_InstanceDefinitionGeometry_UserStringCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

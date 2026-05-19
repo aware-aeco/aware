@@ -1,0 +1,422 @@
+{
+  "name": "BrepFaceList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to all the Faces in a Brep object.",
+  "interfaces": [
+    "IEnumerable\u003CBrepFace\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_BrepFaceList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(Int32)",
+      "signature": "public BrepFace Add(int surfaceIndex)",
+      "summary": "Create and add a new face to this list. An incomplete face is added. The caller must create and fill in the loops used by the face.",
+      "params": [
+        {
+          "name": "surfaceIndex",
+          "type": "System.Int32",
+          "doc": "index of surface in brep\u0027s Surfaces list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepFaceList.Add(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_Add_1.htm"
+    },
+    {
+      "name": "Add(Surface)",
+      "signature": "public BrepFace Add(Surface surface)",
+      "summary": "Add a new face to a brep. This creates a complete face with new vertices at the surface corners, new edges along the surface boundary, etc. The loop of the returned face has four trims that correspond to the south, east, north, and west side of the surface in that order. If you use this version of Add to add an exiting brep, then you are responsible for using a tool like JoinEdges() to hook the new face to its neighbors.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "surface is copied",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepFaceList.Add(Rhino.Geometry.Surface)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_Add.htm"
+    },
+    {
+      "name": "AddConeFace",
+      "signature": "public BrepFace AddConeFace(BrepVertex vertex, BrepEdge edge, bool revEdge)",
+      "summary": "Add a new face to the brep whose surface geometry is a ruled cone with the edge as the base and the vertex as the apex point.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Rhino.Geometry.BrepVertex",
+          "doc": "The apex of the cone will be at this vertex. The north side of the surface\u0027s parameter space will be a singular point at the vertex.",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "Rhino.Geometry.BrepEdge",
+          "doc": "The south side of the face\u0027s surface will run along this edge.",
+          "optional": false
+        },
+        {
+          "name": "revEdge",
+          "type": "System.Boolean",
+          "doc": "true if the new face\u0027s outer boundary orientation along the edge is opposite the orientation of edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepFaceList.AddConeFace(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepEdge,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_AddConeFace.htm"
+    },
+    {
+      "name": "AddRuledFace",
+      "signature": "public BrepFace AddRuledFace(BrepEdge edgeA, bool revEdgeA, BrepEdge edgeB, bool revEdgeB)",
+      "summary": "Add a new face to the brep whose surface geometry is a ruled surface between two edges.",
+      "params": [
+        {
+          "name": "edgeA",
+          "type": "Rhino.Geometry.BrepEdge",
+          "doc": "The south side of the face\u0027s surface will run along edgeA.",
+          "optional": false
+        },
+        {
+          "name": "revEdgeA",
+          "type": "System.Boolean",
+          "doc": "true if the new face\u0027s outer boundary orientation along edgeA is opposite the orientation of edgeA.",
+          "optional": false
+        },
+        {
+          "name": "edgeB",
+          "type": "Rhino.Geometry.BrepEdge",
+          "doc": "The north side of the face\u0027s surface will run along edgeA",
+          "optional": false
+        },
+        {
+          "name": "revEdgeB",
+          "type": "System.Boolean",
+          "doc": "true if the new face\u0027s outer boundary orientation along edgeB is opposite the orientation of edgeB",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepFaceList.AddRuledFace(Rhino.Geometry.BrepEdge,System.Boolean,Rhino.Geometry.BrepEdge,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_AddRuledFace.htm"
+    },
+    {
+      "name": "ExtractFace",
+      "signature": "public Brep ExtractFace(int faceIndex)",
+      "summary": "Extracts a face from a Brep.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep",
+        "doc": "A brep. This can be null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_ExtractFace.htm"
+    },
+    {
+      "name": "Flip",
+      "signature": "public void Flip(bool onlyReversedFaces)",
+      "summary": "Flips the orientation of faces.",
+      "params": [
+        {
+          "name": "onlyReversedFaces",
+          "type": "System.Boolean",
+          "doc": "If true, clears all BrepFace.OrientationIsReversed flags by calling BrepFace.Transpose() on each face with a true OrientationIsReversed setting. If false, all of the faces are flipped regardless of their orientation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_Flip.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CBrepFace\u003E GetEnumerator()",
+      "summary": "Gets an enumerators that yields BrepFace objects.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CBrepFace\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_GetEnumerator.htm"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "public void RemoveAt(int faceIndex)",
+      "summary": "Deletes a face at a specified index.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of the mesh face.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_RemoveAt.htm"
+    },
+    {
+      "name": "RemoveSlits",
+      "signature": "public bool RemoveSlits()",
+      "summary": "Remove slit trims and slit boundaries from each face.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if any slits were removed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_RemoveSlits.htm"
+    },
+    {
+      "name": "ShrinkFaces",
+      "signature": "public bool ShrinkFaces()",
+      "summary": "Shrinks all the underlying surfaces in this Brep. Sometimes the surfaces extend far beyond the trimming boundaries of the Brep Face. This function will remove those portions of the surfaces that are not used.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_ShrinkFaces.htm"
+    },
+    {
+      "name": "SplitBipolarFaces",
+      "signature": "public bool SplitBipolarFaces()",
+      "summary": "Splits surfaces with two singularities, like spheres, so the results have at most one singularity.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitBipolarFaces.htm"
+    },
+    {
+      "name": "SplitClosedFaces",
+      "signature": "public bool SplitClosedFaces(int minimumDegree)",
+      "summary": "Splits closed surfaces so they are not closed.",
+      "params": [
+        {
+          "name": "minimumDegree",
+          "type": "System.Int32",
+          "doc": "If the degree of the surface \u003C min_degree, the surface is not split. In some cases, minimumDegree = 2 is useful to preserve piecewise linear surfaces.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitClosedFaces.htm"
+    },
+    {
+      "name": "SplitFaceAtTangents",
+      "signature": "public bool SplitFaceAtTangents(int faceIndex)",
+      "summary": "Splits the face of a Brep at tangent locations.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of the face to split.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitFaceAtTangents.htm"
+    },
+    {
+      "name": "SplitFacesAtTangents",
+      "signature": "public bool SplitFacesAtTangents()",
+      "summary": "Splits all of the faces of a Brep at tangent locations.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitFacesAtTangents.htm"
+    },
+    {
+      "name": "SplitKinkyFace",
+      "signature": "public bool SplitKinkyFace(int faceIndex, double kinkTolerance)",
+      "summary": "Splits a single face into G1 pieces.",
+      "remarks": "This function leaves deleted stuff in the brep. Call Brep.Compact() to remove deleted stuff.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of the face to split.",
+          "optional": false
+        },
+        {
+          "name": "kinkTolerance",
+          "type": "System.Double",
+          "doc": "Tolerance (in radians) to use for crease detection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitKinkyFace.htm"
+    },
+    {
+      "name": "SplitKinkyFaces()",
+      "signature": "public bool SplitKinkyFaces()",
+      "summary": "Splits any faces with creases into G1 pieces.",
+      "remarks": "If you need to detect whether splitting occurred, compare the before and after values of Faces.Count",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitKinkyFaces.htm"
+    },
+    {
+      "name": "SplitKinkyFaces(Double)",
+      "signature": "public bool SplitKinkyFaces(double kinkTolerance)",
+      "summary": "Splits any faces with creases into G1 pieces.",
+      "remarks": "If you need to detect whether splitting occurred, compare the before and after values of Faces.Count",
+      "params": [
+        {
+          "name": "kinkTolerance",
+          "type": "System.Double",
+          "doc": "Tolerance (in radians) to use for crease detection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitKinkyFaces_1.htm"
+    },
+    {
+      "name": "SplitKinkyFaces(Double, Boolean)",
+      "signature": "public bool SplitKinkyFaces(double kinkTolerance, bool compact)",
+      "summary": "Splits any faces with creases into G1 pieces.",
+      "remarks": "If you need to detect whether splitting occurred, compare the before and after values of Faces.Count",
+      "params": [
+        {
+          "name": "kinkTolerance",
+          "type": "System.Double",
+          "doc": "Tolerance (in radians) to use for crease detection.",
+          "optional": false
+        },
+        {
+          "name": "compact",
+          "type": "System.Boolean",
+          "doc": "If true, the Brep will be compacted if possible.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_SplitKinkyFaces_2.htm"
+    },
+    {
+      "name": "StandardizeFaceSurface",
+      "signature": "public bool StandardizeFaceSurface(int faceIndex)",
+      "summary": "Standardizes the relationship between a BrepFace and the 3d surface it uses. When done, the face will be the only face that references its 3d surface, and the orientations of the face and 3d surface will be the same.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_StandardizeFaceSurface.htm"
+    },
+    {
+      "name": "StandardizeFaceSurfaces",
+      "signature": "public void StandardizeFaceSurfaces()",
+      "summary": "Standardize all faces in the brep.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepFaceList_StandardizeFaceSurfaces.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of brep faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepFaceList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "BrepFace",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the BrepFace at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepFaceList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Bolt.Representation",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The bolt representations.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d7923fba-2a16-e1e1-262f-82e3b4fe739c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Solid",
+      "value": 1,
+      "summary": "The solid representation."
+    },
+    {
+      "name": "ExactSolid",
+      "value": 9,
+      "summary": "The exact solid representation."
+    },
+    {
+      "name": "Symbol",
+      "value": 2,
+      "summary": "The symbol representation."
+    },
+    {
+      "name": "Symbol2",
+      "value": 4,
+      "summary": "The second symbol representation."
+    },
+    {
+      "name": "Symbol3",
+      "value": 5,
+      "summary": "The third symbol representation."
+    },
+    {
+      "name": "DINSymbol",
+      "value": 7,
+      "summary": "The DIN symbol representation."
+    },
+    {
+      "name": "UserDefined",
+      "value": 8,
+      "summary": "The user defined representation."
+    }
+  ]
+}

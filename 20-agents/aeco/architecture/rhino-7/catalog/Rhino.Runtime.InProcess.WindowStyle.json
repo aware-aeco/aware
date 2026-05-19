@@ -1,0 +1,39 @@
+{
+  "name": "WindowStyle",
+  "namespace": "Rhino.Runtime.InProcess",
+  "kind": "enum",
+  "summary": "Specifies how a new window should appear when Rhino starts.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InProcess_WindowStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoWindow",
+      "value": -1,
+      "summary": "The no window style."
+    },
+    {
+      "name": "Normal",
+      "value": 0,
+      "summary": "The normal, visible window style."
+    },
+    {
+      "name": "Hidden",
+      "value": 1,
+      "summary": "The hidden window style."
+    },
+    {
+      "name": "Minimized",
+      "value": 2,
+      "summary": "The minimized window style."
+    },
+    {
+      "name": "Maximized",
+      "value": 3,
+      "summary": "The maximized window style."
+    }
+  ]
+}

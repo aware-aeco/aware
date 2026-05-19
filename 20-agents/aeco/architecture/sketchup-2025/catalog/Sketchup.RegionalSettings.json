@@ -1,0 +1,42 @@
+{
+  "name": "RegionalSettings",
+  "namespace": "Sketchup",
+  "kind": "interface",
+  "summary": "The RegionalSettings module contains methods getting information about the user\u0027s locale settings. Note that when you convert between units and strings you don\u0027t need to parse it yourself and you can instead use String#to_l and Length#to_s.",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/RegionalSettings.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "decimal_separator",
+      "signature": "decimal_separator =\u003E String",
+      "summary": "Returns the decimal character for the current user\u0027s locale.",
+      "remarks": "Returns the decimal character for the current user\u0027s locale.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the decimal separator character"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/RegionalSettings.html#decimal_separator-class_method"
+    },
+    {
+      "name": "list_separator",
+      "signature": "list_separator =\u003E String",
+      "summary": "Returns the list separator character for the current user\u0027s locale.",
+      "remarks": "Returns the list separator character for the current user\u0027s locale.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the list separator character"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/RegionalSettings.html#list_separator-class_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

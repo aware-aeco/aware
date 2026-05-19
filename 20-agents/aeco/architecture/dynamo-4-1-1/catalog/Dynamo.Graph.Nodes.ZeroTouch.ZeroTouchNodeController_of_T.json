@@ -1,0 +1,248 @@
+{
+  "name": "ZeroTouchNodeController\u003CT\u003E",
+  "namespace": "Dynamo.Graph.Nodes.ZeroTouch",
+  "kind": "class",
+  "summary": "Controller that synchronizes a node with a zero-touch function definition.",
+  "base": "Dynamo.Graph.Nodes.FunctionCallNodeController\u003CT\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs",
+  "constructors": [
+    {
+      "name": "ZeroTouchNodeController(T)",
+      "signature": "void ZeroTouchNodeController(T definition)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.ZeroTouch.ZeroTouchNodeController\u00601 class with FunctionDescriptor.",
+      "params": [
+        {
+          "name": "definition",
+          "type": "T",
+          "doc": "FunctionDescriptor describing the function that this controller will call.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFunctionObject(Dynamo.Graph.Nodes.NodeModel, ProtoCore.AST.AssociativeAST.AssociativeNode, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode CreateFunctionObject(Dynamo.Graph.Nodes.NodeModel model, ProtoCore.AST.AssociativeAST.AssociativeNode functionNode, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputs)",
+      "summary": "Creates a FunctionObject representing a partial application of a function.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Node to produce FunctionObject for.",
+          "optional": false
+        },
+        {
+          "name": "functionNode",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "AST representing the function to make a FunctionObject out of.",
+          "optional": false
+        },
+        {
+          "name": "inputs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Arguments to be applied partially.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "GetFunctionApplication(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode GetFunctionApplication(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes)",
+      "summary": "ZeroTouchNodeController.GetFunctionApplication",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        },
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "InitializeFunctionParameters(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E)",
+      "signature": "void InitializeFunctionParameters(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E parameters)",
+      "summary": "Initializes a node\u0027s InPortData based on a list of parameters.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Node to initialize.",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E",
+          "doc": "Parameters used for initialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "InitializeInputs(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void InitializeInputs(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "ZeroTouchNodeController.InitializeInputs",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "InitializeOutputs(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void InitializeOutputs(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "ZeroTouchNodeController.InitializeOutputs",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "IsConstructor",
+      "signature": "bool IsConstructor()",
+      "summary": "Is this function a constructor of a class?",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "IsInstanceMember",
+      "signature": "bool IsInstanceMember()",
+      "summary": "Is this function an instance member of a class?",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "IsStaticMember",
+      "signature": "bool IsStaticMember()",
+      "summary": "Is this function a static member of a class?",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Serializes data into given System.Xml.XmlElement object.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "System.Xml.XmlElement object to store data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "Saving context.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "SyncNodeWithDefinition(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void SyncNodeWithDefinition(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "Syncronizes custom node instance with its definition",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "The custom node instance",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Category of function, taken from Definition.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description of function, taken from Definition.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "MangledName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "MangledName of function, taken from Definition.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

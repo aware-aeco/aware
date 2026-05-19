@@ -1,0 +1,38 @@
+{
+  "name": "CannotGetAttributeForPluginDueToIncorrectTypeException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotGetAttributeForPluginDueToIncorrectTypeException class defines the exception that is thrown when Plugin.GetAttribute is called but the type is incorrect.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/baa4d03b-dd89-501c-d04c-6a8b6b415caa",
+  "constructors": [
+    {
+      "name": "CannotGetAttributeForPluginDueToIncorrectTypeException",
+      "signature": "public CannotGetAttributeForPluginDueToIncorrectTypeException(Type ExpectedType, Type GivenType)",
+      "summary": "Creates a new CannotGetAttributeForPluginDueToIncorrectTypeException instance.",
+      "params": [
+        {
+          "name": "ExpectedType",
+          "type": "System.Type",
+          "doc": "The expected type.",
+          "optional": false
+        },
+        {
+          "name": "GivenType",
+          "type": "System.Type",
+          "doc": "The given type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d8050705-3fde-dcea-5f67-4cd32f71e875"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

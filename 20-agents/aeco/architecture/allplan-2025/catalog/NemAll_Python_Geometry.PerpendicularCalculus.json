@@ -1,0 +1,166 @@
+{
+  "name": "PerpendicularCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class for perpendicular calculation",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PerpendicularCalculus/",
+  "constructors": [
+    {
+      "name": "PerpendicularCalculus",
+      "signature": "PerpendicularCalculus( path: Path2D, eps: float, insideTolerance: float = 1.7976931348623157e308 ) | PerpendicularCalculus(line: Line2D, insideTolerance: float = 1.7976931348623157e\u002B308) | PerpendicularCalculus( polyline: Polyline2D, insideTolerance: float = 1.7976931348623157e308 ) | PerpendicularCalculus(arc: Arc2D, insideTolerance: float = 1.7976931348623157e\u002B308) | PerpendicularCalculus( clothoid: Clothoid2D, eps: float, insideTolerance: float = 1.7976931348623157e308, ) | PerpendicularCalculus(spline: Spline2D, eps: float) | PerpendicularCalculus(polygon2D: Polygon2D) | PerpendicularCalculus(element: PerpendicularCalculus) | PerpendicularCalculus( geoObject: object, eps: float, insideTolerance: float = 1.7976931348623157e308, )",
+      "summary": "Constructor.",
+      "remarks": "Constructor.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path2D",
+          "doc": "Path of concatenated IGeometry objects",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Tolerance for the perpendicular point calculation",
+          "optional": false
+        },
+        {
+          "name": "insideTolerance",
+          "type": "float",
+          "doc": "Tolerance for the IsInsideElement(..) comparison",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PerpendicularCalculus/#NemAll_Python_Geometry.PerpendicularCalculus.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate( geoObject_object: object, inputPnt: Point3D, eps: float, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( path: Path2D, inputPnt: Point3D, eps: float, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( path: Path2D, inputPnt: Point3D, eps: float, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D] | Calculate( line2d: Line2D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( line2d: Line2D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D] | Calculate(axis: Axis2D, inputPnt: Point3D) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( line3d: Line3D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D] | Calculate( line3d: Line3D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( polyline3d: Polyline3D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( polygon3d: Polygon3D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( polyhedron3d: Polyhedron3D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate(axis: Axis3D, inputPnt: Point3D) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( arc: Arc2D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( polyline: Polyline2D, inputPnt: Point3D, subelement: int, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( spline: Spline2D, inputPnt: Point3D, eps: float ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( clothoid2D: Clothoid2D, inputPnt: Point3D, eps: float, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( polygon2D: Polygon2D, inputPnt: Point3D ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate(vector2D: Vector2D, bPerpendicularLeft: bool) -\u003E Vector2D | Calculate( arc: Arc3D, inputPnt: Point3D, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D, Vector2D] | Calculate( geoObject_object: object, inputPnt: Point3D, eps: float, insideTolerance: float = 1.7976931348623157e308, ) -\u003E tuple[bool, Point3D]",
+      "summary": "Calculates perpendicular point on IGeometry object.",
+      "remarks": "Calculates perpendicular point on IGeometry object.",
+      "params": [
+        {
+          "name": "geoObject_object",
+          "type": "object",
+          "doc": "IGeometry on which to calculate perpendicular point",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "Projection point",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Tolerance for the perpendicular point calculation",
+          "optional": false
+        },
+        {
+          "name": "insideTolerance",
+          "type": "float",
+          "doc": "Tolerance for the IsInsideElement(..) comparison",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Point3D, Vector2D]",
+        "doc": "tuple(True if perpendicular point calculation was successful, Perpendicular point, Tangent of the perpendicular)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PerpendicularCalculus/#NemAll_Python_Geometry.PerpendicularCalculus.Calculate"
+    },
+    {
+      "name": "GetTangent",
+      "signature": "GetTangent() -\u003E Vector2D",
+      "summary": "Get the tangent of the geometry",
+      "remarks": "Get the tangent of the geometry",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Tangent of the geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PerpendicularCalculus/#NemAll_Python_Geometry.PerpendicularCalculus.GetTangent"
+    },
+    {
+      "name": "IsInsideElement",
+      "signature": "IsInsideElement( geoElement_object: object, perPnt: Point3D, insideTolerance: float ) -\u003E bool",
+      "summary": "Check, whether the perpendicular point is inside the element",
+      "remarks": "Check, whether the perpendicular point is inside the element",
+      "params": [
+        {
+          "name": "geoElement_object",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        },
+        {
+          "name": "perPnt",
+          "type": "Point3D",
+          "doc": "Perpendicular point",
+          "optional": false
+        },
+        {
+          "name": "insideTolerance",
+          "type": "float",
+          "doc": "Allowed deviance to the end point outside the element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Perpendicular point is inside the element: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PerpendicularCalculus/#NemAll_Python_Geometry.PerpendicularCalculus.IsInsideElement"
+    },
+    {
+      "name": "IsSuccessful",
+      "signature": "IsSuccessful() -\u003E bool",
+      "summary": "Get the result of the calculation",
+      "remarks": "Get the result of the calculation",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if calculation successful, else false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PerpendicularCalculus/#NemAll_Python_Geometry.PerpendicularCalculus.IsSuccessful"
+    },
+    {
+      "name": "IsSupportedGeometry",
+      "signature": "IsSupportedGeometry(geoObject_object: object) -\u003E bool",
+      "summary": "Check, whether geometry is supported",
+      "remarks": "Check, whether geometry is supported",
+      "params": [
+        {
+          "name": "geoObject_object",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "is supported"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PerpendicularCalculus/#NemAll_Python_Geometry.PerpendicularCalculus.IsSupportedGeometry"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

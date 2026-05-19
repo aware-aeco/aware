@@ -1,0 +1,34 @@
+{
+  "name": "AnalysisDesignParameterMulti.DesignParIndex",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Multi value design parameter indexes",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d19ca947-d9d1-c906-e5ee-6c75bac378ff",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Ky",
+      "value": 88,
+      "summary": "VAM_DESIGNPARINDEX_MultiKy =\u003E 88."
+    },
+    {
+      "name": "Kz",
+      "value": 89,
+      "summary": "VAM_DESIGNPARINDEX_MultiKz =\u003E 89."
+    },
+    {
+      "name": "Ly",
+      "value": 90,
+      "summary": "VAM_DESIGNPARINDEX_MultiLy =\u003E 90."
+    },
+    {
+      "name": "Lz",
+      "value": 91,
+      "summary": "VAM_DESIGNPARINDEX_MultiLz =\u003E 91."
+    }
+  ]
+}

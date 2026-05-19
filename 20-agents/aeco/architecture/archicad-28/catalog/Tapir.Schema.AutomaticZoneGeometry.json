@@ -1,0 +1,23 @@
+{
+  "name": "AutomaticZoneGeometry",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Automatic zone placement.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AutomaticZoneGeometry",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "referencePosition",
+      "type": "Coordinate2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Reference point to automatically find zone.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AutomaticZoneGeometry"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,172 @@
+{
+  "name": "ViewSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to control view settings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_ViewSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentState",
+      "signature": "public static ViewSettingsState GetCurrentState()",
+      "summary": "Gets the current settings.",
+      "params": [],
+      "returns": {
+        "type": "ViewSettingsState",
+        "doc": "A new view state with current settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_ViewSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static ViewSettingsState GetDefaultState()",
+      "summary": "Gets the view factory settings.",
+      "params": [],
+      "returns": {
+        "type": "ViewSettingsState",
+        "doc": "A new view state with factory settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_ViewSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "RestoreDefaults",
+      "signature": "public static void RestoreDefaults()",
+      "summary": "Updates from the default setting state.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_ViewSettings_RestoreDefaults.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(ViewSettingsState state)",
+      "summary": "Updates from a particular setting state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.ViewSettingsState",
+          "doc": "The new state that will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_ViewSettings_UpdateFromState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AlwaysPanParallelViews",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the \u0027always pan parallel views\u0027 value. If the view is not looking straight at the construction plane, then sets parallel viewports so they will not rotate.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_AlwaysPanParallelViews.htm"
+    },
+    {
+      "name": "DefinedViewSetCPlane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the \u0027named views set CPlane\u0027 value. When true, restoring a named view causes the construction plane saved with that view to also restore.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_DefinedViewSetCPlane.htm"
+    },
+    {
+      "name": "DefinedViewSetProjection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the \u0027named views set projection\u0027 value. When true, restoring a named view causes the viewport projection saved with the view to also restore.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_DefinedViewSetProjection.htm"
+    },
+    {
+      "name": "LinkedViewports",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the \u0027linked views\u0027 activated setting. true enables real-time view synchronization. When a standard view is manipulated, the camera lens length of all parallel projection viewports are set to match the current viewport.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_LinkedViewports.htm"
+    },
+    {
+      "name": "PanReverseKeyboardAction",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets if panning with the keyboard is reversed. false, then Rhino pans the camera in the direction of the arrow key you press. true, then Rhino pans the scene instead.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_PanReverseKeyboardAction.htm"
+    },
+    {
+      "name": "PanScreenFraction",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the faction used as multiplier to pan the screen.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_PanScreenFraction.htm"
+    },
+    {
+      "name": "RotateCircleIncrement",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotation increment. When the user rotates a view with the keyboard, Rhino rotates the view in steps. The usual step is 1/60th of a circle, which equals six degrees.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_RotateCircleIncrement.htm"
+    },
+    {
+      "name": "RotateReverseKeyboard",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotation direction. If true, then Rhino rotates the camera around the scene, otherwise, rotates the scene itself.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_RotateReverseKeyboard.htm"
+    },
+    {
+      "name": "RotateToView",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotation reference. If true, then the views rotates relative to the view axes; false, than relative to the world x, y, and z axes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_RotateToView.htm"
+    },
+    {
+      "name": "SingleClickMaximize",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the \u0027single-click maximize\u0027 value. When true, maximizing a viewport needs a single click on the viewport title rather than a double-click.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_SingleClickMaximize.htm"
+    },
+    {
+      "name": "ZoomExtentsParallelViewBorder",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Border amount to apply to parallel viewport during zoom extents",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_ZoomExtentsParallelViewBorder.htm"
+    },
+    {
+      "name": "ZoomExtentsPerspectiveViewBorder",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Border amount to apply to perspective viewport during zoom extents",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_ZoomExtentsPerspectiveViewBorder.htm"
+    },
+    {
+      "name": "ZoomScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the step size for zooming with a wheeled mouse or the Page Up and Page Down keys.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_ViewSettings_ZoomScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

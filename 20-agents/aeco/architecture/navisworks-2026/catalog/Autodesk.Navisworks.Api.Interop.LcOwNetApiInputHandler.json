@@ -1,0 +1,1050 @@
+{
+  "name": "LcOwNetApiInputHandler",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOwNetApiInputHandler class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler",
+  "constructors": [
+    {
+      "name": "LcOwNetApiInputHandler(Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandlerHandlerType, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel)",
+      "signature": "LcOwNetApiInputHandler(Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandlerHandlerType handler_type, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "Constructs a new LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "handler_type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandlerHandlerType",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandlerHandlerType%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCursor",
+      "signature": "Autodesk.Navisworks.Api.Cursor GetCursor(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier)",
+      "summary": "GetCursor method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Cursor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.GetCursor%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%29"
+    },
+    {
+      "name": "GetHelpIdAtPoint",
+      "signature": "bool GetHelpIdAtPoint(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, int x, int y, out string buffer)",
+      "summary": "GetHelpIdAtPoint method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.GetHelpIdAtPoint%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.Int32%2CSystem.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetHelpIdForHighlight",
+      "signature": "bool GetHelpIdForHighlight(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, out string buffer)",
+      "summary": "GetHelpIdForHighlight method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.GetHelpIdForHighlight%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.String%40%29"
+    },
+    {
+      "name": "KeyDown",
+      "signature": "bool KeyDown(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort key)",
+      "summary": "KeyDown method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "ushort",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.KeyDown%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%29"
+    },
+    {
+      "name": "KeyDown",
+      "signature": "bool KeyDown(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort key, double timeOffset)",
+      "summary": "KeyDown method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.KeyDown%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Double%29"
+    },
+    {
+      "name": "KeyDrag",
+      "signature": "bool KeyDrag(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier)",
+      "summary": "KeyDrag method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.KeyDrag%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%29"
+    },
+    {
+      "name": "KeyDrag",
+      "signature": "bool KeyDrag(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, double timeOffset)",
+      "summary": "KeyDrag method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.KeyDrag%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Double%29"
+    },
+    {
+      "name": "KeyUp",
+      "signature": "bool KeyUp(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort key)",
+      "summary": "KeyUp method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "ushort",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.KeyUp%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%29"
+    },
+    {
+      "name": "KeyUp",
+      "signature": "bool KeyUp(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort key, double timeOffset)",
+      "summary": "KeyUp method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.KeyUp%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Double%29"
+    },
+    {
+      "name": "ModifierKeyDown",
+      "signature": "bool ModifierKeyDown(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier)",
+      "summary": "ModifierKeyDown method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.ModifierKeyDown%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%29"
+    },
+    {
+      "name": "ModifierKeyDown",
+      "signature": "bool ModifierKeyDown(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, double timeOffset)",
+      "summary": "ModifierKeyDown method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.ModifierKeyDown%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Double%29"
+    },
+    {
+      "name": "ModifierKeyUp",
+      "signature": "bool ModifierKeyUp(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier)",
+      "summary": "ModifierKeyUp method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.ModifierKeyUp%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%29"
+    },
+    {
+      "name": "ModifierKeyUp",
+      "signature": "bool ModifierKeyUp(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, double timeOffset)",
+      "summary": "ModifierKeyUp method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.ModifierKeyUp%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseDown",
+      "signature": "bool MouseDown(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort button, int x, int y)",
+      "summary": "MouseDown method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseDown%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "MouseDown",
+      "signature": "bool MouseDown(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort button, int x, int y, double timeOffset)",
+      "summary": "MouseDown method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseDown%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseDrag",
+      "signature": "bool MouseDrag(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, int x, int y)",
+      "summary": "MouseDrag method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseDrag%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "MouseDrag",
+      "signature": "bool MouseDrag(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, int x, int y, double timeOffset)",
+      "summary": "MouseDrag method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseDrag%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseLeave",
+      "signature": "bool MouseLeave(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer)",
+      "summary": "MouseLeave method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseLeave%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%29"
+    },
+    {
+      "name": "MouseLeave",
+      "signature": "bool MouseLeave(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, double timeOffset)",
+      "summary": "MouseLeave method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseLeave%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseMove",
+      "signature": "bool MouseMove(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, int x, int y)",
+      "summary": "MouseMove method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseMove%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "MouseMove",
+      "signature": "bool MouseMove(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, int x, int y, double timeOffset)",
+      "summary": "MouseMove method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseMove%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseUp",
+      "signature": "bool MouseUp(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort button, int x, int y)",
+      "summary": "MouseUp method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseUp%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "MouseUp",
+      "signature": "bool MouseUp(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort button, int x, int y, double timeOffset)",
+      "summary": "MouseUp method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.MouseUp%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "OnContextMenu",
+      "signature": "bool OnContextMenu(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, nint wnd, int x, int y)",
+      "summary": "OnContextMenu method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "wnd",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.OnContextMenu%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.IntPtr%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "OnRButtonDown",
+      "signature": "bool OnRButtonDown(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, uint nFlags, int x, int y, bool double_click)",
+      "summary": "OnRButtonDown method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "nFlags",
+          "type": "uint",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "double_click",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.OnRButtonDown%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.UInt32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%29"
+    },
+    {
+      "name": "OnRButtonUp",
+      "signature": "bool OnRButtonUp(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, uint nFlags, int x, int y)",
+      "summary": "OnRButtonUp method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "nFlags",
+          "type": "uint",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.OnRButtonUp%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.UInt32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "WheelDrag",
+      "signature": "bool WheelDrag(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, int x, int y, ushort wheel, double len)",
+      "summary": "WheelDrag method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "wheel",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "len",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.WheelDrag%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%2CSystem.UInt16%2CSystem.Double%29"
+    },
+    {
+      "name": "WheelDrag",
+      "signature": "bool WheelDrag(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, Autodesk.Navisworks.Api.KeyModifiers modifier, int x, int y, ushort wheel, double len, double timeOffset)",
+      "summary": "WheelDrag method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "wheel",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "len",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.WheelDrag%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%2CSystem.UInt16%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetTooltip",
+      "signature": "ulong GetTooltip(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, int x, int y, out string buffer)",
+      "summary": "GetTooltip method of LcOwNetApiInputHandler.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ulong",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.GetTooltip%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.Int32%2CSystem.Int32%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOwNetApiInputHandler.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOwNetApiInputHandler.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

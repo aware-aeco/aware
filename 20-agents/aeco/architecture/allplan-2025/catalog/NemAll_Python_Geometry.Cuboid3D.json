@@ -1,0 +1,405 @@
+{
+  "name": "Cuboid3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D cuboid",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/",
+  "constructors": [
+    {
+      "name": "Cuboid3D",
+      "signature": "Cuboid3D() | Cuboid3D(cuboid: Cuboid3D) | Cuboid3D( refPoint: Point3D, startPoint: Point3D, vec1: Vector3D, vec2: Vector3D, vec3: Vector3D, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBottomFacePolygon",
+      "signature": "GetBottomFacePolygon() -\u003E Polygon3D",
+      "summary": "Get the boundary polygon of bottom face of the cuboid",
+      "remarks": "Get the boundary polygon of bottom face of the cuboid",
+      "params": [],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "Bottom face boundary polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetBottomFacePolygon"
+    },
+    {
+      "name": "GetGroundPlane",
+      "signature": "GetGroundPlane() -\u003E Plane3D",
+      "summary": "Get ground plane ( ref point \u002B Z-vector ).",
+      "remarks": "Get ground plane ( ref point \u002B Z-vector ).",
+      "params": [],
+      "returns": {
+        "type": "Plane3D",
+        "doc": "ground Plane3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetGroundPlane"
+    },
+    {
+      "name": "GetHeight",
+      "signature": "GetHeight() -\u003E float",
+      "summary": "Get height.",
+      "remarks": "Get height.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Size of Z-vector ( vector3 )."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetHeight"
+    },
+    {
+      "name": "GetLength",
+      "signature": "GetLength() -\u003E float",
+      "summary": "Get length.",
+      "remarks": "Get length.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Size of X-vector ( vector1 )."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetLength"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point3D",
+      "summary": "Get reference point.",
+      "remarks": "Get reference point.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetRefPoint"
+    },
+    {
+      "name": "GetRelStartPoint",
+      "signature": "GetRelStartPoint() -\u003E Point3D",
+      "summary": "Get start point in relative coordinates.",
+      "remarks": "Get start point in relative coordinates.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Constant reference to the start point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetRelStartPoint"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point3D",
+      "summary": "Get start point in world coordinates.",
+      "remarks": "Get start point in world coordinates.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "copy of start point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetStartPoint"
+    },
+    {
+      "name": "GetTopFacePolygon",
+      "signature": "GetTopFacePolygon() -\u003E Polygon3D",
+      "summary": "Get the boundary polygon of top face of the cuboid",
+      "remarks": "Get the boundary polygon of top face of the cuboid",
+      "params": [],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "Top face boundary polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetTopFacePolygon"
+    },
+    {
+      "name": "GetVector",
+      "signature": "GetVector(index: int) -\u003E Vector3D",
+      "summary": "Get given vector.",
+      "remarks": "Get given vector.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "m_Vec[index]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetVector"
+    },
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth() -\u003E float",
+      "summary": "Get width.",
+      "remarks": "Get width.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Size of Y-vector ( vector2 )."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetWidth"
+    },
+    {
+      "name": "Set",
+      "signature": "Set( refPoint: Point3D, startPoint: Point3D, vec1: Vector3D, vec2: Vector3D, vec3: Vector3D, ) | Set(cuboid: Cuboid3D)",
+      "summary": "Set the Cuboid.",
+      "remarks": "Set the Cuboid.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "Reference point in world coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "Start point of cuboid.",
+          "optional": false
+        },
+        {
+          "name": "vec1",
+          "type": "Vector3D",
+          "doc": "X-vector.",
+          "optional": false
+        },
+        {
+          "name": "vec2",
+          "type": "Vector3D",
+          "doc": "Y-vector.",
+          "optional": false
+        },
+        {
+          "name": "vec3",
+          "type": "Vector3D",
+          "doc": "Z-vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.Set"
+    },
+    {
+      "name": "SetHeight",
+      "signature": "SetHeight(height: float)",
+      "summary": "Set height.",
+      "remarks": "Set height.",
+      "params": [
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "New size of Z-vector ( vector3 ).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.SetHeight"
+    },
+    {
+      "name": "SetLength",
+      "signature": "SetLength(length: float)",
+      "summary": "Set length.",
+      "remarks": "Set length.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "New size of X-vector ( vector1 ).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.SetLength"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point3D)",
+      "summary": "Set reference point.",
+      "remarks": "Set reference point.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "New reference point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.SetRefPoint"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startPoint: Point3D)",
+      "summary": "Set start point.",
+      "remarks": "Set start point.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "New start point ( in world coordinates ).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.SetStartPoint"
+    },
+    {
+      "name": "SetVector",
+      "signature": "SetVector(vec: Vector3D, index: int)",
+      "summary": "Set the vector.",
+      "remarks": "Set the vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "New vector.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index pf the vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.SetVector"
+    },
+    {
+      "name": "SetWidth",
+      "signature": "SetWidth(width: float)",
+      "summary": "Set width.",
+      "remarks": "Set width.",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "New size of Y-vector ( vector2 ).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.SetWidth"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(cuboid: Cuboid3D) -\u003E object",
+      "summary": "Comparison of cuboids without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of cuboids without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "cuboid",
+          "type": "Cuboid3D",
+          "doc": "Compared cuboid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when cuboids are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HeightVector",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the height vector property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.HeightVector"
+    },
+    {
+      "name": "LengthVector",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the length vector property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.LengthVector"
+    },
+    {
+      "name": "RefPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the ref point property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.RefPoint"
+    },
+    {
+      "name": "StartPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the start point property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.StartPoint"
+    },
+    {
+      "name": "WidthVector",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the width vector property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.WidthVector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

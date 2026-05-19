@@ -1,0 +1,119 @@
+{
+  "name": "HideElementsService",
+  "namespace": "Utils.HideElementsService",
+  "kind": "class",
+  "summary": "implementation of the hide elements service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/",
+  "constructors": [
+    {
+      "name": "HideElementsService",
+      "signature": "HideElementsService()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "clear",
+      "signature": "clear()",
+      "summary": "clear the elements",
+      "remarks": "clear the elements",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.clear"
+    },
+    {
+      "name": "hide_arch_ground_view_elements",
+      "signature": "hide_arch_ground_view_elements(arch_ele: BaseElementAdapter)",
+      "summary": "hide the architecture ground view elements",
+      "remarks": "hide the architecture ground view elements",
+      "params": [
+        {
+          "name": "arch_ele",
+          "type": "BaseElementAdapter",
+          "doc": "architecture element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.hide_arch_ground_view_elements"
+    },
+    {
+      "name": "hide_element",
+      "signature": "hide_element(element: BaseElementAdapter)",
+      "summary": "hide the element and the children",
+      "remarks": "hide the element and the children",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "element to hide",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.hide_element"
+    },
+    {
+      "name": "hide_element_and_linked",
+      "signature": "hide_element_and_linked(element: BaseElementAdapter)",
+      "summary": "hide the element, the children and the linked elements",
+      "remarks": "hide the element, the children and the linked elements",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "element to hide",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.hide_element_and_linked"
+    },
+    {
+      "name": "show_elements",
+      "signature": "show_elements()",
+      "summary": "show the hidden elements",
+      "remarks": "show the hidden elements",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.show_elements"
+    }
+  ],
+  "properties": [
+    {
+      "name": "get_hidden_geo_elements",
+      "type": "list[Any]",
+      "getter": true,
+      "setter": false,
+      "summary": "get the geometry of the hidden elements",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.get_hidden_geo_elements"
+    },
+    {
+      "name": "hidden_elements",
+      "type": "list[BaseElementAdapter]",
+      "getter": true,
+      "setter": false,
+      "summary": "get the elements",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/#Utils.HideElementsService.HideElementsService.hidden_elements"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

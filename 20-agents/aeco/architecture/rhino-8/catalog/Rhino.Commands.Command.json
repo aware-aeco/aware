@@ -1,0 +1,410 @@
+{
+  "name": "Command",
+  "namespace": "Rhino.Commands",
+  "kind": "class",
+  "summary": "Defines a base class for all commands. This class is abstract.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Commands_Command.htm",
+  "constructors": [
+    {
+      "name": "Command",
+      "signature": "protected Command()",
+      "summary": "Default protected constructor. It only allows instantiation through sub-classing.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DisplayHelp",
+      "signature": "public static void DisplayHelp(Guid commandId)",
+      "summary": "Displays help for a command.",
+      "params": [
+        {
+          "name": "commandId",
+          "type": "System.Guid",
+          "doc": "A command ID.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_DisplayHelp.htm"
+    },
+    {
+      "name": "GetCommandContextHelpUrl",
+      "signature": "public static string GetCommandContextHelpUrl(Guid commandId)",
+      "summary": "Returns a command\u0027s context help url.",
+      "params": [
+        {
+          "name": "commandId",
+          "type": "System.Guid",
+          "doc": "A command ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The command\u0027s context url if provided."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_GetCommandContextHelpUrl.htm"
+    },
+    {
+      "name": "GetCommandNames",
+      "signature": "public static string[] GetCommandNames(bool english, bool loaded)",
+      "summary": "Gets list of command names in Rhino. This list does not include Test, Alpha, or System commands.",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.Boolean",
+          "doc": "if true, retrieve the English name for every command. if false, retrieve the local name for every command.",
+          "optional": false
+        },
+        {
+          "name": "loaded",
+          "type": "System.Boolean",
+          "doc": "if true, only get names of currently loaded commands. if false, get names of all registered (may not be currently loaded) commands.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "An array instance with command names. This array could be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_GetCommandNames.htm"
+    },
+    {
+      "name": "GetCommandStack",
+      "signature": "public static Guid[] GetCommandStack()",
+      "summary": "Determines if Rhino is currently running a command. Because Rhino allow for transparent commands (commands that can be run from inside of other commands), this method returns the total ids of active commands.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "Ids of running commands or null if no commands are currently running. The \u0022active\u0022 command is at the end of this list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_GetCommandStack.htm"
+    },
+    {
+      "name": "GetMostRecentCommands",
+      "signature": "public static MostRecentCommandDescription[] GetMostRecentCommands()",
+      "summary": "Gets an array of most recent command descriptions.",
+      "params": [],
+      "returns": {
+        "type": "MostRecentCommandDescription[]",
+        "doc": "An array of command descriptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_GetMostRecentCommands.htm"
+    },
+    {
+      "name": "InCommand",
+      "signature": "public static bool InCommand()",
+      "summary": "Determines if Rhino is currently running a command.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a command is currently running, false if no commands are currently running."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_InCommand.htm"
+    },
+    {
+      "name": "InScriptRunnerCommand",
+      "signature": "public static bool InScriptRunnerCommand()",
+      "summary": "This is a low level tool to determine if Rhino is currently running a script running command like \u0022ReadCommandFile\u0022 or the RhinoScript plug-in\u0027s \u0022RunScript\u0022.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a script running command is active."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_InScriptRunnerCommand.htm"
+    },
+    {
+      "name": "IsCommand",
+      "signature": "public static bool IsCommand(string name)",
+      "summary": "Determines is a string is a command.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "A string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the string is a command."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_IsCommand.htm"
+    },
+    {
+      "name": "IsValidCommandName",
+      "signature": "public static bool IsValidCommandName(string name)",
+      "summary": "Determines if a string is a valid command name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "A string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the string is a valid command name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_IsValidCommandName.htm"
+    },
+    {
+      "name": "LookupCommandId",
+      "signature": "public static Guid LookupCommandId(string name, bool searchForEnglishName)",
+      "summary": "Returns the ID of a command.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the command.",
+          "optional": false
+        },
+        {
+          "name": "searchForEnglishName",
+          "type": "System.Boolean",
+          "doc": "true if the name is to searched in English. This ensures that a \u0027_\u0027 is prepended to the name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "An of the command, or Empty on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_LookupCommandId.htm"
+    },
+    {
+      "name": "LookupCommandName",
+      "signature": "public static string LookupCommandName(Guid commandId, bool englishName)",
+      "summary": "Returns the command name given a command ID.",
+      "params": [
+        {
+          "name": "commandId",
+          "type": "System.Guid",
+          "doc": "A command ID.",
+          "optional": false
+        },
+        {
+          "name": "englishName",
+          "type": "System.Boolean",
+          "doc": "true if the requested command is in English.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The command name, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_LookupCommandName.htm"
+    },
+    {
+      "name": "OnHelp",
+      "signature": "protected virtual void OnHelp()",
+      "summary": "Is called when the user needs assistance with this command.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_OnHelp.htm"
+    },
+    {
+      "name": "ReplayHistory",
+      "signature": "protected virtual bool ReplayHistory(ReplayHistoryData replayData)",
+      "summary": "Repeats an operation of a command. In order to make this function work, you will likely need to grab the Result property that gives the list of input objects. Then, you will be able to replace these inputs by using one of the UpdateToX() methods of the ReplayHistoryResult.You should NOT use any document AddX() or ReplaceX() functions, as they will break history.",
+      "params": [
+        {
+          "name": "replayData",
+          "type": "Rhino.DocObjects.ReplayHistoryData",
+          "doc": "The replay history information.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded. The default implementation always returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_ReplayHistory.htm"
+    },
+    {
+      "name": "RunCommand",
+      "signature": "protected abstract Result RunCommand(RhinoDoc doc, RunMode mode)",
+      "summary": "Executes the command.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The current document.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.Commands.RunMode",
+          "doc": "The command running mode.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The command result code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_RunCommand.htm"
+    },
+    {
+      "name": "RunProxyCommand",
+      "signature": "public static void RunProxyCommand(Command.RunCommandDelegate commandCallback, RhinoDoc doc, Object data)",
+      "summary": "Execute some code as if it were running in a command",
+      "params": [
+        {
+          "name": "commandCallback",
+          "type": "Rhino.Commands.Command.RunCommandDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022commandCallback\u0022/\u003E documentation for \u0022M:Rhino.Commands.Command.RunProxyCommand(Rhino.Commands.Command.RunCommandDelegate,Rhino.RhinoDoc,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Commands.Command.RunProxyCommand(Rhino.Commands.Command.RunCommandDelegate,Rhino.RhinoDoc,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "optional extra data to pass to callback",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_Command_RunProxyCommand.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommandContextHelpUrl",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the URL of the command contextual help. This is usually a location of a local CHM file. The default implementation return an empty string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_CommandContextHelpUrl.htm"
+    },
+    {
+      "name": "EnglishName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the command. This method is abstract.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_EnglishName.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the unique ID of this command. It is best to use a Guid attribute for each custom derived command class since this will keep the id consistent between sessions of Rhino GuidAttribute",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_Id.htm"
+    },
+    {
+      "name": "LastCommandId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of the last commands.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_LastCommandId.htm"
+    },
+    {
+      "name": "LastCommandResult",
+      "type": "Result",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the result code of the last command.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_LastCommandResult.htm"
+    },
+    {
+      "name": "LocalName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the local name of the command.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_LocalName.htm"
+    },
+    {
+      "name": "PlugIn",
+      "type": "PlugIn",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the plug-in where this commands is placed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_PlugIn.htm"
+    },
+    {
+      "name": "Settings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the settings of the command.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_Command_Settings.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "BeginCommand",
+      "delegate": "System.EventHandler\u003CCommandEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CCommandEventArgs\u003E BeginCommand",
+      "summary": "Called just before command.RunCommand().",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Commands_Command_BeginCommand.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EndCommand",
+      "delegate": "System.EventHandler\u003CCommandEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CCommandEventArgs\u003E EndCommand",
+      "summary": "Called immediately after command.RunCommand().",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Commands_Command_EndCommand.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "UndoRedo",
+      "delegate": "System.EventHandler\u003CUndoRedoEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CUndoRedoEventArgs\u003E UndoRedo",
+      "summary": "Used to monitor Rhino\u0027s built in undo/redo support.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Commands_Command_UndoRedo.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

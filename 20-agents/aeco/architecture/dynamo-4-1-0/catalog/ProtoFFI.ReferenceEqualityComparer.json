@@ -1,0 +1,46 @@
+{
+  "name": "ReferenceEqualityComparer",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "This class compares two CLR objects using reference equality. It is used in CLRObjectMap to map CLR object instances to their marshaled StackValue representations. Uses System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(System.Object) to get the object\u0027s identity hash code, which ensures well-distributed hash codes even when objects have value-based hash codes that collide (e.g., Point objects with identical coordinates). Note: The hash code computation is intentionally aligned with the reference equality behavior used by System.Object.ReferenceEquals(System.Object,System.Object). This ensures consistent semantics between equality comparison and hash code generation, which is a requirement for proper System.Collections.Generic.IEqualityComparer\u00601 implementation.",
+  "interfaces": [
+    "System.Collections.Generic.IEqualityComparer\u003Cobject\u003E"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRObjectMarshaler.cs",
+  "constructors": [
+    {
+      "name": "ReferenceEqualityComparer()",
+      "signature": "void ReferenceEqualityComparer()",
+      "summary": "ReferenceEqualityComparer.ReferenceEqualityComparer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRObjectMarshaler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetHashCode(object)",
+      "signature": "int GetHashCode(object obj)",
+      "summary": "ReferenceEqualityComparer.GetHashCode",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRObjectMarshaler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

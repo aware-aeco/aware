@@ -1,0 +1,1009 @@
+{
+  "name": "ObjectAttributes",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Attributes (color, material, layer,...) associated with a rhino object",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_ObjectAttributes.htm",
+  "constructors": [
+    {
+      "name": "ObjectAttributes()",
+      "signature": "public ObjectAttributes()",
+      "summary": "Initializes a new instance of the ObjectAttributes class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes__ctor.htm"
+    },
+    {
+      "name": "ObjectAttributes(SerializationInfo, StreamingContext)",
+      "signature": "protected ObjectAttributes(SerializationInfo info, StreamingContext context)",
+      "summary": "Initializes a new instance of the ObjectAttributes class",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddHideInDetailOverride",
+      "signature": "public bool AddHideInDetailOverride(Guid detailId)",
+      "summary": "Make this object hidden in a given detail",
+      "params": [
+        {
+          "name": "detailId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022detailId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.AddHideInDetailOverride(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.AddHideInDetailOverride(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_AddHideInDetailOverride.htm"
+    },
+    {
+      "name": "AddToGroup",
+      "signature": "public void AddToGroup(int groupIndex)",
+      "summary": "Adds object to the group with specified index by appending index to group list. If the object is already in group, nothing is changed.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index that will be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_AddToGroup.htm"
+    },
+    {
+      "name": "ComputedPlotColor(RhinoDoc)",
+      "signature": "public Color ComputedPlotColor(RhinoDoc document)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022document\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotColor(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotColor(Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_ComputedPlotColor.htm"
+    },
+    {
+      "name": "ComputedPlotColor(RhinoDoc, Guid)",
+      "signature": "public Color ComputedPlotColor(RhinoDoc document, Guid viewportId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022document\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotColor(Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022viewportId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotColor(Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotColor(Rhino.RhinoDoc,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_ComputedPlotColor_1.htm"
+    },
+    {
+      "name": "ComputedPlotWeight(RhinoDoc)",
+      "signature": "public double ComputedPlotWeight(RhinoDoc document)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022document\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotWeight(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotWeight(Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_ComputedPlotWeight.htm"
+    },
+    {
+      "name": "ComputedPlotWeight(RhinoDoc, Guid)",
+      "signature": "public double ComputedPlotWeight(RhinoDoc document, Guid viewportId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022document\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotWeight(Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022viewportId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotWeight(Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.ComputedPlotWeight(Rhino.RhinoDoc,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_ComputedPlotWeight_1.htm"
+    },
+    {
+      "name": "ConstructConstObject",
+      "signature": "protected void ConstructConstObject(Object parentObject, int subobjectIndex)",
+      "summary": "Assigns a parent object and a sub-object index to this.",
+      "params": [
+        {
+          "name": "parentObject",
+          "type": "System.Object",
+          "doc": "The parent object.",
+          "optional": false
+        },
+        {
+          "name": "subobjectIndex",
+          "type": "System.Int32",
+          "doc": "The sub-object index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ConstructConstObject.htm"
+    },
+    {
+      "name": "DeleteAllUserStrings",
+      "signature": "public void DeleteAllUserStrings()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_DeleteAllUserStrings.htm"
+    },
+    {
+      "name": "DeleteUserString",
+      "signature": "public bool DeleteUserString(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.DeleteUserString(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.DeleteUserString(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_DeleteUserString.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose_1.htm"
+    },
+    {
+      "name": "DrawColor(RhinoDoc)",
+      "signature": "public Color DrawColor(RhinoDoc document)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022document\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.DrawColor(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.DrawColor(Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_DrawColor.htm"
+    },
+    {
+      "name": "DrawColor(RhinoDoc, Guid)",
+      "signature": "public Color DrawColor(RhinoDoc document, Guid viewportId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "document",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022document\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.DrawColor(Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022viewportId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.DrawColor(Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.DrawColor(Rhino.RhinoDoc,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_DrawColor_1.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public ObjectAttributes Duplicate()",
+      "summary": "Constructs a copy of this ObjectAttributes instance.",
+      "params": [],
+      "returns": {
+        "type": "ObjectAttributes",
+        "doc": "A new instance on success, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_Duplicate.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Finalize.htm"
+    },
+    {
+      "name": "GetDisplayModeOverride",
+      "signature": "public Guid GetDisplayModeOverride(Guid viewportId)",
+      "summary": "Returns the id of the display mode of an objects. Object display modes are view based. Thus, it is possible to have an object display different in different views.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "Id of a Rhino Viewport.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A display node id if the object has a display mode override for the viewport; otherwise Guid.Empty is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_GetDisplayModeOverride.htm"
+    },
+    {
+      "name": "GetGroupList",
+      "signature": "public int[] GetGroupList()",
+      "summary": "Returns an array of GroupCount group indices. If GroupCount is zero, then GetGroupList() returns null.",
+      "params": [],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of group indices. null might be returned in place of an empty array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_GetGroupList.htm"
+    },
+    {
+      "name": "GetHideInDetailOverrides",
+      "signature": "public Guid[] GetHideInDetailOverrides()",
+      "summary": "Get list of details that this object is supposed to be hidden in",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.GetHideInDetailOverrides\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_GetHideInDetailOverrides.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "public string GetUserString(string key)",
+      "summary": "Gets a user string.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve the string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "string associated with the key if successful. null if no key was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_GetUserString.htm"
+    },
+    {
+      "name": "GetUserStrings",
+      "signature": "public NameValueCollection GetUserStrings()",
+      "summary": "Gets an independent copy of the collection of (user text key, user text value) pairs attached to this object.",
+      "params": [],
+      "returns": {
+        "type": "NameValueCollection",
+        "doc": "A collection of key strings and values strings. This"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_GetUserStrings.htm"
+    },
+    {
+      "name": "HasDisplayModeOverride",
+      "signature": "public bool HasDisplayModeOverride(Guid viewportId)",
+      "summary": "Determines if an object has a display mode override for a given viewport.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "Id of a Rhino Viewport.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the object has a display mode override for the viewport; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_HasDisplayModeOverride.htm"
+    },
+    {
+      "name": "HasHideInDetailOverrideSet",
+      "signature": "public bool HasHideInDetailOverrideSet(Guid detailId)",
+      "summary": "Is this object supposed to be hidden in a given detail",
+      "params": [
+        {
+          "name": "detailId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022detailId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.HasHideInDetailOverrideSet(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.HasHideInDetailOverrideSet(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_HasHideInDetailOverrideSet.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "NonConstOperation",
+      "signature": "protected virtual void NonConstOperation()",
+      "summary": "For derived classes implementers. Defines the necessary implementation to free the instance from being constant.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_NonConstOperation.htm"
+    },
+    {
+      "name": "OnSwitchToNonConst",
+      "signature": "protected virtual void OnSwitchToNonConst()",
+      "summary": "Is called when a non-constant operation first occurs.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_OnSwitchToNonConst.htm"
+    },
+    {
+      "name": "RemoveDisplayModeOverride()",
+      "signature": "public void RemoveDisplayModeOverride()",
+      "summary": "By default, objects are drawn using the display mode of the viewport that the object is being drawn in. Setting a specific display mode, instructs Rhino to always use that display mode, regardless of the viewport\u0027s mode. This function resets an object to use the viewport\u0027s display mode for all viewports.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_RemoveDisplayModeOverride.htm"
+    },
+    {
+      "name": "RemoveDisplayModeOverride(Guid)",
+      "signature": "public void RemoveDisplayModeOverride(Guid rhinoViewportId)",
+      "summary": "By default, objects are drawn using the display mode of the viewport that the object is being drawn in. Setting a specific display mode, instructs Rhino to always use that display mode, regardless of the viewport\u0027s mode. This function resets an object to use the viewport\u0027s display mode.",
+      "params": [
+        {
+          "name": "rhinoViewportId",
+          "type": "System.Guid",
+          "doc": "viewport that display mode overrides should be cleared from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_RemoveDisplayModeOverride_1.htm"
+    },
+    {
+      "name": "RemoveFromAllGroups",
+      "signature": "public void RemoveFromAllGroups()",
+      "summary": "Removes object from all groups.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_RemoveFromAllGroups.htm"
+    },
+    {
+      "name": "RemoveFromGroup",
+      "signature": "public void RemoveFromGroup(int groupIndex)",
+      "summary": "removes object from the group with specified index. If the object is not in the group, nothing is changed.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index that will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_RemoveFromGroup.htm"
+    },
+    {
+      "name": "RemoveHideInDetailOverride",
+      "signature": "public bool RemoveHideInDetailOverride(Guid detailId)",
+      "summary": "Remove hidden in detail flag for a specific detail",
+      "params": [
+        {
+          "name": "detailId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022detailId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.RemoveHideInDetailOverride(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjectAttributes.RemoveHideInDetailOverride(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_RemoveHideInDetailOverride.htm"
+    },
+    {
+      "name": "SetDisplayModeOverride(DisplayModeDescription)",
+      "signature": "public bool SetDisplayModeOverride(DisplayModeDescription mode)",
+      "summary": "By default, objects are drawn using the display mode of the viewport that the object is being drawn in. Setting a specific display mode, instructs Rhino to always use that display mode, regardless of the viewport\u0027s mode. This version affects the object\u0027s display mode for all viewports.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Rhino.Display.DisplayModeDescription",
+          "doc": "The display mode.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if setting was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_SetDisplayModeOverride.htm"
+    },
+    {
+      "name": "SetDisplayModeOverride(DisplayModeDescription, Guid)",
+      "signature": "public bool SetDisplayModeOverride(DisplayModeDescription mode, Guid rhinoViewportId)",
+      "summary": "By default, objects are drawn using the display mode of the viewport that the object is being drawn in. Setting a specific display mode, instructs Rhino to always use that display mode, regardless of the viewport\u0027s mode. This version sets a display mode for a specific viewport.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Rhino.Display.DisplayModeDescription",
+          "doc": "The display mode.",
+          "optional": false
+        },
+        {
+          "name": "rhinoViewportId",
+          "type": "System.Guid",
+          "doc": "The Rhino viewport ID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_SetDisplayModeOverride_1.htm"
+    },
+    {
+      "name": "SetUserString",
+      "signature": "public bool SetUserString(string key, string value)",
+      "summary": "Attach a user string (key,value combination) to this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve this string.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "string associated with key. If null, the key will be removed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_SetUserString.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Apply a transformation.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The transformation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ObjectAttributes_Transform.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CastsShadows",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an object\u0027s casts shadows property, or whether or not an object casts shadows on other objects and a ground plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_CastsShadows.htm"
+    },
+    {
+      "name": "ColorSource",
+      "type": "ObjectColorSource",
+      "getter": true,
+      "setter": true,
+      "summary": "The color used to display an object is specified in one of three ways. If ColorSource is ON::color_from_layer, then the object\u0027s layer ON_Layer::Color() is used. If ColorSource is ON::color_from_object, then value of m_color is used. If ColorSource is ON::color_from_material, then the diffuse color of the object\u0027s render material is used. See ON_3dmObjectAttributes::MaterialSource() to determine where to get the definition of the object\u0027s render material.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_ColorSource.htm"
+    },
+    {
+      "name": "CustomMeshingParameters",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets the per-object render meshing parameters, which controls the object\u0027s render mesh density. If this property is null, then the object uses the document\u0027s render meshing parameters. To remove the per-object render meshing parameters, set this property to null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_CustomMeshingParameters.htm"
+    },
+    {
+      "name": "Decals",
+      "type": "Decals",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all object decals associated with this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_Decals.htm"
+    },
+    {
+      "name": "DisplayOrder",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Display order used to force objects to be drawn on top or behind each other. Larger numbers draw on top of smaller numbers. 0 = draw object in standard depth buffered order\u003C0 = draw object behind \u0022normal\u0022 draw order objects\u003E0 = draw object on top of \u0022normal\u0022 draw order objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_DisplayOrder.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "GroupCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "number of groups object belongs to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_GroupCount.htm"
+    },
+    {
+      "name": "HasMapping",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "A mapping from any plug-in source is associated with these attributes Need to do this here to respond correctly to ModifyObjectAttributes event",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_HasMapping.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides CommonObject.IsDocumentControlled.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsInstanceDefinitionObject",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Use this query to determine if an object is part of an instance definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_IsInstanceDefinitionObject.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "LayerIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an associated layer index. Layer definitions in an OpenNURBS model are stored in a layer table. The layer table is conceptually an array of ON_Layer classes. Every OpenNURBS object in a model is on some layer. The object\u0027s layer is specified by zero based indices into the ON_Layer array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_LayerIndex.htm"
+    },
+    {
+      "name": "LinetypeIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the linetype index. Linetype definitions in an OpenNURBS model are stored in a linetype table. The linetype table is conceptually an array of ON_Linetype classes. Every OpenNURBS object in a model references some linetype. The object\u0027s linetype is specified by zero based indices into the ON_Linetype array.Index 0 is reserved for continuous linetype (no pattern).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_LinetypeIndex.htm"
+    },
+    {
+      "name": "LinetypeSource",
+      "type": "ObjectLinetypeSource",
+      "getter": true,
+      "setter": true,
+      "summary": "The Linetype used to display an object is specified in one of two ways. If LinetypeSource is ON::linetype_from_layer, then the object\u0027s layer ON_Layer::Linetype() is used. If LinetypeSource is ON::linetype_from_object, then value of m_linetype is used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_LinetypeSource.htm"
+    },
+    {
+      "name": "MaterialIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the material index. If you want something simple and fast, set the index of the rendering material.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_MaterialIndex.htm"
+    },
+    {
+      "name": "MaterialRefs",
+      "type": "MaterialRefs",
+      "getter": true,
+      "setter": false,
+      "summary": "If you are developing a high quality plug-in renderer, and a user is assigning a custom render material to this object, then add rendering material information to the MaterialRefs dictionary. Note to developers: As soon as the MaterialRefs dictionary contains items rendering material queries slow down. Do not populate the MaterialRefs dictionary when setting the MaterialIndex will take care of your needs.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_MaterialRefs.htm"
+    },
+    {
+      "name": "MaterialSource",
+      "type": "ObjectMaterialSource",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the simple material should come from the object or from it\u0027s layer. High quality rendering plug-ins should use m_rendering_attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_MaterialSource.htm"
+    },
+    {
+      "name": "Mode",
+      "type": "ObjectMode",
+      "getter": true,
+      "setter": true,
+      "summary": "An object must be in one of three modes: normal, locked or hidden. If an object is in normal mode, then the object\u0027s layer controls visibility and selectability. If an object is locked, then the object\u0027s layer controls visibility by the object cannot be selected. If the object is hidden, it is not visible and it cannot be selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_Mode.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an object optional text name. More than one object in a model can have the same name and some objects may have no name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_Name.htm"
+    },
+    {
+      "name": "ObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "If ON::color_from_object == ColorSource, then color is the object\u0027s display color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_ObjectColor.htm"
+    },
+    {
+      "name": "ObjectDecoration",
+      "type": "ObjectDecoration",
+      "getter": true,
+      "setter": true,
+      "summary": "Used to indicate an object has a decoration (like an arrowhead on a curve)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_ObjectDecoration.htm"
+    },
+    {
+      "name": "ObjectId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Every object has a Guid (globally unique identifier, also known as UUID, or universally unique identifier). The default value is Guid.Empty. When an object is added to a model, the value is checked. If the value is Guid.Empty, a new Guid is created. If the value is not null but it is already used by another object in the model, a new Guid is created. If the value is not Guid.Empty and it is not used by another object in the model, then that value persists. When an object is updated, by a move for example, the value of ObjectId persists. This value is the same as the one returned by object.Id.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_ObjectId.htm"
+    },
+    {
+      "name": "OCSMappingChannelId",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The mapping channel id to use when calling MappingChannel to retrieve the OCS mapping if there is one.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_OCSMappingChannelId.htm"
+    },
+    {
+      "name": "PlotColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "If plot_color_from_object == PlotColorSource, then PlotColor is the object\u0027s plotting color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_PlotColor.htm"
+    },
+    {
+      "name": "PlotColorSource",
+      "type": "ObjectPlotColorSource",
+      "getter": true,
+      "setter": true,
+      "summary": "The color used to plot an object on paper is specified in one of three ways. If PlotColorSource is ON::plot_color_from_layer, then the object\u0027s layer ON_Layer::PlotColor() is used. If PlotColorSource is ON::plot_color_from_object, then value of PlotColor() is used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_PlotColorSource.htm"
+    },
+    {
+      "name": "PlotWeight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Plot weight in millimeters. =0.0 means use the default width \u003C0.0 means don\u0027t plot (visible for screen display, but does not show on plot)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_PlotWeight.htm"
+    },
+    {
+      "name": "PlotWeightSource",
+      "type": "ObjectPlotWeightSource",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_PlotWeightSource.htm"
+    },
+    {
+      "name": "ReceivesShadows",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an object\u0027s receives shadows property, or whether or not an object receives shadows from other objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_ReceivesShadows.htm"
+    },
+    {
+      "name": "RenderMaterial",
+      "type": "RenderMaterial",
+      "getter": false,
+      "setter": true,
+      "summary": "Sets the render material for the object - higher level function for setting MaterialSource and MaterialIndex",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_RenderMaterial.htm"
+    },
+    {
+      "name": "Space",
+      "type": "ActiveSpace",
+      "getter": true,
+      "setter": true,
+      "summary": "Starting with V4, objects can be in either model space or page space. If an object is in page space, then ViewportId is not nil and identifies the page it is on.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_Space.htm"
+    },
+    {
+      "name": "Url",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Objects may have an URL. There are no restrictions on what value this URL may have. As an example, if the object came from a commercial part library, the URL might point to the definition of that part.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_Url.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use sharable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UserStringCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_UserStringCount.htm"
+    },
+    {
+      "name": "ViewportId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "If ViewportId is nil, the object is active in all viewports. If ViewportId is not nil, then this object is only active in a specific view. This field is primarily used to assign page space objects to a specific page, but it can also be used to restrict model space to a specific view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_ViewportId.htm"
+    },
+    {
+      "name": "Visible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an object\u0027s visibility.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_Visible.htm"
+    },
+    {
+      "name": "WireDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "When a surface object is displayed in wireframe, this controls how many isoparametric wires are used. value number of isoparametric wires -1 boundary wires (off) 0 boundary and knot wires 1 boundary and knot wires and, if there are no interior knots, a single interior wire. N\u003E=2 boundary and knot wires and (N\u002B1) interior wires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ObjectAttributes_WireDensity.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "GH_Topic",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "class",
+  "summary": "Represents a single topic in the Grasshopper help.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Documentation_GH_Topic.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ParseFile",
+      "signature": "public static GH_Topic ParseFile(string path)",
+      "summary": "Parse a *.topic file and return a topic entry.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "File to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Topic",
+        "doc": "The topic defined by the file. This function always returns a valid topic or it throws an exception."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Topic_ParseFile.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "GH_ContentCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Topic_Description.htm"
+    },
+    {
+      "name": "SafeDescription",
+      "type": "GH_ContentCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Topic_SafeDescription.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

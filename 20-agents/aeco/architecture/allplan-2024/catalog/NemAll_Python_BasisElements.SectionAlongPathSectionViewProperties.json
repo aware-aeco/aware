@@ -1,0 +1,209 @@
+{
+  "name": "SectionAlongPathSectionViewProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Section view properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathSectionViewProperties",
+      "signature": "SectionAlongPathSectionViewProperties(bInitFromSTW=False) | SectionAlongPathSectionViewProperties(B)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetHorizontTolerance",
+      "signature": "GetHorizontTolerance()",
+      "summary": "Access tolerances",
+      "remarks": "Access tolerances",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.GetHorizontTolerance"
+    },
+    {
+      "name": "GetOffsetTolerance",
+      "signature": "GetOffsetTolerance()",
+      "summary": "Access tolerances",
+      "remarks": "Access tolerances",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.GetOffsetTolerance"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Horizont",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Horizon",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.Horizont"
+    },
+    {
+      "name": "IsElementedgesDisplayed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is element edges displayed",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsElementedgesDisplayed"
+    },
+    {
+      "name": "IsElementedges_BottomLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is element edges bottom labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsElementedges_BottomLabeling"
+    },
+    {
+      "name": "IsElementedges_MiddleLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is element edges middle labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsElementedges_MiddleLabeling"
+    },
+    {
+      "name": "IsElementedges_TopLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is element edges top labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsElementedges_TopLabeling"
+    },
+    {
+      "name": "IsHorizontalPositionPointDisplayed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is horizontal position point displayed",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsHorizontalPositionPointDisplayed"
+    },
+    {
+      "name": "IsHorizontalPositionPoint_BottomLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is horizontal position point bottom labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsHorizontalPositionPoint_BottomLabeling"
+    },
+    {
+      "name": "IsHorizontalPositionPoint_MiddleLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is horizontalPositionPoint_Middle labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsHorizontalPositionPoint_MiddleLabeling"
+    },
+    {
+      "name": "IsHorizontalPositionPoint_TopLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is horizontal position point top labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsHorizontalPositionPoint_TopLabeling"
+    },
+    {
+      "name": "IsStationPointDisplayed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is station point displayed",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsStationPointDisplayed"
+    },
+    {
+      "name": "IsStationPoint_BottomLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is station point bottom labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsStationPoint_BottomLabeling"
+    },
+    {
+      "name": "IsStationPoint_MiddleLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is station point middle labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsStationPoint_MiddleLabeling"
+    },
+    {
+      "name": "IsStationPoint_TopLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is station point_Top labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsStationPoint_TopLabeling"
+    },
+    {
+      "name": "IsZeroAxDisplayed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is zero axis displayed",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsZeroAxDisplayed"
+    },
+    {
+      "name": "IsZeroAx_BottomLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is zero Axis bottom labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsZeroAx_BottomLabeling"
+    },
+    {
+      "name": "IsZeroAx_MiddleLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is zero axis middle labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsZeroAx_MiddleLabeling"
+    },
+    {
+      "name": "IsZeroAx_TopLabeling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is zero Axis top labeling",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.IsZeroAx_TopLabeling"
+    },
+    {
+      "name": "LabelingType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the LabelingType",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.LabelingType"
+    },
+    {
+      "name": "Offset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Offset",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.Offset"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

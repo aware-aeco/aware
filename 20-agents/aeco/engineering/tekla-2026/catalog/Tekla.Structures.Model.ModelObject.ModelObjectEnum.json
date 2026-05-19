@@ -1,0 +1,359 @@
+{
+  "name": "ModelObject.ModelObjectEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "All possible concrete model object subclasses are defined here. This enumeration can be used to fetch certain types of objects from the Tekla Structures model.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/40af6269-5d48-d7a0-3b34-95ef2f744c3e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNKNOWN",
+      "value": 0,
+      "summary": "The unknown model object."
+    },
+    {
+      "name": "BEAM",
+      "value": 1,
+      "summary": "The beam."
+    },
+    {
+      "name": "POLYBEAM",
+      "value": 2,
+      "summary": "The polybeam."
+    },
+    {
+      "name": "CONTOURPLATE",
+      "value": 3,
+      "summary": "The contour plate."
+    },
+    {
+      "name": "BOOLEANPART",
+      "value": 4,
+      "summary": "The boolean part."
+    },
+    {
+      "name": "FITTING",
+      "value": 5,
+      "summary": "The fitting."
+    },
+    {
+      "name": "CUTPLANE",
+      "value": 6,
+      "summary": "The cutplane."
+    },
+    {
+      "name": "SURFACE_TREATMENT",
+      "value": 7,
+      "summary": "The surface treatment."
+    },
+    {
+      "name": "WELD",
+      "value": 8,
+      "summary": "The weld."
+    },
+    {
+      "name": "ASSEMBLY",
+      "value": 9,
+      "summary": "The assembly."
+    },
+    {
+      "name": "SINGLEREBAR",
+      "value": 10,
+      "summary": "The single rebar."
+    },
+    {
+      "name": "REBARGROUP",
+      "value": 11,
+      "summary": "The rebar group."
+    },
+    {
+      "name": "REBARMESH",
+      "value": 12,
+      "summary": "The rebar mesh."
+    },
+    {
+      "name": "REBARSTRAND",
+      "value": 13,
+      "summary": "The rebar strand."
+    },
+    {
+      "name": "CONTROL_PLANE",
+      "value": 14,
+      "summary": "The control plane."
+    },
+    {
+      "name": "BOLT_ARRAY",
+      "value": 15,
+      "summary": "The bolt array."
+    },
+    {
+      "name": "BOLT_CIRCLE",
+      "value": 16,
+      "summary": "The bolt circle."
+    },
+    {
+      "name": "BOLT_XYLIST",
+      "value": 17,
+      "summary": "The bolt XY list."
+    },
+    {
+      "name": "LOAD_POINT",
+      "value": 18,
+      "summary": "The point load."
+    },
+    {
+      "name": "LOAD_LINE",
+      "value": 19,
+      "summary": "The line load."
+    },
+    {
+      "name": "LOAD_AREA",
+      "value": 20,
+      "summary": "The area load."
+    },
+    {
+      "name": "LOAD_UNIFORM",
+      "value": 21,
+      "summary": "The uniform load."
+    },
+    {
+      "name": "GRID",
+      "value": 22,
+      "summary": "The grid."
+    },
+    {
+      "name": "GRIDPLANE",
+      "value": 23,
+      "summary": "The grid plane."
+    },
+    {
+      "name": "CONNECTION",
+      "value": 24,
+      "summary": "The connection."
+    },
+    {
+      "name": "COMPONENT",
+      "value": 25,
+      "summary": "The component."
+    },
+    {
+      "name": "SEAM",
+      "value": 26,
+      "summary": "The seam."
+    },
+    {
+      "name": "DETAIL",
+      "value": 27,
+      "summary": "The detail."
+    },
+    {
+      "name": "REFERENCE_MODEL",
+      "value": 28,
+      "summary": "The reference model."
+    },
+    {
+      "name": "REBAR_SPLICE",
+      "value": 29,
+      "summary": "The rebar splice."
+    },
+    {
+      "name": "LOAD_GROUP",
+      "value": 30,
+      "summary": "The load group."
+    },
+    {
+      "name": "TASK",
+      "value": 31,
+      "summary": "The task."
+    },
+    {
+      "name": "TASK_DEPENDENCY",
+      "value": 32,
+      "summary": "The task dependency."
+    },
+    {
+      "name": "TASK_WORKTYPE",
+      "value": 34,
+      "summary": "The task worktype."
+    },
+    {
+      "name": "POLYGON_WELD",
+      "value": 35,
+      "summary": "The polygon weld."
+    },
+    {
+      "name": "LOGICAL_WELD",
+      "value": 36,
+      "summary": "The logical weld."
+    },
+    {
+      "name": "CIRCLEREBAR",
+      "value": 37,
+      "summary": "The circle rebar."
+    },
+    {
+      "name": "HIERARCHIC_DEFINITION",
+      "value": 38,
+      "summary": "The hierarchic definition."
+    },
+    {
+      "name": "HIERARCHIC_OBJECT",
+      "value": 39,
+      "summary": "The hierarchic object."
+    },
+    {
+      "name": "ANALYSIS_GEOMETRY",
+      "value": 40,
+      "summary": "The analysis geometry."
+    },
+    {
+      "name": "ANALYSIS_PART",
+      "value": 41,
+      "summary": "The analysis part."
+    },
+    {
+      "name": "REFERENCE_MODEL_OBJECT",
+      "value": 42,
+      "summary": "The reference model object."
+    },
+    {
+      "name": "CUSTOM_PART",
+      "value": 43,
+      "summary": "The custom part object."
+    },
+    {
+      "name": "CIRCLE_REBARGROUP",
+      "value": 44,
+      "summary": "The circle rebar group."
+    },
+    {
+      "name": "CURVED_REBARGROUP",
+      "value": 45,
+      "summary": "The curved rebar group."
+    },
+    {
+      "name": "EDGE_CHAMFER",
+      "value": 46,
+      "summary": "The edge chamfer."
+    },
+    {
+      "name": "POUR_OBJECT",
+      "value": 47,
+      "summary": "The pour object."
+    },
+    {
+      "name": "POUR_BREAK",
+      "value": 48,
+      "summary": "The pour break."
+    },
+    {
+      "name": "CONTROL_LINE",
+      "value": 50,
+      "summary": "The control line."
+    },
+    {
+      "name": "LOAD_TEMPERATURE",
+      "value": 51,
+      "summary": "The temperature load."
+    },
+    {
+      "name": "BREP",
+      "value": 52,
+      "summary": "The Brep part instance."
+    },
+    {
+      "name": "CONTROL_CIRCLE",
+      "value": 53,
+      "summary": "The control circle."
+    },
+    {
+      "name": "CONTROL_POINT",
+      "value": 54,
+      "summary": "The control point."
+    },
+    {
+      "name": "REBAR_SET",
+      "value": 55,
+      "summary": "The rebar set."
+    },
+    {
+      "name": "REBAR_SET_ADDITION",
+      "value": 56,
+      "summary": "The rebar set addition."
+    },
+    {
+      "name": "REBAR_PROPERTY_MODIFIER",
+      "value": 57,
+      "summary": "The rebar property modifier."
+    },
+    {
+      "name": "REBAR_END_DETAIL_MODIFIER",
+      "value": 58,
+      "summary": "The rebar end-detail modifier."
+    },
+    {
+      "name": "REBAR_SPLITTER",
+      "value": 59,
+      "summary": "The rebar splitter."
+    },
+    {
+      "name": "CONTROL_ARC",
+      "value": 64,
+      "summary": "Construction arc."
+    },
+    {
+      "name": "CONTROL_SPLINE",
+      "value": 65,
+      "summary": "Construction spline"
+    },
+    {
+      "name": "CONTROL_POLYCURVE",
+      "value": 66,
+      "summary": "Construction polycurve"
+    },
+    {
+      "name": "RADIAL_GRID",
+      "value": 67,
+      "summary": "Radial grid"
+    },
+    {
+      "name": "GRID_CYLINDRICAL_SURFACE",
+      "value": 68,
+      "summary": "Cylindrical surfaces of radial grids"
+    },
+    {
+      "name": "LOFTED_PLATE",
+      "value": 69,
+      "summary": "The lofted plate"
+    },
+    {
+      "name": "LEG_SURFACE_OBJECT",
+      "value": 70,
+      "summary": "The leg surface object."
+    },
+    {
+      "name": "STOREY",
+      "value": 71,
+      "summary": "The storey object."
+    },
+    {
+      "name": "SPACE",
+      "value": 72,
+      "summary": "The building space object."
+    },
+    {
+      "name": "BUILDING",
+      "value": 73,
+      "summary": "The building space object."
+    },
+    {
+      "name": "BUILDING_SITE",
+      "value": 74,
+      "summary": "The site object."
+    }
+  ]
+}

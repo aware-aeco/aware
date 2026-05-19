@@ -1,0 +1,42 @@
+{
+  "name": "LcURegistryMode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcURegistryMode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eUSER_READ_ONLY",
+      "value": 1
+    },
+    {
+      "name": "eUSER_INHERIT_READ_ONLY",
+      "value": 3
+    },
+    {
+      "name": "eINSTALL",
+      "value": 4
+    },
+    {
+      "name": "eUSER",
+      "value": 9
+    },
+    {
+      "name": "eUSER_INHERIT",
+      "value": 11
+    },
+    {
+      "name": "eUSER_INHERIT_READ_ONLY_MISSING_OK",
+      "value": 19
+    },
+    {
+      "name": "eINSTALL_MISSING_OK",
+      "value": 20
+    }
+  ]
+}

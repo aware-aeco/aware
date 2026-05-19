@@ -1,0 +1,78 @@
+{
+  "name": "InternalForcesApi",
+  "namespace": "IdeaStatiCa.RcsApi.Api",
+  "kind": "class",
+  "summary": "RCS Rest API 1.0 \u2014 InternalForces endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/1/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/InternalForcesApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSectionLoadingAsync",
+      "signature": "Task\u003Cstring\u003E GetSectionLoadingAsync(Guid projectId, int sectionId)",
+      "summary": "Get section loading",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/InternalForcesApi.md"
+    },
+    {
+      "name": "SetSectionLoadingAsync",
+      "signature": "Task\u003Cstring\u003E SetSectionLoadingAsync(Guid projectId, int sectionId, RcsSectionLoading rcsSectionLoading)",
+      "summary": "Set section loading",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "rcsSectionLoading",
+          "type": "RcsSectionLoading",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/InternalForcesApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

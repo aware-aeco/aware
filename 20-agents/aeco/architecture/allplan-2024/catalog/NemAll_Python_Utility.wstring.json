@@ -1,0 +1,40 @@
+{
+  "name": "wstring",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Utility.wstring.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/wstring/",
+  "constructors": [
+    {
+      "name": "wstring",
+      "signature": "wstring()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/wstring/#NemAll_Python_Utility.wstring.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/wstring/#NemAll_Python_Utility.wstring.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

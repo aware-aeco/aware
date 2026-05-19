@@ -1,0 +1,129 @@
+{
+  "name": "eServiceResult",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "service result",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eServiceResult/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eServiceResult",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eServiceResult/#NemAll_Python_Geometry.eServiceResult.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FAILED_TO_CONVERGE",
+      "value": 17
+    },
+    {
+      "name": "FAILED_TO_INVERT_MATRIX",
+      "value": 16
+    },
+    {
+      "name": "INVALID_CONE",
+      "value": 13
+    },
+    {
+      "name": "INVALID_CUBOID",
+      "value": 11
+    },
+    {
+      "name": "INVALID_CYLINDER",
+      "value": 12
+    },
+    {
+      "name": "INVALID_ELLIPSOID",
+      "value": 14
+    },
+    {
+      "name": "INVALID_GEOOBJECT",
+      "value": 9
+    },
+    {
+      "name": "INVALID_LINE",
+      "value": 3
+    },
+    {
+      "name": "INVALID_POINT",
+      "value": 10
+    },
+    {
+      "name": "INVALID_POINTCLOUD",
+      "value": 18
+    },
+    {
+      "name": "INVALID_POLYGON",
+      "value": 5
+    },
+    {
+      "name": "INVALID_POLYHEDRON",
+      "value": 6
+    },
+    {
+      "name": "INVALID_POLYLINE",
+      "value": 4
+    },
+    {
+      "name": "INVALID_SURFACE",
+      "value": 15
+    },
+    {
+      "name": "IS_ABOVE",
+      "value": 19
+    },
+    {
+      "name": "IS_BELOW",
+      "value": 20
+    },
+    {
+      "name": "IS_IN",
+      "value": 21
+    },
+    {
+      "name": "IS_UNKNOWN",
+      "value": 22
+    },
+    {
+      "name": "NEGATIVE_ORIENTATION",
+      "value": 1
+    },
+    {
+      "name": "NO_ERR",
+      "value": 2
+    },
+    {
+      "name": "PARALLEL_LINES",
+      "value": 8
+    },
+    {
+      "name": "POSITIVE_ORIENTATION",
+      "value": 0
+    },
+    {
+      "name": "ZERO_ANGLE",
+      "value": 7
+    }
+  ]
+}

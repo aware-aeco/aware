@@ -1,0 +1,30 @@
+{
+  "name": "MessageCenterCategory",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "MessageCenterCategory enum in Autodesk.Navisworks.Api.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.MessageCenterCategory",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Information",
+      "value": 0
+    },
+    {
+      "name": "Warning",
+      "value": 1
+    },
+    {
+      "name": "Error",
+      "value": 2
+    },
+    {
+      "name": "Developer",
+      "value": 3
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ModifyType",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.ModifyType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_ModifyType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Modify",
+      "value": 0
+    },
+    {
+      "name": "Override",
+      "value": 1
+    },
+    {
+      "name": "NotSaved",
+      "value": 2
+    }
+  ]
+}

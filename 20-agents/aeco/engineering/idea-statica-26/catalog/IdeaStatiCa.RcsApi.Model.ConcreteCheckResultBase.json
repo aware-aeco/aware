@@ -1,0 +1,62 @@
+{
+  "name": "ConcreteCheckResultBase",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ConcreteCheckResultBase.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultBase.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "InternalFores",
+      "type": "ResultOfInternalForces",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultBase.internalFores.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultBase.md"
+    },
+    {
+      "name": "NonConformities",
+      "type": "List\u003CNonConformity\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultBase.nonConformities.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultBase.md"
+    },
+    {
+      "name": "Result",
+      "type": "CheckResult",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultBase.result.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultBase.md"
+    },
+    {
+      "name": "CheckValue",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultBase.checkValue.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultBase.md"
+    },
+    {
+      "name": "LimitCheckValue",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultBase.limitCheckValue.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultBase.md"
+    },
+    {
+      "name": "Check",
+      "type": "CalculationType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultBase.check.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultBase.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

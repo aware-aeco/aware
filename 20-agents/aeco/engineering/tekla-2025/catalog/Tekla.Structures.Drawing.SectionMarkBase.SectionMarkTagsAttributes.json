@@ -1,0 +1,128 @@
+{
+  "name": "SectionMarkBase.SectionMarkTagsAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SectionMarkTagsAttributes class contains attributes for section mark tags.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6a08c09a-d36f-31ec-a859-ff21cf495ba3",
+  "constructors": [
+    {
+      "name": "SectionMarkBase.SectionMarkTagsAttributes()",
+      "signature": "public SectionMarkTagsAttributes()",
+      "summary": "Creates a new mark tags attributes instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1233c31a-67c8-9bf2-6f2f-d95dbc3a581f"
+    },
+    {
+      "name": "SectionMarkBase.SectionMarkTagsAttributes(SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes)",
+      "signature": "public SectionMarkTagsAttributes(SectionMarkBase.SectionMarkTagAttributes tagA1, SectionMarkBase.SectionMarkTagAttributes tagA2, SectionMarkBase.SectionMarkTagAttributes tagA3, SectionMarkBase.SectionMarkTagAttributes tagA4, SectionMarkBase.SectionMarkTagAttributes tagA5)",
+      "summary": "Creates a new mark tags attributes instance.",
+      "params": [
+        {
+          "name": "tagA1",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes",
+          "doc": "The tag at place A1.",
+          "optional": false
+        },
+        {
+          "name": "tagA2",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes",
+          "doc": "The tag at place A2.",
+          "optional": false
+        },
+        {
+          "name": "tagA3",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes",
+          "doc": "The tag at place A3.",
+          "optional": false
+        },
+        {
+          "name": "tagA4",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes",
+          "doc": "The tag at place A4.",
+          "optional": false
+        },
+        {
+          "name": "tagA5",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes",
+          "doc": "The tag at place A5.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/56e39e2d-67ec-1a5f-5dd1-1472ca6c53f3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c46c46d-9f88-cbe4-8231-2039e196b773"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TagA1",
+      "type": "SectionMarkBase.SectionMarkTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A1 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ee7f74f3-5b33-62f4-08ed-8ff93c624c01"
+    },
+    {
+      "name": "TagA2",
+      "type": "SectionMarkBase.SectionMarkTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A2 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8cfb8b7e-395d-751c-f65a-5c8b45f0bd71"
+    },
+    {
+      "name": "TagA3",
+      "type": "SectionMarkBase.SectionMarkTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A3 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cecf20d5-9811-2ed4-d563-e25f7c71457f"
+    },
+    {
+      "name": "TagA4",
+      "type": "SectionMarkBase.SectionMarkTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A4 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fbf6ecb0-caa5-2bcd-9aa5-801da5a154c8"
+    },
+    {
+      "name": "TagA5",
+      "type": "SectionMarkBase.SectionMarkTagAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A5 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5b622184-69ab-f708-729f-cc61dbd236f5"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

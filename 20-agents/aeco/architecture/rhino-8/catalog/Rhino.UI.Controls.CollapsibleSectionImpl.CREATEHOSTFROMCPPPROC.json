@@ -1,0 +1,14 @@
+{
+  "name": "CollapsibleSectionImpl.CREATEHOSTFROMCPPPROC",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "delegate",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.CollapsibleSectionImpl.CREATEHOSTFROMCPPPROC\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_CollapsibleSectionImpl_CREATEHOSTFROMCPPPROC.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate IntPtr CREATEHOSTFROMCPPPROC( IntPtr client )"
+}

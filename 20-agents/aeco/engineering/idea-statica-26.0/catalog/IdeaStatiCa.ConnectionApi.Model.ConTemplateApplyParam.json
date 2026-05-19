@@ -1,0 +1,30 @@
+{
+  "name": "ConTemplateApplyParam",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConTemplateApplyParam.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConTemplateApplyParam.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ConnectionTemplate",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplateApplyParam.connectionTemplate.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConTemplateApplyParam.md"
+    },
+    {
+      "name": "Mapping",
+      "type": "TemplateConversions",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplateApplyParam.mapping.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConTemplateApplyParam.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

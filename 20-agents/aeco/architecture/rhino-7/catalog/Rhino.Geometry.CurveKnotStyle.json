@@ -1,0 +1,44 @@
+{
+  "name": "CurveKnotStyle",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for knot spacing styles in interpolated curves.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_CurveKnotStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Uniform",
+      "value": 0,
+      "summary": "Parameter spacing between consecutive knots is 1.0."
+    },
+    {
+      "name": "Chord",
+      "value": 1,
+      "summary": "Chord length spacing, requires degree=3 with CV1 and CVn1 specified."
+    },
+    {
+      "name": "ChordSquareRoot",
+      "value": 2,
+      "summary": "Square root of chord length, requires degree=3 with CV1 and CVn1 specified."
+    },
+    {
+      "name": "UniformPeriodic",
+      "value": 3,
+      "summary": "Periodic with uniform spacing."
+    },
+    {
+      "name": "ChordPeriodic",
+      "value": 4,
+      "summary": "Periodic with chord length spacing."
+    },
+    {
+      "name": "ChordSquareRootPeriodic",
+      "value": 5,
+      "summary": "Periodic with square root of chord length spacing."
+    }
+  ]
+}

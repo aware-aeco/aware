@@ -85,6 +85,12 @@ struct OkResponse {
 #[derive(Deserialize, Debug)]
 struct ResponseData {
     agent: Option<SidecarAgent>,
+    coverage: Option<serde_json::Value>,
+    /// Result of the `coverage-validate` verb. We deserialize the inner
+    /// payload to a strongly-typed `CoverageValidateResult` so the CLI can
+    /// render it (instead of just re-emitting the JSON blob like
+    /// `coverage-generate` does).
+    coverage_validate: Option<CoverageValidateResult>,
 }
 
 /// Mirrors the C# `GeneratedAgent` shape. Converted to `crate::builder::GeneratedAgent` for return.
@@ -138,6 +144,46 @@ pub struct FromHeadersArgs {
     pub agent_id: Option<String>,
 }
 
+#[derive(Serialize)]
+pub struct CoverageGenerateArgs {
+    pub ir_path: String,
+    pub out_dir: String,
+    pub agent_id: String,
+    pub vendor: String,
+    pub vertical: String,
+}
+
+/// Arguments for the sidecar's `coverage-validate` verb. The schema paths are
+/// optional — when omitted, the sidecar resolves them from embedded
+/// resources, which is the default for in-tree review work. Override paths
+/// exist so the test suite can validate against a scratched-up schema
+/// fragment.
+#[derive(Serialize, Default)]
+pub struct CoverageValidateArgs {
+    pub ir_path: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub schema_root: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub schema_type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub agent_dir: Option<String>,
+}
+
+/// Strongly-typed mirror of `CoverageValidateResult` in
+/// `Protocol/Response.cs`. Held internally; surface re-exported via
+/// [`coverage_validate`].
+#[derive(Deserialize, Debug, Serialize, Clone)]
+pub struct CoverageValidateResult {
+    pub ok: bool,
+    pub ir_path: String,
+    #[serde(default)]
+    pub ir_violations: Vec<String>,
+    #[serde(default)]
+    pub catalog_violations: std::collections::BTreeMap<String, Vec<String>>,
+    #[serde(default)]
+    pub catalog_files_validated: u32,
+}
+
 /// Spawn the sidecar, send a reflect-dlls request, return the parsed agent.
 pub fn reflect_dlls(args: ReflectDllsArgs) -> Result<GeneratedAgent, AwareError> {
     let agent = invoke("reflect-dlls", &args)?;
@@ -162,7 +208,50 @@ pub fn from_headers(args: FromHeadersArgs) -> Result<GeneratedAgent, AwareError>
     Ok(to_local_agent(agent, "headers"))
 }
 
+/// Spawn the sidecar, send a coverage-generate request, return the raw
+/// `coverage` payload (manifest path, skill/catalog counts, written paths).
+///
+/// Unlike the other verbs which deserialize into a `GeneratedAgent`, the
+/// coverage-generate verb writes its outputs directly to `out_dir` and returns
+/// a summary describing what was produced. Callers print the JSON value as-is.
+pub fn coverage_generate(args: CoverageGenerateArgs) -> Result<serde_json::Value, AwareError> {
+    invoke_raw("coverage-generate", &args).and_then(|data| {
+        data.coverage.ok_or_else(|| {
+            AwareError::Validation(
+                "sidecar coverage-generate returned ok but no coverage data".into(),
+            )
+        })
+    })
+}
+
+/// Spawn the sidecar, send a coverage-validate request, return the result.
+///
+/// The verb performs Draft 2020-12 JSON Schema validation against the
+/// embedded host-coverage schemas. A returned `ok = false` indicates schema
+/// violations — the verb itself succeeded; it's the IR (or one of the catalog
+/// files) that failed validation. Callers translate `ok = false` into a
+/// non-zero exit code at the CLI surface.
+pub fn coverage_validate(args: CoverageValidateArgs) -> Result<CoverageValidateResult, AwareError> {
+    invoke_raw("coverage-validate", &args).and_then(|data| {
+        data.coverage_validate.ok_or_else(|| {
+            AwareError::Validation(
+                "sidecar coverage-validate returned ok but no coverage_validate data".into(),
+            )
+        })
+    })
+}
+
 fn invoke<T: Serialize>(op: &str, args: &T) -> Result<SidecarAgent, AwareError> {
+    invoke_raw(op, args)?
+        .agent
+        .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no agent")))
+}
+
+/// Spawn the sidecar, send a request, return the raw `data` payload.
+///
+/// Lets callers pick whichever field of `ResponseData` matches their verb
+/// (`agent` for reflection verbs, `coverage` for coverage-generate, etc.).
+fn invoke_raw<T: Serialize>(op: &str, args: &T) -> Result<ResponseData, AwareError> {
     let bin = discover()?;
     let request = Envelope { op, args };
     let body = serde_json::to_string(&request)
@@ -206,8 +295,7 @@ fn invoke<T: Serialize>(op: &str, args: &T) -> Result<SidecarAgent, AwareError> 
 
     parsed
         .data
-        .and_then(|d| d.agent)
-        .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no agent")))
+        .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no data")))
 }
 
 fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {

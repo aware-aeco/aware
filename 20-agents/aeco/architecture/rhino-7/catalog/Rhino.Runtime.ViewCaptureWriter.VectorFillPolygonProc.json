@@ -1,0 +1,14 @@
+{
+  "name": "ViewCaptureWriter.VectorFillPolygonProc",
+  "namespace": "Rhino.Runtime",
+  "kind": "delegate",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.ViewCaptureWriter.VectorFillPolygonProc\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_ViewCaptureWriter_VectorFillPolygonProc.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void VectorFillPolygonProc( int argb, int count, IntPtr points )"
+}

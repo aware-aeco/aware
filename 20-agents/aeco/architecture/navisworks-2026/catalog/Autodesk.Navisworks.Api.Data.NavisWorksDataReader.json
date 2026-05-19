@@ -1,0 +1,607 @@
+{
+  "name": "NavisWorksDataReader",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Implementation of DbDataReader.",
+  "base": "System.Data.Common.DbDataReader",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.NavisWorksDataReader",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.IEnumerator GetEnumerator()",
+      "summary": "GetEnumerator method of NavisWorksDataReader.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetEnumerator"
+    },
+    {
+      "name": "GetSchemaTable",
+      "signature": "System.Data.DataTable GetSchemaTable()",
+      "summary": "Schema information in SQLite is difficult to map into .NET conventions, so a lot of work must be done to gather the necessary information so it can be represented in an ADO.NET manner.",
+      "params": [],
+      "returns": {
+        "type": "System.Data.DataTable",
+        "doc": "Returns a DataTable containing the schema information for the active SELECT statement being processed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetSchemaTable"
+    },
+    {
+      "name": "GetDateTime",
+      "signature": "System.DateTime GetDateTime(int ordinal)",
+      "summary": "Retrieve the column as a date/time value",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.DateTime",
+        "doc": "DateTime"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetDateTime%28System.Int32%29"
+    },
+    {
+      "name": "GetGuid",
+      "signature": "System.Guid GetGuid(int ordinal)",
+      "summary": "Returns the column as a Guid",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": "Guid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetGuid%28System.Int32%29"
+    },
+    {
+      "name": "GetFieldType",
+      "signature": "System.Type GetFieldType(int ordinal)",
+      "summary": "Returns the .NET type of a given column",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Type",
+        "doc": "Type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetFieldType%28System.Int32%29"
+    },
+    {
+      "name": "GetBoolean",
+      "signature": "bool GetBoolean(int ordinal)",
+      "summary": "Retrieves the column as a boolean value",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "bool"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetBoolean%28System.Int32%29"
+    },
+    {
+      "name": "IsDBNull",
+      "signature": "bool IsDBNull(int ordinal)",
+      "summary": "Returns True if the specified column is null",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True or False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.IsDBNull%28System.Int32%29"
+    },
+    {
+      "name": "NextResult",
+      "signature": "bool NextResult()",
+      "summary": "Moves to the next resultset in multiple row-returning SQL command.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the command was successful and a new resultset is available, False otherwise."
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseException",
+          "when": "Database exception"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.NextResult"
+    },
+    {
+      "name": "Read",
+      "signature": "bool Read()",
+      "summary": "Reads the next row from the resultset",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if a new row was successfully loaded and is ready for processing"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.Read"
+    },
+    {
+      "name": "GetByte",
+      "signature": "byte GetByte(int ordinal)",
+      "summary": "Retrieves the column as a single byte value",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "byte",
+        "doc": "byte"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetByte%28System.Int32%29"
+    },
+    {
+      "name": "GetChar",
+      "signature": "char GetChar(int ordinal)",
+      "summary": "Returns the column as a single character",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "char",
+        "doc": "char"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetChar%28System.Int32%29"
+    },
+    {
+      "name": "GetDecimal",
+      "signature": "decimal GetDecimal(int ordinal)",
+      "summary": "Retrieve the column as a decimal value",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "decimal",
+        "doc": "decimal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetDecimal%28System.Int32%29"
+    },
+    {
+      "name": "GetDouble",
+      "signature": "double GetDouble(int ordinal)",
+      "summary": "Returns the column as a double",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": "double"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetDouble%28System.Int32%29"
+    },
+    {
+      "name": "GetFloat",
+      "signature": "float GetFloat(int ordinal)",
+      "summary": "Returns a column as a float value",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "float"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetFloat%28System.Int32%29"
+    },
+    {
+      "name": "GetInt32",
+      "signature": "int GetInt32(int ordinal)",
+      "summary": "Retrieves the column as an int",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Int32"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetInt32%28System.Int32%29"
+    },
+    {
+      "name": "GetOrdinal",
+      "signature": "int GetOrdinal(string name)",
+      "summary": "Retrieves the index of a column, given its name",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "The int index of the column"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetOrdinal%28System.String%29"
+    },
+    {
+      "name": "GetValues",
+      "signature": "int GetValues(object[] values)",
+      "summary": "Retrieves the values of multiple columns, up to the size of the supplied array",
+      "params": [
+        {
+          "name": "values",
+          "type": "object[]",
+          "doc": "The array to fill with values from the columns in the current resultset",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "The number of columns retrieved"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetValues%28System.Object%5B%5D%29"
+    },
+    {
+      "name": "GetBytes",
+      "signature": "long GetBytes(int ordinal, long dataOffset, byte[] buffer, int bufferOffset, int length)",
+      "summary": "Retrieves a column as an array of bytes (blob). To determine the number of bytes in the column, pass a null value for the buffer.The total length will be returned.",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        },
+        {
+          "name": "dataOffset",
+          "type": "long",
+          "doc": "The zero-based index of where to begin reading the data",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "byte[]",
+          "doc": "The buffer to write the bytes into",
+          "optional": false
+        },
+        {
+          "name": "bufferOffset",
+          "type": "int",
+          "doc": "The zero-based index of where to begin writing into the array",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "int",
+          "doc": "The number of bytes to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": "The actual number of bytes written into the array, if buffer is null, will return total length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetBytes%28System.Int32%2CSystem.Int64%2CSystem.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetChars",
+      "signature": "long GetChars(int ordinal, long dataOffset, char[] buffer, int bufferOffset, int length)",
+      "summary": "Retrieves a column as an array of chars (blob) To determine the number of characters in the column, pass a null value for the buffer. The total length will be returned.",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        },
+        {
+          "name": "dataOffset",
+          "type": "long",
+          "doc": "The zero-based index of where to begin reading the data",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "char[]",
+          "doc": "The buffer to write the characters into",
+          "optional": false
+        },
+        {
+          "name": "bufferOffset",
+          "type": "int",
+          "doc": "The zero-based index of where to begin writing into the array",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "int",
+          "doc": "The number of bytes to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": "The actual number of bytes written into the array, if buffer is null, will return total length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetChars%28System.Int32%2CSystem.Int64%2CSystem.Char%5B%5D%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetInt64",
+      "signature": "long GetInt64(int ordinal)",
+      "summary": "Retrieves the column as a long",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": "Int64"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetInt64%28System.Int32%29"
+    },
+    {
+      "name": "GetValue",
+      "signature": "object GetValue(int ordinal)",
+      "summary": "Retrieves the column as an object corresponding to the underlying datatype of the column",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetValue%28System.Int32%29"
+    },
+    {
+      "name": "GetInt16",
+      "signature": "short GetInt16(int ordinal)",
+      "summary": "Returns the column as a short",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "short",
+        "doc": "Int16"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetInt16%28System.Int32%29"
+    },
+    {
+      "name": "GetDataTypeName",
+      "signature": "string GetDataTypeName(int ordinal)",
+      "summary": "Retrieves the name of the back-end datatype of the column",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetDataTypeName%28System.Int32%29"
+    },
+    {
+      "name": "GetName",
+      "signature": "string GetName(int ordinal)",
+      "summary": "Retrieves the name of the column",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetName%28System.Int32%29"
+    },
+    {
+      "name": "GetString",
+      "signature": "string GetString(int ordinal)",
+      "summary": "Retrieves the column as a string",
+      "params": [
+        {
+          "name": "ordinal",
+          "type": "int",
+          "doc": "The index of the column to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.GetString%28System.Int32%29"
+    },
+    {
+      "name": "Close",
+      "signature": "void Close()",
+      "summary": "Closes the datareader.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.Close"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Not implemented. Returns 0",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.Depth"
+    },
+    {
+      "name": "FieldCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of columns in the current resultset.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.FieldCount"
+    },
+    {
+      "name": "HasRows",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns True if the resultset has rows that can be fetched",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.HasRows"
+    },
+    {
+      "name": "IsClosed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns True if the data reader is closed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.IsClosed"
+    },
+    {
+      "name": "Item",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Indexer to retrieve data from a column given its i",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.Item%28System.Int32%29"
+    },
+    {
+      "name": "Item",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Indexer to retrieve data from a column given its name",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.Item%28System.String%29"
+    },
+    {
+      "name": "RecordsAffected",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Retrieve the count of records affected by an update/insert/delete command. Only valid once the data reader is closed!",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisWorksDataReader.RecordsAffected"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

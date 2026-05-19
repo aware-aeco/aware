@@ -1,0 +1,42 @@
+{
+  "name": "AnalysisConnectivity",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisConnectivity class contains information related to analysis connectivities.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/08abc530-b7e9-5a6b-1e33-1ef3014d58f6",
+  "constructors": [
+    {
+      "name": "AnalysisConnectivity",
+      "signature": "public AnalysisConnectivity()",
+      "summary": "Initializes a new instance of the AnalysisConnectivity class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9b53827-e4dc-288c-132c-d79162dda8d4"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Connectivity",
+      "type": ".AnalysisConnectivity.ConnectivityEnum.",
+      "getter": true,
+      "setter": true,
+      "summary": "The connectivity type of the analysis connectivity.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b941c2a-8e08-6aef-59bb-73082d04ef4b"
+    },
+    {
+      "name": "Spring",
+      "type": ".Double.",
+      "getter": true,
+      "setter": true,
+      "summary": "The spring values of the analysis connectivity.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/639a4156-1d11-b3e6-3f45-e2cb79f615ac"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

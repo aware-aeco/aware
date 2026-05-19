@@ -1,0 +1,94 @@
+{
+  "name": "GH_PaletteSettings",
+  "namespace": "Grasshopper.GUI.Theme",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Theme.GH_PaletteSettings.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Theme_GH_PaletteSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ErrorSelected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for selected Error palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_ErrorSelected.htm"
+    },
+    {
+      "name": "ErrorStandard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for unselected Error palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_ErrorStandard.htm"
+    },
+    {
+      "name": "HiddenSelected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for selected Hidden palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_HiddenSelected.htm"
+    },
+    {
+      "name": "HiddenStandard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for unselected Hidden palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_HiddenStandard.htm"
+    },
+    {
+      "name": "LockedSelected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for selected Locked palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_LockedSelected.htm"
+    },
+    {
+      "name": "LockedStandard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for unselected Locked palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_LockedStandard.htm"
+    },
+    {
+      "name": "NormalSelected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for selected Normal palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_NormalSelected.htm"
+    },
+    {
+      "name": "NormalStandard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for unselected Normal palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_NormalStandard.htm"
+    },
+    {
+      "name": "WarningSelected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for selected Warning palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_WarningSelected.htm"
+    },
+    {
+      "name": "WarningStandard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette style for unselected Warning palettes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PaletteSettings_WarningStandard.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

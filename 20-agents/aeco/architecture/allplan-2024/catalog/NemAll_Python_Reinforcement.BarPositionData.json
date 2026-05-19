@@ -1,0 +1,245 @@
+{
+  "name": "BarPositionData",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the bar position data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/",
+  "constructors": [
+    {
+      "name": "BarPositionData",
+      "signature": "BarPositionData(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "BarPositionData",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCount",
+      "signature": "GetCount()",
+      "summary": "Get the count",
+      "remarks": "Get the count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetCount"
+    },
+    {
+      "name": "GetDiameter",
+      "signature": "GetDiameter()",
+      "summary": "Get the diameter",
+      "remarks": "Get the diameter",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "diameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetDiameter"
+    },
+    {
+      "name": "GetLength",
+      "signature": "GetLength()",
+      "summary": "Get the length",
+      "remarks": "Get the length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetLength"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "GetPosition()",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetPosition"
+    },
+    {
+      "name": "GetSteelGrade",
+      "signature": "GetSteelGrade()",
+      "summary": "Get the steel grade",
+      "remarks": "Get the steel grade",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Steel grade"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetSteelGrade"
+    },
+    {
+      "name": "SetCount",
+      "signature": "SetCount(count)",
+      "summary": "Set the count",
+      "remarks": "Set the count",
+      "params": [
+        {
+          "name": "count",
+          "type": "int",
+          "doc": "Count",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetCount"
+    },
+    {
+      "name": "SetDiameter",
+      "signature": "SetDiameter(diameter)",
+      "summary": "Set the diameter",
+      "remarks": "Set the diameter",
+      "params": [
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "diameter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetDiameter"
+    },
+    {
+      "name": "SetLength",
+      "signature": "SetLength(length)",
+      "summary": "Set the length",
+      "remarks": "Set the length",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetLength"
+    },
+    {
+      "name": "SetPosition",
+      "signature": "SetPosition(position)",
+      "summary": "Set the position number",
+      "remarks": "Set the position number",
+      "params": [
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "Position",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetPosition"
+    },
+    {
+      "name": "SetSteelGrade",
+      "signature": "SetSteelGrade(steelGrade)",
+      "summary": "Set the steel grade",
+      "remarks": "Set the steel grade",
+      "params": [
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "steel grade",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetSteelGrade"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the count",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.Count"
+    },
+    {
+      "name": "Diameter",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the diameter",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.Diameter"
+    },
+    {
+      "name": "Length",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the length",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.Length"
+    },
+    {
+      "name": "Position",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.Position"
+    },
+    {
+      "name": "SteelGrade",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the steel grade",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SteelGrade"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

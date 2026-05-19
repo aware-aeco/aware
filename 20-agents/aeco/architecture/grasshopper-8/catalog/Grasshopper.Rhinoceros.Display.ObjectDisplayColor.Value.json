@@ -1,0 +1,313 @@
+{
+  "name": "ObjectDisplayColor.Value",
+  "namespace": "Grasshopper.Rhinoceros.Display",
+  "kind": "struct",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.Display.ObjectDisplayColor.Value.)",
+  "base": "GH_ISerializable",
+  "interfaces": [
+    "IEquatable\u003CObjectDisplayColor.Value\u003E",
+    "IComparable\u003CObjectDisplayColor.Value\u003E",
+    "IComparable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value.htm",
+  "constructors": [
+    {
+      "name": "ObjectDisplayColor.Value(ModelColor)",
+      "signature": "public Value(ModelColor color)",
+      "summary": "Initializes a new instance of the ObjectDisplayColor.Value class",
+      "params": [
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value__ctor.htm"
+    },
+    {
+      "name": "ObjectDisplayColor.Value(ObjectColorSource)",
+      "signature": "public Value(ObjectColorSource source)",
+      "summary": "Initializes a new instance of the ObjectDisplayColor.Value class",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectColorSource",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value__ctor_1.htm"
+    },
+    {
+      "name": "ObjectDisplayColor.Value(ObjectColorSource, ModelColor)",
+      "signature": "public Value(ObjectColorSource source, ModelColor color)",
+      "summary": "Initializes a new instance of the ObjectDisplayColor.Value class",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectColorSource",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo(Object)",
+      "signature": "public int CompareTo(Object other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_CompareTo_1.htm"
+    },
+    {
+      "name": "CompareTo(ObjectDisplayColor.Value)",
+      "signature": "public int CompareTo(ObjectDisplayColor.Value other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Display.ObjectDisplayColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_CompareTo.htm"
+    },
+    {
+      "name": "Deconstruct",
+      "signature": "public void Deconstruct(out ObjectColorSource source, out ModelColor value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectColorSource",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_Deconstruct.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_Equals_1.htm"
+    },
+    {
+      "name": "Equals(ObjectDisplayColor.Value)",
+      "signature": "public bool Equals(ObjectDisplayColor.Value other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Display.ObjectDisplayColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_GetHashCode.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelColor to ObjectDisplayColor.Value)",
+      "signature": "public static implicit operator ObjectDisplayColor.Value (ModelColor color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectDisplayColor.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_op_Implicit_2.htm"
+    },
+    {
+      "name": "Implicit(ObjectColorSource to ObjectDisplayColor.Value)",
+      "signature": "public static implicit operator ObjectDisplayColor.Value (ObjectColorSource source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectColorSource",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectDisplayColor.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_op_Implicit_3.htm"
+    },
+    {
+      "name": "Implicit(ObjectDisplayColor.Value to ModelColor)",
+      "signature": "public static implicit operator ModelColor (ObjectDisplayColor.Value value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Display.ObjectDisplayColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_op_Implicit_1.htm"
+    },
+    {
+      "name": "Implicit(ObjectDisplayColor.Value to ObjectColorSource)",
+      "signature": "public static implicit operator ObjectColorSource (ObjectDisplayColor.Value value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Display.ObjectDisplayColor.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectColorSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ByLayer",
+      "type": "ObjectDisplayColor.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_ByLayer.htm"
+    },
+    {
+      "name": "ByMaterial",
+      "type": "ObjectDisplayColor.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_ByMaterial.htm"
+    },
+    {
+      "name": "ByParent",
+      "type": "ObjectDisplayColor.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_ByParent.htm"
+    },
+    {
+      "name": "Color",
+      "type": "ModelColor",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_Color.htm"
+    },
+    {
+      "name": "Source",
+      "type": "ObjectColorSource",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ObjectDisplayColor_Value_Source.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

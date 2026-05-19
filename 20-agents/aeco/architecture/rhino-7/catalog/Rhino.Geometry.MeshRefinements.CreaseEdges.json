@@ -1,0 +1,34 @@
+{
+  "name": "CreaseEdges",
+  "namespace": "Rhino.Geometry.MeshRefinements",
+  "kind": "enum",
+  "summary": "Defines the way naked edges are handled.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshRefinements_CreaseEdges.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NakedFixed",
+      "value": 0,
+      "summary": "Naked edges will not move or be modified."
+    },
+    {
+      "name": "NakedSmooth",
+      "value": 1,
+      "summary": "The naked edge will tend toward a spline."
+    },
+    {
+      "name": "CornerFixedOtherCreased",
+      "value": 2,
+      "summary": "Corners (2-sided vertices) will be fixed, while other naked vertices will tend toward a spline."
+    },
+    {
+      "name": "Auto",
+      "value": 3,
+      "summary": "Unwelded vertices become creases, and welded are smooth."
+    }
+  ]
+}

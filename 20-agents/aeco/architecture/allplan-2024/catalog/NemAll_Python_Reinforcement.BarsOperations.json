@@ -1,0 +1,86 @@
+{
+  "name": "BarsOperations",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.BarsOperations.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarsOperations/",
+  "constructors": [
+    {
+      "name": "BarsOperations",
+      "signature": "BarsOperations()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarsOperations/#NemAll_Python_Reinforcement.BarsOperations.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DivideBarsPlacement",
+      "signature": "DivideBarsPlacement(placement, divisionPolyline)",
+      "summary": "Divide the bars placement",
+      "remarks": "Divide the bars placement",
+      "params": [
+        {
+          "name": "placement",
+          "type": "DivideBarsParameters",
+          "doc": "BaseElementAdapter with the placement",
+          "optional": false
+        },
+        {
+          "name": "divideBarsParameter",
+          "type": "object",
+          "doc": "Divide bars parameters",
+          "optional": false
+        },
+        {
+          "name": "divisionPolyline",
+          "type": "Polyline2D",
+          "doc": "Divison polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Result message"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarsOperations/#NemAll_Python_Reinforcement.BarsOperations.DivideBarsPlacement"
+    },
+    {
+      "name": "JoinBarsPlacements",
+      "signature": "JoinBarsPlacements(placement, fillEdges)",
+      "summary": "Join the bars placements",
+      "remarks": "Join the bars placements",
+      "params": [
+        {
+          "name": "placements",
+          "type": "object",
+          "doc": "BaseElementAdapterList with the placements",
+          "optional": false
+        },
+        {
+          "name": "fillEdges",
+          "type": "bool",
+          "doc": "Fill the edges: True/False",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Result message"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarsOperations/#NemAll_Python_Reinforcement.BarsOperations.JoinBarsPlacements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

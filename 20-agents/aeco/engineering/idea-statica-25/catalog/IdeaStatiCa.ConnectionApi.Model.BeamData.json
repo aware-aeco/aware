@@ -1,0 +1,134 @@
+{
+  "name": "BeamData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.BeamData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "Plates",
+      "type": "List\u003CPlateData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.plates.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "CrossSectionType",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.crossSectionType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "MprlName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.mprlName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "OriginalModelId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.originalModelId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "Cuts",
+      "type": "List\u003CCutData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.cuts.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "IsAdded",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.isAdded.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "AddedMemberLength",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.addedMemberLength.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "IsNegativeObject",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.isNegativeObject.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "AddedMember",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.addedMember.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "MirrorY",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.mirrorY.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "RefLineInCenterOfGravity",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.refLineInCenterOfGravity.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "IsBearingMember",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.isBearingMember.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "AutoAddCutByWorkplane",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.autoAddCutByWorkplane.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BeamData.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BeamData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

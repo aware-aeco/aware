@@ -1,0 +1,39 @@
+{
+  "name": "GroupTableEventType",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "enum",
+  "summary": "Defines the types of group table events.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_GroupTableEventType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Added",
+      "value": 0,
+      "summary": "A group was added."
+    },
+    {
+      "name": "Deleted",
+      "value": 1,
+      "summary": "A group was deleted."
+    },
+    {
+      "name": "Undeleted",
+      "value": 2,
+      "summary": "A group was undeleted."
+    },
+    {
+      "name": "Modified",
+      "value": 3,
+      "summary": "A group was modified."
+    },
+    {
+      "name": "Sorted",
+      "value": 4,
+      "summary": "The group table was sorted."
+    }
+  ]
+}

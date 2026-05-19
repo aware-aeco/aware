@@ -1,0 +1,25 @@
+{
+  "name": "FacePerpendicularToIntersectionLineException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The FacePerpendicularToIntersectionLineException class represents an error when, face perpendicular to intersection line.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/935fde75-f2c5-1d01-623f-d7a6b4c48c34",
+  "constructors": [
+    {
+      "name": "FacePerpendicularToIntersectionLineException",
+      "signature": "public FacePerpendicularToIntersectionLineException()",
+      "summary": "Initializes a new instance of the FacePerpendicularToIntersectionLineException class with \u0022face perpendicular to intersection line\u0022 error message.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8471ef00-8586-99ca-2671-ba0546ed2170"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

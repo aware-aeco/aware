@@ -1,0 +1,188 @@
+{
+  "name": "Cylinder3DList",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Geometry.Cylinder3DList.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/",
+  "constructors": [
+    {
+      "name": "Cylinder3DList",
+      "signature": "Cylinder3DList()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__contains__",
+      "signature": "__contains__(value)",
+      "summary": "Check for a value in the list",
+      "remarks": "Check for a value in the list",
+      "params": [
+        {
+          "name": "value",
+          "type": "Cylinder3D",
+          "doc": "Value to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "State for value is in the list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__contains__"
+    },
+    {
+      "name": "__delitem__",
+      "signature": "__delitem__(value)",
+      "summary": "Delete a list item",
+      "remarks": "Delete a list item",
+      "params": [
+        {
+          "name": "value",
+          "type": "Cylinder3D",
+          "doc": "Value to delete",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__delitem__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index)",
+      "summary": "Get a list item",
+      "remarks": "Get a list item",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the item",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Cylinder3D",
+        "doc": "Value for the index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__getitem__"
+    },
+    {
+      "name": "__iter__",
+      "signature": "__iter__()",
+      "summary": "List iterator",
+      "remarks": "List iterator",
+      "params": [],
+      "returns": {
+        "type": "Iterator",
+        "doc": "List iterator"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__iter__"
+    },
+    {
+      "name": "__len__",
+      "signature": "__len__()",
+      "summary": "Get the list length",
+      "remarks": "Get the list length",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Length of the list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__len__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__repr__"
+    },
+    {
+      "name": "__setitem__",
+      "signature": "__setitem__(index, value)",
+      "summary": "Set a list item",
+      "remarks": "Set a list item",
+      "params": [
+        {
+          "name": "index",
+          "type": "int | slice",
+          "doc": "Index of the item",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Cylinder3D",
+          "doc": "Value to item",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.__setitem__"
+    },
+    {
+      "name": "append",
+      "signature": "append(value)",
+      "summary": "Append a list item",
+      "remarks": "Append a list item",
+      "params": [
+        {
+          "name": "value",
+          "type": "Cylinder3D",
+          "doc": "Value to append",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.append"
+    },
+    {
+      "name": "extend",
+      "signature": "extend(iterable)",
+      "summary": "Add the items from an iterable to the end of the list",
+      "remarks": "Add the items from an iterable to the end of the list",
+      "params": [
+        {
+          "name": "iterable",
+          "type": "Cylinder3DList",
+          "doc": "Iterable to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/#NemAll_Python_Geometry.Cylinder3DList.extend"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,44 @@
+{
+  "name": "AnimationProperties.CaptureTypes",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Constants that define the mode of the animation tools.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_AnimationProperties_CaptureTypes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Path",
+      "value": 0,
+      "summary": "Camera and target movement along separate path curves"
+    },
+    {
+      "name": "Turntable",
+      "value": 1,
+      "summary": "Rotate a view around the target."
+    },
+    {
+      "name": "Flythrough",
+      "value": 2,
+      "summary": "Camera and target movement along a path curve"
+    },
+    {
+      "name": "DaySunStudy",
+      "value": 3,
+      "summary": "Sun movement through a specified calendar day"
+    },
+    {
+      "name": "SeasonalSunStudy",
+      "value": 4,
+      "summary": "Sun movement through a specified week, month, or year"
+    },
+    {
+      "name": "None",
+      "value": 5,
+      "summary": "No capture type specified"
+    }
+  ]
+}

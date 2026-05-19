@@ -1,0 +1,31 @@
+{
+  "name": "ILogMessage",
+  "namespace": "Dynamo.Logging",
+  "kind": "interface",
+  "summary": "A message that can be logged with an ILogger.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/ILogger.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Log(Dynamo.Logging.ILogger)",
+      "signature": "void Log(Dynamo.Logging.ILogger logger)",
+      "summary": "Makes logger log message.",
+      "params": [
+        {
+          "name": "logger",
+          "type": "Dynamo.Logging.ILogger",
+          "doc": "Logger.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/ILogger.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

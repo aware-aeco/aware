@@ -1,0 +1,78 @@
+{
+  "name": "FileStp",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for writing STEP (STP) file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileStp.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "public static bool Read(string path, RhinoDoc doc, FileStpReadOptions options)",
+      "summary": "Read a Stp file into a RhinoDoc",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to read a file from",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to import geometry into",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileStpReadOptions",
+          "doc": "options used for importing the Stp file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileStp_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public static bool Write(string filename, RhinoDoc doc, FileStpWriteOptions options)",
+      "summary": "Write a STP file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "path to write a file to",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to get geometry from",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileStpWriteOptions",
+          "doc": "options used for generating the STP file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileStp_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

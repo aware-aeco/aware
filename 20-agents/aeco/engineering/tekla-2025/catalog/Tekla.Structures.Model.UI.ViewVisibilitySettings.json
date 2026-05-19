@@ -1,0 +1,250 @@
+{
+  "name": "ViewVisibilitySettings",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The View visibility settings class contains object visibility information related to view.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9edf7de3-5e73-1e02-d13c-0d50f9714cbc",
+  "constructors": [
+    {
+      "name": "ViewVisibilitySettings",
+      "signature": "public ViewVisibilitySettings()",
+      "summary": "Initializes a new instance of the ViewVisibilitySettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5d32835d-f61e-7f68-c8c8-d795a209a119"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BoltHolesVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bolt hole visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3795202d-1360-a156-9217-f54c96ed629b"
+    },
+    {
+      "name": "BoltHolesVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bolt hole visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca7f6b2b-fb2a-2228-9867-4c739a50547c"
+    },
+    {
+      "name": "BoltsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bolt visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ec801f93-8877-85a2-bbe7-311c1a2d9429"
+    },
+    {
+      "name": "BoltsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bolt visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/22e79c12-942a-41cf-2b9a-a4187c7b7cf5"
+    },
+    {
+      "name": "BuildingVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the building heirarchy visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8c56033b-903b-9571-08f2-1620f51aff0d"
+    },
+    {
+      "name": "ComponentsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the component symbol visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3aafa3a0-ee69-076b-8dd7-b17dd86aa0c0"
+    },
+    {
+      "name": "ComponentsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the component symbol visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cbf40213-6602-40b6-d0e7-d4379a83ebcb"
+    },
+    {
+      "name": "ConstructionLinesVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the construction line visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/75c26951-d472-47de-d64a-a967767ad825"
+    },
+    {
+      "name": "ConstructionPlanesVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the construction plane visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/04263d1c-9987-9010-c16f-7619b9bef75c"
+    },
+    {
+      "name": "ConstructionPlanesVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the construction plane visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d47f862a-fa2c-6d51-dd67-5138c07841ff"
+    },
+    {
+      "name": "CutsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cut or union visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9b433100-9a00-1424-6b95-3d3bac2fc9b2"
+    },
+    {
+      "name": "CutsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cut visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a074922f-1696-680e-cbbe-b75fb14d9b08"
+    },
+    {
+      "name": "FittingsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fitting visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eee2caa9-e17c-1263-0b05-c06b3812e63f"
+    },
+    {
+      "name": "FittingsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fitting visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fd33c68e-2a07-5a50-e180-2dc5f926d377"
+    },
+    {
+      "name": "GridsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the grid visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bb9d1935-466b-419a-fd4f-c71a4c16c970"
+    },
+    {
+      "name": "LoadsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the load visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfb5e578-a0e6-3041-36cc-2495f21b08ac"
+    },
+    {
+      "name": "PartsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the part visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b086828-63a0-92fa-26f8-c2b578aaa740"
+    },
+    {
+      "name": "PartsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the part visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4787a20a-14ca-60b5-be0d-abcc8f875d98"
+    },
+    {
+      "name": "PointsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2020c6ac-c85a-1aab-7122-d640e30db427"
+    },
+    {
+      "name": "PointsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f732efb6-a4d9-a355-2377-1429d1b7176d"
+    },
+    {
+      "name": "PourBreaksVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the pour break visibility. NOTE! this setting requires that XS_ENABLE_POUR_MANAGEMENT is set to true.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3483a105-44f8-3277-cf3b-a645f644ce6d"
+    },
+    {
+      "name": "PoursVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the pour visibility. NOTE! this setting requires that XS_ENABLE_POUR_MANAGEMENT is set to true.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8d4bf1ff-2706-a03a-4c68-d89e8d832433"
+    },
+    {
+      "name": "RebarsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the reinforcement visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aacb9d1e-d0fd-93cf-5d28-64df0589065e"
+    },
+    {
+      "name": "RebarsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the reinforcement visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9ed94ad-d977-3ba4-d59d-21258b91cec1"
+    },
+    {
+      "name": "ReferenceObjectsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the reference object visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ad2f263-557f-6ed2-2ce8-d7cff75b4916"
+    },
+    {
+      "name": "SurfaceTreatmentsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface treatment visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cbfd35d7-3907-c37e-585e-4f4884f57bd3"
+    },
+    {
+      "name": "WeldsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld visibility.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d2977537-3b63-c8ee-32df-99f67974e168"
+    },
+    {
+      "name": "WeldsVisibleInComponents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld visibility inside components.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bcdf8628-17e9-a9a8-5917-3a81d9dbbb78"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

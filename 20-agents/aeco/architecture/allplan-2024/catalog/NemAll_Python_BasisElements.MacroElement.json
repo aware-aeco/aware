@@ -1,0 +1,121 @@
+{
+  "name": "MacroElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "MacroElement class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/",
+  "constructors": [
+    {
+      "name": "MacroElement",
+      "signature": "MacroElement() | MacroElement(macroProp, slideList)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetHash",
+      "signature": "GetHash()",
+      "summary": "Get the hash value",
+      "remarks": "Get the hash value",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Hash value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.GetHash"
+    },
+    {
+      "name": "GetMacroProperties",
+      "signature": "GetMacroProperties()",
+      "summary": "Get the Macro properties",
+      "remarks": "Get the Macro properties",
+      "params": [],
+      "returns": {
+        "type": "MacroProperties",
+        "doc": "Macro properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.GetMacroProperties"
+    },
+    {
+      "name": "GetSlideList",
+      "signature": "GetSlideList()",
+      "summary": "Get the slide object list",
+      "remarks": "Get the slide object list",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Slide object list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.GetSlideList"
+    },
+    {
+      "name": "SetHash",
+      "signature": "SetHash(hash)",
+      "summary": "Set the hash value",
+      "remarks": "Set the hash value",
+      "params": [
+        {
+          "name": "hash",
+          "type": "str",
+          "doc": "Hash value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.SetHash"
+    },
+    {
+      "name": "SetMacroProperties",
+      "signature": "SetMacroProperties(MacroProp)",
+      "summary": "Set the Macro properties",
+      "remarks": "Set the Macro properties",
+      "params": [
+        {
+          "name": "MacroProp",
+          "type": "MacroProperties",
+          "doc": "Macro properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.SetMacroProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

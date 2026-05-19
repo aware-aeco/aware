@@ -1,0 +1,58 @@
+{
+  "name": "IPlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IPlacing interface is for objects that can have different placings.",
+  "interfaces": [
+    "IHasChildren"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/560a76d0-1e87-ff6f-4905-ed9bfb167eb8",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetObjects()",
+      "signature": "DrawingObjectEnumerator GetObjects()",
+      "summary": "Gets the children of the current object.",
+      "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The children of the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e548034d-415e-3fc3-844f-780bc5d2e7c2"
+    },
+    {
+      "name": "GetObjects(.Type[])",
+      "signature": "DrawingObjectEnumerator GetObjects(Type[] TypeFilter)",
+      "summary": "Gets the children of the current object that are of certain types.",
+      "params": [
+        {
+          "name": "TypeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The children of the current object that are of certain types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b2c4ae3-77ab-3ff9-2e07-a39e04badc8f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Placing",
+      "type": "PlacingBase",
+      "getter": true,
+      "setter": true,
+      "summary": "The current placing of the object. See PlacingTypes for different placing options.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c51eee6c-7542-f6fb-6350-0e611863ecf8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

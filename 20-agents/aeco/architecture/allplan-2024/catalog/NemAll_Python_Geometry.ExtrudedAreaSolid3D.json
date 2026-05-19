@@ -1,0 +1,214 @@
+{
+  "name": "ExtrudedAreaSolid3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Solid created by extrusion of area by given direction vector",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/",
+  "constructors": [
+    {
+      "name": "ExtrudedAreaSolid3D",
+      "signature": "ExtrudedAreaSolid3D() | ExtrudedAreaSolid3D(solid) | ExtrudedAreaSolid3D(solid, refPoint)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDirection",
+      "signature": "GetDirection()",
+      "summary": "Get direction for extrusion",
+      "remarks": "Get direction for extrusion",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.GetDirection"
+    },
+    {
+      "name": "GetExtrudedArea",
+      "signature": "GetExtrudedArea()",
+      "summary": "Get extruded area",
+      "remarks": "Get extruded area",
+      "params": [],
+      "returns": {
+        "type": "PolygonalArea3D",
+        "doc": "PolygonalArea3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.GetExtrudedArea"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint()",
+      "summary": "Get the reference point",
+      "remarks": "Get the reference point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.GetRefPoint"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Check if the Solid is valid",
+      "remarks": "Check if the Solid is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if it is a valid solid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.IsValid"
+    },
+    {
+      "name": "SetDirection",
+      "signature": "SetDirection(dir)",
+      "summary": "Set direction for extrusion",
+      "remarks": "Set direction for extrusion",
+      "params": [
+        {
+          "name": "dir",
+          "type": "Vector3D",
+          "doc": "Vector3D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.SetDirection"
+    },
+    {
+      "name": "SetExtrudedArea",
+      "signature": "SetExtrudedArea(area)",
+      "summary": "Set extruded area",
+      "remarks": "Set extruded area",
+      "params": [
+        {
+          "name": "area",
+          "type": "PolygonalArea3D",
+          "doc": "PolygonalArea3D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.SetExtrudedArea"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint)",
+      "summary": "Set reference point",
+      "remarks": "Set reference point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "New reference point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.SetRefPoint"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(extrudedAreaSolid)",
+      "summary": "Comparison of extrudedAreaSolids without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of extrudedAreaSolids without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "extrudedAreaSolid",
+          "type": "ExtrudedAreaSolid3D",
+          "doc": "Compared extrudedAreaSolid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when extrudedAreaSolids are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.__eq__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix)",
+      "summary": "Matrix transformation",
+      "remarks": "Matrix transformation",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "Transformation 3D matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Direction",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the direction as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.Direction"
+    },
+    {
+      "name": "ExtrudedArea",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the extruded area as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.ExtrudedArea"
+    },
+    {
+      "name": "RefPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the reference point as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.RefPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

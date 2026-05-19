@@ -1,0 +1,40 @@
+{
+  "name": "GH_GDLParser",
+  "namespace": "Grasshopper.Kernel.GDL",
+  "kind": "class",
+  "summary": "Provided functionality for parsing and writing Grasshopper Descriptor Language text.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GDL_GH_GDLParser.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ParseGDL",
+      "signature": "public static GH_Document ParseGDL(string[] lines, out string[] messages)",
+      "summary": "Convert a GDL text into an actual document.",
+      "params": [
+        {
+          "name": "lines",
+          "type": "System.String[]",
+          "doc": "Lines to parse.",
+          "optional": false
+        },
+        {
+          "name": "messages",
+          "type": "System.String[]",
+          "doc": "Messages encountered.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Document",
+        "doc": "A document on success or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GDL_GH_GDLParser_ParseGDL.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

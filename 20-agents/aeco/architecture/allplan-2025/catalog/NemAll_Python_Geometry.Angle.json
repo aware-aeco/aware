@@ -1,0 +1,342 @@
+{
+  "name": "Angle",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for angle in [rad].",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/",
+  "constructors": [
+    {
+      "name": "Angle",
+      "signature": "Angle() | Angle(angle: Angle) | Angle(angle: float)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DegToRad",
+      "signature": "DegToRad(angleDeg: float) -\u003E float",
+      "summary": "Convert angle from deg to rad Can be used for initialization of Angle class with deg angle. angle = Angle(Angle.DegToRad(45)); // angle will be 0.75[rad] (approx.)",
+      "remarks": "Convert angle from deg to rad Can be used for initialization of Angle class with deg angle. angle = Angle(Angle.DegToRad(45)); // angle will be 0.75[rad] (approx.)",
+      "params": [
+        {
+          "name": "angleDeg",
+          "type": "float",
+          "doc": "Angle in deg",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Angle in rad"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.DegToRad"
+    },
+    {
+      "name": "FromDeg",
+      "signature": "FromDeg(angleDeg: float) -\u003E Angle",
+      "summary": "",
+      "params": [
+        {
+          "name": "angleDeg",
+          "type": "float",
+          "doc": "Angle in degree",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "Angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.FromDeg"
+    },
+    {
+      "name": "Get",
+      "signature": "Get() -\u003E float",
+      "summary": "Get angle as radian value.",
+      "remarks": "Get angle as radian value.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double as radian value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Get"
+    },
+    {
+      "name": "GetDeg",
+      "signature": "GetDeg() -\u003E float",
+      "summary": "Get angle as degree value.",
+      "remarks": "Get angle as degree value.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double as degree value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.GetDeg"
+    },
+    {
+      "name": "Normalize2Pi",
+      "signature": "Normalize2Pi()",
+      "summary": "Normalize the angle to a range of \u003C0, 2PI\u003E. This method is checked and set Angle to 0 while angle is out of range \u003C-1e8, 1e8\u003E. The algorithm isn\u0027t stable for angle out of this range.",
+      "remarks": "Normalize the angle to a range of \u003C0, 2PI\u003E. This method is checked and set Angle to 0 while angle is out of range \u003C-1e8, 1e8\u003E. The algorithm isn\u0027t stable for angle out of this range.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Normalize2Pi"
+    },
+    {
+      "name": "NormalizePi",
+      "signature": "NormalizePi()",
+      "summary": "Normalize the angle to a range of \u003C-PI, PI\u003E. This method is checked and set Angle to 0 while angle is out of range \u003C-1e8, 1e8\u003E. The algorithm isn\u0027t stable for angle out of this range.",
+      "remarks": "Normalize the angle to a range of \u003C-PI, PI\u003E. This method is checked and set Angle to 0 while angle is out of range \u003C-1e8, 1e8\u003E. The algorithm isn\u0027t stable for angle out of this range.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.NormalizePi"
+    },
+    {
+      "name": "RadToDeg",
+      "signature": "RadToDeg(angleRad: float) -\u003E float",
+      "summary": "Convert angle from rad to deg",
+      "remarks": "Convert angle from rad to deg",
+      "params": [
+        {
+          "name": "angleRad",
+          "type": "float",
+          "doc": "Angle in rad",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Angle in rad"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.RadToDeg"
+    },
+    {
+      "name": "RadToGrad",
+      "signature": "RadToGrad(angleRad: float) -\u003E float",
+      "summary": "Convert angle from rad to grad",
+      "remarks": "Convert angle from rad to grad",
+      "params": [
+        {
+          "name": "angleRad",
+          "type": "float",
+          "doc": "Angle in rad",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Angle in grad"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.RadToGrad"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(angle: float) | Set(angle: Angle)",
+      "summary": "Set angle as radian value.",
+      "remarks": "Set angle as radian value.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "float",
+          "doc": "angle which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Set"
+    },
+    {
+      "name": "SetDeg",
+      "signature": "SetDeg(angleDeg: float)",
+      "summary": "Set angle as degree value.",
+      "remarks": "Set angle as degree value.",
+      "params": [
+        {
+          "name": "angleDeg",
+          "type": "float",
+          "doc": "angle as degree value which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.SetDeg"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(angle: Angle) -\u003E Angle | __add__(angle: float) -\u003E Angle",
+      "summary": "Addition operator",
+      "remarks": "Addition operator",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle which will be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "New angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__add__"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(angle: Angle) -\u003E bool",
+      "summary": "Comparison of angles. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of angles. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when angles are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__eq__"
+    },
+    {
+      "name": "__float__",
+      "signature": "__float__() -\u003E float",
+      "summary": "Type conversion operator.",
+      "remarks": "Type conversion operator.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Angle as double."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__float__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(angle: Angle) -\u003E Angle",
+      "summary": "Addition assignment operator.",
+      "remarks": "Addition assignment operator.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle which will be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "Reference to Angle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__iadd__"
+    },
+    {
+      "name": "__isub__",
+      "signature": "__isub__(angle: Angle) -\u003E Angle",
+      "summary": "Addition assignment operator.",
+      "remarks": "Addition assignment operator.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle which will be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "Reference to Angle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__isub__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(angle: Angle) -\u003E bool",
+      "summary": "Comparison of angles. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of angles. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when angles are not equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Deg",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get angle as degree value.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Deg"
+    },
+    {
+      "name": "Rad",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get angle as radian value.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Rad"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

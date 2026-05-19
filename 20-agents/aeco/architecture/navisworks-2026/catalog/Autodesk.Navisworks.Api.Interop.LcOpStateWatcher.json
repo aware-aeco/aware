@@ -1,0 +1,212 @@
+{
+  "name": "LcOpStateWatcher",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpStateWatcher class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpStateWatcher",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BeginWrite",
+      "signature": "bool BeginWrite(Autodesk.Navisworks.Api.Interop.LcOpStatePart part)",
+      "summary": "BeginWrite method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "part",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStatePart",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.BeginWrite%28Autodesk.Navisworks.Api.Interop.LcOpStatePart%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpStateWatcher InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpStateWatcher",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddPreWriteWatch",
+      "signature": "void AddPreWriteWatch(Autodesk.Navisworks.Api.Interop.LcOpElementClass el_data)",
+      "summary": "AddPreWriteWatch method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "el_data",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.AddPreWriteWatch%28Autodesk.Navisworks.Api.Interop.LcOpElementClass%29"
+    },
+    {
+      "name": "AddPreWriteWatch",
+      "signature": "void AddPreWriteWatch(Autodesk.Navisworks.Api.Interop.LcOpStatePart parts)",
+      "summary": "AddPreWriteWatch method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "parts",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStatePart",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.AddPreWriteWatch%28Autodesk.Navisworks.Api.Interop.LcOpStatePart%29"
+    },
+    {
+      "name": "AddWatch",
+      "signature": "void AddWatch(Autodesk.Navisworks.Api.Interop.LcOpElementClass el_data)",
+      "summary": "AddWatch method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "el_data",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.AddWatch%28Autodesk.Navisworks.Api.Interop.LcOpElementClass%29"
+    },
+    {
+      "name": "AddWatch",
+      "signature": "void AddWatch(Autodesk.Navisworks.Api.Interop.LcOpStateEvent event_)",
+      "summary": "AddWatch method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "event_",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStateEvent",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.AddWatch%28Autodesk.Navisworks.Api.Interop.LcOpStateEvent%29"
+    },
+    {
+      "name": "BeginWatch",
+      "signature": "void BeginWatch(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpStatePart parts)",
+      "summary": "BeginWatch method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "parts",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStatePart",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.BeginWatch%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpStatePart%29"
+    },
+    {
+      "name": "EndWatch",
+      "signature": "void EndWatch()",
+      "summary": "EndWatch method of LcOpStateWatcher.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.EndWatch"
+    },
+    {
+      "name": "EndWrite",
+      "signature": "void EndWrite()",
+      "summary": "EndWrite method of LcOpStateWatcher.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.EndWrite"
+    },
+    {
+      "name": "EndWrite",
+      "signature": "void EndWrite(bool update)",
+      "summary": "EndWrite method of LcOpStateWatcher.",
+      "params": [
+        {
+          "name": "update",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.EndWrite%28System.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpStateWatcher.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpStateWatcher.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

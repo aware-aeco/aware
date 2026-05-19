@@ -1,0 +1,82 @@
+{
+  "name": "CodeFile",
+  "namespace": "ProtoCore.CodeModel",
+  "kind": "class",
+  "summary": "Type CodeFile",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeFile.cs",
+  "constructors": [
+    {
+      "name": "CodeFile()",
+      "signature": "void CodeFile()",
+      "summary": "CodeFile.CodeFile",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeFile.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "op_Equality(ProtoCore.CodeModel.CodeFile, ProtoCore.CodeModel.CodeFile)",
+      "signature": "bool op_Equality(ProtoCore.CodeModel.CodeFile lhs, ProtoCore.CodeModel.CodeFile rhs)",
+      "summary": "CodeFile.op_Equality",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.CodeModel.CodeFile",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.CodeModel.CodeFile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeFile.cs"
+    },
+    {
+      "name": "op_Inequality(ProtoCore.CodeModel.CodeFile, ProtoCore.CodeModel.CodeFile)",
+      "signature": "bool op_Inequality(ProtoCore.CodeModel.CodeFile lhs, ProtoCore.CodeModel.CodeFile rhs)",
+      "summary": "CodeFile.op_Inequality",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.CodeModel.CodeFile",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.CodeModel.CodeFile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeFile.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FilePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeFile.FilePath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeFile.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

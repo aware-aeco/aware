@@ -1,0 +1,25 @@
+{
+  "name": "InputViewData",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.InputViewData.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewData/",
+  "constructors": [
+    {
+      "name": "InputViewData",
+      "signature": "InputViewData()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewData/#NemAll_Python_IFW_Input.InputViewData.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

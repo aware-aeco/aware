@@ -1,0 +1,29 @@
+{
+  "name": "Position.DepthEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The position in the depth sense.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c532ad57-9a3c-8754-bccc-797db0151372",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MIDDLE",
+      "value": 0,
+      "summary": "The middle option."
+    },
+    {
+      "name": "FRONT",
+      "value": 1,
+      "summary": "The front option."
+    },
+    {
+      "name": "BEHIND",
+      "value": 2,
+      "summary": "The behind option."
+    }
+  ]
+}

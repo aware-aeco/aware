@@ -1,0 +1,33 @@
+{
+  "name": "DynamicVariableTable",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type DynamicVariableTable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/StringTable.cs",
+  "constructors": [
+    {
+      "name": "DynamicVariableTable()",
+      "signature": "void DynamicVariableTable()",
+      "summary": "DynamicVariableTable.DynamicVariableTable",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/StringTable.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "variableTable",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.DyanmicVariableNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DynamicVariableTable.variableTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/StringTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

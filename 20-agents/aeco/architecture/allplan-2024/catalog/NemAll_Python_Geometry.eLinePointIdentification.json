@@ -1,0 +1,45 @@
+{
+  "name": "eLinePointIdentification",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Start and end point identification",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eLinePointIdentification/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eLinePointIdentification",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eLinePointIdentification/#NemAll_Python_Geometry.eLinePointIdentification.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "END_POINT",
+      "value": 1
+    },
+    {
+      "name": "START_POINT",
+      "value": 0
+    }
+  ]
+}

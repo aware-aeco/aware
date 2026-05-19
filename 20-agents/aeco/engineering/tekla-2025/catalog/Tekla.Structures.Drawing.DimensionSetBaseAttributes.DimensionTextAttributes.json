@@ -1,0 +1,100 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionTextAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DimensionTextAttributes class controls the dimension value representation.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/561bf2b6-be3f-4ceb-1ecc-e3423a4d8e4e",
+  "constructors": [
+    {
+      "name": "DimensionSetBaseAttributes.DimensionTextAttributes()",
+      "signature": "public DimensionTextAttributes()",
+      "summary": "Creates a new dimension text attributes instance. By default the default font is used, no frame is drawn and the value text is above the dimension line.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/36f24bf5-4879-e54c-63d3-15c4d6e645d4"
+    },
+    {
+      "name": "DimensionSetBaseAttributes.DimensionTextAttributes(FontAttributes, DimensionSetBaseAttributes.FrameTypes, DimensionSetBaseAttributes.DimensionTextPlacings)",
+      "signature": "public DimensionTextAttributes(FontAttributes font, DimensionSetBaseAttributes.FrameTypes frame, DimensionSetBaseAttributes.DimensionTextPlacings textPlacing)",
+      "summary": "Creates a new dimension text attributes instance with the given parameters.",
+      "params": [
+        {
+          "name": "font",
+          "type": "Tekla.Structures.Drawing.FontAttributes",
+          "doc": "The font attributes of the dimension value text.",
+          "optional": false
+        },
+        {
+          "name": "frame",
+          "type": "Tekla.Structures.Drawing.DimensionSetBaseAttributes.FrameTypes",
+          "doc": "The frame type of the dimension value text.",
+          "optional": false
+        },
+        {
+          "name": "textPlacing",
+          "type": "Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTextPlacings",
+          "doc": "The place of the dimension value text.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/02b259ae-d3a7-7fc1-5749-397ded0f862f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/992e4a4e-49c4-07b6-2ff5-f3206535255c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The font attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2b3c074-a848-6cab-5455-df63f484f4b1"
+    },
+    {
+      "name": "Frame",
+      "type": "DimensionSetBaseAttributes.FrameTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame type of the dimension value text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc69d779-9f28-ead5-605c-bc1b42e115f3"
+    },
+    {
+      "name": "TextPlacing",
+      "type": "DimensionSetBaseAttributes.DimensionTextPlacings",
+      "getter": true,
+      "setter": true,
+      "summary": "The place of the dimension value text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff9cb3b9-d2f8-4a21-7899-e6adc2af075d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

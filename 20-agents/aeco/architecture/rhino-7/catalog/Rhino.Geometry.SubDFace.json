@@ -1,0 +1,185 @@
+{
+  "name": "SubDFace",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Single face of a SubD",
+  "base": "SubDComponent",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDFace.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ComponentIndex",
+      "signature": "public ComponentIndex ComponentIndex()",
+      "summary": "Gets the component index of this face.",
+      "params": [],
+      "returns": {
+        "type": "ComponentIndex",
+        "doc": "The component index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubDFace_ComponentIndex.htm"
+    },
+    {
+      "name": "EdgeAt",
+      "signature": "public SubDEdge EdgeAt(int index)",
+      "summary": "Get an edge at a given index",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDFace.EdgeAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubDFace.EdgeAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubDFace_EdgeAt.htm"
+    },
+    {
+      "name": "EdgeDirectionMatchesFaceOrientation",
+      "signature": "public bool EdgeDirectionMatchesFaceOrientation(int index)",
+      "summary": "Check if a given edge in this face has the same direction as the face orientation",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDFace.EdgeDirectionMatchesFaceOrientation(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubDFace.EdgeDirectionMatchesFaceOrientation(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubDFace_EdgeDirectionMatchesFaceOrientation.htm"
+    },
+    {
+      "name": "VertexAt",
+      "signature": "public SubDVertex VertexAt(int index)",
+      "summary": "Get a vertex that this face uses by index",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDFace.VertexAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDVertex",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubDFace.VertexAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubDFace_VertexAt.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EdgeCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of edges for this face. Note that EdgeCount is always the same as VertexCount. Two properties are provided simply for clarity.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDFace_EdgeCount.htm"
+    },
+    {
+      "name": "Id",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique id within the parent SubD for this item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_Id.htm"
+    },
+    {
+      "name": "IsDamaged",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is damaged.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsDamaged.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsDeleted.htm"
+    },
+    {
+      "name": "IsHidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is hidden.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsHidden.htm"
+    },
+    {
+      "name": "IsHighlighted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is highlighted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsHighlighted.htm"
+    },
+    {
+      "name": "IsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsLocked.htm"
+    },
+    {
+      "name": "IsSelected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsSelected.htm"
+    },
+    {
+      "name": "LimitSurfaceCenterPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the limit surface point location at the center of the face",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDFace_LimitSurfaceCenterPoint.htm"
+    },
+    {
+      "name": "ParentSubD",
+      "type": "SubD",
+      "getter": true,
+      "setter": false,
+      "summary": "SubD that this component belongs to",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_ParentSubD.htm"
+    },
+    {
+      "name": "PerFaceColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "If per-face color is \u0022Empty\u0022, then this face does not have a custom color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDFace_PerFaceColor.htm"
+    },
+    {
+      "name": "VertexCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of vertices for this face. Note that EdgeCount is always the same as VertexCount. Two properties are provided simply for clarity.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDFace_VertexCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,184 @@
+{
+  "name": "GH_UserObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents a custom user object. A User Object is an existing IGH_DocumentObject with overridden icon, instance description and exposure.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_UserObject.htm",
+  "constructors": [
+    {
+      "name": "GH_UserObject()",
+      "signature": "public GH_UserObject()",
+      "summary": "Empty constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject__ctor.htm"
+    },
+    {
+      "name": "GH_UserObject(String)",
+      "signature": "public GH_UserObject(string source_file)",
+      "summary": "Create a new user object from an existing *.ghuser file.",
+      "params": [
+        {
+          "name": "source_file",
+          "type": "System.String",
+          "doc": "File that contains the User Object definition.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Destroy all data except the file path and the ID.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject_Clear.htm"
+    },
+    {
+      "name": "CreateDefaultPath",
+      "signature": "public void CreateDefaultPath(bool avoid_conflict)",
+      "summary": "Set the Path field for this user object to the default. The default file name is derived from the Description.Name field. This method also ensures the UserObject directory exists.",
+      "params": [
+        {
+          "name": "avoid_conflict",
+          "type": "System.Boolean",
+          "doc": "If true, a unique file path is assigned.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject_CreateDefaultPath.htm"
+    },
+    {
+      "name": "InstantiateObject",
+      "signature": "public IGH_DocumentObject InstantiateObject()",
+      "summary": "Instantiate a new IGH_DocumentObject from this User Object.",
+      "params": [],
+      "returns": {
+        "type": "IGH_DocumentObject",
+        "doc": "The IGH_DocumentObject instance defined inside the UserObject file or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject_InstantiateObject.htm"
+    },
+    {
+      "name": "ReadFromFile",
+      "signature": "public void ReadFromFile()",
+      "summary": "Force an update of the local data from the file. The Path field must be set for this to work.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown when the source file doesn\u0027t exist or is corrupted."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject_ReadFromFile.htm"
+    },
+    {
+      "name": "SaveToFile",
+      "signature": "public bool SaveToFile()",
+      "summary": "Save the current User Object state to a file. Any existing file will be overwritten.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject_SaveToFile.htm"
+    },
+    {
+      "name": "SetDataFromObject",
+      "signature": "public void SetDataFromObject(IGH_DocumentObject obj)",
+      "summary": "Set the Data field content of ths UserObject from a Document object instance.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "doc": "Object to assign",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UserObject_SetDataFromObject.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BaseGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ComponentID of the IGH_DocumentObject that functions as the base class for this User Object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_UserObject_BaseGuid.htm"
+    },
+    {
+      "name": "Data",
+      "type": "Byte[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the serialized data. This data is used to deserialize a new instance of the base class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_UserObject_Data.htm"
+    },
+    {
+      "name": "Description",
+      "type": "GH_InstanceDescription",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Instance Description override for this User Object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_UserObject_Description.htm"
+    },
+    {
+      "name": "Exposure",
+      "type": "GH_Exposure",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Exposure of this User Object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_UserObject_Exposure.htm"
+    },
+    {
+      "name": "Guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Guid of this User Object. The Guid is created anew during construction and is not stored in the User Object File. You should never have to set this field.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_UserObject_Guid.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the icon associated with this User Object. If the icon hasn\u0027t been overridden, then a Default icon is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_UserObject_Icon.htm"
+    },
+    {
+      "name": "Path",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the file path this User Object is loaded from or saved to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_UserObject_Path.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

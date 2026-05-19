@@ -1,0 +1,1133 @@
+{
+  "name": "ElementCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Element Commands\u0027 command group \u2014 48 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSelectedElements",
+      "signature": "GetSelectedElements(): object",
+      "summary": "Gets the list of the currently selected elements.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetSelectedElements",
+      "since": "0.1.0"
+    },
+    {
+      "name": "GetElementsByType",
+      "signature": "GetElementsByType(elementType: ElementType, filters?: ElementFilter[], databases?: Databases): ElementsWithExecutionResultsOrError",
+      "summary": "Returns the identifier of every element of the given type on the plan. It works for any type. Use the optional filter parameter for filtering.",
+      "params": [
+        {
+          "name": "elementType",
+          "type": "ElementType",
+          "optional": false
+        },
+        {
+          "name": "filters",
+          "type": "ElementFilter[]",
+          "optional": true
+        },
+        {
+          "name": "databases",
+          "type": "Databases",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ElementsWithExecutionResultsOrError",
+        "doc": "Returns a \u0060ElementsWithExecutionResultsOrError\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetElementsByType",
+      "since": "1.0.7"
+    },
+    {
+      "name": "GetAllElements",
+      "signature": "GetAllElements(filters?: ElementFilter[], databases?: Databases): ElementsWithExecutionResultsOrError",
+      "summary": "Returns the identifier of all elements on the plan. Use the optional filter parameter for filtering.",
+      "params": [
+        {
+          "name": "filters",
+          "type": "ElementFilter[]",
+          "optional": true
+        },
+        {
+          "name": "databases",
+          "type": "Databases",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ElementsWithExecutionResultsOrError",
+        "doc": "Returns a \u0060ElementsWithExecutionResultsOrError\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetAllElements",
+      "since": "1.0.7"
+    },
+    {
+      "name": "ChangeSelectionOfElements",
+      "signature": "ChangeSelectionOfElements(addElementsToSelection?: Elements, removeElementsFromSelection?: Elements): object",
+      "summary": "Adds/removes a number of elements to/from the current selection.",
+      "params": [
+        {
+          "name": "addElementsToSelection",
+          "type": "Elements",
+          "optional": true
+        },
+        {
+          "name": "removeElementsFromSelection",
+          "type": "Elements",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResultsOfAddToSelection, executionResultsOfRemoveFromSelection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ChangeSelectionOfElements",
+      "since": "1.0.7"
+    },
+    {
+      "name": "FilterElements",
+      "signature": "FilterElements(elements: Elements, filters?: ElementFilter[]): object",
+      "summary": "Tests an elements by the given criterias.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "filters",
+          "type": "ElementFilter[]",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FilterElements",
+      "since": "1.0.7"
+    },
+    {
+      "name": "GetDetailsOfElements",
+      "signature": "GetDetailsOfElements(elements: Elements): object",
+      "summary": "Gets the details of the given elements (geometry parameters etc).",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: detailsOfElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetDetailsOfElements",
+      "since": "1.0.7"
+    },
+    {
+      "name": "SetDetailsOfElements",
+      "signature": "SetDetailsOfElements(elementsWithDetails: object[]): object",
+      "summary": "Sets the details of the given elements (floor, layer, order etc).",
+      "params": [
+        {
+          "name": "elementsWithDetails",
+          "type": "object[]",
+          "doc": "The elements with parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetDetailsOfElements",
+      "since": "1.0.7"
+    },
+    {
+      "name": "Get3DBoundingBoxes",
+      "signature": "Get3DBoundingBoxes(elements: Elements): object",
+      "summary": "Get the 3D bounding box of elements. The bounding box is calculated from the global origin in the 3D view. The output is the array of the bounding boxes respective to the input array of elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: boundingBoxes3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Get3DBoundingBoxes",
+      "since": "1.1.2"
+    },
+    {
+      "name": "GetSubelementsOfHierarchicalElements",
+      "signature": "GetSubelementsOfHierarchicalElements(elements: Elements): object",
+      "summary": "Gets the subelements of the given hierarchical elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: subelements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetSubelementsOfHierarchicalElements",
+      "since": "1.0.6"
+    },
+    {
+      "name": "GetConnectedElements",
+      "signature": "GetConnectedElements(elements: Elements, connectedElementType: ElementType): ConnectedElementsOrError",
+      "summary": "Gets connected elements of the given elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "connectedElementType",
+          "type": "ElementType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectedElementsOrError",
+        "doc": "Returns a \u0060ConnectedElementsOrError\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetConnectedElements",
+      "since": "1.1.4"
+    },
+    {
+      "name": "GetZoneBoundaries",
+      "signature": "GetZoneBoundaries(zoneElementId: ElementId): ZoneBoundariesOrError",
+      "summary": "Gets the boundaries of the given Zone (connected elements, neighbour zones, etc.).",
+      "params": [
+        {
+          "name": "zoneElementId",
+          "type": "ElementId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ZoneBoundariesOrError",
+        "doc": "Returns a \u0060ZoneBoundariesOrError\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetZoneBoundaries",
+      "since": "1.2.3"
+    },
+    {
+      "name": "GetCollisions",
+      "signature": "GetCollisions(elementsGroup1: Elements, elementsGroup2: Elements, settings?: object): object",
+      "summary": "Detect collisions between the given two groups of elements.",
+      "params": [
+        {
+          "name": "elementsGroup1",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "elementsGroup2",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "object",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: collisions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetCollisions",
+      "since": "1.2.2"
+    },
+    {
+      "name": "HighlightElements",
+      "signature": "HighlightElements(elements: Elements, highlightedColors: integer[][], wireframe3D?: boolean, nonHighlightedColor?: integer[]): ExecutionResult",
+      "summary": "Highlights the elements given in the elements array. In case of empty elements array removes all previously set highlights.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "highlightedColors",
+          "type": "integer[][]",
+          "doc": "A list of colors to highlight elements.",
+          "optional": false
+        },
+        {
+          "name": "wireframe3D",
+          "type": "boolean",
+          "doc": "Optional parameter. Switch non highlighted elements in the 3D window to wireframe.",
+          "optional": true
+        },
+        {
+          "name": "nonHighlightedColor",
+          "type": "integer[]",
+          "doc": "Optional parameter. Color of the non highlighted elements as an [r, g, b, a] array. Each component must be in the 0-255 range.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#HighlightElements",
+      "since": "1.0.3"
+    },
+    {
+      "name": "MoveElements",
+      "signature": "MoveElements(elementsWithMoveVectors: object[]): object",
+      "summary": "Moves elements with a given vector.",
+      "params": [
+        {
+          "name": "elementsWithMoveVectors",
+          "type": "object[]",
+          "doc": "The elements with move vector pairs.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MoveElements",
+      "since": "1.0.2"
+    },
+    {
+      "name": "DeleteElements",
+      "signature": "DeleteElements(elements: Elements): ExecutionResult",
+      "summary": "Deletes elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DeleteElements",
+      "since": "1.2.1"
+    },
+    {
+      "name": "GetGDLParametersOfElements",
+      "signature": "GetGDLParametersOfElements(elements: Elements): object",
+      "summary": "Gets all the GDL parameters (name, type, value) of the given elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: gdlParametersOfElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetGDLParametersOfElements",
+      "since": "1.0.8"
+    },
+    {
+      "name": "SetGDLParametersOfElements",
+      "signature": "SetGDLParametersOfElements(elementsWithGDLParameters: object[]): object",
+      "summary": "Sets the given GDL parameters of the given elements.",
+      "params": [
+        {
+          "name": "elementsWithGDLParameters",
+          "type": "object[]",
+          "doc": "The elements with GDL parameters dictionary pairs.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetGDLParametersOfElements",
+      "since": "1.0.8"
+    },
+    {
+      "name": "GetClassificationsOfElements",
+      "signature": "GetClassificationsOfElements(elements: Elements, classificationSystemIds: ClassificationSystemIds): object",
+      "summary": "Returns the classification of the given elements in the given classification systems. It works for subelements of hierarchal elements also.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "classificationSystemIds",
+          "type": "ClassificationSystemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elementClassifications."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetClassificationsOfElements",
+      "since": "1.0.7"
+    },
+    {
+      "name": "SetClassificationsOfElements",
+      "signature": "SetClassificationsOfElements(elementClassifications: ElementClassifications): object",
+      "summary": "Sets the classifications of elements. In order to set the classification of an element to unclassified, omit the classificationItemId field. It works for subelements of hierarchal elements also.",
+      "params": [
+        {
+          "name": "elementClassifications",
+          "type": "ElementClassifications",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetClassificationsOfElements",
+      "since": "1.0.7"
+    },
+    {
+      "name": "CreateColumns",
+      "signature": "CreateColumns(columnsData: object[]): object",
+      "summary": "Creates Column elements based on the given parameters.",
+      "params": [
+        {
+          "name": "columnsData",
+          "type": "object[]",
+          "doc": "Array of data to create Columns.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateColumns",
+      "since": "1.0.3"
+    },
+    {
+      "name": "CreateWalls",
+      "signature": "CreateWalls(wallsData: object[]): object",
+      "summary": "Creates Wall elements based on the given parameters.",
+      "params": [
+        {
+          "name": "wallsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateWalls",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateBeams",
+      "signature": "CreateBeams(beamsData: object[]): object",
+      "summary": "Creates Beam elements based on the given parameters.",
+      "params": [
+        {
+          "name": "beamsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateBeams",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateSlabs",
+      "signature": "CreateSlabs(slabsData: object[]): object",
+      "summary": "Creates Slab elements based on the given parameters.",
+      "params": [
+        {
+          "name": "slabsData",
+          "type": "object[]",
+          "doc": "Array of data to create Slabs.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateSlabs",
+      "since": "1.0.3"
+    },
+    {
+      "name": "CreateWindows",
+      "signature": "CreateWindows(windowsData: object[]): object",
+      "summary": "Creates Window elements in host walls based on the given parameters.",
+      "params": [
+        {
+          "name": "windowsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateWindows",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateDoors",
+      "signature": "CreateDoors(doorsData: object[]): object",
+      "summary": "Creates Door elements in host walls based on the given parameters.",
+      "params": [
+        {
+          "name": "doorsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateDoors",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateOpenings",
+      "signature": "CreateOpenings(openingsData: object[]): object",
+      "summary": "Creates Opening elements in the given host elements.",
+      "params": [
+        {
+          "name": "openingsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateOpenings",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateMorphs",
+      "signature": "CreateMorphs(morphsData: object[]): object",
+      "summary": "Creates Morph elements from simple box definitions.",
+      "params": [
+        {
+          "name": "morphsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateMorphs",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateRoofs",
+      "signature": "CreateRoofs(roofsData: object[]): object",
+      "summary": "Creates multi-plane Roof elements based on footprint, level and roof profile data.",
+      "params": [
+        {
+          "name": "roofsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateRoofs",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateAssociativeDimensions",
+      "signature": "CreateAssociativeDimensions(dimensionsData: object[]): object",
+      "summary": "Creates associative linear dimensions from explicit witness point references.",
+      "params": [
+        {
+          "name": "dimensionsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateAssociativeDimensions",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateAssociativeDimensionsOnSection",
+      "signature": "CreateAssociativeDimensionsOnSection(dimensionsData: object[]): object",
+      "summary": "Creates associative linear dimensions on section elements using common wall, slab, beam, column and opening presets.",
+      "params": [
+        {
+          "name": "dimensionsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateAssociativeDimensionsOnSection",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateWallThicknessDimensions",
+      "signature": "CreateWallThicknessDimensions(dimensionsData: object[]): object",
+      "summary": "Creates associative wall thickness dimensions for the given walls.",
+      "params": [
+        {
+          "name": "dimensionsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateWallThicknessDimensions",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateZones",
+      "signature": "CreateZones(zonesData: object[]): object",
+      "summary": "Creates Zone elements based on the given parameters.",
+      "params": [
+        {
+          "name": "zonesData",
+          "type": "object[]",
+          "doc": "Array of data to create Zones.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateZones",
+      "since": "1.1.8"
+    },
+    {
+      "name": "CreatePolylines",
+      "signature": "CreatePolylines(polylinesData: object[]): object",
+      "summary": "Creates Polyline elements based on the given parameters.",
+      "params": [
+        {
+          "name": "polylinesData",
+          "type": "object[]",
+          "doc": "Array of data to create Polylines.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreatePolylines",
+      "since": "1.1.5"
+    },
+    {
+      "name": "CreateObjects",
+      "signature": "CreateObjects(objectsData: object[]): object",
+      "summary": "Creates Object elements based on the given parameters.",
+      "params": [
+        {
+          "name": "objectsData",
+          "type": "object[]",
+          "doc": "Array of data to create Objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateObjects",
+      "since": "1.0.3"
+    },
+    {
+      "name": "CreateMeshes",
+      "signature": "CreateMeshes(meshesData: object[]): object",
+      "summary": "Creates Mesh elements based on the given parameters.",
+      "params": [
+        {
+          "name": "meshesData",
+          "type": "object[]",
+          "doc": "Array of data to create Meshes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateMeshes",
+      "since": "1.1.9"
+    },
+    {
+      "name": "CreateLabels",
+      "signature": "CreateLabels(labelsData: object[]): object",
+      "summary": "Creates Label elements based on the given parameters.",
+      "params": [
+        {
+          "name": "labelsData",
+          "type": "object[]",
+          "doc": "Array of data to create Labels.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateLabels",
+      "since": "1.2.5"
+    },
+    {
+      "name": "ModifyWalls",
+      "signature": "ModifyWalls(wallsWithDetails: object[]): object",
+      "summary": "Modifies Wall elements based on the given parameters.",
+      "params": [
+        {
+          "name": "wallsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifyWalls",
+      "since": "1.4.0"
+    },
+    {
+      "name": "ModifyBeams",
+      "signature": "ModifyBeams(beamsWithDetails: object[]): object",
+      "summary": "Modifies Beam elements based on the given parameters.",
+      "params": [
+        {
+          "name": "beamsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifyBeams",
+      "since": "1.4.0"
+    },
+    {
+      "name": "ModifySlabs",
+      "signature": "ModifySlabs(slabsWithDetails: object[]): object",
+      "summary": "Modifies Slab elements based on the given parameters.",
+      "params": [
+        {
+          "name": "slabsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifySlabs",
+      "since": "1.4.0"
+    },
+    {
+      "name": "ModifyColumns",
+      "signature": "ModifyColumns(columnsWithDetails: object[]): object",
+      "summary": "Modifies Column elements based on the given parameters.",
+      "params": [
+        {
+          "name": "columnsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifyColumns",
+      "since": "1.4.0"
+    },
+    {
+      "name": "ModifyWindows",
+      "signature": "ModifyWindows(windowsWithDetails: object[]): object",
+      "summary": "Modifies Window elements based on the given parameters.",
+      "params": [
+        {
+          "name": "windowsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifyWindows",
+      "since": "1.4.0"
+    },
+    {
+      "name": "ModifyDoors",
+      "signature": "ModifyDoors(doorsWithDetails: object[]): object",
+      "summary": "Modifies Door elements based on the given parameters.",
+      "params": [
+        {
+          "name": "doorsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifyDoors",
+      "since": "1.4.0"
+    },
+    {
+      "name": "ModifyMorphs",
+      "signature": "ModifyMorphs(morphsWithDetails: object[]): object",
+      "summary": "Modifies Morph elements based on the given parameters.",
+      "params": [
+        {
+          "name": "morphsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifyMorphs",
+      "since": "1.4.0"
+    },
+    {
+      "name": "ModifyRoofs",
+      "signature": "ModifyRoofs(roofsWithDetails: object[]): object",
+      "summary": "Modifies multi-plane Roof elements based on the given parameters.",
+      "params": [
+        {
+          "name": "roofsWithDetails",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ModifyRoofs",
+      "since": "1.4.0"
+    },
+    {
+      "name": "GetElementPreviewImage",
+      "signature": "GetElementPreviewImage(elementId: ElementId, imageType?: string, format?: string, width?: integer, height?: integer): object",
+      "summary": "Returns the preview image of the given element.",
+      "params": [
+        {
+          "name": "elementId",
+          "type": "ElementId",
+          "optional": false
+        },
+        {
+          "name": "imageType",
+          "type": "string",
+          "doc": "The type of the preview image. Default is 3D.",
+          "optional": true
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "doc": "The image format. Default is png.",
+          "optional": true
+        },
+        {
+          "name": "width",
+          "type": "integer",
+          "doc": "The width of the preview image in pixels. Default is 128.",
+          "optional": true
+        },
+        {
+          "name": "height",
+          "type": "integer",
+          "doc": "The height of the preview image in pixels. Default is 128.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: previewImage."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetElementPreviewImage",
+      "since": "1.2.7"
+    },
+    {
+      "name": "GetRoomImage",
+      "signature": "GetRoomImage(zoneId: ElementId, format?: string, width?: integer, height?: integer, offset?: number, scale?: number, backgroundColor?: ColorRGB): object",
+      "summary": "Returns the room image of the given zone.",
+      "params": [
+        {
+          "name": "zoneId",
+          "type": "ElementId",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "doc": "The image format. Default is png.",
+          "optional": true
+        },
+        {
+          "name": "width",
+          "type": "integer",
+          "doc": "The width of the preview image in pixels. Default is 256.",
+          "optional": true
+        },
+        {
+          "name": "height",
+          "type": "integer",
+          "doc": "The height of the preview image in pixels. Default is 256.",
+          "optional": true
+        },
+        {
+          "name": "offset",
+          "type": "number",
+          "doc": "Offset of the clip polygon from the edge of the zone. Default is 0.001.",
+          "optional": true
+        },
+        {
+          "name": "scale",
+          "type": "number",
+          "doc": "Scale of the view (e.g. 0.005 for 1:200). Default is 0.005.",
+          "optional": true
+        },
+        {
+          "name": "backgroundColor",
+          "type": "ColorRGB",
+          "doc": "Background color of the generated image. Default is white (1.0, 1.0, 1.0).",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: roomImage."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetRoomImage",
+      "since": "1.2.7"
+    },
+    {
+      "name": "SetElementNotificationClient",
+      "signature": "SetElementNotificationClient(host?: string, port: integer, notifyOnNewElement?: boolean, notifyOnModificationOfAnElement?: boolean, notifyOnReservationChanges?: boolean): ExecutionResult",
+      "summary": "Sets up a new notification client to receive element events.",
+      "params": [
+        {
+          "name": "host",
+          "type": "string",
+          "doc": "The host address of the notification client. If not provided, localhost is used.",
+          "optional": true
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "doc": "The port number of the notification client.",
+          "optional": false
+        },
+        {
+          "name": "notifyOnNewElement",
+          "type": "boolean",
+          "doc": "Notify on creation of a new element. Optional parameter, by default true.",
+          "optional": true
+        },
+        {
+          "name": "notifyOnModificationOfAnElement",
+          "type": "boolean",
+          "doc": "Notify on modification/deletion of an element. Optional parameter, by default true.",
+          "optional": true
+        },
+        {
+          "name": "notifyOnReservationChanges",
+          "type": "boolean",
+          "doc": "Notify on reservation changes of an element. Optional parameter, by default true.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetElementNotificationClient",
+      "since": "1.2.8"
+    },
+    {
+      "name": "RemoveElementNotificationClient",
+      "signature": "RemoveElementNotificationClient(host?: string, port: integer): ExecutionResult",
+      "summary": "Removes an element notification client.",
+      "params": [
+        {
+          "name": "host",
+          "type": "string",
+          "doc": "The host address of the notification client. If not provided, localhost is used.",
+          "optional": true
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "doc": "The port number of the notification client.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#RemoveElementNotificationClient",
+      "since": "1.2.8"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

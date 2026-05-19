@@ -1,0 +1,46 @@
+{
+  "name": "FileX_T",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for writing X_T file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileX_T.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Write",
+      "signature": "public static bool Write(string filename, RhinoDoc doc, FileX_TWriteOptions options)",
+      "summary": "Write a X_T file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "path to write a file to",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to get geometry from",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileX_TWriteOptions",
+          "doc": "options used for generating the X_T file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileX_T_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

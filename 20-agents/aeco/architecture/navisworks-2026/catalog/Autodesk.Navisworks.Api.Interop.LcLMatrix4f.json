@@ -1,0 +1,890 @@
+{
+  "name": "LcLMatrix4f",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcLMatrix4f class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+  "constructors": [
+    {
+      "name": "LcLMatrix4f()",
+      "signature": "LcLMatrix4f()",
+      "summary": "Constructs a new LcLMatrix4f.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.%23ctor"
+    },
+    {
+      "name": "LcLMatrix4f(Autodesk.Navisworks.Api.Interop.LcLAffine3f)",
+      "signature": "LcLMatrix4f(Autodesk.Navisworks.Api.Interop.LcLAffine3f affine)",
+      "summary": "Constructs a new LcLMatrix4f.",
+      "params": [
+        {
+          "name": "affine",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLAffine3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.%23ctor%28Autodesk.Navisworks.Api.Interop.LcLAffine3f%29"
+    },
+    {
+      "name": "LcLMatrix4f(Autodesk.Navisworks.Api.Interop.LcLMatrix4f)",
+      "signature": "LcLMatrix4f(Autodesk.Navisworks.Api.Interop.LcLMatrix4f a)",
+      "summary": "Constructs a new LcLMatrix4f.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.%23ctor%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "LcLMatrix4f(Autodesk.Navisworks.Api.Matrix3, Autodesk.Navisworks.Api.Vector3D)",
+      "signature": "LcLMatrix4f(Autodesk.Navisworks.Api.Matrix3 linear, Autodesk.Navisworks.Api.Vector3D trans)",
+      "summary": "Constructs a new LcLMatrix4f.",
+      "params": [
+        {
+          "name": "linear",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.%23ctor%28Autodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "LcLMatrix4f(Autodesk.Navisworks.Api.Rotation3D)",
+      "signature": "LcLMatrix4f(Autodesk.Navisworks.Api.Rotation3D r)",
+      "summary": "Constructs a new LcLMatrix4f.",
+      "params": [
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.%23ctor%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "LcLMatrix4f(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double)",
+      "signature": "LcLMatrix4f(double e00, double e01, double e02, double e03, double e10, double e11, double e12, double e13, double e20, double e21, double e22, double e23, double e30, double e31, double e32, double e33)",
+      "summary": "Constructs a new LcLMatrix4f.",
+      "params": [
+        {
+          "name": "e00",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e01",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e02",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e03",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e10",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e11",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e12",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e13",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e20",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e21",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e22",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e23",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e30",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e31",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e32",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e33",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.%23ctor%28System.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Inverse",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f Inverse()",
+      "summary": "Inverse method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Inverse"
+    },
+    {
+      "name": "GetLinear",
+      "signature": "Autodesk.Navisworks.Api.Matrix3 GetLinear()",
+      "summary": "GetLinear method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Matrix3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.GetLinear"
+    },
+    {
+      "name": "ConvertRotation",
+      "signature": "Autodesk.Navisworks.Api.Rotation3D ConvertRotation()",
+      "summary": "ConvertRotation method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rotation3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.ConvertRotation"
+    },
+    {
+      "name": "GetTranslation",
+      "signature": "Autodesk.Navisworks.Api.Vector3D GetTranslation()",
+      "summary": "GetTranslation method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.GetTranslation"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m)",
+      "summary": "Equals method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Equals%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m, double tol)",
+      "summary": "Equals method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        },
+        {
+          "name": "tol",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Equals%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%2CSystem.Double%29"
+    },
+    {
+      "name": "HasNaN",
+      "signature": "bool HasNaN()",
+      "summary": "HasNaN method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.HasNaN"
+    },
+    {
+      "name": "IsIdentity",
+      "signature": "bool IsIdentity()",
+      "summary": "IsIdentity method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.IsIdentity"
+    },
+    {
+      "name": "IsZero",
+      "signature": "bool IsZero()",
+      "summary": "IsZero method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.IsZero"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcLMatrix4f InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of LcLMatrix4f.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.ToString"
+    },
+    {
+      "name": "Factor",
+      "signature": "void Factor(Autodesk.Navisworks.Api.Vector3D s, Autodesk.Navisworks.Api.Matrix3 so, Autodesk.Navisworks.Api.Matrix3 r, Autodesk.Navisworks.Api.Vector3D t)",
+      "summary": "Factor method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "so",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Factor%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Factor",
+      "signature": "void Factor(Autodesk.Navisworks.Api.Vector3D s, Autodesk.Navisworks.Api.Matrix3 so, Autodesk.Navisworks.Api.Matrix3 r, Autodesk.Navisworks.Api.Vector3D t, Autodesk.Navisworks.Api.Interop.LcLMatrix4f p)",
+      "summary": "Factor method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "so",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Factor%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "Factor",
+      "signature": "void Factor(Autodesk.Navisworks.Api.Vector3D s, Autodesk.Navisworks.Api.Rotation3D so, Autodesk.Navisworks.Api.Rotation3D r, Autodesk.Navisworks.Api.Vector3D t)",
+      "summary": "Factor method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "so",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Factor%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Rotation3D%2CAutodesk.Navisworks.Api.Rotation3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Factor",
+      "signature": "void Factor(Autodesk.Navisworks.Api.Vector3D s, Autodesk.Navisworks.Api.Rotation3D so, Autodesk.Navisworks.Api.Rotation3D r, Autodesk.Navisworks.Api.Vector3D t, Autodesk.Navisworks.Api.Interop.LcLMatrix4f p)",
+      "summary": "Factor method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "so",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Factor%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Rotation3D%2CAutodesk.Navisworks.Api.Rotation3D%2CAutodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "GetLinear",
+      "signature": "void GetLinear(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "GetLinear method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.GetLinear%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "Invert",
+      "signature": "void Invert()",
+      "summary": "Invert method of LcLMatrix4f.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.Invert"
+    },
+    {
+      "name": "MakeAffine",
+      "signature": "void MakeAffine(Autodesk.Navisworks.Api.Interop.LcLAffine3f affine)",
+      "summary": "MakeAffine method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "affine",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLAffine3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MakeAffine%28Autodesk.Navisworks.Api.Interop.LcLAffine3f%29"
+    },
+    {
+      "name": "MakeAffine",
+      "signature": "void MakeAffine(Autodesk.Navisworks.Api.Matrix3 linear, Autodesk.Navisworks.Api.Vector3D trans)",
+      "summary": "MakeAffine method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "linear",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MakeAffine%28Autodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "MakeIdentity",
+      "signature": "void MakeIdentity()",
+      "summary": "MakeIdentity method of LcLMatrix4f.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MakeIdentity"
+    },
+    {
+      "name": "MakeLinear",
+      "signature": "void MakeLinear(Autodesk.Navisworks.Api.Matrix3 linear)",
+      "summary": "MakeLinear method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "linear",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MakeLinear%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "MakeRotation",
+      "signature": "void MakeRotation(Autodesk.Navisworks.Api.Rotation3D r)",
+      "summary": "MakeRotation method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MakeRotation%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "MakeScale",
+      "signature": "void MakeScale(Autodesk.Navisworks.Api.Vector3D v)",
+      "summary": "MakeScale method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MakeScale%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "MakeTranslation",
+      "signature": "void MakeTranslation(Autodesk.Navisworks.Api.Vector3D t)",
+      "summary": "MakeTranslation method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "t",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MakeTranslation%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "MultLeft",
+      "signature": "void MultLeft(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m)",
+      "summary": "MultLeft method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MultLeft%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "MultLeft",
+      "signature": "void MultLeft(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "MultLeft method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MultLeft%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "MultRight",
+      "signature": "void MultRight(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m)",
+      "summary": "MultRight method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MultRight%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "MultRight",
+      "signature": "void MultRight(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "MultRight method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.MultRight%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "RotateLeft",
+      "signature": "void RotateLeft(Autodesk.Navisworks.Api.Rotation3D r)",
+      "summary": "RotateLeft method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.RotateLeft%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "RotateRight",
+      "signature": "void RotateRight(Autodesk.Navisworks.Api.Rotation3D r)",
+      "summary": "RotateRight method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.RotateRight%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "ScaleLeft",
+      "signature": "void ScaleLeft(Autodesk.Navisworks.Api.Vector3D s)",
+      "summary": "ScaleLeft method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.ScaleLeft%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "ScaleRight",
+      "signature": "void ScaleRight(Autodesk.Navisworks.Api.Vector3D s)",
+      "summary": "ScaleRight method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.ScaleRight%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.Interop.LcLAffine3f affine)",
+      "summary": "SetValue method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "affine",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLAffine3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.SetValue%28Autodesk.Navisworks.Api.Interop.LcLAffine3f%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.Interop.LcLMatrix4f a)",
+      "summary": "SetValue method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.SetValue%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.Matrix3 linear, Autodesk.Navisworks.Api.Vector3D trans)",
+      "summary": "SetValue method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "linear",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.SetValue%28Autodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.Rotation3D r)",
+      "summary": "SetValue method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.SetValue%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "TranslateLeft",
+      "signature": "void TranslateLeft(Autodesk.Navisworks.Api.Vector3D s)",
+      "summary": "TranslateLeft method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.TranslateLeft%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "TranslateRight",
+      "signature": "void TranslateRight(Autodesk.Navisworks.Api.Vector3D s)",
+      "summary": "TranslateRight method of LcLMatrix4f.",
+      "params": [
+        {
+          "name": "s",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.TranslateRight%28Autodesk.Navisworks.Api.Vector3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcLMatrix4f.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcLMatrix4f.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

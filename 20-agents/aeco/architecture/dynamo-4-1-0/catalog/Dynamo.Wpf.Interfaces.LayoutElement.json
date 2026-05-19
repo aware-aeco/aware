@@ -1,0 +1,99 @@
+{
+  "name": "LayoutElement",
+  "namespace": "Dynamo.Wpf.Interfaces",
+  "kind": "class",
+  "summary": "Represents a group/category",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs",
+  "constructors": [
+    {
+      "name": "LayoutElement(string)",
+      "signature": "void LayoutElement(string text)",
+      "summary": "Default constructor",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "Text value of the element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EnumerateChildren",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutElement\u003E EnumerateChildren()",
+      "summary": "Returns a flat list of all the children, including the children owned by its child elements recursively",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutElement\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "EnumerateIncludes",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutIncludeInfo\u003E EnumerateIncludes()",
+      "summary": "Returns a flat list of all the include info, including those owned by its child elements recursively.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutIncludeInfo\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "childElements",
+      "type": "System.Collections.Generic.List\u003CDynamo.Wpf.Interfaces.LayoutElement\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "List of nested elements under this element",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "elementType",
+      "type": "Dynamo.Wpf.Interfaces.LayoutElementType",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the element.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "iconUrl",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Relative or absolute URL of the icon for the corresponding library item",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "include",
+      "type": "System.Collections.Generic.List\u003CDynamo.Wpf.Interfaces.LayoutIncludeInfo\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "List of data types that should be included under this given library element",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the element",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

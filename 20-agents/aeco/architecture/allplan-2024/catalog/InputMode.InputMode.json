@@ -1,0 +1,43 @@
+{
+  "name": "InputMode",
+  "namespace": "InputMode",
+  "kind": "enum",
+  "summary": "Definition of class InputMode",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/InputMode/InputMode/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "GeoExpand",
+      "value": 1
+    },
+    {
+      "name": "HandleModify",
+      "value": 4
+    },
+    {
+      "name": "HandleNext",
+      "value": 5
+    },
+    {
+      "name": "HandleSelect",
+      "value": 3
+    },
+    {
+      "name": "Interactor",
+      "value": 6
+    },
+    {
+      "name": "RefPoint",
+      "value": 2
+    },
+    {
+      "name": "WriteToDB",
+      "value": 7
+    }
+  ]
+}

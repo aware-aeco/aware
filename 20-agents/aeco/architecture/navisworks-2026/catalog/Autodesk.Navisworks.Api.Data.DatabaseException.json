@@ -1,0 +1,93 @@
+{
+  "name": "DatabaseException",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "The exception that is thrown when database failed",
+  "base": "System.InvalidOperationException",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.DatabaseException",
+  "constructors": [
+    {
+      "name": "DatabaseException(int)",
+      "signature": "DatabaseException(int errorCode)",
+      "summary": "Creates a DatabaseException",
+      "params": [
+        {
+          "name": "errorCode",
+          "type": "int",
+          "doc": "The error code.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseException.%23ctor%28System.Int32%29"
+    },
+    {
+      "name": "DatabaseException(int, string)",
+      "signature": "DatabaseException(int errorCode, string message)",
+      "summary": "Creates a DatabaseException",
+      "params": [
+        {
+          "name": "errorCode",
+          "type": "int",
+          "doc": "The error code.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The error message that explains the reason for the exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseException.%23ctor%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "DatabaseException(int, string, System.Exception)",
+      "signature": "DatabaseException(int errorCode, string message, System.Exception innerException)",
+      "summary": "Creates a DatabaseException",
+      "params": [
+        {
+          "name": "errorCode",
+          "type": "int",
+          "doc": "The error code.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The error message that explains the reason for the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The exception that is the cause of the current exception. If the innerException parameter is not null, the current exception is raised in a catch block that handles the inner exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseException.%23ctor%28System.Int32%2CSystem.String%2CSystem.Exception%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ErrorCode",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Get database failed error code.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.DatabaseException.ErrorCode"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

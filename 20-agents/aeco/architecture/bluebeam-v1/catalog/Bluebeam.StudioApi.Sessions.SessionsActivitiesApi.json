@@ -1,0 +1,96 @@
+{
+  "name": "SessionsActivitiesApi",
+  "namespace": "Bluebeam.StudioApi.Sessions",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Sessions / Activities endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetActivity",
+      "signature": "Task GetActivity(Guid sessionId, Guid id)",
+      "summary": "Get a Studio Session activity",
+      "remarks": "HTTP GET \u0060/publicapi/v1/sessions/{sessionId}/activities/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/activities/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/activities/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CreateSessionActivity",
+      "signature": "Task CreateSessionActivity(Guid sessionId, CreateSessionActivityRequest request)",
+      "summary": "Create a Studio Session activity",
+      "remarks": "HTTP POST \u0060/publicapi/v1/sessions/{sessionId}/activities\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/activities\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CreateSessionActivityRequest",
+          "doc": "Request body. JSON object with fields: Message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListSessionActivities",
+      "signature": "Task ListSessionActivities(Guid sessionId)",
+      "summary": "Get all Studio Session activities",
+      "remarks": "HTTP GET \u0060/publicapi/v1/sessions/{sessionId}/activities\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/activities\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

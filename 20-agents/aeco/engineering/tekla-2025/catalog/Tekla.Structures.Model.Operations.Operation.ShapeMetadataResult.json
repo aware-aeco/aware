@@ -1,0 +1,39 @@
+{
+  "name": "Operation.ShapeMetadataResult",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "enum",
+  "summary": "The result type of the shape metadata operations. If you alter this, check if you need to change ShapeMetadataResult_e on the Tekla Structures core side",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7fc3aca4-5f38-d63a-48c2-a05120f9faf5",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoResult",
+      "value": 0,
+      "summary": "Operation failed."
+    },
+    {
+      "name": "OK",
+      "value": 1,
+      "summary": "Operation succeeded."
+    },
+    {
+      "name": "DuplicateKeyExist",
+      "value": 2,
+      "summary": "At least one identical pre-existing key was found in the shape when trying to insert key and value"
+    },
+    {
+      "name": "NoMatchingShape",
+      "value": 3,
+      "summary": "No matching shape found for the GUID in the catalog"
+    },
+    {
+      "name": "NoMatchingKey",
+      "value": 4,
+      "summary": "No matching key found for the GUID in the shape"
+    }
+  ]
+}

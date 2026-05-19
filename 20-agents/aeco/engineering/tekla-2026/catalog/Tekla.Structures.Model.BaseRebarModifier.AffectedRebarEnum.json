@@ -1,0 +1,29 @@
+{
+  "name": "BaseRebarModifier.AffectedRebarEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "This enum allows the caller to specify which end of the bar is of interest when calling the function GetAffectedBars.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/240f68e0-8f7f-6483-bfc6-d46137879691",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "START",
+      "value": 0,
+      "summary": "Gets bars that are affected at their start."
+    },
+    {
+      "name": "END",
+      "value": 1,
+      "summary": "Gets bars that affected at their end."
+    },
+    {
+      "name": "EITHER",
+      "value": 2,
+      "summary": "Gets all bars affected by the modifier."
+    }
+  ]
+}

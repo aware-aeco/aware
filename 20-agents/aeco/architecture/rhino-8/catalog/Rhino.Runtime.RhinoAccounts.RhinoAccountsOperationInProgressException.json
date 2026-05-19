@@ -1,0 +1,60 @@
+{
+  "name": "RhinoAccountsOperationInProgressException",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Exception thrown when there is already a Rhino Accounts operation taking place.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsOperationInProgressException.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsOperationInProgressException(Assembly, Exception)",
+      "signature": "public RhinoAccountsOperationInProgressException(Assembly assembly, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly that is currently performing an operation.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsOperationInProgressException__ctor.htm"
+    },
+    {
+      "name": "RhinoAccountsOperationInProgressException(String, Exception)",
+      "signature": "public RhinoAccountsOperationInProgressException(string message, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message of the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsOperationInProgressException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

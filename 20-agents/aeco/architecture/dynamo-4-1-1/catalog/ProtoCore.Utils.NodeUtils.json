@@ -1,0 +1,293 @@
+{
+  "name": "NodeUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type NodeUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode Clone(ProtoCore.AST.AssociativeAST.AssociativeNode rhsNode)",
+      "summary": "NodeUtils.Clone",
+      "params": [
+        {
+          "name": "rhsNode",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "Clone(ProtoCore.AST.ImperativeAST.ImperativeNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ImperativeNode Clone(ProtoCore.AST.ImperativeAST.ImperativeNode rhsNode)",
+      "summary": "NodeUtils.Clone",
+      "params": [
+        {
+          "name": "rhsNode",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "Clone(ProtoCore.AST.Node)",
+      "signature": "ProtoCore.AST.Node Clone(ProtoCore.AST.Node rhsNode)",
+      "summary": "NodeUtils.Clone",
+      "params": [
+        {
+          "name": "rhsNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.Node",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "CopyNodeLocation(ProtoCore.AST.Node, ProtoCore.AST.Node)",
+      "signature": "void CopyNodeLocation(ProtoCore.AST.Node node, ProtoCore.AST.Node other)",
+      "summary": "NodeUtils.CopyNodeLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "other",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "IsReturnExpressionNode(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "bool IsReturnExpressionNode(ProtoCore.AST.AssociativeAST.AssociativeNode node)",
+      "summary": "NodeUtils.IsReturnExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "IsReturnExpressionNode(ProtoCore.AST.ImperativeAST.ImperativeNode)",
+      "signature": "bool IsReturnExpressionNode(ProtoCore.AST.ImperativeAST.ImperativeNode node)",
+      "summary": "NodeUtils.IsReturnExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "SetNodeEndLocation(ProtoCore.AST.Node, ProtoCore.AST.Node)",
+      "signature": "void SetNodeEndLocation(ProtoCore.AST.Node node, ProtoCore.AST.Node other)",
+      "summary": "NodeUtils.SetNodeEndLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "other",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "SetNodeEndLocation(ProtoCore.AST.Node, ProtoCore.DesignScriptParser.Token)",
+      "signature": "void SetNodeEndLocation(ProtoCore.AST.Node node, ProtoCore.DesignScriptParser.Token token)",
+      "summary": "NodeUtils.SetNodeEndLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "token",
+          "type": "ProtoCore.DesignScriptParser.Token",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "SetNodeLocation(ProtoCore.AST.Node, ProtoCore.AST.Node, ProtoCore.AST.Node)",
+      "signature": "void SetNodeLocation(ProtoCore.AST.Node node, ProtoCore.AST.Node startNode, ProtoCore.AST.Node endNode)",
+      "summary": "NodeUtils.SetNodeLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "startNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "endNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "SetNodeLocation(ProtoCore.AST.Node, ProtoCore.DesignScriptParser.Token)",
+      "signature": "void SetNodeLocation(ProtoCore.AST.Node node, ProtoCore.DesignScriptParser.Token token)",
+      "summary": "NodeUtils.SetNodeLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "token",
+          "type": "ProtoCore.DesignScriptParser.Token",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "SetNodeStartLocation(ProtoCore.AST.Node, ProtoCore.AST.Node)",
+      "signature": "void SetNodeStartLocation(ProtoCore.AST.Node node, ProtoCore.AST.Node other)",
+      "summary": "NodeUtils.SetNodeStartLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "other",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "SetNodeStartLocation(ProtoCore.AST.Node, ProtoCore.DesignScriptParser.Token)",
+      "signature": "void SetNodeStartLocation(ProtoCore.AST.Node node, ProtoCore.DesignScriptParser.Token token)",
+      "summary": "NodeUtils.SetNodeStartLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "token",
+          "type": "ProtoCore.DesignScriptParser.Token",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "UpdateBinaryExpressionLocation(ProtoCore.AST.AssociativeAST.BinaryExpressionNode)",
+      "signature": "void UpdateBinaryExpressionLocation(ProtoCore.AST.AssociativeAST.BinaryExpressionNode node)",
+      "summary": "NodeUtils.UpdateBinaryExpressionLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    },
+    {
+      "name": "UpdateBinaryExpressionLocation(ProtoCore.AST.ImperativeAST.BinaryExpressionNode)",
+      "signature": "void UpdateBinaryExpressionLocation(ProtoCore.AST.ImperativeAST.BinaryExpressionNode node)",
+      "summary": "NodeUtils.UpdateBinaryExpressionLocation",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.BinaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/NodeUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

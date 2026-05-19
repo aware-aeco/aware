@@ -1,0 +1,22 @@
+{
+  "name": "SelectedType",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.SelectedType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/SelectedType.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "(No description provided in vendor docs for SelectedType.kind.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/SelectedType.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,121 @@
+{
+  "name": "RenderMaterial.BasicMaterialParameterNames",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Parameter names for use in GetNamedParameter and SetNamedParameter with basic materials.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderMaterial_BasicMaterialParameterNames.htm",
+  "constructors": [
+    {
+      "name": "RenderMaterial.BasicMaterialParameterNames",
+      "signature": "public BasicMaterialParameterNames()",
+      "summary": "Initializes a new instance of the RenderMaterial.BasicMaterialParameterNames class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderMaterial_BasicMaterialParameterNames__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Ambient",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Ambient.htm"
+    },
+    {
+      "name": "Diffuse",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Diffuse.htm"
+    },
+    {
+      "name": "DisableLighting",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_DisableLighting.htm"
+    },
+    {
+      "name": "Emission",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Emission.htm"
+    },
+    {
+      "name": "FlamingoLibrary",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_FlamingoLibrary.htm"
+    },
+    {
+      "name": "Ior",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Ior.htm"
+    },
+    {
+      "name": "Reflectivity",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Reflectivity.htm"
+    },
+    {
+      "name": "ReflectivityColor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_ReflectivityColor.htm"
+    },
+    {
+      "name": "Shine",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Shine.htm"
+    },
+    {
+      "name": "Specular",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Specular.htm"
+    },
+    {
+      "name": "Transparency",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_Transparency.htm"
+    },
+    {
+      "name": "TransparencyColor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_RenderMaterial_BasicMaterialParameterNames_TransparencyColor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

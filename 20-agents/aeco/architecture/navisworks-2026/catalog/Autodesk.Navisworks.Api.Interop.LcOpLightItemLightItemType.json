@@ -1,0 +1,38 @@
+{
+  "name": "LcOpLightItemLightItemType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLightItemLightItemType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItemLightItemType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLIGHT_POINT",
+      "value": 0
+    },
+    {
+      "name": "eLIGHT_SPOT",
+      "value": 1
+    },
+    {
+      "name": "eLIGHT_DISTANT",
+      "value": 2
+    },
+    {
+      "name": "eLIGHT_WEB",
+      "value": 3
+    },
+    {
+      "name": "eLIGHT_NUM",
+      "value": 4
+    },
+    {
+      "name": "eLIGHT_NONE",
+      "value": 5
+    }
+  ]
+}

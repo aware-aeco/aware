@@ -1,0 +1,127 @@
+{
+  "name": "Texture",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Texture parameters",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The filename of the texture in the library (without extension).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "rotationAngle",
+      "type": "number",
+      "getter": true,
+      "setter": true,
+      "summary": "Rotation angle in radians.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "xSize",
+      "type": "number",
+      "getter": true,
+      "setter": true,
+      "summary": "X size of the picture in model space, by default 1.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "ySize",
+      "type": "number",
+      "getter": true,
+      "setter": true,
+      "summary": "Y size of the picture in model space, by default 1.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "FillRectangle",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if fit the rectangle with the picture in a central position, using the natural aspect ratio of the picture.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "FitPicture",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if fit the picture in the middle of the rectangle, using the natural aspect ratio of the picture.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "mirrorX",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the texture is mirrored in X direction.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "mirrorY",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the texture is mirrored in Y direction.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "useAlphaChannel",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the alpha channel of the texture is used.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "alphaChannelChangesTransparency",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the alpha channel of the texture changes the transparency.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "alphaChannelChangesSurfaceColor",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the alpha channel of the texture changes the surface color.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "alphaChannelChangesAmbientColor",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the alpha channel of the texture changes the ambient color.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "alphaChannelChangesSpecularColor",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the alpha channel of the texture changes the specular color.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    },
+    {
+      "name": "alphaChannelChangesDiffuseColor",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True, if the alpha channel of the texture changes the diffuse color.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Texture"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

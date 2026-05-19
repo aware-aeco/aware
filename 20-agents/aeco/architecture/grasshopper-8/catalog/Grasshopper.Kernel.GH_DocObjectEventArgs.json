@@ -1,0 +1,55 @@
+{
+  "name": "GH_DocObjectEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "These arguments are passed along with ObjectsAdded and ObjectsRemoved events on GH_Document.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocObjectEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "List\u003CIGH_Attributes\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all the attributes that are associated with all objects in the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocObjectEventArgs_Attributes.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that raised the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocObjectEventArgs_Document.htm"
+    },
+    {
+      "name": "Object",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the object to which this event pertains.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocObjectEventArgs_Object.htm"
+    },
+    {
+      "name": "ObjectCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of objects in this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocObjectEventArgs_ObjectCount.htm"
+    },
+    {
+      "name": "Objects",
+      "type": "ReadOnlyCollection\u003CIGH_DocumentObject\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a readonly list of the objects to which this event pertains.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocObjectEventArgs_Objects.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

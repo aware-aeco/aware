@@ -1,0 +1,116 @@
+{
+  "name": "LinkAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LinkAttributes class contains the attributes for controlling the appearance of a link.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4fe70624-5381-eb78-a7a4-17802129c21d",
+  "constructors": [
+    {
+      "name": "LinkAttributes()",
+      "signature": "public LinkAttributes()",
+      "summary": "Creates a new link attributes instance using standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c81606e-3122-e3a5-9809-84452a298578"
+    },
+    {
+      "name": "LinkAttributes(String)",
+      "signature": "public LinkAttributes(string AttributeFile)",
+      "summary": "Creates a new link attributes instance loading the specified attributes.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/83226fd5-2624-a4ae-d6a9-954d94fde423"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0248c23-25fb-914d-c803-44c1ad907136"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the link frame attributes from the specified file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9aa04884-118a-a851-bc6c-be135647aa0d"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the font attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d1ad82d5-fb66-1356-e1cb-b5956485a953"
+    },
+    {
+      "name": "Frame",
+      "type": "LinkFrameAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the link frame attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/915004a5-b4f2-5f22-457c-2d715f6b237f"
+    },
+    {
+      "name": "IsUnderlined",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the link is underlined or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0bb18f68-326d-f5ab-7b7f-d7309006e9ab"
+    },
+    {
+      "name": "Scaling",
+      "type": "ScalingOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the link scaling options.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb1d223a-0480-8ef6-2862-19f662238703"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

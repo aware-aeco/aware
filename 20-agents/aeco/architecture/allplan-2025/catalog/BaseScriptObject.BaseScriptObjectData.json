@@ -1,0 +1,46 @@
+{
+  "name": "BaseScriptObjectData",
+  "namespace": "BaseScriptObject",
+  "kind": "class",
+  "summary": "implementation of the data class for the script object interactor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObjectData/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "control_props_util",
+      "type": "ControlPropertiesUtil",
+      "getter": true,
+      "setter": false,
+      "summary": "Utility for altering the properties of palette controls",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObjectData/#BaseScriptObject.BaseScriptObjectData.control_props_util"
+    },
+    {
+      "name": "coord_input",
+      "type": "CoordinateInput",
+      "getter": true,
+      "setter": false,
+      "summary": "Object representing user\u0027s input in Allplan Viewport",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObjectData/#BaseScriptObject.BaseScriptObjectData.coord_input"
+    },
+    {
+      "name": "is_only_update",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "True, when the script execution was triggered by a PythonPart update",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObjectData/#BaseScriptObject.BaseScriptObjectData.is_only_update"
+    },
+    {
+      "name": "modification_ele_list",
+      "type": "ModificationElementList",
+      "getter": true,
+      "setter": false,
+      "summary": "List with UUIDs of modified elements",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObjectData/#BaseScriptObject.BaseScriptObjectData.modification_ele_list"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

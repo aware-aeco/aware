@@ -1,0 +1,52 @@
+{
+  "name": "GH_NumberSliderSnappingEditor",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_NumberSliderSnappingEditor.)",
+  "base": "Form",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_NumberSliderSnappingEditor.htm",
+  "constructors": [
+    {
+      "name": "GH_NumberSliderSnappingEditor",
+      "signature": "public GH_NumberSliderSnappingEditor()",
+      "summary": "Initializes a new instance of the GH_NumberSliderSnappingEditor class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_NumberSliderSnappingEditor__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_NumberSliderSnappingEditor and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_NumberSliderSnappingEditor_Dispose.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SnapLines",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_NumberSliderSnappingEditor_SnapLines.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

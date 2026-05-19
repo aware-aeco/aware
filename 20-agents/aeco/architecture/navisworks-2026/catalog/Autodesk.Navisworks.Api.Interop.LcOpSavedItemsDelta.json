@@ -1,0 +1,169 @@
+{
+  "name": "LcOpSavedItemsDelta",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSavedItemsDelta class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpDelta",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetParentFromPath",
+      "signature": "Autodesk.Navisworks.Api.GroupItem GetParentFromPath(Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement el)",
+      "summary": "GetParentFromPath method of LcOpSavedItemsDelta.",
+      "params": [
+        {
+          "name": "el",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.GroupItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.GetParentFromPath%28Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement%29"
+    },
+    {
+      "name": "GetType",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsDeltaType GetType()",
+      "summary": "GetType method of LcOpSavedItemsDelta.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsDeltaType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.GetType"
+    },
+    {
+      "name": "GetStatus",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElementStatus GetStatus()",
+      "summary": "GetStatus method of LcOpSavedItemsDelta.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElementStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.GetStatus"
+    },
+    {
+      "name": "GetPath",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector GetPath()",
+      "summary": "GetPath method of LcOpSavedItemsDelta.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.GetPath"
+    },
+    {
+      "name": "GetItem",
+      "signature": "Autodesk.Navisworks.Api.SavedItem GetItem()",
+      "summary": "GetItem method of LcOpSavedItemsDelta.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.GetItem"
+    },
+    {
+      "name": "GetEditParts",
+      "signature": "Autodesk.Navisworks.Api.SavedItemParts GetEditParts()",
+      "summary": "GetEditParts method of LcOpSavedItemsDelta.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemParts",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.GetEditParts"
+    },
+    {
+      "name": "GetPathBack",
+      "signature": "int GetPathBack()",
+      "summary": "GetPathBack method of LcOpSavedItemsDelta.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.GetPathBack"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSavedItemsDelta.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSavedItemsDelta.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSavedItemsDelta.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsDelta.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

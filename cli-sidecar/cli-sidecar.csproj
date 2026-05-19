@@ -28,17 +28,81 @@
       IL2050: LoadTypeLibEx P/Invoke declares an out ITypeLib COM interface parameter. ITypeLib
       is BCL-defined and will not be trimmed. COM ref is managed manually via Marshal.ReleaseComObject.
     -->
-    <NoWarn>$(NoWarn);IL2026;IL2050;IL2104;IL3053</NoWarn>
+    <!--
+      IL3000/IL3002: Microsoft.Playwright's Driver.cs reads Assembly.Location to locate the
+      Node-based driver binary. Both warnings are about single-file deployment behavior
+      (Assembly.Location is empty inside a single-file app). Playwright already falls back to
+      AppContext.BaseDirectory at runtime, so the published sidecar binary works correctly.
+      Surfaced once the Tekla extractor made the Playwright code paths reachable from Main()
+      (Phase A had Scraper.cs as a library but never called it). These are NoWarn-suppressed
+      ONLY for the Playwright package code; our own Scraper wrapper does not introduce
+      Assembly.Location reads.
+    -->
+    <NoWarn>$(NoWarn);IL2026;IL2050;IL2104;IL3053;IL3000;IL3002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- MetadataLoadContext: safe for AOT (loads metadata only, no IL execution) -->
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="9.0.0" />
+    <!--
+      Microsoft.Playwright: drives a headless Chromium for the vendor extractors
+      (Phase B). Internally the .NET driver shells out to a Node-based runner over
+      stdio, so there is no managed reflection on user types. Any AOT/trim warnings
+      from Playwright's own assemblies are suppressed via the IL2026/IL3050 entries
+      in <NoWarn> below — accepted because we control where Playwright is invoked
+      from (only the Extractors.Common.Scraper wrapper) and we don't serialize
+      Playwright types ourselves.
+    -->
+    <PackageReference Include="Microsoft.Playwright" Version="1.49.0" />
+    <!--
+      AngleSharp: HTML parsing for the Phase B vendor extractors. AngleSharp is a
+      pure managed library with no reflection on user types and ships net9.0
+      assemblies; trim/AOT warnings from its own internals are suppressed via the
+      NoWarn list. We invoke AngleSharp only from inside Extractors/<vendor>/* and
+      we never serialize AngleSharp types ourselves.
+    -->
+    <PackageReference Include="AngleSharp" Version="1.1.2" />
+    <!--
+      JsonSchema.Net: Draft 2020-12 JSON Schema validator (Greg Dennis). Already used
+      by the Generator tests (Ingest/Generator/Tests/Tests.csproj at version 7.2.3);
+      pinned to the same version here so the sidecar `coverage-validate` verb runs
+      against the same library + the same schema files as the test suite. AOT-safe:
+      the library is pure managed code and does not perform reflection on user types;
+      it reads schemas via JsonDocument and evaluates JsonElement, both source-gen
+      compatible. The verb's request/response envelopes use SidecarJsonContext so the
+      only reflection-touching path is internal to JsonSchema.Net itself.
+    -->
+    <PackageReference Include="JsonSchema.Net" Version="7.2.3" />
+  </ItemGroup>
+
+  <!--
+    Embed the two host-coverage schemas into the sidecar assembly so the
+    `coverage-validate` verb can resolve them without the caller needing to know
+    where the schema files live on disk. Embedded resources are NativeAOT-safe
+    (no reflection on user types; the manifest lookup is a constant string).
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="Ingest/Schema/host-coverage.schema.json">
+      <LogicalName>host-coverage.schema.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingest/Schema/host-coverage-type.schema.json">
+      <LogicalName>host-coverage-type.schema.json</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <!-- Exclude test project files from the main build -->
   <ItemGroup>
     <Compile Remove="Tests\**\*.cs" />
+    <Compile Remove="Ingest\Generator\Tests\**\*.cs" />
+    <!-- Dynamo extractor (Phase B B11) caches an extracted source archive under
+         Ingest\Output\dynamo-nupkg\source-archive\Dynamo-<ref>\ on the build host so it
+         can scan .cs files for type-declaration positions. The .cs / .resx / .csproj
+         files in there would otherwise be picked up by the SDK's globbing — exclude them
+         from the sidecar's build. -->
+    <Compile Remove="Ingest\Output\**\*.cs" />
+    <EmbeddedResource Remove="Ingest\Output\**\*.resx" />
+    <None Remove="Ingest\Output\**\*.csproj" />
+    <None Remove="Ingest\Output\**\*.resx" />
   </ItemGroup>
 
 </Project>

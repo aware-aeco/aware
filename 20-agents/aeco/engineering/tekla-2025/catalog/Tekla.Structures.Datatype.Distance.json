@@ -1,0 +1,850 @@
+{
+  "name": "Distance",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "struct",
+  "summary": "The Distance datatype.",
+  "remarks": "Distance stores, parses and formats distances in real world units.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/db01624c-588b-13b0-0d37-cae81b0408e4",
+  "constructors": [
+    {
+      "name": "Distance(Double)",
+      "signature": "public Distance(double millimeters)",
+      "summary": "Initializes a new instance of the structure.",
+      "params": [
+        {
+          "name": "millimeters",
+          "type": "System.Double",
+          "doc": "The distance in millimeters.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a91ceb69-8f53-dfd6-5a1e-5357b1da3618"
+    },
+    {
+      "name": "Distance(Double, Distance.UnitType)",
+      "signature": "public Distance(double distance, Distance.UnitType unitType)",
+      "summary": "Initializes a new instance of the structure.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The distance in the specified units.",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The distance unit type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if an invalid unit type is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f04eab2-8582-1838-1f7a-0f0cf0cb372f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Distance other)",
+      "summary": "Compares the current object with another object of the same type.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Datatype.Distance",
+          "doc": "The object to be compared with the current object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "A 32-bit signed integer that indicates the relative order of the objects being compared.The return value has the following meanings:ValueMeaningLess than zeroThe current object is less than the other object.ZeroThe current object is equal to the other object.Greater than zeroThe current object is greater than the other object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0696222a-5d13-2d03-130b-b84be5abb7bd"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "public double ConvertTo(Distance.UnitType unitType)",
+      "summary": "Converts the distance to the specified units.",
+      "params": [
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The distance unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The distance in the specified units."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8ae399a4-8b28-afd9-57ca-3f5e9d9a30d9"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Indicates whether the current instance and the specified object are equal.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object to be compared with the current object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the specified object and the current instance are of the same type and represent the same value; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33943554-de05-52a1-9af6-71ea101f7ba4"
+    },
+    {
+      "name": "Equals(Distance)",
+      "signature": "public bool Equals(Distance other)",
+      "summary": "Indicates whether the current object is equal to another object of the same type.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Datatype.Distance",
+          "doc": "The object to be compared with the current object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the current object is equal to the other object; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e692e8e8-f12f-0b5c-315d-d2c9ae41baca"
+    },
+    {
+      "name": "FromDecimalString(String)",
+      "signature": "public static Distance FromDecimalString(string text)",
+      "summary": "Creates a distance from a decimal string representation.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The distance string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6211cf0a-42b1-8e32-d5e4-70d96368b1b4"
+    },
+    {
+      "name": "FromDecimalString(String, IFormatProvider)",
+      "signature": "public static Distance FromDecimalString(string text, IFormatProvider formatProvider)",
+      "summary": "Creates a distance from a decimal string representation.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The distance string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5a0332b9-9aff-7068-3336-fb43cd5dc640"
+    },
+    {
+      "name": "FromDecimalString(String, IFormatProvider, Distance.UnitType)",
+      "signature": "public static Distance FromDecimalString(string text, IFormatProvider formatProvider, Distance.UnitType unitType)",
+      "summary": "Creates a distance from a decimal string representation.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The distance string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The unit type of the distance to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if an invalid unit type is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef97a044-fb84-c24e-9925-2169502e7e19"
+    },
+    {
+      "name": "FromFractionalFeetAndInchesString(String)",
+      "signature": "public static Distance FromFractionalFeetAndInchesString(string text)",
+      "summary": "Creates a distance from a string representation of fractional feet and inches.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The distance string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1529c894-c88a-6e32-4bf8-04b60df86127"
+    },
+    {
+      "name": "FromFractionalFeetAndInchesString(String, IFormatProvider, Distance.UnitType)",
+      "signature": "public static Distance FromFractionalFeetAndInchesString(string text, IFormatProvider formatProvider, Distance.UnitType unitType)",
+      "summary": "Creates a distance from a string representation of fractional feet and inches.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The distance string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The unit type of the distance to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/458c16cf-2c84-7b8e-bb0e-6fdaa833ac18"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Returns the hash code for the current instance.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A 32-bit signed integer that is the hash code for the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f11213ce-1c1d-b9bd-8246-24ac0f18a920"
+    },
+    {
+      "name": "Parse(String)",
+      "signature": "public static Distance Parse(string text)",
+      "summary": "Parses a distance from a string representation using the current unit type and culture.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a41cda91-0ae5-6855-7057-873ef3e16841"
+    },
+    {
+      "name": "Parse(String, IFormatProvider)",
+      "signature": "public static Distance Parse(string text, IFormatProvider formatProvider)",
+      "summary": "Parses a distance from a string representation using the current unit type and the given culture.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text to parse.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/30331ab4-552e-4df4-0b35-99d041d11f1d"
+    },
+    {
+      "name": "Parse(String, IFormatProvider, Distance.UnitType)",
+      "signature": "public static Distance Parse(string text, IFormatProvider formatProvider, Distance.UnitType unitType)",
+      "summary": "Parses a distance from a string representation using the given unit type and culture.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text to parse.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The unit type of the distance to parse. Determines the parsing process.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Distance",
+        "doc": "The representation of the specified distance."
+      },
+      "throws": [
+        {
+          "type": "FormatException",
+          "when": "Thrown if the text does not represent a distance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if an invalid unit type is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7f2527a1-966d-74e5-e167-d16511fb0566"
+    },
+    {
+      "name": "ToDecimalString()",
+      "signature": "public string ToDecimalString()",
+      "summary": "Converts the distance to a decimal string representation.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4fdd8958-9e34-3223-bc05-807c3fbeb7ae"
+    },
+    {
+      "name": "ToDecimalString(IFormatProvider)",
+      "signature": "public string ToDecimalString(IFormatProvider formatProvider)",
+      "summary": "Converts the distance to a decimal string representation.",
+      "params": [
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5280892-7714-7bc8-1e4a-7f7522040382"
+    },
+    {
+      "name": "ToDecimalString(String)",
+      "signature": "public string ToDecimalString(string format)",
+      "summary": "Converts the distance to a decimal string representation.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cd0ee155-46bc-2446-d7b4-085e1c18173c"
+    },
+    {
+      "name": "ToDecimalString(String, IFormatProvider)",
+      "signature": "public string ToDecimalString(string format, IFormatProvider formatProvider)",
+      "summary": "Converts the distance to a decimal string representation.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f0623791-0fbb-dc73-74b6-ad1a6bde8dc9"
+    },
+    {
+      "name": "ToDecimalString(String, IFormatProvider, Distance.UnitType)",
+      "signature": "public string ToDecimalString(string format, IFormatProvider formatProvider, Distance.UnitType unitType)",
+      "summary": "Converts the distance to a decimal string representation.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if an invalid unit type is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/de76014f-1500-125f-6f0a-1f4fd3017cb5"
+    },
+    {
+      "name": "ToFractionalFeetAndInchesString()",
+      "signature": "public string ToFractionalFeetAndInchesString()",
+      "summary": "Creates a string representation of the distance in feet and inches.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d611f8c3-11c1-c318-4bfa-5f933257fe4f"
+    },
+    {
+      "name": "ToFractionalFeetAndInchesString(IFormatProvider)",
+      "signature": "public string ToFractionalFeetAndInchesString(IFormatProvider formatProvider)",
+      "summary": "Creates a string representation of the distance in feet and inches.",
+      "params": [
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a34602fe-6adb-ce21-3b16-5b6258e88506"
+    },
+    {
+      "name": "ToFractionalInchesString()",
+      "signature": "public string ToFractionalInchesString()",
+      "summary": "Creates a string representation of the distance in inches.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ce38b30-c93c-cff8-6cec-60f514689552"
+    },
+    {
+      "name": "ToFractionalInchesString(IFormatProvider)",
+      "signature": "public string ToFractionalInchesString(IFormatProvider formatProvider)",
+      "summary": "Creates a string representation of the distance in inches.",
+      "params": [
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/735bbd44-6bf8-d628-c205-89d237f74583"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the distance.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance using CultureInfo.InvariantCulture."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7981e135-73db-fe09-efcf-6bbc0543262c"
+    },
+    {
+      "name": "ToString(IFormatProvider)",
+      "signature": "public string ToString(IFormatProvider formatProvider)",
+      "summary": "Creates a string representation of the distance.",
+      "params": [
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c9c481b3-fc9f-f8dc-23fd-58d8c8d0d568"
+    },
+    {
+      "name": "ToString(String)",
+      "signature": "public string ToString(string format)",
+      "summary": "Creates a string representation of the distance.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9d1e329d-d0fc-d9d0-d3b8-62af500b4540"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Creates a string representation of the distance.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/048a07c8-6092-2995-5539-c2ca71b7cb01"
+    },
+    {
+      "name": "ToString(String, IFormatProvider, Distance.UnitType)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider, Distance.UnitType unitType)",
+      "summary": "Creates a string representation of the distance.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the distance."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if an invalid unit type is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fc6e470e-88d7-e078-1bca-ffec1fe32042"
+    },
+    {
+      "name": "TryParse(String, Distance.)",
+      "signature": "public static bool TryParse(string text, out Distance result)",
+      "summary": "Attempts to parse a distance from a string representation using the current units.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text to parse.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Tekla.Structures.Datatype.Distance.",
+          "doc": "The output variable for the result.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "A boolean value indicating whether the operation succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/21abb59b-79ab-c805-bfc0-a1bc27fd4e6d"
+    },
+    {
+      "name": "TryParse(String, IFormatProvider, Distance.)",
+      "signature": "public static bool TryParse(string text, IFormatProvider formatProvider, out Distance result)",
+      "summary": "Attempts to parse a distance from a string representation using the current units.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text to parse.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Tekla.Structures.Datatype.Distance.",
+          "doc": "The output variable for the result.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "A boolean value indicating whether the operation succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b05f47a-26b1-7e05-947e-cf5daf99af2d"
+    },
+    {
+      "name": "TryParse(String, IFormatProvider, Distance.UnitType, Distance.)",
+      "signature": "public static bool TryParse(string text, IFormatProvider formatProvider, Distance.UnitType defaultUnitType, out Distance result)",
+      "summary": "Attempts to parse a distance from a string representation using the current units.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text to parse.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "defaultUnitType",
+          "type": "Tekla.Structures.Datatype.Distance.UnitType",
+          "doc": "The default unit type if the unit cannot be determined.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Tekla.Structures.Datatype.Distance.",
+          "doc": "The output variable for the result.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "A boolean value indicating whether the operation succeeded."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if an invalid unit type is specified."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d5655b28-ad76-fd8b-61ac-68447343ae39"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentUnitType",
+      "type": "Distance.UnitType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the current unit type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f94824ce-f263-f674-9b84-03dc1eac10a0"
+    },
+    {
+      "name": "Millimeters",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the distance in millimeters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/140e8b18-b010-a82f-6ca9-ca6ec90fc273"
+    },
+    {
+      "name": "UseFractionalFormat",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a boolean value indicating whether to use the fractional format for US imperial units.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7d0bd430-a7da-1542-cb5a-a341d1498c16"
+    },
+    {
+      "name": "UseUnitsInDecimalString",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a boolean value indicating whether to use units in the decimal string representation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/feb659fd-d22e-438f-bf24-a90c23c18dc9"
+    },
+    {
+      "name": "Value",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the distance value in current units.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e2b9efec-39e9-04f9-9192-723cea78a26f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

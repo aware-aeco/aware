@@ -1,0 +1,380 @@
+{
+  "name": "Color4f",
+  "namespace": "Rhino.Display",
+  "kind": "struct",
+  "summary": "Color defined by 4 floating point values.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_Color4f.htm",
+  "constructors": [
+    {
+      "name": "Color4f(Color)",
+      "signature": "public Color4f(Color color)",
+      "summary": "Initializes a new instance of the Color4f class",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.#ctor(System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f__ctor_1.htm"
+    },
+    {
+      "name": "Color4f(Color4f)",
+      "signature": "public Color4f(Color4f color)",
+      "summary": "Initializes a new instance of the Color4f class",
+      "params": [
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.#ctor(Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f__ctor.htm"
+    },
+    {
+      "name": "Color4f(Int32)",
+      "signature": "public Color4f(int argb)",
+      "summary": "Initializes a new instance of the Color4f class",
+      "params": [
+        {
+          "name": "argb",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022argb\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.#ctor(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f__ctor_2.htm"
+    },
+    {
+      "name": "Color4f(Single, Single, Single, Single)",
+      "signature": "public Color4f(float red, float green, float blue, float alpha)",
+      "summary": "Initializes a new instance of the Color4f class",
+      "params": [
+        {
+          "name": "red",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022red\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.#ctor(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022green\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.#ctor(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022blue\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.#ctor(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022alpha\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.#ctor(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ApplyGamma",
+      "signature": "public static Color4f ApplyGamma(Color4f col, float gamma)",
+      "summary": "",
+      "params": [
+        {
+          "name": "col",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022col\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.ApplyGamma(Rhino.Display.Color4f,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gamma",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022gamma\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.ApplyGamma(Rhino.Display.Color4f,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4f",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.ApplyGamma(Rhino.Display.Color4f,System.Single)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_ApplyGamma.htm"
+    },
+    {
+      "name": "AsSystemColor",
+      "signature": "public Color AsSystemColor()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.AsSystemColor\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_AsSystemColor.htm"
+    },
+    {
+      "name": "BlendTo",
+      "signature": "public Color4f BlendTo(float t, Color4f col)",
+      "summary": "",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.BlendTo(System.Single,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022col\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.BlendTo(System.Single,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4f",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.BlendTo(System.Single,Rhino.Display.Color4f)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_BlendTo.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.Equals(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.Equals(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_Equals.htm"
+    },
+    {
+      "name": "FromArgb(Single, Color4f)",
+      "signature": "public static Color4f FromArgb(float a, Color4f color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4f",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,Rhino.Display.Color4f)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_FromArgb.htm"
+    },
+    {
+      "name": "FromArgb(Single, Single, Single, Single)",
+      "signature": "public static Color4f FromArgb(float a, float r, float g, float b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022r\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022g\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,System.Single,System.Single,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4f",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.FromArgb(System.Single,System.Single,System.Single,System.Single)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_FromArgb_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.GetHashCode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_GetHashCode.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Color4f a, Color4f b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.op_Equality(Rhino.Display.Color4f,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.op_Equality(Rhino.Display.Color4f,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.op_Equality(Rhino.Display.Color4f,Rhino.Display.Color4f)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Color4f a, Color4f b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.op_Inequality(Rhino.Display.Color4f,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Display.Color4f.op_Inequality(Rhino.Display.Color4f,Rhino.Display.Color4f)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.Color4f.op_Inequality(Rhino.Display.Color4f,Rhino.Display.Color4f)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_Color4f_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_A.htm"
+    },
+    {
+      "name": "B",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_B.htm"
+    },
+    {
+      "name": "Black",
+      "type": "Color4f",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_Black.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "Color4f",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_Empty.htm"
+    },
+    {
+      "name": "G",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_G.htm"
+    },
+    {
+      "name": "L",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_L.htm"
+    },
+    {
+      "name": "R",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_R.htm"
+    },
+    {
+      "name": "White",
+      "type": "Color4f",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_Color4f_White.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

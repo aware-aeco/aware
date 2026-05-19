@@ -1,0 +1,206 @@
+{
+  "name": "TextureGraphInfo",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.TextureGraphInfo\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_TextureGraphInfo.htm",
+  "constructors": [
+    {
+      "name": "TextureGraphInfo",
+      "signature": "public TextureGraphInfo()",
+      "summary": "Initializes a new instance of the TextureGraphInfo class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ActiveAxis",
+      "signature": "public TextureGraphInfo.Axis ActiveAxis()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "TextureGraphInfo.Axis",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.ActiveAxis\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_ActiveAxis.htm"
+    },
+    {
+      "name": "ActiveChannel",
+      "signature": "public TextureGraphInfo.Channel ActiveChannel()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "TextureGraphInfo.Channel",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.ActiveChannel\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_ActiveChannel.htm"
+    },
+    {
+      "name": "AmountU",
+      "signature": "public double AmountU()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.AmountU\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_AmountU.htm"
+    },
+    {
+      "name": "AmountV",
+      "signature": "public double AmountV()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.AmountV\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_AmountV.htm"
+    },
+    {
+      "name": "AmountW",
+      "signature": "public double AmountW()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.AmountW\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_AmountW.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the TextureGraphInfo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_Finalize.htm"
+    },
+    {
+      "name": "SetActiveAxis",
+      "signature": "public void SetActiveAxis(TextureGraphInfo.Axis axis)",
+      "summary": "",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Rhino.Render.TextureGraphInfo.Axis",
+          "doc": "[Missing \u003Cparam name=\u0022axis\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.SetActiveAxis(Rhino.Render.TextureGraphInfo.Axis)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_SetActiveAxis.htm"
+    },
+    {
+      "name": "SetActiveChannel",
+      "signature": "public void SetActiveChannel(TextureGraphInfo.Channel channel)",
+      "summary": "",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Rhino.Render.TextureGraphInfo.Channel",
+          "doc": "[Missing \u003Cparam name=\u0022channel\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.SetActiveChannel(Rhino.Render.TextureGraphInfo.Channel)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_SetActiveChannel.htm"
+    },
+    {
+      "name": "SetAmountU",
+      "signature": "public void SetAmountU(double d)",
+      "summary": "",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.SetAmountU(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_SetAmountU.htm"
+    },
+    {
+      "name": "SetAmountV",
+      "signature": "public void SetAmountV(double d)",
+      "summary": "",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.SetAmountV(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_SetAmountV.htm"
+    },
+    {
+      "name": "SetAmountW",
+      "signature": "public void SetAmountW(double d)",
+      "summary": "",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureGraphInfo.SetAmountW(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TextureGraphInfo_SetAmountW.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_TextureGraphInfo_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

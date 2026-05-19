@@ -1,0 +1,22 @@
+{
+  "name": "LcOpLightItemLightColorUnits",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLightItemLightColorUnits enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItemLightColorUnits",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eUNITS_KELVIN",
+      "value": 0
+    },
+    {
+      "name": "eUNITS_RGB",
+      "value": 1
+    }
+  ]
+}

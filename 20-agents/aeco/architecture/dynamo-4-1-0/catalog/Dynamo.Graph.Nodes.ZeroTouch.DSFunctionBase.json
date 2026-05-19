@@ -1,0 +1,124 @@
+{
+  "name": "DSFunctionBase",
+  "namespace": "Dynamo.Graph.Nodes.ZeroTouch",
+  "kind": "class",
+  "summary": "Base class for NodeModels representing zero-touch-imported-function calls.",
+  "base": "Dynamo.Graph.Nodes.FunctionCallBase\u003CDynamo.Graph.Nodes.ZeroTouch.ZeroTouchNodeController\u003CDynamo.Engine.FunctionDescriptor\u003E, Dynamo.Engine.FunctionDescriptor\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs",
+  "constructors": [
+    {
+      "name": "DSFunctionBase(Dynamo.Graph.Nodes.ZeroTouch.ZeroTouchNodeController\u003CDynamo.Engine.FunctionDescriptor\u003E)",
+      "signature": "void DSFunctionBase(Dynamo.Graph.Nodes.ZeroTouch.ZeroTouchNodeController\u003CDynamo.Engine.FunctionDescriptor\u003E controller)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.ZeroTouch.DSFunctionBase class.",
+      "params": [
+        {
+          "name": "controller",
+          "type": "Dynamo.Graph.Nodes.ZeroTouch.ZeroTouchNodeController\u003CDynamo.Engine.FunctionDescriptor\u003E",
+          "doc": "Function descritor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "DSFunctionBase.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "GetAstIdentifierForOutputIndex(int)",
+      "signature": "ProtoCore.AST.AssociativeAST.IdentifierNode GetAstIdentifierForOutputIndex(int outputIndex)",
+      "summary": "Fetches the ProtoAST Identifier for a given output index.",
+      "params": [
+        {
+          "name": "outputIndex",
+          "type": "int",
+          "doc": "Index of the output port.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+        "doc": "Identifier corresponding to the given output port."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "GetTypeHintForOutput(int)",
+      "signature": "ProtoCore.Type GetTypeHintForOutput(int index)",
+      "summary": "Returns the possible type of output at specified port.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the port",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Type",
+        "doc": "The type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Copy command will call it to serialize this node to xml data.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsConvertible",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this node is allowed to be converted to AST node in nodes to code conversion.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSFunctionBase.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

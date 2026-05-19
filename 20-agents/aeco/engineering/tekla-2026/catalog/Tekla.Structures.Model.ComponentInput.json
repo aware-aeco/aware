@@ -1,0 +1,210 @@
+{
+  "name": "ComponentInput",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ComponentInput class handles the input of component objects and positions. A component has one component input. The component input must include all the needed input objects and points in the correct order. For example, an input with a point and a part is different from an input of a part and a point. The maximum number of different input items in the collection is 10.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2e678a2a-118b-ca18-2776-91cd29d4540c",
+  "constructors": [
+    {
+      "name": "ComponentInput",
+      "signature": "public ComponentInput()",
+      "summary": "Creates a new component input object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ecb2502b-3309-5862-98e1-c0214ab99229"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddInputObject",
+      "signature": "public bool AddInputObject(ModelObject M)",
+      "summary": "Adds a model object to the component input.",
+      "params": [
+        {
+          "name": "M",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a5d879e1-4952-2600-40db-fdab2637adae"
+    },
+    {
+      "name": "AddInputObjects",
+      "signature": "public bool AddInputObjects(ArrayList Objects)",
+      "summary": "Adds an array list of model objects to the component input.",
+      "params": [
+        {
+          "name": "Objects",
+          "type": "System.Collections.ArrayList",
+          "doc": "A list of model objects in the correct order.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f7711bd2-4bf6-9b33-dd62-dc5702e62a2b"
+    },
+    {
+      "name": "AddInputPolygon",
+      "signature": "public bool AddInputPolygon(Polygon P)",
+      "summary": "Adds a polygon to the component input.",
+      "params": [
+        {
+          "name": "P",
+          "type": "Tekla.Structures.Model.Polygon",
+          "doc": "The polygon to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d50f8295-7d7b-90ce-e1a2-4a38b0a05826"
+    },
+    {
+      "name": "AddOneInputPosition",
+      "signature": "public bool AddOneInputPosition(Point P)",
+      "summary": "Adds an input position to the component input.",
+      "params": [
+        {
+          "name": "P",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The position to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8aca8df7-49a3-0a9c-b4cd-66ba8b611345"
+    },
+    {
+      "name": "AddTwoInputPositions",
+      "signature": "public bool AddTwoInputPositions(Point Position1, Point Position2)",
+      "summary": "Adds two input positions to the component input.",
+      "params": [
+        {
+          "name": "Position1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first position to be added.",
+          "optional": false
+        },
+        {
+          "name": "Position2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second position to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/63f0c2d2-025a-9c81-915f-fd8df69f744a"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(Array array, int index)",
+      "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
+      "params": [
+        {
+          "name": "array",
+          "type": "System.Array",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from the ICollection. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based index in the array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "The array is null."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "The index is less than zero."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "The array is multidimensional, or the index is equal to or greater than the length of the array, or the number of elements in the source ICollection is greater than the available space from the index to the end of the destination array."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "The type of the source ICollection cannot be cast automatically to the type of the destination array."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/42454497-9e17-cd6b-cda6-b7ec6decbe1f"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator GetEnumerator()",
+      "summary": "Returns an enumerator that iterates through a collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "An IEnumerator object that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c3e1a0fc-7e10-3647-deff-3a18bc3fb8c1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements contained in the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9e048423-e83e-e00c-93c2-65ab87a88fef"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f30221ee-a6ca-692f-ec1d-e383d109a6ff"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an object that can be used to synchronize access to the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a14dab55-81f7-7879-4d33-c8bbdd6bf9de"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,218 @@
+{
+  "name": "VisibleHiddenEdgesProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of the visible and hidden edges in a UVS",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/",
+  "constructors": [
+    {
+      "name": "VisibleHiddenEdgesProperties",
+      "signature": "VisibleHiddenEdgesProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HiddenEdgesColor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Color ID of hidden edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.HiddenEdgesColor"
+    },
+    {
+      "name": "HiddenEdgesLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "layer ID for hidden edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.HiddenEdgesLayer"
+    },
+    {
+      "name": "HiddenEdgesLineType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "stroke ID for hidden edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.HiddenEdgesLineType"
+    },
+    {
+      "name": "HiddenEdgesPen",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "pen ID for hidden edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.HiddenEdgesPen"
+    },
+    {
+      "name": "IsHiddenEdgesColorFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to get the color ID of the hidden edges from the layer definition",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesColorFromLayer"
+    },
+    {
+      "name": "IsHiddenEdgesColorUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the color specified in HiddenEdgesColor for drawing the hidden edges (True) or the color of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesColorUsed"
+    },
+    {
+      "name": "IsHiddenEdgesLayerUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the layer specified in HiddenEdgesLayer for drawing the hidden edges (True) or the layer of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesLayerUsed"
+    },
+    {
+      "name": "IsHiddenEdgesLineTypeFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to get the stroke ID of the hidden edges from the layer definition",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesLineTypeFromLayer"
+    },
+    {
+      "name": "IsHiddenEdgesLineTypeUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the stroke specified in HiddenEdgesLineType for drawing the hidden edges (True) or the stroke of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesLineTypeUsed"
+    },
+    {
+      "name": "IsHiddenEdgesOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to draw hidden edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesOn"
+    },
+    {
+      "name": "IsHiddenEdgesPenFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to get the pen ID of the hidden edges from the layer definition",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesPenFromLayer"
+    },
+    {
+      "name": "IsHiddenEdgesPenUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the pen specified in HiddenEdgesPen for drawing the hidden edges (True) or the pen of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsHiddenEdgesPenUsed"
+    },
+    {
+      "name": "IsVisibleEdgesColorFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to get the color ID of the visible edges from the layer definition",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesColorFromLayer"
+    },
+    {
+      "name": "IsVisibleEdgesColorUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the color specified in VisibleEdgesColor for drawing the visible edges (True) or the color of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesColorUsed"
+    },
+    {
+      "name": "IsVisibleEdgesLayerUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the layer specified in VisibleEdgesLayer for drawing the visible edges (True) or the layer of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesLayerUsed"
+    },
+    {
+      "name": "IsVisibleEdgesLineTypeFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to get the stroke ID of the visible edges from the layer definition",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesLineTypeFromLayer"
+    },
+    {
+      "name": "IsVisibleEdgesLineTypeUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the stroke specified in VisibleEdgesLineType for drawing the visible edges (True) or the stroke of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesLineTypeUsed"
+    },
+    {
+      "name": "IsVisibleEdgesOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to draw visible edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesOn"
+    },
+    {
+      "name": "IsVisibleEdgesPenFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to get the pen ID of the visible edges from the layer definition",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesPenFromLayer"
+    },
+    {
+      "name": "IsVisibleEdgesPenUsed",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to use the pen specified in VisibleEdgesPen for drawing the visible edges (True) or the pen of the model elements (False)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.IsVisibleEdgesPenUsed"
+    },
+    {
+      "name": "VisibleEdgesColor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Color ID for visible edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.VisibleEdgesColor"
+    },
+    {
+      "name": "VisibleEdgesLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Layer ID for visible edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.VisibleEdgesLayer"
+    },
+    {
+      "name": "VisibleEdgesLineType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Stroke ID for visible edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.VisibleEdgesLineType"
+    },
+    {
+      "name": "VisibleEdgesPen",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Pen ID for visible edges",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/VisibleHiddenEdgesProperties/#NemAll_Python_BasisElements.VisibleHiddenEdgesProperties.VisibleEdgesPen"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,30 @@
+{
+  "name": "IGH_RenderAwareObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in your IGH_DocumentObject type if you wish to send geometry to a render queue.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_RenderAwareObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AppendRenderGeometry",
+      "signature": "[ObsoleteAttribute] void AppendRenderGeometry(GH_RenderArgs args)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_RenderArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_RenderAwareObject_AppendRenderGeometry.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

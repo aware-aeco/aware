@@ -1,0 +1,55 @@
+{
+  "name": "FileProtocolPluginRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents a FileProtocolPlugin record in Navisworks",
+  "base": "Autodesk.Navisworks.Api.Plugins.PluginRecord",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.FileProtocolPluginRecord",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.FileProtocolPlugin LoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.FileProtocolPlugin",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPluginRecord.LoadPlugin"
+    },
+    {
+      "name": "TryLoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.FileProtocolPlugin TryLoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.FileProtocolPlugin",
+        "doc": "null if plugin failed to load"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPluginRecord.TryLoadPlugin"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LoadedPlugin",
+      "type": "Autodesk.Navisworks.Api.Plugins.FileProtocolPlugin",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the plugin if loaded, otherwise null",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPluginRecord.LoadedPlugin"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

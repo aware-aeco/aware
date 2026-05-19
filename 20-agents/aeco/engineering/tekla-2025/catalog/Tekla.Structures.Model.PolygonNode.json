@@ -1,0 +1,85 @@
+{
+  "name": "PolygonNode",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The PolygonNode class represents flat geometry tree node.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8b8b4b86-6354-8422-b25e-3cb648755976",
+  "constructors": [
+    {
+      "name": "PolygonNode",
+      "signature": "public PolygonNode(Contour contour, bool isAutomaticNode = false)",
+      "summary": "Initializes a new instance of the PolygonNode class.",
+      "params": [
+        {
+          "name": "contour",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "The contour points of the node.",
+          "optional": false
+        },
+        {
+          "name": "isAutomaticNode",
+          "type": "System.Boolean",
+          "doc": "true if the node represents an automatically generated extension.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5afe6f9-2427-20d1-8590-dcd7d513e27e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AcceptVisitor",
+      "signature": "public void AcceptVisitor(IGeometryNodeVisitor visitor)",
+      "summary": "Entry method for the visitor pattern",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "Tekla.Structures.Model.IGeometryNodeVisitor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea91906f-dfb0-e192-f2d5-c912453e9568"
+    },
+    {
+      "name": "Clone",
+      "signature": "public IGeometryNode Clone()",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "returns": {
+        "type": "IGeometryNode",
+        "doc": "A new object that is a copy of the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/947896a5-05f7-c3e7-e570-703dc743fdf1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Contour",
+      "type": "Contour",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets or sets the contour points of flat geometry.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e7624db7-2244-147f-4610-5a5035d29637"
+    },
+    {
+      "name": "IsAutomatic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this geometry node was automatically generated (returns false if it was originally a user-defined part)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f00cd70c-8759-e491-4d1c-8ec8e03fae88"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

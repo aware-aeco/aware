@@ -1,0 +1,14 @@
+{
+  "name": "GH_DigitScrollerBase.ValueChangedEventHandler",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Base.GH_DigitScrollerBase.ValueChangedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_DigitScrollerBase_ValueChangedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ValueChangedEventHandler( Object sender, GH_DigitScrollerEventArgs e )"
+}

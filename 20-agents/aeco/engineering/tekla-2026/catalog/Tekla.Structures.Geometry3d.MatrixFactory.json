@@ -1,0 +1,107 @@
+{
+  "name": "MatrixFactory",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The MatrixFactory class provides a convenient way to generate different kinds of transformation matrices.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ef97ef94-ca37-e418-1974-02453a5183fe",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ByCoordinateSystems",
+      "signature": "public static Matrix ByCoordinateSystems(CoordinateSystem CoordSys1, CoordinateSystem CoordSys2)",
+      "summary": "Returns a coordinate transformation matrix defined by two coordinate systems. With the returned matrix points can be transformed from the first coordinate system to the second coordinate system. The ByCoordinateSystems method is meant for transforming points between coordinate systems asked in the same work plane.",
+      "params": [
+        {
+          "name": "CoordSys1",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to start from.",
+          "optional": false
+        },
+        {
+          "name": "CoordSys2",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The target coordinate system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix",
+        "doc": "The transformation matrix defined by the two coordinate systems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/164a690d-7f09-985b-d7a7-cc0259e6bc53"
+    },
+    {
+      "name": "FromCoordinateSystem",
+      "signature": "public static Matrix FromCoordinateSystem(CoordinateSystem CoordSys)",
+      "summary": "Returns a coordinate transformation matrix defined by the given coordinate system. With the returned matrix points can be transformed from the given coordinate system to the current work plane coordinate system.",
+      "params": [
+        {
+          "name": "CoordSys",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to transform points from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix",
+        "doc": "The transformation matrix defined by the given coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/eeb1ab4c-20e3-6a13-15f0-a1f5947c8dce"
+    },
+    {
+      "name": "Rotate",
+      "signature": "public static Matrix Rotate(double Angle, Vector Axis)",
+      "summary": "Returns a rotation matrix in a Clockwise rotation around the given rotation axis, defined by the given angle and the given rotation axis.",
+      "params": [
+        {
+          "name": "Angle",
+          "type": "System.Double",
+          "doc": "The rotation angle (in radians).",
+          "optional": false
+        },
+        {
+          "name": "Axis",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The rotation axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix",
+        "doc": "The new rotation matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9421178e-d986-44f4-f2f4-e2d753bd2fa9"
+    },
+    {
+      "name": "ToCoordinateSystem",
+      "signature": "public static Matrix ToCoordinateSystem(CoordinateSystem CoordSys)",
+      "summary": "Returns a coordinate transformation matrix defined by the given coordinate system. With the returned matrix points can be transformed from the current work plane coordinate system to the given coordinate system.",
+      "params": [
+        {
+          "name": "CoordSys",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to transform points to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix",
+        "doc": "The transformation matrix defined by the given coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7dbba383-7bd0-e7a1-c409-9b0e9aa50f36"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

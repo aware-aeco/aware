@@ -1,0 +1,133 @@
+{
+  "name": "GumballMode",
+  "namespace": "Rhino.UI.Gumball",
+  "kind": "enum",
+  "summary": "Transformation modes for gumballs.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Gumball_GumballMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Menu",
+      "value": 1,
+      "summary": "Gumball menu button was picked."
+    },
+    {
+      "name": "TranslateFree",
+      "value": 2,
+      "summary": "Unconstrained translation."
+    },
+    {
+      "name": "TranslateX",
+      "value": 3,
+      "summary": "Translation along a single axis."
+    },
+    {
+      "name": "TranslateY",
+      "value": 4,
+      "summary": "Translation along a single axis."
+    },
+    {
+      "name": "TranslateZ",
+      "value": 5,
+      "summary": "Translation along a single axis."
+    },
+    {
+      "name": "TranslateXY",
+      "value": 6,
+      "summary": "Translation in a plane."
+    },
+    {
+      "name": "TranslateYZ",
+      "value": 7,
+      "summary": "Translation in a plane."
+    },
+    {
+      "name": "TranslateZX",
+      "value": 8,
+      "summary": "Translation in a plane."
+    },
+    {
+      "name": "ScaleX",
+      "value": 9,
+      "summary": "Scale along a single axis."
+    },
+    {
+      "name": "ScaleY",
+      "value": 10,
+      "summary": "Scale along a single axis."
+    },
+    {
+      "name": "ScaleZ",
+      "value": 11,
+      "summary": "Scale along a single axis."
+    },
+    {
+      "name": "ScaleXY",
+      "value": 12,
+      "summary": "Scale in a plane."
+    },
+    {
+      "name": "ScaleYZ",
+      "value": 13,
+      "summary": "Scale in a plane."
+    },
+    {
+      "name": "ScaleZX",
+      "value": 14,
+      "summary": "Scale in a plane."
+    },
+    {
+      "name": "RotateX",
+      "value": 15,
+      "summary": "Rotation around a single axis."
+    },
+    {
+      "name": "RotateY",
+      "value": 16,
+      "summary": "Rotation around a single axis."
+    },
+    {
+      "name": "RotateZ",
+      "value": 17,
+      "summary": "Rotation around a single axis."
+    },
+    {
+      "name": "ExtrudeX",
+      "value": 18,
+      "summary": "Extrusion along a single axis."
+    },
+    {
+      "name": "ExtrudeY",
+      "value": 19,
+      "summary": "Extrusion along a single axis."
+    },
+    {
+      "name": "ExtrudeZ",
+      "value": 20,
+      "summary": "Extrusion along a single axis."
+    },
+    {
+      "name": "CutX",
+      "value": 21,
+      "summary": "Cutting extrusion along the gumball X axis."
+    },
+    {
+      "name": "CutY",
+      "value": 22,
+      "summary": "Cutting extrusion along the gumball Y axis."
+    },
+    {
+      "name": "CutZ",
+      "value": 23,
+      "summary": "Cutting extrusion along the gumball Z axis."
+    }
+  ]
+}

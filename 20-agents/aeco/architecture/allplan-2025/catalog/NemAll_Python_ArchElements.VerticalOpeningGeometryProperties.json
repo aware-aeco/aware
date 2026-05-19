@@ -1,0 +1,105 @@
+{
+  "name": "VerticalOpeningGeometryProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the vertical opening geometry properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/",
+  "constructors": [
+    {
+      "name": "VerticalOpeningGeometryProperties",
+      "signature": "VerticalOpeningGeometryProperties(element: VerticalOpeningGeometryProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "VerticalOpeningGeometryProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the depth",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.Depth"
+    },
+    {
+      "name": "ProfilePath",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the full name of the profile",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.ProfilePath"
+    },
+    {
+      "name": "RiseAtBottom",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rise at the bottom",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.RiseAtBottom"
+    },
+    {
+      "name": "RiseAtTop",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rise at the top",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.RiseAtTop"
+    },
+    {
+      "name": "SegmentsAtBottom",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the segments of rise at bottom",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.SegmentsAtBottom"
+    },
+    {
+      "name": "SegmentsAtTop",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the segments of rise at top",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.SegmentsAtTop"
+    },
+    {
+      "name": "Shape",
+      "type": "VerticalOpeningShapeType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the opening shape type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.Shape"
+    },
+    {
+      "name": "ShapePolygon",
+      "type": "Polygon2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the shape polygon",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.ShapePolygon"
+    },
+    {
+      "name": "Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningGeometryProperties/#NemAll_Python_ArchElements.VerticalOpeningGeometryProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

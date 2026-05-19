@@ -1,0 +1,22 @@
+{
+  "name": "Point3dList.YAccess",
+  "namespace": "Rhino.Collections",
+  "kind": "class",
+  "summary": "Utility class for easy-access of x-components of points inside an ON_3dPointList.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Collections_Point3dList_YAccess.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the y-coordinate of the specified point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_Point3dList_YAccess_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,31 @@
+{
+  "name": "InvalidTypeException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The InvalidTypeException class defines the exception that is thrown when a type was not one of the allowed ones.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6bf4fcbe-a96d-9809-629d-b9491f452c57",
+  "constructors": [
+    {
+      "name": "InvalidTypeException",
+      "signature": "public InvalidTypeException(string Message)",
+      "summary": "Creates a new InvalidTypeException instance.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5abdc978-08a8-0cd9-2f9e-4c98e343edb7"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

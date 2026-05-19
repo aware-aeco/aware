@@ -1,0 +1,46 @@
+{
+  "name": "FileStp",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for writing STEP (STP) file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileStp.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Write",
+      "signature": "public static bool Write(string filename, RhinoDoc doc, FileStpWriteOptions options)",
+      "summary": "Write a STP file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "path to write a file to",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to get geometry from",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileStpWriteOptions",
+          "doc": "options used for generating the STP file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FileStp_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

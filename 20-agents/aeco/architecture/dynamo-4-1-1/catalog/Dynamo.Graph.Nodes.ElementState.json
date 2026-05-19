@@ -1,0 +1,50 @@
+{
+  "name": "ElementState",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "enum",
+  "summary": "Represents nodes states.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Active",
+      "value": 1
+    },
+    {
+      "name": "AstBuildBroken",
+      "value": 5
+    },
+    {
+      "name": "Dead",
+      "value": 0
+    },
+    {
+      "name": "Error",
+      "value": 4
+    },
+    {
+      "name": "Info",
+      "value": 6
+    },
+    {
+      "name": "MigratedFormula",
+      "value": 8
+    },
+    {
+      "name": "PersistentInfo",
+      "value": 7
+    },
+    {
+      "name": "PersistentWarning",
+      "value": 3
+    },
+    {
+      "name": "Warning",
+      "value": 2
+    }
+  ]
+}

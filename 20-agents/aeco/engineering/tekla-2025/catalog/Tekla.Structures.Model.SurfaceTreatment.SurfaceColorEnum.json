@@ -1,0 +1,49 @@
+{
+  "name": "SurfaceTreatment.SurfaceColorEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different surfacing colors.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/220357a1-749a-c75a-62cc-651b54fe5e1f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WHITE",
+      "value": 1,
+      "summary": "The white surface color."
+    },
+    {
+      "name": "RED",
+      "value": 2,
+      "summary": "The red surface color."
+    },
+    {
+      "name": "GREEN",
+      "value": 3,
+      "summary": "The green surface color."
+    },
+    {
+      "name": "BLUE",
+      "value": 4,
+      "summary": "The blue surface color."
+    },
+    {
+      "name": "CYAN",
+      "value": 5,
+      "summary": "The cyan surface color."
+    },
+    {
+      "name": "YELLOW",
+      "value": 6,
+      "summary": "The yellow surface color."
+    },
+    {
+      "name": "MAGENTA",
+      "value": 7,
+      "summary": "The magenta surface color."
+    }
+  ]
+}

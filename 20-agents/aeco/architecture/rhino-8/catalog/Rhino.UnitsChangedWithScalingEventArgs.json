@@ -1,0 +1,39 @@
+{
+  "name": "UnitsChangedWithScalingEventArgs",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Provides information about UnitsChangedWithScaling events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UnitsChangedWithScalingEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document for this event. This field might be null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UnitsChangedWithScalingEventArgs_Document.htm"
+    },
+    {
+      "name": "DocumentSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the uniques document serial number for this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UnitsChangedWithScalingEventArgs_DocumentSerialNumber.htm"
+    },
+    {
+      "name": "Scale",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The scale factor.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UnitsChangedWithScalingEventArgs_Scale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "SectionMarkBase.SectionMarkTagAttributes.TagTextRotation",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The mark tag text rotation values.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a8e4a0bf-8d73-5f8a-1cf5-3f86921a4d8e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AlwaysRotate",
+      "value": 1,
+      "summary": "Always rotate."
+    },
+    {
+      "name": "AlwaysHorizontal",
+      "value": 2,
+      "summary": "Always horizontal."
+    },
+    {
+      "name": "DoNotRotateVertically",
+      "value": 3,
+      "summary": "Do not rotate vertically."
+    },
+    {
+      "name": "AlwaysOrthogonal",
+      "value": 4,
+      "summary": "Always orthogonal."
+    }
+  ]
+}

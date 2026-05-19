@@ -1,0 +1,165 @@
+{
+  "name": "PaletteCtrlType",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "enum",
+  "summary": "Types of the palette controls",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Palette/PaletteCtrlType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PaletteCtrlType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Palette/PaletteCtrlType/#NemAll_Python_Palette.PaletteCtrlType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ARRAYBUTTON",
+      "value": 26
+    },
+    {
+      "name": "BUTTON",
+      "value": 9
+    },
+    {
+      "name": "CANVAS",
+      "value": 32
+    },
+    {
+      "name": "CHECK",
+      "value": 4
+    },
+    {
+      "name": "COMBO",
+      "value": 5
+    },
+    {
+      "name": "COMBOCOLOR",
+      "value": 6
+    },
+    {
+      "name": "COMBODRAWINGTYPE",
+      "value": 19
+    },
+    {
+      "name": "COMBOFACESTYLE",
+      "value": 18
+    },
+    {
+      "name": "COMBOHATCH",
+      "value": 17
+    },
+    {
+      "name": "COMBOLAYER",
+      "value": 13
+    },
+    {
+      "name": "COMBOMATNAME",
+      "value": 14
+    },
+    {
+      "name": "COMBOPATTERN",
+      "value": 16
+    },
+    {
+      "name": "COMBOPEN",
+      "value": 7
+    },
+    {
+      "name": "COMBOREINFBARDIAM",
+      "value": 23
+    },
+    {
+      "name": "COMBOREINFBARGRADE",
+      "value": 22
+    },
+    {
+      "name": "COMBOREINFCONCRGRADE",
+      "value": 21
+    },
+    {
+      "name": "COMBOREINFMESH",
+      "value": 25
+    },
+    {
+      "name": "COMBOREINFMESHGROUP",
+      "value": 24
+    },
+    {
+      "name": "COMBOREINFNORM",
+      "value": 20
+    },
+    {
+      "name": "COMBOSTROKE",
+      "value": 8
+    },
+    {
+      "name": "EDIT",
+      "value": 3
+    },
+    {
+      "name": "ELLIPS",
+      "value": 29
+    },
+    {
+      "name": "GROUPBOX",
+      "value": 10
+    },
+    {
+      "name": "INFIELD",
+      "value": 2
+    },
+    {
+      "name": "LINE",
+      "value": 28
+    },
+    {
+      "name": "PICTURE",
+      "value": 1
+    },
+    {
+      "name": "PICTUREBUTTON",
+      "value": 15
+    },
+    {
+      "name": "PICTURELIST",
+      "value": 12
+    },
+    {
+      "name": "POLY",
+      "value": 31
+    },
+    {
+      "name": "RECT",
+      "value": 27
+    },
+    {
+      "name": "STATIC",
+      "value": 0
+    },
+    {
+      "name": "TEXT",
+      "value": 30
+    }
+  ]
+}

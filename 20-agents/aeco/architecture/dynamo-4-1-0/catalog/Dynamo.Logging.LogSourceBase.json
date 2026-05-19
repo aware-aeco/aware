@@ -1,0 +1,124 @@
+{
+  "name": "LogSourceBase",
+  "namespace": "Dynamo.Logging",
+  "kind": "class",
+  "summary": "An object that can log messages.",
+  "interfaces": [
+    "Dynamo.Logging.ILogSource"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs",
+  "constructors": [
+    {
+      "name": "LogSourceBase()",
+      "signature": "void LogSourceBase()",
+      "summary": "LogSourceBase.LogSourceBase",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AsLogger",
+      "signature": "Dynamo.Logging.ILogger AsLogger()",
+      "summary": "Creates an ILogger out of this LogSourceBase; logging to the ILogger will send messages out of the LogMessage event.",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Logging.ILogger",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs"
+    },
+    {
+      "name": "Log(Dynamo.Logging.ILogMessage)",
+      "signature": "void Log(Dynamo.Logging.ILogMessage obj)",
+      "summary": "Logs ILogMessage objects.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Logging.ILogMessage",
+          "doc": "Message object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs"
+    },
+    {
+      "name": "Log(System.Exception)",
+      "signature": "void Log(System.Exception ex)",
+      "summary": "Transform exception into ILogMessage object and logs it.",
+      "params": [
+        {
+          "name": "ex",
+          "type": "System.Exception",
+          "doc": "Exception",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs"
+    },
+    {
+      "name": "Log(string)",
+      "signature": "void Log(string msg)",
+      "summary": "Transform string into ILogMessage object and logs it.",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "doc": "String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs"
+    },
+    {
+      "name": "Log(string, Dynamo.Logging.WarningLevel)",
+      "signature": "void Log(string msg, Dynamo.Logging.WarningLevel severity)",
+      "summary": "Logs string message with some warning level.",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "doc": "String",
+          "optional": false
+        },
+        {
+          "name": "severity",
+          "type": "Dynamo.Logging.WarningLevel",
+          "doc": "Warning level",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "Emits LogMessages.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/LogSource.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

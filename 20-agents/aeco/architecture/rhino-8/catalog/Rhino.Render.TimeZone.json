@@ -1,0 +1,80 @@
+{
+  "name": "TimeZone",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "TimeZone",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_TimeZone.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "TimeZoneAt",
+      "signature": "public static TimeZone TimeZoneAt(int index)",
+      "summary": "Returns a time zone at given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TimeZone",
+        "doc": "Time zone at index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TimeZone_TimeZoneAt.htm"
+    },
+    {
+      "name": "TimeZones",
+      "signature": "public static int TimeZones()",
+      "summary": "Returns number of available time zones.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "Time zone count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TimeZone_TimeZones.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Hours",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets hours of a time zone.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TimeZone_Hours.htm"
+    },
+    {
+      "name": "Latitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the latitude of a major city nearby",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TimeZone_Latitude.htm"
+    },
+    {
+      "name": "Longitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Longitude of a major city nearby",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TimeZone_Longitude.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets name of a time zone.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TimeZone_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

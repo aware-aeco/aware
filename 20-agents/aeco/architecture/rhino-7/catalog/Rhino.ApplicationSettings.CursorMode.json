@@ -1,0 +1,29 @@
+{
+  "name": "CursorMode",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Defines enumerated constant values for particular OSnap cursor colors.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_CursorMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No OSnap cursor."
+    },
+    {
+      "name": "BlackOnWhite",
+      "value": 1,
+      "summary": "Black on white OSnap cursor."
+    },
+    {
+      "name": "WhiteOnBlack",
+      "value": 2,
+      "summary": "White on black OSnap cursor."
+    }
+  ]
+}

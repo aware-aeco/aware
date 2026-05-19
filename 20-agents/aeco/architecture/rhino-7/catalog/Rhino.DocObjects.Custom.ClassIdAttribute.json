@@ -1,0 +1,41 @@
+{
+  "name": "ClassIdAttribute",
+  "namespace": "Rhino.DocObjects.Custom",
+  "kind": "class",
+  "summary": "Useful for legacy UserData",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Custom_ClassIdAttribute.htm",
+  "constructors": [
+    {
+      "name": "ClassIdAttribute",
+      "signature": "public ClassIdAttribute(string id)",
+      "summary": "Initializes a class id attribute.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "String in the form of a Guid.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_ClassIdAttribute__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the associated style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_ClassIdAttribute_Id.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,662 @@
+{
+  "name": "UI",
+  "namespace": "",
+  "kind": "interface",
+  "summary": "The UI module contains a number of methods for creating simple UI elements from a SketchUp Ruby script.",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/UI.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "add_context_menu_handler",
+      "signature": "add_context_menu_handler {|menu| ... } =\u003E Integer",
+      "summary": "The add_context_menu_handler method is used to register a block of code with SketchUp that will be called when a context menu is to be displayed.",
+      "remarks": "The add_context_menu_handler method is used to register a block of code with SketchUp that will be called when a context menu is to be displayed. The context menu handler can then display the context menu with the items that you have added. Be careful with what you do in a context menu handler. If you perform an operation takes take a long time, such as traversing the model or selection in a large model it will delay the menu. See the contextmenu.rb script in the Plugins/examples directory for an example.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of context handlers that are registered"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#add_context_menu_handler-class_method"
+    },
+    {
+      "name": "beep",
+      "signature": "beep =\u003E nil",
+      "summary": "The beep method plays a system beep sound.",
+      "remarks": "The beep method plays a system beep sound. The beep method does not accept any arguments nor return any values.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#beep-class_method"
+    },
+    {
+      "name": "create_cursor",
+      "signature": "create_cursor(path, hot_x, hot_y) =\u003E Integer",
+      "summary": "Note: Since SketchUp 2016 it is possible to provide vector images for the cursors.",
+      "remarks": "Note: Since SketchUp 2016 it is possible to provide vector images for the cursors. SVG format for Windows and PDF format for macOS. This is the recommended format to use since it will scale well with different DPI scaling. Note: Because the image is never released, avoid creating new cursors for the same image for any given tool. Cache it and reuse it. The create_cursor method is used to create a cursor from an image file at the specified location. This must be called from within a custom tool. See the Sketchup::Tool documentation for a complete example. The size of the cursor images should be 32x32 pixels. Any size different from that will be scaled using the shrink-to-fit policy. The coordinates for the cursor\u0027s hotspot are based from it\u0027s top left corner, starting at (0, 0). For example, a value of (hot_x, hot_y) = (5, 10) would identify the hotpoint of the cursor at 5 pixels from the left edge of your cursor image and 10 pixels from the top edge of your cursor image.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "File path to an image.",
+          "optional": false
+        },
+        {
+          "name": "hot_x",
+          "type": "Integer",
+          "doc": "The x-coordinate of the \u201Chotpoint\u201D of the cursor, computed from the left edge of your cursor image.",
+          "optional": false
+        },
+        {
+          "name": "hot_y",
+          "type": "Integer",
+          "doc": "The y-coordinate of the \u201Chotpoint\u201D of the cursor, computed from the top edge of your cursor image.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "Id associated with the cursor. Use this with set_cursor in Sketchup::Tool#onSetCursor."
+      },
+      "throws": [
+        {
+          "type": "RangeError",
+          "when": "if @param hot_x or @param hot_y are negative or larger than the max value of an Integer."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#create_cursor-class_method"
+    },
+    {
+      "name": "get_clipboard_data",
+      "signature": "get_clipboard_data =\u003E String?",
+      "summary": "Returns the plain text available on the clipboard, if there is any.",
+      "remarks": "Returns the plain text available on the clipboard, if there is any.",
+      "params": [],
+      "returns": {
+        "type": "String, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#get_clipboard_data-class_method"
+    },
+    {
+      "name": "inputbox",
+      "signature": "inputbox(prompts, defaults, title) =\u003E Array\u003CString\u003E, false | inputbox(prompts, defaults, list, title) =\u003E Array\u003CString\u003E, false",
+      "summary": "Note: The method intelligently handles various types for default values and lists, automatically attempting to convert provided inputs to match the type of the default value.",
+      "remarks": "Note: The method intelligently handles various types for default values and lists, automatically attempting to convert provided inputs to match the type of the default value. This ensures consistency in data types throughout the operation. Creates a dialog box for inputting user information. The dialog box contains input fields with static text prompts, optional default values, optional drop down selections, and optional title. You can also use this method to display drop down lists of options, by passing an optional param.",
+      "params": [
+        {
+          "name": "prompts",
+          "type": "Array\u003CString\u003E",
+          "doc": "An array of prompt names appearing in the input box adjacent to input fields.",
+          "optional": false
+        },
+        {
+          "name": "defaults",
+          "type": "Array\u003CString\u003E",
+          "doc": "An array of default values for the input fields.",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "doc": "The title for the input box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array\u003CString\u003E, false",
+        "doc": "An array of returned values if the user did not cancel the dialog. If the user canceled the dialog, false is returned. The returned values in the array will be in the same order as the input fields."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#inputbox-class_method"
+    },
+    {
+      "name": "inspector_names",
+      "signature": "inspector_names =\u003E Array\u003CString\u003E",
+      "summary": "The inspector_names method is used to returns the names of all the inspectors.",
+      "remarks": "The inspector_names method is used to returns the names of all the inspectors. Inspectors are another name for the various floating dialog windows that you can activate from withing SketchUp, such as the Materials window.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "an array of strings containing the names of inspectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#inspector_names-class_method"
+    },
+    {
+      "name": "menu",
+      "signature": "menu(menu_name = \u0022Extensions\u0022) =\u003E Sketchup::Menu",
+      "summary": "Note: The \u0027Extensions\u0027 menu was named \u0027Plugins\u0027 prior to SketchUp 2015.",
+      "remarks": "Note: The \u0027Extensions\u0027 menu was named \u0027Plugins\u0027 prior to SketchUp 2015. For backward compatibility \u0027Plugins\u0027 still works. Note: \u0027Developer\u0027 menu was added with SketchUp 2021.1. The menu method retrieves a SketchUp\u0027s menu object with a given name. This is the first step toward adding your own custom items to the bottom of SketchUp\u0027s menus. Valid menu names are: \u0027File\u0027, \u0027Edit\u0027, \u0027View\u0027, \u0027Camera\u0027, \u0027Draw\u0027, \u0027Tools\u0027, \u0027Window\u0027, \u0027Extensions\u0027, \u0027Help\u0027 and \u0027Developer\u0027.",
+      "params": [
+        {
+          "name": "menu_name",
+          "type": "String",
+          "doc": "The name of a supported menu.",
+          "optional": true,
+          "default": "\u0022Extensions\u0022"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Menu",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#menu-class_method"
+    },
+    {
+      "name": "messagebox",
+      "signature": "messagebox(message, type = MB_OK) =\u003E Integer",
+      "summary": "Creates a dialog box containing static text with a series of buttons for the user to choose from.",
+      "remarks": "Creates a dialog box containing static text with a series of buttons for the user to choose from. Valid message box types are: MB_OK - Contains an OK button. MB_OKCANCEL - Contains OK and Cancel buttons. MB_ABORTRETRYIGNORE - Contains Abort, Retry, and Ignore buttons. MB_YESNOCANCEL - Contains Yes, No, and Cancel buttons. MB_YESNO - Contains Yes and No buttons. MB_RETRYCANCEL - Contains Retry and Cancel buttons. MB_MULTILINE - Contains and OK button. Return values can be any of following: IDOK IDCANCEL IDABORT IDRETRY IDIGNORE IDYES IDNO In an MB_MULTILINE message box, the message is displayed as a multi-line message with scrollbars (as needed). MB_MULTILNE also allows a third string argument that will be used as the title for the messagebox.",
+      "params": [
+        {
+          "name": "message",
+          "type": "String",
+          "doc": "The message that you want to display.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Integer",
+          "doc": "The message box type, which will be a constant from the list in the method comments.",
+          "optional": true,
+          "default": "MB_OK"
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "A number corresponding to what the user selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#messagebox-class_method"
+    },
+    {
+      "name": "model_info_pages",
+      "signature": "model_info_pages =\u003E Array\u003CString\u003E",
+      "summary": "The model_info_pages method is used to returns the names of all the available model info pages.",
+      "remarks": "The model_info_pages method is used to returns the names of all the available model info pages. These include UI windows such as Components, Credits, and Units.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "an array of strings containing the names of model info pages."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#model_info_pages-class_method"
+    },
+    {
+      "name": "openpanel",
+      "signature": "openpanel(title, directory, filename) =\u003E String",
+      "summary": "The openpanel method is used to display the Open dialog box.",
+      "remarks": "The openpanel method is used to display the Open dialog box. The path that is returned can then be used inside code to open a text or image file. See the standard Ruby class File for examples of reading and writing from disk.",
+      "params": [
+        {
+          "name": "title",
+          "type": "String",
+          "doc": "The title to apply to the open dialog box.",
+          "optional": false
+        },
+        {
+          "name": "directory",
+          "type": "String",
+          "doc": "The default directory for the open panel.",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The default filename for the open panel. On Windows, you can alternatively pass a wildcard filter using this format: UIname|wildcard||. Additional filter dropdown list items can be added by adding additional pairs of filter name and filter like this: UIname1|wildcard1|UIname2|wildcard2||. Also multiple wildcard filters can be combined into a single line using a semicolon-separated list in the filter field: ui_name|wildcard1;wildcard2||.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "the full path and name of the file selected, or nil if the dialog was canceled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#openpanel-class_method"
+    },
+    {
+      "name": "openURL",
+      "signature": "openURL(url) =\u003E Boolean",
+      "summary": "The openURL method is used to open the default browser to a URL.",
+      "remarks": "The openURL method is used to open the default browser to a URL.",
+      "params": [
+        {
+          "name": "url",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#openURL-class_method"
+    },
+    {
+      "name": "play_sound",
+      "signature": "play_sound(filename) =\u003E nil",
+      "summary": "The play_sound method is used to play a sound file.",
+      "remarks": "The play_sound method is used to play a sound file. Valid sound files include .wav and .mp3 files on the Mac and .wav files on the PC.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "the relative path to the filename from the SketchUp install directory, or an absolute path to the file. (See Sketchup.find_support_file for a way to search for a specific file.)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#play_sound-class_method"
+    },
+    {
+      "name": "preferences_pages",
+      "signature": "preferences_pages =\u003E Array\u003CString\u003E",
+      "summary": "The preferences_pages method is used to returns the names of all the preferences pages.",
+      "remarks": "The preferences_pages method is used to returns the names of all the preferences pages. These include windows like Templates. SketchUp 2017 \u0022Extensions\u0022 page was removed.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "an array of strings containing the names of preference pages."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#preferences_pages-class_method"
+    },
+    {
+      "name": "refresh_inspectors",
+      "signature": "refresh_inspectors =\u003E nil",
+      "summary": "Tells SketchUp to refresh all inspectors such as the Component Browser and the Outliner.",
+      "remarks": "Tells SketchUp to refresh all inspectors such as the Component Browser and the Outliner. This is useful when you need to manually force a refresh after you\u0027ve made a change to the document via Ruby. Generally, SketchUp will keep these in sync for you, but occasionally it does not, such as when model.start_operation has disabled UI updates.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#refresh_inspectors-class_method"
+    },
+    {
+      "name": "refresh_toolbars",
+      "signature": "refresh_toolbars =\u003E nil",
+      "summary": "Tells SketchUp to refresh all floating toolbars.",
+      "remarks": "Tells SketchUp to refresh all floating toolbars. This is useful when you need to manually force a refresh after you\u0027ve made a change to the document via Ruby. Generally, SketchUp will keep these in sync for you, but occasionally it does not, such as when Sketchup::Model#start_operation has disabled UI updates. This only affects macOS, on Windows the toolbars are always refreshing.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#refresh_toolbars-class_method"
+    },
+    {
+      "name": "savepanel",
+      "signature": "savepanel(title, directory, filename) =\u003E String",
+      "summary": "The savepanel method is used to display the Save dialog box.",
+      "remarks": "The savepanel method is used to display the Save dialog box. The path that is returned can then be used inside code to save out a text or image file. See the standard Ruby class File for examples of reading and writing from disk.",
+      "params": [
+        {
+          "name": "title",
+          "type": "String",
+          "doc": "The title to apply to the save dialog box.",
+          "optional": false
+        },
+        {
+          "name": "directory",
+          "type": "String",
+          "doc": "The default directory for the save panel.",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The default filename for the save panel. On Windows, you can alternatively pass a mask, like \u201C*.txt\u201D, to have all the .txt files display. If you want multiple file types to display, you can supply multiple masks for the filename and separate them with a semicolon, like this: \u201C.txt;.doc\u201D.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "the full path and name of the file selected or nil if the dialog was canceled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#savepanel-class_method"
+    },
+    {
+      "name": "scale_factor",
+      "signature": "scale_factor =\u003E Float | scale_factor(view) =\u003E Float",
+      "summary": "Note: SU2017M0 will automatically scale up line width and text size, but will not scale up the points provided to Sketchup::View#draw2d.",
+      "remarks": "Note: SU2017M0 will automatically scale up line width and text size, but will not scale up the points provided to Sketchup::View#draw2d. Returns the scaling factor SketchUp uses on high DPI monitors. Useful for things like Sketchup::View#draw2d.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Sketchup::View",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#scale_factor-class_method"
+    },
+    {
+      "name": "select_directory",
+      "signature": "select_directory(options = {}) =\u003E String, ...",
+      "summary": "The select_directory method is used to display the OS dialog for selecting one or several directories from the file system.",
+      "remarks": "The select_directory method is used to display the OS dialog for selecting one or several directories from the file system.",
+      "params": [
+        {
+          "name": "options",
+          "type": "Hash",
+          "doc": "The dialog can be customized by providing a hash or named arguments of options.",
+          "optional": true,
+          "default": "{}"
+        }
+      ],
+      "returns": {
+        "type": "String, Array\u003CString\u003E, nil",
+        "doc": "A string with the full path of the directory selected when :select_multiple option is set to false otherwise an array of strings or nil if the user cancelled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#select_directory-class_method"
+    },
+    {
+      "name": "set_clipboard_data",
+      "signature": "set_clipboard_data(data) =\u003E Boolean",
+      "summary": "Copies plain text to the clipboard.",
+      "remarks": "Copies plain text to the clipboard.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#set_clipboard_data-class_method"
+    },
+    {
+      "name": "set_cursor",
+      "signature": "set_cursor(cursor_id) =\u003E Boolean",
+      "summary": "The set_cursor method is used to change the cursor to a new cursor with a given cursor id.",
+      "remarks": "The set_cursor method is used to change the cursor to a new cursor with a given cursor id. See UI.create_cursor and the Tool class for details on creating your own tools with arbitrary cursors. If you call this while a standard SketchUp tool is active, you will not see your custom cursor, as these tools are constantly setting their own cursors to indicate SketchUp\u0027s state.",
+      "params": [
+        {
+          "name": "cursor_id",
+          "type": "Integer",
+          "doc": "The id of the cursor you want to display.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#set_cursor-class_method"
+    },
+    {
+      "name": "set_toolbar_visible",
+      "signature": "set_toolbar_visible(name, visible) =\u003E Boolean",
+      "summary": "The set_toolbar_visible method is used to set whether a given toolbar is visible.",
+      "remarks": "The set_toolbar_visible method is used to set whether a given toolbar is visible. Note that the toolbars and their names are different on the Mac vs. PC, so be careful and be sure to test when using this method in a cross-platform script.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of a Ruby toolbar.",
+          "optional": false
+        },
+        {
+          "name": "visible",
+          "type": "Boolean",
+          "doc": "True to make the toolbar visible, false to hide it.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#set_toolbar_visible-class_method"
+    },
+    {
+      "name": "show_extension_manager",
+      "signature": "show_extension_manager =\u003E nil",
+      "summary": "The show_extension_manager method is used to display the Extension Manager dialog.",
+      "remarks": "The show_extension_manager method is used to display the Extension Manager dialog.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#show_extension_manager-class_method"
+    },
+    {
+      "name": "show_extension_warehouse",
+      "signature": "show_extension_warehouse(extension_id = nil) =\u003E nil",
+      "summary": "Show the Extension Warehouse dialog inside SketchUp.",
+      "remarks": "Show the Extension Warehouse dialog inside SketchUp. If an extension UUID is provided the dialog navigates directly to that extension\u0027s page. If no UUID is provided it opens the Extension Warehouse home page.",
+      "params": [
+        {
+          "name": "extension_id",
+          "type": "String, nil",
+          "doc": "Optional Extension Warehouse UUID. If nil or omitted the EW home page is shown.",
+          "optional": true,
+          "default": "nil"
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#show_extension_warehouse-class_method"
+    },
+    {
+      "name": "show_inspector",
+      "signature": "show_inspector(name) =\u003E Boolean",
+      "summary": "The show_inspector method is used to display the inspector with the given name.",
+      "remarks": "The show_inspector method is used to display the inspector with the given name. You can get the list of valid inspectors with UI.inspector_names.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of inspector that you want to display.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#show_inspector-class_method"
+    },
+    {
+      "name": "show_model_info",
+      "signature": "show_model_info(page_name) =\u003E Boolean",
+      "summary": "The show_model_info method is used to display the model info dialog for a specific page.",
+      "remarks": "The show_model_info method is used to display the model info dialog for a specific page. You can get the list of valid page names with model_info_pages. SketchUp 2014 \u0022Classifications\u0022 page was added.",
+      "params": [
+        {
+          "name": "page_name",
+          "type": "String",
+          "doc": "The name of the model info dialog you want to display.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#show_model_info-class_method"
+    },
+    {
+      "name": "show_preferences",
+      "signature": "show_preferences(page_name) =\u003E Boolean",
+      "summary": "The show_preferences method is used to display a SketchUp preferences dialog.",
+      "remarks": "The show_preferences method is used to display a SketchUp preferences dialog. You can get the list of valid dialogs with preferences_pages.",
+      "params": [
+        {
+          "name": "page_name",
+          "type": "String",
+          "doc": "The name of the preferences dialog you want to display.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#show_preferences-class_method"
+    },
+    {
+      "name": "start_timer",
+      "signature": "start_timer(seconds, repeat = false) {|procedure| ... } =\u003E Integer",
+      "summary": "The start_timer method is used to start a timer.",
+      "remarks": "The start_timer method is used to start a timer. This is an effective method to create a repeating snippet of code for arbitrary animation. See this blog post for an detailed example of custom animation using timers: sketchupapi.blogspot.com/2008/10/animate-yo-cheese.html Note that there is a bug that if you open a modal window in a non-repeating timer the timer will repeat until the window is closed.",
+      "params": [
+        {
+          "name": "seconds",
+          "type": "Numeric",
+          "doc": "The time in seconds before your code should be called.",
+          "optional": false
+        },
+        {
+          "name": "repeat",
+          "type": "Boolean",
+          "doc": "true if you want the timer to repeat, false (or omit) if you do not want it to repeat.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "a timer ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#start_timer-class_method"
+    },
+    {
+      "name": "stop_timer",
+      "signature": "stop_timer(id) =\u003E nil",
+      "summary": "The stop_timer method is used to stop a timer based on its id.",
+      "remarks": "The stop_timer method is used to stop a timer based on its id.",
+      "params": [
+        {
+          "name": "id",
+          "type": "Integer",
+          "doc": "The timer id for the timer that you want to stop.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#stop_timer-class_method"
+    },
+    {
+      "name": "toolbar",
+      "signature": "toolbar(name) =\u003E UI::Toolbar",
+      "summary": "The toolbar method is used to get a Ruby toolbar by name.",
+      "remarks": "The toolbar method is used to get a Ruby toolbar by name. If the toolbar doesn\u0027t exist a new one will be created.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the Ruby toolbar.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UI::Toolbar",
+        "doc": "a Toolbar object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#toolbar-class_method"
+    },
+    {
+      "name": "toolbar_names",
+      "signature": "toolbar_names =\u003E Array\u003CString\u003E",
+      "summary": "The toolbar_names method is used to return the name of all the available native toolbars (this differs between PC and Mac).",
+      "remarks": "The toolbar_names method is used to return the name of all the available native toolbars (this differs between PC and Mac). These toolbar names do not include Ruby toolbars.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "Array of strings representing toolbar names."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#toolbar_names-class_method"
+    },
+    {
+      "name": "toolbar_visible?",
+      "signature": "toolbar_visible?(name) =\u003E Boolean",
+      "summary": "The toolbar_visible? method is used to determine whether a given toolbar is visible.",
+      "remarks": "The toolbar_visible? method is used to determine whether a given toolbar is visible. Note that the toolbars and their names are different on the Mac vs. PC, so be careful and be sure to test when using this method in a cross-platform script.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of a native toolbar.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI.html#toolbar_visible?-class_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

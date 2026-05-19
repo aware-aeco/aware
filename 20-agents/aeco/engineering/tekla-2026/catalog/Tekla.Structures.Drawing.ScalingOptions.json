@@ -1,0 +1,24 @@
+{
+  "name": "ScalingOptions",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The options for controlling the scaling of the objects in the drawing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9665449d-ff04-7985-ad81-52330c936e19",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoScaling",
+      "value": 0,
+      "summary": "Does not scale the object."
+    },
+    {
+      "name": "ScaleToFit",
+      "value": 4,
+      "summary": "Scales the object to fit in the frame in the Y direction."
+    }
+  ]
+}

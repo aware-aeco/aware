@@ -1,0 +1,193 @@
+{
+  "name": "FileWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileWriteOptions\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileWriteOptions",
+      "signature": "public FileWriteOptions()",
+      "summary": "Initializes a new instance of the FileWriteOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the FileWriteOptions",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileWriteOptions_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the FileWriteOptions and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileWriteOptions_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileWriteOptions_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DestinationFileName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "For use on Apple frameworks only. Returns the final destination file name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_DestinationFileName.htm"
+    },
+    {
+      "name": "FileVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_FileVersion.htm"
+    },
+    {
+      "name": "IncludeBitmapTable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The file written should include the bitmap table if your File Writing Plug-in supports it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_IncludeBitmapTable.htm"
+    },
+    {
+      "name": "IncludeHistory",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The file written should include history information if your File Writing Plug-In supports it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_IncludeHistory.htm"
+    },
+    {
+      "name": "IncludePreviewImage",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The file written should include a preview image if your File Writing Plug-in supports it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_IncludePreviewImage.htm"
+    },
+    {
+      "name": "IncludeRenderMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The file written should include the render meshes if your File Writing Plug-in supports it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_IncludeRenderMeshes.htm"
+    },
+    {
+      "name": "OptionsDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Additional read options.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_OptionsDictionary.htm"
+    },
+    {
+      "name": "RhinoDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Source RhinoDoc that is being written",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_RhinoDoc.htm"
+    },
+    {
+      "name": "SuppressAllInput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_SuppressAllInput.htm"
+    },
+    {
+      "name": "SuppressDialogBoxes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, it means the command has been run with a \u0027-\u0027, meaning you should not ask questions during writing. (no dialogs, no \u0022getters\u0022, etc.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_SuppressDialogBoxes.htm"
+    },
+    {
+      "name": "UpdateDocumentPath",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If a complete, current version, 3dm file is successfully saved, then the name of the file will be used to update the document\u0027s default file path and title and document will be marked as not modified.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_UpdateDocumentPath.htm"
+    },
+    {
+      "name": "WriteAsTemplate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Write as template",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_WriteAsTemplate.htm"
+    },
+    {
+      "name": "WriteGeometryOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, the file written should include only geometry File Writing Plug-in supports it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_WriteGeometryOnly.htm"
+    },
+    {
+      "name": "WriteSelectedObjectsOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, this command should export only the objects currently selected in the Rhino model.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_WriteSelectedObjectsOnly.htm"
+    },
+    {
+      "name": "WriteUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, the file written should include User Data if your File Writing Plug-in supports it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_WriteUserData.htm"
+    },
+    {
+      "name": "Xform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileWriteOptions_Xform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

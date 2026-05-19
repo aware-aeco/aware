@@ -1,0 +1,49 @@
+{
+  "name": "TextVerticalAlignment",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Vertical location of text attach point relative to text",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_TextVerticalAlignment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Top",
+      "value": 0,
+      "summary": "Attach to top of an \u0022I\u0022 on the first line. (Independent of glyphs being displayed.)"
+    },
+    {
+      "name": "MiddleOfTop",
+      "value": 1,
+      "summary": "Attach to middle of an \u0022I\u0022 on the first line. (Independent of glyphs being displayed.)"
+    },
+    {
+      "name": "BottomOfTop",
+      "value": 2,
+      "summary": "Attach to baseline of first line. (Independent of glyphs being displayed.)"
+    },
+    {
+      "name": "Middle",
+      "value": 3,
+      "summary": "Attach to middle of text vertical advance. (Independent of glyphs being displayed.)"
+    },
+    {
+      "name": "MiddleOfBottom",
+      "value": 4,
+      "summary": "Attach to middle of an \u0022I\u0022 on the last line. (Independent of glyphs being displayed.)"
+    },
+    {
+      "name": "Bottom",
+      "value": 5,
+      "summary": "Attach to the baseline of the last line. (Independent of glyphs being displayed.)"
+    },
+    {
+      "name": "BottomOfBoundingBox",
+      "value": 6,
+      "summary": "Attach to the bottom of the boudning box of the visible glyphs."
+    }
+  ]
+}

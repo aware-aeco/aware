@@ -1,0 +1,108 @@
+{
+  "name": "AstBuiltEventHandler",
+  "namespace": "Dynamo.Engine",
+  "kind": "delegate",
+  "summary": "This is a delegate used in AstBuilt event.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs",
+  "constructors": [
+    {
+      "name": "AstBuiltEventHandler(object, IntPtr)",
+      "signature": "void AstBuiltEventHandler(object object, IntPtr method)",
+      "summary": "AstBuiltEventHandler.AstBuiltEventHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(object, Dynamo.Engine.CodeGeneration.CompiledEventArgs, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(object sender, Dynamo.Engine.CodeGeneration.CompiledEventArgs e, System.AsyncCallback callback, object object)",
+      "summary": "AstBuiltEventHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Dynamo.Engine.CodeGeneration.CompiledEventArgs",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "AstBuiltEventHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "Invoke(object, Dynamo.Engine.CodeGeneration.CompiledEventArgs)",
+      "signature": "void Invoke(object sender, Dynamo.Engine.CodeGeneration.CompiledEventArgs e)",
+      "summary": "AstBuiltEventHandler.Invoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Dynamo.Engine.CodeGeneration.CompiledEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(object sender, Dynamo.Engine.CodeGeneration.CompiledEventArgs e)"
+}

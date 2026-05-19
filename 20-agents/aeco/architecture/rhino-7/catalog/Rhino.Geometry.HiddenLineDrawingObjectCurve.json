@@ -1,0 +1,141 @@
+{
+  "name": "HiddenLineDrawingObjectCurve",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Curves generated from source objects which correspond to edges, and silhouettes of source objects and intersections with cutting planes. A HiddenLineDrawingObjectCurve is partitioned into hidden and visible segments called HiddenLineDrawingSegment",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_HiddenLineDrawingObjectCurve.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Curve(Double)",
+      "signature": "public HiddenLineDrawingSegment Curve(double t)",
+      "summary": "Returns the HiddenLineDrawingCurve object containing parameter \u0027t\u0027.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "The parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HiddenLineDrawingSegment",
+        "doc": "The HiddenLineDrawingCurve object if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingObjectCurve_Curve.htm"
+    },
+    {
+      "name": "Curve(Double, Int32)",
+      "signature": "public HiddenLineDrawingSegment Curve(double t, int side)",
+      "summary": "Returns the HiddenLineDrawingCurve object containing parameter \u0027t\u0027.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "The parameter.",
+          "optional": false
+        },
+        {
+          "name": "side",
+          "type": "System.Int32",
+          "doc": "Determines which side to return at breakpoints, where: 0 - default, \u003C0 - curve that contains an interval [t-, t], for some t- \u003C t, \u003E0 - curve that contains an interval [t, t\u002B], for some t\u002B \u003E t.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HiddenLineDrawingSegment",
+        "doc": "The HiddenLineDrawingCurve object if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingObjectCurve_Curve_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClippingPlaneIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index into HiddenLineDrawing.ClippingPlanes when SilhouetteType == SilhouetteType.SectionCut.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_ClippingPlaneIndex.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of this object in HiddenLineDrawing.FullCurves.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_Index.htm"
+    },
+    {
+      "name": "IsProjecting",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if all the non clipped portions of this curve are projecting.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_IsProjecting.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Verifies the object is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_IsValid.htm"
+    },
+    {
+      "name": "OriginalDomainStart",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Initialized to RhinoMath.UnsetValue. Valid if the full curve is closed. Rejoin can reparameterize the curve by moving the seam. When this has been done the original domain start is stored here.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_OriginalDomainStart.htm"
+    },
+    {
+      "name": "Parameters",
+      "type": "Double[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Increasing, partition of curve.Domain.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_Parameters.htm"
+    },
+    {
+      "name": "Segments",
+      "type": "HiddenLineDrawingSegment[]",
+      "getter": true,
+      "setter": false,
+      "summary": "The HiddenLineDrawingCurve objects that make up this full curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_Segments.htm"
+    },
+    {
+      "name": "SilhouetteType",
+      "type": "SilhouetteType",
+      "getter": true,
+      "setter": false,
+      "summary": "The silhouette event type",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_SilhouetteType.htm"
+    },
+    {
+      "name": "SourceObject",
+      "type": "HiddenLineDrawingObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the source object that this curve came from",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_SourceObject.htm"
+    },
+    {
+      "name": "SourceObjectComponentIndex",
+      "type": "ComponentIndex",
+      "getter": true,
+      "setter": false,
+      "summary": "Component of source object part that generated this curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingObjectCurve_SourceObjectComponentIndex.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

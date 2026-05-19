@@ -1,0 +1,44 @@
+{
+  "name": "PickerInputWithinAView",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputWithinAView class is the base class of PickerInput instances that represent a valid pick of point(s) or object(s) in a view.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ddd636f6-9030-6f6f-cbaa-384cdf839526",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5b0aca25-a5f4-0eca-8817-8b0e912a5229"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PickedView",
+      "type": "ViewBase",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

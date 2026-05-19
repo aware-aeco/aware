@@ -1,0 +1,25 @@
+{
+  "name": "LeaderLinePlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LeaderLinePlacingType class defines a placing type that places the object with a leader line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e8d1a85a-a4b7-79e7-22f9-99906e34409f",
+  "constructors": [
+    {
+      "name": "LeaderLinePlacingType",
+      "signature": "public LeaderLinePlacingType()",
+      "summary": "Creates a new leader line placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c6246ce3-1c52-cfc1-d90d-df0860745d32"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,1217 @@
+{
+  "name": "Sketchup",
+  "namespace": "",
+  "kind": "interface",
+  "summary": "The Sketchup module contains a number of important utility methods for use in your Ruby scripts. Many of the classes in the API are implemented beneath this module. You can think of the Sketchup module as the \u201Croot\u201D of the application tree. Most ruby calls start from the currently active model, and this is accessed via the Sketchup.active_model method.",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "active_model",
+      "signature": "active_model =\u003E Sketchup::Model",
+      "summary": "The active_model method returns the currently active SketchUp model.",
+      "remarks": "The active_model method returns the currently active SketchUp model. On the PC, this is the only model that one can have access to via the API, but Macintosh versions of SketchUp can have multiple models open at once, in which case the method will return the model that the user currently has focused.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Model",
+        "doc": "active model object if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#active_model-class_method"
+    },
+    {
+      "name": "add_observer",
+      "signature": "add_observer(observer) =\u003E Boolean",
+      "summary": "The add_observer method is used to add an observer to the current object.",
+      "remarks": "The add_observer method is used to add an observer to the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#add_observer-class_method"
+    },
+    {
+      "name": "app_name",
+      "signature": "app_name =\u003E String",
+      "summary": "The app_name method is used to retrieve the current application name.",
+      "remarks": "The app_name method is used to retrieve the current application name.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the name of the application, either \u201CSketchUp Pro\u201D or \u201CSketchUp\u201D. Note: For versions earlier than SketchUp8 M4 (Mac 8.0.15157 and Windows 8.0.15158) this function will return \u201CGoogle SketchUp Pro\u201D or \u201CGoogle SketchUp\u201D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#app_name-class_method"
+    },
+    {
+      "name": "break_edges=",
+      "signature": "break_edges=(enabled) =\u003E Boolean",
+      "summary": "The break_edges= method can be used to disable or enable the break edges feature.",
+      "remarks": "The break_edges= method can be used to disable or enable the break edges feature. Break edges is the SketchUp 7 feature that automatically splits edges that the user draws which cross over one another. This feature is always on by default and cannot be disabled by the user via the user interface, but you can call this method to disable it. Be cautious in doing so, however, as the resulting model could then be altered when the user later draws lines into it with the break edges feature reactivated.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "Boolean",
+          "doc": "If true, break edges will be turned on. If false, it will be deactivated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if break edges was turned on."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#break_edges=-class_method"
+    },
+    {
+      "name": "break_edges?",
+      "signature": "break_edges? =\u003E Boolean",
+      "summary": "The break_edges? method indicates whether the break edges feature is currently turned on.",
+      "remarks": "The break_edges? method indicates whether the break edges feature is currently turned on. Break edges is the SketchUp 7 feature that automatically splits edges that the user draws which cross over one another. This feature is always on by default and cannot be disabled by the user via the user interface.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#break_edges?-class_method"
+    },
+    {
+      "name": "create_texture_writer",
+      "signature": "create_texture_writer =\u003E Sketchup::TextureWriter",
+      "summary": "The create_texture_writer method is used to create a TextureWriter object.",
+      "remarks": "The create_texture_writer method is used to create a TextureWriter object.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::TextureWriter",
+        "doc": "a texturewriter object if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#create_texture_writer-class_method"
+    },
+    {
+      "name": "debug_mode=",
+      "signature": "debug_mode=(enabled) =\u003E Boolean",
+      "summary": "Note: Changing this value within your extension can cause problems for other extension developers who rely on the debug information for their own work.",
+      "remarks": "Note: Changing this value within your extension can cause problems for other extension developers who rely on the debug information for their own work. Only use this locally; never change this value in an extension you publish. The debug_mode= method lets you controls whether SketchUp will output warnings to the console when it detects incorrect usage of the API. The setting takes effect right away, no need to restart SketchUp.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "Boolean",
+          "doc": "If true, SketchUp will produce debug warnings.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#debug_mode=-class_method"
+    },
+    {
+      "name": "debug_mode?",
+      "signature": "debug_mode? =\u003E Boolean",
+      "summary": "The debug_mode? controls whether SketchUp will output warnings to the console when it detects incorrect usage of the API.",
+      "remarks": "The debug_mode? controls whether SketchUp will output warnings to the console when it detects incorrect usage of the API.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#debug_mode?-class_method"
+    },
+    {
+      "name": "display_name_from_action",
+      "signature": "display_name_from_action(action_name) =\u003E String",
+      "summary": "Note: This method has been non-functional on Mac since SketchUp 8.",
+      "remarks": "Note: This method has been non-functional on Mac since SketchUp 8. The display_name_from_action method is used to gets a user-friendly name from an action string. See Sketchup.send_action for a list of valid action strings.",
+      "params": [
+        {
+          "name": "action_name",
+          "type": "String",
+          "doc": "An action string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "a friendly name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#display_name_from_action-class_method"
+    },
+    {
+      "name": "extensions",
+      "signature": "extensions =\u003E Sketchup::ExtensionsManager",
+      "summary": "Returns the ExtensionsManager where you can find all registered SketchupExtension objects.",
+      "remarks": "Returns the ExtensionsManager where you can find all registered SketchupExtension objects. #Sketchup.extensionextension.loaded?\u201C",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ExtensionsManager",
+        "doc": "an ExtensionsManager object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#extensions-class_method"
+    },
+    {
+      "name": "file_new",
+      "signature": "file_new =\u003E Module",
+      "summary": "The file_new method is used to create a new file.",
+      "remarks": "The file_new method is used to create a new file.",
+      "params": [],
+      "returns": {
+        "type": "Module",
+        "doc": "The Sketchup module."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#file_new-class_method"
+    },
+    {
+      "name": "find_support_file",
+      "signature": "find_support_file(filename, directory) =\u003E String",
+      "summary": "The find_support_files method is used to retrieve the relative path and name of a file within the SketchUp installation directory.",
+      "remarks": "The find_support_files method is used to retrieve the relative path and name of a file within the SketchUp installation directory. Forward slashes must be used to delimit between directory names.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "Name of the filename you want to find.",
+          "optional": false
+        },
+        {
+          "name": "directory",
+          "type": "String",
+          "doc": "directory relative to the SketchUp installation directory.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "the entire path if successful. If unsuccessful, the method returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#find_support_file-class_method"
+    },
+    {
+      "name": "find_support_files",
+      "signature": "find_support_files(filename, directory) =\u003E Array\u003CString\u003E",
+      "summary": "The find_support_files method is used to retrieve the path and name of all matching files within the SketchUp installation directory.",
+      "remarks": "The find_support_files method is used to retrieve the path and name of all matching files within the SketchUp installation directory. Forward slashes must be used to delimit between directory names.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "Extension of the files to be found.",
+          "optional": false
+        },
+        {
+          "name": "directory",
+          "type": "String",
+          "doc": "directory relative to the SketchUp installation directory. Without this the result will be empty.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "an array of files. If unsuccessful, the method returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#find_support_files-class_method"
+    },
+    {
+      "name": "fix_shadow_strings=",
+      "signature": "fix_shadow_strings=(enabled) =\u003E Boolean",
+      "summary": "The fix_shadow_strings= method lets you control whether shadow rendering attempts to fix an artifact commonly referred to as \u201Cstrings\u201D.",
+      "remarks": "The fix_shadow_strings= method lets you control whether shadow rendering attempts to fix an artifact commonly referred to as \u201Cstrings\u201D. The fix is actually very model dependent and not controllable from the UI, so this method can be used to control it.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "Boolean",
+          "doc": "If true, shadow strings fix will be turned on. If false, it will be deactivated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if shadow strings fix was turned on."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#fix_shadow_strings=-class_method"
+    },
+    {
+      "name": "fix_shadow_strings?",
+      "signature": "fix_shadow_strings? =\u003E Boolean",
+      "summary": "The fix_shadow_strings? method indicates whether the a fix for a shadow rendering artifact commonly referred to as \u201Cstrings\u201D is enabled.",
+      "remarks": "The fix_shadow_strings? method indicates whether the a fix for a shadow rendering artifact commonly referred to as \u201Cstrings\u201D is enabled. The fix is actually very model dependent and not controllable from the UI, so this method can be used to test it.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#fix_shadow_strings?-class_method"
+    },
+    {
+      "name": "focus",
+      "signature": "focus =\u003E Object",
+      "summary": "The focus method is used to focus the active model window.",
+      "remarks": "The focus method is used to focus the active model window.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#focus-class_method"
+    },
+    {
+      "name": "format_angle",
+      "signature": "format_angle(number) =\u003E String",
+      "summary": "The format_angle method takes a number as an angle in radians and formats it into degrees.",
+      "remarks": "The format_angle method takes a number as an angle in radians and formats it into degrees. For example, format_angle(Math::PI) will return 180.0.",
+      "params": [
+        {
+          "name": "number",
+          "type": "Numeric",
+          "doc": "A number to be formatted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "an angle in degrees if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#format_angle-class_method"
+    },
+    {
+      "name": "format_area",
+      "signature": "format_area(number) =\u003E String",
+      "summary": "The format_area method formats a number as an area using the current units settings.",
+      "remarks": "The format_area method formats a number as an area using the current units settings. The number must be in square inches.",
+      "params": [
+        {
+          "name": "number",
+          "type": "Numeric",
+          "doc": "A number to be formatted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#format_area-class_method"
+    },
+    {
+      "name": "format_degrees",
+      "signature": "format_degrees(number) =\u003E String",
+      "summary": "The format_degrees method formats a number as an angle given in degrees.",
+      "remarks": "The format_degrees method formats a number as an angle given in degrees. For example, 10 becomes 10.0. This is the equivalent to a to_f call.",
+      "params": [
+        {
+          "name": "number",
+          "type": "Numeric",
+          "doc": "A number to be formatted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "degrees if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#format_degrees-class_method"
+    },
+    {
+      "name": "format_length",
+      "signature": "format_length(number) =\u003E String | format_length(number, precision) =\u003E String",
+      "summary": "The format_length method formats a number as a length using the current units settings.",
+      "remarks": "The format_length method formats a number as a length using the current units settings. The default unit setting is inches. For example, 10 becomes 10\u201C.",
+      "params": [
+        {
+          "name": "number",
+          "type": "Numeric",
+          "doc": "A number to be formatted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#format_length-class_method"
+    },
+    {
+      "name": "format_volume",
+      "signature": "format_volume(number) =\u003E String",
+      "summary": "The format_volume method formats a number as a volume using the current units settings.",
+      "remarks": "The format_volume method formats a number as a volume using the current units settings. The number must be in cubic inches.",
+      "params": [
+        {
+          "name": "number",
+          "type": "Numeric",
+          "doc": "A number to be formatted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#format_volume-class_method"
+    },
+    {
+      "name": "get_datfile_info",
+      "signature": "get_datfile_info(key, default_value) =\u003E String",
+      "summary": "The get_datfile_info method is used to retrieve the value for the given key from Sketchup.",
+      "remarks": "The get_datfile_info method is used to retrieve the value for the given key from Sketchup.dat. If the key is not found, default_value is returned.",
+      "params": [
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "The key whose value you want to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "String",
+          "doc": "The default value you want returned if key is not available.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "a string value if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#get_datfile_info-class_method"
+    },
+    {
+      "name": "get_i18n_datfile_info",
+      "signature": "get_i18n_datfile_info(key, default_value) =\u003E String",
+      "summary": "The get_i18n_datfile_info method is used to retrieve the value for the given key from the internationalization file that SketchUp uses to work in multiple languages.",
+      "remarks": "The get_i18n_datfile_info method is used to retrieve the value for the given key from the internationalization file that SketchUp uses to work in multiple languages. If the key is not found, default_value is returned.",
+      "params": [
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "The key whose value you want to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "String",
+          "doc": "The default value you want returned if key is not available.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#get_i18n_datfile_info-class_method"
+    },
+    {
+      "name": "get_locale",
+      "signature": "get_locale =\u003E String",
+      "summary": "The os_language method returns the language code for the language SketchUp is running in.",
+      "remarks": "The os_language method returns the language code for the language SketchUp is running in. This is an alias for the get_locale method. Examples of return values are: en-US, fr, it, de, es, ja, ko, zh-CN, zh-TW, pt-BR, nl, ru and sv. For an up to date list os supported languages, see the SketchUp download page.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a code representing the language SketchUp is displaying."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#get_locale-class_method"
+    },
+    {
+      "name": "get_resource_path",
+      "signature": "get_resource_path(filename) =\u003E String",
+      "summary": "The get_resource_path is used to retrieve the directory where \u201Cresource\u201D files are stored by SketchUp.",
+      "remarks": "The get_resource_path is used to retrieve the directory where \u201Cresource\u201D files are stored by SketchUp. Resource files include things like language localization files.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The filename of a resource file in the resource directory hierarchy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "the directory path to the resources folder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#get_resource_path-class_method"
+    },
+    {
+      "name": "get_shortcuts",
+      "signature": "get_shortcuts =\u003E Array\u003CString\u003E",
+      "summary": "The get_shortcuts method retrieves an array of all keyboard shortcuts currently registered with SketchUp.",
+      "remarks": "The get_shortcuts method retrieves an array of all keyboard shortcuts currently registered with SketchUp. Each shortcut is returned as a string with the shortcut and the command separated by a tab, similar to \u201CCtrl\u002BA\\tEdit/Select All\u201D",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "an array of shortcut strings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#get_shortcuts-class_method"
+    },
+    {
+      "name": "install_from_archive",
+      "signature": "install_from_archive(filepath, show_warning = true) =\u003E Boolean",
+      "summary": "Installs the contents of a ZIP archive file into SketchUp\u0027s Plugins folder.",
+      "remarks": "Installs the contents of a ZIP archive file into SketchUp\u0027s Plugins folder. If the ZIP contains subfolders, these will be preserved. This allows for a Ruby API plugin or Extension developer to distribute their plugin as a single file regardless of how many asset files must be included. The user will be shown a warning message that they must agree to before the install proceeds. If they do not agree, an Interrupt error will be raised. If the user does agree but there is a problem with the unzip process, an Exception will be raised. You can capture these states via a begin/rescue. See the example below. If the install is successful, any Ruby files that have been added to the Plugins folder will immediately be executed, saving the user a restart. To create an archive file, use your favorite tool (7zip, Winzip, etc.) to zip up any files and folders in your plugins directory. If the archive contains a SketchupExtension that you would like users to be able to install from the Preferences \u003E Extensions panel, rename your file to have a .rbz file extension.",
+      "params": [
+        {
+          "name": "filepath",
+          "type": "String",
+          "doc": "The path to the RBZ or ZIP file to install.",
+          "optional": false
+        },
+        {
+          "name": "show_warning",
+          "type": "Boolean",
+          "doc": "Whether to warn the user not to install untrusted extensions. In certain cases the warning can be confusing and redundant, e.g. when automatically updating a trusted extension. When the user has selected the archive themselves, it is best to warn about the possible risks.",
+          "optional": true,
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Exception",
+          "when": "If the archive cannot be installed."
+        },
+        {
+          "type": "Interrupt",
+          "when": "If the user cancel the installation."
+        },
+        {
+          "type": "Exception",
+          "when": "If the archive cannot be found."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#install_from_archive-class_method"
+    },
+    {
+      "name": "is_64bit?",
+      "signature": "is_64bit? =\u003E Boolean",
+      "summary": "This methods indicates whether the host SketchUp application is 64bit.",
+      "remarks": "This methods indicates whether the host SketchUp application is 64bit. Useful for extensions that ship with binaries and need to determine which versions to load.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#is_64bit?-class_method"
+    },
+    {
+      "name": "is_online",
+      "signature": "is_online =\u003E Boolean",
+      "summary": "The is_online method is used to verify a connection to the Internet.",
+      "remarks": "The is_online method is used to verify a connection to the Internet. This method can take some time to execute, so be careful not to call it more often than you need.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#is_online-class_method"
+    },
+    {
+      "name": "is_pro?",
+      "signature": "is_pro? =\u003E Boolean",
+      "summary": "Note: In SketchUp Make this method will return true during the Pro trial period and revert to false when the trial period is over.",
+      "remarks": "Note: In SketchUp Make this method will return true during the Pro trial period and revert to false when the trial period is over. Returns a boolean flag indicating whether the application is SketchUp Pro.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#is_pro?-class_method"
+    },
+    {
+      "name": "is_valid_filename?",
+      "signature": "is_valid_filename?(filename) =\u003E Boolean",
+      "summary": "The is_valid_filename? method is used to determine whether a filename contains illegal characters.",
+      "remarks": "The is_valid_filename? method is used to determine whether a filename contains illegal characters.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "A filename string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#is_valid_filename?-class_method"
+    },
+    {
+      "name": "load",
+      "signature": "load(path) =\u003E Boolean",
+      "summary": "The load method is used to load Ruby files.",
+      "remarks": "The load method is used to load Ruby files. Unlike Ruby\u0027s own load method it also supports SketchUp\u0027s encrypted .rbe files. You do not need to include the file extension in the path. This method will look for .rb first (unencrypted) and then .rbe (encrypted) and finally .rbs (the deprecated scrambled format) files. See the \u201CDistributing your Plugin\u201D article for details.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The path, including the filename, to the file you want to require.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the file is included. False if the file is not included."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#load-class_method"
+    },
+    {
+      "name": "open_file",
+      "signature": "open_file(filename) =\u003E Boolean | open_file(filename, with_status: true) =\u003E Integer, false | open_file(filename, with_status: true, show_version_warning_dialog: true) =\u003E Integer, false",
+      "summary": "The open_file method is used to open a SketchUp model.",
+      "remarks": "The open_file method is used to open a SketchUp model.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The model file to open.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if opening the file succeeded, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#open_file-class_method"
+    },
+    {
+      "name": "os_language",
+      "signature": "os_language =\u003E String",
+      "summary": "The os_language method returns the language code for the language SketchUp is running in.",
+      "remarks": "The os_language method returns the language code for the language SketchUp is running in. This is an alias for the get_locale method. Examples of return values are: en-US, fr, it, de, es, ja, ko, zh-CN, zh-TW, pt-BR, nl, ru and sv. For an up to date list os supported languages, see the SketchUp download page.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a code representing the language SketchUp is displaying."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#os_language-class_method"
+    },
+    {
+      "name": "parse_length",
+      "signature": "parse_length(string) =\u003E Float",
+      "summary": "The parse_length method parses a string as a length.",
+      "remarks": "The parse_length method parses a string as a length. For example, \u201C200\u201D becomes 200.0.",
+      "params": [
+        {
+          "name": "string",
+          "type": "String",
+          "doc": "The string to be parsed as a number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": "the numerical representation of the string if successful, or nil if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#parse_length-class_method"
+    },
+    {
+      "name": "platform",
+      "signature": "platform =\u003E Symbol",
+      "summary": "This methods returns a symbol indicating the current platform.",
+      "remarks": "This methods returns a symbol indicating the current platform. It should be used over RUBY_PLATFORM as this returns a different value for Windows since SketchUp 2014. Older SketchUp versions still need to check RUBY_PLATFORM.include?(\u0027mswin\u0027) or RUBY_PLATFORM.include?(\u0027darwin\u0027). Possible return values: :platform_win :platform_osx",
+      "params": [],
+      "returns": {
+        "type": "Symbol",
+        "doc": "Current OS platform."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#platform-class_method"
+    },
+    {
+      "name": "plugins_disabled=",
+      "signature": "plugins_disabled=(enabled) =\u003E Boolean",
+      "summary": "The plugins_disabled= method lets you control whether SketchUp will load Ruby scripts from the plugins directory at startup time.",
+      "remarks": "The plugins_disabled= method lets you control whether SketchUp will load Ruby scripts from the plugins directory at startup time. This is primarily a trouble-shooting method. If you are having strange behavior in SketchUp that you suspect is from a bad script, you can type Sketchup.plugins_disabled=true into the Ruby console and restart SketchUp to see if the problem is fixed.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "Boolean",
+          "doc": "If true, the plugins directory will not load.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if plugins were disabled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#plugins_disabled=-class_method"
+    },
+    {
+      "name": "plugins_disabled?",
+      "signature": "plugins_disabled? =\u003E Boolean",
+      "summary": "The plugins_disabled? method indicates whether Ruby scripts in the plugins directory will be loaded at startup time.",
+      "remarks": "The plugins_disabled? method indicates whether Ruby scripts in the plugins directory will be loaded at startup time.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#plugins_disabled?-class_method"
+    },
+    {
+      "name": "quit",
+      "signature": "quit =\u003E Object",
+      "summary": "The quit method is used to terminate the application.",
+      "remarks": "The quit method is used to terminate the application. This will pop-up the usual model save prompts if there are unsaved models open. User can cancel the model save, in which case the application will not terminate.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "self"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#quit-class_method"
+    },
+    {
+      "name": "read_default",
+      "signature": "read_default(section, variable, default = nil) =\u003E Object?",
+      "summary": "Note: Be aware that the method is not capable of handling Length objects.",
+      "remarks": "Note: Be aware that the method is not capable of handling Length objects. You can convert the value to a Float before writing and convert back to Length when reading the value. Don\u0027t store the value as a String as this rounds the value and formats it in a way that can\u0027t be read if the system setting for decimal separator changes. The #read_default method is used to retrieve the string associated with a value within the specified sub-section section of a .INI file or registry (within the Software \u003E SketchUp \u003E SketchUp [Version] section).",
+      "params": [
+        {
+          "name": "section",
+          "type": "String",
+          "doc": "A section in an .INI or registry.",
+          "optional": false
+        },
+        {
+          "name": "variable",
+          "type": "String",
+          "doc": "A variable within the section.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Object",
+          "doc": "A default value if the value is not found.",
+          "optional": true,
+          "default": "nil"
+        }
+      ],
+      "returns": {
+        "type": "Object, nil",
+        "doc": "if unsuccessful, the value of the default if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#read_default-class_method"
+    },
+    {
+      "name": "redo",
+      "signature": "redo =\u003E nil",
+      "summary": "The redo method is used redo the last transaction on the redo stack.",
+      "remarks": "The redo method is used redo the last transaction on the redo stack.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#redo-class_method"
+    },
+    {
+      "name": "register_extension",
+      "signature": "register_extension(extension, load_on_start = false) =\u003E Boolean",
+      "summary": "Note: It is recommended to set load_on_start to true unless you have a very good reason not to.",
+      "remarks": "Note: It is recommended to set load_on_start to true unless you have a very good reason not to. The #register_extension method is used to register an extension with SketchUp\u0027s Extension Manager.",
+      "params": [
+        {
+          "name": "extension",
+          "type": "SketchupExtension",
+          "doc": "A SketchupExtension object.",
+          "optional": false
+        },
+        {
+          "name": "load_on_start",
+          "type": "Boolean",
+          "doc": "Passing true into this will load the extension immediately and set it so that it will load automatically whenever SketchUp restarts.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if extension registered properly"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#register_extension-class_method"
+    },
+    {
+      "name": "register_importer",
+      "signature": "register_importer(importer) =\u003E Boolean",
+      "summary": "The register_importer method is used to register an importer with SketchUp.",
+      "remarks": "The register_importer method is used to register an importer with SketchUp.",
+      "params": [
+        {
+          "name": "importer",
+          "type": "Sketchup::Importer",
+          "doc": "An Importer object representing the importer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#register_importer-class_method"
+    },
+    {
+      "name": "remove_observer",
+      "signature": "remove_observer(observer) =\u003E Boolean",
+      "summary": "The remove_observer method is used to remove an observer from the current object.",
+      "remarks": "The remove_observer method is used to remove an observer from the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Sketchup::AppObserver",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#remove_observer-class_method"
+    },
+    {
+      "name": "require",
+      "signature": "require(path) =\u003E Boolean",
+      "summary": "The require method is used to load Ruby files once.",
+      "remarks": "The require method is used to load Ruby files once. Unlike Ruby\u0027s own require method it also supports SketchUp\u0027s encrypted .rbe files. You do not need to include the file extension in the path. This method will look for .rbe first (encrypted) and then .rbs (the deprecated scrambled format) and finally .rb (unencrypted) files. The loading order was changed in SketchUp 2016 when the new .rbe encryption was introduced. Prior to SketchUp 2016 the loading order was first .rb then .rbs.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The path, including the filename, to the file you want to require.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the file is included. False if the file is not included."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#require-class_method"
+    },
+    {
+      "name": "resize_viewport",
+      "signature": "resize_viewport(model, width, height) =\u003E Boolean | resize_viewport(model, width, height, logical_pixels: false) =\u003E Boolean",
+      "summary": "Note: In SketchUp 2024.",
+      "remarks": "Note: In SketchUp 2024.0 and later this method doesn\u0027t behave correctly in all cases on Windows. The passed values are internally converted to logical pixels, rounded and converted back to physical pixels. This means certain sizes, such as 1000 px at 150% scaling, cannot be accurately set. As a workaround in you can use sizes that are evenly divisible with common scale factors, if you depend on pixel perfect sizes. The resize_viewport method changes the pixel size of the viewport and SketchUp window. This can be useful for producing a consistent behavior in automatic testing, regardless of the display resolution.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Sketchup::Model",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "Integer",
+          "doc": "Width in physical pixels",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "doc": "Height in physical pixels",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success. false if the window couldn\u0027t reach the desired size, e.g. because it wouldn\u0027t fit the screen."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#resize_viewport-class_method"
+    },
+    {
+      "name": "save_thumbnail",
+      "signature": "save_thumbnail(skp_filename, img_filename) =\u003E Boolean",
+      "summary": "The save_thumbnail method is used to generate a thumbnail for any SKP file - not necessarily the loaded model.",
+      "remarks": "The save_thumbnail method is used to generate a thumbnail for any SKP file - not necessarily the loaded model.",
+      "params": [
+        {
+          "name": "skp_filename",
+          "type": "String",
+          "doc": "The name of the SketchUp file whose model you want represented in the thumbnail.",
+          "optional": false
+        },
+        {
+          "name": "img_filename",
+          "type": "String",
+          "doc": "The name of the file where the thumbnail will be saved.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#save_thumbnail-class_method"
+    },
+    {
+      "name": "send_action",
+      "signature": "send_action(action) =\u003E Boolean",
+      "summary": "The send_action method sends a message to the message queue to perform some action asynchronously.",
+      "remarks": "The send_action method sends a message to the message queue to perform some action asynchronously. Valid actions are: showRubyPanel: viewBack: viewBottom: viewFront: viewIso: viewLeft: viewRight: viewTop: viewPerspective: viewShowAxes: viewShowHidden: viewZoomExtents: viewZoomToSelection: viewUndo: selectOrbitTool: selectPositionCameraTool: selectDollyTool: selectTurnTool: selectWalkTool: selectZoomTool: selectFieldOfViewTool: selectZoomWindowTool: pageAdd: pageDelete: pageUpdate: pageNext: pagePrevious: renderWireframe: renderHiddenLine: renderMonochrome: renderShaded: renderTextures: selectArcTool: selectArc3PointTool: selectArc3PointPieTool: selectAxisTool: selectCircleTool: selectEraseTool: selectFreehandTool: selectLineTool: selectMeasureTool: selectMoveTool: selectOffsetTool: selectPaintTool: selectPolygonTool: selectProtractorTool: selectPushPullTool: selectRectangleTool: selectRectangle3PointTool: selectRotateTool: selectScaleTool: selectSectionPlaneTool: selectTextTool: selectDimensionTool: selectExtrudeTool: selectSelectionTool: editUndo: editRedo: editHide: editUnhide: fixNonPlanarFaces: Added in SketchUp 8.0\u002B: addBuilding: getPhotoTexture: selectImageIglooTool: selectNorthTool: Added in SketchUp 2013\u002B: showExtensionStore: Removed in SketchUp 2013\u002B: addBuilding: On the PC only, you can also send these numeric values. (Note that these are officially \u201Cunsupported\u201D and are not guaranteed to work in current or future versions of the API.) 10501: set view to Top 10502: set view to Front 10503: set view to Rear 10504: set view to Left 10505: set view to Right 10506: set view to Bottom 10507: set view to Axonometric 10510: set render mode to Wire 10511: set render mode to Hidden lines removal 10512: set render mode to Surfaces Shading 10513: set render mode to Transparency 10519: set camera to ortho (removes perspective) 10520: walk tool 10521: display the System Preferences dialog box (Files tab) 10522: removes axes display 10523: pan tool 10525: set the interactive eye height feature 10526: zoom window 10527: zoom extents 10529: zoom out 2 10531: toggle the Standard toolbar 10532: toggle the Camera toolbar 10533: display the Shadows Settings dialog box 10537: toggle the Views toolbar 10538: display the System Preferences dialog box (Display tab) 10545: toggle Shadows 10546: toggle Shadows toolbar 10551: toogle Large icons 10576: toggle Render Mode toolbar 21019: select the Eraser tool 21020: show Status bar and VCB 21022: hide Status bar and VCB 21023: place 3d text box 21024: select the Measure tool 21031: select the Freehand Draw tool 21041: select the PushPull tool 21048: select the Move tool 21052: hide selected objects 21056: create face with selected edges closed loop 21057: select the Protractor tool 21060: display Components Window 21061: toggle Draw toolbar 21063: toggle Model Bounding Box display 21065: select the Arc tool 21067: creat a new Page 21069: select the Arc 3 Point tool 21070: select the Arc 3 Point Pie tool 21074: show the Materials Browser Window 21076: display the Preferences dialog box (Text activated) 21077: display the Tip of the day Window 21078: select the Paint Bucket tool 21080: display the Page Manager Window 21082: display the Macros Dialog Box 21086: display the Components Browser Window 21094: select the Rectangle tool 21095: select the Polygon tool 21096: select the Circle tool 21098: open the Open Window 21100: select the Offset tool 21101: select all objects 21107: invert selection 21112: open the Import Window 21124: launch the validity check tool 21126: select the Axes tool 21029: select the Rotate tool 21032: toggle Layer toolbar 21036: display the Save as Window 21046: spin the model a full 360\u0026deg; and display report 21047: fast Pick Time report 21049: open the Export model Window 21169: select the Position Camera tool 21170: display the Preferences, Tour Guide activated 21180: create a new Page just right of selected page 21200: display the Insert Image Window 21233: display Area of selected face 21234: display Area of all faces with selected material 21236: select the Scale tool 21237: display the Export 2D Graphics Window 21245: display a Polygon Offset Factors dialog box 21276: reverse selected face(s) 21287: select the Divide feature 21337: select the Section Plane Placement tool 21354: open the Layer Window 21386: open the Export Animation Window 21405: select the Text tool 21406: display Fog dialog box 21410: select the Dim tool 21433: toggle Edit toolbar 21442: select the FollowMe tool 21448: select the Axes tool 21453: select all objects 21460: display Licence 21462: display Authorization dialog box 21463: display un-authorizing message 21464: display Open Licence files (Network) Window 21466: display Quick reference Card in Adobe Reader 21467: display Licences in use dialog box 21469: zoom extents to selected objects 21476: perform a non-planar check on selected objects 21477: list accelerators in window 21485: erase selected objects 21487: display Edit current material dialog box 21485: erase all new created pages 21488: display Entity Info Window 21490: display Soften Edges Window 21491: display Profiles 21492: display Extended Edges 21493: display Jitter Lines 21494: select Field of view tool 21513: display the outliner 21520: override Tile Rendering Size dialog box 21525: select the FollowMe tool 21542: display the Insert Image Window 21560 and up: causes a runtime Error",
+      "params": [
+        {
+          "name": "action",
+          "type": "String, Integer",
+          "doc": "The action to be performed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#send_action-class_method"
+    },
+    {
+      "name": "send_to_layout",
+      "signature": "send_to_layout(file) =\u003E Boolean",
+      "summary": "The send_to_layout method is used to open a file in LayOut.",
+      "remarks": "The send_to_layout method is used to open a file in LayOut.",
+      "params": [
+        {
+          "name": "file",
+          "type": "String",
+          "doc": "The path and filename to open, either .skp or .layout.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if opening the file succeeded, false otherwise. If LayOut is not installed or the file is not present this function will return false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#send_to_layout-class_method"
+    },
+    {
+      "name": "set_status_text",
+      "signature": "set_status_text =\u003E nil | set_status_text(status_text = \u0027\u0027, position = SB_PROMPT) =\u003E nil",
+      "summary": "The set_status_text method is used to set the text appearing on the status bar within the drawing window.",
+      "remarks": "The set_status_text method is used to set the text appearing on the status bar within the drawing window. If no arguments are passed, the status bar content is cleared. Valid positions are: SB_PROMPT - the text will appear at the left-side of the status bar SB_VCB_LABEL - the text will appear in place of the VCB label SB_VCB_VALUE - the text will appear in the VCB",
+      "params": [
+        {
+          "name": "status",
+          "type": "String",
+          "doc": "text the status text that will appear.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "Integer",
+          "doc": "the position where the text will appear.",
+          "optional": true,
+          "default": "SB_PROMPT"
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#set_status_text-class_method"
+    },
+    {
+      "name": "status_text=",
+      "signature": "status_text=(status_text) =\u003E String",
+      "summary": "The status_text= method is used to set the text appearing on the status bar within the drawing window.",
+      "remarks": "The status_text= method is used to set the text appearing on the status bar within the drawing window. This is the same as calling set_status_text with a 2nd parameter of SB_PROMPT.",
+      "params": [
+        {
+          "name": "status_text",
+          "type": "String",
+          "doc": "The status text that will appear.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#status_text=-class_method"
+    },
+    {
+      "name": "temp_dir",
+      "signature": "temp_dir =\u003E String",
+      "summary": "The temp_dir method is used to retrieve the OS temporary directory for the current user.",
+      "remarks": "The temp_dir method is used to retrieve the OS temporary directory for the current user. You can use this directory to write temporary files that are not required to persist between SketchUp sessions.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a string containing the full temporary directory path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#temp_dir-class_method"
+    },
+    {
+      "name": "template",
+      "signature": "template =\u003E String",
+      "summary": "The template method is used to get the file name of the current template.",
+      "remarks": "The template method is used to get the file name of the current template. Templates are the .skp files that are loaded when the user select File \u003E New.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the current template"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#template-class_method"
+    },
+    {
+      "name": "template=",
+      "signature": "template=(filename) =\u003E String",
+      "summary": "The template= method is used to set the file name of the current template.",
+      "remarks": "The template= method is used to set the file name of the current template. Templates are the .skp files that are loaded when the user select File \u003E New.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The name of the template to set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#template=-class_method"
+    },
+    {
+      "name": "template_dir",
+      "signature": "template_dir =\u003E String",
+      "summary": "The template_dir is used to retrieve the directory where templates are stored by the SketchUp install.",
+      "remarks": "The template_dir is used to retrieve the directory where templates are stored by the SketchUp install. Templates are the .skp files that are loaded when the user select File \u003E New.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "containing the full template directory path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#template_dir-class_method"
+    },
+    {
+      "name": "undo",
+      "signature": "undo =\u003E nil",
+      "summary": "The undo method is used undo the last transaction on the undo stack.",
+      "remarks": "The undo method is used undo the last transaction on the undo stack.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#undo-class_method"
+    },
+    {
+      "name": "vcb_label=",
+      "signature": "vcb_label=(label_text) =\u003E String",
+      "summary": "The vcb_label= method is used to set the label that appears on the vcb, or the \u201Cvalue control box\u201D, which is another word for the \u201Cmeasurements\u201D text entry box that appears at the bottom on the SketchUp window.",
+      "remarks": "The vcb_label= method is used to set the label that appears on the vcb, or the \u201Cvalue control box\u201D, which is another word for the \u201Cmeasurements\u201D text entry box that appears at the bottom on the SketchUp window. This is the same as calling set_status_text with a 2nd parameter of SB_VCB_LABEL.",
+      "params": [
+        {
+          "name": "label_text",
+          "type": "String",
+          "doc": "The label text that will appear.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#vcb_label=-class_method"
+    },
+    {
+      "name": "vcb_value=",
+      "signature": "vcb_value=(value) =\u003E String",
+      "summary": "The vcb_value= method is used to set the value that appears on the vcb, or the \u201Cvalue control box\u201D, which is another word for the \u201Cmeasurements\u201D text entry box that appears at the bottom on the SketchUp window.",
+      "remarks": "The vcb_value= method is used to set the value that appears on the vcb, or the \u201Cvalue control box\u201D, which is another word for the \u201Cmeasurements\u201D text entry box that appears at the bottom on the SketchUp window. This is the same as calling set_status_text with a 2nd parameter of SB_VCB_VALUE.",
+      "params": [
+        {
+          "name": "value",
+          "type": "String",
+          "doc": "The text that will appear as the vcb\u0027s value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#vcb_value=-class_method"
+    },
+    {
+      "name": "version",
+      "signature": "version =\u003E String",
+      "summary": "Gets the current version of sketchup in decimal form.",
+      "remarks": "Gets the current version of sketchup in decimal form.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the decimal form of the version"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#version-class_method"
+    },
+    {
+      "name": "version_number",
+      "signature": "version_number =\u003E Integer",
+      "summary": "Get the current version of sketchup as a whole number for comparisons.",
+      "remarks": "Get the current version of sketchup as a whole number for comparisons. The number returned has the major, minor, and build values packed into an integer value as follows: Major version = X Minor version = Y Build number = Z SketchUp 6.0 - SketchUp 2015 XXYYYZZZ SketchUp 2016\u002B XXYZZZZZZZ",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the whole number form of the version"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#version_number-class_method"
+    },
+    {
+      "name": "write_default",
+      "signature": "write_default(section, key, value) =\u003E Boolean",
+      "summary": "Note: Be aware that the method is not capable of handling Length objects.",
+      "remarks": "Note: Be aware that the method is not capable of handling Length objects. You can convert the value to a Float before writing and convert back to Length when reading the value. Don\u0027t store the value as a String as this rounds the value and formats it in a way that can\u0027t be read if the system setting for decimal separator changes. The #write_default method is used to set the string associated with a variable within the specified sub-section of a .plist file on the Mac or the registry on Windows (within the Software \u003E SketchUp \u003E SketchUp [Version] section).",
+      "params": [
+        {
+          "name": "section",
+          "type": "String",
+          "doc": "A section in a .plist file (Mac) or the registry (Windows).",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "A key within the section.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "doc": "The value to store.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup.html#write_default-class_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

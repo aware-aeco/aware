@@ -1,0 +1,1646 @@
+{
+  "name": "File3dmTypeCodes",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Typecode format 4 bytes long Copyx xxxxxxxxxxxxxxx,x xxx xxxx xxxx x x xx | | | | | | | | | | | | | | | \u002B--- \u0022stuff\u0022 bit | | | | | | | \u002B-- specific codes | | | | | \u002B-- RESERVED - DO NOT USE (should be 0) (will be used to control CRC on/off) | | | \u002B-- category:_000 0000 0000 0001 Legacy geometry TCODE_LEGACY_GEOMETRY | _000 0000 0000 0010 openNURBS object TCODE_OPENNURBS_OBJECT | _000 0000 0000 0100 -- RESERVED - DO NOT USE (should be 0 in any typecode) -- | _000 0000 0000 1000 -- RESERVED - DO NOT USE (should be 0 in any typecode) -- | _000 0000 0001 0000 Geometry TCODE_GEOMETRY | _000 0000 0010 0000 Annotation | _000 0000 0100 0000 Display Attributes TCODE_DISPLAY | _000 0000 1000 0000 Rendering TCODE_RENDER | _000 0001 0000 0000 | _000 0010 0000 0000 Interface TCODE_INTERFACE | _000 0100 0000 0000 -- RESERVED - DO NOT USE (should be 0 in any typecode) -- | _000 1000 0000 0000 Tolerances TCODE_TOLERANCE | _001 0000 0000 0000 Tables TCODE_TABLE | _010 0000 0000 0000 Table record TCODE_TABLEREC | _100 0000 0000 0000 User information TCODE_USER | \u002B-- format: 0 - data size in header - data block follows TCODE_SHORT 1 - data in header - no data block follows",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmTypeCodes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "TCODE_ANALYSIS_MESH",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ANALYSIS_MESH.htm"
+    },
+    {
+      "name": "TCODE_ANGULAR_DIMENSION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ANGULAR_DIMENSION.htm"
+    },
+    {
+      "name": "TCODE_ANNOTATION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x0020000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ANNOTATION.htm"
+    },
+    {
+      "name": "TCODE_ANNOTATION_LEADER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ANNOTATION_LEADER.htm"
+    },
+    {
+      "name": "TCODE_ANNOTATION_SETTINGS",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ANNOTATION_SETTINGS.htm"
+    },
+    {
+      "name": "TCODE_ANONYMOUS_CHUNK",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "(TCODE_USER | TCODE_CRC | 0x0000)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ANONYMOUS_CHUNK.htm"
+    },
+    {
+      "name": "TCODE_BITMAP_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_BITMAP_RECORD.htm"
+    },
+    {
+      "name": "TCODE_BITMAP_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_BITMAP_TABLE.htm"
+    },
+    {
+      "name": "TCODE_BITMAPPREVIEW",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_BITMAPPREVIEW.htm"
+    },
+    {
+      "name": "TCODE_BUMPMAP",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_BUMPMAP.htm"
+    },
+    {
+      "name": "TCODE_COMMENTBLOCK",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "(0x00000001) The TCODE_COMMENTBLOCK is the first chunk in the file, starts 32 bytes into the file, and contains text information terminated with a ^m_z. This ^m_z and contents of this chunk were expanded in February 2000. Files written with code released earlier than this will not have the ^m_z.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_COMMENTBLOCK.htm"
+    },
+    {
+      "name": "TCODE_COMPRESSED_MESH_GEOMETRY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_COMPRESSED_MESH_GEOMETRY.htm"
+    },
+    {
+      "name": "TCODE_CPLANE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_CPLANE.htm"
+    },
+    {
+      "name": "TCODE_CRC",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x8000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_CRC.htm"
+    },
+    {
+      "name": "TCODE_CURRENTLAYER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_CURRENTLAYER.htm"
+    },
+    {
+      "name": "TCODE_DICTIONARY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DICTIONARY.htm"
+    },
+    {
+      "name": "TCODE_DICTIONARY_END",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DICTIONARY_END.htm"
+    },
+    {
+      "name": "TCODE_DICTIONARY_ENTRY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DICTIONARY_ENTRY.htm"
+    },
+    {
+      "name": "TCODE_DICTIONARY_ID",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DICTIONARY_ID.htm"
+    },
+    {
+      "name": "TCODE_DIMSTYLE_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DIMSTYLE_RECORD.htm"
+    },
+    {
+      "name": "TCODE_DIMSTYLE_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DIMSTYLE_TABLE.htm"
+    },
+    {
+      "name": "TCODE_DISP_AM_RESOLUTION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DISP_AM_RESOLUTION.htm"
+    },
+    {
+      "name": "TCODE_DISP_CPLINES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DISP_CPLINES.htm"
+    },
+    {
+      "name": "TCODE_DISP_MAXLENGTH",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DISP_MAXLENGTH.htm"
+    },
+    {
+      "name": "TCODE_DISPLAY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x0040000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_DISPLAY.htm"
+    },
+    {
+      "name": "TCODE_ENDOFFILE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "(0x00007FFF) The TCODE_ENDOFFILE is the last chunk in the file and the first 4 bytes of information in this chunk is an integer that contains the file length. This chunk was added in February 2000 and files written with code released earlier than this will not have this termination block.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ENDOFFILE.htm"
+    },
+    {
+      "name": "TCODE_ENDOFFILE_GOO",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "(0x00007FFE) this typecode is returned when a rogue eof marker is found Some v1 3dm file writers put these markers in a \u0022goo\u0022. Simply skip these chunks and continue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ENDOFFILE_GOO.htm"
+    },
+    {
+      "name": "TCODE_ENDOFTABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_ENDOFTABLE.htm"
+    },
+    {
+      "name": "TCODE_FONT_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_FONT_RECORD.htm"
+    },
+    {
+      "name": "TCODE_FONT_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_FONT_TABLE.htm"
+    },
+    {
+      "name": "TCODE_GEOMETRY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x0010000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_GEOMETRY.htm"
+    },
+    {
+      "name": "TCODE_GROUP_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_GROUP_RECORD.htm"
+    },
+    {
+      "name": "TCODE_GROUP_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_GROUP_TABLE.htm"
+    },
+    {
+      "name": "TCODE_HATCHPATTERN_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_HATCHPATTERN_RECORD.htm"
+    },
+    {
+      "name": "TCODE_HATCHPATTERN_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_HATCHPATTERN_TABLE.htm"
+    },
+    {
+      "name": "TCODE_HIDE_TRACE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_HIDE_TRACE.htm"
+    },
+    {
+      "name": "TCODE_HISTORYRECORD_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_HISTORYRECORD_RECORD.htm"
+    },
+    {
+      "name": "TCODE_HISTORYRECORD_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_HISTORYRECORD_TABLE.htm"
+    },
+    {
+      "name": "TCODE_INSTANCE_DEFINITION_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_INSTANCE_DEFINITION_RECORD.htm"
+    },
+    {
+      "name": "TCODE_INSTANCE_DEFINITION_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_INSTANCE_DEFINITION_TABLE.htm"
+    },
+    {
+      "name": "TCODE_INTERFACE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x02000000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_INTERFACE.htm"
+    },
+    {
+      "name": "TCODE_LAYER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYER.htm"
+    },
+    {
+      "name": "TCODE_LAYER_OBSELETE_1",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYER_OBSELETE_1.htm"
+    },
+    {
+      "name": "TCODE_LAYER_OBSELETE_2",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYER_OBSELETE_2.htm"
+    },
+    {
+      "name": "TCODE_LAYER_OBSELETE_3",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYER_OBSELETE_3.htm"
+    },
+    {
+      "name": "TCODE_LAYER_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYER_RECORD.htm"
+    },
+    {
+      "name": "TCODE_LAYER_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "layers.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYER_TABLE.htm"
+    },
+    {
+      "name": "TCODE_LAYERINDEX",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERINDEX.htm"
+    },
+    {
+      "name": "TCODE_LAYERLOCKED",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERLOCKED.htm"
+    },
+    {
+      "name": "TCODE_LAYERMATERIALINDEX",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERMATERIALINDEX.htm"
+    },
+    {
+      "name": "TCODE_LAYERNAME",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERNAME.htm"
+    },
+    {
+      "name": "TCODE_LAYERON",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERON.htm"
+    },
+    {
+      "name": "TCODE_LAYERPICKABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERPICKABLE.htm"
+    },
+    {
+      "name": "TCODE_LAYERREF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERREF.htm"
+    },
+    {
+      "name": "TCODE_LAYERRENDERABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERRENDERABLE.htm"
+    },
+    {
+      "name": "TCODE_LAYERSNAPABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERSNAPABLE.htm"
+    },
+    {
+      "name": "TCODE_LAYERSTATE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERSTATE.htm"
+    },
+    {
+      "name": "TCODE_LAYERTABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERTABLE.htm"
+    },
+    {
+      "name": "TCODE_LAYERTHAWED",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERTHAWED.htm"
+    },
+    {
+      "name": "TCODE_LAYERVISIBLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LAYERVISIBLE.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_ASM",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_ASM.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_ASMSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_ASMSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_BND",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_BND.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_BNDSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_BNDSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_CRV",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_CRV.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_CRVSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_CRVSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_FAC",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_FAC.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_FACSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_FACSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_GEOMETRY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_GEOMETRY.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_PNT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_PNT.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_PNTSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_PNTSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_PRT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_PRT.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_PRTSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_PRTSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_SHL",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_SHL.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_SHLSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_SHLSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_SPL",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_SPL.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_SPLSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_SPLSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_SRF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_SRF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_SRFSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_SRFSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_TOL_ANGLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_TOL_ANGLE.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_TOL_FIT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_TOL_FIT.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_TRM",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_TRM.htm"
+    },
+    {
+      "name": "TCODE_LEGACY_TRMSTUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LEGACY_TRMSTUFF.htm"
+    },
+    {
+      "name": "TCODE_LIGHT_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LIGHT_RECORD.htm"
+    },
+    {
+      "name": "TCODE_LIGHT_RECORD_ATTRIBUTES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LIGHT_RECORD_ATTRIBUTES.htm"
+    },
+    {
+      "name": "TCODE_LIGHT_RECORD_ATTRIBUTES_USERDATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LIGHT_RECORD_ATTRIBUTES_USERDATA.htm"
+    },
+    {
+      "name": "TCODE_LIGHT_RECORD_END",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LIGHT_RECORD_END.htm"
+    },
+    {
+      "name": "TCODE_LIGHT_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "rendering lights.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LIGHT_TABLE.htm"
+    },
+    {
+      "name": "TCODE_LINEAR_DIMENSION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LINEAR_DIMENSION.htm"
+    },
+    {
+      "name": "TCODE_LINETYPE_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LINETYPE_RECORD.htm"
+    },
+    {
+      "name": "TCODE_LINETYPE_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_LINETYPE_TABLE.htm"
+    },
+    {
+      "name": "TCODE_MATERIAL_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_MATERIAL_RECORD.htm"
+    },
+    {
+      "name": "TCODE_MATERIAL_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "rendering materials.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_MATERIAL_TABLE.htm"
+    },
+    {
+      "name": "TCODE_MAXIMIZED_VIEWPORT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_MAXIMIZED_VIEWPORT.htm"
+    },
+    {
+      "name": "TCODE_MESH_OBJECT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_MESH_OBJECT.htm"
+    },
+    {
+      "name": "TCODE_NAME",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_NAME.htm"
+    },
+    {
+      "name": "TCODE_NAMED_CPLANE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_NAMED_CPLANE.htm"
+    },
+    {
+      "name": "TCODE_NAMED_VIEW",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_NAMED_VIEW.htm"
+    },
+    {
+      "name": "TCODE_NEAR_CLIP_PLANE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_NEAR_CLIP_PLANE.htm"
+    },
+    {
+      "name": "TCODE_NOTES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_NOTES.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD_ATTRIBUTES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD_ATTRIBUTES.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD_ATTRIBUTES_USERDATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD_ATTRIBUTES_USERDATA.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD_END",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD_END.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD_HISTORY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD_HISTORY.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD_HISTORY_DATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD_HISTORY_DATA.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD_HISTORY_HEADER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD_HISTORY_HEADER.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_RECORD_TYPE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_RECORD_TYPE.htm"
+    },
+    {
+      "name": "TCODE_OBJECT_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "geometry and annotation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBJECT_TABLE.htm"
+    },
+    {
+      "name": "TCODE_OBSOLETE_LAYERSET_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBSOLETE_LAYERSET_RECORD.htm"
+    },
+    {
+      "name": "TCODE_OBSOLETE_LAYERSET_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OBSOLETE_LAYERSET_TABLE.htm"
+    },
+    {
+      "name": "TCODE_OLD_FULLMESH",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OLD_FULLMESH.htm"
+    },
+    {
+      "name": "TCODE_OLD_MESH_UV",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OLD_MESH_UV.htm"
+    },
+    {
+      "name": "TCODE_OLD_MESH_VERTEX_NORMALS",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OLD_MESH_VERTEX_NORMALS.htm"
+    },
+    {
+      "name": "TCODE_OLD_RH_TRIMESH",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OLD_RH_TRIMESH.htm"
+    },
+    {
+      "name": "TCODE_OPENNURBS_CLASS",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OPENNURBS_CLASS.htm"
+    },
+    {
+      "name": "TCODE_OPENNURBS_CLASS_DATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OPENNURBS_CLASS_DATA.htm"
+    },
+    {
+      "name": "TCODE_OPENNURBS_CLASS_END",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OPENNURBS_CLASS_END.htm"
+    },
+    {
+      "name": "TCODE_OPENNURBS_CLASS_USERDATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OPENNURBS_CLASS_USERDATA.htm"
+    },
+    {
+      "name": "TCODE_OPENNURBS_CLASS_USERDATA_HEADER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OPENNURBS_CLASS_USERDATA_HEADER.htm"
+    },
+    {
+      "name": "TCODE_OPENNURBS_CLASS_UUID",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OPENNURBS_CLASS_UUID.htm"
+    },
+    {
+      "name": "TCODE_OPENNURBS_OBJECT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x00020000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_OPENNURBS_OBJECT.htm"
+    },
+    {
+      "name": "TCODE_PROPERTIES_APPLICATION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_PROPERTIES_APPLICATION.htm"
+    },
+    {
+      "name": "TCODE_PROPERTIES_COMPRESSED_PREVIEWIMAGE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_PROPERTIES_COMPRESSED_PREVIEWIMAGE.htm"
+    },
+    {
+      "name": "TCODE_PROPERTIES_NOTES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_PROPERTIES_NOTES.htm"
+    },
+    {
+      "name": "TCODE_PROPERTIES_OPENNURBS_VERSION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_PROPERTIES_OPENNURBS_VERSION.htm"
+    },
+    {
+      "name": "TCODE_PROPERTIES_PREVIEWIMAGE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_PROPERTIES_PREVIEWIMAGE.htm"
+    },
+    {
+      "name": "TCODE_PROPERTIES_REVISIONHISTORY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_PROPERTIES_REVISIONHISTORY.htm"
+    },
+    {
+      "name": "TCODE_PROPERTIES_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Model Properties: revision history, notes, preview image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_PROPERTIES_TABLE.htm"
+    },
+    {
+      "name": "TCODE_RADIAL_DIMENSION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RADIAL_DIMENSION.htm"
+    },
+    {
+      "name": "TCODE_RENDER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x0080000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RENDER.htm"
+    },
+    {
+      "name": "TCODE_RENDER_MATERIAL_ID",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RENDER_MATERIAL_ID.htm"
+    },
+    {
+      "name": "TCODE_RENDERMESHPARAMS",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RENDERMESHPARAMS.htm"
+    },
+    {
+      "name": "TCODE_RGB",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RGB.htm"
+    },
+    {
+      "name": "TCODE_RGBDISPLAY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RGBDISPLAY.htm"
+    },
+    {
+      "name": "TCODE_RH_POINT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RH_POINT.htm"
+    },
+    {
+      "name": "TCODE_RH_SPOTLIGHT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RH_SPOTLIGHT.htm"
+    },
+    {
+      "name": "TCODE_RHINOIO_OBJECT_BREP",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RHINOIO_OBJECT_BREP.htm"
+    },
+    {
+      "name": "TCODE_RHINOIO_OBJECT_DATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RHINOIO_OBJECT_DATA.htm"
+    },
+    {
+      "name": "TCODE_RHINOIO_OBJECT_END",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RHINOIO_OBJECT_END.htm"
+    },
+    {
+      "name": "TCODE_RHINOIO_OBJECT_NURBS_CURVE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RHINOIO_OBJECT_NURBS_CURVE.htm"
+    },
+    {
+      "name": "TCODE_RHINOIO_OBJECT_NURBS_SURFACE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_RHINOIO_OBJECT_NURBS_SURFACE.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS__NEVER__USE__THIS",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS__NEVER__USE__THIS.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_ANALYSISMESH",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_ANALYSISMESH.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_ANNOTATION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_ANNOTATION.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_ATTRIBUTES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_ATTRIBUTES.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_CURRENT_COLOR",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_CURRENT_COLOR.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_CURRENT_DIMSTYLE_INDEX",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_CURRENT_DIMSTYLE_INDEX.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_CURRENT_FONT_INDEX",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_CURRENT_FONT_INDEX.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_CURRENT_LAYER_INDEX",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_CURRENT_LAYER_INDEX.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_CURRENT_MATERIAL_INDEX",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_CURRENT_MATERIAL_INDEX.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_CURRENT_WIRE_DENSITY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_CURRENT_WIRE_DENSITY.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_GRID_DEFAULTS",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_GRID_DEFAULTS.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_MODEL_URL",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_MODEL_URL.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_NAMED_CPLANE_LIST",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_NAMED_CPLANE_LIST.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_NAMED_VIEW_LIST",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_NAMED_VIEW_LIST.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_PLUGINLIST",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_PLUGINLIST.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_RENDER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_RENDER.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_RENDERMESH",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_RENDERMESH.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_TABLE.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_UNITSANDTOLS",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_UNITSANDTOLS.htm"
+    },
+    {
+      "name": "TCODE_SETTINGS_VIEW_LIST",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SETTINGS_VIEW_LIST.htm"
+    },
+    {
+      "name": "TCODE_SHORT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x80000000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SHORT.htm"
+    },
+    {
+      "name": "TCODE_SHOWGRID",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SHOWGRID.htm"
+    },
+    {
+      "name": "TCODE_SHOWGRIDAXES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SHOWGRIDAXES.htm"
+    },
+    {
+      "name": "TCODE_SHOWWORLDAXES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SHOWWORLDAXES.htm"
+    },
+    {
+      "name": "TCODE_SNAPSIZE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SNAPSIZE.htm"
+    },
+    {
+      "name": "TCODE_STUFF",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_STUFF.htm"
+    },
+    {
+      "name": "TCODE_SUMMARY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_SUMMARY.htm"
+    },
+    {
+      "name": "TCODE_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x10000000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TABLE.htm"
+    },
+    {
+      "name": "TCODE_TABLEREC",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x20000000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TABLEREC.htm"
+    },
+    {
+      "name": "TCODE_TEXT_BLOCK",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TEXT_BLOCK.htm"
+    },
+    {
+      "name": "TCODE_TEXTURE_MAPPING_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TEXTURE_MAPPING_RECORD.htm"
+    },
+    {
+      "name": "TCODE_TEXTURE_MAPPING_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TEXTURE_MAPPING_TABLE.htm"
+    },
+    {
+      "name": "TCODE_TEXTUREMAP",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TEXTUREMAP.htm"
+    },
+    {
+      "name": "TCODE_TOLERANCE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x08000000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TOLERANCE.htm"
+    },
+    {
+      "name": "TCODE_TRANSPARENCY",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_TRANSPARENCY.htm"
+    },
+    {
+      "name": "TCODE_UNIT_AND_TOLERANCES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_UNIT_AND_TOLERANCES.htm"
+    },
+    {
+      "name": "TCODE_USER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "0x40000000.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_USER.htm"
+    },
+    {
+      "name": "TCODE_USER_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_USER_RECORD.htm"
+    },
+    {
+      "name": "TCODE_USER_TABLE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_USER_TABLE.htm"
+    },
+    {
+      "name": "TCODE_USER_TABLE_UUID",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_USER_TABLE_UUID.htm"
+    },
+    {
+      "name": "TCODE_VIEW",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW.htm"
+    },
+    {
+      "name": "TCODE_VIEW_ATTRIBUTES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_ATTRIBUTES.htm"
+    },
+    {
+      "name": "TCODE_VIEW_CPLANE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_CPLANE.htm"
+    },
+    {
+      "name": "TCODE_VIEW_DISPLAYMODE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_DISPLAYMODE.htm"
+    },
+    {
+      "name": "TCODE_VIEW_NAME",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_NAME.htm"
+    },
+    {
+      "name": "TCODE_VIEW_POSITION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_POSITION.htm"
+    },
+    {
+      "name": "TCODE_VIEW_RECORD",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_RECORD.htm"
+    },
+    {
+      "name": "TCODE_VIEW_SHOWCONAXES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_SHOWCONAXES.htm"
+    },
+    {
+      "name": "TCODE_VIEW_SHOWCONGRID",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_SHOWCONGRID.htm"
+    },
+    {
+      "name": "TCODE_VIEW_SHOWWORLDAXES",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_SHOWWORLDAXES.htm"
+    },
+    {
+      "name": "TCODE_VIEW_TARGET",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_TARGET.htm"
+    },
+    {
+      "name": "TCODE_VIEW_TRACEIMAGE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_TRACEIMAGE.htm"
+    },
+    {
+      "name": "TCODE_VIEW_VIEWPORT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_VIEWPORT.htm"
+    },
+    {
+      "name": "TCODE_VIEW_VIEWPORT_USERDATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_VIEWPORT_USERDATA.htm"
+    },
+    {
+      "name": "TCODE_VIEW_WALLPAPER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_WALLPAPER.htm"
+    },
+    {
+      "name": "TCODE_VIEW_WALLPAPER_V3",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEW_WALLPAPER_V3.htm"
+    },
+    {
+      "name": "TCODE_VIEWPORT",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEWPORT.htm"
+    },
+    {
+      "name": "TCODE_VIEWPORT_DISPLAY_MODE",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEWPORT_DISPLAY_MODE.htm"
+    },
+    {
+      "name": "TCODE_VIEWPORT_POSITION",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEWPORT_POSITION.htm"
+    },
+    {
+      "name": "TCODE_VIEWPORT_TRACEINFO",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEWPORT_TRACEINFO.htm"
+    },
+    {
+      "name": "TCODE_VIEWPORT_WALLPAPER",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_VIEWPORT_WALLPAPER.htm"
+    },
+    {
+      "name": "TCODE_XDATA",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_File3dmTypeCodes_TCODE_XDATA.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

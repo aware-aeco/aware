@@ -1,0 +1,536 @@
+{
+  "name": "BezierCurve",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a Bezier curve. Note: as an exception, the bezier curve is not derived from Curve.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_BezierCurve.htm",
+  "constructors": [
+    {
+      "name": "BezierCurve(IEnumerable\u003CPoint2d\u003E)",
+      "signature": "public BezierCurve(IEnumerable\u003CPoint2d\u003E controlPoints)",
+      "summary": "Create bezier curve with controls defined by a list of 2d points",
+      "params": [
+        {
+          "name": "controlPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve__ctor.htm"
+    },
+    {
+      "name": "BezierCurve(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public BezierCurve(IEnumerable\u003CPoint3d\u003E controlPoints)",
+      "summary": "Create bezier curve with controls defined by a list of 3d points",
+      "params": [
+        {
+          "name": "controlPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve__ctor_1.htm"
+    },
+    {
+      "name": "BezierCurve(IEnumerable\u003CPoint4d\u003E)",
+      "signature": "public BezierCurve(IEnumerable\u003CPoint4d\u003E controlPoints)",
+      "summary": "Create bezier curve with controls defined by a list of 4d points",
+      "params": [
+        {
+          "name": "controlPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint4d\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve__ctor_2.htm"
+    },
+    {
+      "name": "BezierCurve(SerializationInfo, StreamingContext)",
+      "signature": "protected BezierCurve(SerializationInfo info, StreamingContext context)",
+      "summary": "Protected constructor for internal use.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "Serialization data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "Serialization stream.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ChangeDimension",
+      "signature": "public bool ChangeDimension(int desiredDimension)",
+      "summary": "Change dimension of bezier.",
+      "params": [
+        {
+          "name": "desiredDimension",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if desired_dimension \u003C 1"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_ChangeDimension.htm"
+    },
+    {
+      "name": "CreateBeziers",
+      "signature": "public static BezierCurve[] CreateBeziers(Curve sourceCurve)",
+      "summary": "Create an array of Bezier curves that fit to an existing curve. Please note, these Beziers can be of any order and may be rational.",
+      "params": [
+        {
+          "name": "sourceCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The curve to fit Beziers to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierCurve[]",
+        "doc": "A new array of Bezier curves"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_CreateBeziers.htm"
+    },
+    {
+      "name": "CreateCubicBeziers",
+      "signature": "public static BezierCurve[] CreateCubicBeziers(Curve sourceCurve, double distanceTolerance, double kinkTolerance)",
+      "summary": "Constructs an array of cubic, non-rational Beziers that fit a curve to a tolerance.",
+      "params": [
+        {
+          "name": "sourceCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A curve to approximate.",
+          "optional": false
+        },
+        {
+          "name": "distanceTolerance",
+          "type": "System.Double",
+          "doc": "The max fitting error. Use RhinoMath.SqrtEpsilon as a minimum.",
+          "optional": false
+        },
+        {
+          "name": "kinkTolerance",
+          "type": "System.Double",
+          "doc": "If the input curve has a g1-discontinuity with angle radian measure greater than kinkTolerance at some point P, the list of beziers will also have a kink at P.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierCurve[]",
+        "doc": "A new array of bezier curves. The array can be empty and might contain null items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_CreateCubicBeziers.htm"
+    },
+    {
+      "name": "CreateLoftedBezier(IEnumerable\u003CPoint2d\u003E)",
+      "signature": "public static BezierCurve CreateLoftedBezier(IEnumerable\u003CPoint2d\u003E points)",
+      "summary": "Loft a bezier through a list of points",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "2 or more points to interpolate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierCurve",
+        "doc": "new bezier curve if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_CreateLoftedBezier.htm"
+    },
+    {
+      "name": "CreateLoftedBezier(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public static BezierCurve CreateLoftedBezier(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Loft a bezier through a list of points",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "2 or more points to interpolate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierCurve",
+        "doc": "new bezier curve if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_CreateLoftedBezier_1.htm"
+    },
+    {
+      "name": "CurvatureAt",
+      "signature": "public Vector3d CurvatureAt(double t)",
+      "summary": "Evaluate the curvature vector at a curve parameter.",
+      "remarks": "No error handling.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Evaluation parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "Curvature vector of the curve at the parameter t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_CurvatureAt.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_Finalize.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public BoundingBox GetBoundingBox(bool accurate)",
+      "summary": "Bounding box solver. Gets the world axis aligned bounding box for the curve.",
+      "params": [
+        {
+          "name": "accurate",
+          "type": "System.Boolean",
+          "doc": "If true, a physically accurate bounding box will be computed. If not, a bounding box estimate will be computed. For some geometry types there is no difference between the estimate and the accurate bounding box. Estimated bounding boxes can be computed much (much) faster than accurate (or \u0022tight\u0022) bounding boxes. Estimated bounding boxes are always similar to or larger than accurate bounding boxes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The bounding box of the geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetControlVertex2d",
+      "signature": "public Point2d GetControlVertex2d(int index)",
+      "summary": "Get location of a control vertex.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "If the bezier is rational, the euclidean location is returned."
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "when index is out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_GetControlVertex2d.htm"
+    },
+    {
+      "name": "GetControlVertex3d",
+      "signature": "public Point3d GetControlVertex3d(int index)",
+      "summary": "Gets the 3D location of a control vertex at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The 3D location of the control vertex. If the Bezier is rational, the euclidean location is returned. Returns Unset if the index is out of range or the control vertex cannot be retrieved."
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "Thrown when index is out of range."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_GetControlVertex3d.htm"
+    },
+    {
+      "name": "GetControlVertex4d",
+      "signature": "public Point4d GetControlVertex4d(int index)",
+      "summary": "Gets the homogeneous (4D) value of a control vertex at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Control vertex index (0 \u003C= index \u003C ControlVertexCount).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "The homogeneous value of the control vertex. If the Bezier is not rational, the weight is 1. Returns Unset if the index is out of range or the control vertex cannot be retrieved."
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "Thrown when index is out of range."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_GetControlVertex4d.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_GetObjectData.htm"
+    },
+    {
+      "name": "IncreaseDegree",
+      "signature": "public bool IncreaseDegree(int desiredDegree)",
+      "summary": "Increase degree of bezier",
+      "params": [
+        {
+          "name": "desiredDegree",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if desiredDegree \u003C current degree."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_IncreaseDegree.htm"
+    },
+    {
+      "name": "MakeNonRational",
+      "signature": "public bool MakeNonRational()",
+      "summary": "Make bezier non-rational",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_MakeNonRational.htm"
+    },
+    {
+      "name": "MakeRational",
+      "signature": "public bool MakeRational()",
+      "summary": "Make bezier rational",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_MakeRational.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double t)",
+      "summary": "Evaluates point at a curve parameter.",
+      "remarks": "No error handling.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Evaluation parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Point (location of curve at the parameter t)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_PointAt.htm"
+    },
+    {
+      "name": "Split",
+      "signature": "public bool Split(double t, out BezierCurve left, out BezierCurve right)",
+      "summary": "Divides the Bezier curve at the specified parameter.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "parameter must satisfy 0 \u003C t \u003C 1",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "Rhino.Geometry.BezierCurve",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Rhino.Geometry.BezierCurve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_Split.htm"
+    },
+    {
+      "name": "TangentAt",
+      "signature": "public Vector3d TangentAt(double t)",
+      "summary": "Evaluates the unit tangent vector at a curve parameter.",
+      "remarks": "No error handling.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Evaluation parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "Unit tangent vector of the curve at the parameter t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_TangentAt.htm"
+    },
+    {
+      "name": "ToNurbsCurve",
+      "signature": "public NurbsCurve ToNurbsCurve()",
+      "summary": "Constructs a NURBS curve representation of this curve.",
+      "params": [],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "NURBS representation of the curve on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BezierCurve_ToNurbsCurve.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ControlVertexCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of control vertices in this curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_BezierCurve_ControlVertexCount.htm"
+    },
+    {
+      "name": "Dimension",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Dimension of Bezier",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_BezierCurve_Dimension.htm"
+    },
+    {
+      "name": "IsRational",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the curve is rational. Rational curves have control-points with custom weights.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_BezierCurve_IsRational.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_BezierCurve_IsValid.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

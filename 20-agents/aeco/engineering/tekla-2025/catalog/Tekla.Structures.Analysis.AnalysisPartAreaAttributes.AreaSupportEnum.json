@@ -1,0 +1,49 @@
+{
+  "name": "AnalysisPartAreaAttributes.AreaSupportEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The area support options.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d61599db-50f4-3fdb-43a3-690dc7dcde2e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AREA_SUPPORT_NONE",
+      "value": 0,
+      "summary": "The \u0022none\u0022 area support option."
+    },
+    {
+      "name": "AREA_SUPPORT_WALL_BOTTOM_PINNED",
+      "value": 1,
+      "summary": "The area support simple."
+    },
+    {
+      "name": "AREA_SUPPORT_WALL_BOTTOM_FIXED",
+      "value": 2,
+      "summary": "The wall bottom fixed area support."
+    },
+    {
+      "name": "AREA_SUPPORT_ALL_PINNED",
+      "value": 3,
+      "summary": "The all pinned area support."
+    },
+    {
+      "name": "AREA_SUPPORT_ALL_FIXED",
+      "value": 4,
+      "summary": "The all fixed area support."
+    },
+    {
+      "name": "AREA_SUPPORT_OUTLINE_PINNED",
+      "value": 5,
+      "summary": "The outline pinned area support."
+    },
+    {
+      "name": "AREA_SUPPORT_OUTLINE_FIXED",
+      "value": 6,
+      "summary": "The outline fixed area support."
+    }
+  ]
+}

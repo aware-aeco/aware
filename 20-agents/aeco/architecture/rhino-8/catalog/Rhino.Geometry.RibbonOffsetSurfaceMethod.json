@@ -1,0 +1,29 @@
+{
+  "name": "RibbonOffsetSurfaceMethod",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Enum for RibbonOffset surface generation",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_RibbonOffsetSurfaceMethod.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No Surfaces will be created"
+    },
+    {
+      "name": "Sweep2",
+      "value": 1,
+      "summary": "Creates surfaces based off of Sweep 2 Rails"
+    },
+    {
+      "name": "Sweep2NetworkSrf",
+      "value": 2,
+      "summary": "Creates a mix of sweeps and network surfaces. NetworkSrf will be applied in corners with 3 sides"
+    }
+  ]
+}

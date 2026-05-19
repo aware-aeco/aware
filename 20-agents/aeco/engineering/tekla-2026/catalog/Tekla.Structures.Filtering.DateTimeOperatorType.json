@@ -1,0 +1,44 @@
+{
+  "name": "DateTimeOperatorType",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "enum",
+  "summary": "The DateTime operator type defines the operators between two DateTime filter expressions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/16c4c7db-83ad-5ed5-f606-d681354d5b74",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IS_EQUAL",
+      "value": 1,
+      "summary": "The \u0022is equal\u0022 operator."
+    },
+    {
+      "name": "IS_NOT_EQUAL",
+      "value": 2,
+      "summary": "The \u0022is not equal\u0022 operator."
+    },
+    {
+      "name": "EARLIER_THAN",
+      "value": 15,
+      "summary": "The \u0022earlier than\u0022 operator."
+    },
+    {
+      "name": "EARLIER_OR_EQUAL",
+      "value": 16,
+      "summary": "The \u0022earlier or equal\u0022 operator."
+    },
+    {
+      "name": "LATER_THAN",
+      "value": 17,
+      "summary": "The \u0022later than\u0022 operator."
+    },
+    {
+      "name": "LATER_OR_EQUEL",
+      "value": 18,
+      "summary": "The \u0022later or equal\u0022 operator."
+    }
+  ]
+}

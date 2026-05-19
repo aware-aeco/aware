@@ -1,0 +1,13 @@
+{
+  "name": "IBoundingVolume",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "interface",
+  "summary": "The BoundingVolume interface represents any generic 3D bounding volume.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1114b1ad-5f17-f45d-5879-ccce0b9366ef",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

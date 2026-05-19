@@ -1,0 +1,58 @@
+﻿
+idx ns                                 name                                kind  result issues
+--- --                                 ----                                ----  ------ ------
+ 76 Bluebeam.StudioApi.Jobs.Models     CreateJobHeaderandfooterRequest     class PASS         
+ 73 Bluebeam.StudioApi.Jobs.Models     CreateJobPs2pdfRequest              class PASS         
+ 32 Bluebeam.StudioApi.Projects        ProjectsPermissionsApi              class PASS         
+ 21 Bluebeam.StudioApi.Projects.Models CreateProjectFolderRequest          class PASS         
+ 57 Bluebeam.StudioApi.Jobs.Models     CreateJobUnflattenRequest           class PASS         
+ 49 Bluebeam.StudioApi.Jobs.Models     CreateJobBalancepagesRequest        class PASS         
+ 58 Bluebeam.StudioApi.Jobs.Models     CreateJobMarkuplistRequest          class PASS         
+  3 Bluebeam.StudioApi.Sessions.Models InviteSessionRequest                class PASS         
+ 35 Bluebeam.StudioApi.Projects        ProjectsSharedLinksApi              class PASS         
+  0 Bluebeam.StudioApi.Sessions        SessionsApi                         class PASS         
+ 11 Bluebeam.StudioApi.Sessions.Models UpdateUserRequest                   class PASS         
+ 75 Bluebeam.StudioApi.Jobs.Models     CreateJobFilepropertyvalueRequest   class PASS         
+ 66 Bluebeam.StudioApi.Jobs.Models     CreateJobImage2pdfRequest           class PASS         
+ 24 Bluebeam.StudioApi.Projects.Models CheckoutToSessionFileRequest        class PASS         
+ 70 Bluebeam.StudioApi.Jobs.Models     CreateJobImportcustomcolumnsRequest class PASS         
+ 18 Bluebeam.StudioApi.Projects.Models CreateProjectRequest                class PASS         
+ 30 Bluebeam.StudioApi.Projects.Models UpdateUserPermissionsRequest        class PASS         
+ 65 Bluebeam.StudioApi.Jobs.Models     CreateJobExportcustomcolumnsRequest class PASS         
+ 43 Bluebeam.StudioApi.Jobs.Models     CreateJobExtractpagesRequest        class PASS         
+  8 Bluebeam.StudioApi.Sessions.Models UpdateSessionPermissionsRequest     class PASS         
+ 40 Bluebeam.StudioApi.Jobs.Models     CreateJobFlattenRequest             class PASS         
+ 10 Bluebeam.StudioApi.Sessions.Models UpdateUserPermissionsRequest        class PASS         
+ 29 Bluebeam.StudioApi.Projects.Models UpdateUserRequest                   class PASS         
+ 60 Bluebeam.StudioApi.Jobs.Models     CreateJobExportformdataRequest      class PASS         
+ 74 Bluebeam.StudioApi.Jobs.Models     CreateJobPagecountRequest           class PASS         
+ 53 Bluebeam.StudioApi.Jobs.Models     CreateJobExcel2pdfRequest           class PASS         
+ 25 Bluebeam.StudioApi.Projects.Models ConfirmCheckinFileRequest           class PASS         
+ 77 Bluebeam.StudioApi.Jobs.Models     CreateJobInsertblankpagesRequest    class PASS         
+ 27 Bluebeam.StudioApi.Projects.Models CopyFileRequest                     class PASS         
+ 42 Bluebeam.StudioApi.Jobs.Models     CreateJobOpenpasswordRequest        class PASS         
+ 28 Bluebeam.StudioApi.Projects        ProjectsUsersApi                    class PASS         
+ 41 Bluebeam.StudioApi.Jobs.Models     CreateJobStampRequest               class PASS         
+ 15 Bluebeam.StudioApi.Projects        ProjectsApi                         class PASS         
+ 37 Bluebeam.StudioApi.Projects.Models UpdateSharedLinkRequest             class PASS         
+ 63 Bluebeam.StudioApi.Jobs.Models     CreateJobInsertpagesRequest         class PASS         
+ 48 Bluebeam.StudioApi.Jobs.Models     CreateJobDeletepagesRequest         class PASS         
+ 31 Bluebeam.StudioApi.Projects.Models CreateProjectUserRequest            class PASS         
+  4 Bluebeam.StudioApi.Sessions        SessionsFilesApi                    class PASS         
+ 44 Bluebeam.StudioApi.Jobs.Models     CreateJobReplacepagesRequest        class PASS         
+ 50 Bluebeam.StudioApi.Jobs.Models     CreateJobExportmarkupsRequest       class PASS         
+ 36 Bluebeam.StudioApi.Projects.Models CreateProjectSharedLinkRequest      class PASS         
+ 19 Bluebeam.StudioApi.Projects        ProjectsFoldersApi                  class PASS         
+ 34 Bluebeam.StudioApi.Projects.Models UpdateProjectPermissionsRequest     class PASS         
+ 47 Bluebeam.StudioApi.Jobs.Models     CreateJobCreatepdfareportRequest    class PASS         
+ 71 Bluebeam.StudioApi.Jobs.Models     CreateJobCombineRequest             class PASS         
+  7 Bluebeam.StudioApi.Sessions        SessionsPermissionsApi              class PASS         
+  9 Bluebeam.StudioApi.Sessions        SessionsUsersApi                    class PASS         
+ 12 Bluebeam.StudioApi.Sessions.Models CreateSessionUserRequest            class PASS         
+ 14 Bluebeam.StudioApi.Sessions.Models CreateSessionActivityRequest        class PASS         
+ 22 Bluebeam.StudioApi.Projects        ProjectsFilesApi                    class PASS         
+
+
+
+
+Strict verification summary: 50 pass / 0 fail / 50 total

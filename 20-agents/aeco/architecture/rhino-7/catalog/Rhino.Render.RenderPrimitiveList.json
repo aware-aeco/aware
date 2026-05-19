@@ -1,0 +1,545 @@
+{
+  "name": "RenderPrimitiveList",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderPrimitiveList\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderPrimitiveList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(Box, RenderMaterial)",
+      "signature": "public void Add(Box box, RenderMaterial material)",
+      "summary": "Add primitive box and material.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Box to add.",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "Material to add, may be null if not needed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Add.htm"
+    },
+    {
+      "name": "Add(Mesh, RenderMaterial)",
+      "signature": "public void Add(Mesh mesh, RenderMaterial material)",
+      "summary": "Add mesh and material.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to add.",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "Material to add, may be null if not needed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Add_2.htm"
+    },
+    {
+      "name": "Add(IEnumerable\u003CMesh\u003E, RenderMaterial)",
+      "signature": "public void Add(IEnumerable\u003CMesh\u003E meshes, RenderMaterial material)",
+      "summary": "",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022meshes\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.Add(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Render.RenderMaterial)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.Add(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.Render.RenderMaterial)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Add_6.htm"
+    },
+    {
+      "name": "Add(PlaneSurface, RenderMaterial)",
+      "signature": "public void Add(PlaneSurface plane, RenderMaterial material)",
+      "summary": "Add primitive plane and material.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.PlaneSurface",
+          "doc": "Plane to add.",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "Material to add, may be null if not needed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Add_4.htm"
+    },
+    {
+      "name": "Add(Sphere, RenderMaterial)",
+      "signature": "public void Add(Sphere sphere, RenderMaterial material)",
+      "summary": "Add primitive sphere and material.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "Sphere to add.",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "Material to add, may be null if not needed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Add_5.htm"
+    },
+    {
+      "name": "Add(Cone, Plane, RenderMaterial)",
+      "signature": "public void Add(Cone cone, Plane truncation, RenderMaterial material)",
+      "summary": "Add primitive cone and material.",
+      "params": [
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "Cone to add.",
+          "optional": false
+        },
+        {
+          "name": "truncation",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane used to cut the cone (the non-apex end is kept). Should be equal to cone.plane if not truncated.",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "Material to add, may be null if not needed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Add_1.htm"
+    },
+    {
+      "name": "Add(Mesh, RenderMaterial, Transform)",
+      "signature": "public void Add(Mesh mesh, RenderMaterial material, Transform t)",
+      "summary": "Add mesh and material.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to add.",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "Transformation of this mesh. Material to add, may be null if not needed.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.Add(Rhino.Geometry.Mesh,Rhino.Render.RenderMaterial,Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Add_3.htm"
+    },
+    {
+      "name": "AutoDeleteMaterialsOn",
+      "signature": "public bool AutoDeleteMaterialsOn()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.AutoDeleteMaterialsOn\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_AutoDeleteMaterialsOn.htm"
+    },
+    {
+      "name": "AutoDeleteMeshesOn",
+      "signature": "public bool AutoDeleteMeshesOn()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.AutoDeleteMeshesOn\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_AutoDeleteMeshesOn.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Remove all primitives from this list",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Clear.htm"
+    },
+    {
+      "name": "ConvertMeshesToTriangles",
+      "signature": "public void ConvertMeshesToTriangles()",
+      "summary": "Convert mesh quad faces to triangle faces.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_ConvertMeshesToTriangles.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RenderPrimitiveList",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Finalize.htm"
+    },
+    {
+      "name": "GetInstanceTransform",
+      "signature": "public Transform GetInstanceTransform(int index)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.GetInstanceTransform(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.GetInstanceTransform(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_GetInstanceTransform.htm"
+    },
+    {
+      "name": "Material",
+      "signature": "public RenderMaterial Material(int index)",
+      "summary": "Call this method to get the render material associated with the mesh at the specified index. Will return null if there is no material associated with the requested mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMaterial",
+        "doc": "If there is a render material associated at the requested index then the material is returned otherwise null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Material.htm"
+    },
+    {
+      "name": "Mesh",
+      "signature": "public Mesh Mesh(int index)",
+      "summary": "Get the mesh for the primitive at the specified index. If the item at this index is a primitive type other than a mesh then it mesh representation is returned.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "Returns the mesh for the primitive at the specified index. If the item at this index is a primitive type other than a mesh then it mesh representation is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_Mesh.htm"
+    },
+    {
+      "name": "MeshInstance",
+      "signature": "public Mesh MeshInstance(int index, out Transform instance_transform)",
+      "summary": "Get the mesh for the primitive at the specified index. If the item at this index is a primitive type other than a mesh then it mesh representation is returned.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        },
+        {
+          "name": "instance_transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Receives the transformation of this mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "Returns the mesh for the primitive at the specified index. If the item at this index is a primitive type other than a mesh then it mesh representation is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_MeshInstance.htm"
+    },
+    {
+      "name": "PrimitiveType",
+      "signature": "public RenderPrimitiveType PrimitiveType(int index)",
+      "summary": "Type of primitive object at this index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderPrimitiveType",
+        "doc": "Primitive type of the item at this index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_PrimitiveType.htm"
+    },
+    {
+      "name": "SetInstanceTransform",
+      "signature": "public void SetInstanceTransform(int index, Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.SetInstanceTransform(System.Int32,Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022xform\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.SetInstanceTransform(System.Int32,Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_SetInstanceTransform.htm"
+    },
+    {
+      "name": "ToMaterialArray",
+      "signature": "public RenderMaterial[] ToMaterialArray()",
+      "summary": "Call this method to see if there are any RenderMaterials associated with the meshes. Each primitive can optionally have a RenderMaterial associated with it, if the RenderMaterial is null then check for a RhinoObject.RenderMaterial.",
+      "params": [],
+      "returns": {
+        "type": "RenderMaterial[]",
+        "doc": "Return an array that of the same size as the ToMeshArray() containing the RenderMaterial associated with the mesh, may contain null entries if there is no RenderMaterial associated with the custom mesh."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_ToMaterialArray.htm"
+    },
+    {
+      "name": "ToMeshArray",
+      "signature": "public Mesh[] ToMeshArray()",
+      "summary": "Call this method to get a array of meshes, all primitives will get meshed and the meshes will get included in the returned array.",
+      "params": [],
+      "returns": {
+        "type": "Mesh[]",
+        "doc": "Return an array of meshes from this list, this will convert all primitives to meshes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_ToMeshArray.htm"
+    },
+    {
+      "name": "TryGetBox",
+      "signature": "public bool TryGetBox(int index, out Box box)",
+      "summary": "Call this method to get a box at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Will contain the box at the requested index if the index is in range and the primitive at the requested index is a box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the index is in range and the primitive at the requested index is a box otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_TryGetBox.htm"
+    },
+    {
+      "name": "TryGetCone",
+      "signature": "public bool TryGetCone(int index, out Cone cone, out Plane truncation)",
+      "summary": "Call this method to get a box at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        },
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "Will contain the cone at the requested index if the index is in range and the primitive at the requested index is a box.",
+          "optional": false
+        },
+        {
+          "name": "truncation",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022truncation\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderPrimitiveList.TryGetCone(System.Int32,Rhino.Geometry.Cone@,Rhino.Geometry.Plane@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the index is in range and the primitive at the requested index is a box otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_TryGetCone.htm"
+    },
+    {
+      "name": "TryGetPlane",
+      "signature": "public bool TryGetPlane(int index, out PlaneSurface plane)",
+      "summary": "Call this method to get a box at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.PlaneSurface",
+          "doc": "Will contain the plane at the requested index if the index is in range and the primitive at the requested index is a plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the index is in range and the primitive at the requested index is a plane otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_TryGetPlane.htm"
+    },
+    {
+      "name": "TryGetSphere",
+      "signature": "public bool TryGetSphere(int index, out Sphere sphere)",
+      "summary": "Call this method to get a box at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero based index of the item in the list. Valid values are greater than or equal to 0 and less than Count.",
+          "optional": false
+        },
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "Will contain the sphere at the requested index if the index is in range and the primitive at the requested index is a box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the index is in range and the primitive at the requested index is a box otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderPrimitiveList_TryGetSphere.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of meshes in this list",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderPrimitiveList_Count.htm"
+    },
+    {
+      "name": "RhinoObject",
+      "type": "RhinoObject",
+      "getter": true,
+      "setter": false,
+      "summary": "The Rhino object associated with this list",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderPrimitiveList_RhinoObject.htm"
+    },
+    {
+      "name": "UseObjectsMappingChannels",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the texture mapping will be taken from the Rhino object otherwise; the texture mapping will use the texture coordinates on the mesh only.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderPrimitiveList_UseObjectsMappingChannels.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

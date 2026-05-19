@@ -1,0 +1,39 @@
+{
+  "name": "LicenseTypes",
+  "namespace": "Rhino.Runtime",
+  "kind": "enum",
+  "summary": "Different licensing modes that Rhino can run in",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_LicenseTypes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "Licensing mode not define"
+    },
+    {
+      "name": "Standalone",
+      "value": 1,
+      "summary": "Standalone license installed on this computer."
+    },
+    {
+      "name": "ZooAutoDetect",
+      "value": 2,
+      "summary": "Classic Zoo license with the Zoo server automatically detected at runtime."
+    },
+    {
+      "name": "ZooManualDetect",
+      "value": 3,
+      "summary": "Classic Zoo license with the Zoo server specified by hostname or IP"
+    },
+    {
+      "name": "CloudZoo",
+      "value": 4,
+      "summary": "Cloud Zoo licenese"
+    }
+  ]
+}

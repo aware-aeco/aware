@@ -1,0 +1,34 @@
+{
+  "name": "RebarMesh.RebarMeshTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different types of reinforcement meshes.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a9f722d1-5248-ab18-8d02-39e78dee4e05",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNKNOWN_MESH",
+      "value": 0,
+      "summary": "The type of the mesh is unknown."
+    },
+    {
+      "name": "RECTANGULAR_MESH",
+      "value": 1,
+      "summary": "The shape of the mesh is rectangular."
+    },
+    {
+      "name": "POLYGON_MESH",
+      "value": 2,
+      "summary": "The shape of the mesh is a polygon. Create rectangular meshes also as polygon meshes."
+    },
+    {
+      "name": "BENT_MESH",
+      "value": 3,
+      "summary": "The shape of the mesh is bent."
+    }
+  ]
+}

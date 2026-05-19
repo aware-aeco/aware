@@ -1,0 +1,13 @@
+{
+  "name": "Operation.ExportBasePoint",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "enum",
+  "summary": "Export base point",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a23be964-0f05-80db-4c82-afd85fd91a77",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

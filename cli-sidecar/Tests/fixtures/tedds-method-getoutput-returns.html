@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel="preload" as="style" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,700italic,800italic,600italic,400italic,300italic&display=swap">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800,700italic,800italic,600italic,400italic,300italic&display=swap" rel="stylesheet">
+    <!-- Favicons and touch icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/themes/contrib/trimble2017/images/favicons/apple-touch-icon.png?v=bORyEr80JO">
+    <link rel="icon" type="image/png" sizes="32x32" href="/themes/contrib/trimble2017/images/favicons/favicon-32x32.png?v=bORyEr80JO">
+    <link rel="icon" type="image/png" sizes="16x16" href="/themes/contrib/trimble2017/images/favicons/favicon-16x16.png?v=bORyEr80JO">
+    <link rel="manifest" href="/themes/contrib/trimble2017/images/favicons/site.webmanifest?v=bORyEr80JO">
+    <link rel="mask-icon" href="/themes/contrib/trimble2017/images/favicons/safari-pinned-tab.svg?v=bORyEr80JO" color="#5bbad5">
+    <link rel="shortcut icon" href="/themes/contrib/trimble2017/images/favicons/favicon.ico?v=bORyEr80JO">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="/themes/contrib/trimble2017/images/favicons/browserconfig.xml?v=bORyEr80JO">
+    <meta name="theme-color" content="#ffffff">
+    <!-- end favicons -->
+    <meta charset="utf-8" />
+<meta name="description" content="Returns the documented output from the calculator in the specified format." />
+<link rel="canonical" href="https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980" />
+<meta property="og:url" content="https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980" />
+<meta property="og:title" content="GetOutput" />
+<meta property="og:description" content="Method GetOutput GetOutput(OutputFormat) Returns the documented output from the calculator in the specified format. Declaration string GetOutput(OutputFormat format = OutputFormat.Rtf) Parameters Type" />
+<meta property="og:image" content="https://developer.tekla.com/themes/custom/trimble2017_devcenter/og-default.jpg" />
+<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>UL.menu--main li {display:none} UL.menu--main li.tekla-tedds {display:block}</style>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0];var j=d.createElement(s);var dl=l!='dataLayer'?'&l='+l:'';j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';j.async=true;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PK5XT28');</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0];var j=d.createElement(s);var dl=l!='dataLayer'?'&l='+l:'';j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';j.async=true;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-59PX7Q9');</script>
+
+    <title>GetOutput | Tekla Developer Center</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_Fmiy_r-MocCGM7olBXUOU4bYyHc87qZF1D1ZRAp9xyY.css?delta=0&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJx1jt0OwjAIhV9otuqNj9PQFrsaWpaC07698yfGZO4GyPkOBwg6X9XFLIFnbN1yxcA0SBfFYj0IDtpy8YTH_eFkE7EH2ol2yjX9IhdxDlgV24bJjVrI5TJxU_tHcxMkNKJQI7T43RKEFsYXtO95uKE_cyv20w1c4L4SAy-pkhVXBAnL8qiJqJBJjHJKtG0rKLIc3-Q8aeYqK_4sD7UpiKA" />
+<link rel="stylesheet" media="all" href="https://search.cloud.tekla.com/static/css/vendor.chunk.css" />
+<link rel="stylesheet" media="all" href="https://search.cloud.tekla.com/static/css/main.chunk.css" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_atUkJYnc8o6bsNCVToVc_fZ5Ox-YlWI5TPuhZ5VfCf8.css?delta=3&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJx1jt0OwjAIhV9otuqNj9PQFrsaWpaC07698yfGZO4GyPkOBwg6X9XFLIFnbN1yxcA0SBfFYj0IDtpy8YTH_eFkE7EH2ol2yjX9IhdxDlgV24bJjVrI5TJxU_tHcxMkNKJQI7T43RKEFsYXtO95uKE_cyv20w1c4L4SAy-pkhVXBAnL8qiJqJBJjHJKtG0rKLIc3-Q8aeYqK_4sD7UpiKA" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_hJbc9avoq6qeZmMy4oacogbujEzgT186hUAAVS7GsNs.css?delta=4&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJx1jt0OwjAIhV9otuqNj9PQFrsaWpaC07698yfGZO4GyPkOBwg6X9XFLIFnbN1yxcA0SBfFYj0IDtpy8YTH_eFkE7EH2ol2yjX9IhdxDlgV24bJjVrI5TJxU_tHcxMkNKJQI7T43RKEFsYXtO95uKE_cyv20w1c4L4SAy-pkhVXBAnL8qiJqJBJjHJKtG0rKLIc3-Q8aeYqK_4sD7UpiKA" />
+
+    <script src="/sites/default/files/js/js_U6YM_dAL_Ff_pGsqWvEpqlmyVeHLwglg6JOv1n2yZD4.js?scope=header&amp;delta=0&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+
+  </head>
+  <body class="user-logged-out path-node page-node-type-api-reference-page has-glyphicons">
+    <div class="body-inner">
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PK5XT28" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59PX7Q9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <a href="#main-content" class="visually-hidden focusable skip-link">
+        Skip to main content
+      </a>
+        <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+              <header class="header navbar navbar-default" id="navbar" role="banner">
+      <div class="navbar-header">
+        <div class="navbar-header__super-navigation">
+          <div class="navbar-header__super-navigation--left">
+            <div id="tekla-navigation" data-language="en"></div>
+
+                          <div class="logo-trimble"><img class="logo-trimble__img" src="/themes/contrib/trimble2017/images/svg_icons/logo-trimble.svg" alt="Trimble"></div>
+            
+              <div class="region region-super-navigation-left">
+          <a class="logo navbar-btn pull-left" href="/" title="Home" rel="home">
+      <img src="/themes/custom/trimble2017_devcenter/logo.svg?v=bORyEr80JO" alt="Home" />
+    </a>
+      <section id="block-trimble2017-devcenter-honeypot" class="block block-block-content block-block-contenta204467b-4cfd-448d-9327-b633b70276df clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><a aria-hidden="true" class="hide" href="/notallowed" rel="nofollow">not-allowed-link</a></div>
+      
+  </section>
+
+
+  </div>
+
+          </div>
+          <div class="navbar-header__super-navigation--right">
+              <div class="region region-super-navigation-right">
+      
+        <ul class="menu nav navbar-nav user-account-menu__username-link">
+                        
+                        <li>
+        <a href="/atc/login?redirect=/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980" class="user-account-menu__username-link" rel="nofollow" data-drupal-link-query="{&quot;redirect&quot;:&quot;\/doc\/tekla-tedds\/2025\/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980&quot;}" data-drupal-link-system-path="atc/login">Sign in</a>
+                  </li>
+                          </ul>
+              
+
+
+
+  </div>
+
+            <div class="mobile-button--super-navigation">
+              <button type="button" class="toggle" aria-label="Show menu"></button>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-header__mobile-super-navigation">
+            <div class="region region-super-navigation-right">
+      
+        <ul class="menu nav navbar-nav user-account-menu__username-link">
+                        
+                        <li>
+        <a href="/atc/login?redirect=/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980" class="user-account-menu__username-link" rel="nofollow" data-drupal-link-query="{&quot;redirect&quot;:&quot;\/doc\/tekla-tedds\/2025\/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980&quot;}" data-drupal-link-system-path="atc/login">Sign in</a>
+                  </li>
+                          </ul>
+              
+
+
+
+  </div>
+
+        </div>
+                  <div class="navbar-header__main-navigation navbar-header__main-navigation--desktop">
+            <div class="navbar-header__main-navigation--left">
+                <div class="region region-main-navigation-left">
+    <section id="block-trimble2017-devcenter-teklaproductselectversion" class="block block-tekla-product-select block-tekla-product-select-version clearfix">
+  
+    
+
+      <div class="tekla-product-select-logos-wrapper">
+  <form class="tekla-product-select-version-form" data-drupal-selector="tekla-product-select-version-form" action="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980" method="post" id="tekla-product-select-version-form" accept-charset="UTF-8">
+  <div class="form-item js-form-item form-type-select js-form-type-select form-item-product-select js-form-item-product-select form-no-label form-group">
+  
+  
+  <div class="input-group"><div class="select-wrapper"><select data-drupal-selector="edit-product-select" data-disable-refocus="true" class="form-select form-control" id="edit-product-select" name="product_select"><option
+            value="18">Tekla Structures</option><option
+            value="19">Tekla Structural Designer</option><option
+            value="20" selected="selected">Tekla Tedds</option><option
+            value="21">Tekla PowerFab</option><option
+            value="22">Trimble Connect</option></select></div><span class="input-group-addon"><span class="icon glyphicon glyphicon-refresh ajax-progress ajax-progress-throbber" aria-hidden="true"></span></span></div>
+
+  
+  
+  </div>
+<input autocomplete="off" data-drupal-selector="form-ru0lnyggdertoqfgxsjzngjm2npivwlyuurddipyk3m" type="hidden" name="form_build_id" value="form-rU0LNyGGDeRTOQfGxSJzNgJm2NpiVwlyuurDDiPyK3M" /><input data-drupal-selector="edit-tekla-product-select-version-form" type="hidden" name="form_id" value="tekla_product_select_version_form" />
+</form>
+
+</div>
+
+  </section>
+
+<nav role="navigation" aria-labelledby="block-trimble2017-devcenter-main-navigation-desktop-menu" id="block-trimble2017-devcenter-main-navigation-desktop" class="mainnavigation">
+            
+  <h2 class="visually-hidden" id="block-trimble2017-devcenter-main-navigation-desktop-menu">Main navigation</h2>
+  
+
+        
+      <ul class="menu menu--main nav navbar-nav">
+                      <li class="tekla-structures first">
+                                        <a href="/doc/tekla-structures/2026/tekla-structures-64304" data-drupal-link-system-path="node/64304">API references</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/tekla-structures/tekla-structures-documentation" data-drupal-link-system-path="node/243">Documentation</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/doc/tekla-powerfab/2026/fab-suite-request-api-77584" data-drupal-link-system-path="node/77584">API References</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/tekla-powerfab/tekla-powerfab-documentation" data-drupal-link-system-path="node/245">Documentation</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/doc/tekla-structural-designer/2026/tsd-api-remoting-73833" data-drupal-link-system-path="node/73833">API References</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/tekla-structural-designer/tekla-structural-designer-documentation" data-drupal-link-system-path="node/388">Documentation</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/doc/tekla-tedds/2026/64124" data-drupal-link-system-path="node/64124">API References</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/tekla-tedds/tekla-tedds-documentation" data-drupal-link-system-path="node/387">Documentation</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/benefits-for-your-business" data-drupal-link-system-path="node/20115">Benefits</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/tekla-developer-community" data-drupal-link-system-path="node/20111">Community</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/trimble-connect-community" class="trimble-connect" target="_blank" data-drupal-link-system-path="node/20114">Community</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/policy" data-drupal-link-system-path="node/20112">Policy</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/policy-trimble-connect" data-drupal-link-system-path="node/20113">Policy</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab trimble-connect last">
+                                        <a href="/tekla-structures/tekla-developer-news" data-drupal-link-system-path="node/281">News</a>
+              </li>
+        </ul>
+  
+
+  </nav>
+
+  </div>
+
+              <div class="mobile-button">
+                <button type="button" class="toggle" aria-label="Show menu"></button>
+              </div>
+            </div>
+            <div class="navbar-header__main-navigation--right">
+                <div class="region region-main-navigation-right">
+    <section id="block-trimble2017-devcenter-trimblesearch" class="block block-trimble-search-page block-trimble-search-block clearfix">
+  
+    
+
+      <div id="tekla-search-field" data-language="en" data-product="Tekla Tedds" data-version="2026" data-service="devctr"></div>
+
+  </section>
+
+
+  </div>
+
+            </div>
+          </div>
+                <div class="navbar-header__mobile-navigation">
+            <div class="region region-main-navigation-mobile">
+    <nav role="navigation" aria-labelledby="block-trimble2017-devcenter-main-navigation-mobile-menu" id="block-trimble2017-devcenter-main-navigation-mobile" class="mainnavigation_mobile">
+            
+  <h2 class="visually-hidden" id="block-trimble2017-devcenter-main-navigation-mobile-menu">Main navigation</h2>
+  
+
+        
+      <ul class="menu menu--main nav navbar-nav">
+                      <li class="tekla-structures first">
+                                        <a href="/doc/tekla-structures/2026/tekla-structures-64304" data-drupal-link-system-path="node/64304">API references</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/tekla-structures/tekla-structures-documentation" data-drupal-link-system-path="node/243">Documentation</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/doc/tekla-powerfab/2026/fab-suite-request-api-77584" data-drupal-link-system-path="node/77584">API References</a>
+              </li>
+                      <li class="tekla-powerfab">
+                                        <a href="/tekla-powerfab/tekla-powerfab-documentation" data-drupal-link-system-path="node/245">Documentation</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/doc/tekla-structural-designer/2026/tsd-api-remoting-73833" data-drupal-link-system-path="node/73833">API References</a>
+              </li>
+                      <li class="tekla-structural-designer">
+                                        <a href="/tekla-structural-designer/tekla-structural-designer-documentation" data-drupal-link-system-path="node/388">Documentation</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/doc/tekla-tedds/2026/64124" data-drupal-link-system-path="node/64124">API References</a>
+              </li>
+                      <li class="tekla-tedds">
+                                        <a href="/tekla-tedds/tekla-tedds-documentation" data-drupal-link-system-path="node/387">Documentation</a>
+              </li>
+                      <li class="tekla-structures">
+                                        <a href="/benefits-for-your-business" data-drupal-link-system-path="node/20115">Benefits</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/tekla-developer-community" data-drupal-link-system-path="node/20111">Community</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/trimble-connect-community" class="trimble-connect" target="_blank" data-drupal-link-system-path="node/20114">Community</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab">
+                                        <a href="/policy" data-drupal-link-system-path="node/20112">Policy</a>
+              </li>
+                      <li class="trimble-connect">
+                                        <a href="/policy-trimble-connect" data-drupal-link-system-path="node/20113">Policy</a>
+              </li>
+                      <li class="tekla-structures tekla-structural-designer tekla-tedds tekla-powerfab trimble-connect last">
+                                        <a href="/tekla-structures/tekla-developer-news" data-drupal-link-system-path="node/281">News</a>
+              </li>
+        </ul>
+  
+
+  </nav>
+
+  </div>
+
+        </div>
+              </div>
+          </header>
+  
+
+<div class="preface">  <div class="region region-preface">
+        <ol class="breadcrumb">
+    <li ><a href="/">Home</a></li><li ><a href="/tekla-tedds">Tekla Tedds</a></li><li ><a href="/doc/tekla-tedds/2025/41820">API Namespaces</a></li><li ><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-41823">Tekla.Structural.InteropAssemblies.TeddsCalc</a></li><li ><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-41852">ICalculator</a></li><li  class="active">GetOutput</li>  </ol>
+
+
+  </div>
+</div>
+
+<div class="precontent">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="main-container-wrap">
+    <div role="main" class="main-container container js-quickedit-main-content">
+      <div class="row row__main-container">
+
+                                      <div class="content-header col-sm-12" role="heading"></div>
+                  
+                                      <aside class="sidebar-first col-sm-4" role="complementary">  <div class="region region-sidebar-first">
+    <section id="block-trimble2017-devcenter-teddsapiref2025version" class="block block-block-content block-block-contentb8c571d0-bafc-4a8b-989d-74c7ef422e79 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="alert">
+<h3>Tekla Tedds API References 2025</h3>
+<p>Click <a href="/doc/tekla-tedds/2026/64124">here</a> to access Tekla Tedds API References for version 2026. </p>
+</div></div>
+      
+  </section>
+
+<section class="api-packages-tree block-product-guide-tree block block-trimble-html-import-manager block-api-reference-page-tree clearfix" id="block-trimble2017-devcenter-apipackagenavigation">
+  
+    
+
+      <h3>API References</h3><ul><li leaf-id="41820" class=" expanded has-children" aria-expanded="true"><a href="/doc/tekla-tedds/2025/41820">API Namespaces</a><button type="button" class="has-children expanded loaded accordion-trigger">Expand</button><ul><li leaf-id="41821" class=" has-children" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-expressoaddin-41821">Tekla.Structural.ExpressoAddIn</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="41822" class=" has-children" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-41822">Tekla.Structural.InteropAssemblies.Tedds</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="41823" class=" expanded has-children" aria-expanded="true"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-41823">Tekla.Structural.InteropAssemblies.TeddsCalc</a><button type="button" class="has-children expanded loaded accordion-trigger">Expand</button><ul><li leaf-id="41846" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcerrortype-41846">CalcErrorType</a></li><li leaf-id="41847" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcprogressevent-41847">CalcProgressEvent</a></li><li leaf-id="41848" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcstatus-41848">CalcStatus</a></li><li leaf-id="41849" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcvalueformat-41849">CalcValueFormat</a></li><li leaf-id="41850" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcvaluetype-41850">CalcValueType</a></li><li leaf-id="41851" class=" has-children" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalcvalue-41851">ICalcValue</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="41852" class=" expanded has-children" aria-expanded="true"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-41852">ICalculator</a><button type="button" class="has-children expanded loaded accordion-trigger">Expand</button><ul><li leaf-id="41969" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-calculatingerrorevents-41969">CalculatingErrorEvents</a></li><li leaf-id="41970" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-calculatingprogressevents-41970">CalculatingProgressEvents</a></li><li leaf-id="41971" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-functions-41971">Functions</a></li><li leaf-id="41972" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-status-41972">Status</a></li><li leaf-id="41973" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-undefinedvariableevents-41973">UndefinedVariableEvents</a></li><li leaf-id="41974" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-versionlibrarymajor-41974">VersionLibraryMajor</a></li><li leaf-id="41975" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-versionlibraryminor-41975">VersionLibraryMinor</a></li><li leaf-id="41976" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-versionmajor-41976">VersionMajor</a></li><li leaf-id="41977" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-versionminor-41977">VersionMinor</a></li><li leaf-id="41978" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-windowhandle-41978">WindowHandle</a></li><li leaf-id="41979" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-copyoutputtoclipboard-41979">CopyOutputToClipboard</a></li><li leaf-id="41980" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980">GetOutput</a></li><li leaf-id="41981" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getvariables-41981">GetVariables</a></li><li leaf-id="41982" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getvariables2-41982">GetVariables2</a></li><li leaf-id="41983" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getvariables3-41983">GetVariables3</a></li><li leaf-id="41984" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-initialize-41984">Initialize</a></li><li leaf-id="41985" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-initializecalc-41985">InitializeCalc</a></li><li leaf-id="41986" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-setforegroundwindow-41986">SetForegroundWindow</a></li><li leaf-id="41987" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-setownerwindow-41987">SetOwnerWindow</a></li><li leaf-id="41988" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-setvariables-41988">SetVariables</a></li></ul></li><li leaf-id="41853" class=" has-children" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculatorexevents-41853">ICalculatorExEvents</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="41854" class=" has-children" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-ifunctions-41854">IFunctions</a><button type="button" class="has-children collapsed accordion-trigger">Expand</button></li><li leaf-id="41855" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-outputformat-41855">OutputFormat</a></li><li leaf-id="41856" aria-expanded="false"><a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-variableformat-41856">VariableFormat</a></li></ul></li></ul></li></ul>
+  </section>
+
+
+  </div>
+</aside>
+                  
+                        <section class="main-content col-sm-8">
+
+                                              <div class="highlighted">  <div class="region region-highlighted">
+    <div data-drupal-messages-fallback class="hidden"></div>
+
+  </div>
+</div>
+                      
+                    
+                    
+                                <a id="main-content"></a>
+              <div class="region region-content">
+        <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      
+            <div class="field field--name-dynamic-token-fieldnode-api-top-link-anchor field--type-ds field--label-hidden field--item"><a id="PageHeader"></a></div>
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><article class="content wrap" id="_content" data-uid="Tekla.Structural.InteropAssemblies.TeddsCalc.ICalculator.GetOutput*">
+
+
+
+<h1 id="Tekla_Structural_InteropAssemblies_TeddsCalc_ICalculator_GetOutput_" data-uid="Tekla.Structural.InteropAssemblies.TeddsCalc.ICalculator.GetOutput*">Method GetOutput</h1>
+<div class="markdown level0 summary"></div>
+<div class="markdown level0 conceptual"></div>
+
+
+
+<a id="Tekla_Structural_InteropAssemblies_TeddsCalc_ICalculator_GetOutput_" data-uid="Tekla.Structural.InteropAssemblies.TeddsCalc.ICalculator.GetOutput*"></a>
+<h4 id="Tekla_Structural_InteropAssemblies_TeddsCalc_ICalculator_GetOutput_Tekla_Structural_InteropAssemblies_TeddsCalc_OutputFormat_" data-uid="Tekla.Structural.InteropAssemblies.TeddsCalc.ICalculator.GetOutput(Tekla.Structural.InteropAssemblies.TeddsCalc.OutputFormat)">GetOutput(OutputFormat)</h4>
+<div class="markdown level1 summary"><p>Returns the documented output from the calculator in the specified format.</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+<h5 class="declaration">Declaration</h5>
+<div class="codewrapper">
+  <pre><code class="language-cs hljs hljs cs"><span class="hljs-function"><span class="hljs-keyword">string</span> <span class="hljs-title">GetOutput</span>(<span class="hljs-params">OutputFormat format = OutputFormat.Rtf</span>)</span></code></pre>
+</div>
+<h5 class="parameters">Parameters</h5>
+<table class="table table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="/topic/en/20/45/648a63d21fa6e9bd53e191aa2ebc695dc579e618fabf02d03d9fe8fe3c7d0242">OutputFormat</a></td>
+      <td><span class="parametername">format</span></td>
+      <td><p>Output format, the default is Microsoft Rich Text Format</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<h5 class="returns">Returns</h5>
+<table class="table table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+      <td><p>Output documentation.</p>
+</td>
+    </tr>
+  </tbody>
+</table>
+<h5 id="Tekla_Structural_InteropAssemblies_TeddsCalc_ICalculator_GetOutput_Tekla_Structural_InteropAssemblies_TeddsCalc_OutputFormat__remarks">Remarks</h5>
+<div class="markdown level1 remarks"><p>In order to obtain output the calculator must have been initialized with RTF, using
+<a class="xref" href="/topic/en/20/45/4ea1d7cff39c130aecc6be90103a3e4900815e9b473cb3713fbd77ef9c115700">InitializeCalc</a> or
+<a class="xref" href="/topic/en/20/45/3ab2a6a338f894c330b63592f689966056f69beb09047175f6e40986902c5841">Initialize</a>.</p>
+<p>
+If the scenario you are implementing requires both input and output then you will typically 
+initialize the Calculator object twice, the first time to create the input variables for the calculation and 
+the second time to initialise the calculator using those input variables to start a specific calculation.
+</p><p>
+When the output is requested in PDF format the resulting string must be processed correctly. PDF is 
+a binary format and as such the string should not be modified because it is likely to contain invalid 
+characters and null terminators which will not be processed correctly by most string processing functions. 
+The string should be converted to raw bytes before further processing or saving to disk.
+</p><example>
+             <pre><code class="language-cs hljs cs"><span class="hljs-comment">//Example which uses the "Bearing pressures for rectangular footings" calculation</span>
+             <span class="hljs-comment">//and specifies the input for the design</span>
+         <span class="hljs-comment">//Library file name and item name of calculation to use</span>
+         <span class="hljs-keyword">string</span> calcFileName = <span class="hljs-string">"$(SysLbrDir)Bearing pressure.lbr"</span>;
+         <span class="hljs-keyword">string</span> calcItemName = <span class="hljs-string">"Bearing pressures"</span>;
+
+         <span class="hljs-comment">//Create calculator and initialize for setting up input variables only</span>
+         Calculator calculator = <span class="hljs-keyword">new</span> Calculator();
+         calculator.Initialize();
+
+         <span class="hljs-comment">//Set all required input variables</span>
+         calculator.Functions.SetVar(<span class="hljs-string">"Lx"</span>, <span class="hljs-number">2000</span>, <span class="hljs-string">"mm"</span>);
+         calculator.Functions.SetVar(<span class="hljs-string">"Ly"</span>, <span class="hljs-number">2500</span>, <span class="hljs-string">"mm"</span>);
+         calculator.Functions.SetVar(<span class="hljs-string">"Pz"</span>, <span class="hljs-number">150</span>, <span class="hljs-string">"kN"</span>);
+         calculator.Functions.SetVar(<span class="hljs-string">"ex"</span>, <span class="hljs-number">600</span>, <span class="hljs-string">"mm"</span>);
+         calculator.Functions.SetVar(<span class="hljs-string">"ey"</span>, <span class="hljs-number">550</span>, <span class="hljs-string">"mm"</span>);
+
+         <span class="hljs-comment">//Get variables as XML string</span>
+         <span class="hljs-keyword">string</span> variables = calculator.GetVariables();
+
+         <span class="hljs-comment">//Initialize for a second time but this time with calculation to start and variables</span>
+         calculator.InitializeCalc(calcFileName, calcItemName, variables);
+
+         <span class="hljs-comment">//Calculation has now finished so retrieve variables</span>
+         <span class="hljs-keyword">string</span> outputRtf = calculator.GetOutput();
+
+         <span class="hljs-comment">//Copy output to Windows clipboard</span>
+         Clipboard.SetText(outputRtf, TextDataFormat.Rtf);&lt;/code&gt;&lt;/pre&gt;&lt;/example&gt;
+
+</code></pre></example></div>
+</article></div>
+      
+    </div>
+  </div>
+
+
+<section id="block-trimble2017-devcenter-quick-feedback" class="block block-webform block-webform-block clearfix">
+  
+    
+
+      <span id="webform-submission-quick-feedback-node-41980-form-ajax-content"></span><div id="webform-submission-quick-feedback-node-41980-form-ajax" class="webform-ajax-form-wrapper" data-effect="fade" data-progress-type="throbber"><form class="webform-submission-form webform-submission-add-form webform-submission-quick-feedback-form webform-submission-quick-feedback-add-form webform-submission-quick-feedback-node-41980-form webform-submission-quick-feedback-node-41980-add-form js-webform-details-toggle webform-details-toggle" data-drupal-selector="webform-submission-quick-feedback-node-41980-add-form" action="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980" method="post" id="webform-submission-quick-feedback-node-41980-add-form" accept-charset="UTF-8">
+  
+  <fieldset data-drupal-selector="edit-was-this-helpful" class="radios--wrapper fieldgroup form-composite webform-composite-visible-title required js-webform-type-radios webform-type-radios js-form-item form-item js-form-wrapper form-wrapper" id="edit-was-this-helpful--wrapper">
+      <legend id="edit-was-this-helpful--wrapper-legend">
+    <span class="fieldset-legend js-form-required form-required">Was this helpful?</span>
+  </legend>
+  <div class="fieldset-wrapper">
+                <div id="edit-was-this-helpful" class="js-webform-radios webform-options-display-two-columns"><div class="form-item js-form-item form-type-radio js-form-type-radio form-item-was-this-helpful js-form-item-was-this-helpful radio">
+  
+  
+  
+
+      <label for="edit-was-this-helpful-yes" class="control-label option"><input data-drupal-selector="edit-was-this-helpful-yes" class="form-radio" type="radio" id="edit-was-this-helpful-yes" name="was_this_helpful" value="yes" />Yes</label>
+  
+  
+  </div>
+<div class="form-item js-form-item form-type-radio js-form-type-radio form-item-was-this-helpful js-form-item-was-this-helpful radio">
+  
+  
+  
+
+      <label for="edit-was-this-helpful-no" class="control-label option"><input data-drupal-selector="edit-was-this-helpful-no" class="form-radio" type="radio" id="edit-was-this-helpful-no" name="was_this_helpful" value="no" />No</label>
+  
+  
+  </div>
+</div>
+
+          </div>
+</fieldset>
+<div class="js-webform-states-hidden form-item js-form-item form-type-textarea js-form-type-textarea form-item-what-is-missing js-form-item-what-is-missing form-group">
+      <label for="edit-what-is-missing" class="control-label">What is missing?</label>
+  
+  
+  <div class="form-textarea-wrapper">
+  <textarea data-drupal-selector="edit-what-is-missing" aria-describedby="edit-what-is-missing--description" class="form-textarea form-control resize-vertical" data-drupal-states="{&quot;visible&quot;:{&quot;.webform-submission-quick-feedback-node-41980-add-form :input[name=\u0022was_this_helpful\u0022]&quot;:{&quot;value&quot;:&quot;no&quot;}},&quot;required&quot;:{&quot;.webform-submission-quick-feedback-node-41980-add-form :input[name=\u0022was_this_helpful\u0022]&quot;:{&quot;value&quot;:&quot;no&quot;}}}" id="edit-what-is-missing" name="what_is_missing" rows="5" cols="60" placeholder="The feedback you give here is not visible to other users. We use your comments to improve the content."></textarea>
+</div>
+
+
+  
+  
+      <div class="description help-block">
+      <div id="edit-what-is-missing--description" class="webform-element-description form-group">The feedback you give here is not visible to other users. We use your comments to improve the content.</div>
+
+    </div>
+  </div>
+<div data-drupal-selector="edit-actions" class="form-actions webform-actions form-group js-form-wrapper form-wrapper" id="edit-actions"><button class="webform-button--submit btn-default button button--primary js-form-submit form-submit btn" data-drupal-selector="edit-actions-submit" data-disable-refocus="true" type="submit" id="edit-actions-submit" name="op" value="Submit">Submit</button>
+</div>
+<input data-drupal-selector="edit-page-url" type="hidden" name="page_url" value="https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980" /><input data-drupal-selector="edit-content-owner" type="hidden" name="content_owner" value="rune.backman@trimble.com" /><input autocomplete="off" data-drupal-selector="form-mzlnpzshagwb996yoznnpb6lukwoadyrpjfagi8cwws" type="hidden" name="form_build_id" value="form-mzlNpZShAgWb996YoZnNpB6lUKWOaDYrPJfagi8cWWs" /><input data-drupal-selector="edit-webform-submission-quick-feedback-node-41980-add-form" type="hidden" name="form_id" value="webform_submission_quick_feedback_node_41980_add_form" /><div class="url-textfield form-group js-form-wrapper form-wrapper" style="display: none !important;"><div class="form-item js-form-item form-type-textfield js-form-type-textfield form-item-url js-form-item-url form-group">
+      <label for="edit-url" class="control-label">Leave this field blank</label>
+  
+  
+  <input autocomplete="off" data-drupal-selector="edit-url" class="form-text form-control" type="text" id="edit-url" name="url" value="" size="20" maxlength="128" />
+
+  
+  
+  </div>
+</div>
+
+
+  
+</form>
+</div>
+  </section>
+
+<section id="block-trimble2017-devcenter-previousapireferencepageinthetree" class="block-product-guide-previous block block-trimble-html-import-manager block-api-reference-page-previous clearfix">
+  
+    
+
+      <a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-copyoutputtoclipboard-41979">Previous</a>
+  </section>
+
+<section id="block-trimble2017-devcenter-nextapireferencepageinthetree" class="block-product-guide-next block block-trimble-html-import-manager block-api-reference-page-next clearfix">
+  
+    
+
+      <a href="/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-getvariables-41981">Next</a>
+  </section>
+
+
+  </div>
+
+                  </section>
+
+                      </div>
+    </div>
+  </div>
+
+<div class="postcontent">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+      <div class="precontent__col col-sm-4"></div>
+    </div>
+  </div>
+</div>
+
+<div class="postscript">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">  <div class="region region-postscript">
+    <section id="block-followusonsocialmedia" class="block block-block-content block-block-contentac151fd8-1977-42e2-94bc-74aeaf95f9a7 clearfix">
+  
+    
+
+      
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item"><div class="wp-block-group alignfull banner background-trimble-blue">
+   <p class="ingress has-text-color" style="color:#ffffff">Want to stay up-to-date with Tekla development information?</p>
+   <a class="btn btn-primary" href="/tekla-structures/tekla-developer-news">Check out all developer news and updates</a></p>
+</div>
+<a aria-hidden="true" class="hide" href="/notallowed" rel="nofollow">not-allowed-link</a></div>
+      
+  </section>
+
+
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer" role="contentinfo">
+  <div id="trimble-common-footer" data-language="en" />
+</footer>
+
+  </div>
+
+      
+    </div>
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/41980","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"eJydUttuwyAM_aEQtr3sc5BDPOIWMMNO2vz9yNpVrdpq2h4A61zwwWJgVtEKxSpzVCqd54qWsmLNEPvd54x17T-4pm6iMMW21JWp2ASUuwgrz-pGEs9LE1rO6Dl2sopisgMIdlopDRHfXl7fbYg8QDSia6QcbqhSeZy9mjDTiHJDKe4jGDyeMpkMi_HMe0Ixm-ta60ZcPG7pn_Ryk6boKBWuah9grkDAfqiQx3-7zEebKta_mUWbGer4yOUS5KapP24DhUwBv2-gOXP9NdZGRAGUOF-uy3hwFSN5e6ncUPkgWF2zZL0oBaH66TuVPdXdAYftC9jz2cMOjneg5xZWSPGOwYipdehHVKAovcDyu0g5hPhcllCkJXzKc9meL3f8tn0BXbInZg","theme":"trimble2017_devcenter","theme_token":null},"ajaxTrustedUrl":{"form_action_p_pvdeGsVG5zNF_XLGPTvYSKCf43t8qZYSwcfZl2uzM":true,"\/doc\/tekla-tedds\/2025\/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980?ajax_form=1":true},"bootstrap":{"forms_has_error_value_toggle":1,"trimble_bootstrap_table_query":"DIV.node:not(.node--type-business-card) table, ARTICLE.page.full table","modal_animation":1,"modal_backdrop":"true","modal_focus_input":1,"modal_keyboard":1,"modal_select_text":1,"modal_show":1,"modal_size":"","tooltip_enabled":1,"tooltip_animation":1,"tooltip_container":"body","tooltip_delay":"0","tooltip_html":0,"tooltip_placement":"auto top","tooltip_selector":"","tooltip_trigger":"hover"},"ajax":{"edit-actions-submit":{"callback":"::submitAjaxForm","event":"click","effect":"fade","speed":500,"progress":{"type":"throbber","message":""},"disable-refocus":true,"url":"\/doc\/tekla-tedds\/2025\/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980?ajax_form=1","httpMethod":"POST","dialogType":"ajax","submit":{"_triggering_element_name":"op","_triggering_element_value":"Submit"}},"edit-product-select":{"callback":[{},"selectProduct"],"disable-refocus":true,"event":"change","wrapper":"product-select-element","url":"\/doc\/tekla-tedds\/2025\/tekla-structural-interopassemblies-teddscalc-icalculator-getoutput-41980?ajax_form=1","httpMethod":"POST","dialogType":"ajax","submit":{"_triggering_element_name":"product_select"}}},"user":{"uid":0,"permissionsHash":"be3a3cf5af333966e607c605804f4efcb317eab61e6dcb2a2241f15acf486e77"}}</script>
+<script src="/sites/default/files/js/js_kVmpb1bsLG7hJY6hmLzIU3FoG1JzQPFjlc5A_foGAho.js?scope=footer&amp;delta=0&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+<script src="https://nav.prod.tekla.com/main.js" defer></script>
+<script src="https://cookies.prod.tekla.com/main.js" defer></script>
+<script src="/sites/default/files/js/js_ajU6S3P8-G8ruzuUyL5uZbWo2oAiLgHRoXHWJDpoico.js?scope=footer&amp;delta=3&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+<script src="https://search.cloud.tekla.com/static/js/runtime-main.js"></script>
+<script src="https://search.cloud.tekla.com/static/js/vendor.chunk.js"></script>
+<script src="https://search.cloud.tekla.com/static/js/main.chunk.js"></script>
+<script src="/sites/default/files/js/js_CRXz1I5iI1cxZrb7KalOSxgf9gYf5sLVMvPZ4sAmHWs.js?scope=footer&amp;delta=7&amp;language=en&amp;theme=trimble2017_devcenter&amp;include=eJyVUdtuAiEQ_aEF2r70c8jAjogLDB1GV_--bNWNRk3jC0zOjTnBEUkThmqEKEmsgydGE4sgF0h697NHPukNcR6EY3YJvz4-v01I5CCpJqcUS7ijKtO496LCPo7Y7ijBKYHC4zlcFTgoTzRFbGpxXbV2KznZmCuxmCeYrRBQO4Yy3jz-nkttenPk98xNuhn46aI2Q-kavroV1Kgq-KmD6sLpW6y3jwEkUlnjCs6WMUVv1sk6prkh224psiobAvvt31bmPA8zuuWbzOXWsIPjA4gJc8_RIwrE1HSDA_4rEgohvZZlbK3v8ZKnupRsD_xy_AJuiPmS"></script>
+
+  </body>
+</html>

@@ -1,0 +1,104 @@
+{
+  "name": "AnalysisSubSection.AnalysisSubSectionTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the subsection types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/bc60fc0a-d228-41aa-af7d-702b9b32ca28",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNKNOWN_TYPE",
+      "value": 0,
+      "summary": "The subsection subtype is unknown."
+    },
+    {
+      "name": "I",
+      "value": 4,
+      "summary": "The profile type I."
+    },
+    {
+      "name": "UNSYMMETRICAL_I",
+      "value": 5,
+      "summary": "The profile type unsymmetrical I."
+    },
+    {
+      "name": "L",
+      "value": 6,
+      "summary": "The profile type L."
+    },
+    {
+      "name": "Z",
+      "value": 7,
+      "summary": "The profile type Z."
+    },
+    {
+      "name": "U",
+      "value": 8,
+      "summary": "The profile type U."
+    },
+    {
+      "name": "PL",
+      "value": 1,
+      "summary": "The profile type PL."
+    },
+    {
+      "name": "D",
+      "value": 10,
+      "summary": "The profile type D."
+    },
+    {
+      "name": "PD",
+      "value": 11,
+      "summary": "The profile type PD."
+    },
+    {
+      "name": "P",
+      "value": 9,
+      "summary": "The profile type P."
+    },
+    {
+      "name": "C",
+      "value": 8,
+      "summary": "The profile type C."
+    },
+    {
+      "name": "T",
+      "value": 2,
+      "summary": "The profile type T."
+    },
+    {
+      "name": "T_MIRRORED",
+      "value": 3,
+      "summary": "The profile type T mirrored."
+    },
+    {
+      "name": "USER_DEFINED",
+      "value": 12,
+      "summary": "The profile type user defined."
+    },
+    {
+      "name": "TWIN_L_1",
+      "value": 13,
+      "summary": "The profile type twin L 1."
+    },
+    {
+      "name": "TWIN_L_2",
+      "value": 14,
+      "summary": "The profile type twin L 2."
+    },
+    {
+      "name": "TWIN_U_1",
+      "value": 15,
+      "summary": "The profile type twin U 1."
+    },
+    {
+      "name": "TWIN_U_2",
+      "value": 16,
+      "summary": "The profile type twin U 2."
+    }
+  ]
+}

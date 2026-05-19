@@ -1,0 +1,66 @@
+{
+  "name": "LayoutSize",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Layout size data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/",
+  "constructors": [
+    {
+      "name": "LayoutSize",
+      "signature": "LayoutSize()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Height",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the height :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Height"
+    },
+    {
+      "name": "Index",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the index :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Index"
+    },
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the name :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Name"
+    },
+    {
+      "name": "UserDefined",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the user defined state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.UserDefined"
+    },
+    {
+      "name": "Width",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the width :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutSize/#NemAll_Python_BaseElements.LayoutSize.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

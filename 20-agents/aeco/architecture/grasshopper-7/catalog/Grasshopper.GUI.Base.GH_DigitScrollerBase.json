@@ -1,0 +1,672 @@
+{
+  "name": "GH_DigitScrollerBase",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "Provides Numeric digit scrolling GUI not tied to a control-handle.",
+  "base": "GH_TextBoxInputBase",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_DigitScrollerBase.htm",
+  "constructors": [
+    {
+      "name": "GH_DigitScrollerBase",
+      "signature": "public GH_DigitScrollerBase()",
+      "summary": "Initializes a new instance of the GH_DigitScrollerBase class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "HandleTextInputAccepted",
+      "signature": "protected override void HandleTextInputAccepted(string text)",
+      "summary": "(Overrides GH_TextBoxInputBase.HandleTextInputAccepted(String).)",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_HandleTextInputAccepted.htm"
+    },
+    {
+      "name": "HideTextInputBox",
+      "signature": "public void HideTextInputBox()",
+      "summary": "Hides the text-input override form (if it is displayed).",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_HideTextInputBox.htm"
+    },
+    {
+      "name": "MouseDown",
+      "signature": "public GH_DigitScrollerBase.GH_MouseAction MouseDown(MouseEventArgs args, PointF pt)",
+      "summary": "Respond to mouse-down events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_DigitScrollerBase.GH_MouseAction",
+        "doc": "True if a Drag operation was started, false if the event went unnoticed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_MouseDown.htm"
+    },
+    {
+      "name": "MouseMove",
+      "signature": "public bool MouseMove(MouseEventArgs args, PointF pt)",
+      "summary": "Respond to mouse-move events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a Drag operation was performed, false if the event went unnoticed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_MouseMove.htm"
+    },
+    {
+      "name": "MouseUp",
+      "signature": "public bool MouseUp(MouseEventArgs args, PointF pt)",
+      "summary": "Respond to mouse-up events.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Windows.Forms.MouseEventArgs",
+          "doc": "Mouse Event arguments.",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Mouse cursor position in floating point accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a Drag operation was terminated, false if the event went unnoticed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_MouseUp.htm"
+    },
+    {
+      "name": "OnInvalidated",
+      "signature": "public void OnInvalidated()",
+      "summary": "Raise the Invalidated event.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_OnInvalidated.htm"
+    },
+    {
+      "name": "OnValueChanged",
+      "signature": "public void OnValueChanged(bool intermediate)",
+      "summary": "Raise the ValueChanged event.",
+      "params": [
+        {
+          "name": "intermediate",
+          "type": "System.Boolean",
+          "doc": "Set the intermediate state of the event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_OnValueChanged.htm"
+    },
+    {
+      "name": "Render",
+      "signature": "public void Render(Graphics G)",
+      "summary": "Render all UI elements.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_Render.htm"
+    },
+    {
+      "name": "RespondToEnter",
+      "signature": "public GH_ToolstripItemKeyHandlerResult RespondToEnter()",
+      "summary": "(Inherited from GH_TextBoxInputBase.)",
+      "params": [],
+      "returns": {
+        "type": "GH_ToolstripItemKeyHandlerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_RespondToEnter.htm"
+    },
+    {
+      "name": "RespondToEscape",
+      "signature": "public GH_ToolstripItemKeyHandlerResult RespondToEscape()",
+      "summary": "(Inherited from GH_TextBoxInputBase.)",
+      "params": [],
+      "returns": {
+        "type": "GH_ToolstripItemKeyHandlerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_RespondToEscape.htm"
+    },
+    {
+      "name": "SetupScroller",
+      "signature": "public void SetupScroller(decimal minimum, decimal maximum, decimal value)",
+      "summary": "Set the minimum, maximum and value fields simultaneously.",
+      "params": [
+        {
+          "name": "minimum",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "maximum",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Decimal",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_SetupScroller.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control)",
+      "signature": "public void ShowTextInputBox(Control owner)",
+      "summary": "",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_ShowTextInputBox.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, Boolean)",
+      "signature": "public void ShowTextInputBox(Control owner, bool limitToBoundary)",
+      "summary": "",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "optional": false
+        },
+        {
+          "name": "limitToBoundary",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_ShowTextInputBox_1.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, Boolean, Matrix)",
+      "signature": "public void ShowTextInputBox(Control owner, bool limitToBoundary, Matrix transform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "optional": false
+        },
+        {
+          "name": "limitToBoundary",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "System.Drawing.Drawing2D.Matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitScrollerBase_ShowTextInputBox_2.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, String, Boolean)",
+      "signature": "public void ShowTextInputBox(Control owner, string content, bool selectContent)",
+      "summary": "Display a floating text-box on top of the owner control.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control that owns this slider. The coordinates of the Bounds rectangle must be specified in owner coordinates.",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "selectContent",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_ShowTextInputBox.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, String, Boolean, Boolean)",
+      "signature": "public void ShowTextInputBox(Control owner, string content, bool selectContent, bool limitToBoundary)",
+      "summary": "Display a floating text-box on top of the owner control.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control that owns this slider. The coordinates of the Bounds rectangle must be specified in owner coordinates.",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "selectContent",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "limitToBoundary",
+          "type": "System.Boolean",
+          "doc": "If True, the pop up input box will be \u0027clipped\u0027 to the owner boundary. At least some part of the slider must be visible for this to work.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_ShowTextInputBox_1.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, String, Boolean, Boolean, Matrix)",
+      "signature": "public void ShowTextInputBox(Control owner, string content, bool selectContent, bool limitToBoundary, Matrix transform)",
+      "summary": "Display a floating text-box on top of the owner control.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control that owns this slider. The coordinates of the Bounds rectangle must be specified in owner coordinates.",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "selectContent",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "limitToBoundary",
+          "type": "System.Boolean",
+          "doc": "If True, the pop up input box will be \u0027clipped\u0027 to the owner boundary. At least some part of the slider must be visible for this to work.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "System.Drawing.Drawing2D.Matrix",
+          "doc": "Transformation matrix to apply to pop up UI.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_ShowTextInputBox_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowRadixDrag",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the radix is allowed to be dragged around.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_AllowRadixDrag.htm"
+    },
+    {
+      "name": "AllowTextInput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether text input is allowed by double click.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_AllowTextInput.htm"
+    },
+    {
+      "name": "AmplifyMotion",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether vertical mouse drags should be amplified as the mouse moves further and further.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_AmplifyMotion.htm"
+    },
+    {
+      "name": "BackgroundGradient",
+      "type": "GH_Gradient",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the background Gradient. If the gradient is not null, it overrides the background colours.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_BackgroundGradient.htm"
+    },
+    {
+      "name": "BottomColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour used along the bottom edge of the control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_BottomColour.htm"
+    },
+    {
+      "name": "Bounds",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Bounds for this scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Bounds.htm"
+    },
+    {
+      "name": "DecimalPlaces",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of decimal places available in this scroller. Unlike Radix, this property maintains the decimal position of the value represented by this scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_DecimalPlaces.htm"
+    },
+    {
+      "name": "DigitAlign",
+      "type": "GH_DigitAlign",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the digit align mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_DigitAlign.htm"
+    },
+    {
+      "name": "Digits",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of digits available in this scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Digits.htm"
+    },
+    {
+      "name": "DrawBackground",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the background is drawn in this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_DrawBackground.htm"
+    },
+    {
+      "name": "DrawBorder",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the border is drawn in this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_DrawBorder.htm"
+    },
+    {
+      "name": "DrawShadows",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether shadows are drawn in this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_DrawShadows.htm"
+    },
+    {
+      "name": "EdgeColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the edge colour of the control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_EdgeColour.htm"
+    },
+    {
+      "name": "Epsilon",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the smallest possible change in the value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Epsilon.htm"
+    },
+    {
+      "name": "Font",
+      "type": "Font",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Font for this scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Font.htm"
+    },
+    {
+      "name": "IsTextInput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the text input box is currently on screen.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_TextBoxInputBase_IsTextInput.htm"
+    },
+    {
+      "name": "MaximumValue",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the upper bound of the scroll value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_MaximumValue.htm"
+    },
+    {
+      "name": "MinimumValue",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lower bound of the scroll value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_MinimumValue.htm"
+    },
+    {
+      "name": "Prefix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the prefix text to be displayed on the scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Prefix.htm"
+    },
+    {
+      "name": "PrefixBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the box containing the prefix string. If there is no prefix the PrefixBox will be Rectangle.Empty",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_PrefixBox.htm"
+    },
+    {
+      "name": "Radix",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radix index of this scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Radix.htm"
+    },
+    {
+      "name": "RadixBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Radix box for this control, if there is no radix box, Rectangle.Empty will be returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_RadixBox.htm"
+    },
+    {
+      "name": "RailColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour used for the rail line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_RailColour.htm"
+    },
+    {
+      "name": "RaiseEvents",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether this scroller raises the ValueChanged event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_RaiseEvents.htm"
+    },
+    {
+      "name": "ScrollBoxes",
+      "type": "List\u003CRectangle\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all scroll boxes (from left to right) for this control, not including the radix box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_ScrollBoxes.htm"
+    },
+    {
+      "name": "ShadowColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour used for the shadows.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_ShadowColour.htm"
+    },
+    {
+      "name": "ShadowSize",
+      "type": "Padding",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size of the drop shadow along all four edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_ShadowSize.htm"
+    },
+    {
+      "name": "SignBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Sign box for this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_SignBox.htm"
+    },
+    {
+      "name": "Suffix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the suffix text to be displayed on the scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Suffix.htm"
+    },
+    {
+      "name": "SuffixBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the box containing the suffix string. If there is no suffix the PrefixBox will have zero width",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_SuffixBox.htm"
+    },
+    {
+      "name": "TextColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour used for the text inside the scrolls.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_TextColour.htm"
+    },
+    {
+      "name": "TopColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour used along the top edge of the control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_TopColour.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value displayed in this scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerBase_Value.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "Invalidated",
+      "delegate": "Grasshopper.GUI.Base.GH_DigitScrollerBase.InvalidatedEventHandler",
+      "signature": "public event GH_DigitScrollerBase.InvalidatedEventHandler Invalidated",
+      "summary": "Raised whenever the display of this scroller is changed, but not the value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_Base_GH_DigitScrollerBase_Invalidated.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ValueChanged",
+      "delegate": "Grasshopper.GUI.Base.GH_DigitScrollerBase.ValueChangedEventHandler",
+      "signature": "public event GH_DigitScrollerBase.ValueChangedEventHandler ValueChanged",
+      "summary": "Raised whenever the value of this scroller is changed due to User-Interface methods.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_Base_GH_DigitScrollerBase_ValueChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

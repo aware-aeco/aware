@@ -1,0 +1,298 @@
+{
+  "name": "MeshTopologyVertexList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the mesh topology vertices of a mesh. Topology vertices are sets of vertices in the MeshVertexList that can topologically be considered the same vertex.",
+  "interfaces": [
+    "IEnumerable\u003CPoint3f\u003E",
+    "IEnumerable",
+    "IList\u003CPoint3f\u003E",
+    "ICollection\u003CPoint3f\u003E",
+    "IList",
+    "ICollection",
+    "IReadOnlyList\u003CPoint3f\u003E",
+    "IReadOnlyCollection\u003CPoint3f\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Collections_MeshTopologyVertexList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConnectedEdge",
+      "signature": "public int ConnectedEdge(int topologyVertexIndex, int edgeAtVertexIndex)",
+      "summary": "Gets a particular edge that is connected to a topological vertex. Call TopologyVertices.SortVertices before this if you are interested in ordered edges.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of a topology vertex in Mesh.TopologyVertices.",
+          "optional": false
+        },
+        {
+          "name": "edgeAtVertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of the edge at the vertex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the connected edge."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_ConnectedEdge.htm"
+    },
+    {
+      "name": "ConnectedEdges",
+      "signature": "public int[] ConnectedEdges(int topologyVertexIndex)",
+      "summary": "Gets all edges that are connected to a given vertex. Call TopologyVertices.SortVertices before this if you are interested in ordered edges.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of a topology vertex in Mesh.TopologyVertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Indices of all edges around vertex that are connected to this topological vertex. null if no faces are connected to this vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_ConnectedEdges.htm"
+    },
+    {
+      "name": "ConnectedEdgesCount",
+      "signature": "public int ConnectedEdgesCount(int topologyVertexIndex)",
+      "summary": "Gets the count of edges that are connected to a given vertex.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of a topology vertex in Mesh.TopologyVertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The amount of edges at this vertex. This can be 0."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_ConnectedEdgesCount.htm"
+    },
+    {
+      "name": "ConnectedFaces",
+      "signature": "public int[] ConnectedFaces(int topologyVertexIndex)",
+      "summary": "Gets all faces that are connected to a given vertex.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of a topology vertex in Mesh.TopologyVertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Indices of all faces in Mesh.Faces that are connected to this topological vertex. null if no faces are connected to this vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_ConnectedFaces.htm"
+    },
+    {
+      "name": "ConnectedTopologyVertices(Int32)",
+      "signature": "public int[] ConnectedTopologyVertices(int topologyVertexIndex)",
+      "summary": "Gets all topological vertices that are connected to a given vertex.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "index of a topology vertex in Mesh.TopologyVertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Indices of all topological vertices that are connected to this topological vertex. null if no vertices are connected to this vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_ConnectedTopologyVertices.htm"
+    },
+    {
+      "name": "ConnectedTopologyVertices(Int32, Boolean)",
+      "signature": "public int[] ConnectedTopologyVertices(int topologyVertexIndex, bool sorted)",
+      "summary": "Gets all topological vertices that are connected to a given vertex.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "index of a topology vertex in Mesh.TopologyVertices.",
+          "optional": false
+        },
+        {
+          "name": "sorted",
+          "type": "System.Boolean",
+          "doc": "if true, the vertices are returned in a radially sorted order.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Indices of all topological vertices that are connected to this topological vertex. null if no vertices are connected to this vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_ConnectedTopologyVertices_1.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CPoint3f\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all topology vertices in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CPoint3f\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_GetEnumerator.htm"
+    },
+    {
+      "name": "IndicesFromFace",
+      "signature": "public int[] IndicesFromFace(int faceIndex)",
+      "summary": "Returns TopologyVertexIndices for a given mesh face index.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of a face to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of vertex indices."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_IndicesFromFace.htm"
+    },
+    {
+      "name": "IsHidden",
+      "signature": "public bool IsHidden(int topologyVertexIndex)",
+      "summary": "Returns true if the topological vertex is hidden. The mesh topology vertex is hidden if and only if all the ON_Mesh vertices it represents is hidden.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "index of a topology vertex in Mesh.TopologyVertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if mesh topology vertex is hidden."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_IsHidden.htm"
+    },
+    {
+      "name": "MeshVertexIndices",
+      "signature": "public int[] MeshVertexIndices(int topologyVertexIndex)",
+      "summary": "Gets all indices of the mesh vertices that a given topology vertex represents.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of a topology vertex in Mesh.TopologyVertices to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Indices of all vertices that in Mesh.Vertices that a topology vertex represents."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_MeshVertexIndices.htm"
+    },
+    {
+      "name": "SortEdges()",
+      "signature": "public bool SortEdges()",
+      "summary": "Sorts the edge list for the mesh topology vertex list so that the edges are in radial order when you call ConnectedTopologyVertices. A non-manifold edge is treated as a boundary edge with respect to sorting. If any boundary or non-manifold edges end at the vertex, then the first edge will be a boundary or non-manifold edge.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_SortEdges.htm"
+    },
+    {
+      "name": "SortEdges(Int32)",
+      "signature": "public bool SortEdges(int topologyVertexIndex)",
+      "summary": "Sorts the edge list for as single mesh topology vertex so that the edges are in radial order when you call ConnectedTopologyVertices. A non-manifold edge is treated as a boundary edge with respect to sorting. If any boundary or non-manifold edges end at the vertex, then the first edge will be a boundary or non-manifold edge.",
+      "params": [
+        {
+          "name": "topologyVertexIndex",
+          "type": "System.Int32",
+          "doc": "index of a topology vertex in Mesh.TopologyVertices\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_SortEdges_1.htm"
+    },
+    {
+      "name": "TopologyVertexIndex",
+      "signature": "public int TopologyVertexIndex(int vertexIndex)",
+      "summary": "Gets the topology vertex index for an existing mesh vertex in the mesh\u0027s VertexList.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of a vertex in the Mesh.Vertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Index of a topology vertex in the Mesh.TopologyVertices."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshTopologyVertexList_TopologyVertexIndex.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets or sets the number of mesh topology vertices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshTopologyVertexList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Point3f",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the vertex at the given index. Setting a location adjusts all vertices in the mesh\u0027s vertex list that are defined by this topological vertex The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshTopologyVertexList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

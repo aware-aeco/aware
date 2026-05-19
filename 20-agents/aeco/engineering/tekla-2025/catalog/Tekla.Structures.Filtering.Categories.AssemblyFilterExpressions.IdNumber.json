@@ -1,0 +1,39 @@
+{
+  "name": "AssemblyFilterExpressions.IdNumber",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The IdNumber class represents the identifier number filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fcbad6e1-0245-4830-f2b1-46a0721449a6",
+  "constructors": [
+    {
+      "name": "AssemblyFilterExpressions.IdNumber",
+      "signature": "public IdNumber()",
+      "summary": "Initializes a new instance of the IdNumber class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dad2432e-6ead-2e2d-a5b9-a070fa2f0404"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

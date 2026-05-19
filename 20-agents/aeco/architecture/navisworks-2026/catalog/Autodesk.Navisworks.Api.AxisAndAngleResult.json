@@ -1,0 +1,41 @@
+{
+  "name": "AxisAndAngleResult",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents an axis and angle result",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.AxisAndAngleResult",
+  "constructors": [
+    {
+      "name": "AxisAndAngleResult()",
+      "signature": "AxisAndAngleResult()",
+      "summary": "Constructor for an angle/axis pair result.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.AxisAndAngleResult.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle in radians",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.AxisAndAngleResult.Angle"
+    },
+    {
+      "name": "Axis",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.AxisAndAngleResult.Axis"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

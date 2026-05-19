@@ -1,0 +1,49 @@
+{
+  "name": "ComponentItem.ComponentTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Defines the different component types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/87a65766-7edb-e0cb-d9be-47d432900e45",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNKNOWN",
+      "value": 0,
+      "summary": "The unknown component type."
+    },
+    {
+      "name": "CONNECTION",
+      "value": 24,
+      "summary": "The component type is connection."
+    },
+    {
+      "name": "COMPONENT",
+      "value": 25,
+      "summary": "The component type is component."
+    },
+    {
+      "name": "SEAM",
+      "value": 26,
+      "summary": "The component type is seam."
+    },
+    {
+      "name": "DETAIL",
+      "value": 27,
+      "summary": "The component type is detail."
+    },
+    {
+      "name": "CUSTOM_PART",
+      "value": 43,
+      "summary": "The component type is custom part object."
+    },
+    {
+      "name": "DRAWING_PLUGIN",
+      "value": 38,
+      "summary": "The component type is drawing plugin."
+    }
+  ]
+}

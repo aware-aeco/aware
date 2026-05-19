@@ -1,0 +1,129 @@
+{
+  "name": "GH_ParserSymbol",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_ParserSymbol.)",
+  "interfaces": [
+    "IComparable\u003CGH_ParserSymbol\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_ParserSymbol.htm",
+  "constructors": [
+    {
+      "name": "GH_ParserSymbol()",
+      "signature": "public GH_ParserSymbol()",
+      "summary": "Initializes a new instance of the GH_ParserSymbol class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserSymbol__ctor.htm"
+    },
+    {
+      "name": "GH_ParserSymbol(String, GH_ParserTokenClass, GH_ParserPrecedence)",
+      "signature": "public GH_ParserSymbol(string token, GH_ParserTokenClass class, GH_ParserPrecedence level)",
+      "summary": "Initializes a new instance of the GH_ParserSymbol class",
+      "params": [
+        {
+          "name": "token",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "class",
+          "type": "Grasshopper.Kernel.Expressions.GH_ParserTokenClass",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Grasshopper.Kernel.Expressions.GH_ParserPrecedence",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserSymbol__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(GH_ParserSymbol other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Expressions.GH_ParserSymbol",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserSymbol_CompareTo.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserSymbol_Equals.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserSymbol_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "m_class",
+      "type": "GH_ParserTokenClass",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserSymbol_m_class.htm"
+    },
+    {
+      "name": "m_level",
+      "type": "GH_ParserPrecedence",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserSymbol_m_level.htm"
+    },
+    {
+      "name": "m_token",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserSymbol_m_token.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

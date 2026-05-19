@@ -1,0 +1,64 @@
+{
+  "name": "GH_BorderTopology",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates all possble border types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_BorderTopology.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": -2,
+      "summary": "Unset value."
+    },
+    {
+      "name": "All",
+      "value": -1,
+      "summary": "All possible types."
+    },
+    {
+      "name": "TopRight",
+      "value": 0,
+      "summary": "Corner border in the top right area of the box."
+    },
+    {
+      "name": "TopLeft",
+      "value": 1,
+      "summary": "Corner border in the top left area of the box."
+    },
+    {
+      "name": "BottomLeft",
+      "value": 2,
+      "summary": "Corner border in the bottom left area of the box."
+    },
+    {
+      "name": "BottomRight",
+      "value": 3,
+      "summary": "Corner border in the bottom right area of the box."
+    },
+    {
+      "name": "Top",
+      "value": 4,
+      "summary": "Edge border along the top area of the box."
+    },
+    {
+      "name": "Left",
+      "value": 5,
+      "summary": "Edge border along the left area of the box."
+    },
+    {
+      "name": "Bottom",
+      "value": 6,
+      "summary": "Edge border along the bottom area of the box."
+    },
+    {
+      "name": "Right",
+      "value": 7,
+      "summary": "Edge border along the right area of the box."
+    }
+  ]
+}

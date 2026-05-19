@@ -1,0 +1,25 @@
+{
+  "name": "BasePlaneReferences",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.BasePlaneReferences.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BasePlaneReferences/",
+  "constructors": [
+    {
+      "name": "BasePlaneReferences",
+      "signature": "BasePlaneReferences()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BasePlaneReferences/#NemAll_Python_ArchElements.BasePlaneReferences.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "FFIHandler",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type FFIHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs",
+  "constructors": [
+    {
+      "name": "FFIHandler()",
+      "signature": "void FFIHandler()",
+      "summary": "FFIHandler.FFIHandler",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFunctionPointer(string, string, string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, ProtoCore.Type)",
+      "signature": "ProtoFFI.FFIFunctionPointer GetFunctionPointer(string moduleName, string className, string functionName, System.Collections.Generic.List\u003CProtoCore.Type\u003E parameterTypes, ProtoCore.Type returnType)",
+      "summary": "FFIHandler.GetFunctionPointer",
+      "params": [
+        {
+          "name": "moduleName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "functionName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameterTypes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "returnType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIFunctionPointer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

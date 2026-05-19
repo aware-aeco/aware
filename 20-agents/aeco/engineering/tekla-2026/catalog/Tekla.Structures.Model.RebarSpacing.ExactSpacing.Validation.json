@@ -1,0 +1,34 @@
+{
+  "name": "RebarSpacing.ExactSpacing.Validation",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Defines values used in validation of exact spacing elements.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/da987189-57da-6c11-3fdb-a97d436b256f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "VALID",
+      "value": 0,
+      "summary": "The elements are valid."
+    },
+    {
+      "name": "EMPTY",
+      "value": 1,
+      "summary": "There are no elements."
+    },
+    {
+      "name": "ZERO_ELEMENTS",
+      "value": 2,
+      "summary": "Contains elements with zero number or distance."
+    },
+    {
+      "name": "NEGATIVE_ELEMENTS",
+      "value": 3,
+      "summary": "Contains elements with negative number or distance."
+    }
+  ]
+}

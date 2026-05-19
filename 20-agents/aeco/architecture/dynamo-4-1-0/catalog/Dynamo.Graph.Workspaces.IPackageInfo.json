@@ -1,0 +1,30 @@
+{
+  "name": "IPackageInfo",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "interface",
+  "summary": "Interface for types containing info about a package",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs"
+    },
+    {
+      "name": "Version",
+      "type": "System.Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Version of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

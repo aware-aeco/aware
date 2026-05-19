@@ -1,0 +1,220 @@
+{
+  "name": "LcOpIsolateTool",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpIsolateTool class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpIsolateTool",
+  "constructors": [
+    {
+      "name": "LcOpIsolateTool(Autodesk.Navisworks.Api.Interop.LcOpKernelEx)",
+      "signature": "LcOpIsolateTool(Autodesk.Navisworks.Api.Interop.LcOpKernelEx kernel)",
+      "summary": "Constructs a new LcOpIsolateTool.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelEx",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpKernelEx%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsInIsolateMode",
+      "signature": "bool IsInIsolateMode()",
+      "summary": "IsInIsolateMode method of LcOpIsolateTool.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.IsInIsolateMode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpIsolateTool InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpIsolateTool.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpIsolateTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpIsolateTool.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddSelection",
+      "signature": "void AddSelection(Autodesk.Navisworks.Api.ModelItemCollection selection, Autodesk.Navisworks.Api.Color colour)",
+      "summary": "AddSelection method of LcOpIsolateTool.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.AddSelection%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "BeginIsolate",
+      "signature": "void BeginIsolate(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, bool apply_clip_volume, bool fit_to_view, bool clear_selection, bool freeze_unselected)",
+      "summary": "BeginIsolate method of LcOpIsolateTool.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "apply_clip_volume",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "fit_to_view",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "clear_selection",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "freeze_unselected",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.BeginIsolate%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.Boolean%2CSystem.Boolean%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ClearDefaultAppearance",
+      "signature": "void ClearDefaultAppearance()",
+      "summary": "ClearDefaultAppearance method of LcOpIsolateTool.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.ClearDefaultAppearance"
+    },
+    {
+      "name": "ClearSelections",
+      "signature": "void ClearSelections()",
+      "summary": "ClearSelections method of LcOpIsolateTool.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.ClearSelections"
+    },
+    {
+      "name": "EndIsolate",
+      "signature": "void EndIsolate()",
+      "summary": "EndIsolate method of LcOpIsolateTool.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.EndIsolate"
+    },
+    {
+      "name": "SetDefaultAppearance",
+      "signature": "void SetDefaultAppearance(bool hide, Autodesk.Navisworks.Api.Color colour, double transparency, bool wireframe)",
+      "summary": "SetDefaultAppearance method of LcOpIsolateTool.",
+      "params": [
+        {
+          "name": "hide",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "wireframe",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.SetDefaultAppearance%28System.Boolean%2CAutodesk.Navisworks.Api.Color%2CSystem.Double%2CSystem.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpIsolateTool.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpIsolateTool.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

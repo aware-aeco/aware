@@ -1,0 +1,263 @@
+{
+  "name": "SectionAlongPathFormatProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Format properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathFormatProperties",
+      "signature": "SectionAlongPathFormatProperties(bInitFromSTW=False) | SectionAlongPathFormatProperties(B)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEliminationAngleTolerance",
+      "signature": "GetEliminationAngleTolerance()",
+      "summary": "Access tolerances",
+      "remarks": "Access tolerances",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "elimination angle tolerance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.GetEliminationAngleTolerance"
+    },
+    {
+      "name": "GetOverhangTolerance",
+      "signature": "GetOverhangTolerance()",
+      "summary": "Access tolerances",
+      "remarks": "Access tolerances",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "overhang tolerance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.GetOverhangTolerance"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AdjacentEdgeTypeSwitcher",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the 0=material, 1=surface, we set a tooltip and description in palette",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.AdjacentEdgeTypeSwitcher"
+    },
+    {
+      "name": "BoundaryLineColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Border: Boundary Line color index",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.BoundaryLineColor"
+    },
+    {
+      "name": "BoundaryLineLayer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Border: Boundary Line Layer number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.BoundaryLineLayer"
+    },
+    {
+      "name": "BoundaryLineLayerKenner",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets layer kenner for Boundary Line Sets layer kenner for Boundary Line",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.BoundaryLineLayerKenner"
+    },
+    {
+      "name": "BoundaryLinePen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Border: Boundary Line pen index (0== not used)",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.BoundaryLinePen"
+    },
+    {
+      "name": "BoundaryLineType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Border: Boundary Line stroke index",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.BoundaryLineType"
+    },
+    {
+      "name": "EdgesVisibility",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Outer edges/All edges Visible 0, 1",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.EdgesVisibility"
+    },
+    {
+      "name": "EliminationAngle",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Angle of the Adjacent Edge elimination, //always in degree",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.EliminationAngle"
+    },
+    {
+      "name": "IsBetweenDifferentSurfacesOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Adjacent Edge Between Different Surfaces",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsBetweenDifferentSurfacesOn"
+    },
+    {
+      "name": "IsBoundaryLineColorFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Border: IsBoundaryLineColorFromLayer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsBoundaryLineColorFromLayer"
+    },
+    {
+      "name": "IsBoundaryLinePenFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Border: IsBoundaryLinePenFromLayer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsBoundaryLinePenFromLayer"
+    },
+    {
+      "name": "IsBoundaryLineTypeFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Border: IsBoundaryLineTypeFromLayer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsBoundaryLineTypeFromLayer"
+    },
+    {
+      "name": "IsBoundaryLineVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the BoundaryLine visibility",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsBoundaryLineVisible"
+    },
+    {
+      "name": "IsEliminationOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Adjacent Edge elimination",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsEliminationOn"
+    },
+    {
+      "name": "IsSectionLineColorFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section: IsSectionLineColorFromLayer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsSectionLineColorFromLayer"
+    },
+    {
+      "name": "IsSectionLinePenFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section: IsSectionLinePenFromLayer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsSectionLinePenFromLayer"
+    },
+    {
+      "name": "IsSectionLineThicknessVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the SectionLineThickness visibility",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsSectionLineThicknessVisible"
+    },
+    {
+      "name": "IsSectionLineTypeFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section: IsSectionLineTypeFromLayer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsSectionLineTypeFromLayer"
+    },
+    {
+      "name": "IsSurfaceFromObjectOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Display Surface From Object",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.IsSurfaceFromObjectOn"
+    },
+    {
+      "name": "Overhang",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Overhang",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.Overhang"
+    },
+    {
+      "name": "SectionLineColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section: Boundary Line color index",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.SectionLineColor"
+    },
+    {
+      "name": "SectionLineLayer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section: Section Line Layer number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.SectionLineLayer"
+    },
+    {
+      "name": "SectionLineLayerKenner",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets layer kenner for Section Line Sets layer kenner for Section Line",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.SectionLineLayerKenner"
+    },
+    {
+      "name": "SectionLinePen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section: Boundary Line pen index (0== not used)",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.SectionLinePen"
+    },
+    {
+      "name": "SectionLineType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Section: Boundary Line stroke index",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.SectionLineType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

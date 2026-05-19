@@ -1,0 +1,204 @@
+{
+  "name": "GH_Animator\u003CT\u003E",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Provides methods for animating values.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_Animator_1.htm",
+  "constructors": [
+    {
+      "name": "GH_Animator\u003CT\u003E(T, T, TimeSpan, GH_Animator\u003CT\u003E.Interpolate)",
+      "signature": "public GH_Animator(T A, T B, TimeSpan duration, GH_Animator\u003CT\u003E.Interpolate interpolator)",
+      "summary": "Create a new instance of the generic animator.",
+      "params": [
+        {
+          "name": "A",
+          "type": "T",
+          "doc": "Start value of animation.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "T",
+          "doc": "End value of animation.",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.TimeSpan",
+          "doc": "Duration of animation.",
+          "optional": false
+        },
+        {
+          "name": "interpolator",
+          "type": "Grasshopper.GUI.GH_Animator\u003CT\u003E.Interpolate",
+          "doc": "Interpolation delegate",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_1__ctor_1.htm"
+    },
+    {
+      "name": "GH_Animator\u003CT\u003E(T, T, DateTime, DateTime, GH_Animator\u003CT\u003E.Interpolate)",
+      "signature": "public GH_Animator(T A, T B, DateTime startTime, DateTime endTime, GH_Animator\u003CT\u003E.Interpolate interpolator)",
+      "summary": "Create a new instance of the generic animator.",
+      "params": [
+        {
+          "name": "A",
+          "type": "T",
+          "doc": "Start value of animation.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "T",
+          "doc": "End value of animation.",
+          "optional": false
+        },
+        {
+          "name": "startTime",
+          "type": "System.DateTime",
+          "doc": "Start of animation, should be expressed in UTC time.",
+          "optional": false
+        },
+        {
+          "name": "endTime",
+          "type": "System.DateTime",
+          "doc": "End of animation, should be expressed in UTC time.",
+          "optional": false
+        },
+        {
+          "name": "interpolator",
+          "type": "Grasshopper.GUI.GH_Animator\u003CT\u003E.Interpolate",
+          "doc": "Interpolation delegate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_1__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AdjustAnimation(T)",
+      "signature": "public void AdjustAnimation(T newTarget)",
+      "summary": "Adjust the animation.",
+      "params": [
+        {
+          "name": "newTarget",
+          "type": "T",
+          "doc": "New B value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_1_AdjustAnimation.htm"
+    },
+    {
+      "name": "AdjustAnimation(T, Int32)",
+      "signature": "public void AdjustAnimation(T newTarget, int duration)",
+      "summary": "Adjust the animation.",
+      "params": [
+        {
+          "name": "newTarget",
+          "type": "T",
+          "doc": "New B value.",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "doc": "Duration of adjusted animation in milliseconds.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_1_AdjustAnimation_2.htm"
+    },
+    {
+      "name": "AdjustAnimation(T, DateTime, DateTime)",
+      "signature": "public void AdjustAnimation(T newTarget, DateTime newStartTime, DateTime newEndTime)",
+      "summary": "Adjust the animation.",
+      "params": [
+        {
+          "name": "newTarget",
+          "type": "T",
+          "doc": "New B value.",
+          "optional": false
+        },
+        {
+          "name": "newStartTime",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "newEndTime",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_1_AdjustAnimation_1.htm"
+    },
+    {
+      "name": "CurrentValue",
+      "signature": "public T CurrentValue()",
+      "summary": "Gets the current animated value.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_1_CurrentValue.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Interpolation",
+      "type": "GH_Interpolation",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the interpolation mode. Changing the mode during an animation will result in discontinuous motion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Animator_1_Interpolation.htm"
+    },
+    {
+      "name": "Phase",
+      "type": "GH_AnimationPhase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current animation phase.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Animator_1_Phase.htm"
+    },
+    {
+      "name": "ValueA",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the start value of the animation. This value is set from within the constructor though you can change it at any time.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Animator_1_ValueA.htm"
+    },
+    {
+      "name": "ValueB",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the end value of the animation. This value is set from within the constructor though you can change it at any time.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Animator_1_ValueB.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,220 @@
+{
+  "name": "ReferencePlaneID",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "struct for handling reference plane IDs",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/",
+  "constructors": [
+    {
+      "name": "ReferencePlaneID",
+      "signature": "ReferencePlaneID() | ReferencePlaneID(modelGuid: GUID, planeId: int) | ReferencePlaneID(element: ReferencePlaneID)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Invalidate",
+      "signature": "Invalidate()",
+      "summary": "Set values to undefined state",
+      "remarks": "Set values to undefined state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.Invalidate"
+    },
+    {
+      "name": "IsDefaultLowerPlane",
+      "signature": "IsDefaultLowerPlane() -\u003E bool",
+      "summary": "Find out if reference plane is default lower reference plane",
+      "remarks": "Find out if reference plane is default lower reference plane",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if ref plane is default lower ref plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.IsDefaultLowerPlane"
+    },
+    {
+      "name": "IsDefaultUpperPlane",
+      "signature": "IsDefaultUpperPlane() -\u003E bool",
+      "summary": "Find out if reference plane is default upper reference plane",
+      "remarks": "Find out if reference plane is default upper reference plane",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if ref plane is default upper ref plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.IsDefaultUpperPlane"
+    },
+    {
+      "name": "IsDocumentRefSurface",
+      "signature": "IsDocumentRefSurface() -\u003E bool",
+      "summary": "Find out if reference surface is from document",
+      "remarks": "Find out if reference surface is from document",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true is reference surface from document (not in model)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.IsDocumentRefSurface"
+    },
+    {
+      "name": "IsInModel",
+      "signature": "IsInModel() -\u003E bool",
+      "summary": "Find out if reference plane is in model",
+      "remarks": "Find out if reference plane is in model",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if ref plane is in model"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.IsInModel"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Get validity of ref plane",
+      "remarks": "Get validity of ref plane",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if ref plane is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.IsValid"
+    },
+    {
+      "name": "SetCustomLowerPlane",
+      "signature": "SetCustomLowerPlane()",
+      "summary": "Set values to custom lower state",
+      "remarks": "Set values to custom lower state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.SetCustomLowerPlane"
+    },
+    {
+      "name": "SetCustomUpperPlane",
+      "signature": "SetCustomUpperPlane()",
+      "summary": "Set values to custom upper state",
+      "remarks": "Set values to custom upper state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.SetCustomUpperPlane"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(other: ReferencePlaneID) -\u003E bool",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "other",
+          "type": "ReferencePlaneID",
+          "doc": "Reference plane ID to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Reference plane IDs are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.__eq__"
+    },
+    {
+      "name": "__lt__",
+      "signature": "__lt__(other: ReferencePlaneID) -\u003E bool",
+      "summary": "Less operator",
+      "remarks": "Less operator",
+      "params": [
+        {
+          "name": "other",
+          "type": "ReferencePlaneID",
+          "doc": "Reference plane ID to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Reference plane is lees then other"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.__lt__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(other: ReferencePlaneID) -\u003E bool",
+      "summary": "Unequal operator",
+      "remarks": "Unequal operator",
+      "params": [
+        {
+          "name": "other",
+          "type": "ReferencePlaneID",
+          "doc": "Reference plane ID to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Reference plane IDs are not equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ModelGuid",
+      "type": "GUID",
+      "getter": true,
+      "setter": true,
+      "summary": "Get model change model id to another",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.ModelGuid"
+    },
+    {
+      "name": "PlaneId",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Get plane ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.PlaneId"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

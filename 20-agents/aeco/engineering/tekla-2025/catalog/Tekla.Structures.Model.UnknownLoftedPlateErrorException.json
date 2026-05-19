@@ -1,0 +1,25 @@
+{
+  "name": "UnknownLoftedPlateErrorException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This class represent an exception thrown when an operation on a lofted plate caused an error of unknown origin",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1b7dc228-870a-7be6-0bb6-cfc92a24ab32",
+  "constructors": [
+    {
+      "name": "UnknownLoftedPlateErrorException",
+      "signature": "public UnknownLoftedPlateErrorException()",
+      "summary": "Constructs an instance of the class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/41625b2f-fe61-e711-d1e3-83b20386b81f"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

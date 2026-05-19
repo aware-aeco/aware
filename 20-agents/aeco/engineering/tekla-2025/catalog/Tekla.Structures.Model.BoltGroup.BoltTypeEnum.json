@@ -1,0 +1,24 @@
+{
+  "name": "BoltGroup.BoltTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The type of the bolt.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6983381d-847d-9348-a456-338ed39eeb56",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOLT_TYPE_SITE",
+      "value": 0,
+      "summary": "The site bolt type."
+    },
+    {
+      "name": "BOLT_TYPE_WORKSHOP",
+      "value": 1,
+      "summary": "The workshop bolt type."
+    }
+  ]
+}

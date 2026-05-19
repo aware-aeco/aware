@@ -1,0 +1,202 @@
+{
+  "name": "DocumentDatabase",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The embedded database in a Document",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentDatabase",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToNavisworksConnection",
+      "signature": "Autodesk.Navisworks.Api.Data.NavisworksConnection ToNavisworksConnection()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.ToNavisworksConnection"
+    },
+    {
+      "name": "BeginTransaction",
+      "signature": "Autodesk.Navisworks.Api.Data.NavisworksTransaction BeginTransaction(Autodesk.Navisworks.Api.Data.DatabaseChangedAction action)",
+      "summary": "Begin a transaction.",
+      "params": [
+        {
+          "name": "action",
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseChangedAction",
+          "doc": "Determines which action should do after commit transaction, DatabaseChangedAction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisworksTransaction",
+        "doc": "If success return NavisworksTransaction, if failed, return null"
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Database element can\u0027t be created"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseException",
+          "when": "Database exception"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.BeginTransaction%28Autodesk.Navisworks.Api.Data.DatabaseChangedAction%29"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.Data.NavisworksConnection op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentDatabase that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentDatabase",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentDatabase%29~Autodesk.Navisworks.Api.Data.NavisworksConnection"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of DocumentDatabase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.Dispose"
+    },
+    {
+      "name": "EnableTableUndoable",
+      "signature": "void EnableTableUndoable(string tableName)",
+      "summary": "Enable table to undoable or redoable.",
+      "params": [
+        {
+          "name": "tableName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Database element can\u0027t be created"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseException",
+          "when": "Database exception"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.EnableTableUndoable%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ExistLiveTransaction",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "If is in a transaction.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.ExistLiveTransaction"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the NavisworksConnection of embedded database in the document",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.Data.DatabaseChangedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.Data.DatabaseChangedEventArgs\u003E Changed",
+      "summary": "Occurs when the DocumentDatabase has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the DocumentDatabase is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Loaded",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Loaded",
+      "summary": "Occurs when entirely new database loaded from file.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.Loaded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TransactionBeginning",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E TransactionBeginning",
+      "summary": "Occurs when a database transaction is about to begins, before any of the edits in the transaction take place.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.TransactionBeginning",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TransactionBegun",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E TransactionBegun",
+      "summary": "Occurs when a database transaction begins, before any of the edits in the transaction take place.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.TransactionBegun",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TransactionCommitting",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E TransactionCommitting",
+      "summary": "Occurs when a database transaction has completed all edits and will commit.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.TransactionCommitting",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TransactionRollingBack",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E TransactionRollingBack",
+      "summary": "Occurs when a database transaction has completed all edits and happen error, but will rollback.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.TransactionRollingBack",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Unloading",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Unloading",
+      "summary": "Current database about to be unloaded (about to change file or exit).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentDatabase.Unloading",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

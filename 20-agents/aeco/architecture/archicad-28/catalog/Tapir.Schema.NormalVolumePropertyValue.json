@@ -1,0 +1,41 @@
+{
+  "name": "NormalVolumePropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A volume property value containing a real volume. The value is measured in SI (cubic meters).",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalVolumePropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060type\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalVolumePropertyValue"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060status\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalVolumePropertyValue"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060value\u0060 of type \u0060number\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalVolumePropertyValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

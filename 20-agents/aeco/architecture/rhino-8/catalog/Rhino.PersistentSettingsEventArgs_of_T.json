@@ -1,0 +1,63 @@
+{
+  "name": "PersistentSettingsEventArgs\u003CT\u003E",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Represents the persistent settings modification event arguments.",
+  "base": "PersistentSettingsEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PersistentSettingsEventArgs_1.htm",
+  "constructors": [
+    {
+      "name": "PersistentSettingsEventArgs\u003CT\u003E",
+      "signature": "public PersistentSettingsEventArgs(T currentValue, T newValue)",
+      "summary": "Initializes a new instance of the PersistentSettingsEventArgs\u003CT\u003E class",
+      "params": [
+        {
+          "name": "currentValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022currentValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettingsEventArgs\u00601.#ctor(\u00600,\u00600)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "newValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022newValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettingsEventArgs\u00601.#ctor(\u00600,\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettingsEventArgs_1__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Cancel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from PersistentSettingsEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettingsEventArgs_Cancel.htm"
+    },
+    {
+      "name": "CurrentValue",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettingsEventArgs_1_CurrentValue.htm"
+    },
+    {
+      "name": "NewValue",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettingsEventArgs_1_NewValue.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

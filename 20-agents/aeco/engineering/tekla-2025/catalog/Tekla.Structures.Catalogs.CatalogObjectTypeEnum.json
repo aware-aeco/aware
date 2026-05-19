@@ -1,0 +1,239 @@
+{
+  "name": "CatalogObjectTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "The catalog object type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/69665cba-e22d-fad0-277b-377c99a3766a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PART",
+      "value": 1,
+      "summary": "The part type."
+    },
+    {
+      "name": "STEEL_BEAM",
+      "value": 2,
+      "summary": "The steel beam type."
+    },
+    {
+      "name": "STEEL_COLUMN",
+      "value": 3,
+      "summary": "The steel column type."
+    },
+    {
+      "name": "STEEL_ORTHOGONAL_BEAM",
+      "value": 4,
+      "summary": "The steel orthogonal beam type."
+    },
+    {
+      "name": "STEEL_TWIN_PROFILE_BEAM",
+      "value": 5,
+      "summary": "The steel twin profile beam type."
+    },
+    {
+      "name": "STEEL_CONTOUR_PLATE",
+      "value": 6,
+      "summary": "The steel contour plate type."
+    },
+    {
+      "name": "STEEL_FOLDED_PLATE",
+      "value": 7,
+      "summary": "The steel folded plate type."
+    },
+    {
+      "name": "CONCRETE_BEAM",
+      "value": 8,
+      "summary": "The concrete beam type."
+    },
+    {
+      "name": "CONCRETE_COLUMN",
+      "value": 9,
+      "summary": "The concrete column type."
+    },
+    {
+      "name": "CONCRETE_PAD_FOOTING",
+      "value": 10,
+      "summary": "The concrete pad footing type."
+    },
+    {
+      "name": "CONCRETE_STRIP_FOOTING",
+      "value": 11,
+      "summary": "The concrete strip footing type."
+    },
+    {
+      "name": "CONCRETE_PANEL",
+      "value": 12,
+      "summary": "The concrete panel type."
+    },
+    {
+      "name": "CONCRETE_SLAB",
+      "value": 13,
+      "summary": "The concrete slab type."
+    },
+    {
+      "name": "REINFORCING_BAR",
+      "value": 14,
+      "summary": "The reinforcing bar type."
+    },
+    {
+      "name": "SURFACING",
+      "value": 15,
+      "summary": "The surfacing type."
+    },
+    {
+      "name": "WELD",
+      "value": 16,
+      "summary": "The weld type."
+    },
+    {
+      "name": "BOLT",
+      "value": 17,
+      "summary": "The bolt type."
+    },
+    {
+      "name": "STEEL_ASSEMBLY",
+      "value": 18,
+      "summary": "The steel assembly type."
+    },
+    {
+      "name": "PRECAST_CONCRETE_ASSEMBLY",
+      "value": 19,
+      "summary": "The precast concrete assembly type."
+    },
+    {
+      "name": "INSITU_CONCRETE_ASSEMBLY",
+      "value": 20,
+      "summary": "The in situ concrete assembly type."
+    },
+    {
+      "name": "POUR_OBJECT",
+      "value": 21,
+      "summary": "The pour object type."
+    },
+    {
+      "name": "POUR_BREAK",
+      "value": 22,
+      "summary": "The pour break type."
+    },
+    {
+      "name": "GRID",
+      "value": 23,
+      "summary": "The grid type."
+    },
+    {
+      "name": "PROJECT",
+      "value": 24,
+      "summary": "The project type."
+    },
+    {
+      "name": "PHASE",
+      "value": 25,
+      "summary": "The phase type."
+    },
+    {
+      "name": "TASK",
+      "value": 26,
+      "summary": "The task type."
+    },
+    {
+      "name": "REFERENCE_MODEL",
+      "value": 27,
+      "summary": "The reference model type."
+    },
+    {
+      "name": "REFERENCE_MODEL_OBJECT",
+      "value": 28,
+      "summary": "The reference model object type."
+    },
+    {
+      "name": "SINGLE_PART_DRAWING",
+      "value": 29,
+      "summary": "The single part drawing type."
+    },
+    {
+      "name": "ASSEMBLY_DRAWING",
+      "value": 30,
+      "summary": "The assembly drawing type."
+    },
+    {
+      "name": "GA_DRAWING",
+      "value": 31,
+      "summary": "The general arrangement drawing type."
+    },
+    {
+      "name": "MULTI_DRAWING",
+      "value": 32,
+      "summary": "The multidrawing type."
+    },
+    {
+      "name": "CAST_UNIT_DRAWING",
+      "value": 33,
+      "summary": "The cast unit drawing type."
+    },
+    {
+      "name": "BENT_PLATE",
+      "value": 34,
+      "summary": "The bent plate type."
+    },
+    {
+      "name": "STEEL_BREP_PART",
+      "value": 35,
+      "summary": "The steel brep part type."
+    },
+    {
+      "name": "CONCRETE_BREP_PART",
+      "value": 36,
+      "summary": "The concrete brep part type."
+    },
+    {
+      "name": "CHAMFER_OBJECT",
+      "value": 37,
+      "summary": "The chanfer object type."
+    },
+    {
+      "name": "SURFACE_OBJECT",
+      "value": 38,
+      "summary": "The surface object type."
+    },
+    {
+      "name": "GRID_PLANE",
+      "value": 39,
+      "summary": "The grid plane type."
+    },
+    {
+      "name": "STEEL_SPIRAL_BEAM",
+      "value": 40,
+      "summary": "The steel helix part type."
+    },
+    {
+      "name": "CONCRETE_SPIRAL_BEAM",
+      "value": 41,
+      "summary": "The concrete helix part type."
+    },
+    {
+      "name": "POUR_UNIT",
+      "value": 42,
+      "summary": "The pour unit type."
+    },
+    {
+      "name": "STEEL_LOFTED_PLATE",
+      "value": 43,
+      "summary": "The steel lofted plate part type."
+    },
+    {
+      "name": "CONCRETE_LOFTED_SLAB",
+      "value": 44,
+      "summary": "The concrete lofted slab part type."
+    },
+    {
+      "name": "BUILDING_SPACE",
+      "value": 45,
+      "summary": "The building space object type."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "CenterCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class to calculate the center of an object",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate(line: Line2D) -\u003E tuple | Calculate(line: Line3D) -\u003E tuple | Calculate(polyline: Polyline2D, edge: int) -\u003E tuple | Calculate(polyline: Polyline3D, edge: int) -\u003E tuple | Calculate(polygon: Polygon2D, bPlaneCenter: bool, edge: int) -\u003E tuple | Calculate(polygon: Polygon3D, bPlaneCenter: bool, edge: int) -\u003E tuple | Calculate(arc: Arc2D, center: bool) -\u003E tuple | Calculate(arc: Arc3D, center: bool) -\u003E tuple | Calculate(spline: Spline2D, eps: float) -\u003E tuple | Calculate(spline: Spline3D, eps: float) -\u003E tuple | Calculate(spline: BSpline3D, eps: float, bAreaCenter: bool) -\u003E tuple | Calculate(spline: BSpline2D, eps: float) -\u003E tuple | Calculate(clothoid: Clothoid2D, eps: float) -\u003E tuple | Calculate(path: Path2D, eps: float, bAreaCenter: bool) -\u003E tuple | Calculate(path: Path3D, eps: float, bAreaCenter: bool) -\u003E tuple | Calculate(geoObject: object, eps: float, bArcCenter: bool, edge: int) -\u003E tuple",
+      "summary": "Calculates the center of a 2D line",
+      "remarks": "Calculates the center of a 2D line",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D on which to calculate the center",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

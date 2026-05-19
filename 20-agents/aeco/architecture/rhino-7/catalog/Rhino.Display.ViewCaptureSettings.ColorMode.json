@@ -1,0 +1,26 @@
+{
+  "name": "ViewCaptureSettings.ColorMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.ViewCaptureSettings.ColorMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_ViewCaptureSettings_ColorMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DisplayColor",
+      "value": 0
+    },
+    {
+      "name": "PrintColor",
+      "value": 1
+    },
+    {
+      "name": "BlackAndWhite",
+      "value": 2
+    }
+  ]
+}

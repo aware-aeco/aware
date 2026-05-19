@@ -1,0 +1,34 @@
+{
+  "name": "RebarLegFace.OffsetTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Specifies how the offset is to be applied.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/419f5d30-53fd-3fdf-ee84-c632eb861773",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FROM_CONCRETE_COVER",
+      "value": 0,
+      "summary": "From the concrete cover offset."
+    },
+    {
+      "name": "FROM_PREVIOUS_LAYER",
+      "value": 1,
+      "summary": "The gap to the previous layer."
+    },
+    {
+      "name": "FROM_LEGFACE_BAR_EDGE",
+      "value": 2,
+      "summary": "From the legface to the edge of the bar."
+    },
+    {
+      "name": "FROM_LEGFACE_BAR_CENTER",
+      "value": 3,
+      "summary": "From the legface to the center of the bar."
+    }
+  ]
+}

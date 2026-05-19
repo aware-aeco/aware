@@ -1,0 +1,146 @@
+{
+  "name": "MessageNumber",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.MessageNumber.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MessageNumber.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "unspecified",
+      "value": "unspecified"
+    },
+    {
+      "name": "information",
+      "value": "information"
+    },
+    {
+      "name": "warning",
+      "value": "warning"
+    },
+    {
+      "name": "warnNoPropertyInData",
+      "value": "warnNoPropertyInData"
+    },
+    {
+      "name": "warnValueOutOfRange",
+      "value": "warnValueOutOfRange"
+    },
+    {
+      "name": "warnCurveCount",
+      "value": "warnCurveCount"
+    },
+    {
+      "name": "warnReinforcementBarsCollision",
+      "value": "warnReinforcementBarsCollision"
+    },
+    {
+      "name": "error",
+      "value": "error"
+    },
+    {
+      "name": "errNoOpenObject",
+      "value": "errNoOpenObject"
+    },
+    {
+      "name": "errDataObjectNotCreated",
+      "value": "errDataObjectNotCreated"
+    },
+    {
+      "name": "errNoObjectInOpenModel",
+      "value": "errNoObjectInOpenModel"
+    },
+    {
+      "name": "errNoReferenceObjectInOpenModel",
+      "value": "errNoReferenceObjectInOpenModel"
+    },
+    {
+      "name": "errNoEquivalentObjectInDataModel",
+      "value": "errNoEquivalentObjectInDataModel"
+    },
+    {
+      "name": "errNoCrossSectionParameter",
+      "value": "errNoCrossSectionParameter"
+    },
+    {
+      "name": "errBoltsTooClose",
+      "value": "errBoltsTooClose"
+    },
+    {
+      "name": "errBoltsTooCloseEdge",
+      "value": "errBoltsTooCloseEdge"
+    },
+    {
+      "name": "errContactsAngle",
+      "value": "errContactsAngle"
+    },
+    {
+      "name": "errIncorrentMaterialE",
+      "value": "errIncorrentMaterialE"
+    },
+    {
+      "name": "errIncorrectMaterialEGP",
+      "value": "errIncorrectMaterialEGP"
+    },
+    {
+      "name": "errPreloadedBoltGrade",
+      "value": "errPreloadedBoltGrade"
+    },
+    {
+      "name": "errValueOutOfRange",
+      "value": "errValueOutOfRange"
+    },
+    {
+      "name": "errCurveZeroPoint",
+      "value": "errCurveZeroPoint"
+    },
+    {
+      "name": "errCurveFunction",
+      "value": "errCurveFunction"
+    },
+    {
+      "name": "errCurveDecreaseFunction",
+      "value": "errCurveDecreaseFunction"
+    },
+    {
+      "name": "errCurveDerivation",
+      "value": "errCurveDerivation"
+    },
+    {
+      "name": "errCurveNotSet",
+      "value": "errCurveNotSet"
+    },
+    {
+      "name": "errValidPolyline",
+      "value": "errValidPolyline"
+    },
+    {
+      "name": "errWarningLoad",
+      "value": "errWarningLoad"
+    },
+    {
+      "name": "errTimeout",
+      "value": "errTimeout"
+    },
+    {
+      "name": "errNoInLibrary",
+      "value": "errNoInLibrary"
+    },
+    {
+      "name": "errBadWeldMaterialProperty",
+      "value": "errBadWeldMaterialProperty"
+    },
+    {
+      "name": "errOperation",
+      "value": "errOperation"
+    },
+    {
+      "name": "reserved",
+      "value": "reserved"
+    }
+  ]
+}

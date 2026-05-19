@@ -1,0 +1,26 @@
+{
+  "name": "RenderMaterial.PreviewBackgroundType",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "The default scene background for the image that appears in preview panes",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderMaterial_PreviewBackgroundType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 1
+    },
+    {
+      "name": "Checkered",
+      "value": 2
+    },
+    {
+      "name": "Scene",
+      "value": 4
+    }
+  ]
+}

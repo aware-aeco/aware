@@ -1,0 +1,85 @@
+{
+  "name": "Contour",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Contour class defines a possibly chamfered contour. Contours must not have loops.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/903abf10-4c92-e708-533a-88c7cebfd501",
+  "constructors": [
+    {
+      "name": "Contour",
+      "signature": "public Contour()",
+      "summary": "Instantiates an empty contour.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/15d7597a-5f33-461c-dbfa-b1a7e28a5e56"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddContourPoint",
+      "signature": "public void AddContourPoint(ContourPoint Point)",
+      "summary": "Adds a new contour point to the contour. Do not add the same contour point twice.",
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Model.ContourPoint",
+          "doc": "The contour point to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/758831d8-d612-1ccd-aa64-e3c0d07baa1d"
+    },
+    {
+      "name": "CalculatePolygon",
+      "signature": "public bool CalculatePolygon(out Polygon polygon)",
+      "summary": "Calculate a polygon approximating the contour with chamfers evaluated.",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Polygon.",
+          "doc": "The calculated Polygon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f5c142bc-8a2b-dee2-5b19-26863e8410a0"
+    },
+    {
+      "name": "GetPolycurve",
+      "signature": "public Polycurve GetPolycurve()",
+      "summary": "Gets the contour geometry as Polycurve",
+      "params": [],
+      "returns": {
+        "type": "Polycurve",
+        "doc": "Polycurve"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1a21df7a-cb44-dada-7422-69a6052fad72"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ContourPoints",
+      "type": "ArrayList",
+      "getter": true,
+      "setter": true,
+      "summary": "The contour points belonging to the contour.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d2954bb2-8f54-25bd-3965-e5b4dc2dad2e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

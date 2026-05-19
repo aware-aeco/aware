@@ -1,0 +1,86 @@
+{
+  "name": "AssemblyHelper",
+  "namespace": "Dynamo.Utilities",
+  "kind": "class",
+  "summary": "Type AssemblyHelper",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/AssemblyHelper.cs",
+  "constructors": [
+    {
+      "name": "AssemblyHelper(string, System.Collections.Generic.IEnumerable\u003Cstring\u003E, bool)",
+      "signature": "void AssemblyHelper(string moduleRootFolder, System.Collections.Generic.IEnumerable\u003Cstring\u003E additionalResolutionPaths, bool testMode)",
+      "summary": "AssemblyHelper.AssemblyHelper",
+      "params": [
+        {
+          "name": "moduleRootFolder",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "additionalResolutionPaths",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "testMode",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/AssemblyHelper.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDynamoVersion(bool)",
+      "signature": "System.Version GetDynamoVersion(bool includeRevisionNumber)",
+      "summary": "AssemblyHelper.GetDynamoVersion",
+      "params": [
+        {
+          "name": "includeRevisionNumber",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Version",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/AssemblyHelper.cs"
+    },
+    {
+      "name": "ResolveAssembly(object, System.ResolveEventArgs)",
+      "signature": "System.Reflection.Assembly ResolveAssembly(object sender, System.ResolveEventArgs args)",
+      "summary": "Handler to the ApplicationDomain\u0027s AssemblyResolve event. If an assembly\u0027s location cannot be resolved, an exception is thrown. Failure to resolve an assembly will leave Dynamo in a bad state, so we should throw an exception here which gets caught by our unhandled exception handler and presents the crash dialogue.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "System.ResolveEventArgs",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Reflection.Assembly",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/AssemblyHelper.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "LcOpDiffResultType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpDiffResultType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDiffResultType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "SelectBehaviour",
+      "value": 1
+    },
+    {
+      "name": "All",
+      "value": 2
+    }
+  ]
+}

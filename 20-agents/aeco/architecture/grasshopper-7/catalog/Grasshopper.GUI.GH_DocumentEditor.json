@@ -1,0 +1,365 @@
+{
+  "name": "GH_DocumentEditor",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "The Grasshopper main window.",
+  "base": "Form",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_DocumentEditor.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentEditor",
+      "signature": "public GH_DocumentEditor()",
+      "summary": "Initializes a new instance of the GH_DocumentEditor class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearStatusBar",
+      "signature": "public void ClearStatusBar()",
+      "summary": "Clear the Grasshopper status-bar.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ClearStatusBar.htm"
+    },
+    {
+      "name": "CloseForReal",
+      "signature": "public void CloseForReal()",
+      "summary": "Really, really close the window.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_CloseForReal.htm"
+    },
+    {
+      "name": "CollapseForm",
+      "signature": "public void CollapseForm()",
+      "summary": "Collapses the form into the title bar area.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_CollapseForm.htm"
+    },
+    {
+      "name": "DisableUI",
+      "signature": "public void DisableUI()",
+      "summary": "Disable all modifier UI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_DisableUI.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_DocumentEditor and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_Dispose.htm"
+    },
+    {
+      "name": "EnableUI",
+      "signature": "public void EnableUI()",
+      "summary": "Enable all modifier UI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_EnableUI.htm"
+    },
+    {
+      "name": "ExpandForm",
+      "signature": "public void ExpandForm()",
+      "summary": "Expands the form if it is currenly collapsed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ExpandForm.htm"
+    },
+    {
+      "name": "FadeIn",
+      "signature": "public void FadeIn()",
+      "summary": "Call this method if the prompt switches back to Grasshopper.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_FadeIn.htm"
+    },
+    {
+      "name": "FadeOut",
+      "signature": "public void FadeOut()",
+      "summary": "Call this method if the prompt switches to Rhino.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_FadeOut.htm"
+    },
+    {
+      "name": "FixCanvasToolbarState",
+      "signature": "public void FixCanvasToolbarState()",
+      "summary": "Enabled/Disables the appropriate buttons depending on whether there is a document loaded on the canvas.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_FixCanvasToolbarState.htm"
+    },
+    {
+      "name": "ScriptAccess_CloseAllDocuments",
+      "signature": "public bool ScriptAccess_CloseAllDocuments()",
+      "summary": "Closes all documents in the Document Queue.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_CloseAllDocuments.htm"
+    },
+    {
+      "name": "ScriptAccess_CloseDocument",
+      "signature": "public bool ScriptAccess_CloseDocument()",
+      "summary": "Closes the currently active document and loads the next available document into the canvas. Changes will not be saved.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_CloseDocument.htm"
+    },
+    {
+      "name": "ScriptAccess_IsDocument",
+      "signature": "public bool ScriptAccess_IsDocument()",
+      "summary": "Returns true if there is an active document.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_IsDocument.htm"
+    },
+    {
+      "name": "ScriptAccess_IsDocumentModified",
+      "signature": "public bool ScriptAccess_IsDocumentModified()",
+      "summary": "Gets the modified flag of the currently loaded document.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the document has been modified, false if not or if there is no document."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_IsDocumentModified.htm"
+    },
+    {
+      "name": "ScriptAccess_NewDocument",
+      "signature": "public bool ScriptAccess_NewDocument()",
+      "summary": "Creates a new document and loads it into the Canvas.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_NewDocument.htm"
+    },
+    {
+      "name": "ScriptAccess_OpenDocument()",
+      "signature": "public bool ScriptAccess_OpenDocument()",
+      "summary": "Displays a command line interface for File Open... then loads that file into the Canvas.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_OpenDocument.htm"
+    },
+    {
+      "name": "ScriptAccess_OpenDocument(String)",
+      "signature": "public bool ScriptAccess_OpenDocument(string filename)",
+      "summary": "Loads a specific file off the hard disk into the Canvas.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "File to load.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_OpenDocument_1.htm"
+    },
+    {
+      "name": "ScriptAccess_SaveDocument",
+      "signature": "public bool ScriptAccess_SaveDocument()",
+      "summary": "Saves the document currently loaded in the Canvas. If the document hasn\u0027t been saved before then a Save... dialog box will be shown.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_SaveDocument.htm"
+    },
+    {
+      "name": "ScriptAccess_SaveDocumentAs()",
+      "signature": "public bool ScriptAccess_SaveDocumentAs()",
+      "summary": "Saves the currently active document to disk.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_SaveDocumentAs.htm"
+    },
+    {
+      "name": "ScriptAccess_SaveDocumentAs(String)",
+      "signature": "public bool ScriptAccess_SaveDocumentAs(string path)",
+      "summary": "Saves the currently active document to disk.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path of save destination.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ScriptAccess_SaveDocumentAs_1.htm"
+    },
+    {
+      "name": "SetStatusBarEvent",
+      "signature": "public void SetStatusBarEvent(GH_RuntimeMessage event)",
+      "summary": "Set a new message on the Grasshopper status bar.",
+      "params": [
+        {
+          "name": "event",
+          "type": "Grasshopper.Kernel.GH_RuntimeMessage",
+          "doc": "Message to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_SetStatusBarEvent.htm"
+    },
+    {
+      "name": "ToggleForm",
+      "signature": "public void ToggleForm()",
+      "summary": "Collapses the form if it\u0027s currently expanded or expands the form if it\u0027s currently collapsed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_ToggleForm.htm"
+    },
+    {
+      "name": "WndProc",
+      "signature": "protected override sealed void WndProc(ref Message m)",
+      "summary": "WndProc is overridden in order to allow for title-bar double-click (un)folding.",
+      "params": [
+        {
+          "name": "m",
+          "type": "System.Windows.Forms.Message",
+          "doc": "Proc message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DocumentEditor_WndProc.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Collapsed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the form is currently collapsed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DocumentEditor_Collapsed.htm"
+    },
+    {
+      "name": "CreateParams",
+      "type": "CreateParams",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides Form.CreateParams.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DocumentEditor_CreateParams.htm"
+    },
+    {
+      "name": "FormShepard",
+      "type": "GH_FormShepard",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the form shepard for this window. Register your modeless dialogs with this shepard if you want to be popular.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DocumentEditor_FormShepard.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "AggregateShortcutMenuItems",
+      "delegate": "Grasshopper.GUI.GH_DocumentEditor.AggregateShortcutMenuItemsEventHandler",
+      "signature": "public static event GH_DocumentEditor.AggregateShortcutMenuItemsEventHandler AggregateShortcutMenuItems",
+      "summary": "This event is raised whenever a GH_DocumentEditor collects all shortcuttable menu items. If you added items to the menu and you want to be able to have custom shortcuts on these items, you must handle this event and insert your own items.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_DocumentEditor_AggregateShortcutMenuItems.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EditorFoldStateChanged",
+      "delegate": "Grasshopper.GUI.GH_DocumentEditor.EditorFoldStateChangedEventHandler",
+      "signature": "public event GH_DocumentEditor.EditorFoldStateChangedEventHandler EditorFoldStateChanged",
+      "summary": "This event is raised whenever the main windows folds or unfolds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_DocumentEditor_EditorFoldStateChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

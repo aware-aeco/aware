@@ -1,0 +1,131 @@
+{
+  "name": "Command",
+  "namespace": "UI",
+  "kind": "class",
+  "summary": "The Command class is the preferred class for adding tools to the menus and Ruby toolbars. For example, you could add a menu item and pass it a code block directly, or you could first create a Command. Using Commands gives you greater control over how the item works in the UI, and it allows multiple spots in the UI to call the same code. For example, You might want a toolbar button and a context-click menu item to both point to the same command, and to control the tooltip and its \u201Cgraying\u201D from a single spot in your code.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/UI/Command.html",
+  "constructors": [
+    {
+      "name": "new",
+      "signature": "Command(menutext) { ... }",
+      "summary": "Note: Prior to SketchUp 2019 it was not possible to sub-class UI::Command due to a bug in how SketchUp initialized the class. The new method is used to create a new command.",
+      "remarks": "Note: Prior to SketchUp 2019 it was not possible to sub-class UI::Command due to a bug in how SketchUp initialized the class. The new method is used to create a new command.",
+      "params": [
+        {
+          "name": "menutext",
+          "type": "String",
+          "doc": "The text that will appear for this command\u0027s menu item if it appears on a menu.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "get_validation_proc",
+      "signature": "get_validation_proc =\u003E Proc?",
+      "summary": "The #get_validation_proc method returns the command\u0027s validation proc.",
+      "remarks": "The #get_validation_proc method returns the command\u0027s validation proc.",
+      "params": [],
+      "returns": {
+        "type": "Proc, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#get_validation_proc-instance_method"
+    },
+    {
+      "name": "proc",
+      "signature": "proc =\u003E Proc",
+      "summary": "The #proc method returns the command\u0027s proc that is called when the command is invoked.",
+      "remarks": "The #proc method returns the command\u0027s proc that is called when the command is invoked.",
+      "params": [],
+      "returns": {
+        "type": "Proc",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#proc-instance_method"
+    },
+    {
+      "name": "set_validation_proc",
+      "signature": "set_validation_proc { ... } =\u003E UI::Command",
+      "summary": "Note: Avoid disabling an command as it often isn\u0027t obvious to the user why it is disabled.",
+      "remarks": "Note: Avoid disabling an command as it often isn\u0027t obvious to the user why it is disabled. Prefer keeping the command enabled but show an error message if pressed when it cannot be used. The #set_validation_proc method allows you to change whether the command is enabled, checked, etc. For instance, the command toggling a dialog window may be displayed as checked while the dialog is open.",
+      "params": [],
+      "returns": {
+        "type": "UI::Command",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#set_validation_proc-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "extension",
+      "type": "SketchupExtension, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "Note: This is an advanced feature that extension developers normally won\u0027t have to deal with.",
+      "remarks": "Note: This is an advanced feature that extension developers normally won\u0027t have to deal with. It\u0027s purpose is to address scenarios when SketchUp isn\u0027t able to automatically infer which extension the command belongs to. The #extension method returns the command\u0027s associated extension.",
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#extension-instance_method"
+    },
+    {
+      "name": "large_icon",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The large_icon method returns the icon file for the command\u0027s large icon.",
+      "remarks": "The large_icon method returns the icon file for the command\u0027s large icon.",
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#large_icon-instance_method"
+    },
+    {
+      "name": "menu_text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The menu_text method returns the menu item name for the command.",
+      "remarks": "The menu_text method returns the menu item name for the command.",
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#menu_text-instance_method"
+    },
+    {
+      "name": "small_icon",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The small_icon method returns the icon file for the command\u0027s small icon.",
+      "remarks": "The small_icon method returns the icon file for the command\u0027s small icon.",
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#small_icon-instance_method"
+    },
+    {
+      "name": "status_bar_text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The status_bar_text method returns the status bar text for the command.",
+      "remarks": "The status_bar_text method returns the status bar text for the command.",
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#status_bar_text-instance_method"
+    },
+    {
+      "name": "tooltip",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The tooltip method returns command item\u0027s tooltip text.",
+      "remarks": "The tooltip method returns command item\u0027s tooltip text.",
+      "doc_url": "https://ruby.sketchup.com/UI/Command.html#tooltip-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

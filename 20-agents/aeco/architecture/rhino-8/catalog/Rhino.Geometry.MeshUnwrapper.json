@@ -1,0 +1,100 @@
+{
+  "name": "MeshUnwrapper",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Unwraps meshes and stores the result in their texture coordinates",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshUnwrapper.htm",
+  "constructors": [
+    {
+      "name": "MeshUnwrapper(IEnumerable\u003CMesh\u003E)",
+      "signature": "public MeshUnwrapper(IEnumerable\u003CMesh\u003E meshes)",
+      "summary": "Creates a mesh unwrapper for a set of meshes",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "Meshes to unwrap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshUnwrapper__ctor_1.htm"
+    },
+    {
+      "name": "MeshUnwrapper(Mesh)",
+      "signature": "public MeshUnwrapper(Mesh mesh)",
+      "summary": "Creates a mesh unwrapper for a single mesh",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to unwrap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshUnwrapper__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose of this object and any unmanaged memory associated with it.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshUnwrapper_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshUnwrapper_Finalize.htm"
+    },
+    {
+      "name": "Unwrap",
+      "signature": "public bool Unwrap(MeshUnwrapMethod method)",
+      "summary": "Unwraps the meshes passed in as constructor arguments and stores the results in texture coordinates.",
+      "params": [
+        {
+          "name": "method",
+          "type": "Rhino.Geometry.MeshUnwrapMethod",
+          "doc": "Unwrap method to be used",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshUnwrapper_Unwrap.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SymmetryPlane",
+      "type": "Plane",
+      "getter": false,
+      "setter": true,
+      "summary": "Symmetry plane. Unwrapper tries to keep unwrap result symmetric to this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshUnwrapper_SymmetryPlane.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

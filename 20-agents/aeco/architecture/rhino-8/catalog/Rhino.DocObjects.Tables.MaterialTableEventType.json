@@ -1,0 +1,38 @@
+{
+  "name": "MaterialTableEventType",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.MaterialTableEventType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_MaterialTableEventType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Added",
+      "value": 0
+    },
+    {
+      "name": "Deleted",
+      "value": 1
+    },
+    {
+      "name": "Undeleted",
+      "value": 2
+    },
+    {
+      "name": "Modified",
+      "value": 3
+    },
+    {
+      "name": "Sorted",
+      "value": 4
+    },
+    {
+      "name": "Current",
+      "value": 5
+    }
+  ]
+}

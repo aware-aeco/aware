@@ -1,0 +1,24 @@
+{
+  "name": "AnalysisPartCompositeProperties.CompositeBeamWidthEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The composite beam width options.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2f09c75a-32ca-7d83-409f-ae6c575e1e94",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "COMPOSITE_BEAM_WIDTH_MANUAL",
+      "value": 0,
+      "summary": "The composite beam width is set manually."
+    },
+    {
+      "name": "COMPOSITE_BEAM_WIDTH_AUTOMATIC",
+      "value": 1,
+      "summary": "The composite beam width is set automatically."
+    }
+  ]
+}

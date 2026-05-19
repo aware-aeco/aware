@@ -1,0 +1,34 @@
+{
+  "name": "AnalysisModel.KeepAxisEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The keep axis settings.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/cd949ee2-54f6-c2a9-9c00-ccb7000fda70",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KEEP_AXIS_NO",
+      "value": 0,
+      "summary": "The keep axis setting is \u0022no\u0022."
+    },
+    {
+      "name": "KEEP_AXIS_LIMITED",
+      "value": 1,
+      "summary": "The keep axis setting is \u0022limited\u0022."
+    },
+    {
+      "name": "KEEP_AXIS_YES",
+      "value": 2,
+      "summary": "The keep axis setting is \u0022yes\u0022."
+    },
+    {
+      "name": "KEEP_AXIS_FULL",
+      "value": 3,
+      "summary": "The keep axis setting is \u0022full\u0022."
+    }
+  ]
+}

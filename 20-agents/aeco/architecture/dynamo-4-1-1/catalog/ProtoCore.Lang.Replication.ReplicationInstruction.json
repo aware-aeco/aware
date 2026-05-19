@@ -1,0 +1,46 @@
+{
+  "name": "ReplicationInstruction",
+  "namespace": "ProtoCore.Lang.Replication",
+  "kind": "struct",
+  "summary": "Representation of the replication algorithm",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ReplicationInstruction.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals(ProtoCore.Lang.Replication.ReplicationInstruction)",
+      "signature": "bool Equals(ProtoCore.Lang.Replication.ReplicationInstruction other)",
+      "summary": "ReplicationInstruction.Equals",
+      "params": [
+        {
+          "name": "other",
+          "type": "ProtoCore.Lang.Replication.ReplicationInstruction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ReplicationInstruction.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ReplicationInstruction.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ReplicationInstruction.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

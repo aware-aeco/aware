@@ -1,0 +1,39 @@
+{
+  "name": "PositionTypeEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The position type for connections and seams.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c01f30a8-da00-a772-9a9e-2aaaceec2259",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MIDDLE_PLANE",
+      "value": 0,
+      "summary": "The middle plane position type."
+    },
+    {
+      "name": "BOX_PLANE",
+      "value": 1,
+      "summary": "The box plane position type."
+    },
+    {
+      "name": "COLLISION_PLANE",
+      "value": 2,
+      "summary": "The collision plane position type."
+    },
+    {
+      "name": "END_END_PLANE",
+      "value": 3,
+      "summary": "The end plane position type."
+    },
+    {
+      "name": "GUSSET_PLANE",
+      "value": 4,
+      "summary": "The gusset plane position type."
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "name": "BSpline2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "class for 2D (non uniform, rational) B-spline geometry",
+  "base": "PolyPoints2D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/",
+  "constructors": [
+    {
+      "name": "BSpline2D",
+      "signature": "BSpline2D() | BSpline2D(points, weights, knots, degree, isPeriodic) | BSpline2D(spline)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear data, getting invalid state",
+      "remarks": "Clear data, getting invalid state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.Clear"
+    },
+    {
+      "name": "CreateLine2D",
+      "signature": "CreateLine2D(line)",
+      "summary": "Create BSpline2D from Line2D",
+      "remarks": "Create BSpline2D from Line2D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Input line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline2D",
+        "doc": "Created BSpline2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.CreateLine2D"
+    },
+    {
+      "name": "Get",
+      "signature": "Get()",
+      "summary": "Return type: tuple(list(Point2D), list(float), list(float), int, bool)",
+      "remarks": "Return type: tuple(list(Point2D), list(float), list(float), int, bool)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.Get"
+    },
+    {
+      "name": "GetDegree",
+      "signature": "GetDegree()",
+      "summary": "Gets spline degree",
+      "remarks": "Gets spline degree",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "spline degree"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.GetDegree"
+    },
+    {
+      "name": "GetKnots",
+      "signature": "GetKnots()",
+      "summary": "Get knot vector",
+      "remarks": "Get knot vector",
+      "params": [],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "knot vector const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.GetKnots"
+    },
+    {
+      "name": "GetWeights",
+      "signature": "GetWeights()",
+      "summary": "Get control points weights",
+      "remarks": "Get control points weights",
+      "params": [],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "weights vector const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.GetWeights"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed()",
+      "summary": "Check if spline is closed ( first/last points are equal )",
+      "remarks": "Check if spline is closed ( first/last points are equal )",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "closed spline true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.IsClosed"
+    },
+    {
+      "name": "IsRational",
+      "signature": "IsRational()",
+      "summary": "Check if the spline is rational",
+      "remarks": "Check if the spline is rational",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true = rational"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.IsRational"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Check spline validity",
+      "remarks": "Check spline validity",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool valid = true"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.IsValid"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "remarks": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.Reverse"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(points, weights, knots, degree, isPeriodic)",
+      "summary": "Get/Set functions",
+      "remarks": "Get/Set functions",
+      "params": [
+        {
+          "name": "points",
+          "type": "Point2DList",
+          "optional": false
+        },
+        {
+          "name": "weights",
+          "type": "VecDoubleList",
+          "optional": false
+        },
+        {
+          "name": "knots",
+          "type": "VecDoubleList",
+          "optional": false
+        },
+        {
+          "name": "degree",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "isPeriodic",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.Set"
+    },
+    {
+      "name": "SetDegree",
+      "signature": "SetDegree(degree)",
+      "summary": "Set spline degree",
+      "remarks": "Set spline degree",
+      "params": [
+        {
+          "name": "degree",
+          "type": "int",
+          "doc": "desired degree",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.SetDegree"
+    },
+    {
+      "name": "SetKnots",
+      "signature": "SetKnots(knots)",
+      "summary": "Set knot vector",
+      "remarks": "Set knot vector",
+      "params": [
+        {
+          "name": "knots",
+          "type": "VecDoubleList",
+          "doc": "knot vector to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.SetKnots"
+    },
+    {
+      "name": "SetPeriodic",
+      "signature": "SetPeriodic(arg2)",
+      "summary": "Set the periodic flag",
+      "remarks": "Set the periodic flag",
+      "params": [
+        {
+          "name": "flag",
+          "type": "object",
+          "doc": "True if BSpline is periodic",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.SetPeriodic"
+    },
+    {
+      "name": "SetWeights",
+      "signature": "SetWeights(weights)",
+      "summary": "Set weights for control points",
+      "remarks": "Set weights for control points",
+      "params": [
+        {
+          "name": "weights",
+          "type": "VecDoubleList",
+          "doc": "weights vector to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.SetWeights"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(bspline)",
+      "summary": "Comparison of bsplines without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of bsplines without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "bspline",
+          "type": "BSpline2D",
+          "doc": "Compared bspline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when bsplines are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Degree",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets spline degree",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.Degree"
+    },
+    {
+      "name": "IsPeriodic",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Check if the spline is periodic",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.IsPeriodic"
+    },
+    {
+      "name": "Knots",
+      "type": "NemAll_Python_Utility.VecDoubleList",
+      "getter": true,
+      "setter": true,
+      "summary": "Get knot vector",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.Knots"
+    },
+    {
+      "name": "Weights",
+      "type": "NemAll_Python_Utility.VecDoubleList",
+      "getter": true,
+      "setter": true,
+      "summary": "Get control points weights",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.Weights"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

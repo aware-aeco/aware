@@ -1,0 +1,29 @@
+{
+  "name": "GH_ParamAccess",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the types of access that parameters support.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParamAccess.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "item",
+      "value": 0,
+      "summary": "Every data item is to be treated individually."
+    },
+    {
+      "name": "list",
+      "value": 1,
+      "summary": "All data branches will be treated at the same time."
+    },
+    {
+      "name": "tree",
+      "value": 2,
+      "summary": "The entire data structure will be treated at once."
+    }
+  ]
+}

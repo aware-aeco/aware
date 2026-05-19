@@ -1,0 +1,160 @@
+{
+  "name": "Thumbnail",
+  "namespace": "Rhino.UI.Controls.ThumbnailUI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ThumbnailUI.Thumbnail\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_ThumbnailUI_Thumbnail.htm",
+  "constructors": [
+    {
+      "name": "Thumbnail",
+      "signature": "public Thumbnail(IntPtr pRdkThumbnail)",
+      "summary": "Constructor for Thumbnail",
+      "params": [
+        {
+          "name": "pRdkThumbnail",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRdkThumbnail\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dib",
+      "signature": "public void Dib(ref Bitmap dibOut)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dibOut",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022dibOut\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.Dib(System.Drawing.Bitmap@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_Dib.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose for Thumbnail",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor for Thumbnail",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_Finalize.htm"
+    },
+    {
+      "name": "GetDib",
+      "signature": "public Bitmap GetDib()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.GetDib\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_GetDib.htm"
+    },
+    {
+      "name": "GetDisplayRect",
+      "signature": "public void GetDisplayRect(ref RectangleF rectOut)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rectOut",
+          "type": "System.Drawing.RectangleF",
+          "doc": "[Missing \u003Cparam name=\u0022rectOut\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.GetDisplayRect(System.Drawing.RectangleF@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_GetDisplayRect.htm"
+    },
+    {
+      "name": "Id",
+      "signature": "public Guid Id()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.Id\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_Id.htm"
+    },
+    {
+      "name": "IsHot",
+      "signature": "public bool IsHot()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.IsHot\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_IsHot.htm"
+    },
+    {
+      "name": "IsSelected",
+      "signature": "public bool IsSelected()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.IsSelected\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_IsSelected.htm"
+    },
+    {
+      "name": "Label",
+      "signature": "public string Label()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.Thumbnail.Label\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_Thumbnail_Label.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Thumbnail c\u002B\u002B pointer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_ThumbnailUI_Thumbnail_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

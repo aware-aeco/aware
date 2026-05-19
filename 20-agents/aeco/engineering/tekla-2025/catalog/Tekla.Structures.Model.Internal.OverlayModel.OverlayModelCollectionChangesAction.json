@@ -1,0 +1,29 @@
+{
+  "name": "OverlayModelCollectionChangesAction",
+  "namespace": "Tekla.Structures.Model.Internal.OverlayModel",
+  "kind": "enum",
+  "summary": "The action of the overlay model collection changes",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/876446b4-e809-c164-7f0f-fc6e88211e01",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Added",
+      "value": 0,
+      "summary": "Added action"
+    },
+    {
+      "name": "Removed",
+      "value": 1,
+      "summary": "Removed action"
+    },
+    {
+      "name": "Updated",
+      "value": 2,
+      "summary": "Updated action"
+    }
+  ]
+}

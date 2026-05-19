@@ -1,0 +1,363 @@
+{
+  "name": "ComponentFunctionInfo",
+  "namespace": "Rhino.NodeInCode",
+  "kind": "class",
+  "summary": "Defines the base class for a function representing a component. This class is abstract.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_NodeInCode_ComponentFunctionInfo.htm",
+  "constructors": [
+    {
+      "name": "ComponentFunctionInfo",
+      "signature": "protected ComponentFunctionInfo(string name, string namespace, string description, IReadOnlyList\u003Cstring\u003E inputNames, IReadOnlyList\u003Cstring\u003E inputDescriptions, IReadOnlyList\u003Cstring\u003E inputTypeNames, IReadOnlyList\u003Cbool\u003E inputsOptional, IReadOnlyList\u003Cstring\u003E outputNames, IReadOnlyList\u003Cstring\u003E outputDescriptions, IReadOnlyList\u003Cstring\u003E outputTypeNames, Guid componentGuid)",
+      "summary": "Instantiates a new instance of the function class. This is not meant for public consumption.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name.",
+          "optional": false
+        },
+        {
+          "name": "namespace",
+          "type": "System.String",
+          "doc": "Namespace.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "Description.",
+          "optional": false
+        },
+        {
+          "name": "inputNames",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CString\u003E",
+          "doc": "Input parameter names.",
+          "optional": false
+        },
+        {
+          "name": "inputDescriptions",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CString\u003E",
+          "doc": "Input parameter descriptions.",
+          "optional": false
+        },
+        {
+          "name": "inputTypeNames",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CString\u003E",
+          "doc": "Input parameter type names.",
+          "optional": false
+        },
+        {
+          "name": "inputsOptional",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CBoolean\u003E",
+          "doc": "Indications for optional inputs.",
+          "optional": false
+        },
+        {
+          "name": "outputNames",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CString\u003E",
+          "doc": "Output names.",
+          "optional": false
+        },
+        {
+          "name": "outputDescriptions",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CString\u003E",
+          "doc": "Output descriptions.",
+          "optional": false
+        },
+        {
+          "name": "outputTypeNames",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CString\u003E",
+          "doc": "Output type names.",
+          "optional": false
+        },
+        {
+          "name": "componentGuid",
+          "type": "System.Guid",
+          "doc": "Component guid.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_NodeInCode_ComponentFunctionInfo__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Evaluate",
+      "signature": "public abstract Object[] Evaluate(IEnumerable args, bool keepTree, out string[] warnings)",
+      "summary": "Evaluates the component with a set of arguments. There needs to be an argument for each input param, and each output param gives an entry in the output array.",
+      "remarks": "For component that store no state, this method is thread safe.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Collections.IEnumerable",
+          "doc": "The arguments list. Each item is assigned to each input param, in order.",
+          "optional": false
+        },
+        {
+          "name": "keepTree",
+          "type": "System.Boolean",
+          "doc": "A value indicating whether trees should be considered valid inputs, and should be returned. In this case, output variables are not simplified to common types.",
+          "optional": false
+        },
+        {
+          "name": "warnings",
+          "type": "System.String[]",
+          "doc": "A possible list of warnings, or null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object[]",
+        "doc": "An array of objects, each representing an output result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_NodeInCode_ComponentFunctionInfo_Evaluate.htm"
+    },
+    {
+      "name": "Invoke",
+      "signature": "public Object[] Invoke(params Object[] args)",
+      "summary": "Runs Evaluate(IEnumerable, Boolean, String[]) with keepTree equal to false, and raises an exception on the first warning.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "Arguments. One for each component input.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object[]",
+        "doc": "Items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_NodeInCode_ComponentFunctionInfo_Invoke.htm"
+    },
+    {
+      "name": "InvokeKeepTree",
+      "signature": "public Object[] InvokeKeepTree(params Object[] args)",
+      "summary": "Runs Evaluate(IEnumerable, Boolean, String[]) with keepTree equal to true and raises an exception on the first warning.",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "Arguments. One for each component input.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object[]",
+        "doc": "Items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_NodeInCode_ComponentFunctionInfo_InvokeKeepTree.htm"
+    },
+    {
+      "name": "InvokeKeepTreeSilenceWarnings",
+      "signature": "public Object[] InvokeKeepTreeSilenceWarnings(params Object[] args)",
+      "summary": "Runs Evaluate(IEnumerable, Boolean, String[]) with keepTree equal to true, and discards warnings (this is a dangerous operation!).",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "Arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object[]",
+        "doc": "Array of items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_NodeInCode_ComponentFunctionInfo_InvokeKeepTreeSilenceWarnings.htm"
+    },
+    {
+      "name": "InvokeSilenceWarnings",
+      "signature": "public Object[] InvokeSilenceWarnings(params Object[] args)",
+      "summary": "Runs Evaluate(IEnumerable, Boolean, String[]) with keepTree equal to false, then simplifies output with SimplifyTreeOutput(Object[], String[], Boolean) and discards warnings (this is a dangerous operation!).",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "Arguments. One for each component input.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object[]",
+        "doc": "Items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_NodeInCode_ComponentFunctionInfo_InvokeSilenceWarnings.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns a string representing this function.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The namespace and the name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_NodeInCode_ComponentFunctionInfo_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The unique identifier of the Grasshopper component. It is the original developer\u0027s responsibility to ensure that this ID is unique.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_ComponentGuid.htm"
+    },
+    {
+      "name": "Delegate",
+      "type": "Delegate",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a delegate that can be directly invoked using a list of arguments. This flattens trees.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_Delegate.htm"
+    },
+    {
+      "name": "DelegateNoWarnings",
+      "type": "Delegate",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a delegate that can be directly invoked using a list of arguments. This flattens trees.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_DelegateNoWarnings.htm"
+    },
+    {
+      "name": "DelegateTree",
+      "type": "Delegate",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a delegate that can be directly invoked using a list of arguments. This considers trees and simplifies single-output components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_DelegateTree.htm"
+    },
+    {
+      "name": "DelegateTreeNoWarnings",
+      "type": "Delegate",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a delegate that can be directly invoked using a list of arguments. This considers trees and simplifies single-output components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_DelegateTreeNoWarnings.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The function description.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_Description.htm"
+    },
+    {
+      "name": "FullName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the component prefixed by, if existing, the namespace.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_FullName.htm"
+    },
+    {
+      "name": "FullScriptingName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Shows the full name of the component, including optional periods. Removes spaces and common operator signs.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_FullScriptingName.htm"
+    },
+    {
+      "name": "InputDescriptions",
+      "type": "IReadOnlyList\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The function input parameter descriptions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_InputDescriptions.htm"
+    },
+    {
+      "name": "InputNames",
+      "type": "IReadOnlyList\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The function input parameter names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_InputNames.htm"
+    },
+    {
+      "name": "InputsOptional",
+      "type": "IReadOnlyList\u003CBoolean\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Indications for each function input parameter whether it is optional.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_InputsOptional.htm"
+    },
+    {
+      "name": "InputTypeNames",
+      "type": "IReadOnlyList\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The function input type names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_InputTypeNames.htm"
+    },
+    {
+      "name": "IsDefault",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the component is a default one.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_IsDefault.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The function name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_Name.htm"
+    },
+    {
+      "name": "Namespace",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The function namespace.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_Namespace.htm"
+    },
+    {
+      "name": "OutputDescriptions",
+      "type": "IReadOnlyList\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper returns several items in general. This property returns the output descriptions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_OutputDescriptions.htm"
+    },
+    {
+      "name": "OutputNames",
+      "type": "IReadOnlyList\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper returns several items in general. This property returns the output names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_OutputNames.htm"
+    },
+    {
+      "name": "OutputTypeNames",
+      "type": "IReadOnlyList\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper returns several items in general. This property returns the output type names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_NodeInCode_ComponentFunctionInfo_OutputTypeNames.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

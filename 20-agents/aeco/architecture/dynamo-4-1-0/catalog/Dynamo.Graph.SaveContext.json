@@ -1,0 +1,42 @@
+{
+  "name": "SaveContext",
+  "namespace": "Dynamo.Graph",
+  "kind": "enum",
+  "summary": "SaveContext represents several contexts, in which node can be serialized/deserialized.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Copy",
+      "value": 1
+    },
+    {
+      "name": "File",
+      "value": 0
+    },
+    {
+      "name": "None",
+      "value": 4
+    },
+    {
+      "name": "Preset",
+      "value": 3
+    },
+    {
+      "name": "Save",
+      "value": 5
+    },
+    {
+      "name": "SaveAs",
+      "value": 6
+    },
+    {
+      "name": "Undo",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "name": "AnalysisPartBarAttributes",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartBarAttributes class contains information related to analysis part bar attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f62c3da6-9858-b482-c809-35c91b0b59ed",
+  "constructors": [
+    {
+      "name": "AnalysisPartBarAttributes",
+      "signature": "public AnalysisPartBarAttributes()",
+      "summary": "Initializes a new instance of the AnalysisPartBarAttributes class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/70ceb66f-fd56-10d2-7260-894fdf0df5e1"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BarEndCondition",
+      "type": "AnalysisPartEnd",
+      "getter": true,
+      "setter": true,
+      "summary": "The bar end condition.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e1cab14b-560f-bbb9-87cf-627a93c12b3c"
+    },
+    {
+      "name": "BarStartCondition",
+      "type": "AnalysisPartEnd",
+      "getter": true,
+      "setter": true,
+      "summary": "The bar start condition.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3903c9e-9a68-a4c7-119c-a4ebabab83fa"
+    },
+    {
+      "name": "BarStartNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The start number of the bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4f4f9115-1790-ecee-0d0b-e80b07c7a90c"
+    },
+    {
+      "name": "ForceStraightSegments",
+      "type": "AnalysisPartBarAttributes.ForceStraightSegmentsEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The straight force segments.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9ee970b-3f9b-02b6-10d0-ca0bb5868dbc"
+    },
+    {
+      "name": "MemberStartNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The start number of the member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5691aa3d-532a-466f-d5de-d147774c340e"
+    },
+    {
+      "name": "OverrideProfileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The override profile name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ba8c6391-dc33-6e2c-4ff6-642aec469359"
+    },
+    {
+      "name": "SplitDistances",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The split distances.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/83d98774-31fa-c3b9-949e-f0ead8f6f002"
+    },
+    {
+      "name": "SplitNodeCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The count of the split node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e89dc191-a67b-06a7-b9a2-ed85c6f68594"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

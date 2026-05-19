@@ -1,0 +1,162 @@
+{
+  "name": "NativeHandle",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Common base class for classes which act as a managed handle to an implementation in native, unmanaged code",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.NativeHandle",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NativeHandle.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NativeHandle.GetHashCode"
+    },
+    {
+      "name": "ReferenceEquals",
+      "signature": "static bool ReferenceEquals(Autodesk.Navisworks.Api.NativeHandle objA, Autodesk.Navisworks.Api.NativeHandle objB)",
+      "summary": "Determines whether the two handles refer to the same underlying native object. Returns false if either handle has been disposed.",
+      "params": [
+        {
+          "name": "objA",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "doc": "First NativeHandle",
+          "optional": false
+        },
+        {
+          "name": "objB",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "doc": "Second NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NativeHandle.ReferenceEquals%28Autodesk.Navisworks.Api.NativeHandle%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Autodesk.Navisworks.Api.NativeHandle objA, Autodesk.Navisworks.Api.NativeHandle objB)",
+      "summary": "Determines whether the two objects refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "objA",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        },
+        {
+          "name": "objB",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NativeHandle.op_Equality%28Autodesk.Navisworks.Api.NativeHandle%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Autodesk.Navisworks.Api.NativeHandle objA, Autodesk.Navisworks.Api.NativeHandle objB)",
+      "summary": "Determines whether the two objects refer to different underlying native objects. Returns true if either object has been disposed.",
+      "params": [
+        {
+          "name": "objA",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        },
+        {
+          "name": "objB",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NativeHandle.op_Inequality%28Autodesk.Navisworks.Api.NativeHandle%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NativeHandle.ToString"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NativeHandle.Dispose"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsDisposed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object has been disposed and is no longer available.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NativeHandle.IsDisposed"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NativeHandle.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,144 @@
+{
+  "name": "GH_AssemblyInfoStub",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides basic properties for a GHA assembly that does not expose a type that derives from GH_AssemblyInfo. This type is created automatically when a GH_AssemblyInfo type is not found in an assembly.",
+  "base": "GH_AssemblyInfo",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_AssemblyInfoStub.htm",
+  "constructors": [
+    {
+      "name": "GH_AssemblyInfoStub",
+      "signature": "public GH_AssemblyInfoStub(Assembly assembly)",
+      "summary": "Initializes a new instance of the GH_AssemblyInfoStub class",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_AssemblyInfoStub__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "Assembly",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the actual assembly that this info object describes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_Assembly.htm"
+    },
+    {
+      "name": "AssemblyName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_AssemblyInfo.AssemblyName.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfoStub_AssemblyName.htm"
+    },
+    {
+      "name": "AssemblyVersion",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_AssemblyInfo.AssemblyVersion.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfoStub_AssemblyVersion.htm"
+    },
+    {
+      "name": "AuthorContact",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contact information for the author. This can be email, phone, fax, address or all of the above. Return null if you do not wish to associate contact details with this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_AuthorContact.htm"
+    },
+    {
+      "name": "AuthorName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the individual/company/organisation that is responsible for this assembly. Return null if you do not wish to associate an author with this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_AuthorName.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the human readable description of this assembly. Return null if you do not wish to associate a description with this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_Description.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a 24x24 icon that represents this assembly. Return null if you do not wish to associate an icon with this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_Icon.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Id of this assembly. By default the Id is a hash of the name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_Id.htm"
+    },
+    {
+      "name": "IsCoreLibrary",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this library is a Grasshopper core library. Core libraries are installed along with Grasshopper and thus should always be available anywhere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_IsCoreLibrary.htm"
+    },
+    {
+      "name": "License",
+      "type": "GH_LibraryLicense",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the license type for this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_License.htm"
+    },
+    {
+      "name": "LoadingMechanism",
+      "type": "GH_LoadingMechanism",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the mechanism used to load this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_LoadingMechanism.htm"
+    },
+    {
+      "name": "Location",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location this assembly was loaded from.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_Location.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the human readable name of this assembly. Return null if you do not wish to associate a name with this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_Name.htm"
+    },
+    {
+      "name": "Version",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the version code for this assembly.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyInfo_Version.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisPartBarAttributes.ForceStraightSegmentsEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The straight force segments.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e7208b24-34c6-77b4-601a-52869683712d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FORCE_STRAIGHT_SEGMENTS_NOT_SET",
+      "value": 9,
+      "summary": "The straight force segments setting \u0022not set\u0022."
+    },
+    {
+      "name": "FORCE_STRAIGHT_SEGMENTS_YES",
+      "value": 0,
+      "summary": "The straight force segments setting \u0022yes\u0022."
+    },
+    {
+      "name": "FORCE_STRAIGHT_SEGMENTS_NO",
+      "value": 1,
+      "summary": "The straight force segments setting \u0022no\u0022."
+    }
+  ]
+}

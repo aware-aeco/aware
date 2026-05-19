@@ -1,0 +1,46 @@
+{
+  "name": "RcsTendonDuctData",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsTendonDuctData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonDuctData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Point",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonDuctData.point.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonDuctData.md"
+    },
+    {
+      "name": "Diameter",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonDuctData.diameter.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonDuctData.md"
+    },
+    {
+      "name": "IsDebondingTube",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonDuctData.isDebondingTube.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonDuctData.md"
+    },
+    {
+      "name": "MaterialDuct",
+      "type": "MaterialDuct",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsTendonDuctData.materialDuct.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsTendonDuctData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

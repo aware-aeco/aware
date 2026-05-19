@@ -1,0 +1,117 @@
+{
+  "name": "ITransform",
+  "namespace": "Grasshopper.Kernel.Types.Transforms",
+  "kind": "interface",
+  "summary": "Basic interface for a single Grasshopper transformation.",
+  "interfaces": [
+    "GH_ISerializable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_Transforms_ITransform.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Duplicate",
+      "signature": "ITransform Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ITransform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_ITransform_Duplicate.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "bool Read(GH_IReader reader)",
+      "summary": "This method is called whenever the instance is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Reader object to deserialize from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_GH_ISerializable_Read.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "ITransform Reverse()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ITransform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_ITransform_Reverse.htm"
+    },
+    {
+      "name": "ToMatrix",
+      "signature": "Transform ToMatrix()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_ITransform_ToMatrix.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_ITransform_ToString.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "bool Write(GH_IWriter writer)",
+      "summary": "This method is called whenever the instance is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Writer object to serialize with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_GH_ISerializable_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_ITransform_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

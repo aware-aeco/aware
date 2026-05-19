@@ -1,0 +1,339 @@
+{
+  "name": "AnnotationUnitsSettings",
+  "namespace": "Grasshopper.Rhinoceros.Annotations",
+  "kind": "class",
+  "summary": "Represents annotation units settings.",
+  "base": "ModelData",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings.htm",
+  "constructors": [
+    {
+      "name": "AnnotationUnitsSettings()",
+      "signature": "public AnnotationUnitsSettings()",
+      "summary": "Initializes a new instance of the AnnotationUnitsSettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings__ctor.htm"
+    },
+    {
+      "name": "AnnotationUnitsSettings(AnnotationUnitsSettings.Attributes)",
+      "signature": "public AnnotationUnitsSettings(AnnotationUnitsSettings.Attributes attributes)",
+      "summary": "Initializes a new instance of the AnnotationUnitsSettings class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Annotations.AnnotationUnitsSettings.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings__ctor_1.htm"
+    },
+    {
+      "name": "AnnotationUnitsSettings(DimensionStyle)",
+      "signature": "public AnnotationUnitsSettings(DimensionStyle dimStyle)",
+      "summary": "Initializes a new instance of the AnnotationUnitsSettings class",
+      "params": [
+        {
+          "name": "dimStyle",
+          "type": "DimensionStyle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CastTo\u003CT\u003E",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_CastTo__1.htm"
+    },
+    {
+      "name": "Equals(ModelData)",
+      "signature": "public bool Equals(ModelData other)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Equals_1.htm"
+    },
+    {
+      "name": "GetDimensionStyle",
+      "signature": "public void GetDimensionStyle(ref DimensionStyle baseDimensionStyle = null)",
+      "summary": "",
+      "params": [
+        {
+          "name": "baseDimensionStyle",
+          "type": "DimensionStyle",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_GetDimensionStyle.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_GetHashCode.htm"
+    },
+    {
+      "name": "ToAttributes",
+      "signature": "public AnnotationUnitsSettings.Attributes ToAttributes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "AnnotationUnitsSettings.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_ToAttributes.htm"
+    },
+    {
+      "name": "ToDetails",
+      "signature": "public string ToDetails()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_ToDetails.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public virtual string TooltipString()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_ToString.htm"
+    },
+    {
+      "name": "Explicit(AnnotationUnitsSettings to DimensionStyle)",
+      "signature": "public static explicit operator DimensionStyle (AnnotationUnitsSettings settings)",
+      "summary": "",
+      "params": [
+        {
+          "name": "settings",
+          "type": "Grasshopper.Rhinoceros.Annotations.AnnotationUnitsSettings",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_op_Explicit.htm"
+    },
+    {
+      "name": "Implicit(AnnotationUnitsSettings.Attributes to AnnotationUnitsSettings)",
+      "signature": "public static implicit operator AnnotationUnitsSettings (AnnotationUnitsSettings.Attributes attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Annotations.AnnotationUnitsSettings.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AnnotationUnitsSettings",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AngleFormat",
+      "type": "Nullable\u003CAngleDisplayFormat\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_AngleFormat.htm"
+    },
+    {
+      "name": "AngleResolution",
+      "type": "Nullable\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_AngleResolution.htm"
+    },
+    {
+      "name": "AngleRoundoff",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_AngleRoundoff.htm"
+    },
+    {
+      "name": "AngleZeroSuppression",
+      "type": "Nullable\u003CZeroSuppression\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_AngleZeroSuppression.htm"
+    },
+    {
+      "name": "LengthDisplay",
+      "type": "Nullable\u003CLengthDisplay\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_LengthDisplay.htm"
+    },
+    {
+      "name": "LengthFactor",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_LengthFactor.htm"
+    },
+    {
+      "name": "LengthPrefix",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_LengthPrefix.htm"
+    },
+    {
+      "name": "LengthResolution",
+      "type": "Nullable\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_LengthResolution.htm"
+    },
+    {
+      "name": "LengthRoundoff",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_LengthRoundoff.htm"
+    },
+    {
+      "name": "LengthSuffix",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_LengthSuffix.htm"
+    },
+    {
+      "name": "LengthZeroSuppression",
+      "type": "Nullable\u003CZeroSuppression\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_LengthZeroSuppression.htm"
+    },
+    {
+      "name": "StackFractionFormat",
+      "type": "Nullable\u003CStackDisplayFormat\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_StackFractionFormat.htm"
+    },
+    {
+      "name": "StackHeightScale",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Annotations_AnnotationUnitsSettings_StackHeightScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,113 @@
+{
+  "name": "Instance",
+  "namespace": "Rhino.Render.CustomRenderMeshes",
+  "kind": "class",
+  "summary": "The core of the custom render primitive delivery system - and instance defines a single mesh. Each instance has a shared mesh and a transform, along with a material, mapping channels (at the mesh and instance level).",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshes_Instance.htm",
+  "constructors": [
+    {
+      "name": "Instance",
+      "signature": "public Instance()",
+      "summary": "Construct a new Instance object",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_Instance__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Dispose method",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_Instance_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Dispose method.",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_Instance_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer to ensure correctly implemented dispose pattern.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_Instance_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsForcedMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The material for this instance should override any display mode materials.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_Instance_IsForcedMaterial.htm"
+    },
+    {
+      "name": "IsRequestingPlugInDependent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If this instance will change depending on the requesting plug-in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_Instance_IsRequestingPlugInDependent.htm"
+    },
+    {
+      "name": "IsViewDependent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If this instance will change depending on the view direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_Instance_IsViewDependent.htm"
+    },
+    {
+      "name": "Material",
+      "type": "RenderMaterial",
+      "getter": true,
+      "setter": true,
+      "summary": "The material for this instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_Instance_Material.htm"
+    },
+    {
+      "name": "Mesh",
+      "type": "Mesh",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the mesh associated with this geometry. Note that this function will always return a mesh even if the type is not a mesh...so you can always call this function without checking the type to give you the mesh. It\u0027s more efficient to use the primitive directly of course...but if you don\u0027t support it...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_Instance_Mesh.htm"
+    },
+    {
+      "name": "Transform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "The transform for this instance. Transform the geometry by this to set its final location in world space.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_Instance_Transform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

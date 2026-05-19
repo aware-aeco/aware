@@ -1,0 +1,62 @@
+{
+  "name": "File3dmEdgeSoftening",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents the edge softening attached to file3dm object attributes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmEdgeSoftening.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Chamfer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether to chamfer the edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmEdgeSoftening_Chamfer.htm"
+    },
+    {
+      "name": "EdgeAngleThreshold",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Threshold angle (in degrees) which controls whether an edge is softened or not. The angle refers to the angles between the adjacent faces of an edge.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmEdgeSoftening_EdgeAngleThreshold.htm"
+    },
+    {
+      "name": "Faceted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether the edges are faceted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmEdgeSoftening_Faceted.htm"
+    },
+    {
+      "name": "ForceSoftening",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether to soften edges despite too large a radius.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmEdgeSoftening_ForceSoftening.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether edge softening is enabled or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmEdgeSoftening_On.htm"
+    },
+    {
+      "name": "Softening",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The softening radius.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmEdgeSoftening_Softening.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

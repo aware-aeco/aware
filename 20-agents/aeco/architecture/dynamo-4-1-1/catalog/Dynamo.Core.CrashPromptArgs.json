@@ -1,0 +1,77 @@
+{
+  "name": "CrashPromptArgs",
+  "namespace": "Dynamo.Core",
+  "kind": "class",
+  "summary": "Event argument for CrashPrompt. It contains display options, details, overriding text and file path.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs",
+  "constructors": [
+    {
+      "name": "CrashPromptArgs(string, string, string)",
+      "signature": "void CrashPromptArgs(string details, string overridingText, string filePath)",
+      "summary": "Returns initializes a new instance of the Dynamo.Core.CrashPromptArgs class.",
+      "params": [
+        {
+          "name": "details",
+          "type": "string",
+          "doc": "Details of crash",
+          "optional": false
+        },
+        {
+          "name": "overridingText",
+          "type": "string",
+          "doc": "Crash message",
+          "optional": false
+        },
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "Preferences file path",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Details",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns details of crash",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs"
+    },
+    {
+      "name": "FilePath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns preference file path",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs"
+    },
+    {
+      "name": "Options",
+      "type": "Dynamo.Core.CrashPromptArgs.DisplayOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Core.CrashPromptArgs.DisplayOptions flag which indicates whether args contain default text overriden, has details or has file path",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs"
+    },
+    {
+      "name": "OverridingText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns crash message",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/CrashPromptArgs.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

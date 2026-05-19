@@ -1,0 +1,30 @@
+{
+  "name": "ISharingLocationsInformation",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "Provides information about the available sharing locations.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/02e6b411-9156-858e-67fd-b7cd736b98ad",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultLocation",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the identifier of the default sharing location.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a5ef121d-d7c1-6962-ec8c-51573e4c6c58"
+    },
+    {
+      "name": "Locations",
+      "type": "IReadOnlyList\u003CISharingLocation\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the collection of available sharing locations.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/87b107e0-781b-9a7c-ccf8-5f48629b34fe"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

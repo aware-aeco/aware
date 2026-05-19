@@ -1,0 +1,169 @@
+{
+  "name": "DisplayBitmap",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "A bitmap resource that can be used by the display pipeline (currently only in OpenGL display). Reuse DisplayBitmaps for drawing if possible; it is much more expensive to construct new DisplayBitmaps than it is to reuse existing DisplayBitmaps.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayBitmap.htm",
+  "constructors": [
+    {
+      "name": "DisplayBitmap(Bitmap)",
+      "signature": "public DisplayBitmap(Bitmap bitmap)",
+      "summary": "Constructs a DisplayBitmap from an existing bitmap.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "The original bitmap.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap__ctor.htm"
+    },
+    {
+      "name": "DisplayBitmap(String, Bitmap)",
+      "signature": "public DisplayBitmap(string path, Bitmap bitmap)",
+      "summary": "Creates a DisplayBitmap either from a path, or a bitmap. If the path is null, a random tag name will be used. If the bitmap is null, the bitmap will be loaded from the path. If both are null, the object is invalid. if both are valid objects, the bitmap will be used and it will be added to Rhino\u0027s bitmap cache with the path supplied. In other words, this is a way to add a bitmap from memory directly into Rhino\u0027s memory cache.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "If null, use a temporary tag name. If non-null, use that path in Rhino\u0027s bitmap cache. Note, this version does not support URLs.",
+          "optional": false
+        },
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "If null, load the bitmap from the supplied path. If non-null, creates the bitmap from the data supplied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap_Finalize.htm"
+    },
+    {
+      "name": "GetBlendModes",
+      "signature": "public void GetBlendModes(out BlendMode source, out BlendMode destination)",
+      "summary": "Gets the source and destination blend modes.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Display.BlendMode",
+          "doc": "The source blend mode is assigned to this out parameter.",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "Rhino.Display.BlendMode",
+          "doc": "The destination blend mode is assigned to this out parameter.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap_GetBlendModes.htm"
+    },
+    {
+      "name": "Load",
+      "signature": "public static DisplayBitmap Load(string path)",
+      "summary": "Load a DisplayBitmap from and image file on disk or from URL. If path starts with http:// or https:// then an attempt is made to load the bitmap from an online resource",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "A location from which to load the file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DisplayBitmap",
+        "doc": "The new display bitmap, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap_Load.htm"
+    },
+    {
+      "name": "SetBlendFunction",
+      "signature": "public void SetBlendFunction(BlendMode source, BlendMode destination)",
+      "summary": "Sets blending function used to determine how this bitmap is blended with the current frame buffer color. The default setting is SourceAlpha for source and OneMinusSourceAlpha for destination. See OpenGL\u0027s glBlendFunc for details. http://www.opengl.org/sdk/docs/man/xhtml/glBlendFunc.xml",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Display.BlendMode",
+          "doc": "The source blend mode.",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "Rhino.Display.BlendMode",
+          "doc": "The destination blend mode.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayBitmap_SetBlendFunction.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Size",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Size of the underlying bitmap image",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayBitmap_Size.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

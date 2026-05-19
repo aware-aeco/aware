@@ -1,0 +1,54 @@
+{
+  "name": "RebarSpacing.ExactSpacing.Element",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "struct",
+  "summary": "This structure is used to hold number and distance data.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6d0a7d41-926b-8adb-0ff7-ca117e9be98d",
+  "constructors": [
+    {
+      "name": "RebarSpacing.ExactSpacing.Element",
+      "signature": "public Element(int number, double distance)",
+      "summary": "Initializes a new instance of the RebarSpacing.ExactSpacing.Element struct.",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "The number of spaces.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The spacing distance.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f4e807c2-66cc-df81-552b-3e0c422ac6b1"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Distance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the spacing distance in the element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/64032efb-6474-0acd-7033-b12ce5e7c8db"
+    },
+    {
+      "name": "Number",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of spaces in the element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99cb2a9b-83df-74b5-931c-d11d12f5864e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

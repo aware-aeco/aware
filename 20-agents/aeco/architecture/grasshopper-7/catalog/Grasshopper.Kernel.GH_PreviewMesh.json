@@ -1,0 +1,39 @@
+{
+  "name": "GH_PreviewMesh",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates possible meshing parameters for documents.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_PreviewMesh.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No preview meshes."
+    },
+    {
+      "name": "LowQuality",
+      "value": 1,
+      "summary": "Rhino default for coarse meshes."
+    },
+    {
+      "name": "HighQuality",
+      "value": 2,
+      "summary": "Rhino default for smooth meshes."
+    },
+    {
+      "name": "Document",
+      "value": 3,
+      "summary": "Same meshing parameters as the current document."
+    },
+    {
+      "name": "Custom",
+      "value": 4,
+      "summary": "Custom meshing parameters."
+    }
+  ]
+}

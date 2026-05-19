@@ -1,0 +1,135 @@
+{
+  "name": "LcOpSecurityTemporalUIColor",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSecurityTemporalUIColor class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor",
+  "constructors": [
+    {
+      "name": "LcOpSecurityTemporalUIColor()",
+      "signature": "LcOpSecurityTemporalUIColor()",
+      "summary": "Constructs a new LcOpSecurityTemporalUIColor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSecurityTemporalUIColor.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSecurityTemporalUIColor.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetAlpha",
+      "signature": "uint GetAlpha()",
+      "summary": "GetAlpha method of LcOpSecurityTemporalUIColor.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.GetAlpha"
+    },
+    {
+      "name": "GetBlue",
+      "signature": "uint GetBlue()",
+      "summary": "GetBlue method of LcOpSecurityTemporalUIColor.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.GetBlue"
+    },
+    {
+      "name": "GetGreen",
+      "signature": "uint GetGreen()",
+      "summary": "GetGreen method of LcOpSecurityTemporalUIColor.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.GetGreen"
+    },
+    {
+      "name": "GetRed",
+      "signature": "uint GetRed()",
+      "summary": "GetRed method of LcOpSecurityTemporalUIColor.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.GetRed"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSecurityTemporalUIColor.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUIColor.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

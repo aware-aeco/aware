@@ -1,0 +1,227 @@
+{
+  "name": "WindowBase",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The WindowBase class is the base class for all Tekla Structures WPF dialogs. The class provides localization, unit conversion and data storage (temporary and file-based) among other things.",
+  "base": "System.Windows.Window",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/27802d58-3aa3-6f9c-6c3b-21ca856eaab5",
+  "constructors": [
+    {
+      "name": "WindowBase",
+      "signature": "public WindowBase()",
+      "summary": "The default constructor that does not need parameters. Initializes the window and registers property bindings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a51368b5-3bc2-e8f8-49bd-6583fcbc36d2"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ApplyValues",
+      "signature": "public void ApplyValues(string FileName)",
+      "summary": "Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/76f35628-b668-e741-3bfe-e761a95e178b"
+    },
+    {
+      "name": "GetConnectionStatus",
+      "signature": "public bool GetConnectionStatus()",
+      "summary": "Returns true if a proper connection to the Tekla Structures process has been established. Currently, there\u0027s no way to re-establish the connection.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/58358e40-b265-4e6b-f448-2c25de1dd55e"
+    },
+    {
+      "name": "GetUnitDecimals",
+      "signature": "public static int GetUnitDecimals(dotdiaUnitTypes_e unit)",
+      "summary": "Gets the number of decimals Tekla Structures uses with the specified unit type.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Tekla.Structures.Dialog.dotdiaUnitTypes_e",
+          "doc": "The specified unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of decimals used, 0 (no decimals or invalid unit type) or -1 (failed)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ab39e575-5bd4-7e45-c6b5-b1c51bbc10f4"
+    },
+    {
+      "name": "InitializeAngleUnitDecimals",
+      "signature": "public static bool InitializeAngleUnitDecimals()",
+      "summary": "Gets the number of decimals Tekla Structures uses for displaying the angle unit and initializes Angle class to use that.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/af5b7239-e320-7709-7db1-369d4fdfbddf"
+    },
+    {
+      "name": "InitializeDistanceUnitDecimals",
+      "signature": "public static bool InitializeDistanceUnitDecimals()",
+      "summary": "Gets the number of decimals Tekla Structures uses for displaying the \u0022length\u0022 unit and initializes the distance datatype to use that.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f6a549be-d401-5021-9d20-c7f6ff32ac82"
+    },
+    {
+      "name": "InitializeUnitDecimals",
+      "signature": "public static bool InitializeUnitDecimals()",
+      "summary": "Gets the number of decimals Tekla Structures uses for displaying its units and initializes the Tekla.Structures.Datatype classes to use them.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/773280d6-c14e-3706-ece9-d2eee4d0ad00"
+    },
+    {
+      "name": "InitializeWindow",
+      "signature": "public void InitializeWindow()",
+      "summary": "Prepares the data storage for the dialog and scans through the fields.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/716e8a1f-2eaa-7a43-faa8-fa816c0733fc"
+    },
+    {
+      "name": "LoadValues",
+      "signature": "public void LoadValues(string FileName)",
+      "summary": "Loads the dialog values from a file. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fec236f4-fc77-fe84-6719-0f260217336c"
+    },
+    {
+      "name": "ModifyValues",
+      "signature": "public void ModifyValues(string FileName)",
+      "summary": "Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/51224621-7902-e1c1-1a2b-16aa41986f8f"
+    },
+    {
+      "name": "SaveValues",
+      "signature": "public void SaveValues(string fileName)",
+      "summary": "Serializes the dialog values to an xml file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The path of the file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8a54d96d-6630-b17e-f547-8f78776f9a79"
+    },
+    {
+      "name": "ShowWindow",
+      "signature": "public void ShowWindow()",
+      "summary": "Displays the window.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/982b1878-5d0d-cbd6-6f7c-00ae2ea754b1"
+    },
+    {
+      "name": "UpdateDataStorageFromViewModel",
+      "signature": "public void UpdateDataStorageFromViewModel(Object viewModelClass)",
+      "summary": "DO NOT USE! For internal usage only!",
+      "params": [
+        {
+          "name": "viewModelClass",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e3436e31-3a09-9c03-dba7-d531beb44a15"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Localization",
+      "type": "Localization",
+      "getter": true,
+      "setter": false,
+      "summary": "The localization instance for the dialog. Each dialog has its own localization instance that has read the localization files needed for that dialog.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/58620c5e-2912-fa23-dcb2-a43c70b41323"
+    },
+    {
+      "name": "LocExtension",
+      "type": "LocExtension",
+      "getter": true,
+      "setter": false,
+      "summary": "The localization instance for the dialog. Each dialog has its own localization instance that has read the localization files needed for that dialog.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e0ee2e0-d417-c384-e9c7-ff2c3397b6b1"
+    },
+    {
+      "name": "UseDefaultStyle",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use default style in all the window controls or not. If the property is not set in the window constructor the default value (true) is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/44bc8917-e035-46f1-e431-b5b52ab44180"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

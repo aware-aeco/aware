@@ -1,0 +1,38 @@
+{
+  "name": "ModelInfo",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.ModelInfo.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=ModelInfo",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the model",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=ModelInfo"
+    },
+    {
+      "name": "Uuid",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Solibri internal unique ID (e.g. 66bbc0ca-4496-11e9-b210-d663bd873d93)",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=ModelInfo"
+    },
+    {
+      "name": "Metadata",
+      "type": "Dictionary\u003Cstring, string\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Metata of the model as a map",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=ModelInfo"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

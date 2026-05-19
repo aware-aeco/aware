@@ -1,0 +1,14 @@
+{
+  "name": "ModelDataPluginRecord",
+  "namespace": "Autodesk.Navisworks.Api.Interop.Plugins",
+  "kind": "class",
+  "summary": "ModelDataPluginRecord class in Autodesk.Navisworks.Api.Interop.Plugins.",
+  "base": "Autodesk.Navisworks.Api.Plugins.PluginRecord",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.Plugins.ModelDataPluginRecord",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

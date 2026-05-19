@@ -1,0 +1,249 @@
+{
+  "name": "PropertyElement.PropertyElementType.BoltMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The BoltMarkPropertyElementTypes class represents the available property element types for bolt marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d36be319-423a-418a-3c8a-1f543e775621",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AssemblyType",
+      "signature": "public static PropertyElement.PropertyElementType AssemblyType()",
+      "summary": "Returns the assembly type property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa58b9ca-8a4c-431f-2e41-76d37565dc4d"
+    },
+    {
+      "name": "BoltDiameter",
+      "signature": "public static PropertyElement.PropertyElementType BoltDiameter()",
+      "summary": "Returns the bolt diameter property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90e0b789-a192-6099-6c3b-3e73b1b76c2c"
+    },
+    {
+      "name": "BoltLength",
+      "signature": "public static PropertyElement.PropertyElementType BoltLength()",
+      "summary": "Returns the bolt length property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/360c3c18-1583-c92e-7a7f-7423a41b20fc"
+    },
+    {
+      "name": "CenterToCenterDistance",
+      "signature": "public static PropertyElement.PropertyElementType CenterToCenterDistance()",
+      "summary": "Returns the center-to-center distance property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c1cfe04f-975b-26e0-ea8a-ba11f34a7c80"
+    },
+    {
+      "name": "Countersunk",
+      "signature": "public static PropertyElement.PropertyElementType Countersunk()",
+      "summary": "Returns the countersunk property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/967ab431-a43f-b22c-20b9-8a277273874a"
+    },
+    {
+      "name": "FullName",
+      "signature": "public static PropertyElement.PropertyElementType FullName()",
+      "summary": "Returns the full name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb2cb655-5c21-e6e9-8d57-f362e0bde84b"
+    },
+    {
+      "name": "GageOfOutstandingLeg",
+      "signature": "public static PropertyElement.PropertyElementType GageOfOutstandingLeg()",
+      "summary": "Returns the gage of the outstanding leg property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5f92a8f-2229-4c48-50bf-4f471fa21c10"
+    },
+    {
+      "name": "HoleDepth",
+      "signature": "public static PropertyElement.PropertyElementType HoleDepth()",
+      "summary": "Returns the hole depth property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aad3fee4-cd74-0635-4547-f20caca809a1"
+    },
+    {
+      "name": "HoleDiameter",
+      "signature": "public static PropertyElement.PropertyElementType HoleDiameter()",
+      "summary": "Returns the hole diameter property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9282d00e-0091-af22-bf04-2870117afc93"
+    },
+    {
+      "name": "Material",
+      "signature": "public static PropertyElement.PropertyElementType Material()",
+      "summary": "Returns the material property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/81ac6787-2693-8077-ec78-cafc3a8291d8"
+    },
+    {
+      "name": "NumberOfBolts",
+      "signature": "public static PropertyElement.PropertyElementType NumberOfBolts()",
+      "summary": "Returns the number of bolts property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5604c3f6-8ed6-b1fc-49e7-29a44f19c9aa"
+    },
+    {
+      "name": "ShortName",
+      "signature": "public static PropertyElement.PropertyElementType ShortName()",
+      "summary": "Returns the short name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0af3a94-0fc2-5a2b-5a2f-16577c5f4a82"
+    },
+    {
+      "name": "Size",
+      "signature": "public static PropertyElement.PropertyElementType Size()",
+      "summary": "Returns the size property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e17d5d99-83fe-d50b-f8f8-b06f2be7d0d3"
+    },
+    {
+      "name": "SlotHeight",
+      "signature": "public static PropertyElement.PropertyElementType SlotHeight()",
+      "summary": "Returns the slot height property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5d8a5e44-df26-9629-3680-14a15d35f95a"
+    },
+    {
+      "name": "SlotLength",
+      "signature": "public static PropertyElement.PropertyElementType SlotLength()",
+      "summary": "Returns the slot length property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d61f76ec-e763-e674-cdea-4bcc9973fb3c"
+    },
+    {
+      "name": "SlotLengthX",
+      "signature": "public static PropertyElement.PropertyElementType SlotLengthX()",
+      "summary": "Returns the slot length in the X direction property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2cea2514-1c06-56dd-890c-811ebd24c9dc"
+    },
+    {
+      "name": "SlotLengthY",
+      "signature": "public static PropertyElement.PropertyElementType SlotLengthY()",
+      "summary": "Returns the slot length in the Y direction property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1eedc4a3-fd20-83b4-82f9-c66a382b308a"
+    },
+    {
+      "name": "Standard",
+      "signature": "public static PropertyElement.PropertyElementType Standard()",
+      "summary": "Returns the standard property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80542dfa-937c-2fd5-c16c-41e17f6c6e48"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

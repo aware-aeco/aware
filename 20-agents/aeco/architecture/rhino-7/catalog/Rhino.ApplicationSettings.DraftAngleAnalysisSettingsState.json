@@ -1,0 +1,38 @@
+{
+  "name": "DraftAngleAnalysisSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Represents a snapshot of DraftAngleAnalysisSettings",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_DraftAngleAnalysisSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AngleRange",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_DraftAngleAnalysisSettingsState_AngleRange.htm"
+    },
+    {
+      "name": "ShowIsoCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show isoparametric curves.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_DraftAngleAnalysisSettingsState_ShowIsoCurves.htm"
+    },
+    {
+      "name": "UpDirection",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "The up direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_DraftAngleAnalysisSettingsState_UpDirection.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

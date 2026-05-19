@@ -1,0 +1,50 @@
+{
+  "name": "ExtensionLibraryLoader",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "Provides functionality for loading node\u0027s DLLs",
+  "interfaces": [
+    "Dynamo.Library.ILibraryLoader"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLibraryLoader.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadNodeLibrary(System.Reflection.Assembly)",
+      "signature": "void LoadNodeLibrary(System.Reflection.Assembly library)",
+      "summary": "Loads a ZeroTouch or NodeModel based node into the VM and search. To guarantee the node is correctly added to the LibraryUI this method should not be called while LibraryExtension is loading.",
+      "params": [
+        {
+          "name": "library",
+          "type": "System.Reflection.Assembly",
+          "doc": "The library.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLibraryLoader.cs"
+    },
+    {
+      "name": "LoadPackages(System.Collections.Generic.IEnumerable\u003CSystem.Reflection.Assembly\u003E)",
+      "signature": "void LoadPackages(System.Collections.Generic.IEnumerable\u003CSystem.Reflection.Assembly\u003E assemblies)",
+      "summary": "Loads packages for import into VM and for node search.",
+      "params": [
+        {
+          "name": "assemblies",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Reflection.Assembly\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLibraryLoader.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

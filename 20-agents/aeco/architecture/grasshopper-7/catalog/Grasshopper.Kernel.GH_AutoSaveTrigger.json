@@ -1,0 +1,54 @@
+{
+  "name": "GH_AutoSaveTrigger",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Different types of events that can cause an AutoSave.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_AutoSaveTrigger.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "undefined",
+      "value": 0,
+      "summary": "Generic autosave trigger, this flag is not filtered."
+    },
+    {
+      "name": "doc_unload",
+      "value": 1,
+      "summary": "Autosave was triggered by a document being unloaded from a Canvas Context."
+    },
+    {
+      "name": "object_added",
+      "value": 2,
+      "summary": "Autosave was triggered by the addition of an object to the document."
+    },
+    {
+      "name": "object_removed",
+      "value": 3,
+      "summary": "Autosave was triggered by the removal of an object from the document."
+    },
+    {
+      "name": "wire_event",
+      "value": 4,
+      "summary": "Autosave was triggered by a change in connector wires."
+    },
+    {
+      "name": "data_matching_event",
+      "value": 5,
+      "summary": "Autosave was triggered by a change to Data Matching settings."
+    },
+    {
+      "name": "data_modification_event",
+      "value": 6,
+      "summary": "Autosave was triggered by a change to Data modifier settings."
+    },
+    {
+      "name": "object_generic",
+      "value": 7,
+      "summary": "Autosave was triggered by a non-trivial change to object data or settings."
+    }
+  ]
+}

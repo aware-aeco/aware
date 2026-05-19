@@ -1,0 +1,255 @@
+{
+  "name": "RuntimeStatus",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type RuntimeStatus",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs",
+  "constructors": [
+    {
+      "name": "RuntimeStatus(ProtoCore.RuntimeCore, bool, System.IO.TextWriter)",
+      "signature": "void RuntimeStatus(ProtoCore.RuntimeCore runtimeCore, bool warningAsError, System.IO.TextWriter writer)",
+      "summary": "RuntimeStatus.RuntimeStatus",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "warningAsError",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "writer",
+          "type": "System.IO.TextWriter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearWarningForExpression(int)",
+      "signature": "void ClearWarningForExpression(int expressionID)",
+      "summary": "RuntimeStatus.ClearWarningForExpression",
+      "params": [
+        {
+          "name": "expressionID",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "ClearWarningsForAst(int)",
+      "signature": "void ClearWarningsForAst(int astID)",
+      "summary": "RuntimeStatus.ClearWarningsForAst",
+      "params": [
+        {
+          "name": "astID",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "ClearWarningsForGraph(System.Guid)",
+      "signature": "void ClearWarningsForGraph(System.Guid guid)",
+      "summary": "RuntimeStatus.ClearWarningsForGraph",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "LogFunctionGroupNotFoundWarning(string, int, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E)",
+      "signature": "void LogFunctionGroupNotFoundWarning(string methodName, int classScope, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments)",
+      "summary": "Report that the method cannot be found.",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "doc": "The method that cannot be found",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "doc": "The class scope of object",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "Arguments",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "LogMethodNotAccessibleWarning(string)",
+      "signature": "void LogMethodNotAccessibleWarning(string methodName)",
+      "summary": "RuntimeStatus.LogMethodNotAccessibleWarning",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "LogMethodResolutionWarning(ProtoCore.FunctionGroup, string, int, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E)",
+      "signature": "void LogMethodResolutionWarning(ProtoCore.FunctionGroup funcGroup, string methodName, int classScope, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments)",
+      "summary": "RuntimeStatus.LogMethodResolutionWarning",
+      "params": [
+        {
+          "name": "funcGroup",
+          "type": "ProtoCore.FunctionGroup",
+          "optional": false
+        },
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "LogWarning(ProtoCore.Runtime.WarningID, string)",
+      "signature": "void LogWarning(ProtoCore.Runtime.WarningID ID, string message)",
+      "summary": "RuntimeStatus.LogWarning",
+      "params": [
+        {
+          "name": "ID",
+          "type": "ProtoCore.Runtime.WarningID",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "LogWarning(ProtoCore.Runtime.WarningID, string, string, int, int)",
+      "signature": "void LogWarning(ProtoCore.Runtime.WarningID ID, string message, string filename, int line, int col)",
+      "summary": "RuntimeStatus.LogWarning",
+      "params": [
+        {
+          "name": "ID",
+          "type": "ProtoCore.Runtime.WarningID",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MessageHandler",
+      "type": "ProtoCore.IOutputStream",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeStatus.MessageHandler",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "WarningCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeStatus.WarningCount",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "Warnings",
+      "type": "System.Collections.Generic.List\u003CProtoCore.Runtime.WarningEntry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeStatus.Warnings",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    },
+    {
+      "name": "WebMessageHandler",
+      "type": "ProtoCore.IOutputStream",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeStatus.WebMessageHandler",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/RuntimeStatus.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

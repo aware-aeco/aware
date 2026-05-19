@@ -1,0 +1,754 @@
+{
+  "name": "RhinoMath",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Provides constants and static methods that are additional to Math.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_RhinoMath.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clamp(Double, Double, Double)",
+      "signature": "public static double Clamp(double value, double bound1, double bound2)",
+      "summary": "Limits a Double to be specified within an interval of two numbers, by specifying a fixed minimum and maximum.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "bound1",
+          "type": "System.Double",
+          "doc": "A first bound.",
+          "optional": false
+        },
+        {
+          "name": "bound2",
+          "type": "System.Double",
+          "doc": "A second bound. This does not necessarily need to be larger or smaller than bound1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The clamped value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_Clamp.htm"
+    },
+    {
+      "name": "Clamp(Int32, Int32, Int32)",
+      "signature": "public static int Clamp(int value, int bound1, int bound2)",
+      "summary": "Restricts a Int32 to be specified within an interval of two integers.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "An integer.",
+          "optional": false
+        },
+        {
+          "name": "bound1",
+          "type": "System.Int32",
+          "doc": "A first bound.",
+          "optional": false
+        },
+        {
+          "name": "bound2",
+          "type": "System.Int32",
+          "doc": "A second bound. This does not necessarily need to be larger or smaller than bound1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The clamped value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_Clamp_1.htm"
+    },
+    {
+      "name": "CRC32(UInt32, Byte[])",
+      "signature": "public static uint CRC32(uint currentRemainder, byte[] buffer)",
+      "summary": "Advances the cyclic redundancy check value remainder given a byte array. http://en.wikipedia.org/wiki/Cyclic_redundancy_check.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The remainder from which to start.",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "System.Byte[]",
+          "doc": "The value to add to the current remainder.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The new current remainder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_CRC32.htm"
+    },
+    {
+      "name": "CRC32(UInt32, Double)",
+      "signature": "public static uint CRC32(uint currentRemainder, double value)",
+      "summary": "Advances the cyclic redundancy check value remainder given a Double. http://en.wikipedia.org/wiki/Cyclic_redundancy_check.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The remainder from which to start.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "The value to add to the current remainder.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The new current remainder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_CRC32_1.htm"
+    },
+    {
+      "name": "CRC32(UInt32, Int32)",
+      "signature": "public static uint CRC32(uint currentRemainder, int value)",
+      "summary": "Advances the cyclic redundancy check value remainder given a Int32. http://en.wikipedia.org/wiki/Cyclic_redundancy_check.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The remainder from which to start.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The value to add to the current remainder.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The new current remainder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_CRC32_2.htm"
+    },
+    {
+      "name": "EpsilonEquals(Double, Double, Double)",
+      "signature": "public static bool EpsilonEquals(double x, double y, double epsilon)",
+      "summary": "Compare two doubles for equality within some \u0022epsilon\u0022 range",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoMath.EpsilonEquals(System.Double,System.Double,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_EpsilonEquals.htm"
+    },
+    {
+      "name": "EpsilonEquals(Single, Single, Single)",
+      "signature": "public static bool EpsilonEquals(float x, float y, float epsilon)",
+      "summary": "Compare to floats for equality within some \u0022epsilon\u0022 range",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoMath.EpsilonEquals(System.Single,System.Single,System.Single)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_EpsilonEquals_1.htm"
+    },
+    {
+      "name": "EvaluateNormal",
+      "signature": "public static bool EvaluateNormal(int limitDirection, Vector3d ds, Vector3d dt, Vector3d dss, Vector3d dst, Vector3d dtt, out Vector3d n)",
+      "summary": "Expert tool to evaluate surface unit normal.",
+      "params": [
+        {
+          "name": "limitDirection",
+          "type": "System.Int32",
+          "doc": "Determines which direction is used to compute the limit, where: 0 = default, 1 = from quadrant I, 2 = from quadrant II, etc.",
+          "optional": false
+        },
+        {
+          "name": "ds",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dt",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dss",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dst",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dtt",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "n",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Unit normal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_EvaluateNormal.htm"
+    },
+    {
+      "name": "EvaluateNormalPartials",
+      "signature": "public static bool EvaluateNormalPartials(Vector3d ds, Vector3d dt, Vector3d dss, Vector3d dst, Vector3d dtt, out Vector3d ns, out Vector3d nt)",
+      "summary": "Expert tool to evaluate partial derivatives of surface unit normal.",
+      "params": [
+        {
+          "name": "ds",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dt",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dss",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dst",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dtt",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "ns",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative of unit normal. If the Jacobian is degenerate, ns is set to zero.",
+          "optional": false
+        },
+        {
+          "name": "nt",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative of unit normal. If the Jacobian is degenerate, nt is set to zero.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if Jacobian is non-degenerate, false if Jacobian is degenerate."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_EvaluateNormalPartials.htm"
+    },
+    {
+      "name": "EvaluateSectionalCurvature",
+      "signature": "public static bool EvaluateSectionalCurvature(Vector3d ds, Vector3d dt, Vector3d dss, Vector3d dst, Vector3d dtt, Vector3d planeNormal, out Vector3d k)",
+      "summary": "Expert tool to evaluate sectional curvature from surface derivatives and section plane normal.",
+      "params": [
+        {
+          "name": "ds",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dt",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "First partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dss",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dst",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "dtt",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Second partial derivative.",
+          "optional": false
+        },
+        {
+          "name": "planeNormal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Unit normal to section plane.",
+          "optional": false
+        },
+        {
+          "name": "k",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Sectional curvature. Curvature of the intersection curve of the surface and plane through the surface point where the partial derivatives were evaluated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if first partials are not linearly independent, in which case the k is set to zero."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_EvaluateSectionalCurvature.htm"
+    },
+    {
+      "name": "IntIndexToString",
+      "signature": "public static string IntIndexToString(int index)",
+      "summary": "Portrays an Int32 index in text.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Int32 number express as string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The text representation of the int index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_IntIndexToString.htm"
+    },
+    {
+      "name": "IsValidDouble",
+      "signature": "public static bool IsValidDouble(double x)",
+      "summary": "Determines whether a Double value is valid within the RhinoCommon context. Rhino does not use Double.NaN by convention, so this test evaluates to true if:x is not equal to RhinoMath.UnsetValueSystem.Double.IsNaN(x) evaluates to falseSystem.Double.IsInfinity(x) evaluates to false",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Double number to test for validity.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the number if valid, false if the number is NaN, Infinity or Unset."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_IsValidDouble.htm"
+    },
+    {
+      "name": "IsValidSingle",
+      "signature": "public static bool IsValidSingle(float x)",
+      "summary": "Determines whether a Single value is valid within the RhinoCommon context. Rhino does not use Single.NaN by convention, so this test evaluates to true if:x is not equal to RhinoMath.UnsetValue,System.Single.IsNaN(x) evaluates to falseSystem.Single.IsInfinity(x) evaluates to false",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "Single number to test for validity.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the number if valid, false if the number is NaN, Infinity or Unset."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_IsValidSingle.htm"
+    },
+    {
+      "name": "MetersPerUnit",
+      "signature": "public static double MetersPerUnit(UnitSystem units)",
+      "summary": "Return number of meters per one unit of a given unit system",
+      "params": [
+        {
+          "name": "units",
+          "type": "Rhino.UnitSystem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoMath.MetersPerUnit(Rhino.UnitSystem)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_MetersPerUnit.htm"
+    },
+    {
+      "name": "ParseNumber",
+      "signature": "public static double ParseNumber(string expression)",
+      "summary": "Evaluates command line math expression.",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "result"
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "expression is null."
+        },
+        {
+          "type": "FormatException",
+          "when": "expression cannot be parsed."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_ParseNumber.htm"
+    },
+    {
+      "name": "ToDegrees",
+      "signature": "public static double ToDegrees(double radians)",
+      "summary": "Convert an angle from radians to degrees.",
+      "params": [
+        {
+          "name": "radians",
+          "type": "System.Double",
+          "doc": "Radians to convert (180 degrees equals pi radians).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoMath.ToDegrees(System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_ToDegrees.htm"
+    },
+    {
+      "name": "ToRadians",
+      "signature": "public static double ToRadians(double degrees)",
+      "summary": "Convert an angle from degrees to radians.",
+      "params": [
+        {
+          "name": "degrees",
+          "type": "System.Double",
+          "doc": "Degrees to convert (180 degrees equals pi radians).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoMath.ToRadians(System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_ToRadians.htm"
+    },
+    {
+      "name": "TryParseNumber",
+      "signature": "public static bool TryParseNumber(string expression, out double result)",
+      "summary": "Evaluates command line math expression.",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_TryParseNumber.htm"
+    },
+    {
+      "name": "UnitScale(UnitSystem, UnitSystem)",
+      "signature": "public static double UnitScale(UnitSystem from, UnitSystem to)",
+      "summary": "Computes the scale factor for changing the measurements unit systems.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Rhino.UnitSystem",
+          "doc": "The system to convert from.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Rhino.UnitSystem",
+          "doc": "The system to convert measurements into.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "A scale multiplier."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_UnitScale.htm"
+    },
+    {
+      "name": "UnitScale(UnitSystem, Double, UnitSystem, Double)",
+      "signature": "public static double UnitScale(UnitSystem from, double fromMetersPerUnit, UnitSystem to, double toMetersPerUnit)",
+      "summary": "Computes the scale factor for changing the measurements unit systems.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Rhino.UnitSystem",
+          "doc": "The system to convert from.",
+          "optional": false
+        },
+        {
+          "name": "fromMetersPerUnit",
+          "type": "System.Double",
+          "doc": "For custom units, specify the meters per unit.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Rhino.UnitSystem",
+          "doc": "The system to convert measurements into.",
+          "optional": false
+        },
+        {
+          "name": "toMetersPerUnit",
+          "type": "System.Double",
+          "doc": "For custom units, specify the meters per unit.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "A scale multiplier."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_UnitScale_1.htm"
+    },
+    {
+      "name": "Wrap",
+      "signature": "public static double Wrap(double value, double bound1, double bound2)",
+      "summary": "Limits a Double to be specified within an interval of two numbers by repeating the available interval cyclically.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "bound1",
+          "type": "System.Double",
+          "doc": "A first bound.",
+          "optional": false
+        },
+        {
+          "name": "bound2",
+          "type": "System.Double",
+          "doc": "A second bound. This does not necessarily need to be larger or smaller than bound1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoMath.Wrap(System.Double,System.Double,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoMath_Wrap.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultAngleTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents the default angle tolerance, used when no other values are provided. This is one degree, expressed in radians.",
+      "remarks": "This is equivalent to openNURBS ON_DEFAULT_ANGLE_TOLERANCE.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_DefaultAngleTolerance.htm"
+    },
+    {
+      "name": "DefaultDistanceToleranceMillimeters",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Get Rhino\u0027s default distance tolerance in millimeters.",
+      "remarks": "This is equivalent to openNURBS ON_DEFAULT_DISTANCE_TOLERANCE_MM.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_DefaultDistanceToleranceMillimeters.htm"
+    },
+    {
+      "name": "Epsilon",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of DBL_EPSILON, which is the smallest positive floating point number x such that 1 \u002B x != 1. This is different than Double.Epsilon which is the smallest positive Double value that is greater than zero.",
+      "remarks": "This is equivalent to openNURBS ON_EPSILON.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_Epsilon.htm"
+    },
+    {
+      "name": "HalfPI",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Quarter of a rotation. 90 degrees. 1.57...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_HalfPI.htm"
+    },
+    {
+      "name": "QuarterPI",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "One eigth of a rotation. 45 degrees. 0.78...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_QuarterPI.htm"
+    },
+    {
+      "name": "SqrtEpsilon",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents a default value that is used when comparing square roots. This value is several orders of magnitude larger than ZeroTolerance.",
+      "remarks": "This is equivalent to openNURBS ON_SQRT_EPSILON.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_SqrtEpsilon.htm"
+    },
+    {
+      "name": "Tau",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Ratio of circumference divided by radius. Full rotation. 360 degrees. 6.28...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_Tau.htm"
+    },
+    {
+      "name": "TwoPI",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Full rotation. 360 degrees. 6.28...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_TwoPI.htm"
+    },
+    {
+      "name": "UnsetIntIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "When signed int values are used in a context where 0 and small negative values are valid indices and there needs to be a value that indicates the index is not set.",
+      "remarks": "This is equivalent to openNURBS ON_UNSET_INT_INDEX.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_UnsetIntIndex.htm"
+    },
+    {
+      "name": "UnsetSingle",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the single precision floating point number that is considered \u0027unset\u0027 in Rhino.",
+      "remarks": "This is equivalent to openNURBS ON_UNSET_FLOAT.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_UnsetSingle.htm"
+    },
+    {
+      "name": "UnsetValue",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Rhino standard Unset value. Use this value rather than Double.NaN when a bogus floating point value is required.",
+      "remarks": "This is equivalent to openNURBS ON_UNSET_VALUE.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_UnsetValue.htm"
+    },
+    {
+      "name": "ZeroTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets Rhino\u0027s Zero Tolerance constant, which is 2^-32. In cases when an absolute \u0022zero\u0022 tolerance is required to compare model space coordinates, ZeroTolerance is used. The value of ZeroTolerance should be no smaller than Epsilon and should be several orders of magnitude smaller than SqrtEpsilon.",
+      "remarks": "This is equivalent to openNURBS ON_ZERO_TOLERANCE.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_RhinoMath_ZeroTolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

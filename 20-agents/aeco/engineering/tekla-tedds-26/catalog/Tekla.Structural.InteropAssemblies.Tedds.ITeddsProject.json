@@ -1,0 +1,225 @@
+{
+  "name": "ITeddsProject",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for a project",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-iteddsproject-64144",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate()",
+      "signature": "void Calculate()",
+      "summary": "Calculate all documents in the project",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/2838496f69be1f7a83cba03368fa67a812931523f69728bda5db4093d59142ba"
+    },
+    {
+      "name": "Close(object)",
+      "signature": "void Close(object SaveChanges)",
+      "summary": "Close the active project",
+      "params": [
+        {
+          "name": "SaveChanges",
+          "type": "object",
+          "doc": "false to discard unsaved project file changes; otherwise save changes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/2c87f3248346ed285fe563afde1337da50b9b562006f59af90b5a415dd65851a"
+    },
+    {
+      "name": "New(string)",
+      "signature": "void New(string Name)",
+      "summary": "Create a new project",
+      "params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "doc": "Name for the new project",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/f450f22c6de708cac674cd161b16011a1453cbc42c965b2b908403c9c1dd45d9"
+    },
+    {
+      "name": "Open(string)",
+      "signature": "void Open(string FileName)",
+      "summary": "Open an existing project",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "string",
+          "doc": "Full path to project file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/c4360567d5ecb42097b5757d2e677f3db24eca2067c6f85ae3b0ac67f6445a24"
+    },
+    {
+      "name": "Save()",
+      "signature": "void Save()",
+      "summary": "Save the active project file",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/690c80c88800cd7ac0044f0fc7ea5e87100a46e94d76e52b25518402b2457a54"
+    },
+    {
+      "name": "SaveAs(object)",
+      "signature": "void SaveAs(object FileName)",
+      "summary": "Save the active project file to a new location",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "object",
+          "doc": "Full path to project file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/4322db7d765395e3247fe7c22aa17849757bf97adc8ef419629dcbd837fbf1f8"
+    },
+    {
+      "name": "SaveAsPdf(string, TdsProjectSavePdf)",
+      "signature": "string[] SaveAsPdf(string folderName, TdsProjectSavePdf options)",
+      "summary": "Save all the documents in the project in PDF format",
+      "params": [
+        {
+          "name": "folderName",
+          "type": "string",
+          "doc": "Path of location where to save files",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "TdsProjectSavePdf",
+          "doc": "Save project to PDF options",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string[]",
+        "doc": "Array of full file paths for all the output PDF files created"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/bb489743c62a33e414db7190b50da208c87078375f088a5688b75c6ef00cdfcd"
+    },
+    {
+      "name": "SendToWord(bool)",
+      "signature": "void SendToWord(bool LoadTedds)",
+      "summary": "Export the project to Microsoft Word or Tedds for Word",
+      "params": [
+        {
+          "name": "LoadTedds",
+          "type": "bool",
+          "doc": "false to just load Microsoft Word; otherwise also load the Tedds for Word Add-In",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/7e32f74ab249fcacf436e6678d913be8bb4c8810103a12b4daa0e2e4088af50f"
+    },
+    {
+      "name": "SetBimProject(string, string)",
+      "signature": "void SetBimProject(string serviceId, string projectId)",
+      "summary": "Link the Tedds project to a BIM project",
+      "params": [
+        {
+          "name": "serviceId",
+          "type": "string",
+          "doc": "Service identifier",
+          "optional": false
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "doc": "Project identifier",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/0a95195fed20f819a0532d7984d1b6a196a1e67c9596a66a32e725b1fc065716"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BimProject",
+      "type": "IBimProject",
+      "getter": true,
+      "setter": false,
+      "summary": "Linked BIM project",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/194192a41163a4642b36140dfed48c1bed2ccd2557508604c7aa796d743a3fe1"
+    },
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Full path of project file including file name",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/484cda718fd2f2a94d99a16ba9965a5fce888710154b48a095e147cb5980fe2d"
+    },
+    {
+      "name": "IsOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is a project currently open",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/d7306f713f0bcfd3eff9482b6739cb3dc1f2e9d36b0b16de35f58ea0601926b8"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Project name",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/d531a2723b903841809f8546047b0531ebde5443b982712432f6a943538c32cf"
+    },
+    {
+      "name": "Path",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Project file path (excludes file name)",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/2b4a629f8c58f07c3b29d2e3dd9c8729abacdf00052bdfbe6b849583ab520de6"
+    },
+    {
+      "name": "RootFolder",
+      "type": "IProjectFolderItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Root folder in the project tree",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/3fa5070f41550783e29b50c05380d99d2c2e4e5734002699fd6202a69bba0880"
+    },
+    {
+      "name": "Saved",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Saved status of project file",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/3b712942f082596b4c11e27657c445d9345f6e7bb6701ff5247b7b6f529228f1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

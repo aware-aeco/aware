@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "ScriptObjectInteractors.MultiElementSelectInteractor",
+  "kind": "static-class",
+  "summary": "Module-level functions of ScriptObjectInteractors.MultiElementSelectInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

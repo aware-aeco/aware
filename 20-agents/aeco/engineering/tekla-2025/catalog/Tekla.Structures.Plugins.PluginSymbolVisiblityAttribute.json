@@ -1,0 +1,58 @@
+{
+  "name": "PluginSymbolVisiblityAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The PluginSymbolVisiblityAttribute class is used for defining the symbol visibility for model plug-ins. The attribute is initialized from the custom attribute [PluginSymbolVisiblity(PluginBase.SymbolVisibility Type)] in the plug-in source. If attribute is not defined or attribute has value PluginBase.SymbolVisibility.DRAW_SYMBOL plug-in symbol is drawn normally.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/34a54f53-8840-15d4-9cc6-d7a746bc3f49",
+  "constructors": [
+    {
+      "name": "PluginSymbolVisiblityAttribute(Int32)",
+      "signature": "public PluginSymbolVisiblityAttribute(int Type)",
+      "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type of the input object dependency as an integer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96dca74e-eadd-2601-507b-06ab7463a12a"
+    },
+    {
+      "name": "PluginSymbolVisiblityAttribute(PluginBase.SymbolVisibility)",
+      "signature": "public PluginSymbolVisiblityAttribute(PluginBase.SymbolVisibility Type)",
+      "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.PluginBase.SymbolVisibility",
+          "doc": "The type of the input object dependency.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5b802a7d-3dca-6e69-ef42-9acd7ad1fbda"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "PluginBase.SymbolVisibility",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the type of the input object dependency.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed4e7dd2-5718-ca35-5064-f8acaf56d8d7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

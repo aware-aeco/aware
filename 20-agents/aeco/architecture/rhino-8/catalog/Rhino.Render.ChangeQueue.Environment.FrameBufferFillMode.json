@@ -1,0 +1,59 @@
+{
+  "name": "Environment.FrameBufferFillMode",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "enum",
+  "summary": "Fillmode for background",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_Environment_FrameBufferFillMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "None set"
+    },
+    {
+      "name": "DefaultColor",
+      "value": 1,
+      "summary": "Use default color"
+    },
+    {
+      "name": "SolidColor",
+      "value": 2,
+      "summary": "Use specified solid color"
+    },
+    {
+      "name": "Gradient2Color",
+      "value": 3,
+      "summary": "Use 2-color gradient"
+    },
+    {
+      "name": "Gradient4Color",
+      "value": 4,
+      "summary": "Use 4-color gradient (colors are specified by corners)"
+    },
+    {
+      "name": "Bitmap",
+      "value": 5,
+      "summary": "Use bitmap"
+    },
+    {
+      "name": "Renderer",
+      "value": 6,
+      "summary": "Use whatever renderer chooses"
+    },
+    {
+      "name": "Transparent",
+      "value": 7,
+      "summary": "Transparent background"
+    },
+    {
+      "name": "Force32Bit",
+      "value": "4294967295",
+      "summary": "Use 32bit color @todo verify what this means"
+    }
+  ]
+}

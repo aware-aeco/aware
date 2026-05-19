@@ -1,0 +1,25 @@
+{
+  "name": "IsDesignScriptCompatibleAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "The IsDesignScriptCompatibleAttribute indicates if the node is able to work with DesignScript evaluation engine.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "IsDesignScriptCompatibleAttribute()",
+      "signature": "void IsDesignScriptCompatibleAttribute()",
+      "summary": "IsDesignScriptCompatibleAttribute.IsDesignScriptCompatibleAttribute",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

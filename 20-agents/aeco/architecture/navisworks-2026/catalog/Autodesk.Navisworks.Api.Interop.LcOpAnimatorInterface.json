@@ -1,0 +1,178 @@
+{
+  "name": "LcOpAnimatorInterface",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAnimatorInterface class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSource",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimatorInterface",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDisplayName",
+      "signature": "bool GetDisplayName(Autodesk.Navisworks.Api.SavedItemReference path, out string display)",
+      "summary": "GetDisplayName method of LcOpAnimatorInterface.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        },
+        {
+          "name": "display",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.GetDisplayName%28Autodesk.Navisworks.Api.SavedItemReference%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetAnimatorInterface",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimatorInterface GetAnimatorInterface()",
+      "summary": "GetAnimatorInterface method of LcOpAnimatorInterface.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimatorInterface",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.GetAnimatorInterface"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimatorInterface InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAnimatorInterface.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimatorInterface",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAnimatorInterface.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "DescribeAvailableAnimations",
+      "signature": "void DescribeAvailableAnimations(Autodesk.Navisworks.Api.Interop.LcOpElementItemPathVector vec, uint types_to_return)",
+      "summary": "DescribeAvailableAnimations method of LcOpAnimatorInterface.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpElementItemPathVector",
+          "optional": false
+        },
+        {
+          "name": "types_to_return",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.DescribeAvailableAnimations%28Autodesk.Navisworks.Api.Interop.LcOpElementItemPathVector%2CSystem.UInt32%29"
+    },
+    {
+      "name": "DescribeAvailableScripts",
+      "signature": "void DescribeAvailableScripts(Autodesk.Navisworks.Api.Interop.LcOpElementItemPathVector vec)",
+      "summary": "DescribeAvailableScripts method of LcOpAnimatorInterface.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpElementItemPathVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.DescribeAvailableScripts%28Autodesk.Navisworks.Api.Interop.LcOpElementItemPathVector%29"
+    },
+    {
+      "name": "SetCurrentAnimation",
+      "signature": "void SetCurrentAnimation(Autodesk.Navisworks.Api.SavedItemReference item)",
+      "summary": "SetCurrentAnimation method of LcOpAnimatorInterface.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.SetCurrentAnimation%28Autodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "SetGUINotify",
+      "signature": "void SetGUINotify(Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify notify)",
+      "summary": "SetGUINotify method of LcOpAnimatorInterface.",
+      "params": [
+        {
+          "name": "notify",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.SetGUINotify%28Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAnimatorInterface.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAnimatorInterface.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

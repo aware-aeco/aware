@@ -1,0 +1,100 @@
+{
+  "name": "LayoutSpecification",
+  "namespace": "Dynamo.Wpf.Interfaces",
+  "kind": "class",
+  "summary": "Represents the specification for the library items layout in library view.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs",
+  "constructors": [
+    {
+      "name": "LayoutSpecification()",
+      "signature": "void LayoutSpecification()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Dynamo.Wpf.Interfaces.LayoutSpecification Clone()",
+      "summary": "Performs a deep clone of this object and returns a new LayoutSpecification object",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Wpf.Interfaces.LayoutSpecification",
+        "doc": "A cloned LayoutSpecification object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "FromJSONStream(System.IO.Stream)",
+      "signature": "Dynamo.Wpf.Interfaces.LayoutSpecification FromJSONStream(System.IO.Stream stream)",
+      "summary": "Creates LibraryLayoutSpec object from given json stream",
+      "params": [
+        {
+          "name": "stream",
+          "type": "System.IO.Stream",
+          "doc": "JSON stream",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Wpf.Interfaces.LayoutSpecification",
+        "doc": "LibraryLayoutSpec object or null"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "FromJSONString(string)",
+      "signature": "Dynamo.Wpf.Interfaces.LayoutSpecification FromJSONString(string jsonText)",
+      "summary": "Creates LibraryLayoutSpec object from the given json text",
+      "params": [
+        {
+          "name": "jsonText",
+          "type": "string",
+          "doc": "JSON text to deserialize",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Wpf.Interfaces.LayoutSpecification",
+        "doc": "LibraryLayoutSpec object or null"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "ToJSONStream",
+      "signature": "System.IO.Stream ToJSONStream()",
+      "summary": "Serializes the layout specification to json stream",
+      "params": [],
+      "returns": {
+        "type": "System.IO.Stream",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sections",
+      "type": "System.Collections.Generic.List\u003CDynamo.Wpf.Interfaces.LayoutSection\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "List of LayoutSections",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

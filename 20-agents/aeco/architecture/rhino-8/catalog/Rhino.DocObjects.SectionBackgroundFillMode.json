@@ -1,0 +1,29 @@
+{
+  "name": "SectionBackgroundFillMode",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines how a background fill is applied to a section",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_SectionBackgroundFillMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Do not fill in the background of a section"
+    },
+    {
+      "name": "Viewport",
+      "value": 1,
+      "summary": "Use the current display mode settings to determine how to apply a fill. Wireframe will not fill while shaded and rendered will fill using colors and materials matching how the object is drawn."
+    },
+    {
+      "name": "SolidColor",
+      "value": 2,
+      "summary": "Use a solid color for a background fill. If BackgroundFillColor is set on this section style, then that color will be used. Otherwise, the item\u0027s color that this section style is associated will be used"
+    }
+  ]
+}

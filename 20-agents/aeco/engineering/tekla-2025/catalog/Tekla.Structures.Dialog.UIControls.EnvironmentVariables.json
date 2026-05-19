@@ -1,0 +1,72 @@
+{
+  "name": "EnvironmentVariables",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The EnvironmentVariables class contains a sorted list specializing in getting active environment variables and advanced option settings. It also checks options.ini files in the active model folder as well as options_user.ini files.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/55ce6899-663c-4581-14ea-228425de9a97",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public static void Add(string key)",
+      "summary": "Adds a variable to the list.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The variable to be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c7d998b9-ddb7-e742-a3e1-7fe8ecfb949d"
+    },
+    {
+      "name": "Get",
+      "signature": "public static string Get(string key)",
+      "summary": "Gets a key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The key."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/002ca3fd-b561-354f-b73a-0422e9d79c18"
+    },
+    {
+      "name": "GetEnvironmentVariable",
+      "signature": "public static string GetEnvironmentVariable(string variableName)",
+      "summary": "Gets an environment variable.",
+      "params": [
+        {
+          "name": "variableName",
+          "type": "System.String",
+          "doc": "The name of the variable to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The environment variable."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/38ea5140-b4be-74f3-f298-1270d3588221"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

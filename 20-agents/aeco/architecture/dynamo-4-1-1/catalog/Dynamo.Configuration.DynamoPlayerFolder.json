@@ -1,0 +1,81 @@
+{
+  "name": "DynamoPlayerFolder",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "This class describes a folder (usually containing Dynamo graphs) added to the Dynamo Player or Generative Design",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs",
+  "constructors": [
+    {
+      "name": "DynamoPlayerFolder()",
+      "signature": "void DynamoPlayerFolder()",
+      "summary": "DynamoPlayerFolder.DynamoPlayerFolder",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The display name of the folder",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The ID of the folder",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    },
+    {
+      "name": "IsDefault",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Is the folder path the default directory of the list",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    },
+    {
+      "name": "IsRemovable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Is this folder removable from the settings (Built-in folders are non-removable)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    },
+    {
+      "name": "IsValid",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Is the folder path a valid path",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    },
+    {
+      "name": "Order",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The order of the folder",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    },
+    {
+      "name": "Path",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The full path of the folder",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisModelIssue.SeverityEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Issue severity.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a30423e9-4da3-a409-7a10-a4d98390af29",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Error",
+      "value": 1,
+      "summary": "Error"
+    },
+    {
+      "name": "Warning",
+      "value": 0,
+      "summary": "Warning"
+    },
+    {
+      "name": "Information",
+      "value": 2,
+      "summary": "Information"
+    }
+  ]
+}

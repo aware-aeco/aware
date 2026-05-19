@@ -1,0 +1,54 @@
+{
+  "name": "BrepEdgeFilletDistance",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Fillet distances along a BrepEdge",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_BrepEdgeFilletDistance.htm",
+  "constructors": [
+    {
+      "name": "BrepEdgeFilletDistance",
+      "signature": "public BrepEdgeFilletDistance(double edgeParameter, double filletDistance)",
+      "summary": "Construct a fillet distance",
+      "params": [
+        {
+          "name": "edgeParameter",
+          "type": "System.Double",
+          "doc": "The parameter along the edge where to apply the fillet distance",
+          "optional": false
+        },
+        {
+          "name": "filletDistance",
+          "type": "System.Double",
+          "doc": "The distance to apply",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_BrepEdgeFilletDistance__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EdgeParameter",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The parameter along the BrepEdge where to apply a fillet distance (radius)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_BrepEdgeFilletDistance_EdgeParameter.htm"
+    },
+    {
+      "name": "FilletDistance",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Distance to fillet",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_BrepEdgeFilletDistance_FilletDistance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

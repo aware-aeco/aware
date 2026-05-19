@@ -1,0 +1,98 @@
+{
+  "name": "SectionAlongPathSectionLabelingProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Section labeling properties",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathSectionLabelingProperties",
+      "signature": "SectionAlongPathSectionLabelingProperties(bInitFromSTW: bool = False) | SectionAlongPathSectionLabelingProperties(B: SectionAlongPathSectionLabelingProperties)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HeadingText",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the HeadingText \u0022longitudinal profile\u0022, \u0022transversal profile\u0022, \u0022elevation\u0022, \u0022section\u0022, \u0022Unfold\u0022, . and \u0022none\u0022 (expandable)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.HeadingText"
+    },
+    {
+      "name": "HeadingTextParameters",
+      "type": "SectionAlongPathTextParameterProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the SectionAlongPathTextParameterProperties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.HeadingTextParameters"
+    },
+    {
+      "name": "IsHeadingOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the IsHeadingOn",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.IsHeadingOn"
+    },
+    {
+      "name": "IsScaleOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the IsScaleOn",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.IsScaleOn"
+    },
+    {
+      "name": "LabelingOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance of the labeling from its content\u0027s min/max box",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.LabelingOffset"
+    },
+    {
+      "name": "LabelingPosition",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Position of the labeling with respect to its content\u0027s min/max box",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.LabelingPosition"
+    },
+    {
+      "name": "LabelingsDistance",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Distance between scale text and heading text",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.LabelingsDistance"
+    },
+    {
+      "name": "ScaleTextParameters",
+      "type": "SectionAlongPathTextParameterProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the SectionAlongPathTextParameterProperties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.ScaleTextParameters"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

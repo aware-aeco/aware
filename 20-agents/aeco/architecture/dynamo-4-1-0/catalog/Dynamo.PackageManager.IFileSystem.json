@@ -1,0 +1,183 @@
+{
+  "name": "IFileSystem",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "interface",
+  "summary": "An abstract FileSystem for mocking purposes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CopyFile(string, string)",
+      "signature": "void CopyFile(string filePath, string destinationPath)",
+      "summary": "IFileSystem.CopyFile",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "destinationPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "DeleteDirectory(string)",
+      "signature": "void DeleteDirectory(string directoryPath)",
+      "summary": "IFileSystem.DeleteDirectory",
+      "params": [
+        {
+          "name": "directoryPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "DeleteFile(string)",
+      "signature": "void DeleteFile(string filePath)",
+      "summary": "IFileSystem.DeleteFile",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "DirectoryExists(string)",
+      "signature": "bool DirectoryExists(string directoryPath)",
+      "summary": "IFileSystem.DirectoryExists",
+      "params": [
+        {
+          "name": "directoryPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "FileExists(string)",
+      "signature": "bool FileExists(string filePath)",
+      "summary": "IFileSystem.FileExists",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "GetDirectories(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GetDirectories(string dir)",
+      "summary": "IFileSystem.GetDirectories",
+      "params": [
+        {
+          "name": "dir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "GetFiles(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GetFiles(string dir)",
+      "summary": "IFileSystem.GetFiles",
+      "params": [
+        {
+          "name": "dir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "TryCreateDirectory(string)",
+      "signature": "Dynamo.PackageManager.Interfaces.IDirectoryInfo TryCreateDirectory(string directoryPath)",
+      "summary": "IFileSystem.TryCreateDirectory",
+      "params": [
+        {
+          "name": "directoryPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Interfaces.IDirectoryInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    },
+    {
+      "name": "WriteAllText(string, string)",
+      "signature": "void WriteAllText(string filePath, string content)",
+      "summary": "IFileSystem.WriteAllText",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileSystem.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

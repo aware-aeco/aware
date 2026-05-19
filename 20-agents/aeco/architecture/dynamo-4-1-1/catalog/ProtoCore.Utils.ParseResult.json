@@ -1,0 +1,41 @@
+{
+  "name": "ParseResult",
+  "namespace": "ProtoCore.Utils",
+  "kind": "class",
+  "summary": "Parse result.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs",
+  "constructors": [
+    {
+      "name": "ParseResult()",
+      "signature": "void ParseResult()",
+      "summary": "ParseResult.ParseResult",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CodeBlockNode",
+      "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+      "getter": true,
+      "setter": true,
+      "summary": "All code related AST nodes will be saved in a CodeBlockNode.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "CommentBlockNode",
+      "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+      "getter": true,
+      "setter": true,
+      "summary": "All comment related AST nodes will be saved in a CodeBlockNode.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

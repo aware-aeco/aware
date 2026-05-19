@@ -1,0 +1,29 @@
+{
+  "name": "ContourPlate.ContourPlateTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The contour plate types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/22f8144f-78df-e35b-1d18-c9999523d61b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNKNOWN",
+      "value": 0,
+      "summary": "The unknown type."
+    },
+    {
+      "name": "PLATE",
+      "value": 1,
+      "summary": "The plate-like contour plate."
+    },
+    {
+      "name": "SLAB",
+      "value": 2,
+      "summary": "The slab-like contour plate."
+    }
+  ]
+}

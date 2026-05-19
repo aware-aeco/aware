@@ -1,0 +1,41 @@
+{
+  "name": "ToolTipsAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Defines tooltips for ribbon tabs and commands in the GUI system.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.ToolTipsAttribute",
+  "constructors": [
+    {
+      "name": "ToolTipsAttribute(string)",
+      "signature": "ToolTipsAttribute(string xaml)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "xaml",
+          "type": "string",
+          "doc": "The file that specifies the tooltips",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolTipsAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Xaml",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The file that specifies the tooltips for Ribbon tab and commands",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.ToolTipsAttribute.Xaml"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

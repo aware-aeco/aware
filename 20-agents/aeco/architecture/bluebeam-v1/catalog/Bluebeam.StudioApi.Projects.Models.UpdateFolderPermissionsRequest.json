@@ -1,0 +1,30 @@
+{
+  "name": "UpdateFolderPermissionsRequest",
+  "namespace": "Bluebeam.StudioApi.Projects.Models",
+  "kind": "class",
+  "summary": "Request body DTO for the corresponding \u0060UpdateFolderPermissions\u0060 operation. Synthesized from the Postman example schema.",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Permission",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Permission\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UserId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060UserId\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

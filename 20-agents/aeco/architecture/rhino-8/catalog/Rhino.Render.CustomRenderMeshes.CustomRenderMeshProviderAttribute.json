@@ -1,0 +1,41 @@
+{
+  "name": "CustomRenderMeshProviderAttribute",
+  "namespace": "Rhino.Render.CustomRenderMeshes",
+  "kind": "class",
+  "summary": "Attributes for RenderMeshProvider",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshes_CustomRenderMeshProviderAttribute.htm",
+  "constructors": [
+    {
+      "name": "CustomRenderMeshProviderAttribute",
+      "signature": "public CustomRenderMeshProviderAttribute(bool nonObjectIdsOnly = false)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "nonObjectIdsOnly",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022nonObjectIdsOnly\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.CustomRenderMeshProviderAttribute.#ctor(System.Boolean)\u0022]",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_CustomRenderMeshProviderAttribute__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "NonObjectIdsOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If set to true, this will quickly return false for HasCustomRenderMeshes if the objectId is in the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_CustomRenderMeshProviderAttribute_NonObjectIdsOnly.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,35 @@
+{
+  "name": "StirrupType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the stirrups",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/StirrupType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Column",
+      "value": 3
+    },
+    {
+      "name": "Diamond",
+      "value": 4
+    },
+    {
+      "name": "FullCircle",
+      "value": 5
+    },
+    {
+      "name": "Normal",
+      "value": 1
+    },
+    {
+      "name": "Torsion",
+      "value": 2
+    }
+  ]
+}

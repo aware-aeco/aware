@@ -1,0 +1,58 @@
+{
+  "name": "IndirectPolymeshEdge",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The IndirectEdge class represents a single global edge in a solid using integer indexes to reference to vertices instead of directly using geometric (coordinate) values.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bfb0abb5-fc13-1e3b-c2e3-3709696304f8",
+  "constructors": [
+    {
+      "name": "IndirectPolymeshEdge",
+      "signature": "public IndirectPolymeshEdge()",
+      "summary": "Initializes a new instance of the IndirectPolymeshEdge class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e88cab0a-1898-9ba0-6d99-1e2183af2eda"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EdgeType",
+      "type": "PolymeshEdgeTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Type of the edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfc44450-1480-a17f-2a79-294ac431dffc"
+    },
+    {
+      "name": "EndPoint",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "End point of the edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/55f2fec7-be29-80cc-caea-32e91f9606d1"
+    },
+    {
+      "name": "ShellIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the shell the edge belongs to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2133ef38-dc33-787b-775e-1fd90bf1a533"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Start point of the edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1346d045-3ef8-e6c5-aebd-1f6eb6144a4f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,2120 @@
+{
+  "name": "LcOpKernel",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpKernel class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpState",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpKernel",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetActiveSheetEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpActiveSheetEvent GetActiveSheetEvent()",
+      "summary": "GetActiveSheetEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpActiveSheetEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetActiveSheetEvent"
+    },
+    {
+      "name": "GetApplictionCloseEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpApplicationCloseEvent GetApplictionCloseEvent()",
+      "summary": "GetApplictionCloseEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpApplicationCloseEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetApplictionCloseEvent"
+    },
+    {
+      "name": "GetBeginEditEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpBeginEditEvent GetBeginEditEvent()",
+      "summary": "GetBeginEditEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBeginEditEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetBeginEditEvent"
+    },
+    {
+      "name": "GetCurrentFilenameChangedEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpCurrentFilenameChangedEvent GetCurrentFilenameChangedEvent()",
+      "summary": "GetCurrentFilenameChangedEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpCurrentFilenameChangedEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetCurrentFilenameChangedEvent"
+    },
+    {
+      "name": "GetEndEditEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpEndEditEvent GetEndEditEvent()",
+      "summary": "GetEndEditEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpEndEditEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetEndEditEvent"
+    },
+    {
+      "name": "GetFileDatabaseLoadedEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElementLoaded GetFileDatabaseLoadedEvent()",
+      "summary": "GetFileDatabaseLoadedEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElementLoaded",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetFileDatabaseLoadedEvent"
+    },
+    {
+      "name": "GetFileDatabaseUnloadingEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElementUnloading GetFileDatabaseUnloadingEvent()",
+      "summary": "GetFileDatabaseUnloadingEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElementUnloading",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetFileDatabaseUnloadingEvent"
+    },
+    {
+      "name": "GetIdleEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpIdleEvent GetIdleEvent()",
+      "summary": "GetIdleEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpIdleEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetIdleEvent"
+    },
+    {
+      "name": "GetAppendFileEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKernelFileEvent GetAppendFileEvent()",
+      "summary": "GetAppendFileEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelFileEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetAppendFileEvent"
+    },
+    {
+      "name": "GetLoadFileEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKernelFileEvent GetLoadFileEvent()",
+      "summary": "GetLoadFileEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelFileEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetLoadFileEvent"
+    },
+    {
+      "name": "GetModelTransformChangingEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent GetModelTransformChangingEvent()",
+      "summary": "GetModelTransformChangingEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetModelTransformChangingEvent"
+    },
+    {
+      "name": "GetModelUnitsChangedEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpModelUnitsChangedEvent GetModelUnitsChangedEvent()",
+      "summary": "GetModelUnitsChangedEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpModelUnitsChangedEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetModelUnitsChangedEvent"
+    },
+    {
+      "name": "GetSaveFileEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSaveFileEvent GetSaveFileEvent()",
+      "summary": "GetSaveFileEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSaveFileEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetSaveFileEvent"
+    },
+    {
+      "name": "GetSaveSceneEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSaveSceneEvent GetSaveSceneEvent()",
+      "summary": "GetSaveSceneEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSaveSceneEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetSaveSceneEvent"
+    },
+    {
+      "name": "GetSceneLoadedEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSceneLoadedEvent GetSceneLoadedEvent()",
+      "summary": "GetSceneLoadedEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSceneLoadedEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetSceneLoadedEvent"
+    },
+    {
+      "name": "GetUnLoadingFileEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpUnLoadingFileEvent GetUnLoadingFileEvent()",
+      "summary": "GetUnLoadingFileEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpUnLoadingFileEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetUnLoadingFileEvent"
+    },
+    {
+      "name": "GetUpdateFilesEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpUpdateFilesEvent GetUpdateFilesEvent()",
+      "summary": "GetUpdateFilesEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpUpdateFilesEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetUpdateFilesEvent"
+    },
+    {
+      "name": "GetUserPropertyEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpUserPropertyEvent GetUserPropertyEvent()",
+      "summary": "GetUserPropertyEvent method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpUserPropertyEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetUserPropertyEvent"
+    },
+    {
+      "name": "GetCurrentFileVersion",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUNWFileVersionFileVersion GetCurrentFileVersion()",
+      "summary": "GetCurrentFileVersion method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUNWFileVersionFileVersion",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetCurrentFileVersion"
+    },
+    {
+      "name": "ResolveIndexPath",
+      "signature": "Autodesk.Navisworks.Api.ModelItem ResolveIndexPath(Autodesk.Navisworks.Api.Interop.LcUInt32Vector index_path)",
+      "summary": "ResolveIndexPath method of LcOpKernel.",
+      "params": [
+        {
+          "name": "index_path",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.ResolveIndexPath%28Autodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "ResolvePathID",
+      "signature": "Autodesk.Navisworks.Api.ModelItem ResolvePathID(int model_index, string path_id)",
+      "summary": "ResolvePathID method of LcOpKernel.",
+      "params": [
+        {
+          "name": "model_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "path_id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.ResolvePathID%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "GetSelection",
+      "signature": "Autodesk.Navisworks.Api.ModelItemCollection GetSelection()",
+      "summary": "GetSelection method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetSelection"
+    },
+    {
+      "name": "AppendFile",
+      "signature": "bool AppendFile(string filename)",
+      "summary": "AppendFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AppendFile%28System.String%29"
+    },
+    {
+      "name": "AppendFile",
+      "signature": "bool AppendFile(string filename, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "AppendFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AppendFile%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "AppendFiles",
+      "signature": "bool AppendFiles(Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector filenames)",
+      "summary": "AppendFiles method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filenames",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AppendFiles%28Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector%29"
+    },
+    {
+      "name": "AppendFiles",
+      "signature": "bool AppendFiles(Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector filenames, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "AppendFiles method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filenames",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AppendFiles%28Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "AppendSheet",
+      "signature": "bool AppendSheet(Autodesk.Navisworks.Api.SheetInfo sheet)",
+      "summary": "AppendSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AppendSheet%28Autodesk.Navisworks.Api.SheetInfo%29"
+    },
+    {
+      "name": "AppendSheet",
+      "signature": "bool AppendSheet(Autodesk.Navisworks.Api.SheetInfo sheet, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "AppendSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AppendSheet%28Autodesk.Navisworks.Api.SheetInfo%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "AutoRecoverFrom",
+      "signature": "bool AutoRecoverFrom(string filename, string original_filename)",
+      "summary": "AutoRecoverFrom method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "original_filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AutoRecoverFrom%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "AutoRecoverFrom",
+      "signature": "bool AutoRecoverFrom(string filename, string original_filename, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "AutoRecoverFrom method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "original_filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AutoRecoverFrom%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "AutoSaveAs",
+      "signature": "bool AutoSaveAs(string filename)",
+      "summary": "AutoSaveAs method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AutoSaveAs%28System.String%29"
+    },
+    {
+      "name": "AutoSaveAs",
+      "signature": "bool AutoSaveAs(string filename, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "AutoSaveAs method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AutoSaveAs%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "CanResaveScene",
+      "signature": "bool CanResaveScene()",
+      "summary": "CanResaveScene method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CanResaveScene"
+    },
+    {
+      "name": "CloseFileHandles",
+      "signature": "bool CloseFileHandles()",
+      "summary": "CloseFileHandles method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CloseFileHandles"
+    },
+    {
+      "name": "CloseFileHandles",
+      "signature": "bool CloseFileHandles(Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "CloseFileHandles method of LcOpKernel.",
+      "params": [
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CloseFileHandles%28Autodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "ConvertSheet",
+      "signature": "bool ConvertSheet(string sheet_id)",
+      "summary": "ConvertSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet_id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.ConvertSheet%28System.String%29"
+    },
+    {
+      "name": "ConvertSheet",
+      "signature": "bool ConvertSheet(string sheet_id, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "ConvertSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet_id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.ConvertSheet%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "CreateCache",
+      "signature": "bool CreateCache(string filename)",
+      "summary": "CreateCache method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CreateCache%28System.String%29"
+    },
+    {
+      "name": "CreateCache",
+      "signature": "bool CreateCache(string filename, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "CreateCache method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CreateCache%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "CreateIndexPath",
+      "signature": "bool CreateIndexPath(Autodesk.Navisworks.Api.ModelItem path_link, Autodesk.Navisworks.Api.Interop.LcUInt32Vector index_path)",
+      "summary": "CreateIndexPath method of LcOpKernel.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "index_path",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CreateIndexPath%28Autodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "DeleteCurrentSelection",
+      "signature": "bool DeleteCurrentSelection()",
+      "summary": "DeleteCurrentSelection method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.DeleteCurrentSelection"
+    },
+    {
+      "name": "DeleteCurrentSelection",
+      "signature": "bool DeleteCurrentSelection(Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "DeleteCurrentSelection method of LcOpKernel.",
+      "params": [
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.DeleteCurrentSelection%28Autodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "DeleteSelection",
+      "signature": "bool DeleteSelection(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "DeleteSelection method of LcOpKernel.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.DeleteSelection%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "DeleteSelection",
+      "signature": "bool DeleteSelection(Autodesk.Navisworks.Api.ModelItemCollection selection, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "DeleteSelection method of LcOpKernel.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.DeleteSelection%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "DescribeSceneSetAsJsonAggregate",
+      "signature": "bool DescribeSceneSetAsJsonAggregate(out string aggregate_json)",
+      "summary": "DescribeSceneSetAsJsonAggregate method of LcOpKernel.",
+      "params": [
+        {
+          "name": "aggregate_json",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.DescribeSceneSetAsJsonAggregate%28System.String%40%29"
+    },
+    {
+      "name": "ExportFile",
+      "signature": "bool ExportFile(string filename, Autodesk.Navisworks.Api.NwdExportOptions options)",
+      "summary": "ExportFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.ExportFile%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%29"
+    },
+    {
+      "name": "ExportFile",
+      "signature": "bool ExportFile(string filename, Autodesk.Navisworks.Api.NwdExportOptions options, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "ExportFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.ExportFile%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "GetNextRedo",
+      "signature": "bool GetNextRedo(out string name)",
+      "summary": "GetNextRedo method of LcOpKernel.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetNextRedo%28System.String%40%29"
+    },
+    {
+      "name": "GetNextUndo",
+      "signature": "bool GetNextUndo(out string name)",
+      "summary": "GetNextUndo method of LcOpKernel.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetNextUndo%28System.String%40%29"
+    },
+    {
+      "name": "IsCurrentFileChangedOnDisk",
+      "signature": "bool IsCurrentFileChangedOnDisk()",
+      "summary": "IsCurrentFileChangedOnDisk method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsCurrentFileChangedOnDisk"
+    },
+    {
+      "name": "IsEditing",
+      "signature": "bool IsEditing()",
+      "summary": "IsEditing method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsEditing"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "bool IsEmpty()",
+      "summary": "IsEmpty method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsEmpty"
+    },
+    {
+      "name": "IsInternalItem",
+      "signature": "bool IsInternalItem(Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "IsInternalItem method of LcOpKernel.",
+      "params": [
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsInternalItem%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsModified",
+      "signature": "bool IsModified()",
+      "summary": "IsModified method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsModified"
+    },
+    {
+      "name": "IsModifiedSinceLastAutoSave",
+      "signature": "bool IsModifiedSinceLastAutoSave()",
+      "summary": "IsModifiedSinceLastAutoSave method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsModifiedSinceLastAutoSave"
+    },
+    {
+      "name": "IsRevokeOk",
+      "signature": "bool IsRevokeOk()",
+      "summary": "IsRevokeOk method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsRevokeOk"
+    },
+    {
+      "name": "IsUpdating",
+      "signature": "bool IsUpdating()",
+      "summary": "IsUpdating method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsUpdating"
+    },
+    {
+      "name": "LoadWholeJsonAggregate",
+      "signature": "bool LoadWholeJsonAggregate(string aggregate_json, string progress_uri)",
+      "summary": "LoadWholeJsonAggregate method of LcOpKernel.",
+      "params": [
+        {
+          "name": "aggregate_json",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress_uri",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.LoadWholeJsonAggregate%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "LoadWholeJsonAggregate",
+      "signature": "bool LoadWholeJsonAggregate(string aggregate_json, string progress_uri, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "LoadWholeJsonAggregate method of LcOpKernel.",
+      "params": [
+        {
+          "name": "aggregate_json",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.LoadWholeJsonAggregate%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "MergeFile",
+      "signature": "bool MergeFile(string filename)",
+      "summary": "MergeFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.MergeFile%28System.String%29"
+    },
+    {
+      "name": "MergeFile",
+      "signature": "bool MergeFile(string filename, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "MergeFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.MergeFile%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "MergeFile",
+      "signature": "bool MergeFile(string filename, Autodesk.Navisworks.Api.Progress progress, string salt_override)",
+      "summary": "MergeFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        },
+        {
+          "name": "salt_override",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.MergeFile%28System.String%2CAutodesk.Navisworks.Api.Progress%2CSystem.String%29"
+    },
+    {
+      "name": "MergeFiles",
+      "signature": "bool MergeFiles(Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector filenames)",
+      "summary": "MergeFiles method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filenames",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.MergeFiles%28Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector%29"
+    },
+    {
+      "name": "MergeFiles",
+      "signature": "bool MergeFiles(Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector filenames, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "MergeFiles method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filenames",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.MergeFiles%28Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "MergeSheet",
+      "signature": "bool MergeSheet(Autodesk.Navisworks.Api.SheetInfo sheet)",
+      "summary": "MergeSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.MergeSheet%28Autodesk.Navisworks.Api.SheetInfo%29"
+    },
+    {
+      "name": "MergeSheet",
+      "signature": "bool MergeSheet(Autodesk.Navisworks.Api.SheetInfo sheet, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "MergeSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.MergeSheet%28Autodesk.Navisworks.Api.SheetInfo%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "PublishFile",
+      "signature": "bool PublishFile(string filename, Autodesk.Navisworks.Api.NwdExportOptions options, Autodesk.Navisworks.Api.PublishProperties attrib)",
+      "summary": "PublishFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "optional": false
+        },
+        {
+          "name": "attrib",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.PublishFile%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%2CAutodesk.Navisworks.Api.PublishProperties%29"
+    },
+    {
+      "name": "PublishFile",
+      "signature": "bool PublishFile(string filename, Autodesk.Navisworks.Api.NwdExportOptions options, Autodesk.Navisworks.Api.PublishProperties attrib, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "PublishFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "optional": false
+        },
+        {
+          "name": "attrib",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.PublishFile%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%2CAutodesk.Navisworks.Api.PublishProperties%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "Redo",
+      "signature": "bool Redo()",
+      "summary": "Redo method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.Redo"
+    },
+    {
+      "name": "RemoveFile",
+      "signature": "bool RemoveFile(int index)",
+      "summary": "RemoveFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.RemoveFile%28System.Int32%29"
+    },
+    {
+      "name": "RemoveFile",
+      "signature": "bool RemoveFile(int index, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "RemoveFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.RemoveFile%28System.Int32%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "Rollback",
+      "signature": "bool Rollback()",
+      "summary": "Rollback method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.Rollback"
+    },
+    {
+      "name": "SaveFile",
+      "signature": "bool SaveFile(string filename)",
+      "summary": "SaveFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SaveFile%28System.String%29"
+    },
+    {
+      "name": "SaveFile",
+      "signature": "bool SaveFile(string filename, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "SaveFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SaveFile%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "SaveNWD",
+      "signature": "bool SaveNWD(string filename, int version)",
+      "summary": "SaveNWD method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SaveNWD%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "SaveNWD",
+      "signature": "bool SaveNWD(string filename, int version, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "SaveNWD method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SaveNWD%28System.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "SaveNWF",
+      "signature": "bool SaveNWF(string filename, int version)",
+      "summary": "SaveNWF method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SaveNWF%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "SaveNWF",
+      "signature": "bool SaveNWF(string filename, int version, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "SaveNWF method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SaveNWF%28System.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "SetClippingPlanesFromJsonClipPlaneSet",
+      "signature": "bool SetClippingPlanesFromJsonClipPlaneSet(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, string json)",
+      "summary": "SetClippingPlanesFromJsonClipPlaneSet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "json",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SetClippingPlanesFromJsonClipPlaneSet%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.String%29"
+    },
+    {
+      "name": "SetRedlinesFromJsonRedlineCollection",
+      "signature": "bool SetRedlinesFromJsonRedlineCollection(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, string json)",
+      "summary": "SetRedlinesFromJsonRedlineCollection method of LcOpKernel.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "json",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SetRedlinesFromJsonRedlineCollection%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.String%29"
+    },
+    {
+      "name": "SetViewpointFromJsonAutodeskCommonCamera",
+      "signature": "bool SetViewpointFromJsonAutodeskCommonCamera(string json, Autodesk.Navisworks.Api.Interop.LcNvViewPoint viewpoint)",
+      "summary": "SetViewpointFromJsonAutodeskCommonCamera method of LcOpKernel.",
+      "params": [
+        {
+          "name": "json",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "viewpoint",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SetViewpointFromJsonAutodeskCommonCamera%28System.String%2CAutodesk.Navisworks.Api.Interop.LcNvViewPoint%29"
+    },
+    {
+      "name": "SwitchSheet",
+      "signature": "bool SwitchSheet(string sheet_id)",
+      "summary": "SwitchSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet_id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SwitchSheet%28System.String%29"
+    },
+    {
+      "name": "SwitchSheet",
+      "signature": "bool SwitchSheet(string sheet_id, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "SwitchSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet_id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SwitchSheet%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "TryLoadFile",
+      "signature": "bool TryLoadFile(string filename)",
+      "summary": "TryLoadFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.TryLoadFile%28System.String%29"
+    },
+    {
+      "name": "TryLoadFile",
+      "signature": "bool TryLoadFile(string filename, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "TryLoadFile method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.TryLoadFile%28System.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "Undo",
+      "signature": "bool Undo()",
+      "summary": "Undo method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.Undo"
+    },
+    {
+      "name": "UndoRedoLocked",
+      "signature": "bool UndoRedoLocked()",
+      "summary": "UndoRedoLocked method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.UndoRedoLocked"
+    },
+    {
+      "name": "UpdateFiles",
+      "signature": "bool UpdateFiles()",
+      "summary": "UpdateFiles method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.UpdateFiles"
+    },
+    {
+      "name": "UpdateFiles",
+      "signature": "bool UpdateFiles(Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "UpdateFiles method of LcOpKernel.",
+      "params": [
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.UpdateFiles%28Autodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "CreatePathID",
+      "signature": "int CreatePathID(Autodesk.Navisworks.Api.ModelItem path_link, out string path_id)",
+      "summary": "CreatePathID method of LcOpKernel.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "path_id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CreatePathID%28Autodesk.Navisworks.Api.ModelItem%2CSystem.String%40%29"
+    },
+    {
+      "name": "RequestOneShotTimer",
+      "signature": "int RequestOneShotTimer(double time_to_wait, Autodesk.Navisworks.Api.Interop.LcOpKernelTimerInterface p)",
+      "summary": "RequestOneShotTimer method of LcOpKernel.",
+      "params": [
+        {
+          "name": "time_to_wait",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelTimerInterface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.RequestOneShotTimer%28System.Double%2CAutodesk.Navisworks.Api.Interop.LcOpKernelTimerInterface%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpKernel InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpKernel.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpKernel.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "TryLoadFileInfo",
+      "signature": "static bool TryLoadFileInfo(string filename, Autodesk.Navisworks.Api.DocumentInfo info)",
+      "summary": "TryLoadFileInfo method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Autodesk.Navisworks.Api.DocumentInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.TryLoadFileInfo%28System.String%2CAutodesk.Navisworks.Api.DocumentInfo%29"
+    },
+    {
+      "name": "TryLoadFileInfo",
+      "signature": "static bool TryLoadFileInfo(string filename, Autodesk.Navisworks.Api.DocumentInfo info, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "TryLoadFileInfo method of LcOpKernel.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Autodesk.Navisworks.Api.DocumentInfo",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.TryLoadFileInfo%28System.String%2CAutodesk.Navisworks.Api.DocumentInfo%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "GetCurrentFilename",
+      "signature": "string GetCurrentFilename()",
+      "summary": "GetCurrentFilename method of LcOpKernel.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetCurrentFilename"
+    },
+    {
+      "name": "GetNextCommentId",
+      "signature": "ulong GetNextCommentId(bool increment)",
+      "summary": "GetNextCommentId method of LcOpKernel.",
+      "params": [
+        {
+          "name": "increment",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ulong",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetNextCommentId%28System.Boolean%29"
+    },
+    {
+      "name": "AcquireLockUndoRedo",
+      "signature": "void AcquireLockUndoRedo()",
+      "summary": "AcquireLockUndoRedo method of LcOpKernel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.AcquireLockUndoRedo"
+    },
+    {
+      "name": "BeginEdit",
+      "signature": "void BeginEdit()",
+      "summary": "BeginEdit method of LcOpKernel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.BeginEdit"
+    },
+    {
+      "name": "BeginEdit",
+      "signature": "void BeginEdit(string name)",
+      "summary": "BeginEdit method of LcOpKernel.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.BeginEdit%28System.String%29"
+    },
+    {
+      "name": "CancelOneShotTimer",
+      "signature": "void CancelOneShotTimer(int id, Autodesk.Navisworks.Api.Interop.LcOpKernelTimerInterface p)",
+      "summary": "CancelOneShotTimer method of LcOpKernel.",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelTimerInterface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.CancelOneShotTimer%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpKernelTimerInterface%29"
+    },
+    {
+      "name": "DeleteKernelContents",
+      "signature": "void DeleteKernelContents()",
+      "summary": "DeleteKernelContents method of LcOpKernel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.DeleteKernelContents"
+    },
+    {
+      "name": "EndEdit",
+      "signature": "void EndEdit()",
+      "summary": "EndEdit method of LcOpKernel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.EndEdit"
+    },
+    {
+      "name": "GetClippingPlanesAsJsonClipPlaneSet",
+      "signature": "void GetClippingPlanesAsJsonClipPlaneSet(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, out string json)",
+      "summary": "GetClippingPlanesAsJsonClipPlaneSet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "json",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetClippingPlanesAsJsonClipPlaneSet%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetCurrentTitle",
+      "signature": "void GetCurrentTitle(out string buffer)",
+      "summary": "GetCurrentTitle method of LcOpKernel.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetCurrentTitle%28System.String%40%29"
+    },
+    {
+      "name": "GetRedlinesAsJsonRedlineCollection",
+      "signature": "void GetRedlinesAsJsonRedlineCollection(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer, out string json)",
+      "summary": "GetRedlinesAsJsonRedlineCollection method of LcOpKernel.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        },
+        {
+          "name": "json",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetRedlinesAsJsonRedlineCollection%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetSuggestedFilename",
+      "signature": "void GetSuggestedFilename(out string buffer)",
+      "summary": "GetSuggestedFilename method of LcOpKernel.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetSuggestedFilename%28System.String%40%29"
+    },
+    {
+      "name": "GetViewpointAsJsonAutodeskCommonCamera",
+      "signature": "void GetViewpointAsJsonAutodeskCommonCamera(Autodesk.Navisworks.Api.Interop.LcNvViewPoint viewpoint, out string json)",
+      "summary": "GetViewpointAsJsonAutodeskCommonCamera method of LcOpKernel.",
+      "params": [
+        {
+          "name": "viewpoint",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "json",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.GetViewpointAsJsonAutodeskCommonCamera%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%2CSystem.String%40%29"
+    },
+    {
+      "name": "ReleaseLockUndoRedo",
+      "signature": "void ReleaseLockUndoRedo()",
+      "summary": "ReleaseLockUndoRedo method of LcOpKernel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.ReleaseLockUndoRedo"
+    },
+    {
+      "name": "SelectMatchingItemInSheet",
+      "signature": "void SelectMatchingItemInSheet(string sheet_id, Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "SelectMatchingItemInSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet_id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SelectMatchingItemInSheet%28System.String%2CAutodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "SelectMatchingItemInSheet",
+      "signature": "void SelectMatchingItemInSheet(string sheet_id, Autodesk.Navisworks.Api.ModelItem item, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "SelectMatchingItemInSheet method of LcOpKernel.",
+      "params": [
+        {
+          "name": "sheet_id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.SelectMatchingItemInSheet%28System.String%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Progress%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpKernel.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpKernel.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

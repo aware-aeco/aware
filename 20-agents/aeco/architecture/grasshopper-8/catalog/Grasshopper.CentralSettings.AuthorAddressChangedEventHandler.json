@@ -1,0 +1,14 @@
+{
+  "name": "CentralSettings.AuthorAddressChangedEventHandler",
+  "namespace": "Grasshopper",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.CentralSettings.AuthorAddressChangedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_CentralSettings_AuthorAddressChangedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void AuthorAddressChangedEventHandler()"
+}

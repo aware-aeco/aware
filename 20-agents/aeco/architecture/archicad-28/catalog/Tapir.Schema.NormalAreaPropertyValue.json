@@ -1,0 +1,41 @@
+{
+  "name": "NormalAreaPropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "An area property value containing a real area. The value is measured in SI (square meters).",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAreaPropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060type\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAreaPropertyValue"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060status\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAreaPropertyValue"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060value\u0060 of type \u0060number\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAreaPropertyValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

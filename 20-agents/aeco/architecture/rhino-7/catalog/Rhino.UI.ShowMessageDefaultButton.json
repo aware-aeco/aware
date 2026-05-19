@@ -1,0 +1,26 @@
+{
+  "name": "ShowMessageDefaultButton",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ShowMessageDefaultButton\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ShowMessageDefaultButton.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Button1",
+      "value": 0
+    },
+    {
+      "name": "Button2",
+      "value": 256
+    },
+    {
+      "name": "Button3",
+      "value": 512
+    }
+  ]
+}

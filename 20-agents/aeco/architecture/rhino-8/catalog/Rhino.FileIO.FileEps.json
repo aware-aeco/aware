@@ -1,0 +1,46 @@
+{
+  "name": "FileEps",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for reading eps file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileEps.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "public static bool Read(string path, RhinoDoc doc, FileEpsReadOptions options)",
+      "summary": "Read a Eps file into a RhinoDoc",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to read a file from",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to import geometry into",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileEpsReadOptions",
+          "doc": "options used for importing the Ai file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileEps_Read.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,121 @@
+{
+  "name": "CommandAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Defines a new command in the GUI system",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.CommandAttribute",
+  "constructors": [
+    {
+      "name": "CommandAttribute(string)",
+      "signature": "CommandAttribute(string name)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the command",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CallCanExecute",
+      "type": "Autodesk.Navisworks.Api.Plugins.CallCanExecute",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines the conditions in which CanExecuteCommand should be called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.CallCanExecute"
+    },
+    {
+      "name": "CanToggle",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if the command can toggle",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.CanToggle"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The text to display for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.DisplayName"
+    },
+    {
+      "name": "ExtendedToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The Extended Tooltip to display for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.ExtendedToolTip"
+    },
+    {
+      "name": "Icon",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The 16x16 icon to display for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.Icon"
+    },
+    {
+      "name": "LargeIcon",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The 32x32 icon to display for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.LargeIcon"
+    },
+    {
+      "name": "LoadForCanExecute",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if CanExecuteCommand should cause the Plugin to load",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.LoadForCanExecute"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.Name"
+    },
+    {
+      "name": "Shortcut",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the keyboard shortcut for the command.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.Shortcut"
+    },
+    {
+      "name": "ShortcutWindowTypes",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The Ids of the windows for which the shortcut is valid. Multiple Ids can be specified by separating with \u0022;\u0022. If Ids are specified the shortcut should be valid in all contexts.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.ShortcutWindowTypes"
+    },
+    {
+      "name": "ToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The Tooltip to display for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandAttribute.ToolTip"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,99 @@
+{
+  "name": "Polymesh.PolymeshCheckerFlags",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Polymesh check flags, please refer to PolymeshHealthCheckEnum for the corresponding result values.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9f06f9d1-a8fb-41f2-aa21-b962d632fcdb",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Perform no check"
+    },
+    {
+      "name": "LoopVertexUnique",
+      "value": 2048,
+      "summary": "To check that no two consecutive vertex index may be the same."
+    },
+    {
+      "name": "VerticesOnSameEdge",
+      "value": 1,
+      "summary": "To check outerloop vertices on same edge, distance tolerance 0.01."
+    },
+    {
+      "name": "OuterloopPlanarity",
+      "value": 2,
+      "summary": "To check outerloop\u0027s planarity, IN_PLANE_EPSILON 1.0e-3."
+    },
+    {
+      "name": "OuterloopSelfIntersection",
+      "value": 4,
+      "summary": "To check if outerloop intersects itself, EPSILON 1.E-4"
+    },
+    {
+      "name": "InnerloopPlanarity",
+      "value": 8,
+      "summary": "To check innterloop\u0027s planarity, IN_PLANE_EPSILON 1.0e-3."
+    },
+    {
+      "name": "InnerloopSelfIntersection",
+      "value": 16,
+      "summary": "To check if innerloop intersects itself, EPSILON 1.E-4."
+    },
+    {
+      "name": "InnerloopInsideOuterloop",
+      "value": 256,
+      "summary": "To check if innerloop inside outerloop, EPSILON 1.E-4."
+    },
+    {
+      "name": "LoopNormalValidity",
+      "value": 32,
+      "summary": "The inner loop is oriented clockwise, the opposite of the outer loop (counterclockwise)."
+    },
+    {
+      "name": "FaceEdgeOrientation",
+      "value": 64,
+      "summary": "To check face\u0027s edge orientation."
+    },
+    {
+      "name": "Multishellness",
+      "value": 128,
+      "summary": "To check are there more than one topologically connected components in the polymesh. This checks only through vertex indexes."
+    },
+    {
+      "name": "MultishellnessGeometrical",
+      "value": 16384,
+      "summary": "To check are there more than one geometrically connected components in the polymesh. Check with all vertex edge face position containment (includes partial edge touching cases). This check can be slow, the behavior is O(n^2)."
+    },
+    {
+      "name": "VerticesOnSamePosition",
+      "value": 512,
+      "summary": "To check if there are any vertices that are in the same location, EPSILON 0.01."
+    },
+    {
+      "name": "UnusedVertices",
+      "value": 1024,
+      "summary": "To check if there are any unused vertices in the vertex array."
+    },
+    {
+      "name": "NonManifoldEdges",
+      "value": 4096,
+      "summary": "Are there non-manifold edges (indirect edge vertices are found for more than 2 faces)."
+    },
+    {
+      "name": "NullFaces",
+      "value": 8192,
+      "summary": "To check if all vertices of the face are linearly dependent, or having less than 3 vertices, or smaller than allowed edges."
+    },
+    {
+      "name": "All",
+      "value": 511,
+      "summary": "To check all criteria."
+    }
+  ]
+}

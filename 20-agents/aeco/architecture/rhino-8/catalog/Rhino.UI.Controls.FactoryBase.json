@@ -1,0 +1,77 @@
+{
+  "name": "FactoryBase",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "class",
+  "summary": "Base class for CollapsibleSection and ViewModel factories used by the RDK UI",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_FactoryBase.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_FactoryBase_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public virtual IntPtr Get(Guid id)",
+      "summary": "Override this method to return a new instance of your class for the given ID",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.FactoryBase.Get(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.FactoryBase.Get(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_FactoryBase_Get.htm"
+    },
+    {
+      "name": "Register()",
+      "signature": "public static Type[] Register()",
+      "summary": "Call this function during startup of current assembly to load classes with factory creation support are registed",
+      "params": [],
+      "returns": {
+        "type": "Type[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.FactoryBase.Register\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_FactoryBase_Register.htm"
+    },
+    {
+      "name": "Register(PlugIn)",
+      "signature": "public static Type[] Register(PlugIn plugin)",
+      "summary": "Call this function during the startup of your plug-in to ensure that all classes that support factory creation are registed",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.FactoryBase.Register(Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Type[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.FactoryBase.Register(Rhino.PlugIns.PlugIn)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_FactoryBase_Register_1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

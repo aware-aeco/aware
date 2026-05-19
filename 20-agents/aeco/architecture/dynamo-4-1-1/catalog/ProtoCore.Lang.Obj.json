@@ -1,0 +1,63 @@
+{
+  "name": "Obj",
+  "namespace": "ProtoCore.Lang",
+  "kind": "class",
+  "summary": "Type Obj",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Obj.cs",
+  "constructors": [
+    {
+      "name": "Obj()",
+      "signature": "void Obj()",
+      "summary": "Obj.Obj",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Obj.cs"
+    },
+    {
+      "name": "Obj(ProtoCore.DSASM.StackValue)",
+      "signature": "void Obj(ProtoCore.DSASM.StackValue dsasmValue)",
+      "summary": "Obj.Obj",
+      "params": [
+        {
+          "name": "dsasmValue",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Obj.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Obj.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Obj.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DsasmValue",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": false,
+      "summary": "This represents a tieback value into the DSASM execution engine",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Obj.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

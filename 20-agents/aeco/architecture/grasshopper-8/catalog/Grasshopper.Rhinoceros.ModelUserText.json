@@ -1,0 +1,610 @@
+{
+  "name": "ModelUserText",
+  "namespace": "Grasshopper.Rhinoceros",
+  "kind": "struct",
+  "summary": "Represents an immutable collection of string/string pairs.",
+  "remarks": "Key comparison is not case sensitive.",
+  "base": "GH_ISerializable",
+  "interfaces": [
+    "IReadOnlyList\u003CKeyValuePair\u003Cstring, string\u003E\u003E",
+    "IReadOnlyDictionary\u003Cstring, string\u003E",
+    "IEquatable\u003CModelUserText\u003E",
+    "IStructuralEquatable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_ModelUserText.htm",
+  "constructors": [
+    {
+      "name": "ModelUserText",
+      "signature": "public ModelUserText(IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E source)",
+      "summary": "Initializes a new instance of the ModelUserText class",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ContainsKey",
+      "signature": "public bool ContainsKey(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_ContainsKey.htm"
+    },
+    {
+      "name": "EnsureRange(IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public ModelUserText EnsureRange(IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_EnsureRange.htm"
+    },
+    {
+      "name": "EnsureRange(IEnumerable\u003CString\u003E)",
+      "signature": "public ModelUserText EnsureRange(IEnumerable\u003Cstring\u003E keys)",
+      "summary": "",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_EnsureRange_1.htm"
+    },
+    {
+      "name": "Equals(ModelUserText)",
+      "signature": "public bool Equals(ModelUserText other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_Equals_1.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CKeyValuePair\u003Cstring, string\u003E\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CKeyValuePair\u003CString,String\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_GetEnumerator.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_GetHashCode.htm"
+    },
+    {
+      "name": "MergeRange(IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public ModelUserText MergeRange(IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_MergeRange.htm"
+    },
+    {
+      "name": "MergeRange(IEnumerable\u003CString\u003E)",
+      "signature": "public ModelUserText MergeRange(IEnumerable\u003Cstring\u003E source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_MergeRange_1.htm"
+    },
+    {
+      "name": "RemoveRange(IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public ModelUserText RemoveRange(IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_RemoveRange.htm"
+    },
+    {
+      "name": "RemoveRange(IEnumerable\u003CString\u003E)",
+      "signature": "public ModelUserText RemoveRange(IEnumerable\u003Cstring\u003E keys)",
+      "summary": "",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_RemoveRange_1.htm"
+    },
+    {
+      "name": "TryGetValue",
+      "signature": "public bool TryGetValue(string key, out string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_TryGetValue.htm"
+    },
+    {
+      "name": "UpdateRange(IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public ModelUserText UpdateRange(IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_UpdateRange.htm"
+    },
+    {
+      "name": "UpdateRange(IEnumerable\u003CString\u003E)",
+      "signature": "public ModelUserText UpdateRange(IEnumerable\u003Cstring\u003E keys)",
+      "summary": "",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_UpdateRange_1.htm"
+    },
+    {
+      "name": "Addition(ModelUserText, IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public static ModelUserText operator \u002B(ModelUserText left, IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_Addition.htm"
+    },
+    {
+      "name": "Addition(ModelUserText, IEnumerable\u003CString\u003E)",
+      "signature": "public static ModelUserText operator \u002B(ModelUserText left, IEnumerable\u003Cstring\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_Addition_1.htm"
+    },
+    {
+      "name": "BitwiseAnd(ModelUserText, IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public static ModelUserText operator \u0026(ModelUserText left, IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_BitwiseAnd.htm"
+    },
+    {
+      "name": "BitwiseAnd(ModelUserText, IEnumerable\u003CString\u003E)",
+      "signature": "public static ModelUserText operator \u0026(ModelUserText left, IEnumerable\u003Cstring\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_BitwiseAnd_1.htm"
+    },
+    {
+      "name": "BitwiseOr(ModelUserText, IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public static ModelUserText operator |(ModelUserText left, IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_BitwiseOr.htm"
+    },
+    {
+      "name": "BitwiseOr(ModelUserText, IEnumerable\u003CString\u003E)",
+      "signature": "public static ModelUserText operator |(ModelUserText left, IEnumerable\u003Cstring\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_BitwiseOr_1.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(ModelUserText left, ModelUserText right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(ModelUserText left, ModelUserText right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_Inequality.htm"
+    },
+    {
+      "name": "Subtraction(ModelUserText, IEnumerable\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "public static ModelUserText operator -(ModelUserText left, IEnumerable\u003CKeyValuePair\u003Cstring, string\u003E\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_Subtraction.htm"
+    },
+    {
+      "name": "Subtraction(ModelUserText, IEnumerable\u003CString\u003E)",
+      "signature": "public static ModelUserText operator -(ModelUserText left, IEnumerable\u003Cstring\u003E right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelUserText",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelUserText",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelUserText_op_Subtraction_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_Count.htm"
+    },
+    {
+      "name": "IsDefault",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_IsDefault.htm"
+    },
+    {
+      "name": "IsDefaultOrEmpty",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_IsDefaultOrEmpty.htm"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_IsEmpty.htm"
+    },
+    {
+      "name": "Item[Int32]",
+      "type": "KeyValuePair\u003CString,String\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_Item.htm"
+    },
+    {
+      "name": "Item[String]",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_Item_1.htm"
+    },
+    {
+      "name": "Keys",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_Keys.htm"
+    },
+    {
+      "name": "Values",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelUserText_Values.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "ModelUserText",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Rhinoceros_ModelUserText_Empty.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

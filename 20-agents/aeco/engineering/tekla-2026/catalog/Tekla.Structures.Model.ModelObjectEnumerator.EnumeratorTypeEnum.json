@@ -1,0 +1,134 @@
+{
+  "name": "ModelObjectEnumerator.EnumeratorTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The types of enumerator available.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d68984b3-09aa-57bf-5ecb-e89993e7a61c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ALL_SELECTED",
+      "value": 1,
+      "summary": "Selects all user selected objects from the model."
+    },
+    {
+      "name": "ALL_OBJECTS",
+      "value": 2,
+      "summary": "Selects all objects from the model."
+    },
+    {
+      "name": "MODELOBJECT_CHILDREN",
+      "value": 3,
+      "summary": "Selects children of specified type of given ModelObject"
+    },
+    {
+      "name": "BY_FILTER_NAME",
+      "value": 4,
+      "summary": "Selects all the ModelObjects for a given filter name"
+    },
+    {
+      "name": "CONNECTED_COMPONENTS",
+      "value": 5,
+      "summary": "Selects all connected components of given ModelObject"
+    },
+    {
+      "name": "BY_BOUNDING_BOX",
+      "value": 6,
+      "summary": "Selects all objects intersecting with given bounding box"
+    },
+    {
+      "name": "ALL_OBJECTS_WITH_TYPE",
+      "value": 7,
+      "summary": "All Objects with type given in type in the \u0022subtype\u0022."
+    },
+    {
+      "name": "REFERENCE_MODEL_OBJECTS",
+      "value": 8,
+      "summary": "Selects sub objects of given ReferenceModel."
+    },
+    {
+      "name": "MODELOBJECT_FATHERS",
+      "value": 9,
+      "summary": "Selects fathers of specified type of given ModelObject (Tasks mainly)"
+    },
+    {
+      "name": "CONNECTED_DEPENDENCIES",
+      "value": 10,
+      "summary": "Selects all connected dependencies of given ModelObject (Tasks mainly)"
+    },
+    {
+      "name": "TASKS_OF_SELECTED_OBJECTS",
+      "value": 11,
+      "summary": "Selects all tasks of selected objects"
+    },
+    {
+      "name": "MODIFIED_OBJECTS_AFTER_STAMP",
+      "value": 12,
+      "summary": "Selects all modified and created objects"
+    },
+    {
+      "name": "FILTERED_OBJECTS_WITH_TYPE",
+      "value": 13,
+      "summary": "Filtered objects with type given in type in the \u0022subtype\u0022."
+    },
+    {
+      "name": "DELETED_OBJECTS_AFTER_STAMP",
+      "value": 14,
+      "summary": "Selects all modified objects"
+    },
+    {
+      "name": "ALL_PRESELECTED",
+      "value": 15,
+      "summary": "Selects all preselected objects."
+    },
+    {
+      "name": "BY_BOUNDING_BOX_AND_VIEW",
+      "value": 16,
+      "summary": "Selects all objects that intersect with the given bounding box and that are visible in the given view."
+    },
+    {
+      "name": "CONVERTED_FROM_REFERENCE_MODEL",
+      "value": 17,
+      "summary": "Selects objects that were converted from a given reference model (if they weren\u0027t unlinked)"
+    },
+    {
+      "name": "ATTRIBUTE_MODIFIED_OBJECTS_AFTER_STAMP",
+      "value": 18,
+      "summary": "Selects all objects of which attributes (UDA) have been modified after the stamp."
+    },
+    {
+      "name": "NUMBERING_MODIFIED_OBJECTS_AFTER_STAMP",
+      "value": 19,
+      "summary": "Selects all objects of which numbering has been modified after the stamp."
+    },
+    {
+      "name": "CREATED_OBJECTS_AFTER_STAMP",
+      "value": 20,
+      "summary": "Selects all created objects"
+    },
+    {
+      "name": "MODIFIED_OBJECTS_BY_FILTER_NAME",
+      "value": 21,
+      "summary": "Selects all objects which are new, modified, numbered or which phase has changed after the stamp and pass the filter of given name."
+    },
+    {
+      "name": "PHASE_MODIFIED_OBJECTS_AFTER_STAMP",
+      "value": 22,
+      "summary": "Selects all objects of which phase has been modified after the stamp."
+    },
+    {
+      "name": "OBJECTS_WITH_ANY_MODIFICATION_AFTER_STAMP",
+      "value": 23,
+      "summary": "Selects all objects with any type of modification or are created after the stamp."
+    },
+    {
+      "name": "BY_MODEL_OBJECT_TYPE",
+      "value": 25,
+      "summary": "Selects all model objects with the specified type."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "ApplyPresetCommand",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "class",
+  "summary": "Type ApplyPresetCommand",
+  "base": "Dynamo.Models.DynamoModel.RecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "ApplyPresetCommand(System.Guid, System.Guid)",
+      "signature": "void ApplyPresetCommand(System.Guid workspaceID, System.Guid stateID)",
+      "summary": "",
+      "params": [
+        {
+          "name": "workspaceID",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "stateID",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "ApplyPresetCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "ApplyPresetCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

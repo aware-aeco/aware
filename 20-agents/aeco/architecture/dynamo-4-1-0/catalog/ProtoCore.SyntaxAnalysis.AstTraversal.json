@@ -1,0 +1,83 @@
+{
+  "name": "AstTraversal",
+  "namespace": "ProtoCore.SyntaxAnalysis",
+  "kind": "class",
+  "summary": "AstTraversal visits all nodes of the AST unless the result of a Visit* method is false or you override one of the methods such that it doesn\u0027t visit all of the Node\u0027s child nodes.",
+  "base": "ProtoCore.SyntaxAnalysis.AstVisitor\u003Cbool, bool\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs",
+  "constructors": [
+    {
+      "name": "AstTraversal()",
+      "signature": "void AstTraversal()",
+      "summary": "AstTraversal.AstTraversal",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "VisitAllChildren(ProtoCore.AST.Node)",
+      "signature": "bool VisitAllChildren(ProtoCore.AST.Node node)",
+      "summary": "AstTraversal.VisitAllChildren",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitAssociativeNode(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "bool VisitAssociativeNode(ProtoCore.AST.AssociativeAST.AssociativeNode node)",
+      "summary": "AstTraversal.VisitAssociativeNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitImperativeNode(ProtoCore.AST.ImperativeAST.ImperativeNode)",
+      "signature": "bool VisitImperativeNode(ProtoCore.AST.ImperativeAST.ImperativeNode node)",
+      "summary": "AstTraversal.VisitImperativeNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

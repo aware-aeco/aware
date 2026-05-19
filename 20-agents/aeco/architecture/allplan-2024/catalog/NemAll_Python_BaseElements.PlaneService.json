@@ -1,0 +1,40 @@
+{
+  "name": "PlaneService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Implementation of the plane service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/",
+  "constructors": [
+    {
+      "name": "PlaneService",
+      "signature": "PlaneService() | PlaneService(doc)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCurrentLevelModelGuid",
+      "signature": "GetCurrentLevelModelGuid()",
+      "summary": "Get the current level model GUID of the active drawing file",
+      "remarks": "Get the current level model GUID of the active drawing file",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "Level modle GUID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.GetCurrentLevelModelGuid"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

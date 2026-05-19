@@ -1,0 +1,123 @@
+{
+  "name": "LineStyles",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "Provides access to the different line style objects in the model.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/LineStyles.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](name) =\u003E Sketchup::LineStyle? | [](index) =\u003E Sketchup::LineStyle?",
+      "summary": "The #[] method lets you retrieve a line style by name or index.",
+      "remarks": "The #[] method lets you retrieve a line style by name or index. The #at method is an alias of #[].",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the line style to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::LineStyle, nil",
+        "doc": "The line style retrieved. nil if the name couldn\u0027t be retrieved."
+      },
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "If index is out of bounds."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LineStyles.html#[]-instance_method"
+    },
+    {
+      "name": "[]",
+      "signature": "[](name) =\u003E Sketchup::LineStyle? | [](index) =\u003E Sketchup::LineStyle?",
+      "summary": "The #[] method lets you retrieve a line style by name or index.",
+      "remarks": "The #[] method lets you retrieve a line style by name or index. The #at method is an alias of #[].",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the line style to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::LineStyle, nil",
+        "doc": "The line style retrieved. nil if the name couldn\u0027t be retrieved."
+      },
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "If index is out of bounds."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LineStyles.html#at-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|linestyle| ... } =\u003E nil",
+      "summary": "The #each method is used to iterate through all the line styles.",
+      "remarks": "The #each method is used to iterate through all the line styles.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LineStyles.html#each-instance_method"
+    },
+    {
+      "name": "names",
+      "signature": "names =\u003E Array\u003CString\u003E",
+      "summary": "The #names method return the support line styles as strings.",
+      "remarks": "The #names method return the support line styles as strings.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LineStyles.html#names-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer Also known as: length",
+      "summary": "The #size method returns the number of line styles that SketchUp supports.",
+      "remarks": "The #size method returns the number of line styles that SketchUp supports.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "The count of line styles."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LineStyles.html#size-instance_method"
+    },
+    {
+      "name": "to_a",
+      "signature": "to_a =\u003E Array",
+      "summary": "The #to_a method returns an array of all the line styles.",
+      "remarks": "The #to_a method returns an array of all the line styles.",
+      "params": [],
+      "returns": {
+        "type": "Array",
+        "doc": "Containing all the line style objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LineStyles.html#to_a-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

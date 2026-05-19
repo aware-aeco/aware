@@ -1,0 +1,194 @@
+{
+  "name": "GH_FieldElement",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Abstract implementation of IGH_FieldElement, derive from this class rather than implementing IGH_FieldElement to save yourself time and effort.",
+  "interfaces": [
+    "IGH_FieldElement"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_FieldElement.htm",
+  "constructors": [
+    {
+      "name": "GH_FieldElement",
+      "signature": "protected GH_FieldElement()",
+      "summary": "Initializes a new instance of the GH_FieldElement class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "public virtual void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "public virtual void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public abstract IGH_FieldElement Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_FieldElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_Duplicate.htm"
+    },
+    {
+      "name": "Force",
+      "signature": "public abstract Vector3d Force(Point3d location)",
+      "summary": "",
+      "params": [
+        {
+          "name": "location",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_Force.htm"
+    },
+    {
+      "name": "IsCoincident",
+      "signature": "public virtual bool IsCoincident(Point3d point, double tolerance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3d",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_IsCoincident.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public virtual bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public virtual bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_BoundingBox.htm"
+    },
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_ClippingBox.htm"
+    },
+    {
+      "name": "ElementGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_ElementGuid.htm"
+    },
+    {
+      "name": "IsLimited",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_IsLimited.htm"
+    },
+    {
+      "name": "Limits",
+      "type": "Box",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_Limits.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,389 @@
+{
+  "name": "Comparison",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class for comparison between two objects",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Congruent",
+      "signature": "Congruent(l1p1, l1p2, l2p1, l2p2) | Congruent(l1, l2)",
+      "summary": "compare 2D points of two 2D lines if are congruent",
+      "remarks": "compare 2D points of two 2D lines if are congruent",
+      "params": [
+        {
+          "name": "l1p1",
+          "type": "Point2D",
+          "doc": "the 1. point of the 1. line",
+          "optional": false
+        },
+        {
+          "name": "l1p2",
+          "type": "Point2D",
+          "doc": "the 2. point of the 1. line",
+          "optional": false
+        },
+        {
+          "name": "l2p1",
+          "type": "Point2D",
+          "doc": "the 1. point of the 2. line",
+          "optional": false
+        },
+        {
+          "name": "l2p2",
+          "type": "Point2D",
+          "doc": "the 2. point of the 2. line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if lines are congruent, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Congruent"
+    },
+    {
+      "name": "DeterminePosition",
+      "signature": "DeterminePosition(geoObject_object, point, tolerance) | DeterminePosition(line, point, tolerance) | DeterminePosition(axis, point, tolerance) | DeterminePosition(polyline, point, tolerance) | DeterminePosition(polyline, point, tolerance, segment) | DeterminePosition(arc, point, tolerance) | DeterminePosition(arc, point, tolerance) | DeterminePosition(clothoid, point, tolerance) | DeterminePosition(spline, point, tolerance) | DeterminePosition(polygon, point, tolerance) | DeterminePosition(polygon, line) | DeterminePosition(line, point, tolerance) | DeterminePosition(polyline, point, tolerance) | DeterminePosition(phed, point) | DeterminePosition(spline, point, tolerance) | DeterminePosition(spline, point, tolerance) | DeterminePosition(path, point, tolerance) | DeterminePosition(b, point, tolerance) | DeterminePosition(polygon1, polygon2) | DeterminePosition(line, minMax) | DeterminePosition(lines, minMax) | DeterminePosition(igeo_object, point, tolerance)",
+      "summary": "Determine the relative position of a point to an object.",
+      "remarks": "Determine the relative position of a point to an object.",
+      "params": [
+        {
+          "name": "geoObject_object",
+          "type": "object",
+          "doc": "IGeometry",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "float",
+          "doc": "tolerance (if distance \u003C tolerance, point on object)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eComparisionResult",
+        "doc": "eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition"
+    },
+    {
+      "name": "Equal",
+      "signature": "Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(path1, path2, tol) | Equal(igeo1_object, igeo2_object, tol)",
+      "summary": "Compare 2 doubles",
+      "remarks": "Compare 2 doubles",
+      "params": [
+        {
+          "name": "el1",
+          "type": "float",
+          "doc": "element",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "float",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal"
+    },
+    {
+      "name": "EqualCoordsRel",
+      "signature": "EqualCoordsRel(el1, el2) | EqualCoordsRel(el1, el2)",
+      "summary": "compare 2 2D points using iqrkor",
+      "remarks": "compare 2 2D points using iqrkor",
+      "params": [
+        {
+          "name": "el1",
+          "type": "Point2D",
+          "doc": "element",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "Point2D",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualCoordsRel"
+    },
+    {
+      "name": "EqualDistance",
+      "signature": "EqualDistance(el1, el2, tol) | EqualDistance(el1, el2, tol)",
+      "summary": "compare 2 2D points using their distance with given tolerance",
+      "remarks": "compare 2 2D points using their distance with given tolerance",
+      "params": [
+        {
+          "name": "el1",
+          "type": "Point2D",
+          "doc": "point",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "Point2D",
+          "doc": "point",
+          "optional": false
+        },
+        {
+          "name": "tol",
+          "type": "float",
+          "doc": "tolerance",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualDistance"
+    },
+    {
+      "name": "EqualRel",
+      "signature": "EqualRel(el1, el2) | EqualRel(el1, el2, tol) | EqualRel(el1, el2) | EqualRel(el1, el2) | EqualRel(el1, el2) | EqualRel(el1, el2)",
+      "summary": "compare 2 doubles using built-in relative tolerance",
+      "remarks": "compare 2 doubles using built-in relative tolerance",
+      "params": [
+        {
+          "name": "el1",
+          "type": "float",
+          "doc": "element",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "float",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualRel"
+    },
+    {
+      "name": "GetSegmentNumber",
+      "signature": "GetSegmentNumber(geoObject_object, segment, tolerance) | GetSegmentNumber(geoObject_object, point, tolerance) | GetSegmentNumber(geoObject_object, point, tolerance) | GetSegmentNumber(line, point, tolerance) | GetSegmentNumber(line, point, tolerance) | GetSegmentNumber(polyPoints, point, tolerance) | GetSegmentNumber(polygon, point, tolerance) | GetSegmentNumber(polyPoints, point, tolerance) | GetSegmentNumber(spline, point, tolerance) | GetSegmentNumber(line, segment, tolerance) | GetSegmentNumber(line, segment, tolerance) | GetSegmentNumber(polyPoints, segment, tolerance) | GetSegmentNumber(polyPoints, segment, tolerance) | GetSegmentNumber(geoObject_object, segment, tolerance)",
+      "summary": "Determine the segment position of a point to a 2D geometry object",
+      "remarks": "Determine the segment position of a point to a 2D geometry object",
+      "params": [
+        {
+          "name": "geoObject_object",
+          "type": "object",
+          "doc": "IGeometry",
+          "optional": false
+        },
+        {
+          "name": "segment",
+          "type": "Line2D",
+          "doc": "Line2D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "float",
+          "doc": "tolerance (if distance \u003C tolerance, point on object)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "segment number 0 is first element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber"
+    },
+    {
+      "name": "IsInside",
+      "signature": "IsInside(polygon, line) | IsInside(line, lineToCheck)",
+      "summary": "Determine if the line is inside the polygon",
+      "remarks": "Determine if the line is inside the polygon",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Polygon",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if the line is inside the polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsInside"
+    },
+    {
+      "name": "IsParallel",
+      "signature": "IsParallel(el1, el2) | IsParallel(lines) | IsParallel(el1, el2) | IsParallel(el1_object, el2_object)",
+      "summary": "test 2 2D lines for parallel",
+      "remarks": "test 2 2D lines for parallel",
+      "params": [
+        {
+          "name": "el1",
+          "type": "Line2D",
+          "doc": "element",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "Line2D",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eComparisionResult",
+        "doc": "tuple(eParallel, eAntiParallel, eNotParallel,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsParallel"
+    },
+    {
+      "name": "Overlapped",
+      "signature": "Overlapped(el1, el2) | Overlapped(el1, el2, partiallyToo=False) | Overlapped(pp1, pp2) | Overlapped(pp1, pp2) | Overlapped(line1, line2) | Overlapped(line1, line2, partiallyToo=False) | Overlapped(arc1, arc2) | Overlapped(arc1, arc2) | Overlapped(phed1, phed2) | Overlapped(el1, el2) | Overlapped(geo1_object, geo2_object)",
+      "summary": "compare of 2 Polyline 2D",
+      "remarks": "compare of 2 Polyline 2D",
+      "params": [
+        {
+          "name": "el1",
+          "type": "Polyline2D",
+          "doc": "Polyline2D",
+          "optional": false
+        },
+        {
+          "name": "el2",
+          "type": "Polyline2D",
+          "doc": "Polyline2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true when overlapped, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped"
+    },
+    {
+      "name": "AllPointsAreOneAxis",
+      "signature": "AllPointsAreOneAxis(polyline, tolerance)",
+      "summary": "Check if all points of polyline are on one straight line",
+      "remarks": "Check if all points of polyline are on one straight line",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "Polyline",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "float",
+          "doc": "Tolerance",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Result of the check"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.AllPointsAreOneAxis"
+    },
+    {
+      "name": "HitsElement",
+      "signature": "HitsElement(result)",
+      "summary": "Check if comparison result hits element in some way",
+      "remarks": "Check if comparison result hits element in some way",
+      "params": [
+        {
+          "name": "result",
+          "type": "eComparisionResult",
+          "doc": "the comparison result to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if the result indicates that the element is hit, otherwise false e.g. left, right, etc."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.HitsElement"
+    },
+    {
+      "name": "signum",
+      "signature": "signum(a, tol)",
+      "summary": "sgn function",
+      "remarks": "sgn function",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "doc": "Number of which to compute sign",
+          "optional": false
+        },
+        {
+          "name": "tol",
+          "type": "float",
+          "doc": "tolerance",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "0, 1, -1"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.signum"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,52 @@
+{
+  "name": "PackageFileInfo",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type PackageFileInfo",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageFileInfo.cs",
+  "constructors": [
+    {
+      "name": "PackageFileInfo(string, string)",
+      "signature": "void PackageFileInfo(string packageRoot, string filename)",
+      "summary": "PackageFileInfo.PackageFileInfo",
+      "params": [
+        {
+          "name": "packageRoot",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageFileInfo.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Model",
+      "type": "System.IO.FileInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageFileInfo.Model",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageFileInfo.cs"
+    },
+    {
+      "name": "RelativePath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Filename relative to the package root directory",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageFileInfo.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

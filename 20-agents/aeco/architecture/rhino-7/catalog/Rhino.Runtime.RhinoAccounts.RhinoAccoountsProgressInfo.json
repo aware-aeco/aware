@@ -1,0 +1,68 @@
+{
+  "name": "RhinoAccoountsProgressInfo",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "This class is designed to convey the progress of an asynchronous operation through .NET\u0027s IProgress\u003CT\u003E interface. It can be used by callers of such tasks to relay the tasks\u0027 progress, as well as useful metadata information that may be of interest.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccoountsProgressInfo.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccoountsProgressInfo",
+      "signature": "public RhinoAccoountsProgressInfo(ProgressState state, Dictionary\u003CObject, Object\u003E metadata = null, string customDescription = null)",
+      "summary": "Creates a new instance.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.Runtime.RhinoAccounts.ProgressState",
+          "doc": "The state to report.",
+          "optional": false
+        },
+        {
+          "name": "metadata",
+          "type": "System.Collections.Generic.Dictionary\u003CObject,Object\u003E",
+          "doc": "Optional. Any metadata of interest that may be used by the caller of a task.",
+          "optional": true
+        },
+        {
+          "name": "customDescription",
+          "type": "System.String",
+          "doc": "Optional. If a non-null value is passed, it will override the default description of the instance.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccoountsProgressInfo__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "A localized description of the state that may be shown to the user of the application.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_RhinoAccoountsProgressInfo_Description.htm"
+    },
+    {
+      "name": "Metadata",
+      "type": "Dictionary\u003CObject,Object\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Any metadata of interest that may be used by the caller of a task.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_RhinoAccoountsProgressInfo_Metadata.htm"
+    },
+    {
+      "name": "State",
+      "type": "ProgressState",
+      "getter": true,
+      "setter": false,
+      "summary": "The state to report.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_RhinoAccoountsProgressInfo_State.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

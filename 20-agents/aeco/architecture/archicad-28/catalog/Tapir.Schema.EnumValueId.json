@@ -1,0 +1,13 @@
+{
+  "name": "EnumValueId",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The identifier of a property enumeration value.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#EnumValueId",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

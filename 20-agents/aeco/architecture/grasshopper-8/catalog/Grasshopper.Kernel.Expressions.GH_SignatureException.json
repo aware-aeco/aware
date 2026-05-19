@@ -1,0 +1,45 @@
+{
+  "name": "GH_SignatureException",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_SignatureException.)",
+  "base": "Exception",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_SignatureException.htm",
+  "constructors": [
+    {
+      "name": "GH_SignatureException",
+      "signature": "public GH_SignatureException(List\u003CGH_Variant\u003E args, string name)",
+      "summary": "Initializes a new instance of the GH_SignatureException class",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Collections.Generic.List\u003CGH_Variant\u003E",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_SignatureException__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Message",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides Exception.Message.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_SignatureException_Message.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,79 @@
+{
+  "name": "RenderContentStyles",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderContentStyles\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderContentStyles.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No defined styles"
+    },
+    {
+      "name": "TextureSummary",
+      "value": 1,
+      "summary": "Texture UI includes an auto texture summary section. See AddAutoParameters()."
+    },
+    {
+      "name": "QuickPreview",
+      "value": 2,
+      "summary": "Editor displays an instant preview before preview cycle begins."
+    },
+    {
+      "name": "PreviewCache",
+      "value": 4,
+      "summary": "Content\u0027s preview imagery can be stored in the preview cache."
+    },
+    {
+      "name": "ProgressivePreview",
+      "value": 8,
+      "summary": "Content\u0027s preview imagery can be rendered progressively."
+    },
+    {
+      "name": "LocalTextureMapping",
+      "value": 16,
+      "summary": "Texture UI includes an auto local mapping section for textures. See AddAutoParameters()"
+    },
+    {
+      "name": "GraphDisplay",
+      "value": 32,
+      "summary": "Texture UI includes a graph section."
+    },
+    {
+      "name": "NameTypeSection",
+      "value": 2048,
+      "summary": "Render content UI includes a \u0027Name\u0027 and \u0027Type\u0027 section."
+    },
+    {
+      "name": "SharedUI",
+      "value": 64,
+      "summary": "Obsolete. OBSOLETE: The UI is always shared between render contents of the same type id."
+    },
+    {
+      "name": "Adjustment",
+      "value": 128,
+      "summary": "Texture UI includes an adjustment section."
+    },
+    {
+      "name": "Fields",
+      "value": 256,
+      "summary": "Render content uses fields to facilitate data storage and undo support. See Fields()"
+    },
+    {
+      "name": "ModalEditing",
+      "value": 512,
+      "summary": "Render content supports editing in a modal editor. OBSOLETE: All contents support modal editing."
+    },
+    {
+      "name": "DynamicFields",
+      "value": 1024,
+      "summary": "The render content\u0027s fields are dynamic. OBSOLETE: Dynamic fields can co-exist with static fields."
+    }
+  ]
+}

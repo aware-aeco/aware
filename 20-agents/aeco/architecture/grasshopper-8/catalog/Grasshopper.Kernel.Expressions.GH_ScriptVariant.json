@@ -1,0 +1,1244 @@
+{
+  "name": "GH_ScriptVariant",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_ScriptVariant.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_ScriptVariant.htm",
+  "constructors": [
+    {
+      "name": "GH_ScriptVariant()",
+      "signature": "public GH_ScriptVariant()",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(Boolean)",
+      "signature": "public GH_ScriptVariant(bool val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_4.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(Byte)",
+      "signature": "public GH_ScriptVariant(byte val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "System.Byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_5.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(DateTime)",
+      "signature": "public GH_ScriptVariant(DateTime val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_6.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(Double)",
+      "signature": "public GH_ScriptVariant(double val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_7.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(Int32)",
+      "signature": "public GH_ScriptVariant(int val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_8.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(Plane)",
+      "signature": "public GH_ScriptVariant(Plane val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "Plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_1.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(Point3d)",
+      "signature": "public GH_ScriptVariant(Point3d val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_2.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(String)",
+      "signature": "public GH_ScriptVariant(string val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_9.htm"
+    },
+    {
+      "name": "GH_ScriptVariant(Vector3d)",
+      "signature": "public GH_ScriptVariant(Vector3d val)",
+      "summary": "Initializes a new instance of the GH_ScriptVariant class",
+      "params": [
+        {
+          "name": "val",
+          "type": "Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ThrowNullOperatorException",
+      "signature": "protected static void ThrowNullOperatorException(string sName)",
+      "summary": "",
+      "params": [
+        {
+          "name": "sName",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_ThrowNullOperatorException.htm"
+    },
+    {
+      "name": "ThrowOperatorException(String, GH_ScriptVariantType)",
+      "signature": "protected static void ThrowOperatorException(string op_name, GH_ScriptVariantType A)",
+      "summary": "",
+      "params": [
+        {
+          "name": "op_name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariantType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_ThrowOperatorException.htm"
+    },
+    {
+      "name": "ThrowOperatorException(String, String)",
+      "signature": "protected static void ThrowOperatorException(string op_name, string A)",
+      "summary": "",
+      "params": [
+        {
+          "name": "op_name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_ThrowOperatorException_2.htm"
+    },
+    {
+      "name": "ThrowOperatorException(String, GH_ScriptVariantType, GH_ScriptVariantType)",
+      "signature": "protected static void ThrowOperatorException(string op_name, GH_ScriptVariantType A, GH_ScriptVariantType B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "op_name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariantType",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariantType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_ThrowOperatorException_1.htm"
+    },
+    {
+      "name": "ThrowOperatorException(String, String, String)",
+      "signature": "protected static void ThrowOperatorException(string op_name, string A, string B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "op_name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_ThrowOperatorException_3.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_ToString.htm"
+    },
+    {
+      "name": "Addition",
+      "signature": "public static GH_ScriptVariant operator \u002B(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Addition.htm"
+    },
+    {
+      "name": "BitwiseAnd",
+      "signature": "public static bool operator \u0026(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_BitwiseAnd.htm"
+    },
+    {
+      "name": "BitwiseOr",
+      "signature": "public static bool operator |(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_BitwiseOr.htm"
+    },
+    {
+      "name": "Concatenate",
+      "signature": "C# does not support this operator.",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Concatenate.htm"
+    },
+    {
+      "name": "Division",
+      "signature": "public static GH_ScriptVariant operator /(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Division.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Equality.htm"
+    },
+    {
+      "name": "ExclusiveOr",
+      "signature": "public static bool operator ^(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_ExclusiveOr.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to Plane)",
+      "signature": "public static explicit operator Plane (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Plane",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit_7.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to Point3d)",
+      "signature": "public static explicit operator Point3d (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit_5.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to Vector3d)",
+      "signature": "public static explicit operator Vector3d (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit_6.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to Boolean)",
+      "signature": "public static explicit operator bool (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to DateTime)",
+      "signature": "public static explicit operator DateTime (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTime",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit_4.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to Double)",
+      "signature": "public static explicit operator double (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit_2.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to Int32)",
+      "signature": "public static explicit operator int (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit_1.htm"
+    },
+    {
+      "name": "Explicit(GH_ScriptVariant to String)",
+      "signature": "public static explicit operator string (GH_ScriptVariant in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Explicit_3.htm"
+    },
+    {
+      "name": "Exponent",
+      "signature": "C# does not support this operator.",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Exponent.htm"
+    },
+    {
+      "name": "False",
+      "signature": "public static bool operator false(GH_ScriptVariant A)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_False.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Implicit(Boolean to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (bool in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit_3.htm"
+    },
+    {
+      "name": "Implicit(DateTime to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (DateTime in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit_4.htm"
+    },
+    {
+      "name": "Implicit(Double to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (double in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit_5.htm"
+    },
+    {
+      "name": "Implicit(Int32 to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (int in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit_6.htm"
+    },
+    {
+      "name": "Implicit(Plane to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (Plane in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(Point3d to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (Point3d in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit_1.htm"
+    },
+    {
+      "name": "Implicit(String to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (string in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit_7.htm"
+    },
+    {
+      "name": "Implicit(Vector3d to GH_ScriptVariant)",
+      "signature": "public static implicit operator GH_ScriptVariant (Vector3d in)",
+      "summary": "",
+      "params": [
+        {
+          "name": "in",
+          "type": "Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Implicit_2.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Inequality.htm"
+    },
+    {
+      "name": "IntegerDivision",
+      "signature": "C# does not support this operator.",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_IntegerDivision.htm"
+    },
+    {
+      "name": "LeftShift",
+      "signature": "public static GH_ScriptVariant operator \u003C\u003C(GH_ScriptVariant A, int B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_LeftShift.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_LessThanOrEqual.htm"
+    },
+    {
+      "name": "Modulus",
+      "signature": "public static GH_ScriptVariant operator %(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Modulus.htm"
+    },
+    {
+      "name": "Multiply",
+      "signature": "public static GH_ScriptVariant operator *(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Multiply.htm"
+    },
+    {
+      "name": "OnesComplement",
+      "signature": "public static GH_ScriptVariant operator ~(GH_ScriptVariant A)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_OnesComplement.htm"
+    },
+    {
+      "name": "RightShift",
+      "signature": "public static GH_ScriptVariant operator \u003E\u003E(GH_ScriptVariant A, int B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_RightShift.htm"
+    },
+    {
+      "name": "Subtraction",
+      "signature": "public static GH_ScriptVariant operator -(GH_ScriptVariant A, GH_ScriptVariant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_Subtraction.htm"
+    },
+    {
+      "name": "True",
+      "signature": "public static bool operator true(GH_ScriptVariant A)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_True.htm"
+    },
+    {
+      "name": "UnaryNegation",
+      "signature": "public static GH_ScriptVariant operator -(GH_ScriptVariant A)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_UnaryNegation.htm"
+    },
+    {
+      "name": "UnaryPlus",
+      "signature": "public static GH_ScriptVariant operator \u002B(GH_ScriptVariant A)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_ScriptVariant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ScriptVariant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ScriptVariant_op_UnaryPlus.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boolean",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Boolean.htm"
+    },
+    {
+      "name": "DateTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_DateTime.htm"
+    },
+    {
+      "name": "Double",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Double.htm"
+    },
+    {
+      "name": "Integer",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Integer.htm"
+    },
+    {
+      "name": "Object",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Object.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Plane.htm"
+    },
+    {
+      "name": "Point",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Point.htm"
+    },
+    {
+      "name": "String",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_String.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_ScriptVariantType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Type.htm"
+    },
+    {
+      "name": "Vector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ScriptVariant_Vector.htm"
+    },
+    {
+      "name": "m_type",
+      "type": "GH_ScriptVariantType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ScriptVariant_m_type.htm"
+    },
+    {
+      "name": "m_value",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ScriptVariant_m_value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

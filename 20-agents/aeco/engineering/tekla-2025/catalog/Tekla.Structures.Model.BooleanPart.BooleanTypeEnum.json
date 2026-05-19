@@ -1,0 +1,29 @@
+{
+  "name": "BooleanPart.BooleanTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Defines the boolean operation: an add or a cut.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a103fb75-b005-bb97-51cc-c4f5ff5763af",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOOLEAN_ADD",
+      "value": 1,
+      "summary": "Defines the add part. Typically the add part type is not used."
+    },
+    {
+      "name": "BOOLEAN_CUT",
+      "value": 2,
+      "summary": "Defines the cut part."
+    },
+    {
+      "name": "BOOLEAN_WELDPREP",
+      "value": 3,
+      "summary": "Defines the weld prep part."
+    }
+  ]
+}

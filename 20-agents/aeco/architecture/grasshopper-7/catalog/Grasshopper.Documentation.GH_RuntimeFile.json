@@ -1,0 +1,275 @@
+{
+  "name": "GH_RuntimeFile",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "class",
+  "summary": "Runtime representation of a Grasshopper help file. A GH_RuntimeFile is nothing more than a collection of keywords with associated content. This class does not interpret a file or check its validity, it merely figures out the different content section based on \u0022Keyword:\u0022 entries.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Documentation_GH_RuntimeFile.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ContainsKey",
+      "signature": "public bool ContainsKey(string key)",
+      "summary": "Test whether a certain key is present in the File.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the key is present in the file, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_RuntimeFile_ContainsKey.htm"
+    },
+    {
+      "name": "IsTag",
+      "signature": "public static bool IsTag(string text)",
+      "summary": "Tests whether a string is a predefined Grasshopper Help keyword.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "String to test. Should contain no whitespace, but does not need to properly cased.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if text is a predefined keyword, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_RuntimeFile_IsTag.htm"
+    },
+    {
+      "name": "IsTagLine",
+      "signature": "public static bool IsTagLine(string line, out string keyword, out string remainder)",
+      "summary": "Tests whether a line of text starts with a Grasshopper Help keyword.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line of text to test.",
+          "optional": false
+        },
+        {
+          "name": "keyword",
+          "type": "System.String",
+          "doc": "This is where the keyword is returned.",
+          "optional": false
+        },
+        {
+          "name": "remainder",
+          "type": "System.String",
+          "doc": "This is where the non-keyword part of the line is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line starts with a keyword."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_RuntimeFile_IsTagLine.htm"
+    },
+    {
+      "name": "ParseFile",
+      "signature": "public static GH_RuntimeFile ParseFile(string path)",
+      "summary": "Parse a file and return the runtime representation of said file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path to file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_RuntimeFile",
+        "doc": "The runtime representation of the file on the disk."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_RuntimeFile_ParseFile.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Content",
+      "type": "List\u003CString[]\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the data associated with a certain key. For every time the key appears in the file, an array of content strings will be returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_RuntimeFile_Content.htm"
+    },
+    {
+      "name": "Keys",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the keys present in the File.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_RuntimeFile_Keys.htm"
+    },
+    {
+      "name": "Path",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the path of this help file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_RuntimeFile_Path.htm"
+    },
+    {
+      "name": "Tags",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a collection of all the pre-defined keywords. Use IsKeyword(string) if you want to know whether a string equals a keyword. It\u0027s both faster and more reliable than comparing against this collection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_RuntimeFile_Tags.htm"
+    },
+    {
+      "name": "TagAuthor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Author fields in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagAuthor.htm"
+    },
+    {
+      "name": "TagAutoLink",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to signal whether automatic linking to a topic is allowed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagAutoLink.htm"
+    },
+    {
+      "name": "TagBeginner",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used t o identify Beginner Level Help Content in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagBeginner.htm"
+    },
+    {
+      "name": "TagCategory",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Category fields in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagCategory.htm"
+    },
+    {
+      "name": "TagComponent",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Component IDs in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagComponent.htm"
+    },
+    {
+      "name": "TagContact",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Author contact details in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagContact.htm"
+    },
+    {
+      "name": "TagDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used t o identify Description fields in glossary source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagDescription.htm"
+    },
+    {
+      "name": "TagErranyms",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Do Not Confuse collections in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagErranyms.htm"
+    },
+    {
+      "name": "TagExpert",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used t o identify Expert Level Help Content in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagExpert.htm"
+    },
+    {
+      "name": "TagInclude",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to signal whether inclusion of a topic is allowed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagInclude.htm"
+    },
+    {
+      "name": "TagIntermediate",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used t o identify Intermediate Level Help Content in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagIntermediate.htm"
+    },
+    {
+      "name": "TagKeywords",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Keyword collections in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagKeywords.htm"
+    },
+    {
+      "name": "TagPronunciation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Pronunciaion Guide fields (IPA) in glossary source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagPronunciation.htm"
+    },
+    {
+      "name": "TagRhinoCommand",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Similar Rhino Commands in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagRhinoCommand.htm"
+    },
+    {
+      "name": "TagSeeAlso",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify See Also collections in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagSeeAlso.htm"
+    },
+    {
+      "name": "TagSynonyms",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify Synonym collections in glossary source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagSynonyms.htm"
+    },
+    {
+      "name": "TagTitle",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String tag used to identify title fields in documentation source files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Documentation_GH_RuntimeFile_TagTitle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

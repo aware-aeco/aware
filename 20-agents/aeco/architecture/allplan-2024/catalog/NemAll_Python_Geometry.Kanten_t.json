@@ -1,0 +1,42 @@
+{
+  "name": "Kanten_t",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "old Allplan structur anf/end begins with 1",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Kanten_t/",
+  "constructors": [
+    {
+      "name": "Kanten_t",
+      "signature": "Kanten_t()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Kanten_t/#NemAll_Python_Geometry.Kanten_t.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "anf",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": ":type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Kanten_t/#NemAll_Python_Geometry.Kanten_t.anf"
+    },
+    {
+      "name": "end",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": ":type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Kanten_t/#NemAll_Python_Geometry.Kanten_t.end"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

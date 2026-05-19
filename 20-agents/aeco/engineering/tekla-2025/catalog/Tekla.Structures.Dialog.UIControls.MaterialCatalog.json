@@ -1,0 +1,78 @@
+{
+  "name": "MaterialCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The MaterialCatalog class represents a group of controls to select materials using the material catalog.",
+  "base": "System.Windows.Forms.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/18f14693-f93b-dd0c-d5ae-a997113bfd06",
+  "constructors": [
+    {
+      "name": "MaterialCatalog()",
+      "signature": "public MaterialCatalog()",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfdd86bd-78f2-5944-0289-1b735cdf1a21"
+    },
+    {
+      "name": "MaterialCatalog(String)",
+      "signature": "public MaterialCatalog(string Material)",
+      "summary": "Creates a new instance of the MaterialCatalog and will select the material (if available) in the tree.",
+      "params": [
+        {
+          "name": "Material",
+          "type": "System.String",
+          "doc": "The material to be selected in the dialog.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0e0d7a1d-142f-2df1-57d0-9c1e4c56c007"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ButtonText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the text of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/14310e6d-726c-532a-65ec-a87b30b32e80"
+    },
+    {
+      "name": "SelectedMaterial",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the selected material in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/282436e9-e061-c6c8-2012-1fb42eb1c6ae"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/788d5c1d-dfc3-1b3f-f849-9e96756dbb4d",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e5da3b1-7d90-73eb-3806-28e4d4c34003",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

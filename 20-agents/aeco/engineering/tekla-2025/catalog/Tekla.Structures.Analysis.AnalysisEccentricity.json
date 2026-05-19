@@ -1,0 +1,42 @@
+{
+  "name": "AnalysisEccentricity",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisEccentricity class contains eccentricity information for an analysis model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/57b5d953-4d56-f84f-a67b-ac58260e690e",
+  "constructors": [
+    {
+      "name": "AnalysisEccentricity",
+      "signature": "public AnalysisEccentricity()",
+      "summary": "Creates a new analysis eccentricity instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2441df0f-7dfe-540a-8d32-bbc8983ef94d"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "End",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The eccentricity at the end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9d7b104c-795c-5bbd-3f2c-28ff573d021b"
+    },
+    {
+      "name": "Start",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The eccentricity at the start.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/197394e4-f93a-131c-2107-a603e1f7256d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

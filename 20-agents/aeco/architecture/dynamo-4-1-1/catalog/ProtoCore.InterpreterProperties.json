@@ -1,0 +1,92 @@
+{
+  "name": "InterpreterProperties",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type InterpreterProperties",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs",
+  "constructors": [
+    {
+      "name": "InterpreterProperties()",
+      "signature": "void InterpreterProperties()",
+      "summary": "InterpreterProperties.InterpreterProperties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "InterpreterProperties(ProtoCore.InterpreterProperties)",
+      "signature": "void InterpreterProperties(ProtoCore.InterpreterProperties rhs)",
+      "summary": "InterpreterProperties.InterpreterProperties",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.InterpreterProperties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Reset",
+      "signature": "void Reset()",
+      "summary": "InterpreterProperties.Reset",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DominantStructure",
+      "type": "ProtoCore.Lang.Replication.DominantListStructure",
+      "getter": true,
+      "setter": true,
+      "summary": "InterpreterProperties.DominantStructure",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "executingGraphNode",
+      "type": "ProtoCore.AssociativeGraph.GraphNode",
+      "getter": true,
+      "setter": true,
+      "summary": "InterpreterProperties.executingGraphNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "functionCallArguments",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "InterpreterProperties.functionCallArguments",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "functionCallDotCallDimensions",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "InterpreterProperties.functionCallDotCallDimensions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "nodeIterations",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "InterpreterProperties.nodeIterations",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,122 @@
+{
+  "name": "Color",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The Color class represents an RGB color with transparency. The color values must be between 0.0 and 1.0.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c726c4b0-94af-e2ca-cf89-c7795b8d4d7c",
+  "constructors": [
+    {
+      "name": "Color()",
+      "signature": "public Color()",
+      "summary": "Creates a new color object. The default object is black.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9828651d-c47b-258e-4c2d-8d599974a312"
+    },
+    {
+      "name": "Color(Double, Double, Double)",
+      "signature": "public Color(double Red, double Green, double Blue)",
+      "summary": "Creates a new color object with the given values.",
+      "params": [
+        {
+          "name": "Red",
+          "type": "System.Double",
+          "doc": "The red value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Green",
+          "type": "System.Double",
+          "doc": "The green value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Blue",
+          "type": "System.Double",
+          "doc": "The blue value of the color, between 0.0 and 1.0.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c1bd289c-404c-fc28-5ece-eee8fc5acb06"
+    },
+    {
+      "name": "Color(Double, Double, Double, Double)",
+      "signature": "public Color(double Red, double Green, double Blue, double Transparency)",
+      "summary": "Creates a new color object with the given values.",
+      "params": [
+        {
+          "name": "Red",
+          "type": "System.Double",
+          "doc": "The red value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Green",
+          "type": "System.Double",
+          "doc": "The green value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Blue",
+          "type": "System.Double",
+          "doc": "The blue value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Transparency",
+          "type": "System.Double",
+          "doc": "The transparency value of the color, between 0.0 (completely see-through) and 1.0 (completely solid).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e61ea573-02b9-2fcc-9e34-86f65664867b"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Blue",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The blue value of the color, between 0.0 and 1.0.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5e60e398-01dd-44fc-476e-40a66bf9cc29"
+    },
+    {
+      "name": "Green",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The green value of the color, between 0.0 and 1.0.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5aad97ef-fa56-f482-25f2-14a84fd3ad1e"
+    },
+    {
+      "name": "Red",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The red value of the color, between 0.0 and 1.0.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/59deb3d6-a423-3008-b3c0-302f784e6888"
+    },
+    {
+      "name": "Transparency",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The transparency value of the color, between 0.0 (completely see-through) and 1.0 (completely solid).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/caace418-d5be-3b3e-4672-6ab889b8a6b3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

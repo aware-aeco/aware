@@ -1,0 +1,29 @@
+{
+  "name": "ViewInfoFocalBlurModes",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "The different focal blur modes of the ViewInfo",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_ViewInfoFocalBlurModes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No focal blur"
+    },
+    {
+      "name": "Automatic",
+      "value": 1,
+      "summary": "Auto-focus on selected objects"
+    },
+    {
+      "name": "Manual",
+      "value": 2,
+      "summary": "Fully manual focus"
+    }
+  ]
+}

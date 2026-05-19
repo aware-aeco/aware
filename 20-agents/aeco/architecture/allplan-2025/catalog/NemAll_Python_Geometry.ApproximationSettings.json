@@ -1,0 +1,325 @@
+{
+  "name": "ApproximationSettings",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class holding approximation options.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/",
+  "constructors": [
+    {
+      "name": "ApproximationSettings",
+      "signature": "ApproximationSettings( oType: eApproximationSettingsType = ASET_SEGMENTATION, value: float = 30.0 ) | ApproximationSettings(options: ApproximationSettings)",
+      "summary": "Default constructor. Other members will be set to 0. Types can be found in GeometryEnums.h",
+      "remarks": "Default constructor. Other members will be set to 0. Types can be found in GeometryEnums.h",
+      "params": [
+        {
+          "name": "oType",
+          "type": "eApproximationSettingsType",
+          "doc": "Type of the settings which will be set",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "value which will be set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDensity",
+      "signature": "GetDensity() -\u003E float",
+      "summary": "Get Density value",
+      "remarks": "Get Density value",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "density value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.GetDensity"
+    },
+    {
+      "name": "GetMaxAngle",
+      "signature": "GetMaxAngle() -\u003E Angle",
+      "summary": "Get Maximal Angle value",
+      "remarks": "Get Maximal Angle value",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "maximal angle value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.GetMaxAngle"
+    },
+    {
+      "name": "GetMaxDistance",
+      "signature": "GetMaxDistance() -\u003E float",
+      "summary": "Get MaxDistance value",
+      "remarks": "Get MaxDistance value",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "const Reference to MaxDistance value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.GetMaxDistance"
+    },
+    {
+      "name": "GetMaxLength",
+      "signature": "GetMaxLength() -\u003E float",
+      "summary": "Get MaxLength value",
+      "remarks": "Get MaxLength value",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "const Reference to MaxLength value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.GetMaxLength"
+    },
+    {
+      "name": "GetMinLength",
+      "signature": "GetMinLength() -\u003E float",
+      "summary": "Get Minimal Length value",
+      "remarks": "Get Minimal Length value",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "minimal length value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.GetMinLength"
+    },
+    {
+      "name": "GetSegmentation",
+      "signature": "GetSegmentation() -\u003E int",
+      "summary": "Get Segmentation value",
+      "remarks": "Get Segmentation value",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "const Reference to Segmentation value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.GetSegmentation"
+    },
+    {
+      "name": "GetType",
+      "signature": "GetType() -\u003E eApproximationSettingsType",
+      "summary": "Get Type of the settings",
+      "remarks": "Get Type of the settings",
+      "params": [],
+      "returns": {
+        "type": "eApproximationSettingsType",
+        "doc": "const Reference to Settings type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.GetType"
+    },
+    {
+      "name": "IsBRepTesselation",
+      "signature": "IsBRepTesselation() -\u003E bool",
+      "summary": "Check whether the type of the settings is ASET_BREP_TESSELATION",
+      "remarks": "Check whether the type of the settings is ASET_BREP_TESSELATION",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.IsBRepTesselation"
+    },
+    {
+      "name": "IsMaxDistance",
+      "signature": "IsMaxDistance() -\u003E bool",
+      "summary": "Check whether the type of the settings is ASET_MAX_DISTANCE",
+      "remarks": "Check whether the type of the settings is ASET_MAX_DISTANCE",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.IsMaxDistance"
+    },
+    {
+      "name": "IsMaxLength",
+      "signature": "IsMaxLength() -\u003E bool",
+      "summary": "Check whether the type of the settings is ASET_MAX_LENGTH",
+      "remarks": "Check whether the type of the settings is ASET_MAX_LENGTH",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.IsMaxLength"
+    },
+    {
+      "name": "IsSegmentation",
+      "signature": "IsSegmentation() -\u003E bool",
+      "summary": "Check whether the type of the settings is ASET_SEGMENTATION",
+      "remarks": "Check whether the type of the settings is ASET_SEGMENTATION",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.IsSegmentation"
+    },
+    {
+      "name": "SetBRepTesselation",
+      "signature": "SetBRepTesselation( density: float, maxAngle: Angle, minLength: float, maxLength: float )",
+      "summary": "Set all settings for BRep3D tesselation.",
+      "remarks": "Set all settings for BRep3D tesselation.",
+      "params": [
+        {
+          "name": "density",
+          "type": "float",
+          "doc": "new density value.",
+          "optional": false
+        },
+        {
+          "name": "maxAngle",
+          "type": "Angle",
+          "doc": "new maximal edge length value.",
+          "optional": false
+        },
+        {
+          "name": "minLength",
+          "type": "float",
+          "doc": "new minimal edge length value.",
+          "optional": false
+        },
+        {
+          "name": "maxLength",
+          "type": "float",
+          "doc": "new maximal angle value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.SetBRepTesselation"
+    },
+    {
+      "name": "SetMaxDistance",
+      "signature": "SetMaxDistance(maxDistance: float)",
+      "summary": "Set MaxDistance value.",
+      "remarks": "Set MaxDistance value.",
+      "params": [
+        {
+          "name": "maxDistance",
+          "type": "float",
+          "doc": "new MaxDistance value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.SetMaxDistance"
+    },
+    {
+      "name": "SetMaxLength",
+      "signature": "SetMaxLength(maxLength: float)",
+      "summary": "Set MaxLength value.",
+      "remarks": "Set MaxLength value.",
+      "params": [
+        {
+          "name": "maxLength",
+          "type": "float",
+          "doc": "new MaxLength value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.SetMaxLength"
+    },
+    {
+      "name": "SetSegmentation",
+      "signature": "SetSegmentation(segmentation: int)",
+      "summary": "Set Segmentation.",
+      "remarks": "Set Segmentation.",
+      "params": [
+        {
+          "name": "segmentation",
+          "type": "int",
+          "doc": "new Segmentation value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.SetSegmentation"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(right: ApproximationSettings) -\u003E bool",
+      "summary": "Operator ==",
+      "remarks": "Operator ==",
+      "params": [
+        {
+          "name": "right",
+          "type": "ApproximationSettings",
+          "doc": "settings to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if settings are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(right: ApproximationSettings) -\u003E bool",
+      "summary": "Operator !=",
+      "remarks": "Operator !=",
+      "params": [
+        {
+          "name": "right",
+          "type": "ApproximationSettings",
+          "doc": "settings to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if settings are NOT equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.__ne__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

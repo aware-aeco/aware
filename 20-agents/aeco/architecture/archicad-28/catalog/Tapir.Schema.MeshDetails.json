@@ -1,0 +1,74 @@
+{
+  "name": "MeshDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Shared schema type \u0060MeshDetails\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "level",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The Z reference level of coordinates.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails"
+    },
+    {
+      "name": "skirtType",
+      "type": "MeshSkirtType",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060skirtType\u0060 of type \u0060MeshSkirtType\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails"
+    },
+    {
+      "name": "skirtLevel",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The height of the skirt.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails"
+    },
+    {
+      "name": "polygonCoordinates",
+      "type": "Coordinate3D[]",
+      "getter": true,
+      "setter": false,
+      "summary": "The 3D coordinates of the outline polygon of the mesh.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails"
+    },
+    {
+      "name": "polygonArcs",
+      "type": "PolyArc[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Polygon outline arcs of the mesh.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails"
+    },
+    {
+      "name": "holes",
+      "type": "Holes3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Property \u0060holes\u0060 of type \u0060Holes3D\u0060 (optional).",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails"
+    },
+    {
+      "name": "sublines",
+      "type": "object[]",
+      "getter": true,
+      "setter": true,
+      "summary": "The leveling sublines inside the polygon of the mesh.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

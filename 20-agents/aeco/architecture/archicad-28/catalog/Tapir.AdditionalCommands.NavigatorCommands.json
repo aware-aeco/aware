@@ -1,0 +1,298 @@
+{
+  "name": "NavigatorCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Navigator Commands\u0027 command group \u2014 14 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PublishPublisherSet",
+      "signature": "PublishPublisherSet(publisherSetName: string, outputPath?: string, selectedNavigatorItemIds?: NavigatorItemIds): void",
+      "summary": "Performs a publish operation on the currently opened project. Only the given publisher set will be published.",
+      "params": [
+        {
+          "name": "publisherSetName",
+          "type": "string",
+          "doc": "The name of the publisher set.",
+          "optional": false
+        },
+        {
+          "name": "outputPath",
+          "type": "string",
+          "doc": "Full local or LAN path for publishing. Optional, by default the path set in the settings of the publisher set will be used.",
+          "optional": true
+        },
+        {
+          "name": "selectedNavigatorItemIds",
+          "type": "NavigatorItemIds",
+          "doc": "Optional publisher-tree navigator items to publish instead of the whole publisher set.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PublishPublisherSet",
+      "since": "0.1.0"
+    },
+    {
+      "name": "UpdateDrawings",
+      "signature": "UpdateDrawings(elements: Elements): ExecutionResult",
+      "summary": "Performs a drawing update on the given elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#UpdateDrawings",
+      "since": "1.1.4"
+    },
+    {
+      "name": "GetDatabaseIdFromNavigatorItemId",
+      "signature": "GetDatabaseIdFromNavigatorItemId(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Gets the ID of the database associated with the supplied navigator item id",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: databases."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetDatabaseIdFromNavigatorItemId",
+      "since": "1.1.4"
+    },
+    {
+      "name": "CreateDetails",
+      "signature": "CreateDetails(detailsData: object[]): object",
+      "summary": "Creates independent Detail databases.",
+      "params": [
+        {
+          "name": "detailsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: databases."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateDetails",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateWorksheets",
+      "signature": "CreateWorksheets(worksheetsData: object[]): object",
+      "summary": "Creates independent Worksheet databases.",
+      "params": [
+        {
+          "name": "worksheetsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: databases."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateWorksheets",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateLayouts",
+      "signature": "CreateLayouts(layoutsData: object[]): object",
+      "summary": "Creates Layouts and their backing master layouts.",
+      "params": [
+        {
+          "name": "layoutsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: databases."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateLayouts",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateSubsets",
+      "signature": "CreateSubsets(subsetsData: object[]): object",
+      "summary": "Creates Layout Book subsets.",
+      "params": [
+        {
+          "name": "subsetsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateSubsets",
+      "since": "1.4.0"
+    },
+    {
+      "name": "CreateDrawings",
+      "signature": "CreateDrawings(drawingsData: object[]): object",
+      "summary": "Creates Drawing elements on the specified or active layout from navigator items.",
+      "params": [
+        {
+          "name": "drawingsData",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateDrawings",
+      "since": "1.4.0"
+    },
+    {
+      "name": "GetModelViewOptions",
+      "signature": "GetModelViewOptions(): object",
+      "summary": "Gets all model view options",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: modelViewOptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetModelViewOptions",
+      "since": "1.1.4"
+    },
+    {
+      "name": "GetViewSettings",
+      "signature": "GetViewSettings(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Gets the view settings of navigator items",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: viewSettings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetViewSettings",
+      "since": "1.1.4"
+    },
+    {
+      "name": "SetViewSettings",
+      "signature": "SetViewSettings(navigatorItemIdsWithViewSettings: object[]): object",
+      "summary": "Sets the view settings of navigator items",
+      "params": [
+        {
+          "name": "navigatorItemIdsWithViewSettings",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetViewSettings",
+      "since": "1.1.4"
+    },
+    {
+      "name": "GetView2DTransformations",
+      "signature": "GetView2DTransformations(databases?: Databases): object",
+      "summary": "Get zoom and rotation of 2D views",
+      "params": [
+        {
+          "name": "databases",
+          "type": "Databases",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: transformations."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetView2DTransformations",
+      "since": "1.1.7"
+    },
+    {
+      "name": "Set3DCutPlanes",
+      "signature": "Set3DCutPlanes(cutPlanes?: object[]): ExecutionResult",
+      "summary": "Sets the 3D cut planes.",
+      "params": [
+        {
+          "name": "cutPlanes",
+          "type": "object[]",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Set3DCutPlanes",
+      "since": "1.3.1"
+    },
+    {
+      "name": "FitInWindow",
+      "signature": "FitInWindow(elements?: Elements): ExecutionResult",
+      "summary": "Zooms to the given elements or fits everything in the window.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FitInWindow",
+      "since": "1.3.1"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

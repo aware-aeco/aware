@@ -1,0 +1,38 @@
+{
+  "name": "GH_MatchWeight",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Weighting factors of string matches.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_MatchWeight.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Exact",
+      "value": 100
+    },
+    {
+      "name": "Start",
+      "value": 100
+    },
+    {
+      "name": "WordExact",
+      "value": 100
+    },
+    {
+      "name": "WordStart",
+      "value": 100
+    },
+    {
+      "name": "Contains",
+      "value": 10
+    },
+    {
+      "name": "Fuzzy",
+      "value": 10
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "name": "UnitAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The UnitAttributes class handles attributes related to units and formatting of values.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7c59d106-b059-1d79-d697-33133265f971",
+  "constructors": [
+    {
+      "name": "UnitAttributes()",
+      "signature": "public UnitAttributes()",
+      "summary": "Creates a new default UnitAttributes attributes instance. The default values are Units.Automatic, FormatTypes.Automatic.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/420c1824-219f-663a-88fd-87d94742d9a6"
+    },
+    {
+      "name": "UnitAttributes(Units, FormatTypes)",
+      "signature": "public UnitAttributes(Units unit, FormatTypes format)",
+      "summary": "Creates a new UnitAttributes attributes instance with the given parameters.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Tekla.Structures.Drawing.Units",
+          "doc": "The units to use.",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Tekla.Structures.Drawing.FormatTypes",
+          "doc": "The format to use.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/55b22f39-99a9-904a-ca37-9560405434f3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public Object Clone()",
+      "summary": "Clones the object.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a99f0c77-a698-90f2-307d-556ec55a9881"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e5dea66a-b241-1e2a-6275-085f3184c73d"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Format",
+      "type": "FormatTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the format to use.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c7a620b9-c189-162c-3e82-dd9c920e4323"
+    },
+    {
+      "name": "Unit",
+      "type": "Units",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the unit to use.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a357714d-6602-c0c6-2504-4bbc8aa561f6"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

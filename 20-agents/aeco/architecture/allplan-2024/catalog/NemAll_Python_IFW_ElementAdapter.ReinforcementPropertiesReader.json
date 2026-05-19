@@ -1,0 +1,56 @@
+{
+  "name": "ReinforcementPropertiesReader",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.ReinforcementPropertiesReader.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ReinforcementPropertiesReader/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber(ele)",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ReinforcementPropertiesReader/#NemAll_Python_IFW_ElementAdapter.ReinforcementPropertiesReader.GetPositionNumber"
+    },
+    {
+      "name": "GetPositionNumberFromRepresentation",
+      "signature": "GetPositionNumberFromRepresentation(ele)",
+      "summary": "Get the position number from a representation element",
+      "remarks": "Get the position number from a representation element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ReinforcementPropertiesReader/#NemAll_Python_IFW_ElementAdapter.ReinforcementPropertiesReader.GetPositionNumberFromRepresentation"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

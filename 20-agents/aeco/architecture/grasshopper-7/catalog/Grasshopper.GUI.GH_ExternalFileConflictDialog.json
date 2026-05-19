@@ -1,0 +1,76 @@
+{
+  "name": "GH_ExternalFileConflictDialog",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_ExternalFileConflictDialog.)",
+  "base": "Form",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_ExternalFileConflictDialog.htm",
+  "constructors": [
+    {
+      "name": "GH_ExternalFileConflictDialog",
+      "signature": "public GH_ExternalFileConflictDialog()",
+      "summary": "Initializes a new instance of the GH_ExternalFileConflictDialog class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_ExternalFileConflictDialog__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_ExternalFileConflictDialog and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_ExternalFileConflictDialog_Dispose.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FilePathA",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ExternalFileConflictDialog_FilePathA.htm"
+    },
+    {
+      "name": "FilePathB",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ExternalFileConflictDialog_FilePathB.htm"
+    },
+    {
+      "name": "InfoLabel",
+      "type": "Label",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ExternalFileConflictDialog_InfoLabel.htm"
+    },
+    {
+      "name": "LoadFileCode",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ExternalFileConflictDialog_LoadFileCode.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

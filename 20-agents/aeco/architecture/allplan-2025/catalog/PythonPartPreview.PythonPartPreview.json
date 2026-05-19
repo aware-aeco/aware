@@ -1,0 +1,97 @@
+{
+  "name": "PythonPartPreview",
+  "namespace": "PythonPartPreview",
+  "kind": "class",
+  "summary": "Implementation of the PythonPart transaction",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartPreview/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "close",
+      "signature": "close()",
+      "summary": "close the preview",
+      "remarks": "close the preview",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartPreview/#PythonPartPreview.PythonPartPreview.close"
+    },
+    {
+      "name": "execute",
+      "signature": "execute( doc: DocumentAdapter, placement_matrix: Matrix3D, model_ele_list: list[Any], direct_draw: bool = False, asso_ref_object: BaseElementAdapter | None = None, use_system_angle: bool = True, as_static_preview: bool = False, )",
+      "summary": "execute the preview draw",
+      "remarks": "execute the preview draw",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "placement_matrix",
+          "type": "Matrix3D",
+          "doc": "placement matrix",
+          "optional": false
+        },
+        {
+          "name": "model_ele_list",
+          "type": "list[Any]",
+          "doc": "list with the model elements",
+          "optional": false
+        },
+        {
+          "name": "direct_draw",
+          "type": "bool",
+          "doc": "direct draw of the preview",
+          "optional": false
+        },
+        {
+          "name": "asso_ref_object",
+          "type": "BaseElementAdapter | None",
+          "doc": "associative view reference object",
+          "optional": false
+        },
+        {
+          "name": "use_system_angle",
+          "type": "bool",
+          "doc": "use the system angle state",
+          "optional": false
+        },
+        {
+          "name": "as_static_preview",
+          "type": "bool",
+          "doc": "draw as static preview state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartPreview/#PythonPartPreview.PythonPartPreview.execute"
+    },
+    {
+      "name": "set_preview_draw_lock",
+      "signature": "set_preview_draw_lock(preview_draw_lock: bool)",
+      "summary": "set the preview draw lock state",
+      "remarks": "set the preview draw lock state",
+      "params": [
+        {
+          "name": "preview_draw_lock",
+          "type": "bool",
+          "doc": "preview draw lock state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartPreview/#PythonPartPreview.PythonPartPreview.set_preview_draw_lock"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

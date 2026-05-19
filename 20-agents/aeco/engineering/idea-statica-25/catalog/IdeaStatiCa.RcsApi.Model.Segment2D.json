@@ -1,0 +1,22 @@
+{
+  "name": "Segment2D",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.Segment2D.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/Segment2D.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Segment2D.endPoint.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/Segment2D.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

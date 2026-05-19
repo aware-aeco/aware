@@ -1,0 +1,31 @@
+{
+  "name": "IGH_DebugDescription",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface to participate in Debug Logging.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_DebugDescription.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AppendToDebugLog",
+      "signature": "void AppendToDebugLog(GH_DebugDescriptionWriter writer)",
+      "summary": "Write important debugging data to a debug writer object.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "Grasshopper.Kernel.GH_DebugDescriptionWriter",
+          "doc": "Object to write to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DebugDescription_AppendToDebugLog.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

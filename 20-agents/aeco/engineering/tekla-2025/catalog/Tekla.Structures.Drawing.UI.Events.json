@@ -1,0 +1,212 @@
+{
+  "name": "Events",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "class",
+  "summary": "The Events class allows the user to register event listeners for drawing user interface events.",
+  "remarks": "Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft\u0027s documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft\u0027s documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft\u0027s documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5e9a7269-86c0-e674-6b7d-775dd6d0ffc1",
+  "constructors": [
+    {
+      "name": "Events",
+      "signature": "public Events()",
+      "summary": "Constructs a new instance of Events.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c2696c0b-c71f-1680-d8c8-d6693858e0fc"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Disposes of the Events instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ad8753f7-5a3e-b9e5-07fc-cc5bf3bdcbcc"
+    },
+    {
+      "name": "InitializeLifetimeService",
+      "signature": "public override Object InitializeLifetimeService()",
+      "summary": "Initializes the lifetime service.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Always null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2d43bede-eff0-ea69-10ca-39097da266e4"
+    },
+    {
+      "name": "OnInterrupted",
+      "signature": "public void OnInterrupted()",
+      "summary": "Called when uesr interrupts.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/993d9fd4-eff0-c073-fa67-ea0f56113a5b"
+    },
+    {
+      "name": "Register",
+      "signature": "public void Register()",
+      "summary": "Registers the instance to listen to the specified events.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if attempting registration when already registered."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/40f9a059-e3b6-7441-9fe5-52a122ef9834"
+    },
+    {
+      "name": "UnRegister",
+      "signature": "public void UnRegister()",
+      "summary": "Unregisters the instance from listening to events.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5d65f46-f114-4387-fc57-4ce16baec662"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "DocumentManagerClosed",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DocumentManagerClosedDelegate",
+      "signature": "public event Events.DocumentManagerClosedDelegate DocumentManagerClosed",
+      "summary": "The DocumentManagerClosed eventis raised when the document manager is closed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f7146c5-b5c4-4fdd-2082-98882bc08712",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingEditorClosed",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingEditorClosedDelegate",
+      "signature": "public event Events.DrawingEditorClosedDelegate DrawingEditorClosed",
+      "summary": "The DrawingEditorClosed event is raised when the drawing editor is closed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c74b3846-83ff-ae56-e133-7528a0b6773a",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingEditorOpened",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingEditorOpenedDelegate",
+      "signature": "public event Events.DrawingEditorOpenedDelegate DrawingEditorOpened",
+      "summary": "The DrawingEditorOpened event is raised when the drawing editor is opened.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/41ddb49f-e0cd-a44d-a408-5ca172bed4ab",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingListSelectionChanged",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingListSelectionChangedDelegate",
+      "signature": "public event Events.DrawingListSelectionChangedDelegate DrawingListSelectionChanged",
+      "summary": "The DrawingListSelectionChanged event is raised when selection on the drawing list has changed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43e29a01-2a71-56de-70b5-feab70afa5d6",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingLoaded",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingLoadedDelegate",
+      "signature": "public event Events.DrawingLoadedDelegate DrawingLoaded",
+      "summary": "The DrawingLoaded event is raised when a new drawing is opened in the drawing editor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d4a747ac-8038-2da1-1f65-519cd8de16e0",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Interrupted",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.InterruptedDelegate",
+      "signature": "public event Events.InterruptedDelegate Interrupted",
+      "summary": "Occurs when user interrupts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78b51d31-526d-0f15-e398-151534863260",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayoutEditingModeEntered",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.LayoutEditingModeEnteredDelegate",
+      "signature": "public event Events.LayoutEditingModeEnteredDelegate LayoutEditingModeEntered",
+      "summary": "The LayoutEditingModeEntered event is raised when layout editing mode is started.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7050d35e-9db2-6988-15f3-b5805eee4100",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayoutEditingModeExited",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.LayoutEditingModeExitedDelegate",
+      "signature": "public event Events.LayoutEditingModeExitedDelegate LayoutEditingModeExited",
+      "summary": "The LayoutEditingModeEntered event is raised when layout editing mode is finished.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/265cc7d5-ee9d-23a0-f7e9-7c32880975e4",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayoutOptionModified",
+      "delegate": "LayoutOptionModifiedDelegate",
+      "signature": "public event LayoutOptionModifiedDelegate LayoutOptionModified",
+      "summary": "The event is raised when layout option is modified",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/397e75fb-55aa-f902-0da0-9eec16361ad1",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayoutTableDeleted",
+      "delegate": "LayoutTableDeletedDelegate",
+      "signature": "public event LayoutTableDeletedDelegate LayoutTableDeleted",
+      "summary": "The event is raised when table is deleted",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1337f393-15f0-a718-b14a-af77be23a741",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayoutTableInserted",
+      "delegate": "LayoutTableInsertedDelegate",
+      "signature": "public event LayoutTableInsertedDelegate LayoutTableInserted",
+      "summary": "The event is raised when table is inserted",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f80d9c64-1523-52b1-dc61-f5fedcf5549e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayoutTableLayoutModified",
+      "delegate": "LayoutTableLayoutModifiedDelegate",
+      "signature": "public event LayoutTableLayoutModifiedDelegate LayoutTableLayoutModified",
+      "summary": "The event is raised when tablelayout is modified",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b188cd2a-87d6-6b76-4873-bcad2dc8808f",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LayoutTableModified",
+      "delegate": "LayoutTableModifiedDelegate",
+      "signature": "public event LayoutTableModifiedDelegate LayoutTableModified",
+      "summary": "The event is never raised",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/539f548b-e6ad-b40f-2396-2644ac220015",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionChange",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.SelectionChangeDelegate",
+      "signature": "public event Events.SelectionChangeDelegate SelectionChange",
+      "summary": "The SelectionChange event is raised when the selection is changed in a Tekla Structures drawing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c4f6d216-43ae-7d5e-3246-c7ef3f91b5db",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

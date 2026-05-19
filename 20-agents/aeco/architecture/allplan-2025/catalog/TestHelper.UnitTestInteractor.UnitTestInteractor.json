@@ -1,0 +1,55 @@
+{
+  "name": "UnitTestInteractor",
+  "namespace": "TestHelper.UnitTestInteractor",
+  "kind": "class",
+  "summary": "Implementation of the unit test interactor.",
+  "base": "type",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractor/",
+  "constructors": [
+    {
+      "name": "UnitTestInteractor",
+      "signature": "UnitTestInteractor(interactor)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "interactor",
+          "type": "object",
+          "doc": "interactor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractor/#TestHelper.UnitTestInteractor.UnitTestInteractor.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__new__",
+      "signature": "__new__(interactor) -\u003E UnitTestInteractor",
+      "summary": "create the unit test interactor",
+      "remarks": "create the unit test interactor",
+      "params": [
+        {
+          "name": "interactor",
+          "type": "object",
+          "doc": "original interactor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UnitTestInteractor",
+        "doc": "unit test interactor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractor/#TestHelper.UnitTestInteractor.UnitTestInteractor.__new__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,32 @@
+{
+  "name": "NodeModelSearchElementBase",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "Base class for node search elements that can be initialized from TypeLoadData.",
+  "base": "Dynamo.Search.SearchElements.NodeSearchElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeModelSearchElementBase.cs",
+  "constructors": [
+    {
+      "name": "NodeModelSearchElementBase(Dynamo.Graph.Nodes.TypeLoadData)",
+      "signature": "void NodeModelSearchElementBase(Dynamo.Graph.Nodes.TypeLoadData typeLoadData)",
+      "summary": "Initializes a new instance of the Dynamo.Search.SearchElements.NodeModelSearchElementBase class.",
+      "params": [
+        {
+          "name": "typeLoadData",
+          "type": "Dynamo.Graph.Nodes.TypeLoadData",
+          "doc": "Data to load.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeModelSearchElementBase.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,575 @@
+{
+  "name": "ClipPlaneSet",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents the set of clip planes in a view.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ClipPlaneSet",
+  "constructors": [
+    {
+      "name": "ClipPlaneSet()",
+      "signature": "ClipPlaneSet()",
+      "summary": "Constructs a new ClipPlaneSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Get",
+      "signature": "Autodesk.Navisworks.Api.ClipPlane Get(int index)",
+      "summary": "Get method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ClipPlane",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.Get%28System.Int32%29"
+    },
+    {
+      "name": "GetTransform",
+      "signature": "Autodesk.Navisworks.Api.Transform3D GetTransform(int index)",
+      "summary": "GetTransform method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.GetTransform%28System.Int32%29"
+    },
+    {
+      "name": "Clips",
+      "signature": "bool Clips(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "Clips method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.Clips%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "IsOffsetPlanes",
+      "signature": "bool IsOffsetPlanes(Autodesk.Navisworks.Api.ClipPlaneSet other)",
+      "summary": "IsOffsetPlanes method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027other\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027other\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.IsOffsetPlanes%28Autodesk.Navisworks.Api.ClipPlaneSet%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "bool ValueEquals(Autodesk.Navisworks.Api.ClipPlaneSet value)",
+      "summary": "Performs comparison \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.ValueEquals%28Autodesk.Navisworks.Api.ClipPlaneSet%29"
+    },
+    {
+      "name": "Size",
+      "signature": "int Size()",
+      "summary": "Size method of ClipPlaneSet.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.Size"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.ClipPlaneSet InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "static bool ValueEquals(Autodesk.Navisworks.Api.ClipPlaneSet value1, Autodesk.Navisworks.Api.ClipPlaneSet value2)",
+      "summary": "Compares the two references \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.ValueEquals%28Autodesk.Navisworks.Api.ClipPlaneSet%2CAutodesk.Navisworks.Api.ClipPlaneSet%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.ClipPlaneSet other)",
+      "summary": "CopyFrom method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027other\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027other\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.CopyFrom%28Autodesk.Navisworks.Api.ClipPlaneSet%29"
+    },
+    {
+      "name": "FitToBox",
+      "signature": "void FitToBox(Autodesk.Navisworks.Api.BoundingBox3D boundingBox)",
+      "summary": "FitToBox method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027boundingBox\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027boundingBox\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.FitToBox%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "GetOrientedBox",
+      "signature": "void GetOrientedBox(Autodesk.Navisworks.Api.BoundingBox3D box, Autodesk.Navisworks.Api.Rotation3D rotation)",
+      "summary": "GetOrientedBox method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        },
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027box\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027rotation\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.GetOrientedBox%28Autodesk.Navisworks.Api.BoundingBox3D%2CAutodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "SetOrientedBox",
+      "signature": "void SetOrientedBox(Autodesk.Navisworks.Api.BoundingBox3D box, Autodesk.Navisworks.Api.Rotation3D rotation)",
+      "summary": "SetOrientedBox method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        },
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027box\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027box\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027rotation\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027rotation\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.SetOrientedBox%28Autodesk.Navisworks.Api.BoundingBox3D%2CAutodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "SetTransform",
+      "signature": "void SetTransform(int index, Autodesk.Navisworks.Api.Transform3D trans)",
+      "summary": "SetTransform method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027trans\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027trans\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.SetTransform%28System.Int32%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "Transform",
+      "signature": "void Transform(Autodesk.Navisworks.Api.Transform3D trans)",
+      "summary": "Transform method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027trans\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027trans\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.Transform%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "Translate",
+      "signature": "void Translate(int index, Autodesk.Navisworks.Api.Vector3D offset)",
+      "summary": "Translate method of ClipPlaneSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027offset\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027offset\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ClipPlaneSet.Translate%28System.Int32%2CAutodesk.Navisworks.Api.Vector3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Box",
+      "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The clipping box position.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.Box"
+    },
+    {
+      "name": "BoxTransform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "The internal transform used for the section box.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.BoxTransform"
+    },
+    {
+      "name": "CurrentPlane",
+      "type": "Autodesk.Navisworks.Api.ClipPlane",
+      "getter": true,
+      "setter": false,
+      "summary": "The current clip plane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.CurrentPlane"
+    },
+    {
+      "name": "CurrentPlaneIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the current plane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.CurrentPlaneIndex"
+    },
+    {
+      "name": "Enabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Is the clipping set enabled.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.Enabled"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.IsReadOnly"
+    },
+    {
+      "name": "Linked",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Are the clip planes linked.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.Linked"
+    },
+    {
+      "name": "Mode",
+      "type": "Autodesk.Navisworks.Api.ClipPlaneSetMode",
+      "getter": true,
+      "setter": true,
+      "summary": "The mode of the set.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.Mode"
+    },
+    {
+      "name": "Range",
+      "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The range over which the clip planes operate.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ClipPlaneSet.Range"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

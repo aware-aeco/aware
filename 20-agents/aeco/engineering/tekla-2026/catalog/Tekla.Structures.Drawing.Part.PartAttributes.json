@@ -1,0 +1,252 @@
+{
+  "name": "Part.PartAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PartAttributes class is the attributes class for the part.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/08d50d99-aaab-1778-91d0-0deab85b3dff",
+  "constructors": [
+    {
+      "name": "Part.PartAttributes()",
+      "signature": "public PartAttributes()",
+      "summary": "Creates a new default part attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/60065781-eb22-2a88-97da-31bb4c425a85"
+    },
+    {
+      "name": "Part.PartAttributes(String)",
+      "signature": "public PartAttributes(string AttributeFile)",
+      "summary": "Creates a new part attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/46b39eb5-5f67-f762-0b60-681831505702"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/471a1278-b484-0fca-5b96-d7755761df7a"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1dfc4ac7-a2b3-bf89-87af-1fc429293cb0"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CenterLine",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the center line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f745c562-722c-c956-0039-a52ba057f5e6"
+    },
+    {
+      "name": "CustomPresentation",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/015c3081-c158-4634-a7f2-2fed754309bf"
+    },
+    {
+      "name": "DrawCenterLine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the center line is drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/19a681b1-8d3b-9eae-32f9-ced3345b6db3"
+    },
+    {
+      "name": "DrawChamfers",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if chamfers are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce61dd58-4f99-59ee-27ae-8bb5fe404357"
+    },
+    {
+      "name": "DrawConnectingSideMarks",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if connecting side marks are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/21b554a6-f0f3-6656-8f68-2074e47cc5ed"
+    },
+    {
+      "name": "DrawHiddenLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if hidden lines are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2bbc2e52-8710-3755-f399-b008a9fd2aa5"
+    },
+    {
+      "name": "DrawOrientationMark",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the orientation mark is drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/473d0946-641f-b12a-93d4-6a24c1457c7e"
+    },
+    {
+      "name": "DrawOwnHiddenLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if own hidden lines are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/90f85703-6b6c-4ef3-9fe1-df8bfd84b535"
+    },
+    {
+      "name": "DrawPopMarks",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if pop marks are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f377ee72-ac2b-ce6b-bc3b-d67303f37dec"
+    },
+    {
+      "name": "DrawReferenceLine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the reference line is drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3bed51ef-0308-8db5-f2e9-377e75f02838"
+    },
+    {
+      "name": "FaceHatch",
+      "type": "ModelObjectHatchAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch type of the face hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/256ef916-49e4-8eab-1ea9-9df73cc07878"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of hidden lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/acfbe61f-3c05-36f7-cb92-cf01dfe95ade"
+    },
+    {
+      "name": "OwnHiddenLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of own hidden lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0188627-31b5-6299-2026-af49c4b64663"
+    },
+    {
+      "name": "PartialProfileLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the partial profile length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74b75475-0895-887c-212c-92aeb0d1b84d"
+    },
+    {
+      "name": "PartialProfileOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the partial profile offset.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f26afac1-a3b0-36a7-6a5b-915dc0026abd"
+    },
+    {
+      "name": "ReferenceLine",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the reference line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a712075d-a777-1c9f-df67-51d92c72f531"
+    },
+    {
+      "name": "Representation",
+      "type": "Part.Representation",
+      "getter": true,
+      "setter": true,
+      "summary": "The representation of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0a87d90-a81b-a02f-0523-79d77ca701b1"
+    },
+    {
+      "name": "SectionFaceHatch",
+      "type": "ModelObjectHatchAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch type of the section face hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5cf383c0-d0b6-c680-2e0e-c1e10ec3b041"
+    },
+    {
+      "name": "SectionLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of section lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2cb7f0c6-412b-ad78-2398-8f4c925c9897"
+    },
+    {
+      "name": "SymbolOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The symbol offset.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/431a3091-b721-9e5e-a85c-b7bdd4da3bc6"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of visible lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a8975197-280c-e4b9-f27c-cead3f919481"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

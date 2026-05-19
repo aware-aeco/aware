@@ -1,0 +1,92 @@
+{
+  "name": "SaveFileDialog",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Similar to the System.Windows.Forms.SaveFileDialog, but with customized Rhino user interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_SaveFileDialog.htm",
+  "constructors": [
+    {
+      "name": "SaveFileDialog",
+      "signature": "public SaveFileDialog()",
+      "summary": "Initializes a new instance of the SaveFileDialog class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_SaveFileDialog__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ShowDialog",
+      "signature": "[ObsoleteAttribute(\u0022Use ShowSaveDialog\u0022)] public DialogResult ShowDialog()",
+      "summary": "Obsolete.",
+      "params": [],
+      "returns": {
+        "type": "DialogResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.SaveFileDialog.ShowDialog\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_SaveFileDialog_ShowDialog.htm"
+    },
+    {
+      "name": "ShowSaveDialog",
+      "signature": "public bool ShowSaveDialog()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a file was selected. false if the dialog was canceled"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_SaveFileDialog_ShowSaveDialog.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultExt",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The default file name extension. The returned string does not include the period.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_SaveFileDialog_DefaultExt.htm"
+    },
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a string containing the file name selected in the file dialog box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_SaveFileDialog_FileName.htm"
+    },
+    {
+      "name": "Filter",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the current file name filter string, which determines the choices that appear in the \u0022Save as file type\u0022 or \u0022Files of type\u0022 box in the dialog box. See System.Windows.Forms.FileDialog for details.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_SaveFileDialog_Filter.htm"
+    },
+    {
+      "name": "InitialDirectory",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the initial directory displayed by the file dialog box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_SaveFileDialog_InitialDirectory.htm"
+    },
+    {
+      "name": "Title",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the file dialog box title.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_SaveFileDialog_Title.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

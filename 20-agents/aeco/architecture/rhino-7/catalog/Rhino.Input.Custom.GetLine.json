@@ -1,0 +1,217 @@
+{
+  "name": "GetLine",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Use to interactively get a line. The Rhino \u0022Line\u0022 command uses GetLine.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetLine.htm",
+  "constructors": [
+    {
+      "name": "GetLine",
+      "signature": "public GetLine()",
+      "summary": "Initializes a new instance of the GetLine class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_Dispose_1.htm"
+    },
+    {
+      "name": "EnableAllVariations",
+      "signature": "public void EnableAllVariations(bool on)",
+      "summary": "If true, then all line variations are shown if the default line mode is used",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetLine.EnableAllVariations(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_EnableAllVariations.htm"
+    },
+    {
+      "name": "EnableFromBothSidesOption",
+      "signature": "public void EnableFromBothSidesOption(bool on)",
+      "summary": "If true, then the \u0022BothSides\u0022 option shows up when the start point is interactively picked.",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetLine.EnableFromBothSidesOption(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_EnableFromBothSidesOption.htm"
+    },
+    {
+      "name": "EnableFromMidPointOption",
+      "signature": "public void EnableFromMidPointOption(bool on)",
+      "summary": "If true, the \u0022MidPoint\u0022 options shows up",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetLine.EnableFromMidPointOption(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_EnableFromMidPointOption.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public Result Get(out Line line)",
+      "summary": "Perform the \u0027get\u0027 operation.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "[Missing \u003Cparam name=\u0022line\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetLine.Get(Rhino.Geometry.Line@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetLine.Get(Rhino.Geometry.Line@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_Get.htm"
+    },
+    {
+      "name": "SetFirstPoint",
+      "signature": "public void SetFirstPoint(Point3d point)",
+      "summary": "Use SetFirstPoint to specify the line\u0027s starting point and skip the start point interactive picking",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022point\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetLine.SetFirstPoint(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetLine_SetFirstPoint.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AcceptZeroLengthLine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Controls whether or not a zero length line is acceptable. The default is to require the user to keep picking the end point until we get a point different than the start point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_AcceptZeroLengthLine.htm"
+    },
+    {
+      "name": "FeedbackColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "If set, the feedback color is used to draw the dynamic line when the second point is begin picked. If not set, the active layer color is used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_FeedbackColor.htm"
+    },
+    {
+      "name": "FirstPointPrompt",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Prompt when getting first point",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_FirstPointPrompt.htm"
+    },
+    {
+      "name": "FixedLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "If FixedLength \u003E 0, the line must have the specified length",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_FixedLength.htm"
+    },
+    {
+      "name": "GetLineMode",
+      "type": "GetLineMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Mode used",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_GetLineMode.htm"
+    },
+    {
+      "name": "HaveFeedbackColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true, the feedback color is used to draw the dynamic line when the second point is begin picked. If false, the active layer color is used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_HaveFeedbackColor.htm"
+    },
+    {
+      "name": "MidPointPrompt",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Prompt when getting midpoint",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_MidPointPrompt.htm"
+    },
+    {
+      "name": "SecondPointPrompt",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Prompt when getting second point",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetLine_SecondPointPrompt.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,37 @@
+{
+  "name": "PickerInput",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInput class instances can be provided as predefined results of requests through the methods of the UI.Picker class.",
+  "base": "System.Object",
+  "interfaces": [
+    "IIsEqual"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/af20a192-0a70-c008-9821-8a87646a472e",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1f670998-82b1-3842-37c0-deaa48e7fc95"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

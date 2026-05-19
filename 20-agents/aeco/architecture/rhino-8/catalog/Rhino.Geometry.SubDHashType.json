@@ -1,0 +1,34 @@
+{
+  "name": "SubDHashType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubDHashType used used to specify what type of SubD information is hashed (topology or geometry).",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDHashType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Unset indicates the hash type still needs to be selected. It is not a valid type for calculating a hash."
+    },
+    {
+      "name": "Topology",
+      "value": 3,
+      "summary": "The Topology hash includes component ids, and all topological relationships between vertices, edges, and faces. If two SubDs have the same topology hash, then the the have identical labeled control net topology."
+    },
+    {
+      "name": "TopologyAndEdgeCreases",
+      "value": 1,
+      "summary": "The TopologyAndEdgeCreases includes all information in a Topology hash. The TopologyAndEdgeCreases adds edge crease/smooth attributes. Many contexts, including face packing and exploding, take edge creases into account when partitioning a SubD into regions."
+    },
+    {
+      "name": "Geometry",
+      "value": 2,
+      "summary": "A geometry hash includes all information in a TopologyAndEdgeCreases hash. The Geometry hash adds vertex tags, vertex control net points, and nonzero subdivision displacements on vertices, edges, and faces. If two SubDs have the same geometry hash, then they have identical surface geometry."
+    }
+  ]
+}

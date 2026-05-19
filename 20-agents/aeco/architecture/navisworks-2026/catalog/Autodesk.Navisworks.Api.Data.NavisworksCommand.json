@@ -1,0 +1,252 @@
+{
+  "name": "NavisworksCommand",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Implementation of DbCommand.",
+  "base": "System.Data.Common.DbCommand",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.NavisworksCommand",
+  "constructors": [
+    {
+      "name": "NavisworksCommand()",
+      "signature": "NavisworksCommand()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.%23ctor"
+    },
+    {
+      "name": "NavisworksCommand(Autodesk.Navisworks.Api.Data.NavisworksConnection)",
+      "signature": "NavisworksCommand(Autodesk.Navisworks.Api.Data.NavisworksConnection connection)",
+      "summary": "Initializes the command and associates it with the specified connection.",
+      "params": [
+        {
+          "name": "connection",
+          "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+          "doc": "The connection to associate with the command",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.%23ctor%28Autodesk.Navisworks.Api.Data.NavisworksConnection%29"
+    },
+    {
+      "name": "NavisworksCommand(string)",
+      "signature": "NavisworksCommand(string commandText)",
+      "summary": "Initializes the command with the given command text",
+      "params": [
+        {
+          "name": "commandText",
+          "type": "string",
+          "doc": "The SQL command text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.%23ctor%28System.String%29"
+    },
+    {
+      "name": "NavisworksCommand(string, Autodesk.Navisworks.Api.Data.NavisworksConnection)",
+      "signature": "NavisworksCommand(string commandText, Autodesk.Navisworks.Api.Data.NavisworksConnection connection)",
+      "summary": "Initializes the command with the given SQL command text and attach the command to the specified connection.",
+      "params": [
+        {
+          "name": "commandText",
+          "type": "string",
+          "doc": "The SQL command text",
+          "optional": false
+        },
+        {
+          "name": "connection",
+          "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+          "doc": "The connection to associate with the command",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.%23ctor%28System.String%2CAutodesk.Navisworks.Api.Data.NavisworksConnection%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteReader",
+      "signature": "Autodesk.Navisworks.Api.Data.NavisWorksDataReader ExecuteReader()",
+      "summary": "Overrides the default behavior of DbDataReader to return a specialized NavisWorksDataReader class",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisWorksDataReader",
+        "doc": "Return NavisWorksDataReader"
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseException",
+          "when": "Database exception"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.ExecuteReader"
+    },
+    {
+      "name": "ExecuteReader",
+      "signature": "Autodesk.Navisworks.Api.Data.NavisWorksDataReader ExecuteReader(System.Data.CommandBehavior behavior)",
+      "summary": "Overrides the default behavior to return a NavisWorksDataReader specialization class",
+      "params": [
+        {
+          "name": "behavior",
+          "type": "System.Data.CommandBehavior",
+          "doc": "The flags to be associated with the reader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisWorksDataReader",
+        "doc": "Return NavisWorksDataReader"
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseException",
+          "when": "Database exception"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.ExecuteReader%28System.Data.CommandBehavior%29"
+    },
+    {
+      "name": "CreateParameter",
+      "signature": "Autodesk.Navisworks.Api.Data.NavisworksParameter CreateParameter()",
+      "summary": "Create a new parameter.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisworksParameter",
+        "doc": "Return NavisworksParameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.CreateParameter"
+    },
+    {
+      "name": "ExecuteNonQuery",
+      "signature": "int ExecuteNonQuery()",
+      "summary": "Execute the command and return the number of rows inserted/updated affected by it.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "The number of rows inserted/updated affected by this executed command"
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseException",
+          "when": "Database exception"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.ExecuteNonQuery"
+    },
+    {
+      "name": "ExecuteScalar",
+      "signature": "object ExecuteScalar()",
+      "summary": "Execute the command and return the first column of the first row of the resultset (if present), or null if no resultset was returned.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "The first column of the first row of the first resultset from the query"
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseException",
+          "when": "Database exception"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.ExecuteScalar"
+    },
+    {
+      "name": "Cancel",
+      "signature": "void Cancel()",
+      "summary": "Not implemented",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.Cancel"
+    },
+    {
+      "name": "Prepare",
+      "signature": "void Prepare()",
+      "summary": "Does nothing. Commands are prepared as they are executed the first time, and kept in prepared state afterwards.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.Prepare"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommandText",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The SQL command text associated with the command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.CommandText"
+    },
+    {
+      "name": "CommandTimeout",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Not implement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.CommandTimeout"
+    },
+    {
+      "name": "CommandType",
+      "type": "System.Data.CommandType",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the command. NavisworksCommand only supports CommandType.Text",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.CommandType"
+    },
+    {
+      "name": "Connection",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+      "getter": true,
+      "setter": true,
+      "summary": "The connection associated with this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.Connection"
+    },
+    {
+      "name": "DesignTimeVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Not implement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.DesignTimeVisible"
+    },
+    {
+      "name": "Parameters",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksParameterCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Not implement, will implement Returns the NavisworksParameterCollection for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.Parameters"
+    },
+    {
+      "name": "UpdatedRowSource",
+      "type": "System.Data.UpdateRowSource",
+      "getter": true,
+      "setter": true,
+      "summary": "Not implement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksCommand.UpdatedRowSource"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

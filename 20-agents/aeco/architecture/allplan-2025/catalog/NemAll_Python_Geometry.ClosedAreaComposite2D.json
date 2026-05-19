@@ -1,0 +1,165 @@
+{
+  "name": "ClosedAreaComposite2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "2D closed area composite Representation class for 2D geometry closed (path bounded) area composite",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/",
+  "constructors": [
+    {
+      "name": "ClosedAreaComposite2D",
+      "signature": "ClosedAreaComposite2D() | ClosedAreaComposite2D(composite: ClosedAreaComposite2D)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(area: ClosedArea2D) -\u003E bool",
+      "summary": "Add new area",
+      "remarks": "Add new area",
+      "params": [
+        {
+          "name": "area",
+          "type": "ClosedArea2D",
+          "doc": "New area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.Add"
+    },
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear contents of this composite",
+      "remarks": "Clear contents of this composite",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.Clear"
+    },
+    {
+      "name": "GetProfile",
+      "signature": "GetProfile(index: int) -\u003E ClosedArea2D",
+      "summary": "Get profile from list of profiles",
+      "remarks": "Get profile from list of profiles",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of profile in vector of profiles",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ClosedArea2D",
+        "doc": "reference to profile"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.GetProfile"
+    },
+    {
+      "name": "GetProfileCount",
+      "signature": "GetProfileCount() -\u003E int",
+      "summary": "Get count of profiles (areas)",
+      "remarks": "Get count of profiles (areas)",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "size_t - count of profiles (areas)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.GetProfileCount"
+    },
+    {
+      "name": "GetProfileList",
+      "signature": "GetProfileList() -\u003E ClosedArea2DList",
+      "summary": "Get const reference to vector of profiles",
+      "remarks": "Get const reference to vector of profiles",
+      "params": [],
+      "returns": {
+        "type": "ClosedArea2DList",
+        "doc": "const reference to vector of profiles"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.GetProfileList"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty() -\u003E bool",
+      "summary": "Check if this composite has any contents ( areas )",
+      "remarks": "Check if this composite has any contents ( areas )",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if it is empty"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.IsEmpty"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(closedAreaComposite: ClosedAreaComposite2D) -\u003E object",
+      "summary": "Comparison of closedAreaComposites without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of closedAreaComposites without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "closedAreaComposite",
+          "type": "ClosedAreaComposite2D",
+          "doc": "Compared closedAreaComposite.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when closedAreaComposites are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ProfileList",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the profile list as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.ProfileList"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,1900 @@
+{
+  "name": "Polyline",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents an ordered set of points connected by linear segments. Polylines are closed if start and end points coincide.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Polyline.htm",
+  "constructors": [
+    {
+      "name": "Polyline()",
+      "signature": "public Polyline()",
+      "summary": "Initializes a new empty polyline.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline__ctor.htm"
+    },
+    {
+      "name": "Polyline(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public Polyline(IEnumerable\u003CPoint3d\u003E collection)",
+      "summary": "Initializes a new polyline from a collection of points.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to copy into the local vertex array.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline__ctor_1.htm"
+    },
+    {
+      "name": "Polyline(Int32)",
+      "signature": "public Polyline(int initialCapacity)",
+      "summary": "Initializes a new empty polyline with an initial capacity.",
+      "params": [
+        {
+          "name": "initialCapacity",
+          "type": "System.Int32",
+          "doc": "Number of vertices this polyline can contain without resizing.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(T)",
+      "signature": "public void Add(T item)",
+      "summary": "Adds an object to the end of the List.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "Item to append.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Add.htm"
+    },
+    {
+      "name": "Add(Double, Double, Double)",
+      "signature": "public void Add(double x, double y, double z)",
+      "summary": "Adds a Point3d to the end of the list with given x,y,z coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y coordinate.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "The Z coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_Add.htm"
+    },
+    {
+      "name": "AddRange(IEnumerable)",
+      "signature": "public void AddRange(IEnumerable collection)",
+      "summary": "Adds the elements of the specified collection to the end of the List.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.IEnumerable",
+          "doc": "The collection whose elements should be added to the end of the List. The collection itself cannot be a null reference (Nothing in Visual Basic), but it can contain elements that are a null reference (Nothing in Visual Basic). Objects in collection which cannot be represented as T will throw exceptions.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_AddRange_1.htm"
+    },
+    {
+      "name": "AddRange(IEnumerable\u003CT\u003E)",
+      "signature": "public void AddRange(IEnumerable\u003CT\u003E collection)",
+      "summary": "Adds the elements of the specified collection to the end of the List.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection whose elements should be added to the end of the List. The collection itself cannot be a null reference (Nothing in Visual Basic), but it can contain elements that are a null reference (Nothing in Visual Basic), if type T is a reference type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_AddRange.htm"
+    },
+    {
+      "name": "AsReadOnly",
+      "signature": "public ReadOnlyCollection\u003CT\u003E AsReadOnly()",
+      "summary": "Constructs a read-only wrapper of this class.",
+      "params": [],
+      "returns": {
+        "type": "ReadOnlyCollection\u003CT\u003E",
+        "doc": "A wrapper."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_AsReadOnly.htm"
+    },
+    {
+      "name": "BinarySearch(T)",
+      "signature": "public int BinarySearch(T item)",
+      "summary": "Searches the entire sorted List for an element using the default comparer and returns the zero-based index of the element.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of item in the sorted List, if item is found; otherwise, a negative number that is the bitwise complement of the index of the next element that is larger than item or, if there is no larger element, the bitwise complement of Count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_BinarySearch_1.htm"
+    },
+    {
+      "name": "BinarySearch(T, IComparer\u003CT\u003E)",
+      "signature": "public int BinarySearch(T item, IComparer\u003CT\u003E comparer)",
+      "summary": "Searches the entire sorted List for an element using the specified comparer and returns the zero-based index of the element.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        },
+        {
+          "name": "comparer",
+          "type": "System.Collections.Generic.IComparer\u003CT\u003E",
+          "doc": "The IComparer(T) implementation to use when comparing elements. Or a null reference (Nothing in Visual Basic) to use the default comparer Comparer(T)::Default.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of item in the sorted List, if item is found; otherwise, a negative number that is the bitwise complement of the index of the next element that is larger than item or, if there is no larger element, the bitwise complement of Count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_BinarySearch_2.htm"
+    },
+    {
+      "name": "BinarySearch(Int32, Int32, T, IComparer\u003CT\u003E)",
+      "signature": "public int BinarySearch(int index, int count, T item, IComparer\u003CT\u003E comparer)",
+      "summary": "Searches the entire sorted List for an element using the specified comparer and returns the zero-based index of the element.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the range to search.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The length of the range to search.",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        },
+        {
+          "name": "comparer",
+          "type": "System.Collections.Generic.IComparer\u003CT\u003E",
+          "doc": "The IComparer(T) implementation to use when comparing elements. Or a null reference (Nothing in Visual Basic) to use the default comparer Comparer(T)::Default.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of item in the sorted List, if item is found; otherwise, a negative number that is the bitwise complement of the index of the next element that is larger than item or, if there is no larger element, the bitwise complement of Count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_BinarySearch.htm"
+    },
+    {
+      "name": "BreakAtAngles",
+      "signature": "public Polyline[] BreakAtAngles(double angle)",
+      "summary": "Breaks this polyline into sections at sharp kinks. Closed polylines will also be broken at the first and last vertex.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Angle (in radians) between adjacent segments for a break to occur.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline[]",
+        "doc": "An array of polyline segments, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_BreakAtAngles.htm"
+    },
+    {
+      "name": "CenterPoint",
+      "signature": "public Point3d CenterPoint()",
+      "summary": "Compute the center point of the polyline as the weighted average of all segments.",
+      "params": [],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The weighted average of all segments."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_CenterPoint.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all elements from the List.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Clear.htm"
+    },
+    {
+      "name": "ClosestIndex",
+      "signature": "public int ClosestIndex(Point3d testPoint)",
+      "summary": "Finds the index of the point that is closest to a test point in this list.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "point to compare against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "index of closest point in the list on success. -1 on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_ClosestIndex.htm"
+    },
+    {
+      "name": "ClosestParameter",
+      "signature": "public double ClosestParameter(Point3d testPoint)",
+      "summary": "Gets the parameter along the polyline which is closest to a test-point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to approximate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The parameter along the polyline closest to testPoint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_ClosestParameter.htm"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "public Point3d ClosestPoint(Point3d testPoint)",
+      "summary": "Gets the point on the polyline which is closest to a test-point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to approximate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the polyline closest to testPoint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_ClosestPoint.htm"
+    },
+    {
+      "name": "CollapseShortSegments",
+      "signature": "public int CollapseShortSegments(double tolerance)",
+      "summary": "Collapses all segments until none are shorter than tolerance. This function is significantly slower than DeleteShortSegments, since it recursively operates on the shortest segment. When a segment is collapsed the end-points are placed in the center of the segment.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use during collapsing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of segments that were collapsed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_CollapseShortSegments.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(T item)",
+      "summary": "Determines whether an element is in the List.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if item is found in the List; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Contains.htm"
+    },
+    {
+      "name": "ConvertAll\u003CTOutput\u003E",
+      "signature": "public RhinoList\u003CTOutput\u003E ConvertAll\u003CTOutput\u003E(Converter\u003CT, TOutput\u003E converter)",
+      "summary": "Aggregates all results of a conversion function over this table into a new list.",
+      "params": [
+        {
+          "name": "converter",
+          "type": "System.Converter\u003CT,TOutput\u003E",
+          "doc": "A conversion function that can transform from T to TOutput.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoList\u003CTOutput\u003E",
+        "doc": "The new list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_ConvertAll__1.htm"
+    },
+    {
+      "name": "CopyTo(T[])",
+      "signature": "public void CopyTo(T[] array)",
+      "summary": "Copies the entire List to a compatible one-dimensional array, starting at the beginning of the target array.",
+      "params": [
+        {
+          "name": "array",
+          "type": "T[]",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from List. The Array must have zero-based indexing.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_CopyTo_1.htm"
+    },
+    {
+      "name": "CopyTo(T[], Int32)",
+      "signature": "public void CopyTo(T[] array, int arrayIndex)",
+      "summary": "Copies the entire List to a compatible one-dimensional array, starting at the specified index of the target array.",
+      "params": [
+        {
+          "name": "array",
+          "type": "T[]",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from List. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "The zero-based index in array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_CopyTo_2.htm"
+    },
+    {
+      "name": "CopyTo(Int32, T[], Int32, Int32)",
+      "signature": "public void CopyTo(int index, T[] array, int arrayIndex, int count)",
+      "summary": "Copies a range of elements from the List to a compatible one-dimensional array, starting at the specified index of the target array.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based index in the source List at which copying begins.",
+          "optional": false
+        },
+        {
+          "name": "array",
+          "type": "T[]",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from List. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "The zero-based index in array at which copying begins.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements to copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_CopyTo.htm"
+    },
+    {
+      "name": "CreateByJoiningLines",
+      "signature": "public static Polyline[] CreateByJoiningLines(IEnumerable\u003CLine\u003E lines, double tolerance, bool splitAtIntersections)",
+      "summary": "Creates polylines by joining lines.",
+      "params": [
+        {
+          "name": "lines",
+          "type": "System.Collections.Generic.IEnumerable\u003CLine\u003E",
+          "doc": "An array, a list or any enumerable of lines.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The threshold distance for joining lines.",
+          "optional": false
+        },
+        {
+          "name": "splitAtIntersections",
+          "type": "System.Boolean",
+          "doc": "If true, splits lines at intersections.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Polyline.CreateByJoiningLines(System.Collections.Generic.IEnumerable{Rhino.Geometry.Line},System.Double,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_CreateByJoiningLines.htm"
+    },
+    {
+      "name": "CreateCircumscribedPolygon",
+      "signature": "public static Polyline CreateCircumscribedPolygon(Circle circle, int sideCount)",
+      "summary": "Create a regular polygon circumscribe about a circle. The midpoints of the polygon\u0027s edges will be tangent to the circle.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "The circle.",
+          "optional": false
+        },
+        {
+          "name": "sideCount",
+          "type": "System.Int32",
+          "doc": "The number of sides",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline",
+        "doc": "A closed polyline if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_CreateCircumscribedPolygon.htm"
+    },
+    {
+      "name": "CreateInscribedPolygon",
+      "signature": "public static Polyline CreateInscribedPolygon(Circle circle, int sideCount)",
+      "summary": "Create a regular polygon inscribed in a circle. The vertices of the polygon will be on the circle.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "The circle.",
+          "optional": false
+        },
+        {
+          "name": "sideCount",
+          "type": "System.Int32",
+          "doc": "The number of sides",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline",
+        "doc": "A closed polyline if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_CreateInscribedPolygon.htm"
+    },
+    {
+      "name": "CreateStarPolygon",
+      "signature": "public static Polyline CreateStarPolygon(Circle circle, double radius, int cornerCount)",
+      "summary": "Create a regular star polygon. The star begins at circle.PointAt(0) and the vertices alternate between being on circle and begin on a concentric circle of other_radius.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "The circle.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of other circle.",
+          "optional": false
+        },
+        {
+          "name": "cornerCount",
+          "type": "System.Int32",
+          "doc": "The number of corners on the circle. There will be 2*cornerCount sides and 2*cornerCount vertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline",
+        "doc": "A closed polyline if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_CreateStarPolygon.htm"
+    },
+    {
+      "name": "DeleteShortSegments",
+      "signature": "public int DeleteShortSegments(double tolerance)",
+      "summary": "Removes all points that are closer than tolerance to the previous point. Start and end points are left intact.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Vertices closer together than tolerance will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of points (and segments) removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_DeleteShortSegments.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public Polyline Duplicate()",
+      "summary": "Returns a deep copy of this polyline instance.",
+      "params": [],
+      "returns": {
+        "type": "Polyline",
+        "doc": "The duplicated polyline."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_Duplicate.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Overrides the default object equality to compare lists by value.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is objects are exactly equal in value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Point3dList)",
+      "signature": "public bool Equals(Point3dList other)",
+      "summary": "Determines if the point lists are exactly equal.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Collections.Point3dList",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is objects are exactly equal in value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_Equals.htm"
+    },
+    {
+      "name": "Exists",
+      "signature": "public bool Exists(Predicate\u003CT\u003E match)",
+      "summary": "Determines whether the List contains elements that match the conditions defined by the specified predicate.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the elements to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the List contains one or more elements that match the conditions defined by the specified predicate; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Exists.htm"
+    },
+    {
+      "name": "Find",
+      "signature": "public T Find(Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire List.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type T."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Find.htm"
+    },
+    {
+      "name": "FindAll",
+      "signature": "public RhinoList\u003CT\u003E FindAll(Predicate\u003CT\u003E match)",
+      "summary": "Retrieves all the elements that match the conditions defined by the specified predicate.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the elements to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoList\u003CT\u003E",
+        "doc": "A ON_List(T) containing all the elements that match the conditions defined by the specified predicate, if found; otherwise, an empty ON_List(T)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindAll.htm"
+    },
+    {
+      "name": "FindIndex(Predicate\u003CT\u003E)",
+      "signature": "public int FindIndex(Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the zero-based index of the first occurrence within the entire List.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the first occurrence of an element that matches the conditions defined by match, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindIndex_2.htm"
+    },
+    {
+      "name": "FindIndex(Int32, Predicate\u003CT\u003E)",
+      "signature": "public int FindIndex(int startIndex, Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the zero-based index of the first occurrence within the entire List.",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the search.",
+          "optional": false
+        },
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the first occurrence of an element that matches the conditions defined by match, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindIndex_1.htm"
+    },
+    {
+      "name": "FindIndex(Int32, Int32, Predicate\u003CT\u003E)",
+      "signature": "public int FindIndex(int startIndex, int count, Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the zero-based index of the first occurrence within the range of elements in the List that extends from the specified index to the last element.",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the search.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements in the section to search.",
+          "optional": false
+        },
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the first occurrence of an element that matches the conditions defined by match, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindIndex.htm"
+    },
+    {
+      "name": "FindLast",
+      "signature": "public T FindLast(Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire List.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type T."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindLast.htm"
+    },
+    {
+      "name": "FindLastIndex(Predicate\u003CT\u003E)",
+      "signature": "public int FindLastIndex(Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the zero-based index of the last occurrence within the entire List.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the last occurrence of an element that matches the conditions defined by match, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindLastIndex_2.htm"
+    },
+    {
+      "name": "FindLastIndex(Int32, Predicate\u003CT\u003E)",
+      "signature": "public int FindLastIndex(int startIndex, Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the zero-based index of the last occurrence within the entire List.",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the backward search.",
+          "optional": false
+        },
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the last occurrence of an element that matches the conditions defined by match, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindLastIndex_1.htm"
+    },
+    {
+      "name": "FindLastIndex(Int32, Int32, Predicate\u003CT\u003E)",
+      "signature": "public int FindLastIndex(int startIndex, int count, Predicate\u003CT\u003E match)",
+      "summary": "Searches for an element that matches the conditions defined by the specified predicate, and returns the zero-based index of the last occurrence within the entire List.",
+      "params": [
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the backward search.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements in the section to search.",
+          "optional": false
+        },
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the element to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the last occurrence of an element that matches the conditions defined by match, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_FindLastIndex.htm"
+    },
+    {
+      "name": "ForEach",
+      "signature": "public void ForEach(Action\u003CT\u003E action)",
+      "summary": "Performs the specified action on each element of the List.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action\u003CT\u003E",
+          "doc": "The Action(T) delegate to perform on each element of the List.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_ForEach.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "Constructs an enumerator that is capable of iterating over all items in this list.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CT\u003E",
+        "doc": "The new enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_GetEnumerator.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Creates a hash code for this object.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "An int that serves as an hash code. This is currently a XOR of all doubles, XORed in line."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_GetHashCode.htm"
+    },
+    {
+      "name": "GetRange",
+      "signature": "public RhinoList\u003CT\u003E GetRange(int index, int count)",
+      "summary": "Constructs a shallow copy of a range of elements in the source List.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based List index at which the range starts.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements in the range.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoList\u003CT\u003E",
+        "doc": "A shallow copy of a range of elements in the source List."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_GetRange.htm"
+    },
+    {
+      "name": "GetSegments",
+      "signature": "public Line[] GetSegments()",
+      "summary": "Constructs an array of line segments that make up the entire polyline.",
+      "params": [],
+      "returns": {
+        "type": "Line[]",
+        "doc": "An array of line segments or null if the polyline contains fewer than 2 points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_GetSegments.htm"
+    },
+    {
+      "name": "IndexOf(T)",
+      "signature": "public int IndexOf(T item)",
+      "summary": "Searches for the specified object and returns the zero-based index of the first occurrence within the entire List.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the first occurrence of item within the entire List, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_IndexOf.htm"
+    },
+    {
+      "name": "IndexOf(T, Int32)",
+      "signature": "public int IndexOf(T item, int index)",
+      "summary": "Searches for the specified object and returns the zero-based index of the first occurrence within the range of elements in the List that extends from the specified index to the last element.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the first occurrence of item within the entire List, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_IndexOf_1.htm"
+    },
+    {
+      "name": "IndexOf(T, Int32, Int32)",
+      "signature": "public int IndexOf(T item, int index, int count)",
+      "summary": "Searches for the specified object and returns the zero-based index of the first occurrence within the range of elements in the List that starts at the specified index and contains the specified number of elements.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the search.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements in the section to search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the first occurrence of item within the entire List, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_IndexOf_2.htm"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(int index, T item)",
+      "summary": "Inserts an element into the List at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based index at which item should be inserted.",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to insert. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Insert.htm"
+    },
+    {
+      "name": "InsertRange",
+      "signature": "public void InsertRange(int index, IEnumerable\u003CT\u003E collection)",
+      "summary": "Inserts the elements of a collection into the List at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based index at which the new elements should be inserted.",
+          "optional": false
+        },
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection whose elements should be inserted into the List. The collection itself cannot be a null reference (Nothing in Visual Basic), but it can contain elements that are a null reference (Nothing in Visual Basic), if type T is a reference type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_InsertRange.htm"
+    },
+    {
+      "name": "IsClosedWithinTolerance",
+      "signature": "public bool IsClosedWithinTolerance(double tolerance)",
+      "summary": "Test a polyline to see if it is closed.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if polyline has 4 or more points, the distance between the start and end points is \u003C= tolerance, and there is a point in the polyline whose distance from the start and end points is \u003E tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_IsClosedWithinTolerance.htm"
+    },
+    {
+      "name": "IsConvexLoop",
+      "signature": "public bool IsConvexLoop(bool strictlyConvex)",
+      "summary": "Determines if a polyline is convex.",
+      "params": [
+        {
+          "name": "strictlyConvex",
+          "type": "System.Boolean",
+          "doc": "If false, collinear segments are considered convex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the polyline is a closed, convex loop."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_IsConvexLoop.htm"
+    },
+    {
+      "name": "LastIndexOf(T)",
+      "signature": "public int LastIndexOf(T item)",
+      "summary": "Searches for the specified object and returns the zero-based index of the last occurrence within the entire List.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the last occurrence of item within the entire the List, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_LastIndexOf.htm"
+    },
+    {
+      "name": "LastIndexOf(T, Int32)",
+      "signature": "public int LastIndexOf(T item, int index)",
+      "summary": "Searches for the specified object and returns the zero-based index of the last occurrence within the range of elements in the List that extends from the first element to the specified index.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the backward search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the last occurrence of item within the entire the List, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_LastIndexOf_1.htm"
+    },
+    {
+      "name": "LastIndexOf(T, Int32, Int32)",
+      "signature": "public int LastIndexOf(T item, int index, int count)",
+      "summary": "Searches for the specified object and returns the zero-based index of the last occurrence within the range of elements in the List that contains the specified number of elements and ends at the specified index.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to locate in the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the backward search.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements in the section to search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the last occurrence of item within the entire the List, if found; otherwise, -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_LastIndexOf_2.htm"
+    },
+    {
+      "name": "MergeColinearSegments",
+      "signature": "public int MergeColinearSegments(double angleTolerance, bool includeSeam)",
+      "summary": "Merge co-linear consecutive segments in a polyline. This method will automatically remove any zero-length segments as well.",
+      "params": [
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "The angle tolerance between adjacent segments for collinearity test.",
+          "optional": false
+        },
+        {
+          "name": "includeSeam",
+          "type": "System.Boolean",
+          "doc": "If true, the seam point of a closed polyline will be moved forwards if it is collinear too.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of segments removed from the entire polyline."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_MergeColinearSegments.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double t)",
+      "summary": "Gets the point on the polyline at the given parameter. The integer part of the parameter indicates the index of the segment.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Polyline parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the polyline at t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_PointAt.htm"
+    },
+    {
+      "name": "ReduceSegments",
+      "signature": "public int ReduceSegments(double tolerance)",
+      "summary": "Constructs a reduction of this polyline by recursively removing the least significant segments.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance for reduction. Whenever a vertex of the polyline is more significant than tolerance, it will be included in the reduction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of vertices that disappeared due to reduction."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_ReduceSegments.htm"
+    },
+    {
+      "name": "RemapIndex",
+      "signature": "public int RemapIndex(int index)",
+      "summary": "Remap an index in the infinite range onto the List index range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index to remap.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Remapped index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_RemapIndex.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(T item)",
+      "summary": "Removes the first occurrence of a specific object from the List.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The object to remove from the List. The value can be a null reference (Nothing in Visual Basic) for reference types.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Remove.htm"
+    },
+    {
+      "name": "RemoveAll",
+      "signature": "public int RemoveAll(Predicate\u003CT\u003E match)",
+      "summary": "Removes the all the elements that match the conditions defined by the specified predicate.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions of the elements to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of elements removed from the List."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_RemoveAll.htm"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "public void RemoveAt(int index)",
+      "summary": "Removes the element at the specified index of the List.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based index of the element to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_RemoveAt.htm"
+    },
+    {
+      "name": "RemoveNearlyEqualSubsequentPoints",
+      "signature": "public void RemoveNearlyEqualSubsequentPoints(double tolerance)",
+      "summary": "Removes one copy of a point that is equal to the previous or later point, by an absolute tolerance factor.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022tolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Polyline.RemoveNearlyEqualSubsequentPoints(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_RemoveNearlyEqualSubsequentPoints.htm"
+    },
+    {
+      "name": "RemoveNulls",
+      "signature": "public int RemoveNulls()",
+      "summary": "Removes all elements from the List that are null references (Nothing in Visual Basic). This function will not do anything if T is not a Reference type.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of nulls removed from the List."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_RemoveNulls.htm"
+    },
+    {
+      "name": "RemoveRange",
+      "signature": "public void RemoveRange(int index, int count)",
+      "summary": "Removes a range of elements from the List.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the range of elements to remove.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_RemoveRange.htm"
+    },
+    {
+      "name": "Reverse()",
+      "signature": "public void Reverse()",
+      "summary": "Reverses the order of the elements in the entire List.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Reverse.htm"
+    },
+    {
+      "name": "Reverse(Int32, Int32)",
+      "signature": "public void Reverse(int index, int count)",
+      "summary": "Reverses the order of the elements in the specified range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the range to reverse.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of elements in the range to reverse.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Reverse_1.htm"
+    },
+    {
+      "name": "SegmentAt",
+      "signature": "public Line SegmentAt(int index)",
+      "summary": "Gets the line segment at the given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of segment to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "Line segment at index or Line.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_SegmentAt.htm"
+    },
+    {
+      "name": "SetAllX",
+      "signature": "public void SetAllX(double xValue)",
+      "summary": "Set all the X values for the points to a single value",
+      "params": [
+        {
+          "name": "xValue",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_SetAllX.htm"
+    },
+    {
+      "name": "SetAllY",
+      "signature": "public void SetAllY(double yValue)",
+      "summary": "Set all the Y values for the points to a single value",
+      "params": [
+        {
+          "name": "yValue",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_SetAllY.htm"
+    },
+    {
+      "name": "SetAllZ",
+      "signature": "public void SetAllZ(double zValue)",
+      "summary": "Set all the Z values for the points to a single value",
+      "params": [
+        {
+          "name": "zValue",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_SetAllZ.htm"
+    },
+    {
+      "name": "Smooth",
+      "signature": "public bool Smooth(double amount)",
+      "summary": "Smoothen the polyline segments by averaging adjacent vertices. Smoothing requires a polyline with exclusively valid vertices.",
+      "params": [
+        {
+          "name": "amount",
+          "type": "System.Double",
+          "doc": "Amount to smooth. Zero equals no smoothing, one equals complete smoothing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_Smooth.htm"
+    },
+    {
+      "name": "Sort()",
+      "signature": "public void Sort()",
+      "summary": "Sorts the elements in the entire List using the default comparer.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Sort.htm"
+    },
+    {
+      "name": "Sort(Comparison\u003CT\u003E)",
+      "signature": "public void Sort(Comparison\u003CT\u003E comparison)",
+      "summary": "Sorts the elements in the entire list using the specified comparer.",
+      "params": [
+        {
+          "name": "comparison",
+          "type": "System.Comparison\u003CT\u003E",
+          "doc": "The System.Comparison(T) to use when comparing elements.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Sort_2.htm"
+    },
+    {
+      "name": "Sort(Double[])",
+      "signature": "public void Sort(double[] keys)",
+      "summary": "Sort this list based on a list of numeric keys of equal length. The keys array will not be altered.",
+      "remarks": "This function does not exist on the DotNET List class. David thought it was a good idea.",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Double[]",
+          "doc": "Numeric keys to sort with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Sort_3.htm"
+    },
+    {
+      "name": "Sort(IComparer\u003CT\u003E)",
+      "signature": "public void Sort(IComparer\u003CT\u003E comparer)",
+      "summary": "Sorts the elements in the entire list using the specified System.Comparison(T)",
+      "params": [
+        {
+          "name": "comparer",
+          "type": "System.Collections.Generic.IComparer\u003CT\u003E",
+          "doc": "The IComparer(T) implementation to use when comparing elements, or a null reference (Nothing in Visual Basic) to use the default comparer Comparer(T).Default.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Sort_1.htm"
+    },
+    {
+      "name": "Sort(Int32[])",
+      "signature": "public void Sort(int[] keys)",
+      "summary": "Sort this list based on a list of numeric keys of equal length. The keys array will not be altered.",
+      "remarks": "This function does not exist on the DotNET List class. David thought it was a good idea.",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Int32[]",
+          "doc": "Numeric keys to sort with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Sort_5.htm"
+    },
+    {
+      "name": "Sort(Int32, Int32, IComparer\u003CT\u003E)",
+      "signature": "public void Sort(int index, int count, IComparer\u003CT\u003E comparer)",
+      "summary": "Sorts the elements in a range of elements in list using the specified comparer.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based starting index of the range to sort.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The length of the range to sort.",
+          "optional": false
+        },
+        {
+          "name": "comparer",
+          "type": "System.Collections.Generic.IComparer\u003CT\u003E",
+          "doc": "The IComparer(T) implementation to use when comparing elements, or a null reference (Nothing in Visual Basic) to use the default comparer Comparer(T).Default.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_Sort_4.htm"
+    },
+    {
+      "name": "TangentAt",
+      "signature": "public Vector3d TangentAt(double t)",
+      "summary": "Gets the unit tangent vector along the polyline at the given parameter. The integer part of the parameter indicates the index of the segment.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Polyline parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The tangent along the polyline at t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_TangentAt.htm"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public T[] ToArray()",
+      "summary": "Constructs an array that contains all items in this list.",
+      "params": [],
+      "returns": {
+        "type": "T[]",
+        "doc": "An array containing all items in this list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_ToArray.htm"
+    },
+    {
+      "name": "ToNurbsCurve",
+      "signature": "public NurbsCurve ToNurbsCurve()",
+      "summary": "Constructs a nurbs curve representation of this polyline.",
+      "params": [],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A Nurbs curve shaped like this polyline or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_ToNurbsCurve.htm"
+    },
+    {
+      "name": "ToPolylineCurve",
+      "signature": "public PolylineCurve ToPolylineCurve()",
+      "summary": "Constructs a polyline curve representation of this polyline.",
+      "params": [],
+      "returns": {
+        "type": "PolylineCurve",
+        "doc": "A curve shaped like this polyline or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_ToPolylineCurve.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public void Transform(Transform xform)",
+      "summary": "Applies a transform to all the points in the list.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transform to apply.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_Point3dList_Transform.htm"
+    },
+    {
+      "name": "TriangulateClosedPolyline",
+      "signature": "public MeshFace[] TriangulateClosedPolyline()",
+      "summary": "Attempts to create a list of triangles which represent a triangulation of a closed polyline",
+      "params": [],
+      "returns": {
+        "type": "MeshFace[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Polyline.TriangulateClosedPolyline\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_TriangulateClosedPolyline.htm"
+    },
+    {
+      "name": "Trim",
+      "signature": "public Polyline Trim(Interval domain)",
+      "summary": "Constructs a polyline out of a parameter sub-domain in this curve.",
+      "params": [
+        {
+          "name": "domain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The sub-domain of the polyline. The integer part of the domain parameters indicate the index of the segment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline",
+        "doc": "The polyline as defined by the sub-domain, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Polyline_Trim.htm"
+    },
+    {
+      "name": "TrimExcess",
+      "signature": "public void TrimExcess()",
+      "summary": "Sets the capacity to the actual number of elements in the List, if that number is less than a threshold value.",
+      "remarks": "This function differs from the DotNET implementation of List\u003CT\u003E since that one only trims the excess if the excess exceeds 10% of the list length.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_TrimExcess.htm"
+    },
+    {
+      "name": "TrueForAll",
+      "signature": "public bool TrueForAll(Predicate\u003CT\u003E match)",
+      "summary": "Determines whether every element in the List matches the conditions defined by the specified predicate.",
+      "params": [
+        {
+          "name": "match",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The Predicate(T) delegate that defines the conditions to check against the elements.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if every element in the List matches the conditions defined by the specified predicate; otherwise, false. If the list has no elements, the return value is true."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_RhinoList_1_TrueForAll.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Even though this is a property, it is not a \u0022fast\u0022 calculation. Every point is evaluated in order to get the bounding box of the list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_Point3dList_BoundingBox.htm"
+    },
+    {
+      "name": "Capacity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the total number of elements the internal data structure can hold without resizing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_RhinoList_1_Capacity.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements actually contained in the List.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_RhinoList_1_Count.htm"
+    },
+    {
+      "name": "First",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the first item in the list. This is synonymous to calling List[0].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_RhinoList_1_First.htm"
+    },
+    {
+      "name": "IsClosed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Test a polyline to see if it is closed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Polyline_IsClosed.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether this polyline is valid. Valid polylines have at least one segment, no Invalid points and no zero length segments.Closed polylines with only two segments are also not considered valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Polyline_IsValid.htm"
+    },
+    {
+      "name": "Item",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the element at the specified index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_RhinoList_1_Item.htm"
+    },
+    {
+      "name": "Last",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the last item in the list. This is synonymous to calling List[Count-1].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_RhinoList_1_Last.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total length of the polyline.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Polyline_Length.htm"
+    },
+    {
+      "name": "NullCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of null references (Nothing in Visual Basic) in this list. If T is a ValueType, this property always return zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_RhinoList_1_NullCount.htm"
+    },
+    {
+      "name": "SegmentCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of segments for this polyline.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Polyline_SegmentCount.htm"
+    },
+    {
+      "name": "X",
+      "type": "Point3dList.XAccess",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an indexer with all X coordinates in this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_Point3dList_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Point3dList.YAccess",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an indexer with all Y coordinates in this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_Point3dList_Y.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Point3dList.ZAccess",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an indexer with all Z coordinates in this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_Point3dList_Z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

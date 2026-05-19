@@ -1,0 +1,14 @@
+{
+  "name": "DefaultDrawingTypes",
+  "namespace": "NemAll_Python_BaseElements.DrawingTypeService",
+  "kind": "enum",
+  "summary": "Definition of the default drawing types",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/#NemAll_Python_BaseElements.DrawingTypeService.DefaultDrawingTypes",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

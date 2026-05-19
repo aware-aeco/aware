@@ -1,0 +1,25 @@
+{
+  "name": "AddMsgInfo",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.AddMsgInfo.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/AddMsgInfo/",
+  "constructors": [
+    {
+      "name": "AddMsgInfo",
+      "signature": "AddMsgInfo()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/AddMsgInfo/#NemAll_Python_IFW_Input.AddMsgInfo.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

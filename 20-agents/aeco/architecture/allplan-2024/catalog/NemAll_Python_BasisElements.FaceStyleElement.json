@@ -1,0 +1,75 @@
+{
+  "name": "FaceStyleElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "FaceStyleElement class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/",
+  "constructors": [
+    {
+      "name": "FaceStyleElement",
+      "signature": "FaceStyleElement() | FaceStyleElement(commonProp, faceStyleProp, geometryObject) | FaceStyleElement(FaceStyleElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/#NemAll_Python_BasisElements.FaceStyleElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFaceStyleProperties",
+      "signature": "GetFaceStyleProperties()",
+      "summary": "Get the face style properties",
+      "remarks": "Get the face style properties",
+      "params": [],
+      "returns": {
+        "type": "FaceStyleProperties",
+        "doc": "face style properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/#NemAll_Python_BasisElements.FaceStyleElement.GetFaceStyleProperties"
+    },
+    {
+      "name": "SetFaceStyleProperties",
+      "signature": "SetFaceStyleProperties(faceStyleProp)",
+      "summary": "Set the FaceStyle properties",
+      "remarks": "Set the FaceStyle properties",
+      "params": [
+        {
+          "name": "faceStyleProp",
+          "type": "FaceStyleProperties",
+          "doc": "face style properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/#NemAll_Python_BasisElements.FaceStyleElement.SetFaceStyleProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/#NemAll_Python_BasisElements.FaceStyleElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "WeldFilterExpressions.ReferenceText",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The ReferenceText class represents the reference text filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c691a90b-a994-40a1-481b-c52a55f9dd10",
+  "constructors": [
+    {
+      "name": "WeldFilterExpressions.ReferenceText",
+      "signature": "public ReferenceText()",
+      "summary": "Initializes a new instance of the ReferenceText class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/98808c5e-be0d-8c16-d8af-466bbc115d80"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,238 @@
+{
+  "name": "Polyline3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D Polyline.",
+  "base": "PolyPoints3D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/",
+  "constructors": [
+    {
+      "name": "Polyline3D",
+      "signature": "Polyline3D() | Polyline3D(pntList) | Polyline3D(polyline) | Polyline3D(polyline, skip, count) | Polyline3D(points)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(polyline) | __iadd__(point) | __iadd__(line)",
+      "summary": "Additional assignment operator",
+      "remarks": "Additional assignment operator",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline3D",
+          "doc": "Polyline which will be added to current polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "Reference to polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__iadd__"
+    },
+    {
+      "name": "GetLine",
+      "signature": "GetLine(index)",
+      "summary": "Extract a line",
+      "remarks": "Extract a line",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line3D",
+        "doc": "indexed line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.GetLine"
+    },
+    {
+      "name": "GetLines",
+      "signature": "GetLines()",
+      "summary": "get lines from polyline",
+      "remarks": "get lines from polyline",
+      "params": [],
+      "returns": {
+        "type": "Line3DList",
+        "doc": "lines"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.GetLines"
+    },
+    {
+      "name": "InsertPolyline",
+      "signature": "InsertPolyline(polyline, position=18446744073709551615)",
+      "summary": "Insert another polyline at given position",
+      "remarks": "Insert another polyline at given position",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline3D",
+          "doc": "Polyline to be inserted",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "Position where the polyline has to be inserted",
+          "optional": true,
+          "default": "18446744073709551615"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.InsertPolyline"
+    },
+    {
+      "name": "IsPlanar",
+      "signature": "IsPlanar()",
+      "summary": "Check if polyline is on one plane",
+      "remarks": "Check if polyline is on one plane",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(True if polyline is on one plane,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.IsPlanar"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Check if the polygon is valid ( has at least 2 points ) For additional point validation use Service::Validate.",
+      "remarks": "Check if the polygon is valid ( has at least 2 points ) For additional point validation use Service::Validate.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.IsValid"
+    },
+    {
+      "name": "LineCount",
+      "signature": "LineCount()",
+      "summary": "Get the count of lines connecting the points",
+      "remarks": "Get the count of lines connecting the points",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "count of lines"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.LineCount"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse Polyline orientation",
+      "remarks": "Reverse Polyline orientation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.Reverse"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(polyline2)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "polyline2",
+          "type": "Polyline3D",
+          "doc": "Second polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Polyline3D are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__eq__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix)",
+      "summary": "Multiple Polyline with matrix",
+      "remarks": "Multiple Polyline with matrix",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "Transformed polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__mul__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(polyline2)",
+      "summary": "Not equal operator",
+      "remarks": "Not equal operator",
+      "params": [
+        {
+          "name": "polyline2",
+          "type": "Polyline3D",
+          "doc": "Second polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Polyline3D are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

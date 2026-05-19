@@ -1,0 +1,300 @@
+{
+  "name": "AnalysisResult",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisResult class contains analysis result information.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9c245008-64d8-2846-76e1-b1ec8c6eb6b1",
+  "constructors": [
+    {
+      "name": "AnalysisResult",
+      "signature": "public AnalysisResult()",
+      "summary": "Creates a new analysis result instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/21e50959-a6b5-d3ae-931d-edfbeaee49a8"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public static bool Delete(AnalysisResult.ObjectTypeEnum objectType, int objectId)",
+      "summary": "Delete analysis results by the given key.",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "Tekla.Structures.Analysis.AnalysisResult.ObjectTypeEnum",
+          "doc": "Object type.",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Int32",
+          "doc": "Object id.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aef9329d-e4b2-886a-f21e-f9fac02c5aeb"
+    },
+    {
+      "name": "DeleteAll",
+      "signature": "public static bool DeleteAll()",
+      "summary": "Delete all analysis results.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1a48788a-c8f2-8b6c-c545-6ec68430cc0e"
+    },
+    {
+      "name": "DeleteLoadcase",
+      "signature": "public static bool DeleteLoadcase(int loadcaseNumber, string loadcaseName)",
+      "summary": "Delete analysis results by load case.",
+      "params": [
+        {
+          "name": "loadcaseNumber",
+          "type": "System.Int32",
+          "doc": "Object type.",
+          "optional": false
+        },
+        {
+          "name": "loadcaseName",
+          "type": "System.String",
+          "doc": "Object id.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a75b4887-0b6b-005d-59e6-ca8d03dc3240"
+    },
+    {
+      "name": "GetResultObjectIds",
+      "signature": "public static List\u003Cint\u003E GetResultObjectIds(AnalysisResult.ObjectTypeEnum objectType)",
+      "summary": "Get ID numbers of objects with results.",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "Tekla.Structures.Analysis.AnalysisResult.ObjectTypeEnum",
+          "doc": "The object type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CInt32\u003E",
+        "doc": "The ID numbers of objects with results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d985ddea-02c1-6c83-3801-3e013b31965e"
+    },
+    {
+      "name": "GetResults",
+      "signature": "public static List\u003CAnalysisResult\u003E GetResults(AnalysisResult.ObjectTypeEnum? objectType, int? objectId, AnalysisResult.ResultPositionEnum? position, Point point, AnalysisResult.ValueTypeEnum? valueType, bool sort)",
+      "summary": "Get analysis results.",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "System.Nullable\u003CAnalysisResult.ObjectTypeEnum\u003E",
+          "doc": "The object type.",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Nullable\u003CInt32\u003E",
+          "doc": "The object id or number (also object type must be given).",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Nullable\u003CAnalysisResult.ResultPositionEnum\u003E",
+          "doc": "The position.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The position point (when position is POSITION_BY_COORDINATES).",
+          "optional": false
+        },
+        {
+          "name": "valueType",
+          "type": "System.Nullable\u003CAnalysisResult.ValueTypeEnum\u003E",
+          "doc": "The value type.",
+          "optional": false
+        },
+        {
+          "name": "sort",
+          "type": "System.Boolean",
+          "doc": "True if values to be sorted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CAnalysisResult\u003E",
+        "doc": "The results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfecc942-baf1-3d44-c192-046868786c11"
+    },
+    {
+      "name": "Insert",
+      "signature": "public bool Insert()",
+      "summary": "Insert analysis result. Results are always stored to physical parts. When OBJECT_TYPE_MEMBER or OBJECT_TYPE_AREA is used the analysis model must be active. All results for given part must be inserted within one commit (CommitChanges), older results of this part are removed automatically.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/110a28e3-09a8-5646-20a4-ac3a2252de80"
+    },
+    {
+      "name": "QueryAnalysisResult",
+      "signature": "public bool QueryAnalysisResult()",
+      "summary": "Queries an analysis result.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successfully queried an analysis result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/792d80e9-e3ce-cbf2-626a-a3d9cad719f6"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LoadCase",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The load case. The real load cases have positive values 1, 2, 3, ... For min/max queries LoadCaseForMinMaxEnum can be used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9dd25ac2-aa40-c368-ba7f-f439ce7db6e2"
+    },
+    {
+      "name": "LoadCaseInfo",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The load case info (optional, max length 128).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bb1d5a22-cb42-4feb-dcf3-4c1866b033dd"
+    },
+    {
+      "name": "LoadCaseName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The load case name (max length 64).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df8c64fd-782e-c3b5-3a6d-986c58218224"
+    },
+    {
+      "name": "LoadCaseType",
+      "type": "AnalysisResult.LoadCaseTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The load case type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/60c5fe74-e350-7bf8-0a6d-2a9c30c33479"
+    },
+    {
+      "name": "ModId",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The time stamp of the result.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e003bdc5-0506-2119-e55d-632dffddd3c6"
+    },
+    {
+      "name": "ObjectId",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object. If ObjectType is OBJECT_TYPE_PART, ObjectId is (physical) part ID. If ObjectType is OBJECT_TYPE_MEMBER, ObjectId is the bar number when analysis bars are used in integration, otherwise ObjectId is the member number. If ObjectType is OBJECT_TYPE_AREA, ObjectId is the area number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/26b66775-3ea1-0c04-a2ae-9e7c538836f8"
+    },
+    {
+      "name": "ObjectType",
+      "type": "AnalysisResult.ObjectTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The object type. In result query the only supported type is the physical member (the part).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0a74ebdf-4b27-bdfd-ac5e-7afb0cafe694"
+    },
+    {
+      "name": "Position",
+      "type": "AnalysisResult.ResultPositionEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The position on the part\u0027s START/END/...",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ecb7bfa4-cec5-db76-f88c-7095098c37cd"
+    },
+    {
+      "name": "PositionCoordX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Global coordinate X (mm) when inserting result. Local (part) coordinate X (mm) when getting results.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d7246f1e-e3ee-753e-49bd-752a7c6284a0"
+    },
+    {
+      "name": "PositionCoordY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Global coordinate Y (mm) when inserting result. Local (part) coordinate Y (mm) when getting results.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f6a682-e352-97ad-dd07-d53c8b9d7dcb"
+    },
+    {
+      "name": "PositionCoordZ",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Global coordinate Z (mm) when inserting result. Local (part) coordinate Z (mm) when getting results.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4316b5db-fc09-864c-b468-747056ad35e3"
+    },
+    {
+      "name": "PositionTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The position\u0027s coordinate tolerance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5164366b-4e3f-ed8c-aa73-80098c4b2fd6"
+    },
+    {
+      "name": "Value",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The result value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/656d7bae-2fd8-2c66-d5ed-2ef10a7c8847"
+    },
+    {
+      "name": "ValueType",
+      "type": "AnalysisResult.ValueTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The result value type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8732d319-85e3-e145-0cdf-96b92d8ad707"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,32 @@
+{
+  "name": "CannotLoadAttributesException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotLoadAttributesException class defines the exception that is thrown when the loading of attributes failed.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3e4c1779-ba8f-f298-49cd-bc239cabfa6c",
+  "constructors": [
+    {
+      "name": "CannotLoadAttributesException",
+      "signature": "public CannotLoadAttributesException(string AttributeFile)",
+      "summary": "Creates a new cannot load attributes exception instance.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file that was being loaded.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/43f7dee5-bdff-b7da-3acb-a39974c6d7e5"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

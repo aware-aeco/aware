@@ -1,0 +1,219 @@
+{
+  "name": "PhysicallyBased",
+  "namespace": "Rhino.Render.ChildSlotNames",
+  "kind": "class",
+  "summary": "Helper class with properties containing the names of children available in our PBR implementation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChildSlotNames_PhysicallyBased.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FromTextureType",
+      "signature": "public static string FromTextureType(TextureType textureType)",
+      "summary": "",
+      "params": [
+        {
+          "name": "textureType",
+          "type": "Rhino.DocObjects.TextureType",
+          "doc": "[Missing \u003Cparam name=\u0022textureType\u0022/\u003E documentation for \u0022M:Rhino.Render.ChildSlotNames.PhysicallyBased.FromTextureType(Rhino.DocObjects.TextureType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChildSlotNames.PhysicallyBased.FromTextureType(Rhino.DocObjects.TextureType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChildSlotNames_PhysicallyBased_FromTextureType.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alpha",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Alpha.htm"
+    },
+    {
+      "name": "AmbientOcclusion",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_AmbientOcclusion.htm"
+    },
+    {
+      "name": "Anisotropic",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Anisotropic.htm"
+    },
+    {
+      "name": "AnisotropicRotation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_AnisotropicRotation.htm"
+    },
+    {
+      "name": "BaseColor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_BaseColor.htm"
+    },
+    {
+      "name": "Bump",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Bump.htm"
+    },
+    {
+      "name": "Clearcoat",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Clearcoat.htm"
+    },
+    {
+      "name": "ClearcoatBump",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_ClearcoatBump.htm"
+    },
+    {
+      "name": "ClearcoatRoughness",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_ClearcoatRoughness.htm"
+    },
+    {
+      "name": "Displacement",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Displacement.htm"
+    },
+    {
+      "name": "Emission",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Emission.htm"
+    },
+    {
+      "name": "Metallic",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Metallic.htm"
+    },
+    {
+      "name": "Opacity",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Opacity.htm"
+    },
+    {
+      "name": "OpacityIor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_OpacityIor.htm"
+    },
+    {
+      "name": "OpacityRoughness",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_OpacityRoughness.htm"
+    },
+    {
+      "name": "Roughness",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Roughness.htm"
+    },
+    {
+      "name": "Sheen",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Sheen.htm"
+    },
+    {
+      "name": "SheenTint",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_SheenTint.htm"
+    },
+    {
+      "name": "Specular",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Specular.htm"
+    },
+    {
+      "name": "SpecularTint",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_SpecularTint.htm"
+    },
+    {
+      "name": "Subsurface",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_Subsurface.htm"
+    },
+    {
+      "name": "SubsurfaceScatteringColor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_SubsurfaceScatteringColor.htm"
+    },
+    {
+      "name": "SubsurfaceScatteringRadius",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChildSlotNames_PhysicallyBased_SubsurfaceScatteringRadius.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

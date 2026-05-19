@@ -1,0 +1,80 @@
+{
+  "name": "Decals",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Represents all the decals of an object.",
+  "interfaces": [
+    "IEnumerable\u003CDecal\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_Decals.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public uint Add(Decal decal)",
+      "summary": "Add a new Decal to the decals list, use Decal.Create to create a new decal instance to add.",
+      "params": [
+        {
+          "name": "decal",
+          "type": "Rhino.Render.Decal",
+          "doc": "[Missing \u003Cparam name=\u0022decal\u0022/\u003E documentation for \u0022M:Rhino.Render.Decals.Add(Rhino.Render.Decal)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decals.Add(Rhino.Render.Decal)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decals_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decals_Clear.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CDecal\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CDecal\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decals.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decals_GetEnumerator.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(Decal decal)",
+      "summary": "",
+      "params": [
+        {
+          "name": "decal",
+          "type": "Rhino.Render.Decal",
+          "doc": "[Missing \u003Cparam name=\u0022decal\u0022/\u003E documentation for \u0022M:Rhino.Render.Decals.Remove(Rhino.Render.Decal)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decals.Remove(Rhino.Render.Decal)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decals_Remove.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

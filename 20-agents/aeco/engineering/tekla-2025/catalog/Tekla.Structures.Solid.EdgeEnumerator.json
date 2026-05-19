@@ -1,0 +1,49 @@
+{
+  "name": "EdgeEnumerator",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The EdgeEnumerator class is used to enumerate the edges of a solid.",
+  "base": "System.Object",
+  "interfaces": [
+    "IEnumerator"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7edcc94f-9b44-d752-6310-c162d76eda59",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a423ca93-c65a-f109-3172-3afe103a2d16"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1a21b63a-93bf-480d-e258-981e7de33612"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/14655c64-2cba-00c0-6e05-b156f7b43b80"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

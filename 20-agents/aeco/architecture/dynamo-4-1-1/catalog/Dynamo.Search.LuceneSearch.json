@@ -1,0 +1,33 @@
+{
+  "name": "LuceneSearch",
+  "namespace": "Dynamo.Search",
+  "kind": "class",
+  "summary": "Singleton class that has access to all the lucene search utility classes.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/LuceneSearch.cs",
+  "constructors": [
+    {
+      "name": "LuceneSearch()",
+      "signature": "void LuceneSearch()",
+      "summary": "LuceneSearch.LuceneSearch",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/LuceneSearch.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Instance",
+      "type": "Dynamo.Search.LuceneSearch",
+      "getter": true,
+      "setter": false,
+      "summary": "The actual instance stored in the Singleton class",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/LuceneSearch.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

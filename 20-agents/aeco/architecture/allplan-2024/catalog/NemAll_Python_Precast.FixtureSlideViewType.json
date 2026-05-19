@@ -1,0 +1,121 @@
+{
+  "name": "FixtureSlideViewType",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "Fixture slide view types",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideViewType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FixtureSlideViewType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideViewType/#NemAll_Python_Precast.FixtureSlideViewType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "e2D_BACK_VIEW",
+      "value": 6
+    },
+    {
+      "name": "e2D_FRONT_VIEW",
+      "value": 5
+    },
+    {
+      "name": "e2D_LEFT_VIEW",
+      "value": 3
+    },
+    {
+      "name": "e2D_NO_VIEW",
+      "value": 0
+    },
+    {
+      "name": "e2D_RIGHT_VIEW",
+      "value": 4
+    },
+    {
+      "name": "e2D_SYMBOL",
+      "value": 11
+    },
+    {
+      "name": "e2D_TOP_VIEW",
+      "value": 1
+    },
+    {
+      "name": "e3D_VIEW",
+      "value": 7
+    },
+    {
+      "name": "e3D_VIEW_OLD",
+      "value": 8
+    },
+    {
+      "name": "e3D_VIEW_OUTLINE_AREA",
+      "value": 10
+    },
+    {
+      "name": "e3D_VIEW_OUTLINE_AREA_ACTUAL",
+      "value": 12
+    },
+    {
+      "name": "e3D_VIEW_OUTLINE_VOLUME",
+      "value": 9
+    },
+    {
+      "name": "eBOTTOM_VIEW",
+      "value": 2
+    },
+    {
+      "name": "eCONNECTION_POINT",
+      "value": 20
+    },
+    {
+      "name": "eCONTOUR_CUT",
+      "value": 18
+    },
+    {
+      "name": "eLOCK_FIXED",
+      "value": 14
+    },
+    {
+      "name": "eLOCK_FIXED_P1",
+      "value": 16
+    },
+    {
+      "name": "eLOCK_UML",
+      "value": 15
+    },
+    {
+      "name": "eMEASURE_POINTS",
+      "value": 19
+    },
+    {
+      "name": "eORGA_ORIGINAL",
+      "value": 17
+    },
+    {
+      "name": "eTGA_ADAPTER",
+      "value": 13
+    }
+  ]
+}

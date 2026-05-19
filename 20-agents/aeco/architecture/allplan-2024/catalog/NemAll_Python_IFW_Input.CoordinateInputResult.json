@@ -1,0 +1,36 @@
+{
+  "name": "CoordinateInputResult",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.CoordinateInputResult.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputResult/",
+  "constructors": [
+    {
+      "name": "CoordinateInputResult",
+      "signature": "CoordinateInputResult()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputResult/#NemAll_Python_IFW_Input.CoordinateInputResult.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetPoint",
+      "signature": "GetPoint()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputResult/#NemAll_Python_IFW_Input.CoordinateInputResult.GetPoint"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

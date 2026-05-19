@@ -1,0 +1,623 @@
+{
+  "name": "NumericConstantFilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The NumericConstantFilterExpression class represents a constant numeric filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6c797a9c-2d1c-a857-d1f0-82e78555e217",
+  "constructors": [
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CDouble\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cdouble\u003E Values)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/21612118-b060-fff6-bd1a-038d79a17b74"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CInt16\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cshort\u003E Values)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt16\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2c11dea6-4bf7-9e1c-1d5d-c55fc09f15a8"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CInt32\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cint\u003E Values)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ac341236-0661-c990-053a-69d08c3499b8"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CInt64\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Clong\u003E Values)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt64\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b068da9d-7959-e5d5-2224-db5629744bd6"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CUInt16\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cushort\u003E Values)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CUInt16\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/84c90c5e-a704-09ee-b649-a11e45fd8d60"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CUInt32\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cuint\u003E Values)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CUInt32\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bd920b26-eb2c-568b-7b24-994f4ef752e5"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CUInt64\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Culong\u003E Values)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CUInt64\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3d873a91-320e-7235-8856-6ae68d7c4f42"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Double)",
+      "signature": "public NumericConstantFilterExpression(double Value)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e28866a-7a82-8604-5180-572e768a21a5"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Int16)",
+      "signature": "public NumericConstantFilterExpression(short Value)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int16",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a6e21401-9625-2ffd-4857-0611c4b26874"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Int32)",
+      "signature": "public NumericConstantFilterExpression(int Value)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/be94853d-17b2-b1e7-1320-25bab95ecaac"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Int64)",
+      "signature": "public NumericConstantFilterExpression(long Value)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int64",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a5fa999a-ef1e-05c5-875a-ac93ed1b5ce5"
+    },
+    {
+      "name": "NumericConstantFilterExpression(UInt16)",
+      "signature": "public NumericConstantFilterExpression(ushort Value)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.UInt16",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5c53cb23-4692-5001-45e2-3ea3709ac42f"
+    },
+    {
+      "name": "NumericConstantFilterExpression(UInt32)",
+      "signature": "public NumericConstantFilterExpression(uint Value)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.UInt32",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/061049df-b1ce-696f-ec03-3fc3c88e5577"
+    },
+    {
+      "name": "NumericConstantFilterExpression(UInt64)",
+      "signature": "public NumericConstantFilterExpression(ulong Value)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.UInt64",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0242d345-19c3-58d9-63cb-54c3aba09c1d"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CTeklaStructuresDatabaseTypeEnum\u003E)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003CTeklaStructuresDatabaseTypeEnum\u003E ObjectTypes)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "ObjectTypes",
+          "type": "System.Collections.Generic.IEnumerable\u003CTeklaStructuresDatabaseTypeEnum\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82c1f335-247d-d034-3546-950b2c39a132"
+    },
+    {
+      "name": "NumericConstantFilterExpression(TeklaStructuresDatabaseTypeEnum)",
+      "signature": "public NumericConstantFilterExpression(TeklaStructuresDatabaseTypeEnum ObjectType)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "ObjectType",
+          "type": "Tekla.Structures.TeklaStructuresDatabaseTypeEnum",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7d46d3ea-96f6-90cd-15be-87c9b89a4913"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CDouble\u003E, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cdouble\u003E Values, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b3b81dc2-6ecf-215c-839d-1adcb18880b2"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CInt16\u003E, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cshort\u003E Values, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt16\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/10166dff-55da-29a7-1844-77605173015a"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CInt32\u003E, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cint\u003E Values, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0c9a3711-95e6-735d-8d13-004cca1c881f"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CInt64\u003E, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Clong\u003E Values, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt64\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c8396593-0492-ee85-e205-f2e3db8bac96"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CUInt16\u003E, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cushort\u003E Values, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CUInt16\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/58138f0c-a6b6-e296-a2d5-f99ad8c28083"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CUInt32\u003E, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Cuint\u003E Values, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CUInt32\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0871dcf4-4f95-03bd-8f1f-74177189bbb6"
+    },
+    {
+      "name": "NumericConstantFilterExpression(IEnumerable\u003CUInt64\u003E, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(IEnumerable\u003Culong\u003E Values, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CUInt64\u003E",
+          "doc": "The values to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9b03b253-d27a-e83c-ac33-1b70b0f4c6ad"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Double, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(double Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ecb664fd-1972-3219-7bee-0c24de68a97d"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Int16, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(short Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int16",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c2754021-e326-bc73-d3ad-f6f2941db0d3"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Int32, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(int Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/56c5d767-d07a-01ba-4668-120b1d27d84b"
+    },
+    {
+      "name": "NumericConstantFilterExpression(Int64, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(long Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int64",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d1d67ca9-c41d-9400-329f-0078627bc1b4"
+    },
+    {
+      "name": "NumericConstantFilterExpression(UInt16, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(ushort Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.UInt16",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a84a912b-9735-63db-6328-1e559fa5685f"
+    },
+    {
+      "name": "NumericConstantFilterExpression(UInt32, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(uint Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.UInt32",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ab46135f-9591-e408-1610-9fb03b033b13"
+    },
+    {
+      "name": "NumericConstantFilterExpression(UInt64, IFormatProvider)",
+      "signature": "public NumericConstantFilterExpression(ulong Value, IFormatProvider Provider)",
+      "summary": "Initializes a new instance of the NumericConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.UInt64",
+          "doc": "The value to represent.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An IFormatProvider object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bdf4d274-baeb-0c69-5b52-2e874fc83b2a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

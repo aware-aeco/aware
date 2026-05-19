@@ -1,0 +1,149 @@
+{
+  "name": "PythonPartGroup",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Definition of a PythonPart group",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/",
+  "constructors": [
+    {
+      "name": "PythonPartGroup",
+      "signature": "PythonPartGroup( name: str, parameter_list: list[str], hash_value: str, python_file: str, pythonparts: list[PythonPart] | PythonPartGroup()",
+      "summary": "Initialize TypeError: When list of PythonParts to group contains a non-PythonPart object",
+      "remarks": "Initialize TypeError: When list of PythonParts to group contains a non-PythonPart object",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__str__",
+      "signature": "__str__() -\u003E str",
+      "summary": "create the element string",
+      "remarks": "create the element string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "element string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.__str__"
+    },
+    {
+      "name": "append",
+      "signature": "append(pythonpart: PythonPart)",
+      "summary": "Add a new PythonPart to the group",
+      "remarks": "Add a new PythonPart to the group",
+      "params": [
+        {
+          "name": "pythonpart",
+          "type": "PythonPart",
+          "doc": "PythonPart to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.append"
+    },
+    {
+      "name": "create",
+      "signature": "create() -\u003E list[AllplanElement]",
+      "summary": "create the PythonPartGroup",
+      "remarks": "create the PythonPartGroup",
+      "params": [],
+      "returns": {
+        "type": "list[AllplanElement]",
+        "doc": "list with the created elements for the PythonPartGroup"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.create"
+    },
+    {
+      "name": "extend",
+      "signature": "extend(pythonparts: list[PythonPart])",
+      "summary": "Extend the group with new PythonParts",
+      "remarks": "Extend the group with new PythonParts",
+      "params": [
+        {
+          "name": "pythonparts",
+          "type": "list[PythonPart]",
+          "doc": "list of PythonParts to add to the group",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.extend"
+    },
+    {
+      "name": "from_build_ele",
+      "signature": "from_build_ele( build_ele: BuildingElement, name: str = \u0022\u0022, pythonparts: list[PythonPart] | None = None, type_uuid: str = \u0022\u0022, type_display_name: str = \u0022\u0022, ) -\u003E PythonPartGroup",
+      "summary": "Initialize the PythonPart group from a BuildingElement",
+      "remarks": "Initialize the PythonPart group from a BuildingElement",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "Building element containing parameter values of the PythonPart group",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Name of the group. If not provided, the name of the .pyp file will be used",
+          "optional": false
+        },
+        {
+          "name": "pythonparts",
+          "type": "list[PythonPart] | None",
+          "doc": "List of PythonParts to put into group. You can initialize an empty group and append PythonParts to it using append() or extend()",
+          "optional": false
+        },
+        {
+          "name": "type_uuid",
+          "type": "str",
+          "doc": "define the selectable type defines the selectable type",
+          "optional": false
+        },
+        {
+          "name": "type_display_name",
+          "type": "str",
+          "doc": "display name for the tooltip and object palette",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PythonPartGroup",
+        "doc": "Constructed PythonPart group"
+      },
+      "throws": [
+        {
+          "type": "TypeError",
+          "when": "When list of PythonParts to group contains a non-PythonPart object"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.from_build_ele"
+    }
+  ],
+  "properties": [
+    {
+      "name": "pythonparts",
+      "type": "list[PythonPart]",
+      "getter": true,
+      "setter": false,
+      "summary": "List of the PythonParts in the group",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.pythonparts"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

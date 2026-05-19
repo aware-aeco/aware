@@ -1,0 +1,29 @@
+{
+  "name": "ClipPlaneState",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Possible states a clip plane can be in.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ClipPlaneState",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0,
+      "summary": "Default (uninitialized)"
+    },
+    {
+      "name": "Enabled",
+      "value": 1,
+      "summary": "Enabled"
+    },
+    {
+      "name": "Disabled",
+      "value": 2,
+      "summary": "Disabled"
+    }
+  ]
+}

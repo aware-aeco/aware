@@ -1,0 +1,52 @@
+{
+  "name": "RawTraceData",
+  "namespace": "ProtoCore.CallSite",
+  "kind": "class",
+  "summary": "Type RawTraceData",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs",
+  "constructors": [
+    {
+      "name": "RawTraceData(string, string)",
+      "signature": "void RawTraceData(string callSiteID, string data)",
+      "summary": "RawTraceData.RawTraceData",
+      "params": [
+        {
+          "name": "callSiteID",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Data",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "RawTraceData.Data",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "ID",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "RawTraceData.ID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

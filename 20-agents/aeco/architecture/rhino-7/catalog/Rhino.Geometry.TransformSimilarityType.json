@@ -1,0 +1,29 @@
+{
+  "name": "TransformSimilarityType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Lists all possible outcomes for transform similarity.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_TransformSimilarityType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OrientationReversing",
+      "value": -1,
+      "summary": "Similarity is preserved, but orientation is flipped."
+    },
+    {
+      "name": "NotSimilarity",
+      "value": 0,
+      "summary": "Similarity is not preserved. Geometry needs to be deformable for this Transform to operate correctly."
+    },
+    {
+      "name": "OrientationPreserving",
+      "value": 1,
+      "summary": "Similarity and orientation are preserved."
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "name": "BuildingElementControlProperties",
+  "namespace": "BuildingElementControlProperties",
+  "kind": "class",
+  "summary": "implementation of the container for the controls properties of the building element",
+  "base": "list[ControlProperties]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/",
+  "constructors": [
+    {
+      "name": "BuildingElementControlProperties",
+      "signature": "BuildingElementControlProperties(control_props: Iterable[ControlProperties] = iter([]))",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "control_props",
+          "type": "Iterable[ControlProperties]",
+          "doc": "controls properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "eval_palette_layout_script",
+      "signature": "eval_palette_layout_script()",
+      "summary": "evaluate the palette layout script",
+      "remarks": "evaluate the palette layout script",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.eval_palette_layout_script"
+    },
+    {
+      "name": "get_property",
+      "signature": "get_property(name: str) -\u003E ControlProperties | None",
+      "summary": "get the control property for the name",
+      "remarks": "get the control property for the name",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ControlProperties | None",
+        "doc": "control property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.get_property"
+    },
+    {
+      "name": "is_refresh_control",
+      "signature": "is_refresh_control() -\u003E bool",
+      "summary": "get the refresh control state",
+      "remarks": "get the refresh control state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "refresh of the controls state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.is_refresh_control"
+    },
+    {
+      "name": "reset_refresh_control",
+      "signature": "reset_refresh_control()",
+      "summary": "set the refresh control state",
+      "remarks": "set the refresh control state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.reset_refresh_control"
+    }
+  ],
+  "properties": [
+    {
+      "name": "palette_layout_dict",
+      "type": "dict[str, Any]",
+      "getter": true,
+      "setter": false,
+      "summary": "get the palette layout dictionary",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.palette_layout_dict"
+    },
+    {
+      "name": "palette_layout_script",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "get the palette layout script",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.palette_layout_script"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

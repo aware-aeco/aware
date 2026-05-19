@@ -1,0 +1,24 @@
+{
+  "name": "Load.LoadPartNamesEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The load part names.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1fac12d5-3ea1-bf0c-4173-ad9376ec2d9c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOAD_PART_NAMES_EXCLUDE",
+      "value": 0,
+      "summary": "Exclude parts by name."
+    },
+    {
+      "name": "LOAD_PART_NAMES_INCLUDE",
+      "value": 1,
+      "summary": "Include parts by name."
+    }
+  ]
+}

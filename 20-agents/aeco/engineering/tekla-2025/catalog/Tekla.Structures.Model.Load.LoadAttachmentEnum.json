@@ -1,0 +1,24 @@
+{
+  "name": "Load.LoadAttachmentEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The load attachment.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a2ef5acf-8fd5-795e-e10a-3158afc3acfa",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOAD_ATTACHMENT_ATTACH_TO_MEMBER",
+      "value": 4001,
+      "summary": "Attach to member."
+    },
+    {
+      "name": "LOAD_ATTACHMENT_DONT_ATTACH",
+      "value": 4003,
+      "summary": "Don\u0027t attach."
+    }
+  ]
+}

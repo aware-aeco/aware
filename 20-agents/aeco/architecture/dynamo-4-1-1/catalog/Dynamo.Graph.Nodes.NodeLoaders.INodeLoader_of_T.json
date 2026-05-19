@@ -1,0 +1,46 @@
+{
+  "name": "INodeLoader\u003CT\u003E",
+  "namespace": "Dynamo.Graph.Nodes.NodeLoaders",
+  "kind": "interface",
+  "summary": "An object which can load a NodeModel from Xml.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeLoaders/NodeFactory.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateNodeFromXml(System.Xml.XmlElement, Dynamo.Graph.SaveContext, ProtoCore.Namespace.ElementResolver)",
+      "signature": "T CreateNodeFromXml(System.Xml.XmlElement elNode, Dynamo.Graph.SaveContext context, ProtoCore.Namespace.ElementResolver resolver)",
+      "summary": "Create a new NodeModel from its serialized form.",
+      "params": [
+        {
+          "name": "elNode",
+          "type": "System.Xml.XmlElement",
+          "doc": "Serialized NodeModel",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "Serialization context",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "Element resolver for resolve namespace conflict",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeLoaders/NodeFactory.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,109 @@
+{
+  "name": "AnalysisPosition",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPosition class contains information related to analysis positions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f38a9da6-b305-8662-72e4-06bf8c3e5a02",
+  "constructors": [
+    {
+      "name": "AnalysisPosition",
+      "signature": "public AnalysisPosition()",
+      "summary": "Initializes a new instance of the AnalysisPosition class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99c1aa89-2a1f-ebab-8640-7502b9a63c4f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis position.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/365ea44a-0b65-d4ce-9977-bf4dd7bfe713"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Node",
+      "type": "AnalysisNode",
+      "getter": true,
+      "setter": true,
+      "summary": "The node of the position.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a002eb50-a61a-81a5-75a8-4666beb7e721"
+    },
+    {
+      "name": "Type",
+      "type": "AnalysisPosition.TypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the position.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/863ba8a3-f978-5afa-4d1a-627a94efe3c4"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

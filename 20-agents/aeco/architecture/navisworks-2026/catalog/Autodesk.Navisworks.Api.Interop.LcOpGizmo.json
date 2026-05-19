@@ -1,0 +1,197 @@
+{
+  "name": "LcOpGizmo",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpGizmo class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpGizmo",
+  "constructors": [
+    {
+      "name": "LcOpGizmo()",
+      "signature": "LcOpGizmo()",
+      "summary": "Constructs a new LcOpGizmo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetTargetHandler",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpTargetHandler GetTargetHandler()",
+      "summary": "GetTargetHandler method of LcOpGizmo.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTargetHandler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.GetTargetHandler"
+    },
+    {
+      "name": "GetTransform",
+      "signature": "Autodesk.Navisworks.Api.Transform3D GetTransform()",
+      "summary": "GetTransform method of LcOpGizmo.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.GetTransform"
+    },
+    {
+      "name": "EnablePart",
+      "signature": "bool EnablePart(string part_name, bool enabled)",
+      "summary": "EnablePart method of LcOpGizmo.",
+      "params": [
+        {
+          "name": "part_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.EnablePart%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpGizmo InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpGizmo.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpGizmo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpGizmo.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "EnableSnapping",
+      "signature": "void EnableSnapping(bool enable)",
+      "summary": "EnableSnapping method of LcOpGizmo.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.EnableSnapping%28System.Boolean%29"
+    },
+    {
+      "name": "SetOrigin",
+      "signature": "void SetOrigin(Autodesk.Navisworks.Api.Point3D origin)",
+      "summary": "SetOrigin method of LcOpGizmo.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.SetOrigin%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetTargetHandler",
+      "signature": "void SetTargetHandler(Autodesk.Navisworks.Api.Interop.LcOpTargetHandler handler)",
+      "summary": "SetTargetHandler method of LcOpGizmo.",
+      "params": [
+        {
+          "name": "handler",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTargetHandler",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.SetTargetHandler%28Autodesk.Navisworks.Api.Interop.LcOpTargetHandler%29"
+    },
+    {
+      "name": "SetTransform",
+      "signature": "void SetTransform(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "SetTransform method of LcOpGizmo.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.SetTransform%28Autodesk.Navisworks.Api.Transform3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpGizmo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpGizmo.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

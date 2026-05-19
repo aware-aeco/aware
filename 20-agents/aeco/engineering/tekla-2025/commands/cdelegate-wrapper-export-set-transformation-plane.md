@@ -1,5 +1,0 @@
-# cdelegate-wrapper-export-set-transformation-plane
-
-Lifecycle: single
-
-DO NOT USE! For internal usage only!

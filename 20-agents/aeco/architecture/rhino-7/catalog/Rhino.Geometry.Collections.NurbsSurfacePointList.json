@@ -1,0 +1,598 @@
+{
+  "name": "NurbsSurfacePointList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the control points of a NURBS surface.",
+  "interfaces": [
+    "IEnumerable\u003CControlPoint\u003E",
+    "IEnumerable",
+    "IEpsilonComparable\u003CNurbsSurfacePointList\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_NurbsSurfacePointList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(NurbsSurfacePointList other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Collections.NurbsSurfacePointList",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.EpsilonEquals(Rhino.Geometry.Collections.NurbsSurfacePointList,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.EpsilonEquals(Rhino.Geometry.Collections.NurbsSurfacePointList,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.EpsilonEquals(Rhino.Geometry.Collections.NurbsSurfacePointList,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_EpsilonEquals.htm"
+    },
+    {
+      "name": "GetControlPoint",
+      "signature": "public ControlPoint GetControlPoint(int u, int v)",
+      "summary": "Gets the control point at the given (u, v) index.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ControlPoint",
+        "doc": "The control point at the given (u, v) index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_GetControlPoint.htm"
+    },
+    {
+      "name": "GetGrevillePoint",
+      "signature": "public Point2d GetGrevillePoint(int u, int v)",
+      "summary": "Gets the 2-D Greville point associated with the control point at the given (u, v) index.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A Surface UV coordinate on success, Point2d.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_GetGrevillePoint.htm"
+    },
+    {
+      "name": "GetPoint(Int32, Int32, Point3d)",
+      "signature": "public bool GetPoint(int u, int v, out Point3d point)",
+      "summary": "Gets a world 3-D, or Euclidean, control point at the given (u, v) index. The 4-D representation is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinate of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_GetPoint.htm"
+    },
+    {
+      "name": "GetPoint(Int32, Int32, Point4d)",
+      "signature": "public bool GetPoint(int u, int v, out Point4d point)",
+      "summary": "Gets a homogeneous control point at the given (u, v) index, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use the override that returns world 3-D, or Euclidean, coordinates.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Coordinate and weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_GetPoint_1.htm"
+    },
+    {
+      "name": "GetWeight",
+      "signature": "public double GetWeight(int u, int v)",
+      "summary": "Gets the weight of a control point at the given (u, v) index. Note, if the surface is non-rational, the weight will be 1.0.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control-point along surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control-point along surface V direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The control point weight if successful, Rhino.Math.UnsetValue otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_GetWeight.htm"
+    },
+    {
+      "name": "SetControlPoint(Int32, Int32, ControlPoint)",
+      "signature": "public bool SetControlPoint(int u, int v, ControlPoint cp)",
+      "summary": "Sets the control point at the given (u, v) index.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "cp",
+          "type": "Rhino.Geometry.ControlPoint",
+          "doc": "The control point to set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetControlPoint.htm"
+    },
+    {
+      "name": "SetControlPoint(Int32, Int32, Point3d)",
+      "signature": "[ObsoleteAttribute(\u0022Use one of the SetPoint() overrides\u0022)] public bool SetControlPoint(int u, int v, Point3d cp)",
+      "summary": "Sets the control point at the given (u, v) index.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "cp",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The control point location to set (weight is assumed to be 1.0).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetControlPoint_1.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Int32, Point3d)",
+      "signature": "public bool SetPoint(int u, int v, Point3d point)",
+      "summary": "Sets a world 3-D, or Euclidean, control point at the given (u, v) index. The 4-D representation is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinate of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetPoint.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Int32, Point4d)",
+      "signature": "public bool SetPoint(int u, int v, Point4d point)",
+      "summary": "Sets a homogeneous control point at the given (u, v) index, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use an override that accepts world 3-D, or Euclidean, coordinates as input.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Coordinate and weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetPoint_2.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Int32, Point3d, Double)",
+      "signature": "public bool SetPoint(int u, int v, Point3d point, double weight)",
+      "summary": "Sets a world 3-D, or Euclidean, control point and weight at a given index. The 4-D representation is (x*w, y*w, z*w, w).",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinates of the control point.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "Weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetPoint_1.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Int32, Double, Double, Double)",
+      "signature": "public bool SetPoint(int u, int v, double x, double y, double z)",
+      "summary": "Sets a world 3-D, or Euclidean, control point at the given (u, v) index. The 4-D representation is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z coordinate of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetPoint_3.htm"
+    },
+    {
+      "name": "SetPoint(Int32, Int32, Double, Double, Double, Double)",
+      "signature": "public bool SetPoint(int u, int v, double x, double y, double z, double weight)",
+      "summary": "Sets a homogeneous control point at the given (u, v) index, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use an override that accepts world 3-D, or Euclidean, coordinates as input.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control point in the surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z coordinate of control point.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "Weight of control point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetPoint_4.htm"
+    },
+    {
+      "name": "SetWeight",
+      "signature": "public bool SetWeight(int u, int v, double weight)",
+      "summary": "Sets the weight of a control point at the given (u, v) index. Note, if the surface is non-rational, it will be converted to rational.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control-point along surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control-point along surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "The control point weight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_SetWeight.htm"
+    },
+    {
+      "name": "UVNDirectionsAt",
+      "signature": "public bool UVNDirectionsAt(int u, int v, out Vector3d uDir, out Vector3d vDir, out Vector3d nDir)",
+      "summary": "Calculates the U, V, and N directions of a NURBS surface control point similar to the method used by Rhino\u0027s MoveUVN command.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Int32",
+          "doc": "Index of control-point along surface U direction.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Int32",
+          "doc": "Index of control-point along surface V direction.",
+          "optional": false
+        },
+        {
+          "name": "uDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The U direction.",
+          "optional": false
+        },
+        {
+          "name": "vDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The V direction.",
+          "optional": false
+        },
+        {
+          "name": "nDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The N direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_UVNDirectionsAt.htm"
+    },
+    {
+      "name": "ValidateSpacing",
+      "signature": "public bool ValidateSpacing(double closeTolerance, double stackTolerance, out IndexPair[] closeIndices, out IndexPair[] stackedIndices)",
+      "summary": "Simple check of distance between adjacent control points",
+      "params": [
+        {
+          "name": "closeTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022closeTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.ValidateSpacing(System.Double,System.Double,Rhino.IndexPair[]@,Rhino.IndexPair[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "stackTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022stackTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.ValidateSpacing(System.Double,System.Double,Rhino.IndexPair[]@,Rhino.IndexPair[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "closeIndices",
+          "type": "Rhino.IndexPair[]",
+          "doc": "[Missing \u003Cparam name=\u0022closeIndices\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.ValidateSpacing(System.Double,System.Double,Rhino.IndexPair[]@,Rhino.IndexPair[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "stackedIndices",
+          "type": "Rhino.IndexPair[]",
+          "doc": "[Missing \u003Cparam name=\u0022stackedIndices\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.ValidateSpacing(System.Double,System.Double,Rhino.IndexPair[]@,Rhino.IndexPair[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.NurbsSurfacePointList.ValidateSpacing(System.Double,System.Double,Rhino.IndexPair[]@,Rhino.IndexPair[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_NurbsSurfacePointList_ValidateSpacing.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CountU",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of control points in the U direction of this surface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_NurbsSurfacePointList_CountU.htm"
+    },
+    {
+      "name": "CountV",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of control points in the V direction of this surface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_NurbsSurfacePointList_CountV.htm"
+    },
+    {
+      "name": "PointSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the control point size, or the number of doubles per control point. For rational curves, PointSize = Surface.Dimension \u002B 1. For non-rational curves, PointSize = Surface.Dimension.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_NurbsSurfacePointList_PointSize.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

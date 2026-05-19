@@ -1,0 +1,79 @@
+{
+  "name": "SceneServerData",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "The Scene Server Data used by the PreviewSceneServer",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_SceneServerData.htm",
+  "constructors": [
+    {
+      "name": "SceneServerData",
+      "signature": "public SceneServerData(PreviewGeometry geo, PreviewBackground back, PreviewLighting light, SceneServerDataUsage usage)",
+      "summary": "Constructor for SceneServerData",
+      "params": [
+        {
+          "name": "geo",
+          "type": "Rhino.Render.PreviewGeometry",
+          "doc": "[Missing \u003Cparam name=\u0022geo\u0022/\u003E documentation for \u0022M:Rhino.Render.SceneServerData.#ctor(Rhino.Render.PreviewGeometry,Rhino.Render.PreviewBackground,Rhino.Render.PreviewLighting,Rhino.Render.SceneServerDataUsage)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "back",
+          "type": "Rhino.Render.PreviewBackground",
+          "doc": "[Missing \u003Cparam name=\u0022back\u0022/\u003E documentation for \u0022M:Rhino.Render.SceneServerData.#ctor(Rhino.Render.PreviewGeometry,Rhino.Render.PreviewBackground,Rhino.Render.PreviewLighting,Rhino.Render.SceneServerDataUsage)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "light",
+          "type": "Rhino.Render.PreviewLighting",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.SceneServerData.#ctor(Rhino.Render.PreviewGeometry,Rhino.Render.PreviewBackground,Rhino.Render.PreviewLighting,Rhino.Render.SceneServerDataUsage)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "usage",
+          "type": "Rhino.Render.SceneServerDataUsage",
+          "doc": "[Missing \u003Cparam name=\u0022usage\u0022/\u003E documentation for \u0022M:Rhino.Render.SceneServerData.#ctor(Rhino.Render.PreviewGeometry,Rhino.Render.PreviewBackground,Rhino.Render.PreviewLighting,Rhino.Render.SceneServerDataUsage)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SceneServerData__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose for SceneServerData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SceneServerData_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor for SceneServerData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SceneServerData_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "The CppPointer of SceneServerData",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SceneServerData_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,54 @@
+{
+  "name": "PropertyElement.PropertyElementType.SectionMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SectionMarkPropertyElementTypes class represents the available property element types for section marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/925e11ae-1b4a-6dd7-26aa-dada89a429be",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SectionName",
+      "signature": "public static PropertyElement.PropertyElementType SectionName()",
+      "summary": "Returns the section name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b55080ac-ccb8-e84c-0182-f7a4ef2b7570"
+    },
+    {
+      "name": "SourceDrawingName",
+      "signature": "public static PropertyElement.PropertyElementType SourceDrawingName()",
+      "summary": "Returns the source drawing name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a6e4d37-9aaf-2b24-fcbe-d8a116c08ef4"
+    },
+    {
+      "name": "SourceDrawingNameWhenMoved",
+      "signature": "public static PropertyElement.PropertyElementType SourceDrawingNameWhenMoved()",
+      "summary": "Returns the source drawing name when moved property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0d097acf-f84d-dcfe-e999-01bcce19d2f5"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

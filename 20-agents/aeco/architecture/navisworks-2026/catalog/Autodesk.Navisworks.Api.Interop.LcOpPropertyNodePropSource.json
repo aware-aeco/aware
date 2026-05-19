@@ -1,0 +1,26 @@
+{
+  "name": "LcOpPropertyNodePropSource",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpPropertyNodePropSource enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpPropertyNodePropSource",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePROP_SOURCE_ATTRIBUTE",
+      "value": 1
+    },
+    {
+      "name": "ePROP_SOURCE_PLUGIN",
+      "value": 2
+    },
+    {
+      "name": "ePROP_SOURCE_ANY",
+      "value": 15
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "SlabOpeningProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the slab opening properties",
+  "base": "VerticalElementProperties",
+  "interfaces": [
+    "ArchBaseProperties"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/",
+  "constructors": [
+    {
+      "name": "SlabOpeningProperties",
+      "signature": "SlabOpeningProperties(openingType: SlabOpeningType = eOpening) | SlabOpeningProperties(openingProps: SlabOpeningProperties)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/#NemAll_Python_ArchElements.SlabOpeningProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetOpeningSymbolsProperties",
+      "signature": "GetOpeningSymbolsProperties() -\u003E OpeningSymbolsProperties",
+      "summary": "Get a reference of the opening symbols properties",
+      "remarks": "Get a reference of the opening symbols properties",
+      "params": [],
+      "returns": {
+        "type": "OpeningSymbolsProperties",
+        "doc": "Opening symbols properties reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/#NemAll_Python_ArchElements.SlabOpeningProperties.GetOpeningSymbolsProperties"
+    },
+    {
+      "name": "GetOpeningType",
+      "signature": "GetOpeningType() -\u003E SlabOpeningType",
+      "summary": "Get the opening type",
+      "remarks": "Get the opening type",
+      "params": [],
+      "returns": {
+        "type": "SlabOpeningType",
+        "doc": "Opening type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/#NemAll_Python_ArchElements.SlabOpeningProperties.GetOpeningType"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Independent2DInteraction",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the independent 2D interaction state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/#NemAll_Python_ArchElements.SlabOpeningProperties.Independent2DInteraction"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

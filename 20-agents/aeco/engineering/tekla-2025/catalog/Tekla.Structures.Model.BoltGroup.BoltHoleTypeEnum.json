@@ -1,0 +1,34 @@
+{
+  "name": "BoltGroup.BoltHoleTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The special hole type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4875b00c-24a3-bd15-5b05-76b3c541f18c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HOLE_TYPE_OVERSIZED",
+      "value": 0,
+      "summary": "The oversized hole type."
+    },
+    {
+      "name": "HOLE_TYPE_SLOTTED",
+      "value": 1,
+      "summary": "The slotted hole type."
+    },
+    {
+      "name": "HOLE_TYPE_NO_HOLE",
+      "value": 2,
+      "summary": "The no hole type."
+    },
+    {
+      "name": "HOLE_TYPE_TAPPED",
+      "value": 3,
+      "summary": "The tapped hole type."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "LcOpSavedItemCommentImage",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSavedItemCommentImage enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemCommentImage",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eIMAGE_PERSPECTIVE",
+      "value": 0
+    },
+    {
+      "name": "eIMAGE_ORTHOGRAPHIC",
+      "value": 1
+    },
+    {
+      "name": "eIMAGE_ANIMATION",
+      "value": 2
+    },
+    {
+      "name": "eIMAGE_CUT",
+      "value": 3
+    },
+    {
+      "name": "eIMAGE_FOLDER",
+      "value": 4
+    },
+    {
+      "name": "eIMAGE_TAG",
+      "value": 5
+    },
+    {
+      "name": "eIMAGE_SELECTION_SET",
+      "value": 6
+    },
+    {
+      "name": "eIMAGE_SEARCH_SET",
+      "value": 7
+    },
+    {
+      "name": "eNUM_IMAGES",
+      "value": 8
+    }
+  ]
+}

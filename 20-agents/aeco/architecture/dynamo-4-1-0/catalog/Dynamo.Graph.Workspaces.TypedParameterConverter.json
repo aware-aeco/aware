@@ -1,0 +1,105 @@
+{
+  "name": "TypedParameterConverter",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "This converter is used to attempt to convert TypedParameter into a json object",
+  "base": "Newtonsoft.Json.JsonConverter",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs",
+  "constructors": [
+    {
+      "name": "TypedParameterConverter()",
+      "signature": "void TypedParameterConverter()",
+      "summary": "TypedParameterConverter.TypedParameterConverter",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvert(System.Type)",
+      "signature": "bool CanConvert(System.Type objectType)",
+      "summary": "TypedParameterConverter.CanConvert",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "ReadJson(Newtonsoft.Json.JsonReader, System.Type, object, Newtonsoft.Json.JsonSerializer)",
+      "signature": "object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)",
+      "summary": "TypedParameterConverter.ReadJson",
+      "params": [
+        {
+          "name": "reader",
+          "type": "Newtonsoft.Json.JsonReader",
+          "optional": false
+        },
+        {
+          "name": "objectType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "existingValue",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "serializer",
+          "type": "Newtonsoft.Json.JsonSerializer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "WriteJson(Newtonsoft.Json.JsonWriter, object, Newtonsoft.Json.JsonSerializer)",
+      "signature": "void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)",
+      "summary": "TypedParameterConverter.WriteJson",
+      "params": [
+        {
+          "name": "writer",
+          "type": "Newtonsoft.Json.JsonWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "serializer",
+          "type": "Newtonsoft.Json.JsonSerializer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

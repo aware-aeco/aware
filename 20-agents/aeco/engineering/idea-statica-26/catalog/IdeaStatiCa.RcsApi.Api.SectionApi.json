@@ -1,0 +1,70 @@
+{
+  "name": "SectionApi",
+  "namespace": "IdeaStatiCa.RcsApi.Api",
+  "kind": "class",
+  "summary": "RCS Rest API 1.0 \u2014 Section endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/1/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/SectionApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SectionsAsync",
+      "signature": "Task\u003CList\u003CRcsSection\u003E\u003E SectionsAsync(Guid projectId)",
+      "summary": "Get sections",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CRcsSection\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/SectionApi.md"
+    },
+    {
+      "name": "UpdateSectionAsync",
+      "signature": "Task\u003CRcsSection\u003E UpdateSectionAsync(Guid projectId, RcsSection rcsSection)",
+      "summary": "Update a section in the RCS project",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Id of the project in cache",
+          "optional": false
+        },
+        {
+          "name": "rcsSection",
+          "type": "RcsSection",
+          "doc": "A new reinforced section data. The value defines the section in project to update",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "RcsSection",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/SectionApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

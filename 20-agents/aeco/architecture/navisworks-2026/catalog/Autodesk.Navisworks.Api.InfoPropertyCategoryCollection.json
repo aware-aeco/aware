@@ -1,0 +1,128 @@
+{
+  "name": "InfoPropertyCategoryCollection",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A collection of InfoPropertyCategory objects.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.InfoPropertyCategory\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.InfoPropertyCategoryCollection",
+  "constructors": [
+    {
+      "name": "InfoPropertyCategoryCollection()",
+      "signature": "InfoPropertyCategoryCollection()",
+      "summary": "Create an empty collection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.InfoPropertyCategory\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that can iterate through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.InfoPropertyCategory\u003E",
+        "doc": "An IEnumerator that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.GetEnumerator"
+    },
+    {
+      "name": "InternalGetEnumerator",
+      "signature": "System.Collections.IEnumerator InternalGetEnumerator()",
+      "summary": "InternalGetEnumerator method of InfoPropertyCategoryCollection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.InternalGetEnumerator"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.InfoPropertyCategoryCollection InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of InfoPropertyCategoryCollection.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.InfoPropertyCategoryCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of InfoPropertyCategoryCollection.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements contained in the collection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.Count"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.IsReadOnly"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.InfoPropertyCategory",
+      "getter": true,
+      "setter": false,
+      "summary": "Item property of InfoPropertyCategoryCollection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.InfoPropertyCategoryCollection.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

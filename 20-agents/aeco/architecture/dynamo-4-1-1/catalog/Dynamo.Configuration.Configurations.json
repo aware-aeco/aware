@@ -1,0 +1,33 @@
+{
+  "name": "Configurations",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "This class contains properties that are used in Dynamo.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/Configurations.cs",
+  "constructors": [
+    {
+      "name": "Configurations()",
+      "signature": "void Configurations()",
+      "summary": "Configurations.Configurations",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/Configurations.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SupportedLocaleDic",
+      "type": "System.Collections.Generic.Dictionary\u003Cstring, string\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Supported languages and locales as a dictionary in the current thread locale",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/Configurations.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

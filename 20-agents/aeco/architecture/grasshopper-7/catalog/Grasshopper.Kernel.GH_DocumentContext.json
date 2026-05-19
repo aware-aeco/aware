@@ -1,0 +1,54 @@
+{
+  "name": "GH_DocumentContext",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible (de)activation contexts for documents.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentContext.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0,
+      "summary": "Specifies unknown context. This should never be used."
+    },
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "Specifies unset state. This is only used for documents that have never been in a context."
+    },
+    {
+      "name": "Open",
+      "value": 2,
+      "summary": "Indicates the document was created anew from a file."
+    },
+    {
+      "name": "Close",
+      "value": 3,
+      "summary": "Indicates the document has been unloaded from memory."
+    },
+    {
+      "name": "Loaded",
+      "value": 4,
+      "summary": "Indicates the document has been loaded into the Canvas."
+    },
+    {
+      "name": "Unloaded",
+      "value": 5,
+      "summary": "Indicates the document has been unloaded from the Canvas."
+    },
+    {
+      "name": "Lock",
+      "value": 6,
+      "summary": "Indicates the document has been locked. This is only possible for nested documents."
+    },
+    {
+      "name": "Unlock",
+      "value": 7,
+      "summary": "Indicates the document has been unlocked. This is only possible for nested documents."
+    }
+  ]
+}

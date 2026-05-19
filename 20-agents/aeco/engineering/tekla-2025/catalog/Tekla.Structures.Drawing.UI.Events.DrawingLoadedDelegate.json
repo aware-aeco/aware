@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingLoadedDelegate",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing loading.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bb9072ed-f484-80fe-d748-42956da051f8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingLoadedDelegate()"
+}

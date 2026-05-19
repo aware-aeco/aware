@@ -1,0 +1,98 @@
+{
+  "name": "RhinoApp.CommandLineTextWriter",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Provides a text writer that writes to the command line.",
+  "base": "TextWriter",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_RhinoApp_CommandLineTextWriter.htm",
+  "constructors": [
+    {
+      "name": "RhinoApp.CommandLineTextWriter",
+      "signature": "public CommandLineTextWriter()",
+      "summary": "Initializes a new instance of the RhinoApp.CommandLineTextWriter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoApp_CommandLineTextWriter__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Write(Char)",
+      "signature": "public override void Write(char value)",
+      "summary": "Writes a char to the command line.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.CommandLineTextWriter.Write(System.Char)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoApp_CommandLineTextWriter_Write.htm"
+    },
+    {
+      "name": "Write(String)",
+      "signature": "public override void Write(string value)",
+      "summary": "Writes a string to the command line.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.CommandLineTextWriter.Write(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoApp_CommandLineTextWriter_Write_2.htm"
+    },
+    {
+      "name": "Write(Char[], Int32, Int32)",
+      "signature": "public override void Write(char[] buffer, int index, int count)",
+      "summary": "Writes a char buffer to the command line.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "System.Char[]",
+          "doc": "[Missing \u003Cparam name=\u0022buffer\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.CommandLineTextWriter.Write(System.Char[],System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.CommandLineTextWriter.Write(System.Char[],System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022count\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.CommandLineTextWriter.Write(System.Char[],System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_RhinoApp_CommandLineTextWriter_Write_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Encoding",
+      "type": "Encoding",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Encoding Unicode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_RhinoApp_CommandLineTextWriter_Encoding.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

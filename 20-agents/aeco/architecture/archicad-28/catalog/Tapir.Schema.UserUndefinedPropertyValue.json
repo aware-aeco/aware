@@ -1,0 +1,32 @@
+{
+  "name": "UserUndefinedPropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A userUndefined value means that there is no actual number/string/etc. value, but the user deliberately set an Undefined value: this is a valid value, too.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#UserUndefinedPropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "type",
+      "type": "PropertyDataType",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060type\u0060 of type \u0060PropertyDataType\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#UserUndefinedPropertyValue"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060status\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#UserUndefinedPropertyValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

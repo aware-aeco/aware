@@ -1,0 +1,66 @@
+{
+  "name": "FinishItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "struct",
+  "summary": "The FinishItem struct contains information about the finish parameters.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/41196302-456a-c390-3cca-e32155fa9743",
+  "constructors": [
+    {
+      "name": "FinishItem",
+      "signature": "public FinishItem(string abbreviation, string description)",
+      "summary": "Creates a new finish item instance.",
+      "params": [
+        {
+          "name": "abbreviation",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9c991d65-e360-7d33-d357-abd13403fd7a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns the fully qualified type name of this instance.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The fully qualified type name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6c0845a0-4621-8c59-f7b1-491241966a2d"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Abbreviation",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The finish abbreviation",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6d2e640e-5aba-1edf-0947-f18985379815"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The finish description",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/54fe1415-81b5-eecb-9969-eec10b884915"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

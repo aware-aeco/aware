@@ -1,0 +1,70 @@
+{
+  "name": "ReinforcedCrossSection",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ReinforcedCrossSection.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReinforcedCrossSection.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md"
+    },
+    {
+      "name": "CrossSection",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReinforcedCrossSection.crossSection.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md"
+    },
+    {
+      "name": "Bars",
+      "type": "List\u003CReinforcedBar\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReinforcedCrossSection.bars.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md"
+    },
+    {
+      "name": "Stirrups",
+      "type": "List\u003CStirrup\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReinforcedCrossSection.stirrups.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md"
+    },
+    {
+      "name": "TendonBars",
+      "type": "List\u003CTendonBar\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReinforcedCrossSection.tendonBars.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md"
+    },
+    {
+      "name": "TendonDucts",
+      "type": "List\u003CTendonDuct\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReinforcedCrossSection.tendonDucts.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ReinforcedCrossSection.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ReinforcedCrossSection.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

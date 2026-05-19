@@ -1,0 +1,1422 @@
+{
+  "name": "GetNumber",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Used to get double precision numbers.",
+  "base": "GetBaseClass",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetNumber.htm",
+  "constructors": [
+    {
+      "name": "GetNumber",
+      "signature": "public GetNumber()",
+      "summary": "Create a new GetNumber.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetNumber__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AcceptColor",
+      "signature": "public void AcceptColor(bool enable)",
+      "summary": "If you want to allow the user to be able to type in a color r,g,b or name during GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptColor(true) before calling GetPoint()/GetObject(). If the user chooses to type in a color, then the result code GetResult.Color is returned and you can use RhinoGet.Color() to get the value of the color. If the get accepts points, then the user will not be able to type in r,g,b colors but will be able to type color names.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type a color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptColor.htm"
+    },
+    {
+      "name": "AcceptCustomMessage",
+      "signature": "public void AcceptCustomMessage(bool enable)",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enable\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AcceptCustomMessage(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptCustomMessage.htm"
+    },
+    {
+      "name": "AcceptEnterWhenDone",
+      "signature": "public void AcceptEnterWhenDone(bool enable)",
+      "summary": "There are instances of RhinoGet that prompt with \u0022Press Enter when Done.\u0022 yet do not call AcceptNothing(). On the Mac, these instances need an additional call to AcceptEnterWhenDone() so the GetPointOptions dialog can correctly enable the Done button.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enable\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AcceptEnterWhenDone(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptEnterWhenDone.htm"
+    },
+    {
+      "name": "AcceptNothing",
+      "signature": "public void AcceptNothing(bool enable)",
+      "summary": "If you want to allow the user to be able to press enter in order to skip selecting a something in GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptNothing( true ) beforehand.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to press enter in order to skip selecting.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptNothing.htm"
+    },
+    {
+      "name": "AcceptNumber",
+      "signature": "public void AcceptNumber(bool enable, bool acceptZero)",
+      "summary": "If you want to allow the user to be able to type in a number during GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptNumber() beforehand. If the user chooses to type in a number, then the result code GetResult.Number is returned and you can use RhinoGet.Number() to get the value of the number. If you are using GetPoint and you want \u00220\u0022 to return (0,0,0) instead of the number zero, then set acceptZero = false.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type a number.",
+          "optional": false
+        },
+        {
+          "name": "acceptZero",
+          "type": "System.Boolean",
+          "doc": "If you are using GetPoint and you want \u00220\u0022 to return (0,0,0) instead of the number zero, then set acceptZero = false.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptNumber.htm"
+    },
+    {
+      "name": "AcceptPoint",
+      "signature": "public void AcceptPoint(bool enable)",
+      "summary": "If you want to allow the user to be able to type in a point then call AcceptPoint(true) before calling GetPoint()/GetObject(). If the user chooses to type in a number, then the result code GetResult.Point is returned and you can use RhinoGet.Point() to get the value of the point.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type in a point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptPoint.htm"
+    },
+    {
+      "name": "AcceptString",
+      "signature": "public void AcceptString(bool enable)",
+      "summary": "If you want to allow the user to be able to type in a string during GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptString(true) before calling GetPoint()/GetObject(). If the user chooses to type in a string, then the result code GetResult.String is returned and you can use RhinoGet.String() to get the value of the string.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type a string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptString.htm"
+    },
+    {
+      "name": "AcceptUndo",
+      "signature": "public void AcceptUndo(bool enable)",
+      "summary": "If you want to allow the user to have an \u0027undo\u0027 option in GetPoint.Get(), GetObject.GetObjects(), etc., then call AcceptUndo(true) beforehand.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to choose the \u0027Undo\u0027 option.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AcceptUndo.htm"
+    },
+    {
+      "name": "AddOption(String)",
+      "signature": "public int AddOption(string englishOption)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "englishOption",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_3.htm"
+    },
+    {
+      "name": "AddOption(LocalizeStringPair)",
+      "signature": "public int AddOption(LocalizeStringPair optionName)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOption.htm"
+    },
+    {
+      "name": "AddOption(String, String)",
+      "signature": "public int AddOption(string englishOption, string englishOptionValue)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "englishOption",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "englishOptionValue",
+          "type": "System.String",
+          "doc": "The option value in English, visualized after an equality sign.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_4.htm"
+    },
+    {
+      "name": "AddOption(LocalizeStringPair, LocalizeStringPair)",
+      "signature": "public int AddOption(LocalizeStringPair optionName, LocalizeStringPair optionValue)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "optionValue",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "The localized value visualized after an equality sign.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_1.htm"
+    },
+    {
+      "name": "AddOption(String, String, Boolean)",
+      "signature": "public int AddOption(string englishOption, string englishOptionValue, bool hiddenOption)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "englishOption",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "englishOptionValue",
+          "type": "System.String",
+          "doc": "The option value in English, visualized after an equality sign.",
+          "optional": false
+        },
+        {
+          "name": "hiddenOption",
+          "type": "System.Boolean",
+          "doc": "If true, the option is not displayed on the command line and the full option name must be typed in order to activate the option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_5.htm"
+    },
+    {
+      "name": "AddOption(LocalizeStringPair, LocalizeStringPair, Boolean)",
+      "signature": "public int AddOption(LocalizeStringPair optionName, LocalizeStringPair optionValue, bool hiddenOption)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "optionValue",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "The localized value visualized after an equality sign.",
+          "optional": false
+        },
+        {
+          "name": "hiddenOption",
+          "type": "System.Boolean",
+          "doc": "If true, the option is not displayed on the command line and the full option name must be typed in order to activate the option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_2.htm"
+    },
+    {
+      "name": "AddOptionColor(String, OptionColor)",
+      "signature": "public int AddOptionColor(string englishName, ref OptionColor colorValue)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "option description",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor_2.htm"
+    },
+    {
+      "name": "AddOptionColor(LocalizeStringPair, OptionColor)",
+      "signature": "public int AddOptionColor(LocalizeStringPair optionName, ref OptionColor colorValue)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "option description",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor.htm"
+    },
+    {
+      "name": "AddOptionColor(String, OptionColor, String)",
+      "signature": "public int AddOptionColor(string englishName, ref OptionColor colorValue, string prompt)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "option description",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The command prompt will show this during picking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor_3.htm"
+    },
+    {
+      "name": "AddOptionColor(LocalizeStringPair, OptionColor, String)",
+      "signature": "public int AddOptionColor(LocalizeStringPair optionName, ref OptionColor colorValue, string prompt)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "option description.",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor_1.htm"
+    },
+    {
+      "name": "AddOptionDouble(String, OptionDouble)",
+      "signature": "public int AddOptionDouble(string englishName, ref OptionDouble numberValue)",
+      "summary": "Adds a command line option to get numbers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "The current number value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble_2.htm"
+    },
+    {
+      "name": "AddOptionDouble(LocalizeStringPair, OptionDouble)",
+      "signature": "public int AddOptionDouble(LocalizeStringPair optionName, ref OptionDouble numberValue)",
+      "summary": "Adds a command line option to get numbers and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "The current number value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble.htm"
+    },
+    {
+      "name": "AddOptionDouble(String, OptionDouble, String)",
+      "signature": "public int AddOptionDouble(string englishName, ref OptionDouble numberValue, string prompt)",
+      "summary": "Adds a command line option to get numbers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "Current value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble_3.htm"
+    },
+    {
+      "name": "AddOptionDouble(LocalizeStringPair, OptionDouble, String)",
+      "signature": "public int AddOptionDouble(LocalizeStringPair optionName, ref OptionDouble numberValue, string prompt)",
+      "summary": "Adds a command line option to get numbers and automatically saves the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "The current number value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble_1.htm"
+    },
+    {
+      "name": "AddOptionEnumList\u003CT\u003E(String, T)",
+      "signature": "public int AddOptionEnumList\u003CT\u003E(string englishOptionName, T defaultValue) where T : struct, new(), IConvertible",
+      "summary": "Adds a choice of enumerated values as list option",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "The name of the option",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "T",
+          "doc": "The default value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if defaultValue provided is not an enumerated type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionEnumList__1.htm"
+    },
+    {
+      "name": "AddOptionEnumList\u003CT\u003E(String, T, T[])",
+      "signature": "public int AddOptionEnumList\u003CT\u003E(string englishOptionName, T defaultValue, T[] include) where T : struct, new(), IConvertible",
+      "summary": "Adds a choice of enumerated values as list option. Allows to include only some enumerated values.",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "The name of the option",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "T",
+          "doc": "The default value",
+          "optional": false
+        },
+        {
+          "name": "include",
+          "type": "T[]",
+          "doc": "An array of enumerated values to use. This argument can also be null; in this case, the whole enumerated is used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if defaultValue provided is not an enumerated type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionEnumList__1_1.htm"
+    },
+    {
+      "name": "AddOptionEnumSelectionList\u003CT\u003E",
+      "signature": "public int AddOptionEnumSelectionList\u003CT\u003E(string englishOptionName, IEnumerable\u003CT\u003E enumSelection, int listCurrentIndex) where T : struct, new(), IConvertible",
+      "summary": "Adds a list of enumerated values as option list. Use enumSelection[go.Option.CurrentListOptionIndex] to retrieve selection.",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022englishOptionName\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "enumSelection",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022enumSelection\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "listCurrentIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022listCurrentIndex\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionEnumSelectionList__1.htm"
+    },
+    {
+      "name": "AddOptionInteger(String, OptionInteger)",
+      "signature": "public int AddOptionInteger(string englishName, ref OptionInteger intValue)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger_2.htm"
+    },
+    {
+      "name": "AddOptionInteger(LocalizeStringPair, OptionInteger)",
+      "signature": "public int AddOptionInteger(LocalizeStringPair optionName, ref OptionInteger intValue)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger.htm"
+    },
+    {
+      "name": "AddOptionInteger(String, OptionInteger, String)",
+      "signature": "public int AddOptionInteger(string englishName, ref OptionInteger intValue, string prompt)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger_3.htm"
+    },
+    {
+      "name": "AddOptionInteger(LocalizeStringPair, OptionInteger, String)",
+      "signature": "public int AddOptionInteger(LocalizeStringPair optionName, ref OptionInteger intValue, string prompt)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger_1.htm"
+    },
+    {
+      "name": "AddOptionList(String, IEnumerable\u003CString\u003E, Int32)",
+      "signature": "public int AddOptionList(string englishOptionName, IEnumerable\u003Cstring\u003E listValues, int listCurrentIndex)",
+      "summary": "Adds a command line list option.",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "listValues",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The string values.",
+          "optional": false
+        },
+        {
+          "name": "listCurrentIndex",
+          "type": "System.Int32",
+          "doc": "Zero based index of current option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionList_1.htm"
+    },
+    {
+      "name": "AddOptionList(LocalizeStringPair, IEnumerable\u003CLocalizeStringPair\u003E, Int32)",
+      "signature": "public int AddOptionList(LocalizeStringPair optionName, IEnumerable\u003CLocalizeStringPair\u003E listValues, int listCurrentIndex)",
+      "summary": "Adds a command line list option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "listValues",
+          "type": "System.Collections.Generic.IEnumerable\u003CLocalizeStringPair\u003E",
+          "doc": "The string values.",
+          "optional": false
+        },
+        {
+          "name": "listCurrentIndex",
+          "type": "System.Int32",
+          "doc": "Zero based index of current option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionList.htm"
+    },
+    {
+      "name": "AddOptionToggle(String, OptionToggle)",
+      "signature": "public int AddOptionToggle(string englishName, ref OptionToggle toggleValue)",
+      "summary": "Adds a command line option to toggle a setting.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "toggleValue",
+          "type": "Rhino.Input.Custom.OptionToggle",
+          "doc": "The current toggle value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionToggle_1.htm"
+    },
+    {
+      "name": "AddOptionToggle(LocalizeStringPair, OptionToggle)",
+      "signature": "public int AddOptionToggle(LocalizeStringPair optionName, ref OptionToggle toggleValue)",
+      "summary": "Adds a command line option to toggle a setting.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "toggleValue",
+          "type": "Rhino.Input.Custom.OptionToggle",
+          "doc": "The current toggle value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionToggle.htm"
+    },
+    {
+      "name": "ClearCommandOptions",
+      "signature": "public void ClearCommandOptions()",
+      "summary": "Clear all command options.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_ClearCommandOptions.htm"
+    },
+    {
+      "name": "ClearDefault",
+      "signature": "public void ClearDefault()",
+      "summary": "Clears any defaults set using SetDefaultPoint, SetDefaultNumber, SetDefaultString, or SetCommandPromptDefault.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_ClearDefault.htm"
+    },
+    {
+      "name": "Color",
+      "signature": "public Color Color()",
+      "summary": "Gets a color if Get*() returns GetResult.Color.",
+      "params": [],
+      "returns": {
+        "type": "Color",
+        "doc": "The color chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Color.htm"
+    },
+    {
+      "name": "CommandResult",
+      "signature": "public Result CommandResult()",
+      "summary": "Helper method for getting command result value from getter results.",
+      "params": [],
+      "returns": {
+        "type": "Result",
+        "doc": "The converted command result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_CommandResult.htm"
+    },
+    {
+      "name": "CustomMessage",
+      "signature": "public Object CustomMessage()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.CustomMessage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_CustomMessage.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Dispose_1.htm"
+    },
+    {
+      "name": "EnableTransparentCommands",
+      "signature": "public void EnableTransparentCommands(bool enable)",
+      "summary": "Control the availability of transparent commands during the get.",
+      "remarks": "Some Rhino commands are \u0022transparent\u0022 and can be run inside of other commands. Examples of transparent commands include the view manipulation commands like ZoomExtents, Top, etc., and the selection commands like SelAll, SelPoint, etc. By default transparent commands can be run during any get. If you want to disable this feature, then call EnableTransparentCommands(false) before calling GetString, GetPoint, GetObject, etc.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "If true, then transparent commands can be run during the get. If false, then transparent commands cannot be run during the get.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_EnableTransparentCommands.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public GetResult Get()",
+      "summary": "Call to get a number.",
+      "params": [],
+      "returns": {
+        "type": "GetResult",
+        "doc": "If the user chose a number, then Number; another enumeration value otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetNumber_Get.htm"
+    },
+    {
+      "name": "GetSelectedEnumValue\u003CT\u003E",
+      "signature": "public T GetSelectedEnumValue\u003CT\u003E() where T : struct, new(), IConvertible",
+      "summary": "Returns the selected enumerated value. Use this in combination with AddOptionEnumList\u003CT\u003E(String, T). This must be called directly after having called a Get method, and having obtained a Option value.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.GetSelectedEnumValue\u0060\u00601\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if type T is not an enumerated type."
+        },
+        {
+          "type": "IndexOutOfRangeException",
+          "when": "If 0 \u003E= CurrentListOptionIndex or CurrentListOptionIndex \u003E N where N is the number of enumerated values."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_GetSelectedEnumValue__1.htm"
+    },
+    {
+      "name": "GetSelectedEnumValueFromSelectionList\u003CT\u003E",
+      "signature": "public T GetSelectedEnumValueFromSelectionList\u003CT\u003E(IEnumerable\u003CT\u003E selectionList) where T : struct, new(), IConvertible",
+      "summary": "Returns the selected enumerated value by looking at the list of values from which to select. Use this in combination with AddOptionEnumSelectionList\u003CT\u003E(String, IEnumerable\u003CT\u003E, Int32)",
+      "params": [
+        {
+          "name": "selectionList",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.GetSelectedEnumValueFromSelectionList\u0060\u00601(System.Collections.Generic.IEnumerable{\u0060\u00600})\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if type T is not an enumerated type."
+        },
+        {
+          "type": "IndexOutOfRangeException",
+          "when": "If 0 \u003E= CurrentListOptionIndex or CurrentListOptionIndex \u003E N where N is the number of enumerated values."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_GetSelectedEnumValueFromSelectionList__1.htm"
+    },
+    {
+      "name": "GotDefault",
+      "signature": "public bool GotDefault()",
+      "summary": "Returns true if user pressed Enter to accept a default point, number, or string set using SetDefaultPoint, SetDefaultNumber, or SetDefaultString.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the result if the default point, number or string set. Otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_GotDefault.htm"
+    },
+    {
+      "name": "Line2d",
+      "signature": "public Point[] Line2d()",
+      "summary": "Returns two points defining the location in the view window of the 2d line selected in GetPoint::Get2dLine(). (0,0) = upper left corner of window.",
+      "params": [],
+      "returns": {
+        "type": "Point[]",
+        "doc": "An array with two 2D points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Line2d.htm"
+    },
+    {
+      "name": "Number",
+      "signature": "public double Number()",
+      "summary": "Gets a number if GetPoint.Get(), GetObject.GetObjects(), etc., returns GetResult.Number.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "The number chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Number.htm"
+    },
+    {
+      "name": "Option",
+      "signature": "public CommandLineOption Option()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": {
+        "type": "CommandLineOption",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.Option\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Option.htm"
+    },
+    {
+      "name": "OptionIndex",
+      "signature": "public int OptionIndex()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.OptionIndex\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_OptionIndex.htm"
+    },
+    {
+      "name": "PickRectangle",
+      "signature": "public Rectangle PickRectangle()",
+      "summary": "If the get was a GetObjects() and the mouse was used to select the objects, then the returned rectangle has left \u003C right and top \u003C bottom. This rectangle is the Windows GDI screen coordinates of the picking rectangle. RhinoViewport.GetPickXform( pick_rect, pick_xform ) will calculate the picking transformation that was used. In all other cases, left=right=top=bottom=0;",
+      "params": [],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The picking rectangle; or 0 in the specified cases."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_PickRectangle.htm"
+    },
+    {
+      "name": "Point",
+      "signature": "public Point3d Point()",
+      "summary": "Gets a point if Get*() returns GetResult.Point.",
+      "params": [],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Point.htm"
+    },
+    {
+      "name": "Point2d",
+      "signature": "public Point Point2d()",
+      "summary": "Returns location in view of point in selected in GetPoint::Get() or GetPoint::Get2dPoint(). (0,0) = upper left corner of window.",
+      "params": [],
+      "returns": {
+        "type": "Point",
+        "doc": "The location."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Point2d.htm"
+    },
+    {
+      "name": "Rectangle2d",
+      "signature": "public Rectangle Rectangle2d()",
+      "summary": "Returns the location in the view of the 2d rectangle selected in GetPoint::Get2dRectangle(). rect.left \u003C rect.right and rect.top \u003C rect.bottom (0,0) = upper left corner of window.",
+      "params": [],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Rectangle2d.htm"
+    },
+    {
+      "name": "Result",
+      "signature": "public GetResult Result()",
+      "summary": "Returns result of the Get*() call.",
+      "params": [],
+      "returns": {
+        "type": "GetResult",
+        "doc": "The result of the last Get*() call."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Result.htm"
+    },
+    {
+      "name": "SetCommandPrompt",
+      "signature": "public void SetCommandPrompt(string prompt)",
+      "summary": "Sets prompt message that appears in the command prompt window.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "command prompt message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetCommandPrompt.htm"
+    },
+    {
+      "name": "SetCommandPromptDefault",
+      "signature": "public void SetCommandPromptDefault(string defaultValue)",
+      "summary": "Sets message that describes what default value will be used if the user presses enter. This description appears in angle brackets \u003C\u003E in the command prompt window. You do not need to provide a default value description unless you explicitly enable AcceptNothing.",
+      "remarks": "If you have a simple default point, number, or string, it is easier to use SetDefaultPoint, SetDefaultNumber, or SetDefaultString. SetCommandPromptDefault and AcceptNothing can be used for providing more advanced UI behavior.",
+      "params": [
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "description of default value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetCommandPromptDefault.htm"
+    },
+    {
+      "name": "SetDefaultColor",
+      "signature": "public void SetDefaultColor(Color defaultColor)",
+      "summary": "Sets a color as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultColor will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default color, GetResult.Color is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultColor will clear any previous calls to SetDefaultString or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultColor",
+          "type": "System.Drawing.Color",
+          "doc": "value for default color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultColor.htm"
+    },
+    {
+      "name": "SetDefaultInteger",
+      "signature": "public void SetDefaultInteger(int defaultValue)",
+      "summary": "Sets a number as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultInteger will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default integer, GetResult.Number is returned and CRhinoGet.GotDefault() will return true. Calling SetDefaultNumber will clear any previous calls to SetDefaultString or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "value for default number.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultInteger.htm"
+    },
+    {
+      "name": "SetDefaultNumber",
+      "signature": "public void SetDefaultNumber(double defaultNumber)",
+      "summary": "Sets a number as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultNumber will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default number, GetResult.Number is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultNumber will clear any previous calls to SetDefaultString or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultNumber",
+          "type": "System.Double",
+          "doc": "value for default number.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultNumber.htm"
+    },
+    {
+      "name": "SetDefaultPoint",
+      "signature": "public void SetDefaultPoint(Point3d point)",
+      "summary": "Sets a point as default value that will be returned if the user presses the ENTER key during the get.",
+      "remarks": "Calling SetDefaultPoint will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses enter to accept the default point, GetResult.Point is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultPoint will clear any previous calls to SetDefaultString or SetDefaultNumber.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "value for default point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultPoint.htm"
+    },
+    {
+      "name": "SetDefaultString",
+      "signature": "public void SetDefaultString(string defaultValue)",
+      "summary": "Sets a string as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultString will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default string, GetResult.String is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultString will clear any previous calls to SetDefaultNumber or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "value for default string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultString.htm"
+    },
+    {
+      "name": "SetLowerLimit",
+      "signature": "public void SetLowerLimit(double lowerLimit, bool strictlyGreaterThan)",
+      "summary": "Sets a lower limit on the number that can be returned. By default there is no lower limit.",
+      "params": [
+        {
+          "name": "lowerLimit",
+          "type": "System.Double",
+          "doc": "smallest acceptable number.",
+          "optional": false
+        },
+        {
+          "name": "strictlyGreaterThan",
+          "type": "System.Boolean",
+          "doc": "If true, then the returned number will be \u003E lower_limit.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetNumber_SetLowerLimit.htm"
+    },
+    {
+      "name": "SetUpperLimit",
+      "signature": "public void SetUpperLimit(double upperLimit, bool strictlyLessThan)",
+      "summary": "Sets an upper limit on the number that can be returned. By default there is no upper limit.",
+      "params": [
+        {
+          "name": "upperLimit",
+          "type": "System.Double",
+          "doc": "largest acceptable number.",
+          "optional": false
+        },
+        {
+          "name": "strictlyLessThan",
+          "type": "System.Boolean",
+          "doc": "If true, then the returned number will be \u003C upper_limit.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetNumber_SetUpperLimit.htm"
+    },
+    {
+      "name": "SetWaitDuration",
+      "signature": "public void SetWaitDuration(int milliseconds)",
+      "summary": "Sets the wait duration (in milliseconds) of the getter. If the duration passes without the user making a decision, the GetResult.Timeout code is returned.",
+      "params": [
+        {
+          "name": "milliseconds",
+          "type": "System.Int32",
+          "doc": "Number of milliseconds to wait.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_SetWaitDuration.htm"
+    },
+    {
+      "name": "StringResult",
+      "signature": "public string StringResult()",
+      "summary": "Gets a string if GetPoint.Get(), GetObject.GetObjects(), etc., returns GetResult.String.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_StringResult.htm"
+    },
+    {
+      "name": "Vector",
+      "signature": "public Vector3d Vector()",
+      "summary": "Gets a direction if Get*() returns GetResult.Point (Set by some digitizers, but in general it\u0027s (0,0,0).",
+      "params": [],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The vector chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_Vector.htm"
+    },
+    {
+      "name": "View",
+      "signature": "public RhinoView View()",
+      "summary": "Gets a view the user clicked in during GetPoint.Get(), GetObject.GetObjects(), etc.",
+      "params": [],
+      "returns": {
+        "type": "RhinoView",
+        "doc": "The view chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetBaseClass_View.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

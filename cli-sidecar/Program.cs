@@ -92,6 +92,198 @@ internal static class Program
                     }
                     catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
                 }
+                case "coverage-extract":
+                {
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.CoverageExtractArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    if (string.IsNullOrEmpty(argsObj.Vendor)
+                        || string.IsNullOrEmpty(argsObj.Version)
+                        || string.IsNullOrEmpty(argsObj.OutPath))
+                    {
+                        EmitError(envelope.Op, "coverage-extract requires vendor, version, out_path");
+                        return 2;
+                    }
+                    try
+                    {
+                        // Synchronous wrapper around the per-vendor async extractor. We block
+                        // the Main thread on purpose — the sidecar is one-shot, no other work
+                        // is happening on this process.
+                        Ingest.CoverageIR ir = argsObj.Vendor.ToLowerInvariant() switch
+                        {
+                            // The Tekla extractor accepts the destination path so it can
+                            // snapshot progress to disk and resume if the process is killed.
+                            "tekla" => Ingest.Extractors.Tekla.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Rhino extractor (Phase B B5) — RhinoCommon docs from the McNeel
+                            // github mirror at developer.rhino3d.com / mcneel/rhinocommon-api-docs.
+                            // Version 7.0 → branch `7`; version 8.0 → branch `gh-pages` (Rhino 8.31).
+                            "rhino" => Ingest.Extractors.Rhino.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Grasshopper extractor (Phase B B6) — Grasshopper SDK docs from
+                            // mcneel/grasshopper-api-docs. Version 7.0 → branch `7`; version 8.0
+                            // → branch `gh-pages` (Grasshopper for Rhino 8.31). Identical Sandcastle
+                            // shape as Rhino — shares the parser via Grasshopper.Extractor's
+                            // delegation to the Rhino PageParser/MemberPageParser.
+                            "grasshopper" => Ingest.Extractors.Grasshopper.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // SketchUp extractor (Phase B B4) — Ruby API YARD docs from
+                            // ruby.sketchup.com. Unified docs site (no per-version trees);
+                            // both 2025.0 and 2026.0 produce IRs from the same source — the
+                            // version field just stamps the host_version. ~155 types,
+                            // single-pass extraction (YARD inlines all members on the type
+                            // page, no enrichment pass needed). NOT the C SDK — that's
+                            // intentionally skipped per project memory.
+                            "sketchup" => Ingest.Extractors.SketchUp.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // ArchiCAD extractor (Phase B B7) — hybrid source: Tapir community
+                            // JSON-RPC catalog from ENZYME-APD/tapir-archicad-automation (GitHub raw)
+                            // + Graphisoft official JSON Interface docs at archicadapi.graphisoft.com.
+                            // Versions 28.0 + 29.0 share the same Tapir command set; Graphisoft
+                            // publishes only the latest reference (v29) — both IRs include it with
+                            // a documented version-stamping caveat in EXTRACTION-NOTES.md.
+                            "archicad" => Ingest.Extractors.ArchiCAD.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // IDEA Statica extractor (Phase B B8) — hybrid REST + .NET SDK docs from
+                            // idea-statica/ideastatica-public's tagged release tree. Versions 25.0
+                            // (tag 25.1.5.1491) and 26.0 (tag 26.0.1.2450) each carry openapi.yaml
+                            // + markdown SDK docs for the Connection API and the RCS API; the
+                            // extractor merges both APIs into one IR per version.
+                            "idea-statica" => Ingest.Extractors.IdeaStatica.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Tekla Tedds extractor (Phase B B9) — Tedds docs from
+                            // developer.tekla.com/doc/tekla-tedds/<ver>. DocFX-style markup
+                            // (different from Tekla Structures' Sandcastle). Versions 25.0 + 26.0
+                            // both stable per release; ~50-60 types per version across 3 namespaces.
+                            // The "tekla-tedds" alias is accepted alongside "tedds" because the
+                            // task spec (and Trimble's marketing) abbreviate Tekla Tedds as TSD in
+                            // some contexts. The existing tsd-25 / tsd-26 agent slugs in the repo
+                            // are for Tekla Structural Designer (a different product); we deliver
+                            // this vendor's agents at tekla-tedds-25 / tekla-tedds-26 to avoid the
+                            // slug collision. IR stamps host="tedds".
+                            "tedds" or "tekla-tedds" => Ingest.Extractors.Tedds.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Solibri extractor (Phase B B13) — OSO REST API OpenAPI YAML from
+                            // solibri.github.io/Developer-Platform.
+                            "solibri" => Ingest.Extractors.Solibri.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Dynamo extractor (Phase B B11) — hybrid NuGet (XML doc + DLL reflection)
+                            // + GitHub Trees API for source-file URLs.
+                            "dynamo" => Ingest.Extractors.Dynamo.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Bluebeam extractor (Phase B B14) — Bluebeam Studio API from the
+                            // public Postman v2.1 collection. Auth-walled developer portal.
+                            "bluebeam" => Ingest.Extractors.Bluebeam.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Navisworks extractor (Phase B B12) — Autodesk.Navisworks.Api.dll +
+                            // sibling XML doc from the community NuGet package
+                            // Chuongmep.Navis.Api.Autodesk.Navisworks.Api. Source.kind = "nuget".
+                            "navisworks" => Ingest.Extractors.Navisworks.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Allplan extractor (Phase B B10) — Nemetschek's PythonParts API docs
+                            // at pythonparts.allplan.com. mkdocs-material layout, single-pass.
+                            "allplan" => Ingest.Extractors.Allplan.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            _ => throw new NotSupportedException(
+                                $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
+                        };
+                        var outDir = Path.GetDirectoryName(argsObj.OutPath);
+                        if (!string.IsNullOrEmpty(outDir)) Directory.CreateDirectory(outDir);
+                        var json = JsonSerializer.Serialize(ir, Ingest.IrJsonContext.Default.CoverageIR);
+                        File.WriteAllText(argsObj.OutPath, json);
+                        EmitOk(envelope.Op, new ResponseData
+                        {
+                            Coverage = new CoverageGenerateResult
+                            {
+                                Manifest = argsObj.OutPath,            // re-using the field to carry the IR path back
+                                SkillCount = ir.types.Count,
+                                CatalogCount = ir.metadata.method_count + ir.metadata.event_count + ir.metadata.property_count,
+                                Total = ir.metadata.type_count,
+                                Skills = Array.Empty<string>(),
+                                Catalogs = Array.Empty<string>(),
+                            }
+                        });
+                        return 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Error.WriteLine($"[coverage-extract] EXCEPTION: {ex}");
+                        EmitError(envelope.Op, $"{ex.GetType().Name}: {ex.Message}");
+                        return 1;
+                    }
+                }
+                case "coverage-generate":
+                {
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.CoverageGenerateArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    if (string.IsNullOrEmpty(argsObj.IrPath)
+                        || string.IsNullOrEmpty(argsObj.OutDir)
+                        || string.IsNullOrEmpty(argsObj.AgentId)
+                        || string.IsNullOrEmpty(argsObj.Vendor)
+                        || string.IsNullOrEmpty(argsObj.Vertical))
+                    {
+                        EmitError(envelope.Op, "coverage-generate requires ir_path, out_dir, agent_id, vendor, vertical");
+                        return 2;
+                    }
+                    try
+                    {
+                        var result = AwareSidecar.Ingest.Generator.Generate(new AwareSidecar.Ingest.GenerateRequest(
+                            IrPath:    argsObj.IrPath,
+                            OutputDir: argsObj.OutDir,
+                            AgentId:   argsObj.AgentId,
+                            Vendor:    argsObj.Vendor,
+                            Vertical:  argsObj.Vertical));
+                        EmitOk(envelope.Op, new ResponseData
+                        {
+                            Coverage = new CoverageGenerateResult
+                            {
+                                Manifest = result.ManifestPath,
+                                SkillCount = result.SkillPaths.Count,
+                                CatalogCount = result.CatalogPaths.Count,
+                                Total = result.TotalArtefactsWritten,
+                                Skills = result.SkillPaths.ToArray(),
+                                Catalogs = result.CatalogPaths.ToArray(),
+                            }
+                        });
+                        return 0;
+                    }
+                    catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
+                }
+                case "coverage-validate":
+                {
+                    // Real Draft 2020-12 schema validation. Brings what the
+                    // codex-coverage review protocol did externally with `ajv@8`
+                    // / Python `jsonschema` into a single canonical in-tree
+                    // verb. Schemas are embedded into the sidecar binary, so the
+                    // caller only needs the IR path (and optionally the agent
+                    // directory if catalog/*.json should be validated too).
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.CoverageValidateArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    if (string.IsNullOrEmpty(argsObj.IrPath))
+                    {
+                        EmitError(envelope.Op, "coverage-validate requires ir_path");
+                        return 2;
+                    }
+                    try
+                    {
+                        var result = AwareSidecar.Ingest.CoverageValidator.Validate(
+                            argsObj.IrPath,
+                            argsObj.SchemaRoot,
+                            argsObj.SchemaType,
+                            argsObj.AgentDir);
+                        EmitOk(envelope.Op, new ResponseData { CoverageValidate = result });
+                        return 0;
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        EmitError(envelope.Op, ex.Message);
+                        return 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        EmitError(envelope.Op, $"{ex.GetType().Name}: {ex.Message}");
+                        return 1;
+                    }
+                }
                 default:
                 {
                     EmitError(envelope.Op, $"unknown op: {envelope.Op}");
@@ -129,10 +321,15 @@ internal static class Program
 [JsonSerializable(typeof(DecompileArgs))]
 [JsonSerializable(typeof(FromComArgs))]
 [JsonSerializable(typeof(FromHeadersArgs))]
+[JsonSerializable(typeof(CoverageGenerateArgs))]
+[JsonSerializable(typeof(CoverageExtractArgs))]
+[JsonSerializable(typeof(CoverageValidateArgs))]
 [JsonSerializable(typeof(OkResponse))]
 [JsonSerializable(typeof(ErrorResponse))]
 [JsonSerializable(typeof(ResponseData))]
 [JsonSerializable(typeof(GeneratedAgent))]
 [JsonSerializable(typeof(GeneratedCommand))]
 [JsonSerializable(typeof(GeneratedSkill))]
+[JsonSerializable(typeof(CoverageGenerateResult))]
+[JsonSerializable(typeof(CoverageValidateResult))]
 internal partial class SidecarJsonContext : JsonSerializerContext { }

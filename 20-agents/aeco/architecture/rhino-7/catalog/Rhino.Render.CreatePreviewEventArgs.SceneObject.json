@@ -1,0 +1,30 @@
+{
+  "name": "CreatePreviewEventArgs.SceneObject",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.CreatePreviewEventArgs.SceneObject\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_CreatePreviewEventArgs_SceneObject.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Material",
+      "type": "RenderMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_CreatePreviewEventArgs_SceneObject_Material.htm"
+    },
+    {
+      "name": "Mesh",
+      "type": "Mesh",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_CreatePreviewEventArgs_SceneObject_Mesh.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "KeyboardShortcut",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "A shortcut is a key plus modifier combination that executes a macro",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_KeyboardShortcut.htm",
+  "constructors": [
+    {
+      "name": "KeyboardShortcut",
+      "signature": "public KeyboardShortcut()",
+      "summary": "Initializes a new instance of the KeyboardShortcut class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_KeyboardShortcut__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Key",
+      "type": "KeyboardKey",
+      "getter": true,
+      "setter": true,
+      "summary": "Key used for shortcut",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_KeyboardShortcut_Key.htm"
+    },
+    {
+      "name": "Macro",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Macro to execute when key plus modifier are pressed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_KeyboardShortcut_Macro.htm"
+    },
+    {
+      "name": "Modifier",
+      "type": "ModifierKey",
+      "getter": true,
+      "setter": true,
+      "summary": "Modifier key used for shortcut",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_KeyboardShortcut_Modifier.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

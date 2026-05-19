@@ -1,0 +1,44 @@
+{
+  "name": "NodeModelAssemblyLoader",
+  "namespace": "Dynamo.Models",
+  "kind": "class",
+  "summary": "This class is responsible for loading types that derive from NodeModel. For information about package loading see the PackageLoader. For information about loading other libraries, see LibraryServices.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs",
+  "constructors": [
+    {
+      "name": "NodeModelAssemblyLoader()",
+      "signature": "void NodeModelAssemblyLoader()",
+      "summary": "NodeModelAssemblyLoader.NodeModelAssemblyLoader",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LoadedAssemblies",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Reflection.Assembly\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All assemblies that have been loaded into Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "AssemblyLoaded",
+      "delegate": "Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedHandler",
+      "signature": "public event Dynamo.Models.NodeModelAssemblyLoader.AssemblyLoadedHandler AssemblyLoaded",
+      "summary": "Event fired when a new assembly is loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/NodeModelAssemblyLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,494 @@
+{
+  "name": "VisualAnalysisMode",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "Represents a base class for visual analysis modes. This class is abstract.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_VisualAnalysisMode.htm",
+  "constructors": [
+    {
+      "name": "VisualAnalysisMode",
+      "signature": "protected VisualAnalysisMode()",
+      "summary": "Initializes a new instance of the VisualAnalysisMode class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AdjustAnalysisMeshes",
+      "signature": "public static bool AdjustAnalysisMeshes(RhinoDoc doc, Guid analysisModeId)",
+      "summary": "Interactively adjusts surface analysis meshes of objects using a Rhino built-in analysis mode.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document.",
+          "optional": false
+        },
+        {
+          "name": "analysisModeId",
+          "type": "System.Guid",
+          "doc": "The id of the analysis mode.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_AdjustAnalysisMeshes.htm"
+    },
+    {
+      "name": "DrawBrepObject",
+      "signature": "protected virtual void DrawBrepObject(BrepObject brep, DisplayPipeline pipeline)",
+      "summary": "Draws one brep. Override this method to add your custom behavior. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.DocObjects.BrepObject",
+          "doc": "A brep object.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The current display pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawBrepObject.htm"
+    },
+    {
+      "name": "DrawCurveObject",
+      "signature": "protected virtual void DrawCurveObject(CurveObject curve, DisplayPipeline pipeline)",
+      "summary": "If Style==Wireframe, then the default decomposes the curve object into nurbs curve segments and calls the virtual DrawNurbsCurve for each segment.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.DocObjects.CurveObject",
+          "doc": "A document curve object.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The drawing pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawCurveObject.htm"
+    },
+    {
+      "name": "DrawMesh",
+      "signature": "protected virtual void DrawMesh(RhinoObject obj, Mesh mesh, DisplayPipeline pipeline)",
+      "summary": "Draws a mesh. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "A Rhino object corresponding to the surface.",
+          "optional": false
+        },
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "The mesh geometry.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The current display pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawMesh.htm"
+    },
+    {
+      "name": "DrawMeshObject",
+      "signature": "protected virtual void DrawMeshObject(MeshObject mesh, DisplayPipeline pipeline)",
+      "summary": "Draws one mesh. Override this method to add your custom behavior. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.DocObjects.MeshObject",
+          "doc": "A mesh object.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The current display pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawMeshObject.htm"
+    },
+    {
+      "name": "DrawNurbsCurve",
+      "signature": "protected virtual void DrawNurbsCurve(RhinoObject obj, NurbsCurve curve, DisplayPipeline pipeline)",
+      "summary": "Draws a NURBS curve. This is a good function to override for analysis modes like curvature hair display. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "A Rhino object corresponding to the curve.",
+          "optional": false
+        },
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "The curve geometry.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The current display pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawNurbsCurve.htm"
+    },
+    {
+      "name": "DrawNurbsSurface",
+      "signature": "protected virtual void DrawNurbsSurface(RhinoObject obj, NurbsSurface surface, DisplayPipeline pipeline)",
+      "summary": "Draws a NURBS surface. This is a good function to override to display object-related meshes. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "A Rhino object corresponding to the surface.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.NurbsSurface",
+          "doc": "The surface geometry.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The current display pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawNurbsSurface.htm"
+    },
+    {
+      "name": "DrawPointCloudObject",
+      "signature": "protected virtual void DrawPointCloudObject(PointCloudObject pointCloud, DisplayPipeline pipeline)",
+      "summary": "Draws one point cloud. Override this method to add your custom behavior. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "pointCloud",
+          "type": "Rhino.DocObjects.PointCloudObject",
+          "doc": "A point cloud object.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The current display pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawPointCloudObject.htm"
+    },
+    {
+      "name": "DrawPointObject",
+      "signature": "protected virtual void DrawPointObject(PointObject point, DisplayPipeline pipeline)",
+      "summary": "Draws one point. Override this method to add your custom behavior. The default implementation does nothing.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.DocObjects.PointObject",
+          "doc": "A point object.",
+          "optional": false
+        },
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "The current display pipeline.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_DrawPointObject.htm"
+    },
+    {
+      "name": "EnableUserInterface",
+      "signature": "public virtual void EnableUserInterface(bool on)",
+      "summary": "Turns the analysis mode\u0027s user interface on and off. For Rhino\u0027s built in modes this opens or closes the modeless dialog that controls the analysis mode\u0027s display settings.",
+      "params": [
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "true if the interface should be shown; false if it should be concealed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_EnableUserInterface.htm"
+    },
+    {
+      "name": "Find(Guid)",
+      "signature": "public static VisualAnalysisMode Find(Guid id)",
+      "summary": "Finds a visual analysis mode by guid.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The globally unique identifier to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "VisualAnalysisMode",
+        "doc": "The found visual analysis mode, or null if it was not found, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_Find.htm"
+    },
+    {
+      "name": "Find(Type)",
+      "signature": "public static VisualAnalysisMode Find(Type t)",
+      "summary": "Finds a visual analysis mode by type.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Type",
+          "doc": "A visual analysis mode type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "VisualAnalysisMode",
+        "doc": "A visual analysis mode on success, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_Find_1.htm"
+    },
+    {
+      "name": "ObjectSupportsAnalysisMode",
+      "signature": "public virtual bool ObjectSupportsAnalysisMode(RhinoObject obj)",
+      "summary": "Gets a value indicating if this visual analysis mode can be used on a given Rhino object.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The object to be tested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this mode can indeed be used on the object; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_ObjectSupportsAnalysisMode.htm"
+    },
+    {
+      "name": "Register",
+      "signature": "public static VisualAnalysisMode Register(Type customAnalysisModeType)",
+      "summary": "Registers a custom visual analysis mode for use in Rhino. It is OK to call register multiple times for a single custom analysis mode type, since subsequent register calls will notice that the type has already been registered.",
+      "params": [
+        {
+          "name": "customAnalysisModeType",
+          "type": "System.Type",
+          "doc": "Must be a type that is a subclass of VisualAnalysisMode.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "VisualAnalysisMode",
+        "doc": "An instance of registered analysis mode on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_Register.htm"
+    },
+    {
+      "name": "SetUpDisplayAttributes",
+      "signature": "protected virtual void SetUpDisplayAttributes(RhinoObject obj, DisplayPipelineAttributes attributes)",
+      "summary": "If an analysis mode needs to modify display attributes, this is the place to do it. In particular, Style==Texture, then this function must be overridden.",
+      "remarks": "Shaded analysis modes that use texture mapping, like zebra and emap, override this function set the texture, diffuse_color, and EnableLighting parameter.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The object for which to set up attributes.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "The linked attributes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_SetUpDisplayAttributes.htm"
+    },
+    {
+      "name": "UpdateVertexColors",
+      "signature": "protected virtual void UpdateVertexColors(RhinoObject obj, Mesh[] meshes)",
+      "summary": "If Style==falseColor, then this virtual function must be overridden. Rhino calls this function when it is time for to set the false colors on the analysis mesh vertices. For breps, there is one mesh per face. For mesh objects there is a single mesh.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The object for which to update vertex colors.",
+          "optional": false
+        },
+        {
+          "name": "meshes",
+          "type": "Rhino.Geometry.Mesh[]",
+          "doc": "An array of meshes that should be updated.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_VisualAnalysisMode_UpdateVertexColors.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the visual analysis mode GUID. The Guid is specified with the GuidAttribute applied to the class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_Id.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the analysis mode. It is used by the _What command and the object properties details window to describe the object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_Name.htm"
+    },
+    {
+      "name": "RhinoCurvatureColorAnalyisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in curvature color analysis mode. Surface curvature is shown using false color mapping.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoCurvatureColorAnalyisModeId.htm"
+    },
+    {
+      "name": "RhinoCurvatureGraphAnalysisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in curvature graphs analysis mode. Curvature hair is shown on curves and surfaces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoCurvatureGraphAnalysisModeId.htm"
+    },
+    {
+      "name": "RhinoDraftAngleAnalysisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in draft angle analysis mode. Draft angle is displayed using false colors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoDraftAngleAnalysisModeId.htm"
+    },
+    {
+      "name": "RhinoEdgeAnalysisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in edge analysis mode. Brep and mesh edges are shown in a selected color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoEdgeAnalysisModeId.htm"
+    },
+    {
+      "name": "RhinoEdgeContinuityAlalysisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in edge continuity analysis mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoEdgeContinuityAlalysisModeId.htm"
+    },
+    {
+      "name": "RhinoEmapAnalysisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in emap analysis mode. An environment map is shown on surfaces and meshes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoEmapAnalysisModeId.htm"
+    },
+    {
+      "name": "RhinoThicknessAnalysisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in thickness analysis mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoThicknessAnalysisModeId.htm"
+    },
+    {
+      "name": "RhinoZebraStripeAnalysisModeId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id for Rhino\u0027s built-in zebra stripe analysis mode. Zebra stripes are shown on surfaces and meshes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_RhinoZebraStripeAnalysisModeId.htm"
+    },
+    {
+      "name": "ShowIsoCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this visual analysis mode will show isocuves on shaded surface objects. Often a mode\u0027s user interface will provide a way to change this setting. The default is false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_ShowIsoCurves.htm"
+    },
+    {
+      "name": "Style",
+      "type": "VisualAnalysisMode.AnalysisStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the visual analysis mode style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_VisualAnalysisMode_Style.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

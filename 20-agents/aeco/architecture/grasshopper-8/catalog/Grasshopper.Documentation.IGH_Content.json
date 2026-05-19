@@ -1,0 +1,13 @@
+{
+  "name": "IGH_Content",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "interface",
+  "summary": "All parts that make up documentation content must implement this interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Documentation_IGH_Content.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

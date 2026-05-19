@@ -1,0 +1,283 @@
+{
+  "name": "SavedItem",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Base class for all saved items.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SavedItem",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.SavedItem CreateCopy()",
+      "summary": "Create a new copy of this item",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.CreateCopy"
+    },
+    {
+      "name": "CreateNewInstance",
+      "signature": "Autodesk.Navisworks.Api.SavedItem CreateNewInstance()",
+      "summary": "Create a new item of the same type as this item",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.CreateNewInstance"
+    },
+    {
+      "name": "CreateUniqueCopy",
+      "signature": "Autodesk.Navisworks.Api.SavedItem CreateUniqueCopy()",
+      "summary": "Create an unique copy of item",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.CreateUniqueCopy"
+    },
+    {
+      "name": "CanTransform",
+      "signature": "bool CanTransform()",
+      "summary": "Indicates whether the implementation of Transform() will do anything",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.CanTransform"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SavedItem.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.SavedItem InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SavedItem.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "MakeDisplayNameUnique",
+      "signature": "void MakeDisplayNameUnique(Autodesk.Navisworks.Api.GroupItem group)",
+      "summary": "Makes a name unique within the immediate children on the group",
+      "params": [
+        {
+          "name": "group",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "group to make unique name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027group\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.MakeDisplayNameUnique%28Autodesk.Navisworks.Api.GroupItem%29"
+    },
+    {
+      "name": "MakeDisplayNameUnique",
+      "signature": "void MakeDisplayNameUnique(Autodesk.Navisworks.Api.GroupItem group, string salt)",
+      "summary": "Makes a name unique within the immediate children on the group",
+      "params": [
+        {
+          "name": "group",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "group to make unique name",
+          "optional": false
+        },
+        {
+          "name": "salt",
+          "type": "string",
+          "doc": "salt string to use in making a name unique",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027group\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.MakeDisplayNameUnique%28Autodesk.Navisworks.Api.GroupItem%2CSystem.String%29"
+    },
+    {
+      "name": "Transform",
+      "signature": "void Transform(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "Apply the given transform to the item",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027transform\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027transform\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SavedItem.Transform%28Autodesk.Navisworks.Api.Transform3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Comments",
+      "type": "Autodesk.Navisworks.Api.CommentCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Comments about the item",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItem.Comments"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name for item as displayed in the GUI",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItem.DisplayName"
+    },
+    {
+      "name": "Guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Globally Unique Id for item",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItem.Guid"
+    },
+    {
+      "name": "IsGroup",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this item is a GroupItem",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItem.IsGroup"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItem.IsReadOnly"
+    },
+    {
+      "name": "Parent",
+      "type": "Autodesk.Navisworks.Api.GroupItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Parent of this item. Null if item has no parent",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItem.Parent"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

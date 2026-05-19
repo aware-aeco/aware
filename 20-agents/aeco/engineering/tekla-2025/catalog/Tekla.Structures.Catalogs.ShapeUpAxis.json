@@ -1,0 +1,34 @@
+{
+  "name": "ShapeUpAxis",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Up axis direction",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a182b297-b6de-a62e-79fa-91e7df0e72fc",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "Undefined direction for axis. Should not be used in input."
+    },
+    {
+      "name": "X_Axis",
+      "value": 1,
+      "summary": "X points up."
+    },
+    {
+      "name": "Y_Axis",
+      "value": 2,
+      "summary": "Y points up."
+    },
+    {
+      "name": "Z_Axis",
+      "value": 3,
+      "summary": "Z points up."
+    }
+  ]
+}

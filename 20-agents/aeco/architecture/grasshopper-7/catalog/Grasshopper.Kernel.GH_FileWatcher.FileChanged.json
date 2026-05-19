@@ -1,0 +1,14 @@
+{
+  "name": "GH_FileWatcher.FileChanged",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "delegate",
+  "summary": "Delegate method for file change callbacks.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_FileWatcher_FileChanged.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void FileChanged( GH_FileWatcher sender, string filename, WatcherChangeTypes change )"
+}

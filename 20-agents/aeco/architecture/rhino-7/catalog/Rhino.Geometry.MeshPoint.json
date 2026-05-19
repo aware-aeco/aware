@@ -1,0 +1,111 @@
+{
+  "name": "MeshPoint",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a point that is found on a mesh.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshPoint.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetTriangle",
+      "signature": "public bool GetTriangle(out int a, out int b, out int c)",
+      "summary": "Gets the mesh face indices of the triangle where the intersection is on the face takes into consideration the way the quad was split during the intersection.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Geometry.MeshPoint.GetTriangle(System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Geometry.MeshPoint.GetTriangle(System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022c\u0022/\u003E documentation for \u0022M:Rhino.Geometry.MeshPoint.GetTriangle(System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.MeshPoint.GetTriangle(System.Int32@,System.Int32@,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshPoint_GetTriangle.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentIndex",
+      "type": "ComponentIndex",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the component index of the intersecting element in the mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_ComponentIndex.htm"
+    },
+    {
+      "name": "EdgeIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "When set, EdgeIndex is an index of an edge in the mesh\u0027s edge list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_EdgeIndex.htm"
+    },
+    {
+      "name": "EdgeParameter",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Edge parameter when found.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_EdgeParameter.htm"
+    },
+    {
+      "name": "FaceIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "FaceIndex is an index of a face in mesh.Faces. When ComponentIndex refers to a vertex, any face that uses the vertex may appear as FaceIndex. When ComponenctIndex refers to an Edge or EdgeIndex is set, then any face that uses that edge may appear as FaceIndex.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_FaceIndex.htm"
+    },
+    {
+      "name": "Mesh",
+      "type": "Mesh",
+      "getter": true,
+      "setter": false,
+      "summary": "The mesh that is related to this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_Mesh.htm"
+    },
+    {
+      "name": "Point",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location (position) of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_Point.htm"
+    },
+    {
+      "name": "T",
+      "type": "Double[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Barycentric quad coordinates for the point on the mesh face mesh.Faces[FaceIndex]. If the face is a triangle disregard T[3] (it should be set to 0.0). If the face is a quad and is split between vertexes 0 and 2, then T[3] will be 0.0 when point is on the triangle defined by vi[0], vi[1], vi[2], and T[1] will be 0.0 when point is on the triangle defined by vi[0], vi[2], vi[3]. If the face is a quad and is split between vertexes 1 and 3, then T[2] will be 0.0 when point is on the triangle defined by vi[0], vi[1], vi[3], and m_t[0] will be 0.0 when point is on the triangle defined by vi[1], vi[2], vi[3].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_T.htm"
+    },
+    {
+      "name": "Triangle",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "Face triangle where the intersection takes place: 0 is unsetA is 0,1,2B is 0,2,3C is 0,1,3D is 1,2,3",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshPoint_Triangle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,55 @@
+{
+  "name": "PlugInDescriptionAttribute",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "Rhino plug-in developer information attributes.",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_PlugInDescriptionAttribute.htm",
+  "constructors": [
+    {
+      "name": "PlugInDescriptionAttribute",
+      "signature": "public PlugInDescriptionAttribute(DescriptionType descriptionType, string value)",
+      "summary": "Initializes a new instance of the PlugInDescriptionAttribute class",
+      "params": [
+        {
+          "name": "descriptionType",
+          "type": "Rhino.PlugIns.DescriptionType",
+          "doc": "[Missing \u003Cparam name=\u0022descriptionType\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugInDescriptionAttribute.#ctor(Rhino.PlugIns.DescriptionType,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.PlugInDescriptionAttribute.#ctor(Rhino.PlugIns.DescriptionType,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_PlugInDescriptionAttribute__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DescriptionType",
+      "type": "DescriptionType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugInDescriptionAttribute_DescriptionType.htm"
+    },
+    {
+      "name": "Value",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugInDescriptionAttribute_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

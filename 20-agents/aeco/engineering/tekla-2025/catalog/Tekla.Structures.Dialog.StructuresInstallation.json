@@ -1,0 +1,102 @@
+{
+  "name": "StructuresInstallation",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "Utility functions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ec1ff0da-9d71-fc0b-77a4-02e68f94a5db",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLocalizationFile(String)",
+      "signature": "public static string GetLocalizationFile(string messageFile)",
+      "summary": "Retrieves localization file from configured environment",
+      "params": [
+        {
+          "name": "messageFile",
+          "type": "System.String",
+          "doc": "File name of message file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Localization file full path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2e157355-4890-ddfb-0749-32605c12f23b"
+    },
+    {
+      "name": "GetLocalizationFile(String, String)",
+      "signature": "public static string GetLocalizationFile(string subPath, string messageFile)",
+      "summary": "Retrieves localization file from configured environment",
+      "params": [
+        {
+          "name": "subPath",
+          "type": "System.String",
+          "doc": "Possible sub folder of message file. Empty sub folder has no effect.",
+          "optional": false
+        },
+        {
+          "name": "messageFile",
+          "type": "System.String",
+          "doc": "File name of message file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "localization file full path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/64580a6b-09f0-4bc5-b166-52bfa2590ffe"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BinFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets Path to Tekla Structures binary (bin) directory.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f4ab359-4f7e-cc55-bf39-38e63f0904a1"
+    },
+    {
+      "name": "EnvBaseFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets Path to Tekla Structures XSDATADIR directory. XSDATADIR is defined in the teklastructures.ini file. It points to a location, where the installation installs the environment files and folders. Example: C:\\ProgramData\\Trimble\\Tekla Structures\\Version",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/81465ec9-d06f-aba7-f8ed-721fa7ea34f1"
+    },
+    {
+      "name": "InstallFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets path to Tekla Structures installation directory.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f78ef91f-e8c7-c405-c7c2-7899c9f54e6c"
+    },
+    {
+      "name": "MessageFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets path to Tekla Structures messages directory.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd745040-bd31-8617-23a4-d68ae70cc899"
+    },
+    {
+      "name": "MessagesFolder",
+      "type": "SortedSet\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list Paths to Tekla Structures messages directories.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dbd9261a-796e-4d6b-48db-e638afc92621"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

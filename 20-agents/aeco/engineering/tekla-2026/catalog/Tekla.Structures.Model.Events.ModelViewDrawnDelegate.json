@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelViewDrawnDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for view drawn event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6440b87a-0d8f-85ab-4d3e-af9e9c9e5366",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelViewDrawnDelegate( int viewId )"
+}

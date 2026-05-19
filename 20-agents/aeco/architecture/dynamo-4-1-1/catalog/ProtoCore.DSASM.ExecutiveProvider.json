@@ -1,0 +1,51 @@
+{
+  "name": "ExecutiveProvider",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type ExecutiveProvider",
+  "interfaces": [
+    "ProtoCore.DSASM.IExecutiveProvider"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/IExecutive.cs",
+  "constructors": [
+    {
+      "name": "ExecutiveProvider()",
+      "signature": "void ExecutiveProvider()",
+      "summary": "ExecutiveProvider.ExecutiveProvider",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/IExecutive.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateExecutive(ProtoCore.RuntimeCore, bool)",
+      "signature": "ProtoCore.DSASM.Executive CreateExecutive(ProtoCore.RuntimeCore runtimeCore, bool isFep)",
+      "summary": "ExecutiveProvider.CreateExecutive",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "isFep",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.Executive",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/IExecutive.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

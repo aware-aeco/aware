@@ -1,0 +1,208 @@
+{
+  "name": "RenderMeshes",
+  "namespace": "Rhino.Render.CustomRenderMeshes",
+  "kind": "class",
+  "summary": "RenderMeshes is a collection of geometry instances for a given ObjectId typically returned by the Custom Render primitive system. As each set of primitives is returned by the RenderMeshProviders in turn, the running hash is updated with new information about the primitive modifications that have been made along the way.",
+  "interfaces": [
+    "IDisposable",
+    "IEnumerable\u003CInstance\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshes_RenderMeshes.htm",
+  "constructors": [
+    {
+      "name": "RenderMeshes(RhinoDoc, Guid, Guid, UInt32)",
+      "signature": "[ObsoleteAttribute] public RenderMeshes(RhinoDoc doc, Guid objectId, Guid renderMeshProviderId, uint runningHash)",
+      "summary": "Create a new render primitives collection.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document with which this collection will be associated.",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "The ObjectId that this collection is for.",
+          "optional": false
+        },
+        {
+          "name": "renderMeshProviderId",
+          "type": "System.Guid",
+          "doc": "The RenderMeshProvider that created this collection - if this is the first in the stack, typically this will be ON_nil_uuid.",
+          "optional": false
+        },
+        {
+          "name": "runningHash",
+          "type": "System.UInt32",
+          "doc": "The running hash of this collection - each RenderMeshProvider will update the hash with its own modification hash.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes__ctor.htm"
+    },
+    {
+      "name": "RenderMeshes(RhinoDoc, Guid, Guid, UInt32, UInt32)",
+      "signature": "public RenderMeshes(RhinoDoc doc, Guid objectId, Guid renderMeshProviderId, uint runningHash, uint flags)",
+      "summary": "Create a new render primitives collection.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document with which this collection will be associated.",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "The ObjectId that this collection is for.",
+          "optional": false
+        },
+        {
+          "name": "renderMeshProviderId",
+          "type": "System.Guid",
+          "doc": "The RenderMeshProvider that created this collection - if this is the first in the stack, typically this will be ON_nil_uuid.",
+          "optional": false
+        },
+        {
+          "name": "runningHash",
+          "type": "System.UInt32",
+          "doc": "The running hash of this collection - each RenderMeshProvider will update the hash with its own modification hash.",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "System.UInt32",
+          "doc": "The flags these render meshes were created with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddInstance",
+      "signature": "public void AddInstance(Instance instance)",
+      "summary": "Adds a new instance to the render primitives collection.",
+      "params": [
+        {
+          "name": "instance",
+          "type": "Rhino.Render.CustomRenderMeshes.Instance",
+          "doc": "The instance to be added.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes_AddInstance.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Dispose this collection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Dispose",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer for this collection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes_Finalize.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CInstance\u003E GetEnumerator()",
+      "summary": "Return an object to iterator over the instances in the collection",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CInstance\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshes.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes_GetEnumerator.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Overrides default hash code function - just returns Hash",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshes.RenderMeshes.GetHashCode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshes_GetHashCode.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "The document with which this IRenderMeshes object is associated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshes_Document.htm"
+    },
+    {
+      "name": "Hash",
+      "type": "UInt32",
+      "getter": true,
+      "setter": true,
+      "summary": "The running hash for these render meshes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshes_Hash.htm"
+    },
+    {
+      "name": "InstanceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of instance objects in this collection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshes_InstanceCount.htm"
+    },
+    {
+      "name": "ObjectId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The ObjectId with which this IRenderMeshes object is associated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshes_ObjectId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

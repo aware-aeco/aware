@@ -1,0 +1,24 @@
+{
+  "name": "RebarSpacing.OffsetEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The offset distance type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4adf4df1-e121-c217-8ab3-e463d84f7be9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "EXACT",
+      "value": 0,
+      "summary": "The offset distance is exact."
+    },
+    {
+      "name": "MINIMUM",
+      "value": 1,
+      "summary": "The offset distance is the minimum required."
+    }
+  ]
+}

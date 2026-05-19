@@ -1,0 +1,46 @@
+{
+  "name": "ReferenceObjectFilterExpressions.CustomString",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomString class represents a custom string filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ca51d0b5-6262-c7f1-52df-6975e3618e66",
+  "constructors": [
+    {
+      "name": "ReferenceObjectFilterExpressions.CustomString",
+      "signature": "public CustomString(string UserAttribute)",
+      "summary": "Initializes a new instance of the CustomString class.",
+      "params": [
+        {
+          "name": "UserAttribute",
+          "type": "System.String",
+          "doc": "The user attribute to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dcca5166-e2cf-4e98-b0b6-24e436aa49e5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "VectorFieldCollectionType",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "enum",
+  "summary": "Represents collection metadata, including whether the collection is ordered, and whether the elements are unique.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.VectorFieldCollectionType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unordered",
+      "value": 0,
+      "summary": "Preserving element order is not important. (Default)"
+    },
+    {
+      "name": "Ordered",
+      "value": 1,
+      "summary": "Preserving element order is important."
+    },
+    {
+      "name": "UnorderedUnique",
+      "value": 2,
+      "summary": "Preserving element order is not important and elements must be unique."
+    },
+    {
+      "name": "OrderedUnique",
+      "value": 3,
+      "summary": "Preserving element order is important and elements must be unique."
+    }
+  ]
+}

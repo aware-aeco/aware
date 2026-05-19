@@ -1,0 +1,58 @@
+{
+  "name": "RebarHookData",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarHookData class defines the hook at the end of a reinforcing bar. Hooks are used for anchoring purposes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d0a79869-e12f-9686-d440-b2fe47008803",
+  "constructors": [
+    {
+      "name": "RebarHookData",
+      "signature": "public RebarHookData()",
+      "summary": "Instantiates a rebar hook data instance with empty members.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/394e7168-36ac-f820-8e6b-da7212fc3a65"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle of the hook. The value is between -270 to \u002B270 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0e42f93b-59ee-f040-cfb4-bdc939a624d2"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The length of the straight part of the hook.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31263a33-9db0-0aac-9c57-a0889bf7692c"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The bending radius of the hook.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e619e9a4-c0d3-8101-32cd-25c1f91d66e7"
+    },
+    {
+      "name": "Shape",
+      "type": "RebarHookData.RebarHookShapeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines the shape of the hook. The options are: NO_HOOK. Sets the angle, radius and length to 0.HOOK_90_DEGREES.HOOK_135_DEGREES.HOOK_180_DEGREES.CUSTOM_HOOK. The angle, radius and length values have to be set manually.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b79843b-617b-34d5-7d85-835c0e9199ef"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for database commit.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/da2bba46-3d2c-0843-4e56-750a766f331c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelChangedDelegate()"
+}

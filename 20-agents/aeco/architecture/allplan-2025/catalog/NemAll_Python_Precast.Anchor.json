@@ -1,0 +1,56 @@
+{
+  "name": "Anchor",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.Anchor.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Anchor/",
+  "constructors": [
+    {
+      "name": "Anchor",
+      "signature": "Anchor( id: int, fromId: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, ) | Anchor( id: int, fromId: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, align: bool, offsetX: float, offsetY: float, ) | Anchor( id: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, ) | Anchor( id: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, offsetX: float, offsetY: float, ) | Anchor( id: int, fromCell: Cell, fromPos: AnchorBorderPosition, toCell: Cell, toPos: AnchorBorderPosition, ) | Anchor( id: int, fromCell: Cell, fromPos: AnchorBorderPosition, toCell: Cell, toPos: AnchorBorderPosition, align: bool, offsetX: float, offsetY: float, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "Anchor",
+          "type": "object",
+          "doc": "ID",
+          "optional": false
+        },
+        {
+          "name": "From",
+          "type": "object",
+          "doc": "cell ID",
+          "optional": false
+        },
+        {
+          "name": "From",
+          "type": "object",
+          "doc": "cell pos",
+          "optional": false
+        },
+        {
+          "name": "To",
+          "type": "object",
+          "doc": "cell ID",
+          "optional": false
+        },
+        {
+          "name": "To",
+          "type": "object",
+          "doc": "cell pos",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Anchor/#NemAll_Python_Precast.Anchor.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

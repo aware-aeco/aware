@@ -1,0 +1,29 @@
+{
+  "name": "GH_Conversion",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Level flag for conversion algorithms.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_Conversion.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Primary",
+      "value": 0,
+      "summary": "Primary conversions only entail direct casts from identical or similar data types."
+    },
+    {
+      "name": "Secondary",
+      "value": 1,
+      "summary": "Secondary conversions entail all implied conversions with the exception of direct casts."
+    },
+    {
+      "name": "Both",
+      "value": 2,
+      "summary": "Indicates both Primary and Secondary"
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "name": "BitmapAreaProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of the bitmap area.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/",
+  "constructors": [
+    {
+      "name": "BitmapAreaProperties",
+      "signature": "BitmapAreaProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: BitmapAreaProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "BitmapAreaProperties",
+          "doc": "BitmapProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BitmapName",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for bitmap name of the bitmap area :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.BitmapName"
+    },
+    {
+      "name": "DirectionToReferenceLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for direction to reference line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.DirectionToReferenceLine"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for reference point :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.ReferencePoint"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for rotation angle :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.RotationAngle"
+    },
+    {
+      "name": "TransparentColor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for transparent color :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.TransparentColor"
+    },
+    {
+      "name": "TransparentColorTolerance",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for transparent color tolerance :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.TransparentColorTolerance"
+    },
+    {
+      "name": "UseDirectionToReferenceLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for usage of direction to reference line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.UseDirectionToReferenceLine"
+    },
+    {
+      "name": "UseMetricalValues",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for metrical values :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.UseMetricalValues"
+    },
+    {
+      "name": "UsePixelMask",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for usage of mask black pixels :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.UsePixelMask"
+    },
+    {
+      "name": "UseReferencePoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for usage of reference point :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.UseReferencePoint"
+    },
+    {
+      "name": "UseRepeatTile",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for repeat tile :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.UseRepeatTile"
+    },
+    {
+      "name": "XOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for X offset value :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.XOffset"
+    },
+    {
+      "name": "XScalingFactor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for X scaling factor :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.XScalingFactor"
+    },
+    {
+      "name": "YOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Y offset value :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.YOffset"
+    },
+    {
+      "name": "YScalingFactor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Y scaling factor :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaProperties/#NemAll_Python_BasisElements.BitmapAreaProperties.YScalingFactor"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

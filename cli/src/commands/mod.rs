@@ -8,6 +8,7 @@ pub mod agent;
 pub mod app;
 pub mod build;
 pub mod connect;
+pub mod coverage;
 pub mod diagram;
 pub mod doctor;
 pub mod plugins;

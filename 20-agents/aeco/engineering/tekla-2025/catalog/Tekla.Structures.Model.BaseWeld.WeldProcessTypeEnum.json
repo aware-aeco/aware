@@ -1,0 +1,49 @@
+{
+  "name": "BaseWeld.WeldProcessTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The weld process type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/81695cfc-b575-4541-c469-e4e20507b795",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WELD_PROCESS_NONE",
+      "value": 0,
+      "summary": "No process type."
+    },
+    {
+      "name": "WELD_PROCESS_SMAW",
+      "value": 1,
+      "summary": "The shielded metal arc (SMAW) process type."
+    },
+    {
+      "name": "WELD_PROCESS_SAW",
+      "value": 2,
+      "summary": "The submerged arc (SAW) process type."
+    },
+    {
+      "name": "WELD_PROCESS_GMAW",
+      "value": 3,
+      "summary": "The gas metal arc (GMAW) process type."
+    },
+    {
+      "name": "WELD_PROCESS_FCAW",
+      "value": 4,
+      "summary": "The flux cored arc (FCAW) process type."
+    },
+    {
+      "name": "WELD_PROCESS_ESW",
+      "value": 5,
+      "summary": "The electroslag (ESW) process type."
+    },
+    {
+      "name": "WELD_PROCESS_EGW",
+      "value": 6,
+      "summary": "The electrogas (EGW) process type."
+    }
+  ]
+}

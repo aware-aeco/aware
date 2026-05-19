@@ -1,0 +1,76 @@
+{
+  "name": "AlongLinePlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The AlongLinePlacing class defines a placing where the object is located and moved along a line defined by two points.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/add4e174-6dc4-3eeb-7b1f-2d013882190d",
+  "constructors": [
+    {
+      "name": "AlongLinePlacing",
+      "signature": "public AlongLinePlacing(Point StartPoint, Point EndPoint)",
+      "summary": "Creates a new along line placing instance. The given two points define the line to be used for the placing.",
+      "params": [
+        {
+          "name": "StartPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first point of the line.",
+          "optional": false
+        },
+        {
+          "name": "EndPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second point of the line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc6d3493-a867-1a37-eecc-435f27c47462"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2360f3f-0551-3a34-e20d-40e9168f3c6b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The end point of the line that the object is placed on.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/13eaa524-808d-f7b3-790d-5253fede8456"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The start point of the line that the object is placed on.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bed7dd3b-929a-e4f1-e7f1-39870cce94ce"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

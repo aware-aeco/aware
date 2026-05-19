@@ -1,0 +1,554 @@
+{
+  "name": "BarShapePlacementUtil",
+  "namespace": "StdReinfShapeBuilder.BarShapePlacementUtil",
+  "kind": "class",
+  "summary": "Implementation of the bar shape placement utility.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/",
+  "constructors": [
+    {
+      "name": "BarShapePlacementUtil",
+      "signature": "BarShapePlacementUtil()",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_shape",
+      "signature": "add_shape(shape_id: int | str, shape: BendingShape)",
+      "summary": "Add a shape to the shape list",
+      "remarks": "Add a shape to the shape list",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        },
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.add_shape"
+    },
+    {
+      "name": "get_placement",
+      "signature": "get_placement(reinf_def, param_dict, diameter, local_angles)",
+      "summary": "Calculate the local placement line inside the local X/Y coordinate system of the shapes",
+      "remarks": "Calculate the local placement line inside the local X/Y coordinate system of the shapes",
+      "params": [
+        {
+          "name": "reinf_def",
+          "type": "object",
+          "doc": "Reinforcement definition",
+          "optional": false
+        },
+        {
+          "name": "param_dict",
+          "type": "object",
+          "doc": "Parameter dictionary",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "object",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Placement line in local coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement"
+    },
+    {
+      "name": "get_placement_at_shape_side",
+      "signature": "get_placement_at_shape_side( shape_id: int | str, side_number: int, ref_pnt_fac: float, b_above_side: bool, placement_diameter: float, local_angles: RotationAngles, ) -\u003E tuple[Line2D, float, float]",
+      "summary": "Calculate the local placement line at a given leg of the reference shape in its local coordinate system",
+      "remarks": "Calculate the local placement line at a given leg of the reference shape in its local coordinate system",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number",
+          "type": "int",
+          "doc": "Number of the leg of the reference shape, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "ref_pnt_fac",
+          "type": "float",
+          "doc": "Factor for the reference point calculation. (-1 = at the side from left to right)",
+          "optional": false
+        },
+        {
+          "name": "b_above_side",
+          "type": "bool",
+          "doc": "When set to True, the placement line is created above the leg",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2D",
+        "doc": "Placement line in local coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_at_shape_side"
+    },
+    {
+      "name": "get_placement_at_shape_side_intersection",
+      "signature": "get_placement_at_shape_side_intersection( shape_id1: int | str, side_number1: int, shape_id2: int | str, side_number2: int, shape_id3: int | str, side_number3: int, b_above_side3: bool, placement_diameter: float, local_angles: RotationAngles, ) -\u003E tuple[Line2D, float, float]",
+      "summary": "Calculates the placement line on the specified leg of the third reference shape, starting at the intersection with the leg of the first reference shape and ending a the intersection with leg of the second reference shape.",
+      "remarks": "Calculates the placement line on the specified leg of the third reference shape, starting at the intersection with the leg of the first reference shape and ending a the intersection with leg of the second reference shape.",
+      "params": [
+        {
+          "name": "shape_id1",
+          "type": "int | str",
+          "doc": "ID of the first reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number1",
+          "type": "int",
+          "doc": "Number of the leg of the first reference shape, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "shape_id2",
+          "type": "int | str",
+          "doc": "ID of the second reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number2",
+          "type": "int",
+          "doc": "Number of the leg of the second reference shape, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "shape_id3",
+          "type": "int | str",
+          "doc": "ID of the third reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number3",
+          "type": "int",
+          "doc": "Number of the leg of the third reference shape, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "b_above_side3",
+          "type": "bool",
+          "doc": "When True, the placement line will be calculated above the leg, otherwise below",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2D",
+        "doc": "Placement line in local coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_at_shape_side_intersection"
+    },
+    {
+      "name": "get_placement_from_bending_roller",
+      "signature": "get_placement_from_bending_roller( shape_id: int | str, side_number: int, b_roller_start_point: bool, placement_base_line: Line2D | Line3D, b_placment_start_point: bool, placement_diameter: float, local_angles: RotationAngles, ) -\u003E float",
+      "summary": "Get the placement cover from the bending roller of a defined side number",
+      "remarks": "Get the placement cover from the bending roller of a defined side number",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number",
+          "type": "int",
+          "doc": "Number of the shape leg",
+          "optional": false
+        },
+        {
+          "name": "b_roller_start_point",
+          "type": "bool",
+          "doc": "True = roller at the start point / False = roller at the end point",
+          "optional": false
+        },
+        {
+          "name": "placement_base_line",
+          "type": "Line2D | Line3D",
+          "doc": "Base line of the placement",
+          "optional": false
+        },
+        {
+          "name": "b_placment_start_point",
+          "type": "bool",
+          "doc": "True = placement start point / False = placement end point",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Local placement cover to a placement base line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_from_bending_roller"
+    },
+    {
+      "name": "get_placement_from_side_intersection",
+      "signature": "get_placement_from_side_intersection( shape_id1: int | str, side_number1: int, b_above_side1: bool, shape_id2: int | str, side_number2: int, b_above_side2: bool, placement_base_line: Line2D, b_placment_start_point: bool, placement_diameter: float, local_angles: RotationAngles, ) -\u003E float",
+      "summary": "Get the placement cover from the side intersection of two defined side numbers.",
+      "remarks": "Get the placement cover from the side intersection of two defined side numbers.",
+      "params": [
+        {
+          "name": "shape_id1",
+          "type": "int | str",
+          "doc": "ID of the first shape",
+          "optional": false
+        },
+        {
+          "name": "side_number1",
+          "type": "int",
+          "doc": "Number of the first shape leg",
+          "optional": false
+        },
+        {
+          "name": "b_above_side1",
+          "type": "bool",
+          "doc": "Cover above the first side: True/False",
+          "optional": false
+        },
+        {
+          "name": "shape_id2",
+          "type": "int | str",
+          "doc": "ID of the second shape",
+          "optional": false
+        },
+        {
+          "name": "side_number2",
+          "type": "int",
+          "doc": "Number of the second shape leg",
+          "optional": false
+        },
+        {
+          "name": "b_above_side2",
+          "type": "bool",
+          "doc": "Cover above the second side: True/False",
+          "optional": false
+        },
+        {
+          "name": "placement_base_line",
+          "type": "Line2D",
+          "doc": "Base line of the placement",
+          "optional": false
+        },
+        {
+          "name": "b_placment_start_point",
+          "type": "bool",
+          "doc": "True = placement start point / False = placement end point",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Local placement cover to a placement base line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_from_side_intersection"
+    },
+    {
+      "name": "get_placement_in_corner",
+      "signature": "get_placement_in_corner( shape_id: int | str, corner_number: int, placement_diameter: float, local_angles: RotationAngles, ) -\u003E Point3D",
+      "summary": "Calculate the placement point for a longitudinal bar in the corner of the given reference shape",
+      "remarks": "Calculate the placement point for a longitudinal bar in the corner of the given reference shape",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        },
+        {
+          "name": "corner_number",
+          "type": "int",
+          "doc": "Number of the corner in the reference shape, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Position of corner bar in the local coordinate system of the reference shape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_in_corner"
+    },
+    {
+      "name": "get_placement_in_side_corners",
+      "signature": "get_placement_in_side_corners( shape_id: int | str, side_number: int, placement_diameter: float, local_angles: RotationAngles, ) -\u003E tuple[Line2D, float, float]",
+      "summary": "Calculate the placement line on the entire length of the specified leg of the reference shape. Note, that the calculation cannot be done in the first leg!",
+      "remarks": "Calculate the placement line on the entire length of the specified leg of the reference shape. Note, that the calculation cannot be done in the first leg!",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number",
+          "type": "int",
+          "doc": "Number of the shape\u0027s leg, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2D",
+        "doc": "Placement line in local coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_in_side_corners"
+    },
+    {
+      "name": "get_placement_in_side_intersection",
+      "signature": "get_placement_in_side_intersection( shape_id1: int | str, side_number1: int, b_above_side1: bool, shape_id2: int | str, side_number2: int, b_above_side2: bool, placement_diameter: float, local_angles: RotationAngles, ) -\u003E Point2D | Point3D",
+      "summary": "Get the placement point at the intersection of two legs.",
+      "remarks": "Get the placement point at the intersection of two legs.",
+      "params": [
+        {
+          "name": "shape_id1",
+          "type": "int | str",
+          "doc": "ID of the first reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number1",
+          "type": "int",
+          "doc": "Leg number of the first reference shape, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "b_above_side1",
+          "type": "bool",
+          "doc": "True will calculate the placement point above the first leg, False below",
+          "optional": false
+        },
+        {
+          "name": "shape_id2",
+          "type": "int | str",
+          "doc": "ID of the second reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number2",
+          "type": "int",
+          "doc": "Leg number of the second reference shape, beginning with 1",
+          "optional": false
+        },
+        {
+          "name": "b_above_side2",
+          "type": "bool",
+          "doc": "True will calculate the placement point above the second leg, False below",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Rotation from global to local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D | Point3D",
+        "doc": "Local placement point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placement_in_side_intersection"
+    },
+    {
+      "name": "get_placent_line_cover_from_side",
+      "signature": "get_placent_line_cover_from_side( shape_id: int | str, side_number: int, b_above_side: bool ) -\u003E tuple[Line3D, float]",
+      "summary": "Get the placement line cover from a shape leg by side number",
+      "remarks": "Get the placement line cover from a shape leg by side number",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number",
+          "type": "int",
+          "doc": "Number of the shape leg",
+          "optional": false
+        },
+        {
+          "name": "b_above_side",
+          "type": "bool",
+          "doc": "Cover above the side: True/False",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line3D",
+        "doc": "Placement line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_placent_line_cover_from_side"
+    },
+    {
+      "name": "get_side_length",
+      "signature": "get_side_length(shape_id: int | str, side_number: int) -\u003E float",
+      "summary": "Gets the leg\u0027s length of the given shape",
+      "remarks": "Gets the leg\u0027s length of the given shape",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        },
+        {
+          "name": "side_number",
+          "type": "int",
+          "doc": "Number of the leg",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.get_side_length"
+    },
+    {
+      "name": "is_shape_created",
+      "signature": "is_shape_created(shape_id: int | str) -\u003E bool",
+      "summary": "Check if the shape of given id exists in the list",
+      "remarks": "Check if the shape of given id exists in the list",
+      "params": [
+        {
+          "name": "shape_id",
+          "type": "int | str",
+          "doc": "ID of the reference shape",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if shape exists, False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/#StdReinfShapeBuilder.BarShapePlacementUtil.BarShapePlacementUtil.is_shape_created"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

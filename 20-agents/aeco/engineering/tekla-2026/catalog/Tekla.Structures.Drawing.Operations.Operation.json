@@ -1,0 +1,98 @@
+{
+  "name": "Operation",
+  "namespace": "Tekla.Structures.Drawing.Operations",
+  "kind": "class",
+  "summary": "Operations for drawing objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2172371d-8e05-8a9c-a7cf-e27af89483f0",
+  "constructors": [
+    {
+      "name": "Operation",
+      "signature": "public Operation()",
+      "summary": "Initializes a new instance of the Operation class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9182e385-dcae-794d-a95e-a3357662b3ad"
+    }
+  ],
+  "methods": [
+    {
+      "name": "MergeMarks",
+      "signature": "public static bool MergeMarks(IList\u003CMarkBase\u003E marks, out List\u003CMarkBase\u003E mergedMarks)",
+      "summary": "Merges given marks objects. NOTE!! Merge requires the original mark content to be similar and of same type. Operation does not support associative notes, mark sets or template content.",
+      "params": [
+        {
+          "name": "marks",
+          "type": "System.Collections.Generic.IList\u003CMarkBase\u003E",
+          "doc": "Contains the of marks to be merged",
+          "optional": false
+        },
+        {
+          "name": "mergedMarks",
+          "type": "System.Collections.Generic.List\u003CMarkBase\u003E.",
+          "doc": "Merged marks",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True in case of success, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/33045019-b167-2f31-9f39-7fd8fbf633c4"
+    },
+    {
+      "name": "SortObjectsByPresentationOrder",
+      "signature": "public static bool SortObjectsByPresentationOrder(IList\u003CDrawingObject\u003E objects, out List\u003CDrawingObject\u003E objectsByPresentationOrder)",
+      "summary": "Sorts objects relatively by presentation order from active drawing. Result is used to define relative drawing order of objects which are on top of each other. Last object from the list is drawn on top of all objects.",
+      "params": [
+        {
+          "name": "objects",
+          "type": "System.Collections.Generic.IList\u003CDrawingObject\u003E",
+          "doc": "Contains the objects layers are asked from",
+          "optional": false
+        },
+        {
+          "name": "objectsByPresentationOrder",
+          "type": "System.Collections.Generic.List\u003CDrawingObject\u003E.",
+          "doc": "Contains objects sorted by presentation order",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True in case of success, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4762a6c1-1637-130d-c937-1efedfc8045a"
+    },
+    {
+      "name": "SplitMarks",
+      "signature": "public static bool SplitMarks(IList\u003CMarkBase\u003E marks)",
+      "summary": "Splits given marks to original marks.",
+      "params": [
+        {
+          "name": "marks",
+          "type": "System.Collections.Generic.IList\u003CMarkBase\u003E",
+          "doc": "Contains the list of marks to be splitted",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True in case of success, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4a588896-d9e1-e726-94a1-9b5c3e099f37"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

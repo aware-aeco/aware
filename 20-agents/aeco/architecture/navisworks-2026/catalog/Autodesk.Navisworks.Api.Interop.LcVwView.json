@@ -1,0 +1,1695 @@
+{
+  "name": "LcVwView",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcVwView class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcVwView",
+  "constructors": [
+    {
+      "name": "LcVwView(Autodesk.Navisworks.Api.Interop.LcVwDocument, Autodesk.Navisworks.Api.Interop.LcOpKernelExViewer)",
+      "signature": "LcVwView(Autodesk.Navisworks.Api.Interop.LcVwDocument parent, Autodesk.Navisworks.Api.Interop.LcOpKernelExViewer viewer)",
+      "summary": "Constructs a new LcVwView.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwDocument",
+          "optional": false
+        },
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelExViewer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.%23ctor%28Autodesk.Navisworks.Api.Interop.LcVwDocument%2CAutodesk.Navisworks.Api.Interop.LcOpKernelExViewer%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PickPointImpl",
+      "signature": "Autodesk.Navisworks.Api.ModelItem PickPointImpl(int cx, int cy, double size, int control_bits, Autodesk.Navisworks.Api.Interop.LcVwData3f point_3d, Autodesk.Navisworks.Api.Interop.LcVwData3f normal, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex1, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex2, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex3, ref int vertex_count, ref bool success)",
+      "summary": "PickPointImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "cx",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "cy",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "control_bits",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "point_3d",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex_count",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.PickPointImpl%28System.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Int32%40%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "ActiveClipPlaneTryShowGizmo",
+      "signature": "bool ActiveClipPlaneTryShowGizmo(bool force_recalculation)",
+      "summary": "ActiveClipPlaneTryShowGizmo method of LcVwView.",
+      "params": [
+        {
+          "name": "force_recalculation",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ActiveClipPlaneTryShowGizmo%28System.Boolean%29"
+    },
+    {
+      "name": "ActiveClipPlaneTryShowGizmoImpl",
+      "signature": "bool ActiveClipPlaneTryShowGizmoImpl(bool force_recalculation)",
+      "summary": "ActiveClipPlaneTryShowGizmoImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "force_recalculation",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ActiveClipPlaneTryShowGizmoImpl%28System.Boolean%29"
+    },
+    {
+      "name": "ContextMenu",
+      "signature": "bool ContextMenu(int x, int y, int screen_x, int screen_y)",
+      "summary": "ContextMenu method of LcVwView.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "screen_x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "screen_y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ContextMenu%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "ConvertMeasurementToRedline",
+      "signature": "bool ConvertMeasurementToRedline(out string jsonRedlineCollection)",
+      "summary": "ConvertMeasurementToRedline method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonRedlineCollection",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ConvertMeasurementToRedline%28System.String%40%29"
+    },
+    {
+      "name": "EndInteractive",
+      "signature": "bool EndInteractive()",
+      "summary": "EndInteractive method of LcVwView.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.EndInteractive"
+    },
+    {
+      "name": "GetActiveClipPlane",
+      "signature": "bool GetActiveClipPlane(ref int plane_index)",
+      "summary": "GetActiveClipPlane method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetActiveClipPlane%28System.Int32%40%29"
+    },
+    {
+      "name": "GetActiveClipPlaneImpl",
+      "signature": "bool GetActiveClipPlaneImpl(ref int plane_index)",
+      "summary": "GetActiveClipPlaneImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetActiveClipPlaneImpl%28System.Int32%40%29"
+    },
+    {
+      "name": "GetClipPlaneSet",
+      "signature": "bool GetClipPlaneSet(out string jsonClipPlaneSet)",
+      "summary": "GetClipPlaneSet method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonClipPlaneSet",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetClipPlaneSet%28System.String%40%29"
+    },
+    {
+      "name": "GetClipPlaneSetImpl",
+      "signature": "bool GetClipPlaneSetImpl(Autodesk.Navisworks.Api.ClipPlaneSet clip_planes)",
+      "summary": "GetClipPlaneSetImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "clip_planes",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetClipPlaneSetImpl%28Autodesk.Navisworks.Api.ClipPlaneSet%29"
+    },
+    {
+      "name": "GetClipPlaneTransform",
+      "signature": "bool GetClipPlaneTransform(int plane_index, out string jsonTransform3D)",
+      "summary": "GetClipPlaneTransform method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetClipPlaneTransform%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetClipPlaneTransformImpl",
+      "signature": "bool GetClipPlaneTransformImpl(int plane_index, Autodesk.Navisworks.Api.Interop.LcOpTransform3fR transformr)",
+      "summary": "GetClipPlaneTransformImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "transformr",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTransform3fR",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetClipPlaneTransformImpl%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpTransform3fR%29"
+    },
+    {
+      "name": "GetCurrentCamera",
+      "signature": "bool GetCurrentCamera(out string jsonCamera)",
+      "summary": "GetCurrentCamera method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonCamera",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetCurrentCamera%28System.String%40%29"
+    },
+    {
+      "name": "GetCurrentCameraImpl",
+      "signature": "bool GetCurrentCameraImpl(Autodesk.Navisworks.Api.Interop.LcNvViewPoint viewpoint)",
+      "summary": "GetCurrentCameraImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "viewpoint",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetCurrentCameraImpl%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%29"
+    },
+    {
+      "name": "GetGizmo",
+      "signature": "bool GetGizmo(ref int gizmo)",
+      "summary": "GetGizmo method of LcVwView.",
+      "params": [
+        {
+          "name": "gizmo",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetGizmo%28System.Int32%40%29"
+    },
+    {
+      "name": "GetGizmoImpl",
+      "signature": "bool GetGizmoImpl(ref int gizmo)",
+      "summary": "GetGizmoImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "gizmo",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetGizmoImpl%28System.Int32%40%29"
+    },
+    {
+      "name": "GetPurpose",
+      "signature": "bool GetPurpose(ref int purpose)",
+      "summary": "GetPurpose method of LcVwView.",
+      "params": [
+        {
+          "name": "purpose",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetPurpose%28System.Int32%40%29"
+    },
+    {
+      "name": "GetPurposeImpl",
+      "signature": "bool GetPurposeImpl(ref int purpose)",
+      "summary": "GetPurposeImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "purpose",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetPurposeImpl%28System.Int32%40%29"
+    },
+    {
+      "name": "GetRedlines",
+      "signature": "bool GetRedlines(out string jsonRedlineCollection)",
+      "summary": "GetRedlines method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonRedlineCollection",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetRedlines%28System.String%40%29"
+    },
+    {
+      "name": "GetRedlinesImpl",
+      "signature": "bool GetRedlinesImpl(Autodesk.Navisworks.Api.Interop.LcOpRedlineList redlines)",
+      "summary": "GetRedlinesImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "redlines",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineList",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetRedlinesImpl%28Autodesk.Navisworks.Api.Interop.LcOpRedlineList%29"
+    },
+    {
+      "name": "GetViewOptions",
+      "signature": "bool GetViewOptions(out string jsonViewOptions)",
+      "summary": "GetViewOptions method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonViewOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetViewOptions%28System.String%40%29"
+    },
+    {
+      "name": "GetViewOptionsImpl",
+      "signature": "bool GetViewOptionsImpl(out string jsonViewOptions)",
+      "summary": "GetViewOptionsImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonViewOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.GetViewOptionsImpl%28System.String%40%29"
+    },
+    {
+      "name": "InitializeClipBox",
+      "signature": "bool InitializeClipBox()",
+      "summary": "InitializeClipBox method of LcVwView.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.InitializeClipBox"
+    },
+    {
+      "name": "InitializeClipBoxImpl",
+      "signature": "bool InitializeClipBoxImpl()",
+      "summary": "InitializeClipBoxImpl method of LcVwView.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.InitializeClipBoxImpl"
+    },
+    {
+      "name": "InitializeClipPlane",
+      "signature": "bool InitializeClipPlane(int plane_index, int direction)",
+      "summary": "InitializeClipPlane method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.InitializeClipPlane%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "InitializeClipPlaneImpl",
+      "signature": "bool InitializeClipPlaneImpl(int plane_index, int direction)",
+      "summary": "InitializeClipPlaneImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.InitializeClipPlaneImpl%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "IsInteractive",
+      "signature": "bool IsInteractive(ref bool interactive)",
+      "summary": "IsInteractive method of LcVwView.",
+      "params": [
+        {
+          "name": "interactive",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.IsInteractive%28System.Boolean%40%29"
+    },
+    {
+      "name": "LookFromDirection",
+      "signature": "bool LookFromDirection(int direction)",
+      "summary": "LookFromDirection method of LcVwView.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.LookFromDirection%28System.Int32%29"
+    },
+    {
+      "name": "LookFromDirectionImpl",
+      "signature": "bool LookFromDirectionImpl(int direction)",
+      "summary": "LookFromDirectionImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.LookFromDirectionImpl%28System.Int32%29"
+    },
+    {
+      "name": "MouseDown",
+      "signature": "bool MouseDown(int x, int y, int button)",
+      "summary": "MouseDown method of LcVwView.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.MouseDown%28System.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "MouseUp",
+      "signature": "bool MouseUp(int x, int y, int button)",
+      "summary": "MouseUp method of LcVwView.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.MouseUp%28System.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "PickPoint",
+      "signature": "bool PickPoint(int cx, int cy, double size, int control_bits, Autodesk.Navisworks.Api.Interop.LcVwData3f point_3d, Autodesk.Navisworks.Api.Interop.LcVwData3f normal, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex1, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex2, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex3, ref int vertex_count, out string jsonModelPathId)",
+      "summary": "PickPoint method of LcVwView.",
+      "params": [
+        {
+          "name": "cx",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "cy",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "control_bits",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "point_3d",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex_count",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.PickPoint%28System.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Int32%40%2CSystem.String%40%29"
+    },
+    {
+      "name": "PickPointEx",
+      "signature": "bool PickPointEx(int cx, int cy, double size, int control_bits, out string jsonPickResult)",
+      "summary": "PickPointEx method of LcVwView.",
+      "params": [
+        {
+          "name": "cx",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "cy",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "control_bits",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonPickResult",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.PickPointEx%28System.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ProjectPoint",
+      "signature": "bool ProjectPoint(double x, double y, double z, ref int sx, ref int sy, ref double depth, ref bool visible)",
+      "summary": "ProjectPoint method of LcVwView.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sx",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "sy",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "visible",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ProjectPoint%28System.Double%2CSystem.Double%2CSystem.Double%2CSystem.Int32%40%2CSystem.Int32%40%2CSystem.Double%40%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "SetActiveClipPlane",
+      "signature": "bool SetActiveClipPlane(int plane_index)",
+      "summary": "SetActiveClipPlane method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetActiveClipPlane%28System.Int32%29"
+    },
+    {
+      "name": "SetActiveClipPlaneImpl",
+      "signature": "bool SetActiveClipPlaneImpl(int plane_index)",
+      "summary": "SetActiveClipPlaneImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetActiveClipPlaneImpl%28System.Int32%29"
+    },
+    {
+      "name": "SetClipPlaneEnabled",
+      "signature": "bool SetClipPlaneEnabled(int plane_index, bool enable)",
+      "summary": "SetClipPlaneEnabled method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneEnabled%28System.Int32%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetClipPlaneEnabledImpl",
+      "signature": "bool SetClipPlaneEnabledImpl(int plane_index, bool enable)",
+      "summary": "SetClipPlaneEnabledImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneEnabledImpl%28System.Int32%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetClipPlanePosition",
+      "signature": "bool SetClipPlanePosition(int plane_index, double x, double y, double z, double nx, double ny, double nz)",
+      "summary": "SetClipPlanePosition method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "nx",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "ny",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "nz",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlanePosition%28System.Int32%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SetClipPlanePositionImpl",
+      "signature": "bool SetClipPlanePositionImpl(int plane_index, double x, double y, double z, double nx, double ny, double nz)",
+      "summary": "SetClipPlanePositionImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "nx",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "ny",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "nz",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlanePositionImpl%28System.Int32%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SetClipPlaneSet",
+      "signature": "bool SetClipPlaneSet(string jsonClipPlaneSet)",
+      "summary": "SetClipPlaneSet method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonClipPlaneSet",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneSet%28System.String%29"
+    },
+    {
+      "name": "SetClipPlaneSetEnabled",
+      "signature": "bool SetClipPlaneSetEnabled(bool enable)",
+      "summary": "SetClipPlaneSetEnabled method of LcVwView.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneSetEnabled%28System.Boolean%29"
+    },
+    {
+      "name": "SetClipPlaneSetEnabledImpl",
+      "signature": "bool SetClipPlaneSetEnabledImpl(bool enable)",
+      "summary": "SetClipPlaneSetEnabledImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneSetEnabledImpl%28System.Boolean%29"
+    },
+    {
+      "name": "SetClipPlaneSetImpl",
+      "signature": "bool SetClipPlaneSetImpl(Autodesk.Navisworks.Api.ClipPlaneSet clip_planes)",
+      "summary": "SetClipPlaneSetImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "clip_planes",
+          "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneSetImpl%28Autodesk.Navisworks.Api.ClipPlaneSet%29"
+    },
+    {
+      "name": "SetClipPlaneTransform",
+      "signature": "bool SetClipPlaneTransform(int plane_index, string jsonTransform3D)",
+      "summary": "SetClipPlaneTransform method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneTransform%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "SetClipPlaneTransformImpl",
+      "signature": "bool SetClipPlaneTransformImpl(int plane_index, Autodesk.Navisworks.Api.Interop.LcOpTransform3fR transformr)",
+      "summary": "SetClipPlaneTransformImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "plane_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "transformr",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTransform3fR",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetClipPlaneTransformImpl%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpTransform3fR%29"
+    },
+    {
+      "name": "SetCurrentCamera",
+      "signature": "bool SetCurrentCamera(string jsonCamera, int camera_change)",
+      "summary": "SetCurrentCamera method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonCamera",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "camera_change",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetCurrentCamera%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetCurrentCameraImpl",
+      "signature": "bool SetCurrentCameraImpl(Autodesk.Navisworks.Api.Interop.LcNvViewPoint viewpoint, int camera_change)",
+      "summary": "SetCurrentCameraImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "viewpoint",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "camera_change",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetCurrentCameraImpl%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetGizmo",
+      "signature": "bool SetGizmo(int gizmo)",
+      "summary": "SetGizmo method of LcVwView.",
+      "params": [
+        {
+          "name": "gizmo",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetGizmo%28System.Int32%29"
+    },
+    {
+      "name": "SetGizmoImpl",
+      "signature": "bool SetGizmoImpl(int gizmo)",
+      "summary": "SetGizmoImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "gizmo",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetGizmoImpl%28System.Int32%29"
+    },
+    {
+      "name": "SetPurpose",
+      "signature": "bool SetPurpose(int purpose)",
+      "summary": "SetPurpose method of LcVwView.",
+      "params": [
+        {
+          "name": "purpose",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetPurpose%28System.Int32%29"
+    },
+    {
+      "name": "SetPurposeImpl",
+      "signature": "bool SetPurposeImpl(int purpose)",
+      "summary": "SetPurposeImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "purpose",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetPurposeImpl%28System.Int32%29"
+    },
+    {
+      "name": "SetRedlines",
+      "signature": "bool SetRedlines(string jsonRedlineCollection)",
+      "summary": "SetRedlines method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonRedlineCollection",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetRedlines%28System.String%29"
+    },
+    {
+      "name": "SetRedlinesImpl",
+      "signature": "bool SetRedlinesImpl(Autodesk.Navisworks.Api.Interop.LcOpRedlineList redlines)",
+      "summary": "SetRedlinesImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "redlines",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineList",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetRedlinesImpl%28Autodesk.Navisworks.Api.Interop.LcOpRedlineList%29"
+    },
+    {
+      "name": "SetViewOptions",
+      "signature": "bool SetViewOptions(string jsonViewOptions)",
+      "summary": "SetViewOptions method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonViewOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetViewOptions%28System.String%29"
+    },
+    {
+      "name": "SetViewOptionsImpl",
+      "signature": "bool SetViewOptionsImpl(string jsonViewOptions)",
+      "summary": "SetViewOptionsImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonViewOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.SetViewOptionsImpl%28System.String%29"
+    },
+    {
+      "name": "StartInteractive",
+      "signature": "bool StartInteractive()",
+      "summary": "StartInteractive method of LcVwView.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.StartInteractive"
+    },
+    {
+      "name": "WindowToWorldSpace",
+      "signature": "bool WindowToWorldSpace(int sx, int sy, double depth, ref double x, ref double y, ref double z)",
+      "summary": "WindowToWorldSpace method of LcVwView.",
+      "params": [
+        {
+          "name": "sx",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "sy",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.WindowToWorldSpace%28System.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Double%40%2CSystem.Double%40%2CSystem.Double%40%29"
+    },
+    {
+      "name": "ZoomBox",
+      "signature": "bool ZoomBox(string jsonBox3D)",
+      "summary": "ZoomBox method of LcVwView.",
+      "params": [
+        {
+          "name": "jsonBox3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ZoomBox%28System.String%29"
+    },
+    {
+      "name": "ZoomBoxImpl",
+      "signature": "bool ZoomBoxImpl(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "ZoomBoxImpl method of LcVwView.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ZoomBoxImpl%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcVwView InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcVwView.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcVwView",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcVwView.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CameraChanged",
+      "signature": "void CameraChanged()",
+      "summary": "CameraChanged method of LcVwView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.CameraChanged"
+    },
+    {
+      "name": "ClipPlaneSetChanged",
+      "signature": "void ClipPlaneSetChanged()",
+      "summary": "ClipPlaneSetChanged method of LcVwView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.ClipPlaneSetChanged"
+    },
+    {
+      "name": "EndedInteractive",
+      "signature": "void EndedInteractive()",
+      "summary": "EndedInteractive method of LcVwView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.EndedInteractive"
+    },
+    {
+      "name": "MakeRenderBoundingBox",
+      "signature": "void MakeRenderBoundingBox(Autodesk.Navisworks.Api.Interop.LcVwData3f min, Autodesk.Navisworks.Api.Interop.LcVwData3f max)",
+      "summary": "MakeRenderBoundingBox method of LcVwView.",
+      "params": [
+        {
+          "name": "min",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.MakeRenderBoundingBox%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%29"
+    },
+    {
+      "name": "MouseDrag",
+      "signature": "void MouseDrag(int x, int y)",
+      "summary": "MouseDrag method of LcVwView.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.MouseDrag%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "MouseMove",
+      "signature": "void MouseMove(int x, int y)",
+      "summary": "MouseMove method of LcVwView.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.MouseMove%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "OverlayRender",
+      "signature": "void OverlayRender(Autodesk.Navisworks.Api.Interop.LcVwGraphics graphics)",
+      "summary": "OverlayRender method of LcVwView.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwGraphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.OverlayRender%28Autodesk.Navisworks.Api.Interop.LcVwGraphics%29"
+    },
+    {
+      "name": "RedlinesChanged",
+      "signature": "void RedlinesChanged()",
+      "summary": "RedlinesChanged method of LcVwView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.RedlinesChanged"
+    },
+    {
+      "name": "Render",
+      "signature": "void Render(Autodesk.Navisworks.Api.Interop.LcVwGraphics graphics)",
+      "summary": "Render method of LcVwView.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwGraphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.Render%28Autodesk.Navisworks.Api.Interop.LcVwGraphics%29"
+    },
+    {
+      "name": "RequestOverlayRender",
+      "signature": "void RequestOverlayRender()",
+      "summary": "RequestOverlayRender method of LcVwView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.RequestOverlayRender"
+    },
+    {
+      "name": "RequestRender",
+      "signature": "void RequestRender()",
+      "summary": "RequestRender method of LcVwView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.RequestRender"
+    },
+    {
+      "name": "StartedInteractive",
+      "signature": "void StartedInteractive()",
+      "summary": "StartedInteractive method of LcVwView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwView.StartedInteractive"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcVwView.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcVwView.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,31 @@
+{
+  "name": "ePolyhedronHealingSettings",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Type of Healing settings for polyhedron",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ePolyhedronHealingSettings/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HSET_NOMODIFY",
+      "value": 2
+    },
+    {
+      "name": "HSET_TILT",
+      "value": 1
+    },
+    {
+      "name": "HSET_TRIANGULATE",
+      "value": 0
+    },
+    {
+      "name": "HSET_UNKNOWN",
+      "value": 3
+    }
+  ]
+}

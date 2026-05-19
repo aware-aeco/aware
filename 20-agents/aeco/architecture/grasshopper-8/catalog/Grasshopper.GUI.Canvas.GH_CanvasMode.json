@@ -1,0 +1,29 @@
+{
+  "name": "GH_CanvasMode",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates all pre-defined Canvas modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Control",
+      "value": 0,
+      "summary": "Indicates the canvas is currently drawing into the winforms control. This is the most common mode."
+    },
+    {
+      "name": "Thumbnail",
+      "value": 1,
+      "summary": "Indicates the canvas is currently drawing itself to a thumbnail image."
+    },
+    {
+      "name": "Export",
+      "value": 2,
+      "summary": "Indicates the canvas is currently drawing itself to an off-screen image. This typically happens during Hi-Res export operations."
+    }
+  ]
+}

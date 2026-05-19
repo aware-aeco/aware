@@ -1,0 +1,23 @@
+{
+  "name": "DirectionMode",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "mode for directions",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/DirectionMode/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFull",
+      "value": 1
+    },
+    {
+      "name": "eRestricted",
+      "value": 0
+    }
+  ]
+}

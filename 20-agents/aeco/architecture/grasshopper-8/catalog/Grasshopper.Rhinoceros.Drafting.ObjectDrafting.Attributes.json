@@ -1,0 +1,109 @@
+{
+  "name": "ObjectDrafting.Attributes",
+  "namespace": "Grasshopper.Rhinoceros.Drafting",
+  "kind": "struct",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.Drafting.ObjectDrafting.Attributes.)",
+  "base": "GH_ISerializable",
+  "interfaces": [
+    "IEquatable\u003CObjectDrafting.Attributes\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals(ObjectDrafting.Attributes)",
+      "signature": "public bool Equals(ObjectDrafting.Attributes other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDrafting.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_GetHashCode.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Nullable\u003CObjectDraftingColor.Value\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_Color.htm"
+    },
+    {
+      "name": "LineScale",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_LineScale.htm"
+    },
+    {
+      "name": "Linetype",
+      "type": "Nullable\u003CObjectDraftingLinetype.Value\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_Linetype.htm"
+    },
+    {
+      "name": "LineWidth",
+      "type": "Nullable\u003CObjectDraftingLineWidth.Value\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_LineWidth.htm"
+    },
+    {
+      "name": "Order",
+      "type": "Nullable\u003CInt32\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDrafting_Attributes_Order.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

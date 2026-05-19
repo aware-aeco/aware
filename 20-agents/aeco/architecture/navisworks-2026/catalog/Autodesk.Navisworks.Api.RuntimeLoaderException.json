@@ -1,0 +1,65 @@
+{
+  "name": "RuntimeLoaderException",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "The exception that is thrown when trying to use a Navisworks control but the control can\u0027t find a Navisworks runtime to use. For example if no Navisworks product is installed.",
+  "base": "System.InvalidOperationException",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.RuntimeLoaderException",
+  "constructors": [
+    {
+      "name": "RuntimeLoaderException()",
+      "signature": "RuntimeLoaderException()",
+      "summary": "Creates a RuntimeLoaderException",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.RuntimeLoaderException.%23ctor"
+    },
+    {
+      "name": "RuntimeLoaderException(string)",
+      "signature": "RuntimeLoaderException(string message)",
+      "summary": "Creates a RuntimeLoaderException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The error message that explains the reason for the exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.RuntimeLoaderException.%23ctor%28System.String%29"
+    },
+    {
+      "name": "RuntimeLoaderException(string, System.Exception)",
+      "signature": "RuntimeLoaderException(string message, System.Exception innerException)",
+      "summary": "Creates a RuntimeLoaderException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The error message that explains the reason for the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The exception that is the cause of the current exception. If the innerException parameter is not null, the current exception is raised in a catch block that handles the inner exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.RuntimeLoaderException.%23ctor%28System.String%2CSystem.Exception%29"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

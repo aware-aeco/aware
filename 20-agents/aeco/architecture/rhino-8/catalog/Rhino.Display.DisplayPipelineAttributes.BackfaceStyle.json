@@ -1,0 +1,44 @@
+{
+  "name": "DisplayPipelineAttributes.BackfaceStyle",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Values for changing the display of the backface (the side opposite of the surface normal direction).",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes_BackfaceStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UseFrontFaceSettings",
+      "value": 0,
+      "summary": "No color change."
+    },
+    {
+      "name": "CullBackfaces",
+      "value": 1,
+      "summary": "Surfaces viewed from the back will be transparent."
+    },
+    {
+      "name": "UseObjectColor",
+      "value": 2,
+      "summary": "Surfaces viewed from the back use the color specified in the object\u0027s display properties."
+    },
+    {
+      "name": "SingleColorAllBackfaces",
+      "value": 3,
+      "summary": "All backfaces display a specified color regardless of the object color."
+    },
+    {
+      "name": "UseRenderMaterial",
+      "value": 4,
+      "summary": "Shades using rendering material."
+    },
+    {
+      "name": "CustomMaterialAllBackfaces",
+      "value": 5,
+      "summary": "Use a custom material for all backfaces."
+    }
+  ]
+}

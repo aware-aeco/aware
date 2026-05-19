@@ -1,0 +1,116 @@
+{
+  "name": "Assertion",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "Defines an assertion by the method it failed in and the messages it provided.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ad52597a-0408-037b-a3d1-689855b86dc5",
+  "constructors": [
+    {
+      "name": "Assertion",
+      "signature": "public Assertion(string message, string detailedMessage, string methodName)",
+      "summary": "Initializes a new instance of the Assertion class.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message.",
+          "optional": false
+        },
+        {
+          "name": "detailedMessage",
+          "type": "System.String",
+          "doc": "The detailed message.",
+          "optional": false
+        },
+        {
+          "name": "methodName",
+          "type": "System.String",
+          "doc": "The method name.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5aec3393-43a1-a580-67b1-ab08feed94c4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "The equals.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The obj.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The Boolean."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0e1a8744-a12a-74b6-4bcd-6f67e2c54fc2"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets a hash code for this instance. Calculated as recommended at http://msdn.microsoft.com/en-us/library/system.object.gethashcode.aspx",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The Int32."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0694a655-97f1-d848-0561-2b43332e2ecf"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "The tostring.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The String."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca2065a8-4966-563c-8b29-4e84a9e0acab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DetailedMessage",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the detailed message provided by the assertion.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/06cc5ffb-4d37-a181-6eea-10f1731e9862"
+    },
+    {
+      "name": "Message",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the message provided by the assertion.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1084ee22-2c17-71d7-d951-36ac03793d31"
+    },
+    {
+      "name": "MethodName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the method the assertion failed in.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/25d24911-ca3d-e5ae-9a5c-728f79f7abe0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

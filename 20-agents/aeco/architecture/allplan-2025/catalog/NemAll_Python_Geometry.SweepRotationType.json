@@ -1,0 +1,27 @@
+{
+  "name": "SweepRotationType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Locked : Unlocked : RailLocked:",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/SweepRotationType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Locked",
+      "value": 0
+    },
+    {
+      "name": "RailLocked",
+      "value": 2
+    },
+    {
+      "name": "Unlocked",
+      "value": 1
+    }
+  ]
+}

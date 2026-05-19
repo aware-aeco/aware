@@ -1,0 +1,27 @@
+{
+  "name": "eClothoidType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Clothoid type identification.",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eClothoidType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eClothoid",
+      "value": 1
+    },
+    {
+      "name": "eParabolaGeneral",
+      "value": 3
+    },
+    {
+      "name": "eParabolaQuadratic",
+      "value": 2
+    }
+  ]
+}

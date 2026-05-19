@@ -1,0 +1,86 @@
+{
+  "name": "FixtureGroupProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "FixtureGroupProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/",
+  "constructors": [
+    {
+      "name": "FixtureGroupProperties",
+      "signature": "FixtureGroupProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: FixtureGroupProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "FixtureGroupProperties",
+          "doc": "FixtureGroupProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LeadingPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Leading point of the fixture group Value type: Point3D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.LeadingPoint"
+    },
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the fixture group Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.Name"
+    },
+    {
+      "name": "Type",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Type of the fixture group (General|Dynamic|Cutted|Leading) Value type: enum :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.Type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,320 @@
+{
+  "name": "BSpline3DService",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D BSpline service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/",
+  "constructors": [
+    {
+      "name": "BSpline3DService",
+      "signature": "BSpline3DService(bSpline)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "bSpline",
+          "type": "BSpline3D",
+          "doc": "BSpline for the services",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddControlPoint",
+      "signature": "AddControlPoint(pointIdx, coords)",
+      "summary": "add control point to B-Spline",
+      "remarks": "add control point to B-Spline",
+      "params": [
+        {
+          "name": "pointIdx",
+          "type": "int",
+          "doc": "index, where new point will be stored",
+          "optional": false
+        },
+        {
+          "name": "coords",
+          "type": "Point3D",
+          "doc": "coordinates of point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.AddControlPoint"
+    },
+    {
+      "name": "AddControlPointOnSegment",
+      "signature": "AddControlPointOnSegment(ray, coords)",
+      "summary": "add control point to B-Spline\u0027s segment given by point",
+      "remarks": "add control point to B-Spline\u0027s segment given by point",
+      "params": [
+        {
+          "name": "ray",
+          "type": "Vector3D",
+          "doc": "view vector",
+          "optional": false
+        },
+        {
+          "name": "coords",
+          "type": "Point3D",
+          "doc": "coordinates of point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "segment index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.AddControlPointOnSegment"
+    },
+    {
+      "name": "GetControlPointIndex",
+      "signature": "GetControlPointIndex(param)",
+      "summary": "calculate control point index from parameter on B-Spline",
+      "remarks": "calculate control point index from parameter on B-Spline",
+      "params": [
+        {
+          "name": "param",
+          "type": "float",
+          "doc": "parameter on BSpline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.GetControlPointIndex"
+    },
+    {
+      "name": "InsertKnot",
+      "signature": "InsertKnot(param, numInsertionsMultiplicity)",
+      "summary": "Insert knot into bspline knot vector (compute new control points, preserve geometry)",
+      "remarks": "Insert knot into bspline knot vector (compute new control points, preserve geometry)",
+      "params": [
+        {
+          "name": "param",
+          "type": "float",
+          "doc": "param to insert",
+          "optional": false
+        },
+        {
+          "name": "numInsertionsMultiplicity",
+          "type": "int",
+          "doc": "multiplicity of new knot",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.InsertKnot"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Check validity of service data",
+      "remarks": "Check validity of service data",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool valid = true"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.IsValid"
+    },
+    {
+      "name": "MoveStartPeriodic",
+      "signature": "MoveStartPeriodic(startParam)",
+      "summary": "Move start point in periodic BSpline",
+      "remarks": "Move start point in periodic BSpline",
+      "params": [
+        {
+          "name": "startParam",
+          "type": "float",
+          "doc": "start value for knot interval",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.MoveStartPeriodic"
+    },
+    {
+      "name": "PointModification",
+      "signature": "PointModification(pointsIdx, moveVector, isInterpolated, hSet)",
+      "summary": "move interpolated or control point of B-Spline",
+      "remarks": "move interpolated or control point of B-Spline",
+      "params": [
+        {
+          "name": "pointsIdx",
+          "type": "VecSizeTList",
+          "doc": "point indexes",
+          "optional": false
+        },
+        {
+          "name": "moveVector",
+          "type": "Vector3D",
+          "doc": "move vector",
+          "optional": false
+        },
+        {
+          "name": "isInterpolated",
+          "type": "bool",
+          "doc": "true if wanted to handle interpolated points",
+          "optional": false
+        },
+        {
+          "name": "hSet",
+          "type": "HealingSettings",
+          "doc": "healing settings",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.PointModification"
+    },
+    {
+      "name": "RefineKnots",
+      "signature": "RefineKnots(knotvalues, knotMultiplicities)",
+      "summary": "Refine knots (insert knots if necessary)",
+      "remarks": "Refine knots (insert knots if necessary)",
+      "params": [
+        {
+          "name": "knotvalues",
+          "type": "VecDoubleList",
+          "doc": "knot values to refine",
+          "optional": false
+        },
+        {
+          "name": "knotMultiplicities",
+          "type": "VecSizeTList",
+          "doc": "knot multiplicities",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.RefineKnots"
+    },
+    {
+      "name": "RemoveControlPoint",
+      "signature": "RemoveControlPoint(pointIdx)",
+      "summary": "remove control point from B-Spline",
+      "remarks": "remove control point from B-Spline",
+      "params": [
+        {
+          "name": "pointIdx",
+          "type": "int",
+          "doc": "point index to remove",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.RemoveControlPoint"
+    },
+    {
+      "name": "SetControlPoint",
+      "signature": "SetControlPoint(pointIdx, newCoords)",
+      "summary": "set coordinates of control point of B-Spline",
+      "remarks": "set coordinates of control point of B-Spline",
+      "params": [
+        {
+          "name": "pointIdx",
+          "type": "int",
+          "doc": "point index",
+          "optional": false
+        },
+        {
+          "name": "newCoords",
+          "type": "Point3D",
+          "doc": "new coordinates of point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.SetControlPoint"
+    },
+    {
+      "name": "SetDegree",
+      "signature": "SetDegree(degree)",
+      "summary": "set degree of B-Spline",
+      "remarks": "set degree of B-Spline",
+      "params": [
+        {
+          "name": "degree",
+          "type": "int",
+          "doc": "new degree for B-Spline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.SetDegree"
+    },
+    {
+      "name": "SetInterpolatedPoint",
+      "signature": "SetInterpolatedPoint(pointIdx, newCoords)",
+      "summary": "set coordinates of interpolated point of B-Spline",
+      "remarks": "set coordinates of interpolated point of B-Spline",
+      "params": [
+        {
+          "name": "pointIdx",
+          "type": "int",
+          "doc": "point index",
+          "optional": false
+        },
+        {
+          "name": "newCoords",
+          "type": "Point3D",
+          "doc": "new coordinates of point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.SetInterpolatedPoint"
+    },
+    {
+      "name": "SetPeriodic",
+      "signature": "SetPeriodic(periodic)",
+      "summary": "set/unset periodic property of B-Spline",
+      "remarks": "set/unset periodic property of B-Spline",
+      "params": [
+        {
+          "name": "periodic",
+          "type": "bool",
+          "doc": "it true, B-Spline will be periodic, otherwise B-Spline will be open",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.SetPeriodic"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

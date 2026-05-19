@@ -1,0 +1,180 @@
+{
+  "name": "SymbolElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SymbolElement class represents a symbol in the Tekla Structures symbol library.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ec0e7aaa-df5c-48a8-bded-69228d9b9b11",
+  "constructors": [
+    {
+      "name": "SymbolElement()",
+      "signature": "public SymbolElement()",
+      "summary": "Creates a new symbol element instance with the default symbol.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a2f0a562-309b-e6c2-50ea-b70556aa95df"
+    },
+    {
+      "name": "SymbolElement(SymbolInfo)",
+      "signature": "public SymbolElement(SymbolInfo Symbol)",
+      "summary": "Creates a new symbol element instance with the given symbol.",
+      "params": [
+        {
+          "name": "Symbol",
+          "type": "Tekla.Structures.Drawing.SymbolInfo",
+          "doc": "The symbol to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/424e6f06-9fef-caa5-818a-525a864acf53"
+    },
+    {
+      "name": "SymbolElement(SymbolInfo, DrawingColors, Double)",
+      "signature": "public SymbolElement(SymbolInfo Symbol, DrawingColors Color, double Height)",
+      "summary": "Creates a new symbol element instance with the given symbol, color and height.",
+      "params": [
+        {
+          "name": "Symbol",
+          "type": "Tekla.Structures.Drawing.SymbolInfo",
+          "doc": "The symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Drawing.DrawingColors",
+          "doc": "The symbol color to be used.",
+          "optional": false
+        },
+        {
+          "name": "Height",
+          "type": "System.Double",
+          "doc": "The symbol height (mm) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4a6356f8-9823-32c9-d600-98d4eb3e47be"
+    },
+    {
+      "name": "SymbolElement(SymbolInfo, TeklaDrawingColor, Double)",
+      "signature": "public SymbolElement(SymbolInfo Symbol, TeklaDrawingColor Color, double Height)",
+      "summary": "Creates a new symbol element instance with the given symbol, the RGB color and height.",
+      "params": [
+        {
+          "name": "Symbol",
+          "type": "Tekla.Structures.Drawing.SymbolInfo",
+          "doc": "The symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "Color",
+          "type": "Tekla.Structures.Drawing.TeklaDrawingColor",
+          "doc": "The symbol color to be used as a true RGB color.",
+          "optional": false
+        },
+        {
+          "name": "Height",
+          "type": "System.Double",
+          "doc": "The symbol height (mm) to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a3151a9f-6e1d-cfb7-7c17-efc6754ca3c3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public override Object Clone()",
+      "summary": "Clones the object.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d7480df-5842-f41e-3eac-d5a8d5570b7b"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "public override string GetUnformattedString()",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/016571de-9ea1-5da5-8812-d3fe8683e142"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/af6fb1a7-fa73-5b8e-d06d-94f761310e69"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "This property is the symbol color.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/52ffa2c9-baa7-9ccd-8d70-82bf5e557e3d"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The symbol height (mm).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bbe783ca-deeb-1ad6-4b15-9eed44d68365"
+    },
+    {
+      "name": "Symbol",
+      "type": "SymbolInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "The symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1955c08b-2163-72bc-5793-d7b397b48e70"
+    },
+    {
+      "name": "TrueColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (rgb enabled) of the symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a1c1f4cd-fed3-0eac-4f6c-752f3638caed"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

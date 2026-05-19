@@ -1,0 +1,86 @@
+{
+  "name": "TextureMode",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.TextureMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_TextureMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PROJECTION_MODE",
+      "value": 0
+    },
+    {
+      "name": "MAPPING_CHANNEL_MODE",
+      "value": 1
+    },
+    {
+      "name": "WRAP_TYPE_MODE",
+      "value": 2
+    },
+    {
+      "name": "REPEAT_LOCKED_MODE",
+      "value": 3
+    },
+    {
+      "name": "OFFSET_LOCKED_MODE",
+      "value": 4
+    },
+    {
+      "name": "PREVIEW_IN_3D_MODE",
+      "value": 5
+    },
+    {
+      "name": "REPEAT_MODE",
+      "value": 6
+    },
+    {
+      "name": "OFFSET_MODE",
+      "value": 7
+    },
+    {
+      "name": "ROTATION_MODE",
+      "value": 8
+    },
+    {
+      "name": "ENVIRONMENT_MAPPING_MODE",
+      "value": 9
+    },
+    {
+      "name": "INTERNAL_ENVIRONMENT_MAPPING_MODE",
+      "value": 10
+    },
+    {
+      "name": "PREVIEW_LOCAL_MAPPING_MODE",
+      "value": 11
+    },
+    {
+      "name": "DISPLAY_IN_VIEWPORT_MODE",
+      "value": 12
+    },
+    {
+      "name": "IS_HDR_CAPABLE_MODE",
+      "value": 13
+    },
+    {
+      "name": "IS_LINEAR_MODE",
+      "value": 14
+    },
+    {
+      "name": "IS_IMAGE_BASED",
+      "value": 15
+    },
+    {
+      "name": "IS_NORMALMAP",
+      "value": 16
+    },
+    {
+      "name": "PIXELSIZE_AS_3DVECTOR",
+      "value": 17
+    }
+  ]
+}

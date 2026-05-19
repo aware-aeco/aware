@@ -1,0 +1,47 @@
+{
+  "name": "DefaultDirectories",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "Default directories",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/DefaultDirectories/",
+  "constructors": [
+    {
+      "name": "DefaultDirectories",
+      "signature": "DefaultDirectories()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/DefaultDirectories/#NemAll_Python_Utility.DefaultDirectories.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddDirectory",
+      "signature": "AddDirectory(path: str) -\u003E bool",
+      "summary": "Add a directory",
+      "remarks": "Add a directory",
+      "params": [
+        {
+          "name": "path",
+          "type": "str",
+          "doc": "path of the directory",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "directory added: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/DefaultDirectories/#NemAll_Python_Utility.DefaultDirectories.AddDirectory"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

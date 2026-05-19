@@ -1,0 +1,34 @@
+{
+  "name": "LevelMark.LevelMarkType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Defines options about how the level mark is shown.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2f6865a2-2311-b832-fc45-e2d34079958b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoArrowNoLeaderLine",
+      "value": 0,
+      "summary": "Level mark is shown without an arrow and a leader line."
+    },
+    {
+      "name": "ArrowWithoutLeaderLine",
+      "value": 1,
+      "summary": "Level mark is shown with an arrow but without a leader line."
+    },
+    {
+      "name": "InclinedLeaderLine",
+      "value": 2,
+      "summary": "Level mark is shown with an inclined leader line but without an arrow."
+    },
+    {
+      "name": "OrthogonalLeaderLine",
+      "value": 3,
+      "summary": "Level mark is shown with an orthogonal leader line and with an arrow."
+    }
+  ]
+}

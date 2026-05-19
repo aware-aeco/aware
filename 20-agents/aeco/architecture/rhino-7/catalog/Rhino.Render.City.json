@@ -1,0 +1,106 @@
+{
+  "name": "City",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "City",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_City.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Cities",
+      "signature": "public static int Cities()",
+      "summary": "Returns number of available cities.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "City count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_City_Cities.htm"
+    },
+    {
+      "name": "CityAt",
+      "signature": "public static City CityAt(int index)",
+      "summary": "Returns city at given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "City",
+        "doc": "City at index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_City_CityAt.htm"
+    },
+    {
+      "name": "FindNearest",
+      "signature": "public static City FindNearest(double latitude, double longitude)",
+      "summary": "Finds nearest city of specified input parameters.",
+      "params": [
+        {
+          "name": "latitude",
+          "type": "System.Double",
+          "doc": "latitude.",
+          "optional": false
+        },
+        {
+          "name": "longitude",
+          "type": "System.Double",
+          "doc": "longitude.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "City",
+        "doc": "Nearest city."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_City_FindNearest.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Latitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets latitude of city.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_City_Latitude.htm"
+    },
+    {
+      "name": "Longitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets longitude of city.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_City_Longitude.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets name of city.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_City_Name.htm"
+    },
+    {
+      "name": "TimeZone",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets time zone of city.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_City_TimeZone.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

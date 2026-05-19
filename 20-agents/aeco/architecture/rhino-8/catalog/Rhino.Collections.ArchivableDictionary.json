@@ -1,0 +1,2630 @@
+{
+  "name": "ArchivableDictionary",
+  "namespace": "Rhino.Collections",
+  "kind": "class",
+  "summary": "Represents a dictionary class that can be attached to objects and can be serialized (saved) at necessity.See remarks for layout.",
+  "remarks": "This is the layout of this object:.BEGINCHUNK (TCODE_ANONYMOUS_CHUNK)|- version (int)|- entry count (int) for entry count entries |- BEGINCHUNK (TCODE_ANONYMOUS_CHUNK) |- key (string) |- entry contents |- ENDCHUNK (TCODE_ANONYMOUS_CHUNK)ENDCHUNK (TCODE_ANONYMOUS_CHUNK)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Collections_ArchivableDictionary.htm",
+  "constructors": [
+    {
+      "name": "ArchivableDictionary()",
+      "signature": "public ArchivableDictionary()",
+      "summary": "Initializes an instance of a dictionary for writing to a 3dm archive.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary__ctor.htm"
+    },
+    {
+      "name": "ArchivableDictionary(Int32)",
+      "signature": "public ArchivableDictionary(int version)",
+      "summary": "Initializes an instance of a dictionary for writing to a 3dm archive.",
+      "params": [
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": "Custom version used to help the plug-in developer determine which version of a dictionary is being written. One good way to write version information is to use a date style integer (YYYYMMDD)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary__ctor_2.htm"
+    },
+    {
+      "name": "ArchivableDictionary(UserData)",
+      "signature": "public ArchivableDictionary(UserData parentUserData)",
+      "summary": "Initializes an instance of a dictionary for writing to a 3dm archive",
+      "params": [
+        {
+          "name": "parentUserData",
+          "type": "Rhino.DocObjects.Custom.UserData",
+          "doc": "parent user data if this dictionary is associated with user data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary__ctor_1.htm"
+    },
+    {
+      "name": "ArchivableDictionary(Int32, String)",
+      "signature": "public ArchivableDictionary(int version, string name)",
+      "summary": "Initializes an instance of a dictionary for writing to a 3dm archive.",
+      "params": [
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": "custom version used to help the plug-in developer determine which version of a dictionary is being written. One good way to write version information is to use a date style integer (YYYYMMDD)",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Optional name to associate with this dictionary. NOTE: if this dictionary is set as a sub-dictionary, the name will be changed to the sub-dictionary key entry",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary__ctor_3.htm"
+    },
+    {
+      "name": "ArchivableDictionary(SerializationInfo, StreamingContext)",
+      "signature": "protected ArchivableDictionary(SerializationInfo info, StreamingContext context)",
+      "summary": "Protected constructor for internal use.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "Serialization data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "Serialization stream.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddContentsFrom",
+      "signature": "public bool AddContentsFrom(ArchivableDictionary source)",
+      "summary": "Add the contents from the source dictionary.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Collections.ArchivableDictionary",
+          "doc": "[Missing \u003Cparam name=\u0022source\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.AddContentsFrom(Rhino.Collections.ArchivableDictionary)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.AddContentsFrom(Rhino.Collections.ArchivableDictionary)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": ""
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_AddContentsFrom.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all keys and values from the dictionary.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Clear.htm"
+    },
+    {
+      "name": "Clone",
+      "signature": "public ArchivableDictionary Clone()",
+      "summary": "Constructs a deep copy of this object.",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "The copy of this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Clone.htm"
+    },
+    {
+      "name": "ContainsKey",
+      "signature": "public bool ContainsKey(string key)",
+      "summary": "Determines whether the dictionary contains the specified key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key to locate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the dictionary contains an element with the specified key; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "key is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_ContainsKey.htm"
+    },
+    {
+      "name": "GetBool(String)",
+      "signature": "public bool GetBool(string key)",
+      "summary": "Get value as Boolean, will only succeed if value was created using Set(string key, Boolean value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBool(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBool(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetBool.htm"
+    },
+    {
+      "name": "GetBool(String, Boolean)",
+      "signature": "public bool GetBool(string key, bool defaultValue)",
+      "summary": "Get value as Boolean, will return defaultValue unless value was created using Set(string key, Boolean value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBool(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBool(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBool(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetBool_1.htm"
+    },
+    {
+      "name": "GetBytes(String)",
+      "signature": "public byte[] GetBytes(string key)",
+      "summary": "Get value as byte[], will only succeed if value was created using Set(string key, byte[] value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBytes(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBytes(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetBytes.htm"
+    },
+    {
+      "name": "GetBytes(String, Byte[])",
+      "signature": "public byte[] GetBytes(string key, byte[] defaultValue)",
+      "summary": "Get value as byte[], will return defaultValue unless value was created using Set(string key, byte[] value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBytes(System.String,System.Byte[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Byte[]",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBytes(System.String,System.Byte[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetBytes(System.String,System.Byte[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetBytes_1.htm"
+    },
+    {
+      "name": "GetDictionary(String)",
+      "signature": "public ArchivableDictionary GetDictionary(string key)",
+      "summary": "Get value as ArchivableDictionary, will only succeed if value was created using Set(string key, ArchivableDictionary value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDictionary(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDictionary(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetDictionary.htm"
+    },
+    {
+      "name": "GetDictionary(String, ArchivableDictionary)",
+      "signature": "public ArchivableDictionary GetDictionary(string key, ArchivableDictionary defaultValue)",
+      "summary": "Get value as ArchivableDictionary, will return defaultValue unless value was created using Set(string key, ArchivableDictionary value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDictionary(System.String,Rhino.Collections.ArchivableDictionary)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Rhino.Collections.ArchivableDictionary",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDictionary(System.String,Rhino.Collections.ArchivableDictionary)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDictionary(System.String,Rhino.Collections.ArchivableDictionary)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetDictionary_1.htm"
+    },
+    {
+      "name": "GetDouble(String)",
+      "signature": "public double GetDouble(string key)",
+      "summary": "Get value as double, will only succeed if value was created using Set(string key, double value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDouble(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDouble(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetDouble.htm"
+    },
+    {
+      "name": "GetDouble(String, Double)",
+      "signature": "public double GetDouble(string key, double defaultValue)",
+      "summary": "Get value as double, will only succeed if value was created using Set(string key, double value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDouble(System.String,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDouble(System.String,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetDouble(System.String,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetDouble_1.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CKeyValuePair\u003Cstring, Object\u003E\u003E GetEnumerator()",
+      "summary": "Gets the enumerator of this dictionary.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CKeyValuePair\u003CString,Object\u003E\u003E",
+        "doc": "A IEnumerator\u003CT\u003E, where T is an instance of KeyValuePair\u003CTKey, TValue\u003E, with T0 set as string, and T1 as System.Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetEnumerator.htm"
+    },
+    {
+      "name": "GetEnumValue\u003CT\u003E()",
+      "signature": "public T GetEnumValue\u003CT\u003E() where T : struct, new(), IConvertible",
+      "summary": "Get an enum value",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetEnumValue\u0060\u00601\u0022]"
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": "Thrown when the key is not found in the dictionary."
+        },
+        {
+          "type": "FormatException",
+          "when": "Thrown when the string retrieved from the dictionary is not convertible to the enum type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetEnumValue__1.htm"
+    },
+    {
+      "name": "GetEnumValue\u003CT\u003E(String)",
+      "signature": "public T GetEnumValue\u003CT\u003E(string key) where T : struct, new(), IConvertible",
+      "summary": "Get an enum value from the dictionary using a custom key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetEnumValue\u0060\u00601(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetEnumValue\u0060\u00601(System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": "Thrown when the key is not found in the dictionary."
+        },
+        {
+          "type": "FormatException",
+          "when": "Thrown when the string retrieved from the dictionary is not convertible to the enum type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetEnumValue__1_1.htm"
+    },
+    {
+      "name": "GetFloat(String)",
+      "signature": "public float GetFloat(string key)",
+      "summary": "Get value as float, will only succeed if value was created using Set(string key, float value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetFloat(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetFloat(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetFloat.htm"
+    },
+    {
+      "name": "GetFloat(String, Single)",
+      "signature": "public float GetFloat(string key, float defaultValue)",
+      "summary": "Get value as float, will return defaultValue unless value was created using Set(string key, float value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetFloat(System.String,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetFloat(System.String,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetFloat(System.String,System.Single)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetFloat_1.htm"
+    },
+    {
+      "name": "GetGuid(String)",
+      "signature": "public Guid GetGuid(string key)",
+      "summary": "Get value as Guid, will only succeed if value was created using Set(string key, Guid value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetGuid(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetGuid(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetGuid.htm"
+    },
+    {
+      "name": "GetGuid(String, Guid)",
+      "signature": "public Guid GetGuid(string key, Guid defaultValue)",
+      "summary": "Get value as Guid, will return defaultValue unless value was created using Set(string key, Guid value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetGuid(System.String,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetGuid(System.String,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetGuid(System.String,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetGuid_1.htm"
+    },
+    {
+      "name": "Getint",
+      "signature": "public int Getint(string key, int defaultValue)",
+      "summary": "Get value as int, will return defaultValue unless value was created using Set(string key, int value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Getint(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Getint(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Getint(System.String,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Getint.htm"
+    },
+    {
+      "name": "GetInteger(String)",
+      "signature": "public int GetInteger(string key)",
+      "summary": "Get value as int, will only succeed if value was created using Set(string key, int value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetInteger(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetInteger(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetInteger.htm"
+    },
+    {
+      "name": "GetInteger(String, Int32)",
+      "signature": "public int GetInteger(string key, int defaultValue)",
+      "summary": "Get value as int, will return defaultValue unless value was created using Set(string key, int value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetInteger(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetInteger(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetInteger(System.String,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetInteger_1.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetObjectData.htm"
+    },
+    {
+      "name": "GetPlane(String)",
+      "signature": "public Plane GetPlane(string key)",
+      "summary": "Get value as Plane, will return defaultValue unless value was created using Set(string key, Plane value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Plane",
+        "doc": "The value as Plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetPlane.htm"
+    },
+    {
+      "name": "GetPlane(String, Plane)",
+      "signature": "public Plane GetPlane(string key, Plane defaultValue)",
+      "summary": "Get value as Plane, will return defaultValue unless value was created using Set(string key, Plane value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key.",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The default value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Plane",
+        "doc": "The value as Plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetPlane_1.htm"
+    },
+    {
+      "name": "GetPoint3d(String)",
+      "signature": "public Point3d GetPoint3d(string key)",
+      "summary": "Get value as Point3d, will only succeed if value was created using Set(string key, Point3d value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3d(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3d(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetPoint3d.htm"
+    },
+    {
+      "name": "GetPoint3d(String, Point3d)",
+      "signature": "public Point3d GetPoint3d(string key, Point3d defaultValue)",
+      "summary": "Get value as Point3d, will return defaultValue unless value was created using Set(string key, Point3d value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetPoint3d_1.htm"
+    },
+    {
+      "name": "GetPoint3f(String)",
+      "signature": "public Point3f GetPoint3f(string key)",
+      "summary": "Get value as Point3f, will only succeed if value was created using Set(string key, Point3f value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3f(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3f",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3f(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetPoint3f.htm"
+    },
+    {
+      "name": "GetPoint3f(String, Point3f)",
+      "signature": "public Point3f GetPoint3f(string key, Point3f defaultValue)",
+      "summary": "Get value as Point3f, will return defaultValue unless value was created using Set(string key, Point3f value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3f(System.String,Rhino.Geometry.Point3f)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3f(System.String,Rhino.Geometry.Point3f)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3f",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetPoint3f(System.String,Rhino.Geometry.Point3f)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetPoint3f_1.htm"
+    },
+    {
+      "name": "GetString(String)",
+      "signature": "public string GetString(string key)",
+      "summary": "Get value as string, will only succeed if value was created using Set(string key, string value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key which points to the string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetString.htm"
+    },
+    {
+      "name": "GetString(String, String)",
+      "signature": "public string GetString(string key, string defaultValue)",
+      "summary": "Get value as string, will return defaultValue unless value was created using Set(string key, string value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key which points to the string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "The string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetString(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetString_1.htm"
+    },
+    {
+      "name": "GetVector3d(String)",
+      "signature": "public Vector3d GetVector3d(string key)",
+      "summary": "Get value as Vector3d, will only succeed if value was created using Set(string key, Vector3d value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetVector3d(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetVector3d(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetVector3d.htm"
+    },
+    {
+      "name": "GetVector3d(String, Vector3d)",
+      "signature": "public Vector3d GetVector3d(string key, Vector3d defaultValue)",
+      "summary": "Get value as Vector3d, will return defaultValue unless value was created using Set(string key, Vector3d value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetVector3d(System.String,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetVector3d(System.String,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.GetVector3d(System.String,Rhino.Geometry.Vector3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_GetVector3d_1.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(string key)",
+      "summary": "Removes the value with the specified key from the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key of the element to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the element is successfully found and removed; otherwise, false. This method returns false if key is not found."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Key is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Remove.htm"
+    },
+    {
+      "name": "RemoveEnumValue\u003CT\u003E",
+      "signature": "public bool RemoveEnumValue\u003CT\u003E() where T : struct, new(), IConvertible",
+      "summary": "Remove an enum value from the dictionary.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.RemoveEnumValue\u0060\u00601\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_RemoveEnumValue__1.htm"
+    },
+    {
+      "name": "ReplaceContentsWith",
+      "signature": "public bool ReplaceContentsWith(ArchivableDictionary source)",
+      "summary": "Replace the contents of the dictionary with that of the given source dictionary.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.Collections.ArchivableDictionary",
+          "doc": "[Missing \u003Cparam name=\u0022source\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.ReplaceContentsWith(Rhino.Collections.ArchivableDictionary)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.ReplaceContentsWith(Rhino.Collections.ArchivableDictionary)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_ReplaceContentsWith.htm"
+    },
+    {
+      "name": "Set(String, ArchivableDictionary)",
+      "signature": "public bool Set(string key, ArchivableDictionary val)",
+      "summary": "Sets another ArchivableDictionary as entry in this dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Collections.ArchivableDictionary",
+          "doc": "An object for that key. Because this class is a reference type and is mutable, changes to this object will propagate to the object inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Collections.ArchivableDictionary)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set.htm"
+    },
+    {
+      "name": "Set(String, ObjRef)",
+      "signature": "public bool Set(string key, ObjRef val)",
+      "summary": "Sets a ObjRef",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.DocObjects.ObjRef",
+          "doc": "An object for that key Because this class is a reference type and is mutable, changes to this object will propagate to the object inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.DocObjects.ObjRef)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_1.htm"
+    },
+    {
+      "name": "Set(String, BoundingBox)",
+      "signature": "public bool Set(string key, BoundingBox val)",
+      "summary": "Sets a BoundingBox.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A value for that key. Because BoundingBox has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.BoundingBox)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_2.htm"
+    },
+    {
+      "name": "Set(String, GeometryBase)",
+      "signature": "public bool Set(string key, GeometryBase val)",
+      "summary": "Sets any class deriving from the GeometryBase base class.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "A geometry object for that key. Because this class is a reference type and is mutable, changes to this object will propagate to the object inside the dictionary.It is up to the user to clone this entry when appropriate. You can use Duplicate() for this.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.GeometryBase)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_3.htm"
+    },
+    {
+      "name": "Set(String, Interval)",
+      "signature": "public bool Set(string key, Interval val)",
+      "summary": "Sets an Interval.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "A value for that key. Because Interval has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Interval)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_4.htm"
+    },
+    {
+      "name": "Set(String, Line)",
+      "signature": "public bool Set(string key, Line val)",
+      "summary": "Sets a Line.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A value for that key. Because Line has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Line)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_5.htm"
+    },
+    {
+      "name": "Set(String, MeshingParameters)",
+      "signature": "public bool Set(string key, MeshingParameters val)",
+      "summary": "Sets a MeshingParameters.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.MeshingParameters",
+          "doc": "An object for that key. Because this class is a reference type and is mutable, changes to this object will propagate to the object inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.MeshingParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_6.htm"
+    },
+    {
+      "name": "Set(String, Plane)",
+      "signature": "public bool Set(string key, Plane val)",
+      "summary": "Sets a Plane.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane for that key. Because Plane has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Plane)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_7.htm"
+    },
+    {
+      "name": "Set(String, Point2d)",
+      "signature": "public bool Set(string key, Point2d val)",
+      "summary": "Sets a Point2d.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point for that key. Because Point2d has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Point2d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_8.htm"
+    },
+    {
+      "name": "Set(String, Point3d)",
+      "signature": "public bool Set(string key, Point3d val)",
+      "summary": "Sets a Point3d.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point for that key. Because Point3d has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_9.htm"
+    },
+    {
+      "name": "Set(String, Point3f)",
+      "signature": "public bool Set(string key, Point3f val)",
+      "summary": "Sets a Point3f.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A value for that key. Because Point3f has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Point3f)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_10.htm"
+    },
+    {
+      "name": "Set(String, Point4d)",
+      "signature": "public bool Set(string key, Point4d val)",
+      "summary": "Sets a Point4d.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "A value for that key. Because Point4d has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Point4d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_11.htm"
+    },
+    {
+      "name": "Set(String, Ray3d)",
+      "signature": "public bool Set(string key, Ray3d val)",
+      "summary": "Sets a Ray3d.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "A value for that key. Because Ray3d has value semantics and is immutable, no changes to this object are possible.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Ray3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_12.htm"
+    },
+    {
+      "name": "Set(String, Transform)",
+      "signature": "public bool Set(string key, Transform val)",
+      "summary": "Sets a Transform.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A transform for that key. Because Transform has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Transform)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_13.htm"
+    },
+    {
+      "name": "Set(String, Vector2d)",
+      "signature": "public bool Set(string key, Vector2d val)",
+      "summary": "Sets a Vector2d.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A value for that key. Because Vector2d has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Vector2d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_14.htm"
+    },
+    {
+      "name": "Set(String, Vector3d)",
+      "signature": "public bool Set(string key, Vector3d val)",
+      "summary": "Sets a Vector3d.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A value for that key. Because Vector3d has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Vector3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_15.htm"
+    },
+    {
+      "name": "Set(String, Vector3f)",
+      "signature": "public bool Set(string key, Vector3f val)",
+      "summary": "Sets a Vector3f.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "A value for that key. Because Vector3f has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,Rhino.Geometry.Vector3f)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_16.htm"
+    },
+    {
+      "name": "Set(String, Boolean)",
+      "signature": "public bool Set(string key, bool val)",
+      "summary": "Sets a Boolean.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Boolean",
+          "doc": "A Boolean value. Because Boolean has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_17.htm"
+    },
+    {
+      "name": "Set(String, Byte)",
+      "signature": "public bool Set(string key, byte val)",
+      "summary": "Sets a Byte.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Byte",
+          "doc": "A Byte. Because Byte has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_18.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CObjRef\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003CObjRef\u003E val)",
+      "summary": "Sets an array of ObjRef",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CObjRef\u003E",
+          "doc": "An object for that key Because this class is a reference type and is mutable, changes to this object will propagate to the object inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Collections.Generic.IEnumerable{Rhino.DocObjects.ObjRef})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_19.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CGeometryBase\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003CGeometryBase\u003E val)",
+      "summary": "Sets an array of GeometryBase",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "An object for that key Because this class is a reference type and is mutable, changes to this object will propagate to the object inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_20.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CBoolean\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Cbool\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of Boolean.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CBoolean\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_21.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CByte\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Cbyte\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of Byte.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CByte\u003E",
+          "doc": "A value for that key Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_22.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CDouble\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Cdouble\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of Double.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_23.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CGuid\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003CGuid\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of Guid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_24.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CInt16\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Cshort\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of Int16.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt16\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_25.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CInt32\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Cint\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of Int32.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_26.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CSByte\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Csbyte\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of SByte.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CSByte\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_27.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CSingle\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Cfloat\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of Single.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CSingle\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_28.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CString\u003E)",
+      "signature": "public bool Set(string key, IEnumerable\u003Cstring\u003E val)",
+      "summary": "Sets a list, an array or any enumerable of String.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "A value for that key. Because this interface is a reference type, changes to the assigned object will modify this entry inside the dictionary.It is up to the user to clone this entry when appropriate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_29.htm"
+    },
+    {
+      "name": "Set(String, Double)",
+      "signature": "public bool Set(string key, double val)",
+      "summary": "Sets a Double.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Double",
+          "doc": "A Double. Because Double has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_30.htm"
+    },
+    {
+      "name": "Set(String, Color)",
+      "signature": "public bool Set(string key, Color val)",
+      "summary": "Sets a Color.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.Color",
+          "doc": "A value for that key. Because Color has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_31.htm"
+    },
+    {
+      "name": "Set(String, Font)",
+      "signature": "public bool Set(string key, Font val)",
+      "summary": "Sets a Font.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.Font",
+          "doc": "A value for that key. Because Font is immutable, it is not possible to modify the object while it is in this dictionary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Drawing.Font)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_32.htm"
+    },
+    {
+      "name": "Set(String, Point)",
+      "signature": "public bool Set(string key, Point val)",
+      "summary": "Sets a Point.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.Point",
+          "doc": "A value for that key. Because Point has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Drawing.Point)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_33.htm"
+    },
+    {
+      "name": "Set(String, PointF)",
+      "signature": "public bool Set(string key, PointF val)",
+      "summary": "Sets a PointF.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.PointF",
+          "doc": "A value for that key. Because PointF has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Drawing.PointF)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_34.htm"
+    },
+    {
+      "name": "Set(String, Rectangle)",
+      "signature": "public bool Set(string key, Rectangle val)",
+      "summary": "Sets a Rectangle.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.Rectangle",
+          "doc": "A value for that key. Because Rectangle has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Drawing.Rectangle)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_35.htm"
+    },
+    {
+      "name": "Set(String, RectangleF)",
+      "signature": "public bool Set(string key, RectangleF val)",
+      "summary": "Sets a RectangleF.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.RectangleF",
+          "doc": "A value for that key. Because RectangleF has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Drawing.RectangleF)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_36.htm"
+    },
+    {
+      "name": "Set(String, Size)",
+      "signature": "public bool Set(string key, Size val)",
+      "summary": "Sets a Size.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.Size",
+          "doc": "A value for that key. Because Size has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Drawing.Size)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_37.htm"
+    },
+    {
+      "name": "Set(String, SizeF)",
+      "signature": "public bool Set(string key, SizeF val)",
+      "summary": "Sets a SizeF.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "A text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Drawing.SizeF",
+          "doc": "A value for that key. Because SizeF has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.Set(System.String,System.Drawing.SizeF)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_38.htm"
+    },
+    {
+      "name": "Set(String, Guid)",
+      "signature": "public bool Set(string key, Guid val)",
+      "summary": "Sets a Guid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Guid",
+          "doc": "A Guid. Because Guid has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_39.htm"
+    },
+    {
+      "name": "Set(String, Int16)",
+      "signature": "public bool Set(string key, short val)",
+      "summary": "Sets a Int16.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Int16",
+          "doc": "A Int16. Because Int16 has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_40.htm"
+    },
+    {
+      "name": "Set(String, Int32)",
+      "signature": "public bool Set(string key, int val)",
+      "summary": "Sets a Int32.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Int32",
+          "doc": "A Int32. Because Int32 has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_41.htm"
+    },
+    {
+      "name": "Set(String, Int64)",
+      "signature": "public bool Set(string key, long val)",
+      "summary": "Sets a Int64.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Int64",
+          "doc": "A Int64. Because Int64 has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_42.htm"
+    },
+    {
+      "name": "Set(String, SByte)",
+      "signature": "public bool Set(string key, sbyte val)",
+      "summary": "Sets a SByte.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.SByte",
+          "doc": "A SByte. Because SByte has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_43.htm"
+    },
+    {
+      "name": "Set(String, Single)",
+      "signature": "public bool Set(string key, float val)",
+      "summary": "Sets a Single.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Single",
+          "doc": "A Single. Because Single has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_44.htm"
+    },
+    {
+      "name": "Set(String, String)",
+      "signature": "public bool Set(string key, string val)",
+      "summary": "Sets a String.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.String",
+          "doc": "A String. Because String is immutable, it is not possible to modify the object while it is in this dictionary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_45.htm"
+    },
+    {
+      "name": "Set(String, UInt16)",
+      "signature": "public bool Set(string key, ushort val)",
+      "summary": "Sets a UInt16.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.UInt16",
+          "doc": "A UInt16. Because UInt16 has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_46.htm"
+    },
+    {
+      "name": "Set(String, UInt32)",
+      "signature": "public bool Set(string key, uint val)",
+      "summary": "Sets a UInt32.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The text key.",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.UInt32",
+          "doc": "A UInt32. Because UInt32 has value semantics, changes to the assigning value will leave this entry unchanged.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if set operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_Set_47.htm"
+    },
+    {
+      "name": "SetEnumValue\u003CT\u003E(T)",
+      "signature": "public bool SetEnumValue\u003CT\u003E(T enumValue) where T : struct, new(), IConvertible",
+      "summary": "Set an enum value",
+      "params": [
+        {
+          "name": "enumValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022enumValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.SetEnumValue\u0060\u00601(\u0060\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.SetEnumValue\u0060\u00601(\u0060\u00600)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_SetEnumValue__1_1.htm"
+    },
+    {
+      "name": "SetEnumValue\u003CT\u003E(String, T)",
+      "signature": "public bool SetEnumValue\u003CT\u003E(string key, T enumValue) where T : struct, new(), IConvertible",
+      "summary": "Set an enum value in the dictionary with a custom key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.SetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "enumValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022enumValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.SetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.SetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_SetEnumValue__1.htm"
+    },
+    {
+      "name": "TryGetBool",
+      "signature": "public bool TryGetBool(string key, out bool value)",
+      "summary": "Get value as Boolean, will only succeed if value was created using Set(string key, Boolean value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetBool(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetBool(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetBool(System.String,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetBool.htm"
+    },
+    {
+      "name": "TryGetBytes",
+      "signature": "public bool TryGetBytes(string key, out byte[] value)",
+      "summary": "Get value as byte[], will only succeed if value was created using Set(string key, byte[] value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetBytes(System.String,System.Byte[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetBytes(System.String,System.Byte[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetBytes(System.String,System.Byte[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetBytes.htm"
+    },
+    {
+      "name": "TryGetDictionary",
+      "signature": "public bool TryGetDictionary(string key, out ArchivableDictionary value)",
+      "summary": "Get value as ArchivableDictionary, will only succeed if value was created using Set(string key, ArchivableDictionary value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetDictionary(System.String,Rhino.Collections.ArchivableDictionary@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Collections.ArchivableDictionary",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetDictionary(System.String,Rhino.Collections.ArchivableDictionary@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetDictionary(System.String,Rhino.Collections.ArchivableDictionary@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetDictionary.htm"
+    },
+    {
+      "name": "TryGetDouble",
+      "signature": "public bool TryGetDouble(string key, out double value)",
+      "summary": "Get value as double, will only succeed if value was created using Set(string key, double value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetDouble(System.String,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetDouble(System.String,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetDouble(System.String,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetDouble.htm"
+    },
+    {
+      "name": "TryGetEnumValue\u003CT\u003E",
+      "signature": "public bool TryGetEnumValue\u003CT\u003E(string key, out T enumValue) where T : struct, new(), IConvertible",
+      "summary": "Attempt to get an enum value from the dictionary using a custom key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetEnumValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "enumValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022enumValue\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetEnumValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetEnumValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetEnumValue__1.htm"
+    },
+    {
+      "name": "TryGetFloat",
+      "signature": "public bool TryGetFloat(string key, out float value)",
+      "summary": "Get value as float, will only succeed if value was created using Set(string key, float value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetFloat(System.String,System.Single@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetFloat(System.String,System.Single@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetFloat(System.String,System.Single@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetFloat.htm"
+    },
+    {
+      "name": "TryGetGuid",
+      "signature": "public bool TryGetGuid(string key, out Guid value)",
+      "summary": "Get value as Guid, will only succeed if value was created using Set(string key, Guid value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetGuid(System.String,System.Guid@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetGuid(System.String,System.Guid@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetGuid(System.String,System.Guid@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetGuid.htm"
+    },
+    {
+      "name": "TryGetInteger",
+      "signature": "public bool TryGetInteger(string key, out int value)",
+      "summary": "Get value as int, will only succeed if value was created using Set(string key, int value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetInteger(System.String,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetInteger(System.String,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetInteger(System.String,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetInteger.htm"
+    },
+    {
+      "name": "TryGetPlane",
+      "signature": "public bool TryGetPlane(string key, out Plane value)",
+      "summary": "Get value as Plane, will only succeed if value was created using Set(string key, Plane value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The value as Plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetPlane.htm"
+    },
+    {
+      "name": "TryGetPoint3d",
+      "signature": "public bool TryGetPoint3d(string key, out Point3d value)",
+      "summary": "Get value as Point3d, will only succeed if value was created using Set(string key, Point3d value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetPoint3d.htm"
+    },
+    {
+      "name": "TryGetPoint3f",
+      "signature": "public bool TryGetPoint3f(string key, out Point3f value)",
+      "summary": "Get value as Point3f, will only succeed if value was created using Set(string key, Point3f value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetPoint3f(System.String,Rhino.Geometry.Point3f@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetPoint3f(System.String,Rhino.Geometry.Point3f@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetPoint3f(System.String,Rhino.Geometry.Point3f@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetPoint3f.htm"
+    },
+    {
+      "name": "TryGetString",
+      "signature": "public bool TryGetString(string key, out string value)",
+      "summary": "Get value as string, will only succeed if value was created using Set(string key, string value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetString(System.String,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetString(System.String,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetString(System.String,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetString.htm"
+    },
+    {
+      "name": "TryGetValue",
+      "signature": "public bool TryGetValue(string key, out Object value)",
+      "summary": "Gets the value associated with the specified key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key of the value to get.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "When this method returns and if the key is found, contains the value associated with the specified key; otherwise, null. This parameter is passed uninitialized.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the dictionary contains an element with the specified key; otherwise, false."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Key is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetValue.htm"
+    },
+    {
+      "name": "TryGetVector3d",
+      "signature": "public bool TryGetVector3d(string key, out Vector3d value)",
+      "summary": "Get value as Vector3d, will only succeed if value was created using Set(string key, Vector3d value)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetVector3d(System.String,Rhino.Geometry.Vector3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetVector3d(System.String,Rhino.Geometry.Vector3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.ArchivableDictionary.TryGetVector3d(System.String,Rhino.Geometry.Vector3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_ArchivableDictionary_TryGetVector3d.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ChangeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Retrieve current change serial number. This is a number that gets increased each time a datum is set or changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_ChangeSerialNumber.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of key/value pairs contained in the dictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the value associated with the specified key.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_Item.htm"
+    },
+    {
+      "name": "Keys",
+      "type": "String[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all entry names or keys.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_Keys.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name string of this ArchivableDictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_Name.htm"
+    },
+    {
+      "name": "ParentUserData",
+      "type": "UserData",
+      "getter": true,
+      "setter": false,
+      "summary": "If this dictionary is part of user-data (or is a UserDictionary), then this is the parent user data. null if this dictionary is not part of user-data",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_ParentUserData.htm"
+    },
+    {
+      "name": "Values",
+      "type": "Object[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all values in this dictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_Values.htm"
+    },
+    {
+      "name": "Version",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the version of this ArchivableDictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_ArchivableDictionary_Version.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

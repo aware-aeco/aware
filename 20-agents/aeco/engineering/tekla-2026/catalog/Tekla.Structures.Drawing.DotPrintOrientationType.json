@@ -1,0 +1,29 @@
+{
+  "name": "DotPrintOrientationType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The print orientation type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d8bbec36-04d7-9dd9-d9f3-3e498c83d2be",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Auto",
+      "value": 0,
+      "summary": "Auto orientation."
+    },
+    {
+      "name": "Landscape",
+      "value": 1,
+      "summary": "Landscape orientation."
+    },
+    {
+      "name": "Portrait",
+      "value": 2,
+      "summary": "Portrait orientation."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Benching",
+  "namespace": "NemAll_Python_Reinforcement.BarAreaPlacementProperties",
+  "kind": "enum",
+  "summary": "Benching type",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/#NemAll_Python_Reinforcement.BarAreaPlacementProperties.Benching",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: str | int | float) -\u003E Benching",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Benching",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/#NemAll_Python_Reinforcement.BarAreaPlacementProperties.Benching.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

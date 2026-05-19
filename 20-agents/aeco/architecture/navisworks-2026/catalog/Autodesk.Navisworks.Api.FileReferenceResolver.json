@@ -1,0 +1,161 @@
+{
+  "name": "FileReferenceResolver",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Utility class used to resolve a file reference to a real file",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileReferenceResolver",
+  "constructors": [
+    {
+      "name": "FileReferenceResolver()",
+      "signature": "FileReferenceResolver()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.FileReferenceResolver.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Resolve",
+      "signature": "Autodesk.Navisworks.Api.FileReferenceResolveResult Resolve(string fileReference)",
+      "summary": "Resolve a file reference (absolute path, relative path, URL, ...)",
+      "params": [
+        {
+          "name": "fileReference",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.FileReferenceResolveResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.FileReferenceResolver.Resolve%28System.String%29"
+    },
+    {
+      "name": "Resolve",
+      "signature": "Autodesk.Navisworks.Api.FileReferenceResolveResult Resolve(string fileReference, bool resolveToOpen)",
+      "summary": "Resolve a file reference (absolute path, relative path, URL, ...)",
+      "params": [
+        {
+          "name": "fileReference",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolveToOpen",
+          "type": "bool",
+          "doc": "Specify whether result should include FileNameToOpen",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.FileReferenceResolveResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.FileReferenceResolver.Resolve%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.FileReferenceResolver InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of FileReferenceResolver.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.FileReferenceResolver",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.FileReferenceResolver.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of FileReferenceResolver.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.FileReferenceResolver.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalClearGlobalCache",
+      "signature": "static void InternalClearGlobalCache()",
+      "summary": "InternalClearGlobalCache method of FileReferenceResolver.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.FileReferenceResolver.InternalClearGlobalCache"
+    }
+  ],
+  "properties": [
+    {
+      "name": "InteractiveDisplayString",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "String to display to end user if reference has to be resolved interactively",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileReferenceResolver.InteractiveDisplayString"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileReferenceResolver.IsReadOnly"
+    },
+    {
+      "name": "ReferringFileName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "File name that is referring to file to be resolved, empty if not known",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileReferenceResolver.ReferringFileName"
+    },
+    {
+      "name": "ReferringFileNameAsSaved",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "File name that is referring to file to be resolved as it was when saved, empty if not known",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileReferenceResolver.ReferringFileNameAsSaved"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

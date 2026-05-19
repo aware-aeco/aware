@@ -1,0 +1,22 @@
+{
+  "name": "GH_DocumentSettings",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible types of settings for a GH_Document.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Preview",
+      "value": 0
+    },
+    {
+      "name": "Properties",
+      "value": 1
+    }
+  ]
+}

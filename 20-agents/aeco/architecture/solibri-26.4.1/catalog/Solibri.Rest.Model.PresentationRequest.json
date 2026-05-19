@@ -1,0 +1,30 @@
+{
+  "name": "PresentationRequest",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.PresentationRequest.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=PresentationRequest",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the presentation.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=PresentationRequest"
+    },
+    {
+      "name": "Prefix",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Tracking ID prefix of the presentation.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=PresentationRequest"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

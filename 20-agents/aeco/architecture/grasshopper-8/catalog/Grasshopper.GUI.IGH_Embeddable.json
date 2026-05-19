@@ -1,0 +1,34 @@
+{
+  "name": "IGH_Embeddable",
+  "namespace": "Grasshopper.GUI",
+  "kind": "interface",
+  "summary": "Implement this interface in your custom control if you want to be called before a menu commits or cancels.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_IGH_Embeddable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PrepareForCancel",
+      "signature": "void PrepareForCancel()",
+      "summary": "This will be called prior to a Cancel operation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_IGH_Embeddable_PrepareForCancel.htm"
+    },
+    {
+      "name": "PrepareForCommit",
+      "signature": "void PrepareForCommit()",
+      "summary": "This will be called prior to a Commit operation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_IGH_Embeddable_PrepareForCommit.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

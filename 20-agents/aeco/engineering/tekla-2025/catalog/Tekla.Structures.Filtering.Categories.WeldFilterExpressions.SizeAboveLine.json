@@ -1,0 +1,39 @@
+{
+  "name": "WeldFilterExpressions.SizeAboveLine",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The SizeAboveLine class represents the size above line filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/02cb494d-e532-1c68-0d54-f66e25c8092a",
+  "constructors": [
+    {
+      "name": "WeldFilterExpressions.SizeAboveLine",
+      "signature": "public SizeAboveLine()",
+      "summary": "Initializes a new instance of the SizeAboveLine class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d5e01631-ab91-0dc7-87c3-ab76336b32e4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

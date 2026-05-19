@@ -1,0 +1,110 @@
+{
+  "name": "IGH_GooProxy",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "interface",
+  "summary": "Base interface for all type proxies.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_IGH_GooProxy.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Construct",
+      "signature": "void Construct()",
+      "summary": "This method will be called when a new instance of this type is constructed. It allows implementers to supply a customized UI to be shown during construction. This method should never throw exceptions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_IGH_GooProxy_Construct.htm"
+    },
+    {
+      "name": "FormatInstance",
+      "signature": "string FormatInstance()",
+      "summary": "Returns a String description of the current value.",
+      "remarks": "If the implementation IsParsable(), then this representation will be in parsable format.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_IGH_GooProxy_FormatInstance.htm"
+    },
+    {
+      "name": "FromString",
+      "signature": "bool FromString(string in)",
+      "summary": "If IsParsable(), then attempts to convert the string to a generic type value",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "doc": "The String to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure. This method should not throw exceptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_IGH_GooProxy_FromString.htm"
+    },
+    {
+      "name": "MutateString",
+      "signature": "string MutateString(string in)",
+      "summary": "Munge a string to remove obvious errors on account of the user.",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_IGH_GooProxy_MutateString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsParsable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the type can be instantiated from a String.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_GooProxy_IsParsable.htm"
+    },
+    {
+      "name": "ProxyOwner",
+      "type": "IGH_Goo",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the piece of Grasshopper data that spawned this proxy.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_GooProxy_ProxyOwner.htm"
+    },
+    {
+      "name": "UserString",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the user-defined string that describes this proxy. This only really makes sense if the Proxy is Parsable.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_GooProxy_UserString.htm"
+    },
+    {
+      "name": "Valid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this proxy represents valid data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_IGH_GooProxy_Valid.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

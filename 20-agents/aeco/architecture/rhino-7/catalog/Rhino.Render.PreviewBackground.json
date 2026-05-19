@@ -1,0 +1,107 @@
+{
+  "name": "PreviewBackground",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "PreviewBackGround takes care of constucting and desctrutction of PreviewLight",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PreviewBackground.htm",
+  "constructors": [
+    {
+      "name": "PreviewBackground",
+      "signature": "public PreviewBackground(IntPtr pPreviewBackground)",
+      "summary": "Constructor for PreivewLighting",
+      "params": [
+        {
+          "name": "pPreviewBackground",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pPreviewBackground\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewBackground.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewBackground__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ElementKind",
+      "signature": "public string ElementKind()",
+      "summary": "ElementKind",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewBackground.ElementKind\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewBackground_ElementKind.htm"
+    },
+    {
+      "name": "EnvironmentInstanceId",
+      "signature": "public Guid EnvironmentInstanceId()",
+      "summary": "EnvironmentInstanceId",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewBackground.EnvironmentInstanceId\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewBackground_EnvironmentInstanceId.htm"
+    },
+    {
+      "name": "SetEnvironmentInstanceId",
+      "signature": "public void SetEnvironmentInstanceId(Guid guid)",
+      "summary": "SetEnvironmentInstanceId",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022guid\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewBackground.SetEnvironmentInstanceId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewBackground_SetEnvironmentInstanceId.htm"
+    },
+    {
+      "name": "SetUpPreview",
+      "signature": "public void SetUpPreview(IntPtr sceneServerPointer, Guid guid)",
+      "summary": "SetUpPreview",
+      "params": [
+        {
+          "name": "sceneServerPointer",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022sceneServerPointer\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewBackground.SetUpPreview(System.IntPtr,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022guid\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewBackground.SetUpPreview(System.IntPtr,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewBackground_SetUpPreview.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "CppPointer for PreivewLighting",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PreviewBackground_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,318 @@
+{
+  "name": "TypeSystem",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type TypeSystem",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs",
+  "constructors": [
+    {
+      "name": "TypeSystem()",
+      "signature": "void TypeSystem()",
+      "summary": "TypeSystem.TypeSystem",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildAddressTypeMap",
+      "signature": "void BuildAddressTypeMap()",
+      "summary": "TypeSystem.BuildAddressTypeMap",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "BuildPrimitiveTypeObject(ProtoCore.PrimitiveType, int)",
+      "signature": "ProtoCore.Type BuildPrimitiveTypeObject(ProtoCore.PrimitiveType pType, int rank)",
+      "summary": "TypeSystem.BuildPrimitiveTypeObject",
+      "params": [
+        {
+          "name": "pType",
+          "type": "ProtoCore.PrimitiveType",
+          "optional": false
+        },
+        {
+          "name": "rank",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "BuildTypeObject(int, int)",
+      "signature": "ProtoCore.Type BuildTypeObject(int UID, int rank)",
+      "summary": "TypeSystem.BuildTypeObject",
+      "params": [
+        {
+          "name": "UID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "rank",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "ClassCoerece(ProtoCore.DSASM.StackValue, ProtoCore.Type, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue ClassCoerece(ProtoCore.DSASM.StackValue sv, ProtoCore.Type targetType, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "TypeSystem.ClassCoerece",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "targetType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "Coerce(ProtoCore.DSASM.StackValue, ProtoCore.Type, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue Coerce(ProtoCore.DSASM.StackValue sv, ProtoCore.Type targetType, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "TypeSystem.Coerce",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "targetType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "Coerce(ProtoCore.DSASM.StackValue, int, int, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue Coerce(ProtoCore.DSASM.StackValue sv, int UID, int rank, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "TypeSystem.Coerce",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "UID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "rank",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "GetPrimitTypeName(ProtoCore.PrimitiveType)",
+      "signature": "string GetPrimitTypeName(ProtoCore.PrimitiveType type)",
+      "summary": "TypeSystem.GetPrimitTypeName",
+      "params": [
+        {
+          "name": "type",
+          "type": "ProtoCore.PrimitiveType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "GetType(ProtoCore.DSASM.StackValue)",
+      "signature": "int GetType(ProtoCore.DSASM.StackValue sv)",
+      "summary": "TypeSystem.GetType",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "GetType(int)",
+      "signature": "string GetType(int UID)",
+      "summary": "TypeSystem.GetType",
+      "params": [
+        {
+          "name": "UID",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "GetType(string)",
+      "signature": "int GetType(string ident)",
+      "summary": "TypeSystem.GetType",
+      "params": [
+        {
+          "name": "ident",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "IsHigherRank(int, int)",
+      "signature": "bool IsHigherRank(int t1, int t2)",
+      "summary": "TypeSystem.IsHigherRank",
+      "params": [
+        {
+          "name": "t1",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "t2",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "SetClassTable(ProtoCore.DSASM.ClassTable)",
+      "signature": "void SetClassTable(ProtoCore.DSASM.ClassTable table)",
+      "summary": "TypeSystem.SetClassTable",
+      "params": [
+        {
+          "name": "table",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "SetTypeSystem",
+      "signature": "void SetTypeSystem()",
+      "summary": "TypeSystem.SetTypeSystem",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "addressTypeClassMap",
+      "type": "System.Collections.Generic.Dictionary\u003CProtoCore.DSASM.AddressType, int\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "TypeSystem.addressTypeClassMap",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    },
+    {
+      "name": "classTable",
+      "type": "ProtoCore.DSASM.ClassTable",
+      "getter": true,
+      "setter": false,
+      "summary": "TypeSystem.classTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

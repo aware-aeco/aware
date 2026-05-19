@@ -1,0 +1,79 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionValuePrecisions",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The value precisions for the dimensions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f40fd295-4398-7fdc-849b-41a1f75b545d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Whole",
+      "value": 1,
+      "summary": "The value is rounded to the nearest whole (1)."
+    },
+    {
+      "name": "OnePerTwo",
+      "value": 2,
+      "summary": "The value is rounded to the nearest half (1/2)."
+    },
+    {
+      "name": "OnePerThree",
+      "value": 3,
+      "summary": "The value is rounded to the nearest third (1/3)."
+    },
+    {
+      "name": "OnePerFour",
+      "value": 4,
+      "summary": "The value is rounded to the nearest fourth (1/4)."
+    },
+    {
+      "name": "OnePerEight",
+      "value": 8,
+      "summary": "The value is rounded to the nearest eighth (1/8)."
+    },
+    {
+      "name": "OnePerSixteen",
+      "value": 16,
+      "summary": "The value is rounded to the nearest sixteenth (1/16)."
+    },
+    {
+      "name": "OnePerThirtytwo",
+      "value": 32,
+      "summary": "The value is rounded to the nearest thirtysecond (1/32)."
+    },
+    {
+      "name": "OnePerTen",
+      "value": 10,
+      "summary": "The value is rounded to one decimal (1/10)."
+    },
+    {
+      "name": "OnePerHundred",
+      "value": 100,
+      "summary": "The value is rounded to two decimals (1/100)."
+    },
+    {
+      "name": "OnePerThousand",
+      "value": 1000,
+      "summary": "The value is rounded to three decimals (1/1000)."
+    },
+    {
+      "name": "TwoAndHalfPerOne",
+      "value": -25,
+      "summary": "Value is rounded to nearest 2.5mm"
+    },
+    {
+      "name": "FivePerOne",
+      "value": -50,
+      "summary": "Value is rounded to nearest 5mm"
+    },
+    {
+      "name": "TenPerOne",
+      "value": -100,
+      "summary": "Value is rounded to nearest 10mm"
+    }
+  ]
+}

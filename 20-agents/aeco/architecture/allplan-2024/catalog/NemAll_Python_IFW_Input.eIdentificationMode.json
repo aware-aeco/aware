@@ -1,0 +1,89 @@
+{
+  "name": "eIdentificationMode",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Type of the identification mode",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eIdentificationMode/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eIdentificationMode",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eIdentificationMode/#NemAll_Python_IFW_Input.eIdentificationMode.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eIDENT_ARCHPOINT",
+      "value": 10
+    },
+    {
+      "name": "eIDENT_ARCHPOINT_OFFSET",
+      "value": 11
+    },
+    {
+      "name": "eIDENT_ARCH_ELEMENTPOINT",
+      "value": 12
+    },
+    {
+      "name": "eIDENT_ELEMENTPOINT",
+      "value": 1
+    },
+    {
+      "name": "eIDENT_POINT",
+      "value": 0
+    },
+    {
+      "name": "eIDENT_POINT_ASSOC_VIEW_WORLD",
+      "value": 2
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT",
+      "value": 3
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT_ALWAYS",
+      "value": 5
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT_ALWAYS_CENTER",
+      "value": 6
+    },
+    {
+      "name": "eIDENT_POINT_ELEMENT_CENTER",
+      "value": 4
+    },
+    {
+      "name": "eIDENT_POINT_OFFSET",
+      "value": 8
+    },
+    {
+      "name": "eIDENT_POINT_PERPENDICULAR",
+      "value": 7
+    },
+    {
+      "name": "eIDENT_TEXTPOINT",
+      "value": 9
+    }
+  ]
+}

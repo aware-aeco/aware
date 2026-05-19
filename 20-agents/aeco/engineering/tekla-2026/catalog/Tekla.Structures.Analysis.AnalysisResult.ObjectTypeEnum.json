@@ -1,0 +1,39 @@
+{
+  "name": "AnalysisResult.ObjectTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The object type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6650f196-d4ff-c2de-60bd-d69a666f5331",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OBJECT_TYPE_MODEL",
+      "value": 1,
+      "summary": "The model object type."
+    },
+    {
+      "name": "OBJECT_TYPE_MEMBER",
+      "value": 2,
+      "summary": "The analytical member object type."
+    },
+    {
+      "name": "OBJECT_TYPE_NODE",
+      "value": 3,
+      "summary": "The node object type."
+    },
+    {
+      "name": "OBJECT_TYPE_PART",
+      "value": 4,
+      "summary": "The physical member object type."
+    },
+    {
+      "name": "OBJECT_TYPE_AREA",
+      "value": 5,
+      "summary": "The analytical area object type."
+    }
+  ]
+}

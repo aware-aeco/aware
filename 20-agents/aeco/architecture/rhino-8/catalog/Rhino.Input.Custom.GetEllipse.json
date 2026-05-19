@@ -1,0 +1,117 @@
+{
+  "name": "GetEllipse",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Class provides user interface to define an ellipse.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_GetEllipse.htm",
+  "constructors": [
+    {
+      "name": "GetEllipse",
+      "signature": "public GetEllipse()",
+      "summary": "Constructs a GetEllispe object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetEllipse__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively releases the unmanaged object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetEllipse_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged object.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetEllipse_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively releases the unmanaged object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetEllipse_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public Result Get(out NurbsCurve ellipse)",
+      "summary": "Prompt for the getting of an ellipse.",
+      "params": [
+        {
+          "name": "ellipse",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "The ellipse in NURB form.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the get operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetEllipse_Get.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FirstPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the first point. If in \u0022from foci\u0022 mode, then this is the first foci point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetEllipse_FirstPoint.htm"
+    },
+    {
+      "name": "IsModeFromFoci",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates the ellipse was created from foci.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetEllipse_IsModeFromFoci.htm"
+    },
+    {
+      "name": "MarkFoci",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the user wants the ellipse foci marked with point objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetEllipse_MarkFoci.htm"
+    },
+    {
+      "name": "SecondPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the second point. If in \u0022from foci\u0022 mode, then this is the second foci point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetEllipse_SecondPoint.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

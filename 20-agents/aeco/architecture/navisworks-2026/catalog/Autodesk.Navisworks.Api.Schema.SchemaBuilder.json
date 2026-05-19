@@ -1,0 +1,171 @@
+{
+  "name": "SchemaBuilder",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "class",
+  "summary": "Enables construction of SchemaDefinitions.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.SchemaBuilder",
+  "constructors": [
+    {
+      "name": "SchemaBuilder()",
+      "signature": "SchemaBuilder()",
+      "summary": "Default constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaBuilder.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildDefinition",
+      "signature": "Autodesk.Navisworks.Api.Schema.SchemaDefinition BuildDefinition()",
+      "summary": "Constructs a schema definition matching what has been passed into Field) \u0026 String).",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaBuilder.BuildDefinition"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SchemaBuilder.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaBuilder.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Schema.SchemaBuilder InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SchemaBuilder.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.SchemaBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaBuilder.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "AddConcept",
+      "signature": "void AddConcept(string concpt)",
+      "summary": "Adds a given concept string onto the schema definition under construction.",
+      "params": [
+        {
+          "name": "concpt",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaBuilder.AddConcept%28System.String%29"
+    },
+    {
+      "name": "AddField",
+      "signature": "void AddField(Autodesk.Navisworks.Api.Schema.Field field)",
+      "summary": "Copies \u0026 adds in the field to the builder\u0027s internal collection.",
+      "params": [
+        {
+          "name": "field",
+          "type": "Autodesk.Navisworks.Api.Schema.Field",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Provided field ID is invalid or missing. 7-bit ASCII without spaces must be used."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Provided field ID is already in use."
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027field\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027field\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaBuilder.AddField%28Autodesk.Navisworks.Api.Schema.Field%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaBuilder.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

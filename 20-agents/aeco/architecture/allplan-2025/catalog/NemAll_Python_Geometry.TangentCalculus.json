@@ -1,0 +1,62 @@
+{
+  "name": "TangentCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Tangent calculation at an element point",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate(line: Line2D) -\u003E Vector3D | Calculate(line: Line3D) -\u003E Vector3D | Calculate(polyline: Polyline2D, inputPnt: Point3D) -\u003E Vector3D | Calculate(polyline: Polyline3D, inputPnt: Point3D) -\u003E Vector3D | Calculate(polygon: Polygon2D, inputPnt: Point3D) -\u003E Vector3D | Calculate(arc: Arc2D, inputPnt: Point3D) -\u003E Vector3D | Calculate(arc: Arc3D, inputPnt: Point3D) -\u003E Vector3D | Calculate(spline: Spline2D, inputPnt: Point3D) -\u003E Vector3D | Calculate(spline: Spline3D, inputPnt: Point3D) -\u003E Vector3D | Calculate(bspline: BSpline2D, inputPnt: Point3D) -\u003E Vector3D | Calculate(bspline: BSpline3D, inputPnt: Point3D) -\u003E Vector3D | Calculate(clothoid: Clothoid2D, inputPnt: Point3D) -\u003E Vector3D | Calculate(path: Path2D, inputPnt: Point3D) -\u003E Vector3D | Calculate(brep: BRep3D, inputPnt: Point3D) -\u003E Vector3DList | Calculate(geoObject: object, inputPnt: Point3D) -\u003E Vector3D",
+      "summary": "Calculates tangent vector of Line2D",
+      "remarks": "Calculates tangent vector of Line2D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D on which to calculate tangent vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "CalculateNormal",
+      "signature": "CalculateNormal(brep: BRep3D, inputPnt: Point3D) -\u003E Vector3D",
+      "summary": "Calculates normal vector of BRep3D at given point",
+      "remarks": "Calculates normal vector of BRep3D at given point",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "Brep body",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for normal calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "normal vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.CalculateNormal"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

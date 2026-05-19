@@ -1,0 +1,42 @@
+{
+  "name": "AnalysisLocalCoordinateSystem",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisLocalCoordinateSystem class contains local coordinate system information for an analysis model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7dd7ab45-ce94-0f2f-0fb3-cbb823608016",
+  "constructors": [
+    {
+      "name": "AnalysisLocalCoordinateSystem",
+      "signature": "public AnalysisLocalCoordinateSystem()",
+      "summary": "Creates a new analysis local coordinate system instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8d47baa7-0a56-8e66-f5d4-788cca76b7c6"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LocalX",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The local X direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9ad0533-8654-40de-81e0-e1944fd447ac"
+    },
+    {
+      "name": "LocalY",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The local Y direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8cac9969-25c7-ff86-7888-b3f5b840643a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

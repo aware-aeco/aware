@@ -1,0 +1,49 @@
+{
+  "name": "DotPrintPaperSize",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The paper size.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0f3d2d1b-e790-9d33-4d98-0745acb9c270",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Auto",
+      "value": 0,
+      "summary": "Printer output type."
+    },
+    {
+      "name": "A0",
+      "value": 1,
+      "summary": "A0 paper size."
+    },
+    {
+      "name": "A1",
+      "value": 2,
+      "summary": "A1 paper size."
+    },
+    {
+      "name": "A2",
+      "value": 3,
+      "summary": "A2 paper size."
+    },
+    {
+      "name": "A3",
+      "value": 4,
+      "summary": "A3 paper size."
+    },
+    {
+      "name": "A4",
+      "value": 5,
+      "summary": "A4 paper size."
+    },
+    {
+      "name": "A5",
+      "value": 6,
+      "summary": "A5 paper size."
+    }
+  ]
+}

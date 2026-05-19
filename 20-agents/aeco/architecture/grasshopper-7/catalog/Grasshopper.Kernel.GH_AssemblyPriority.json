@@ -1,0 +1,38 @@
+{
+  "name": "GH_AssemblyPriority",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Derive from this class if you wish to perform additional steps before any of your components are loaded. Any class in your project which inherits from GH_AssemblyPriority and which has an empty constructor will be instantiated prior to any GH_Component or IGH_DocumentObject classes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_AssemblyPriority.htm",
+  "constructors": [
+    {
+      "name": "GH_AssemblyPriority",
+      "signature": "protected GH_AssemblyPriority()",
+      "summary": "Initializes a new instance of the GH_AssemblyPriority class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_AssemblyPriority__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PriorityLoad",
+      "signature": "public abstract GH_LoadingInstruction PriorityLoad()",
+      "summary": "This method will be called exactly once before any of the Components in your project are loaded.",
+      "params": [],
+      "returns": {
+        "type": "GH_LoadingInstruction",
+        "doc": "Loading instruction. If you wish to abort the loading of your project, then return GH_LoadingInstruction.Abort."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_AssemblyPriority_PriorityLoad.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

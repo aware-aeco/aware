@@ -1,0 +1,29 @@
+{
+  "name": "MouseSelectMode",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Defines enumerated constant values to indicate a particular window selection mode.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_MouseSelectMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Crossing",
+      "value": 0,
+      "summary": "Anything that crosses this window will be selected."
+    },
+    {
+      "name": "Window",
+      "value": 1,
+      "summary": "Anything that is inside this window will be selected."
+    },
+    {
+      "name": "Combo",
+      "value": 2,
+      "summary": "Drag a rectangle from left to right for window select. Drag a rectangle from right to left for crossing select."
+    }
+  ]
+}

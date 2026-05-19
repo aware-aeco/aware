@@ -1,0 +1,49 @@
+{
+  "name": "ProjectionResult",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents result of projecting a point.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProjectionResult",
+  "constructors": [
+    {
+      "name": "ProjectionResult()",
+      "signature": "ProjectionResult()",
+      "summary": "Constructor for a projection result.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ProjectionResult.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Depth value (in clip space).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProjectionResult.Depth"
+    },
+    {
+      "name": "X",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "X screen co-ordinate.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProjectionResult.X"
+    },
+    {
+      "name": "Y",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Y screen co-ordinate.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProjectionResult.Y"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

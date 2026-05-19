@@ -1,0 +1,222 @@
+{
+  "name": "IntersectionEvent",
+  "namespace": "Rhino.Geometry.Intersect",
+  "kind": "class",
+  "summary": "Provides all the information for a single Curve Intersection event.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Intersect_IntersectionEvent.htm",
+  "constructors": [
+    {
+      "name": "IntersectionEvent",
+      "signature": "public IntersectionEvent()",
+      "summary": "Initializes a new instance of the IntersectionEvent class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_IntersectionEvent__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareEquivalent(IntersectionEvent, IntersectionEvent, Double)",
+      "signature": "public static bool CompareEquivalent(IntersectionEvent eventA, IntersectionEvent eventB, double relativePointTolerance)",
+      "summary": "Compare intersection events.",
+      "params": [
+        {
+          "name": "eventA",
+          "type": "Rhino.Geometry.Intersect.IntersectionEvent",
+          "doc": "The first intersection event to compare.",
+          "optional": false
+        },
+        {
+          "name": "eventB",
+          "type": "Rhino.Geometry.Intersect.IntersectionEvent",
+          "doc": "The second intersection event to compare.",
+          "optional": false
+        },
+        {
+          "name": "relativePointTolerance",
+          "type": "System.Double",
+          "doc": "The comparison tolerance. If RhinoMath.UnsetValue, then RhinoMath.SqrtEpsilon is used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two inputs represent the same intersection, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_IntersectionEvent_CompareEquivalent.htm"
+    },
+    {
+      "name": "CompareEquivalent(IntersectionEvent, IntersectionEvent, Double, TextLog)",
+      "signature": "public static bool CompareEquivalent(IntersectionEvent eventA, IntersectionEvent eventB, double relativePointTolerance, TextLog log)",
+      "summary": "Compare intersection events.",
+      "params": [
+        {
+          "name": "eventA",
+          "type": "Rhino.Geometry.Intersect.IntersectionEvent",
+          "doc": "The first intersection event to compare.",
+          "optional": false
+        },
+        {
+          "name": "eventB",
+          "type": "Rhino.Geometry.Intersect.IntersectionEvent",
+          "doc": "The second intersection event to compare.",
+          "optional": false
+        },
+        {
+          "name": "relativePointTolerance",
+          "type": "System.Double",
+          "doc": "The comparison tolerance. If RhinoMath.UnsetValue, then RhinoMath.SqrtEpsilon is used.",
+          "optional": false
+        },
+        {
+          "name": "log",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "If not null and false is returned, then a description of the error is appended to log.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Intersect.IntersectionEvent.CompareEquivalent(Rhino.Geometry.Intersect.IntersectionEvent,Rhino.Geometry.Intersect.IntersectionEvent,System.Double,Rhino.FileIO.TextLog)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_IntersectionEvent_CompareEquivalent_1.htm"
+    },
+    {
+      "name": "SurfaceOverlapParameter",
+      "signature": "public void SurfaceOverlapParameter(out Interval uDomain, out Interval vDomain)",
+      "summary": "If this instance records a Curve|Surface intersection event, and the intersection type if overlap, then use this function to get the U and V domains on the surface where the overlap occurs.",
+      "params": [
+        {
+          "name": "uDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Domain along surface U direction for overlap event.",
+          "optional": false
+        },
+        {
+          "name": "vDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Domain along surface V direction for overlap event.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_IntersectionEvent_SurfaceOverlapParameter.htm"
+    },
+    {
+      "name": "SurfacePointParameter",
+      "signature": "public void SurfacePointParameter(out double u, out double v)",
+      "summary": "If this instance records a Curve|Surface intersection event, and the intersection type is point, then use this function to get the U and V parameters on the surface where the intersection occurs.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "Parameter on surface u direction where the intersection occurs.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "Parameter on surface v direction where the intersection occurs.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_IntersectionEvent_SurfacePointParameter.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsOverlap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "All curve intersection events are either a single point or an overlap.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_IsOverlap.htm"
+    },
+    {
+      "name": "IsPoint",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "All curve intersection events are either a single point or an overlap.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_IsPoint.htm"
+    },
+    {
+      "name": "OverlapA",
+      "type": "Interval",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the interval on curve A where the overlap occurs. If the intersection type is not overlap, this value is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_OverlapA.htm"
+    },
+    {
+      "name": "OverlapB",
+      "type": "Interval",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the interval on curve B where the overlap occurs. If the intersection type is not overlap, this value is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_OverlapB.htm"
+    },
+    {
+      "name": "ParameterA",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the parameter on Curve A where the intersection occurred. If the intersection type is overlap, then this will return the start of the overlap region.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_ParameterA.htm"
+    },
+    {
+      "name": "ParameterB",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the parameter on Curve B where the intersection occurred. If the intersection type is overlap, then this will return the start of the overlap region.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_ParameterB.htm"
+    },
+    {
+      "name": "PointA",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point on Curve A where the intersection occurred. If the intersection type is overlap, then this will return the start of the overlap region.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_PointA.htm"
+    },
+    {
+      "name": "PointA2",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end point of the overlap on Curve A. If the intersection type is not overlap, this value is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_PointA2.htm"
+    },
+    {
+      "name": "PointB",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point on Curve B (or Surface B) where the intersection occurred. If the intersection type is overlap, then this will return the start of the overlap region.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_PointB.htm"
+    },
+    {
+      "name": "PointB2",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end point of the overlap on Curve B (or Surface B). If the intersection type is not overlap, this value is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_IntersectionEvent_PointB2.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

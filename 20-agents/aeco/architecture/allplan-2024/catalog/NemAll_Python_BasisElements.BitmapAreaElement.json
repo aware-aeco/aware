@@ -1,0 +1,75 @@
+{
+  "name": "BitmapAreaElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "BitmapAreaElement class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/",
+  "constructors": [
+    {
+      "name": "BitmapAreaElement",
+      "signature": "BitmapAreaElement() | BitmapAreaElement(commonProp, bitmapAreaProp, geometryObject) | BitmapAreaElement(BitmapAreaElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/#NemAll_Python_BasisElements.BitmapAreaElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBitmapAreaProperties",
+      "signature": "GetBitmapAreaProperties()",
+      "summary": "Get the BitmapArea properties",
+      "remarks": "Get the BitmapArea properties",
+      "params": [],
+      "returns": {
+        "type": "BitmapAreaProperties",
+        "doc": "BitmapArea properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/#NemAll_Python_BasisElements.BitmapAreaElement.GetBitmapAreaProperties"
+    },
+    {
+      "name": "SetBitmapAreaProperties",
+      "signature": "SetBitmapAreaProperties(bitmapAreaProp)",
+      "summary": "Set the bitmapArea properties",
+      "remarks": "Set the bitmapArea properties",
+      "params": [
+        {
+          "name": "bitmapAreaProp",
+          "type": "BitmapAreaProperties",
+          "doc": "BitmapArea properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/#NemAll_Python_BasisElements.BitmapAreaElement.SetBitmapAreaProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/#NemAll_Python_BasisElements.BitmapAreaElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

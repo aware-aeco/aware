@@ -1,0 +1,24 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionTextPlacings",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The placing types of the dimension value text.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f1b82bd1-7225-0d37-9278-34fa42dd0fef",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AboveDimensionLine",
+      "value": 0,
+      "summary": "The dimension value text is placed above the dimension line."
+    },
+    {
+      "name": "OnDimensionLine",
+      "value": 1,
+      "summary": "The dimension value text is placed on the dimension line."
+    }
+  ]
+}

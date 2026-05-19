@@ -1,0 +1,23 @@
+{
+  "name": "Object",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Object class is an abstract base class for all the objects Tekla Structures has.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9e5dc86b-68fe-395d-5ad0-5d4ca084ab36",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Identifier",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

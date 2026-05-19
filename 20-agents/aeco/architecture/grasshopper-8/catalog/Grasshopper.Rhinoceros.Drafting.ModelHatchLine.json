@@ -1,0 +1,251 @@
+{
+  "name": "ModelHatchLine",
+  "namespace": "Grasshopper.Rhinoceros.Drafting",
+  "kind": "class",
+  "summary": "Represents a Rhino model hatch line.",
+  "base": "ModelValue",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Drafting_ModelHatchLine.htm",
+  "constructors": [
+    {
+      "name": "ModelHatchLine()",
+      "signature": "public ModelHatchLine()",
+      "summary": "Initializes a new instance of the ModelHatchLine class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine__ctor.htm"
+    },
+    {
+      "name": "ModelHatchLine(ModelHatchLine.Attributes)",
+      "signature": "public ModelHatchLine(ModelHatchLine.Attributes attributes)",
+      "summary": "Initializes a new instance of the ModelHatchLine class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelHatchLine.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine__ctor_1.htm"
+    },
+    {
+      "name": "ModelHatchLine(HatchLine)",
+      "signature": "public ModelHatchLine(HatchLine hatchLine)",
+      "summary": "Initializes a new instance of the ModelHatchLine class",
+      "params": [
+        {
+          "name": "hatchLine",
+          "type": "HatchLine",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static ModelHatchLine Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelHatchLine",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_CastTo__1.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides Object.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_GetHashCode.htm"
+    },
+    {
+      "name": "ToAttributes",
+      "signature": "public ModelHatchLine.Attributes ToAttributes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ModelHatchLine.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_ToAttributes.htm"
+    },
+    {
+      "name": "ToHatchLine",
+      "signature": "public HatchLine ToHatchLine()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "HatchLine",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_ToHatchLine.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public virtual string TooltipString()",
+      "summary": "(Inherited from ModelValue.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelValue_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ModelValue.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelHatchLine.Attributes to ModelHatchLine)",
+      "signature": "public static implicit operator ModelHatchLine (ModelHatchLine.Attributes attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelHatchLine.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelHatchLine",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(HatchLine to ModelHatchLine)",
+      "signature": "public static implicit operator ModelHatchLine (HatchLine hatchLine)",
+      "summary": "",
+      "params": [
+        {
+          "name": "hatchLine",
+          "type": "HatchLine",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelHatchLine",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_op_Implicit_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_Angle.htm"
+    },
+    {
+      "name": "Base",
+      "type": "Point2d",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_Base.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_Offset.htm"
+    },
+    {
+      "name": "Segments",
+      "type": "IReadOnlyList\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelHatchLine_Segments.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

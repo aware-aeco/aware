@@ -1,0 +1,180 @@
+{
+  "name": "LevelMark.LevelMarkAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LevelMarkAttributes class contains the attributes for the level mark.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ac4e8119-c21c-dd94-2a5c-f7537c74525d",
+  "constructors": [
+    {
+      "name": "LevelMark.LevelMarkAttributes()",
+      "signature": "public LevelMarkAttributes()",
+      "summary": "Initializes a new instance of the LevelMark.LevelMarkAttributes class that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5fd59191-ad39-876f-7b23-9dc90974c4e0"
+    },
+    {
+      "name": "LevelMark.LevelMarkAttributes(String)",
+      "signature": "public LevelMarkAttributes(string AttributesFile)",
+      "summary": "Initializes a new instance of the LevelMark.LevelMarkAttributes class that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eb5f0415-7413-d048-445a-747a349da511"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6a5f89ee-75fb-acf8-f90a-70311f0a3c83"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/61650b6f-be32-1dab-3b09-8256f7189601"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the angle of the level mark, in degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/08fd57dd-b230-005a-a8e5-8afb36dc8f0a"
+    },
+    {
+      "name": "ArrowHead",
+      "type": "ArrowheadAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the arrow attributes for the level mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/76ba0a0d-bbcb-fd76-480f-a10add23db52"
+    },
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the font of the level mark text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9acd84a4-b4d2-904c-2e41-366f6b92f985"
+    },
+    {
+      "name": "Frame",
+      "type": "Frame",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the frame attributes for the level mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/362dc55a-9b7a-2207-abf5-cbcdca5220d0"
+    },
+    {
+      "name": "PlacingAttributes",
+      "type": "PlacingAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/83feae0d-8429-5eea-3b99-ca7247558733"
+    },
+    {
+      "name": "Postfix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets text after the level value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b57b7caa-1225-3305-940f-795ae9a6bbcc"
+    },
+    {
+      "name": "Prefix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text before the level value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a6f0ac9c-485a-7234-28b9-8a349be92447"
+    },
+    {
+      "name": "TextHidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the numeric values are visible or hidden.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f44c51cc-e86c-612c-7b92-844a342296b5"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the transparency of the background of the level mark text is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ee49db9-8a67-c3c1-f484-15ec282860e2"
+    },
+    {
+      "name": "Unit",
+      "type": "UnitAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the unit attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/57130265-4c58-1e5a-f736-cf8f8bd8a995"
+    },
+    {
+      "name": "UseGrouping",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to use different grouping options to represent the level mark dimensions.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80e2bc87-4449-7996-5be0-6544b6b26681"
+    },
+    {
+      "name": "UsePositiveSignForPositiveLevels",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether a \u002B character in front of positive level value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3f851b03-de2e-ac2e-1d75-4d51d4e38dc6"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

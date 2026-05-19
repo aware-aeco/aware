@@ -1,0 +1,42 @@
+{
+  "name": "GH_CanvasNavigation",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates all possible canvas navigations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasNavigation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "PanLeft",
+      "value": 1
+    },
+    {
+      "name": "PanRight",
+      "value": 2
+    },
+    {
+      "name": "PanUp",
+      "value": 3
+    },
+    {
+      "name": "PanDown",
+      "value": 4
+    },
+    {
+      "name": "ZoomIn",
+      "value": 5
+    },
+    {
+      "name": "ZoomOut",
+      "value": 6
+    }
+  ]
+}

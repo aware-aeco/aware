@@ -1,0 +1,308 @@
+{
+  "name": "Dialogs",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The Dialogs class contains interface methods for Tekla Structures to handle FormBase and WindowBase dialogs.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/52eae4f7-9a52-7a70-e14d-53fea8d7cd11",
+  "constructors": [
+    {
+      "name": "Dialogs",
+      "signature": "public Dialogs()",
+      "summary": "Initializes a new instance of the Dialogs class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/050a0fa3-aaf7-9cdd-8b66-4faf9f89daf3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosePluginDialogs",
+      "signature": "public static void ClosePluginDialogs()",
+      "summary": "Close all dialogs to end the threads running the corresponding message loops.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/698fc56b-5264-a788-abf8-77f44b020c14"
+    },
+    {
+      "name": "GetPluginFormBaseByPluginFormName",
+      "signature": "public static PluginFormBase GetPluginFormBaseByPluginFormName(string pluginFormName)",
+      "summary": "Retrieves an instance of the form.",
+      "params": [
+        {
+          "name": "pluginFormName",
+          "type": "System.String",
+          "doc": "The complete name of the plug-in form (including the plug-in name).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PluginFormBase",
+        "doc": "The existing PluginFormBase or null if it did not exist."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b8a8fc67-20a4-fad5-a03e-d42b21116129"
+    },
+    {
+      "name": "GetPluginWindowBaseByPluginFormName",
+      "signature": "public static PluginWindowBase GetPluginWindowBaseByPluginFormName(string pluginFormName)",
+      "summary": "Retrieves an instance of the form.",
+      "params": [
+        {
+          "name": "pluginFormName",
+          "type": "System.String",
+          "doc": "The complete name of the plug-in form (including the plug-in name).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PluginWindowBase",
+        "doc": "The existing PluginWindowBase or null if it did not exist."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/19217d5d-dce5-0d67-01b4-4ff4d932e553"
+    },
+    {
+      "name": "LoadAttributeFileNameToDialogAndApply(String)",
+      "signature": "public static int LoadAttributeFileNameToDialogAndApply(string param)",
+      "summary": "Uses the attributes found from the attribute file as the applied values for the specified dialog.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always. The return value is not useful because it is not sent to the Tekla Structures core."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/771f0656-ff9d-342d-832f-129141070c13"
+    },
+    {
+      "name": "LoadAttributeFileNameToDialogAndApply(String, String)",
+      "signature": "public static bool LoadAttributeFileNameToDialogAndApply(string attributeFileName, string pluginFormName)",
+      "summary": "Loads the specified dialog\u0027s applied values from the attribute file.",
+      "params": [
+        {
+          "name": "attributeFileName",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        },
+        {
+          "name": "pluginFormName",
+          "type": "System.String",
+          "doc": "The full name of the dialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a281b25e-ce09-4aaf-2de1-e480a0fe0c65"
+    },
+    {
+      "name": "LoadAttributeFileNameToDialogAndModify(String)",
+      "signature": "public static int LoadAttributeFileNameToDialogAndModify(string param)",
+      "summary": "Uses the attributes found from the attribute file as the current values for the specified dialog. Modifies the current selected instance. Applied values for this dialog are not changed.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always. The return value is not useful because it is not sent to the Tekla Structures core."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/850a8d13-508b-642f-9416-0e854a297724"
+    },
+    {
+      "name": "LoadAttributeFileNameToDialogAndModify(String, String)",
+      "signature": "public static bool LoadAttributeFileNameToDialogAndModify(string attributeFileName, string pluginFormName)",
+      "summary": "Loads the specified dialog\u0027s current values from the attribute file and modifies the current selected instance.",
+      "params": [
+        {
+          "name": "attributeFileName",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        },
+        {
+          "name": "pluginFormName",
+          "type": "System.String",
+          "doc": "The full name of the dialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/642fbb30-b657-7e34-0fbf-e74f87a70a0c"
+    },
+    {
+      "name": "LoadAttributeFileNameToDialogAndSave",
+      "signature": "public static int LoadAttributeFileNameToDialogAndSave(string param)",
+      "summary": "Uses the attributes found from the attribute file for the specified dialog and saves to file.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always. The return value is not useful because it is not sent to the Tekla Structures core."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f41b14e4-1742-ac10-e3e4-bd1221adc387"
+    },
+    {
+      "name": "LoadAttributeFileToStack",
+      "signature": "public static int LoadAttributeFileToStack(string param)",
+      "summary": "Opens a dialog and forces it to get the values from the currently selected part.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f1a177b3-2bf6-99af-bdd4-c1f8dd428c25"
+    },
+    {
+      "name": "LoadDialogs",
+      "signature": "public static int LoadDialogs(string param)",
+      "summary": "Reads the PluginFormBase and PluginWindowBase dialogs from all found dll files in bin\\dialogs and bin\\plugins.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always. The return value is not useful because it is not sent to the Tekla Structures core."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/110d4f4b-a6cd-30c1-cf6b-cc4e990810fa"
+    },
+    {
+      "name": "OpenDialog",
+      "signature": "public static int OpenDialog(string param)",
+      "summary": "Opens a dialog. The name of the dialog is asked from the Tekla Structures core.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ce7137b-d59d-1a3c-d21a-802a942a118a"
+    },
+    {
+      "name": "OpenDialogAndGet",
+      "signature": "public static int OpenDialogAndGet(string param)",
+      "summary": "Opens a dialog and forces it to get the values from the currently selected part.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc1d25fc-6855-5d1a-d03a-bb403f3af5f8"
+    },
+    {
+      "name": "ReloadDialogs",
+      "signature": "public static int ReloadDialogs(string param)",
+      "summary": "Reloads all PluginFormBase dialogs with default/standard values.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d4b1485e-18d0-b714-17f8-90607c4f1af1"
+    },
+    {
+      "name": "SetSettings",
+      "signature": "public static int SetSettings(string param)",
+      "summary": "Forces the dialog system to get the language and localization settings from Tekla Structures.",
+      "params": [
+        {
+          "name": "param",
+          "type": "System.String",
+          "doc": "Not used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 always."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f56ab8b4-e80c-e35e-8f4d-165105ab70e9"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

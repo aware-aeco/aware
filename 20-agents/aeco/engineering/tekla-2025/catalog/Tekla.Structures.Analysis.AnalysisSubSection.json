@@ -1,0 +1,285 @@
+{
+  "name": "AnalysisSubSection",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisSubSection class contains information related to analysis subsections.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4f52c2c7-2e95-c2d5-7fe1-4c7ebdb275bc",
+  "constructors": [
+    {
+      "name": "AnalysisSubSection",
+      "signature": "public AnalysisSubSection()",
+      "summary": "Initializes a new instance of the AnalysisSubSection class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8137e14c-ba1f-85a6-ee8a-09fd57d70495"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis subsection. The analysis subsection identifier must be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/83c541c6-3c34-8a0b-1672-ac36de2181dc"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "B",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The B value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/edec47e1-d9a6-0068-d860-badc6570f6d6"
+    },
+    {
+      "name": "B1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The B1 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/02c40c70-98b4-28b0-abb9-5708f48ff819"
+    },
+    {
+      "name": "B2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The B2 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4a739ece-1f7f-255e-69de-11d02583b37b"
+    },
+    {
+      "name": "B3",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The B3 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ebc54c8-d3ca-f2b0-6130-5a5a8eb5aa8a"
+    },
+    {
+      "name": "B4",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The B4 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9aee711d-d9db-921e-5351-b4819d3b4da8"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "H",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The H value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310bda25-6959-20a5-5619-894e4f669e2e"
+    },
+    {
+      "name": "H1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The H1 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/46cb9df9-26a3-dc17-cc7e-fcf72ff59bb7"
+    },
+    {
+      "name": "H2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The H2 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5096dab-93e9-3872-f91c-a6906f1f6277"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "IsHole",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the subsection is a hole.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0517baff-4ac5-507f-e71c-f59129bc49b9"
+    },
+    {
+      "name": "Material",
+      "type": "AnalysisMaterial",
+      "getter": true,
+      "setter": true,
+      "summary": "The material of the subsection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/07e63198-1ae1-ef99-27fc-1b603d36a4a9"
+    },
+    {
+      "name": "OffsetAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset angle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c8998e56-94be-90d9-0b17-ba4499175412"
+    },
+    {
+      "name": "OffsetY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset in the direction of the Y-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/60120a2f-dd50-217d-b9a9-9a6a19a9fe6f"
+    },
+    {
+      "name": "OffsetZ",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset in the direction of the Z-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8315abfe-d331-77f3-a736-fb4e90f441e9"
+    },
+    {
+      "name": "Points",
+      "type": "List\u003CPoint\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The points of the subsection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/727bb08e-1baf-a556-3bd7-00eeb89709d0"
+    },
+    {
+      "name": "R1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The R1 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7fd2edb5-6d73-2f5b-9747-7f9e66350c24"
+    },
+    {
+      "name": "R2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The R2 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca327191-fb5c-0c71-9442-17e29f1c441c"
+    },
+    {
+      "name": "SubType",
+      "type": "AnalysisSubSection.AnalysisSubSectionSubTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The subtype of the subsection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd7001b3-49bc-4d1c-62d9-b31050db82b1"
+    },
+    {
+      "name": "T1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The T1 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33527a5c-5394-879c-471f-73dc40a4178c"
+    },
+    {
+      "name": "T2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The T2 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b738bd53-712d-35fc-9809-1e55300fa641"
+    },
+    {
+      "name": "T3",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The T3 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7284fce1-0d73-3324-a7f7-586d885dbaba"
+    },
+    {
+      "name": "T4",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The T4 value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/27551e32-1b0e-5e53-125d-97a7bf083439"
+    },
+    {
+      "name": "TF",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The TF value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/72a336ee-0917-4466-f8b5-59538e460f26"
+    },
+    {
+      "name": "TW",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The TW value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d104ec5f-cbc0-402e-b47a-b691a64254b1"
+    },
+    {
+      "name": "Type",
+      "type": "AnalysisSubSection.AnalysisSubSectionTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the subsection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f5258bd-4bf2-6c68-59ac-77b8834e3227"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

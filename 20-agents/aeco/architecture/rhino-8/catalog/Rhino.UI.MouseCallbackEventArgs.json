@@ -1,0 +1,69 @@
+{
+  "name": "MouseCallbackEventArgs",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.MouseCallbackEventArgs\u0022]",
+  "base": "CancelEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_MouseCallbackEventArgs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsOverGumball",
+      "signature": "public GumballMode IsOverGumball()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GumballMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.MouseCallbackEventArgs.IsOverGumball\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_MouseCallbackEventArgs_IsOverGumball.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CtrlKeyDown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_MouseCallbackEventArgs_CtrlKeyDown.htm"
+    },
+    {
+      "name": "MouseButton",
+      "type": "MouseButton",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_MouseCallbackEventArgs_MouseButton.htm"
+    },
+    {
+      "name": "ShiftKeyDown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_MouseCallbackEventArgs_ShiftKeyDown.htm"
+    },
+    {
+      "name": "View",
+      "type": "RhinoView",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_MouseCallbackEventArgs_View.htm"
+    },
+    {
+      "name": "ViewportPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_MouseCallbackEventArgs_ViewportPoint.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

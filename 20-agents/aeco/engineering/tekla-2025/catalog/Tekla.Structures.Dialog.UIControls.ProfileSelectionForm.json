@@ -1,0 +1,76 @@
+{
+  "name": "ProfileSelectionForm",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ProfileSelectionForm class represents a dialog to select profiles using the profile catalogs.",
+  "base": "System.Windows.Forms.Form",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9e77696b-55d6-51e4-9949-efe253f3e5cd",
+  "constructors": [
+    {
+      "name": "ProfileSelectionForm(List\u003CLibraryProfileItem\u003E, List\u003CParametricProfileItem\u003E)",
+      "signature": "public ProfileSelectionForm(List\u003CLibraryProfileItem\u003E LibraryProfiles, List\u003CParametricProfileItem\u003E ParametricProfiles)",
+      "summary": "Creates a new instance of the ProfileSelectionForm.",
+      "params": [
+        {
+          "name": "LibraryProfiles",
+          "type": "System.Collections.Generic.List\u003CLibraryProfileItem\u003E",
+          "doc": "The library profiles to be added to the dialog.",
+          "optional": false
+        },
+        {
+          "name": "ParametricProfiles",
+          "type": "System.Collections.Generic.List\u003CParametricProfileItem\u003E",
+          "doc": "The parametric profiles to be added to the dialog.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/454e6f99-3555-19cb-52f1-020c05d69ac5"
+    },
+    {
+      "name": "ProfileSelectionForm(List\u003CLibraryProfileItem\u003E, List\u003CParametricProfileItem\u003E, String)",
+      "signature": "public ProfileSelectionForm(List\u003CLibraryProfileItem\u003E LibraryProfileItems, List\u003CParametricProfileItem\u003E ParametricProfileItems, string Profile)",
+      "summary": "Creates a new instance of the ProfileSelectionForm selecting the given profile in the tree control.",
+      "params": [
+        {
+          "name": "LibraryProfileItems",
+          "type": "System.Collections.Generic.List\u003CLibraryProfileItem\u003E",
+          "doc": "The library profiles to be added to the dialog.",
+          "optional": false
+        },
+        {
+          "name": "ParametricProfileItems",
+          "type": "System.Collections.Generic.List\u003CParametricProfileItem\u003E",
+          "doc": "The parametric profiles to be added to the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Profile",
+          "type": "System.String",
+          "doc": "The profile that will be selected in the tree.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ae4ba3c3-3c1a-412f-718c-5733fb11a23a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SelectedProfile",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The selected profile.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aaa9f2b6-7284-0193-162c-e62992a6706a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

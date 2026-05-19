@@ -1,0 +1,77 @@
+{
+  "name": "SettingsApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Settings endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/SettingsApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSettingsAsync",
+      "signature": "Task\u003Cobject\u003E GetSettingsAsync(Guid projectId, string search)",
+      "summary": "Gets setting values for the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the project.",
+          "optional": false
+        },
+        {
+          "name": "search",
+          "type": "string",
+          "doc": "Optional parameter to search for keywords in settings.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "**Dictionary**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/SettingsApi.md"
+    },
+    {
+      "name": "UpdateSettingsAsync",
+      "signature": "Task\u003Cobject\u003E UpdateSettingsAsync(Guid projectId, object body)",
+      "summary": "Updates one or multiple setting values in the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the project.",
+          "optional": false
+        },
+        {
+          "name": "body",
+          "type": "object",
+          "doc": "Dictionary of key-value pairs representing settings to update.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "**Dictionary**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/SettingsApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

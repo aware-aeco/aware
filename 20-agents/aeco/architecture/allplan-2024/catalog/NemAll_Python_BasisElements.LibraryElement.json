@@ -1,0 +1,149 @@
+{
+  "name": "LibraryElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the library element",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/",
+  "constructors": [
+    {
+      "name": "LibraryElement",
+      "signature": "LibraryElement() | LibraryElement(libEleProp) | LibraryElement(libEle)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCount",
+      "signature": "GetCount()",
+      "summary": "Get the element count",
+      "remarks": "Get the element count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Element count"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.GetCount"
+    },
+    {
+      "name": "GetGeometryElements",
+      "signature": "GetGeometryElements(doc)",
+      "summary": "Get the geometry elements",
+      "remarks": "Get the geometry elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list",
+        "doc": "Geometry elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.GetGeometryElements"
+    },
+    {
+      "name": "GetMinMax",
+      "signature": "GetMinMax(doc)",
+      "summary": "Get the min/max box of the element",
+      "remarks": "Get the min/max box of the element",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax3D",
+        "doc": "Min/max box of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.GetMinMax"
+    },
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties()",
+      "summary": "Get the properties",
+      "remarks": "Get the properties",
+      "params": [],
+      "returns": {
+        "type": "LibraryElementProperties",
+        "doc": "Properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.GetProperties"
+    },
+    {
+      "name": "GetReferencePoint",
+      "signature": "GetReferencePoint(doc)",
+      "summary": "Get the reference point",
+      "remarks": "Get the reference point",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.GetReferencePoint"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(moveVec)",
+      "summary": "Move the element",
+      "remarks": "Move the element",
+      "params": [
+        {
+          "name": "moveVec",
+          "type": "Vector3D",
+          "doc": "Move vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.Move"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

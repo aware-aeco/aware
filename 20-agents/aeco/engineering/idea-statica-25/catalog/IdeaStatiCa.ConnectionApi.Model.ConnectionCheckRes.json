@@ -1,0 +1,102 @@
+{
+  "name": "ConnectionCheckRes",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConnectionCheckRes.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CheckResSummary",
+      "type": "List\u003CCheckResSummary\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.checkResSummary.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "CheckResPlate",
+      "type": "List\u003CCheckResPlate\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.checkResPlate.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "CheckResWeld",
+      "type": "List\u003CCheckResWeld\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.checkResWeld.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "CheckResBolt",
+      "type": "List\u003CCheckResBolt\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.checkResBolt.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "CheckResAnchor",
+      "type": "List\u003CCheckResAnchor\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.checkResAnchor.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "CheckResConcreteBlock",
+      "type": "List\u003CCheckResConcreteBlock\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.checkResConcreteBlock.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "BucklingResults",
+      "type": "List\u003CBucklingRes\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.bucklingResults.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "ConnectionID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.connectionID.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    },
+    {
+      "name": "Messages",
+      "type": "OpenMessages",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionCheckRes.messages.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionCheckRes.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

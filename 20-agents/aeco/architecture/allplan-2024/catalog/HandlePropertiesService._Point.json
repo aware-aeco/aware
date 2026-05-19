@@ -1,0 +1,26 @@
+{
+  "name": "_Point",
+  "namespace": "HandlePropertiesService",
+  "kind": "class",
+  "summary": "modify the point",
+  "base": "_BaseHandlePropUpdate",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_Point/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__()",
+      "summary": "execute the value update",
+      "remarks": "execute the value update",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_Point/#HandlePropertiesService._Point.__call__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

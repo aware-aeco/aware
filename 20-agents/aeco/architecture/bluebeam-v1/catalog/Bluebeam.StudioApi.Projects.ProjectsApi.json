@@ -1,0 +1,174 @@
+{
+  "name": "ProjectsApi",
+  "namespace": "Bluebeam.StudioApi.Projects",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Projects endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetHealthcheckDetails",
+      "signature": "Task GetHealthcheckDetails()",
+      "summary": "GET /publicapi/v1/projects/healthcheck/details",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/healthcheck/details\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetProject",
+      "signature": "Task GetProject(Guid id)",
+      "summary": "Get a single project",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateProject",
+      "signature": "Task UpdateProject(Guid id, UpdateProjectRequest request)",
+      "summary": "Update a project",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateProjectRequest",
+          "doc": "Request body. JSON object with fields: Name, Notification, OwnerEmailOrId, Restricted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "DeleteProject",
+      "signature": "Task DeleteProject(Guid id)",
+      "summary": "Delete a project",
+      "remarks": "HTTP DELETE \u0060/publicapi/v1/projects/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "InviteProject",
+      "signature": "Task InviteProject(Guid projectId, InviteProjectRequest request)",
+      "summary": "Invite user to project by email",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/invite\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/invite\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "InviteProjectRequest",
+          "doc": "Request body. JSON object with fields: Email, Message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CreateProject",
+      "signature": "Task CreateProject(CreateProjectRequest request)",
+      "summary": "Create a project",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "request",
+          "type": "CreateProjectRequest",
+          "doc": "Request body. JSON object with fields: Name, Notification, Restricted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListProjects",
+      "signature": "Task ListProjects()",
+      "summary": "Get all projects",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,30 @@
+{
+  "name": "LcOpSelectionKeyFrameParts",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSelectionKeyFrameParts enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePART_TRANS",
+      "value": 1
+    },
+    {
+      "name": "ePART_COLOR",
+      "value": 8
+    },
+    {
+      "name": "ePART_TRANSPARENCY",
+      "value": 16
+    },
+    {
+      "name": "ePART_ALL",
+      "value": 25
+    }
+  ]
+}

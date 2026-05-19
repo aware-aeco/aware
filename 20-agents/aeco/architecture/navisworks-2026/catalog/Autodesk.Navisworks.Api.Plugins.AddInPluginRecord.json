@@ -1,0 +1,140 @@
+{
+  "name": "AddInPluginRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents an AddInPlugin record in Navisworks",
+  "base": "Autodesk.Navisworks.Api.Plugins.PluginRecord",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.AddInPluginRecord",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.AddInPlugin LoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.AddInPlugin",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.LoadPlugin"
+    },
+    {
+      "name": "TryLoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.AddInPlugin TryLoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.AddInPlugin",
+        "doc": "null if plugin failed to load"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.TryLoadPlugin"
+    },
+    {
+      "name": "CanExecute",
+      "signature": "Autodesk.Navisworks.Api.Plugins.CommandState CanExecute()",
+      "summary": "This is called to determine the state of plugin. Primarily if Execute can be called.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.CommandState",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.CanExecute"
+    },
+    {
+      "name": "Execute",
+      "signature": "int Execute(string[] parameters)",
+      "summary": "Executes the plugin, loading it if needed",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.ExecuteDisabledException",
+          "when": "Execute is Disabled via CanExecute"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.Execute%28System.String%5B%5D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanToggle",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies if the command can toggle",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.CanToggle"
+    },
+    {
+      "name": "Icon",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 16x16 icon to be displayed for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.Icon"
+    },
+    {
+      "name": "LargeIcon",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 32x32 icon to be displayed for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.LargeIcon"
+    },
+    {
+      "name": "LoadedPlugin",
+      "type": "Autodesk.Navisworks.Api.Plugins.AddInPlugin",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the plugin if loaded, otherwise null",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.LoadedPlugin"
+    },
+    {
+      "name": "Location",
+      "type": "Autodesk.Navisworks.Api.Plugins.AddInLocation",
+      "getter": true,
+      "setter": false,
+      "summary": "Where the plugin is displayed in Navisworks menus system",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.Location"
+    },
+    {
+      "name": "Shortcut",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the keyboard shortcut for the command.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.Shortcut"
+    },
+    {
+      "name": "ShortcutWindowTypes",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The Ids of the windows for which the shortcut is valid. Multiple Ids can be specified by separating with \u0022;\u0022. If Ids are specified the shortcut should be valid in all contexts.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginRecord.ShortcutWindowTypes"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

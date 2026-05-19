@@ -1,0 +1,171 @@
+{
+  "name": "FixtureProperties",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Palette.FixtureProperties.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/",
+  "constructors": [
+    {
+      "name": "FixtureProperties",
+      "signature": "FixtureProperties() | FixtureProperties(pathShortcut: str, group: str, element: str) | FixtureProperties(FixtureProperties: FixtureProperties)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetElement",
+      "signature": "GetElement() -\u003E str",
+      "summary": "Get the element",
+      "remarks": "Get the element",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.GetElement"
+    },
+    {
+      "name": "GetGroup",
+      "signature": "GetGroup() -\u003E str",
+      "summary": "Get the group",
+      "remarks": "Get the group",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Group"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.GetGroup"
+    },
+    {
+      "name": "GetLastFixturePath",
+      "signature": "GetLastFixturePath() -\u003E str",
+      "summary": "Get the last fixture path",
+      "remarks": "Get the last fixture path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Last fixture path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.GetLastFixturePath"
+    },
+    {
+      "name": "GetPath",
+      "signature": "GetPath() -\u003E str",
+      "summary": "Get the path",
+      "remarks": "Get the path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.GetPath"
+    },
+    {
+      "name": "OpenFixtureDialog",
+      "signature": "OpenFixtureDialog(fixturePath: str) -\u003E str",
+      "summary": "Open the symbol library dialog",
+      "remarks": "Open the symbol library dialog",
+      "params": [
+        {
+          "name": "fixturePath",
+          "type": "str",
+          "doc": "Path to .sym file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "result path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.OpenFixtureDialog"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(other: FixtureProperties) -\u003E object",
+      "summary": "Comparison of fixture properties.",
+      "remarks": "Comparison of fixture properties.",
+      "params": [
+        {
+          "name": "other",
+          "type": "FixtureProperties",
+          "doc": "Compared fixture properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when fixture properties are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Element",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property access for the element :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.Element"
+    },
+    {
+      "name": "Group",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property access for the group :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.Group"
+    },
+    {
+      "name": "Path",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property access for the path :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.Path"
+    },
+    {
+      "name": "PathShortcut",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property access for the path shortcut :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.PathShortcut"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

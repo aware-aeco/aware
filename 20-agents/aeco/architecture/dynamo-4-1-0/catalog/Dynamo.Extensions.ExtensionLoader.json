@@ -1,0 +1,87 @@
+{
+  "name": "ExtensionLoader",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "Provides functionality for loading Dynamo\u0027s extensions. This class loads formatted XMLs which contain information about *Extension.dll and type name of IExtension inheritor. Example: ..\\ExtensionName.dllDynamo.ExtensionName.ExtensionTypeName",
+  "interfaces": [
+    "Dynamo.Extensions.IExtensionLoader",
+    "Dynamo.Logging.ILogSource"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLoader.cs",
+  "constructors": [
+    {
+      "name": "ExtensionLoader()",
+      "signature": "void ExtensionLoader()",
+      "summary": "ExtensionLoader.ExtensionLoader",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLoader.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Load(string)",
+      "signature": "Dynamo.Extensions.IExtension Load(string extensionPath)",
+      "summary": "Loads Dynamo.Extensions.IExtension from assembly.",
+      "params": [
+        {
+          "name": "extensionPath",
+          "type": "string",
+          "doc": "Assembly full path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Extensions.IExtension",
+        "doc": "Loaded Dynamo.Extensions.IExtension"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLoader.cs"
+    },
+    {
+      "name": "LoadDirectory(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E LoadDirectory(string extensionsPath)",
+      "summary": "Loads a collection of Dynamo.Extensions.IExtension from given folder",
+      "params": [
+        {
+          "name": "extensionsPath",
+          "type": "string",
+          "doc": "Assemblies location folder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+        "doc": "Loaded collection of Dynamo.Extensions.IExtension"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLoader.cs"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "ExtensionLoading",
+      "delegate": "System.Action\u003CDynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Action\u003CDynamo.Extensions.IExtension\u003E ExtensionLoading",
+      "summary": "An event that is raised when an extension starts loading.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "This event is used for logging messages.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

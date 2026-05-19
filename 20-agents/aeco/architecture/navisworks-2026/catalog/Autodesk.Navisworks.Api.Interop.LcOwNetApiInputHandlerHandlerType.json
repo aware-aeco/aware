@@ -1,0 +1,22 @@
+{
+  "name": "LcOwNetApiInputHandlerHandlerType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOwNetApiInputHandlerHandlerType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwNetApiInputHandlerHandlerType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eOVERRIDE",
+      "value": 0
+    },
+    {
+      "name": "eTOOL",
+      "value": 1
+    }
+  ]
+}

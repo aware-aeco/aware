@@ -1,0 +1,229 @@
+{
+  "name": "Assignee",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a person/company/role that an item can be assigned to.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Assignee",
+  "constructors": [
+    {
+      "name": "Assignee()",
+      "signature": "Assignee()",
+      "summary": "Constructs a new Assignee.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.%23ctor"
+    },
+    {
+      "name": "Assignee(Autodesk.Navisworks.Api.Assignee)",
+      "signature": "Assignee(Autodesk.Navisworks.Api.Assignee other)",
+      "summary": "Constructs a new Assignee.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Assignee",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027other\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027other\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.%23ctor%28Autodesk.Navisworks.Api.Assignee%29"
+    },
+    {
+      "name": "Assignee(string)",
+      "signature": "Assignee(string display_name)",
+      "summary": "Constructs a new Assignee.",
+      "params": [
+        {
+          "name": "display_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.%23ctor%28System.String%29"
+    },
+    {
+      "name": "Assignee(string, string)",
+      "signature": "Assignee(string internal_id, string display_name)",
+      "summary": "Constructs a new Assignee.",
+      "params": [
+        {
+          "name": "internal_id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.%23ctor%28System.String%2CSystem.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.GetHashCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Assignee InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Assignee.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Assignee",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Assignee.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.ToString"
+    },
+    {
+      "name": "Unassign",
+      "signature": "void Unassign()",
+      "summary": "Unassign method of Assignee.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Assignee.Unassign"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Assigned",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this assignee assigned.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Assignee.Assigned"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Display name of the assignee.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Assignee.DisplayName"
+    },
+    {
+      "name": "InternalId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Internal ID of the assignee.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Assignee.InternalId"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Assignee.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

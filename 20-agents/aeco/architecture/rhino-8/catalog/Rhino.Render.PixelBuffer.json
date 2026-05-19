@@ -1,0 +1,40 @@
+{
+  "name": "PixelBuffer",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PixelBuffer\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PixelBuffer.htm",
+  "constructors": [
+    {
+      "name": "PixelBuffer",
+      "signature": "public PixelBuffer(IntPtr bufferPointer)",
+      "summary": "Create a new PixelBuffer pointing to the (unmanaged) pixel data buffer behind IntPtr",
+      "params": [
+        {
+          "name": "bufferPointer",
+          "type": "System.IntPtr",
+          "doc": "IntPtr to the unmanaged pixel data buffer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PixelBuffer__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Buffer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PixelBuffer_Buffer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

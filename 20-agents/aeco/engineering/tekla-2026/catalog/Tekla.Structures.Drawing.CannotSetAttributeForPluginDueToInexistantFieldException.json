@@ -1,0 +1,25 @@
+{
+  "name": "CannotSetAttributeForPluginDueToInexistantFieldException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotSetAttributeForPluginDueToInexistantFieldException class defines the exception that is thrown when Plugin.SetAttribute is called but the field does not exist.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dcf4f81a-e1c6-e81e-4551-cbc9184267c5",
+  "constructors": [
+    {
+      "name": "CannotSetAttributeForPluginDueToInexistantFieldException",
+      "signature": "public CannotSetAttributeForPluginDueToInexistantFieldException()",
+      "summary": "Creates a new CannotSetAttributeForPluginDueToInexistantFieldException instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/831d282c-a20a-23a8-9fd0-91a404256bb2"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

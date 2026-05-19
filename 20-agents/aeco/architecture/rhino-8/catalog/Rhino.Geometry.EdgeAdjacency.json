@@ -1,0 +1,34 @@
+{
+  "name": "EdgeAdjacency",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Enumerates all possible Topological Edge adjacency types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_EdgeAdjacency.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Edge is not used by any faces and is therefore superfluous."
+    },
+    {
+      "name": "Naked",
+      "value": 1,
+      "summary": "Edge is used by a single face."
+    },
+    {
+      "name": "Interior",
+      "value": 2,
+      "summary": "Edge is used by two adjacent faces."
+    },
+    {
+      "name": "NonManifold",
+      "value": 3,
+      "summary": "Edge is used by three or more adjacent faces."
+    }
+  ]
+}

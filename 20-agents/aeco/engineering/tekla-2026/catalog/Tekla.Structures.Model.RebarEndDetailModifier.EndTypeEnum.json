@@ -1,0 +1,24 @@
+{
+  "name": "RebarEndDetailModifier.EndTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The end type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7c2ac690-db81-fc87-b89b-d393d28171e8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HOOK",
+      "value": 0,
+      "summary": "Hook."
+    },
+    {
+      "name": "CRANKING",
+      "value": 1,
+      "summary": "Cranking."
+    }
+  ]
+}

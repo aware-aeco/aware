@@ -1,0 +1,25 @@
+{
+  "name": "PathIterator",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Path iterator",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PathIterator/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__next__",
+      "signature": "__next__()",
+      "summary": "Get the next element",
+      "remarks": "Get the next element",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PathIterator/#NemAll_Python_Geometry.PathIterator.__next__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

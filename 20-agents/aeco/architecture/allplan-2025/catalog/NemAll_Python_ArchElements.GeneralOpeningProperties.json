@@ -1,0 +1,108 @@
+{
+  "name": "GeneralOpeningProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Properties of a regular or polygonal niche, recess, slit or opening",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/",
+  "constructors": [
+    {
+      "name": "GeneralOpeningProperties",
+      "signature": "GeneralOpeningProperties(openingType: OpeningType) | GeneralOpeningProperties(openingProp: GeneralOpeningProperties)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "openingType",
+          "type": "OpeningType",
+          "doc": "Opening type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetGeometryProperties",
+      "signature": "GetGeometryProperties() -\u003E VerticalOpeningGeometryProperties",
+      "summary": "Get a reference of the geometry properties",
+      "remarks": "Get a reference of the geometry properties",
+      "params": [],
+      "returns": {
+        "type": "VerticalOpeningGeometryProperties",
+        "doc": "Geometry properties reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.GetGeometryProperties"
+    },
+    {
+      "name": "GetOpeningSymbolsProperties",
+      "signature": "GetOpeningSymbolsProperties() -\u003E OpeningSymbolsProperties",
+      "summary": "Get a reference of the opening symbols properties",
+      "remarks": "Get a reference of the opening symbols properties",
+      "params": [],
+      "returns": {
+        "type": "OpeningSymbolsProperties",
+        "doc": "Opening symbols properties reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.GetOpeningSymbolsProperties"
+    },
+    {
+      "name": "GetSillProperties",
+      "signature": "GetSillProperties() -\u003E VerticalOpeningSillProperties",
+      "summary": "Get a reference of the sill properties",
+      "remarks": "Get a reference of the sill properties",
+      "params": [],
+      "returns": {
+        "type": "VerticalOpeningSillProperties",
+        "doc": "Sill properties reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.GetSillProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Independent2DInteraction",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to True, when the opening is above/below the section plane and should therefor NOT interact with the hatching/filling of the parent architectural element in ground view. Defaults to False.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.Independent2DInteraction"
+    },
+    {
+      "name": "OpeningType",
+      "type": "OpeningType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the type of the opening",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.OpeningType"
+    },
+    {
+      "name": "PlaneReferences",
+      "type": "PlaneReferences",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the plane references",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.PlaneReferences"
+    },
+    {
+      "name": "VisibleInViewSection3D",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "When set to False, the opening does NOT cut out the 3D model element of the parent architectural component (hence opening is invisible in UVSs). Relevant for recess only! Defaults to True.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.VisibleInViewSection3D"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

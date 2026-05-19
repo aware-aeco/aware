@@ -1,0 +1,65 @@
+{
+  "name": "IGH_UpgradeObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Create a class with an empty constructor that implements this interface if you want to provide an upgrade mechanism.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_UpgradeObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Upgrade",
+      "signature": "IGH_DocumentObject Upgrade(IGH_DocumentObject target, GH_Document document)",
+      "summary": "Upgrade an existing object.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "doc": "Object to upgrade.",
+          "optional": false
+        },
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that contains the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_DocumentObject",
+        "doc": "The newly created object on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_UpgradeObject_Upgrade.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "UpgradeFrom",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ComponentGuid of the old object (the object to be updated).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_UpgradeObject_UpgradeFrom.htm"
+    },
+    {
+      "name": "UpgradeTo",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ComponentGuid of the new object (the object that will be inserted).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_UpgradeObject_UpgradeTo.htm"
+    },
+    {
+      "name": "Version",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Return a DateTime object that indicates when this upgrade mechanism was written, so that it becomes possible to distinguish competing upgrade mechanisms.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_UpgradeObject_Version.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,92 @@
+{
+  "name": "Polyhedron3DBuilder",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D polyhedron builder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DBuilder/",
+  "constructors": [
+    {
+      "name": "Polyhedron3DBuilder",
+      "signature": "Polyhedron3DBuilder(polyhedron: Polyhedron3D)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "Polyhedron where vertices will be modified",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DBuilder/#NemAll_Python_Geometry.Polyhedron3DBuilder.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendVertex",
+      "signature": "AppendVertex(vertex: Point3D) -\u003E tuple",
+      "summary": "Append new vertex",
+      "remarks": "Append new vertex",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Point3D",
+          "doc": "Point in world coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "eOK if success,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DBuilder/#NemAll_Python_Geometry.Polyhedron3DBuilder.AppendVertex"
+    },
+    {
+      "name": "Complete",
+      "signature": "Complete() -\u003E eGeometryErrorCode",
+      "summary": "Finalize polyhedron Recalculate cached minmax of modified polyhedron",
+      "remarks": "Finalize polyhedron Recalculate cached minmax of modified polyhedron",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DBuilder/#NemAll_Python_Geometry.Polyhedron3DBuilder.Complete"
+    },
+    {
+      "name": "SetVertex",
+      "signature": "SetVertex(vertexIndex: int, vertex: Point3D) -\u003E eGeometryErrorCode",
+      "summary": "Set vertex at the given index",
+      "remarks": "Set vertex at the given index",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "Index of updated vertex",
+          "optional": false
+        },
+        {
+          "name": "vertex",
+          "type": "Point3D",
+          "doc": "Point in world coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "eOK if success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DBuilder/#NemAll_Python_Geometry.Polyhedron3DBuilder.SetVertex"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

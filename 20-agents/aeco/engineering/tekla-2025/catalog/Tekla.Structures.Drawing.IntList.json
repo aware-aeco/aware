@@ -1,0 +1,353 @@
+{
+  "name": "IntList",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The IntList class defines a type safe list of integers.",
+  "base": "System.Collections.CollectionBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2f040240-80e1-d7ed-7bc9-e99324180ca9",
+  "constructors": [
+    {
+      "name": "IntList",
+      "signature": "public IntList()",
+      "summary": "Initializes a new instance of the IntList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c24fcfb8-5abc-12cd-027c-410bcadd886d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public int Add(int value)",
+      "summary": "Adds a new integer to the end of the string list.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to be added to the list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index where the integer was added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/047ae331-ab3f-f133-9ad9-44c9e916afbd"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(int value)",
+      "summary": "Checks if the given integer is in the list.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to be checked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the integer is in the list, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a497d712-0f41-327b-f730-0028d83be6c8"
+    },
+    {
+      "name": "GetRange",
+      "signature": "public IntList GetRange(int index, int count)",
+      "summary": "Gets a sub-list of the integer list.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The start index of the new list.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items in the new list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntList",
+        "doc": "The new integer list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/06faae13-73e4-b5ca-3f59-f42c12381516"
+    },
+    {
+      "name": "IndexOf(Int32)",
+      "signature": "public int IndexOf(int value)",
+      "summary": "Gets the index of the specified integer.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to locate in the list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the integer if found in the list, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2cccec74-0b25-169f-ddbd-11b9360323ad"
+    },
+    {
+      "name": "IndexOf(Int32, Int32)",
+      "signature": "public int IndexOf(int value, int startIndex)",
+      "summary": "Gets the index of the specified integer between the index to start the search from and the end of the list.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to locate in the list.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the integer if found in the list, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/925dae1d-c39e-7149-1d58-f8bcac32e8be"
+    },
+    {
+      "name": "IndexOf(Int32, Int32, Int32)",
+      "signature": "public int IndexOf(int value, int startIndex, int count)",
+      "summary": "Gets the index of the specified integer between the index to start the search from and startIndex \u002B count.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to locate in the list.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the integer if found in the list, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ffca6bf-7601-19f3-5313-fc8749dfbdf9"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(int index, int value)",
+      "summary": "Inserts the integer to the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index where the integer is inserted.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to be inserted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c256012d-a9b7-0165-7a1c-f7a2c104147c"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/426ae003-7107-e1f8-06f1-8c6e8dd833ee"
+    },
+    {
+      "name": "LastIndexOf(Int32)",
+      "signature": "public int LastIndexOf(int value)",
+      "summary": "Searches for the last occurence of the integer in the list.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to locate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the integer if found, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2aebe3ab-2bba-4fc2-4e3f-137c6589cb0f"
+    },
+    {
+      "name": "LastIndexOf(Int32, Int32)",
+      "signature": "public int LastIndexOf(int value, int startIndex)",
+      "summary": "Searches for the last occurence of the integer in the list.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to locate.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the integer if found, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/688d011b-6613-c514-9478-de9a30dc8deb"
+    },
+    {
+      "name": "LastIndexOf(Int32, Int32, Int32)",
+      "signature": "public int LastIndexOf(int value, int startIndex, int count)",
+      "summary": "Searches for the last occurence of the integer in the list.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to locate.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the integer if found, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9fa1a7a6-6810-cb91-91eb-27c93769b7d1"
+    },
+    {
+      "name": "Remove",
+      "signature": "public void Remove(int value)",
+      "summary": "Removes the first occurence of the integer from the list.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The integer to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cd8e0284-12af-e850-bf04-e00168f6fe16"
+    },
+    {
+      "name": "RemoveRange",
+      "signature": "public void RemoveRange(int index, int count)",
+      "summary": "Removes a range of items starting from the given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The start index.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/29b15dbf-aae0-4823-6696-87243ba20ad3"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public int[] ToArray()",
+      "summary": "Copies the integers to an integer array.",
+      "params": [],
+      "returns": {
+        "type": ".Int32.",
+        "doc": "The array of integers."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8abbc579-908a-e6d0-c687-133300d69e76"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the integer at the specified index.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8debcba3-2c1a-b709-fbef-fa7dd9bb5503"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

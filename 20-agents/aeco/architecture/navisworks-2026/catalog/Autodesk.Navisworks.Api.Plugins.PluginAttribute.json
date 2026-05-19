@@ -1,0 +1,95 @@
+{
+  "name": "PluginAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "The standard attribute which must be applied to all plug-ins.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.PluginAttribute",
+  "constructors": [
+    {
+      "name": "PluginAttribute(string, string)",
+      "signature": "PluginAttribute(string name, string developerId)",
+      "summary": "The standard attribute constructor which must be applied to all plug-ins. The combination of Name and DeveloperId should make the plugin unique",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the Plugin.",
+          "optional": false
+        },
+        {
+          "name": "developerId",
+          "type": "string",
+          "doc": "The 4 character ADN developer code or a GUID.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.%23ctor%28System.String%2CSystem.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DeveloperId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 4 character ADN developer code or a GUID. The combination of this and Name should make the plugin unique",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.DeveloperId"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Text to display in the Navisworks GUI",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.DisplayName"
+    },
+    {
+      "name": "ExtendedToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The extended tooltip to display when the Plugin is highlighted in the Navisworks GUI",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.ExtendedToolTip"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the Plugin. The combination of this and DeveloperId should make the plugin unique",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.Name"
+    },
+    {
+      "name": "Options",
+      "type": "Autodesk.Navisworks.Api.Plugins.PluginOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "Options that modify how a plugin behaves",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.Options"
+    },
+    {
+      "name": "SupportsIsSelfEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if Plugin.IsSelfEnabled will be called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.SupportsIsSelfEnabled"
+    },
+    {
+      "name": "ToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The tooltip to display when the Plugin is highlighted in the Navisworks GUI",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginAttribute.ToolTip"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,159 @@
+{
+  "name": "ExpandableContentUI",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "class",
+  "summary": "This class extends ContentUI to represent the default user interface which the RDK provides for a content.This is the UI created by the default implementation of CRhRdkCoreContent::CreateUI(). The main feature of this implementation is a \u0027holder\u0027 containing one or more expandable \u0027sections\u0027 (AKA \u0027roll-ups\u0027).",
+  "base": "ContentUI",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_ExpandableContentUI.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddSection(ICollapsibleSection)",
+      "signature": "public virtual void AddSection(ICollapsibleSection pSection)",
+      "summary": "Add a section to the UI. Called \\e before Create(). A generic controller is attached.",
+      "params": [
+        {
+          "name": "pSection",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022pSection\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ExpandableContentUI.AddSection(Rhino.UI.Controls.ICollapsibleSection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ExpandableContentUI_AddSection.htm"
+    },
+    {
+      "name": "AddSection(ICollapsibleSection, IRdkViewModel)",
+      "signature": "public virtual void AddSection(ICollapsibleSection pSection, IRdkViewModel vm)",
+      "summary": "Add a section to the UI with a custom controller. Called \\e before Create().",
+      "params": [
+        {
+          "name": "pSection",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022pSection\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ExpandableContentUI.AddSection(Rhino.UI.Controls.ICollapsibleSection,Rhino.UI.Controls.IRdkViewModel)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "vm",
+          "type": "Rhino.UI.Controls.IRdkViewModel",
+          "doc": "[Missing \u003Cparam name=\u0022vm\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ExpandableContentUI.AddSection(Rhino.UI.Controls.ICollapsibleSection,Rhino.UI.Controls.IRdkViewModel)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ExpandableContentUI_AddSection_1.htm"
+    },
+    {
+      "name": "ContentUIHolder",
+      "signature": "public virtual ICollapsibleSectionHolder ContentUIHolder()",
+      "summary": "Returns the holder that contains the UI sections, if this is an expandable content UI with sections inside holders. Returns null for custom UIs.",
+      "params": [],
+      "returns": {
+        "type": "ICollapsibleSectionHolder",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.ContentUIHolder\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_ContentUIHolder.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "(Inherited from ContentUI.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_Dispose.htm"
+    },
+    {
+      "name": "EditorUuid",
+      "signature": "public virtual Guid EditorUuid()",
+      "summary": "Get the unique identifier of the editor that the UI is being displayed in.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.EditorUuid\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_EditorUuid.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "ContentUI destructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_Finalize.htm"
+    },
+    {
+      "name": "IsCreated",
+      "signature": "public virtual bool IsCreated()",
+      "summary": "Returns true if the UI is created, else false",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.IsCreated\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_IsCreated.htm"
+    },
+    {
+      "name": "IsShown",
+      "signature": "public virtual bool IsShown()",
+      "summary": "Returns true if the UI is being shown, else false",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.IsShown\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_IsShown.htm"
+    },
+    {
+      "name": "Uuid",
+      "signature": "public virtual Guid Uuid()",
+      "summary": "Get the unique identifier of the UI.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.Uuid\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_Uuid.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ContentUI.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_ContentUI_CppPointer.htm"
+    },
+    {
+      "name": "m_cpp",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ContentUI.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_UI_Controls_ContentUI_m_cpp.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

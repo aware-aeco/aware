@@ -1,0 +1,825 @@
+{
+  "name": "ArchBaseProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Base class representing properties of all kinds of architectural components",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/",
+  "constructors": [
+    {
+      "name": "ArchBaseProperties",
+      "signature": "ArchBaseProperties(element: ArchBaseProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "ArchBaseProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAreaPresentationID",
+      "signature": "GetAreaPresentationID() -\u003E int",
+      "summary": "Get the ID of the area representation",
+      "remarks": "Get the ID of the area representation",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "ID of the area representation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetAreaPresentationID"
+    },
+    {
+      "name": "GetAreaPresentationType",
+      "signature": "GetAreaPresentationType() -\u003E int",
+      "summary": "Get the type of the area representation",
+      "remarks": "Get the type of the area representation",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Type of the area representation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetAreaPresentationType"
+    },
+    {
+      "name": "GetBackgroundColor",
+      "signature": "GetBackgroundColor() -\u003E int",
+      "summary": "Get the background color",
+      "remarks": "Get the background color",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Background color"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetBackgroundColor"
+    },
+    {
+      "name": "GetBitmapName",
+      "signature": "GetBitmapName() -\u003E str",
+      "summary": "Get the name of the bitmap",
+      "remarks": "Get the name of the bitmap",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Name of the bitmap"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetBitmapName"
+    },
+    {
+      "name": "GetCalculationMode",
+      "signature": "GetCalculationMode() -\u003E int",
+      "summary": "Get the calculation mode",
+      "remarks": "Get the calculation mode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Integer representing the calculation mode as follows: 0: m3 1: m2 2: m 3: Pcs 4: kg"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetCalculationMode"
+    },
+    {
+      "name": "GetCircleDivision",
+      "signature": "GetCircleDivision() -\u003E int",
+      "summary": "Get the circle division (relevant only for circular profiles))",
+      "remarks": "Get the circle division (relevant only for circular profiles))",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Number of circle segments"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetCircleDivision"
+    },
+    {
+      "name": "GetCommonProperties",
+      "signature": "GetCommonProperties() -\u003E CommonProperties",
+      "summary": "Get the common properties",
+      "remarks": "Get the common properties",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Common properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetCommonProperties"
+    },
+    {
+      "name": "GetFaceStyle",
+      "signature": "GetFaceStyle() -\u003E int",
+      "summary": "Get the face style ID",
+      "remarks": "Get the face style ID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Face style ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetFaceStyle"
+    },
+    {
+      "name": "GetFactor",
+      "signature": "GetFactor() -\u003E float",
+      "summary": "Get the factor",
+      "remarks": "Get the factor",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetFactor"
+    },
+    {
+      "name": "GetFilling",
+      "signature": "GetFilling() -\u003E int",
+      "summary": "Get the filling ID",
+      "remarks": "Get the filling ID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Filling ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetFilling"
+    },
+    {
+      "name": "GetHatch",
+      "signature": "GetHatch() -\u003E int",
+      "summary": "Get the hatch ID",
+      "remarks": "Get the hatch ID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Hatch ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetHatch"
+    },
+    {
+      "name": "GetMaterial",
+      "signature": "GetMaterial() -\u003E str",
+      "summary": "Get the material",
+      "remarks": "Get the material",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Material"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetMaterial"
+    },
+    {
+      "name": "GetName",
+      "signature": "GetName() -\u003E str",
+      "summary": "Get the name",
+      "remarks": "Get the name",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetName"
+    },
+    {
+      "name": "GetPattern",
+      "signature": "GetPattern() -\u003E int",
+      "summary": "Get the pattern ID",
+      "remarks": "Get the pattern ID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Pattern ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetPattern"
+    },
+    {
+      "name": "GetPlaneReferences",
+      "signature": "GetPlaneReferences() -\u003E PlaneReferences",
+      "summary": "Get the plane references",
+      "remarks": "Get the plane references",
+      "params": [],
+      "returns": {
+        "type": "PlaneReferences",
+        "doc": "Plane references"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetPlaneReferences"
+    },
+    {
+      "name": "GetPriority",
+      "signature": "GetPriority() -\u003E int",
+      "summary": "Get the priority",
+      "remarks": "Get the priority",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Priority"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetPriority"
+    },
+    {
+      "name": "GetStatus",
+      "signature": "GetStatus() -\u003E int",
+      "summary": "Get the Status ID",
+      "remarks": "Get the Status ID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Status ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetStatus"
+    },
+    {
+      "name": "GetSurface",
+      "signature": "GetSurface() -\u003E str",
+      "summary": "Get the surface name and path",
+      "remarks": "Get the surface name and path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Surface name and path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetSurface"
+    },
+    {
+      "name": "GetTrade",
+      "signature": "GetTrade() -\u003E int",
+      "summary": "Get the trade index",
+      "remarks": "Get the trade index",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Trade index according to the definition of the enumeration attribute trade (@209@)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.GetTrade"
+    },
+    {
+      "name": "IsShowAreaElementInGroundView",
+      "signature": "IsShowAreaElementInGroundView() -\u003E bool",
+      "summary": "Get the \u0027Show the area element in the ground view\u0027 state",
+      "remarks": "Get the \u0027Show the area element in the ground view\u0027 state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Show the area element in the ground view: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.IsShowAreaElementInGroundView"
+    },
+    {
+      "name": "LoadFromFavoriteFile",
+      "signature": "LoadFromFavoriteFile(doc: DocumentAdapter)",
+      "summary": "Load the properties from the favorite file",
+      "remarks": "Load the properties from the favorite file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.LoadFromFavoriteFile"
+    },
+    {
+      "name": "RemoveCommonProperties",
+      "signature": "RemoveCommonProperties()",
+      "summary": "Remove the common properties",
+      "remarks": "Remove the common properties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.RemoveCommonProperties"
+    },
+    {
+      "name": "ResetAreaElement",
+      "signature": "ResetAreaElement()",
+      "summary": "Reset the area element",
+      "remarks": "Reset the area element",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.ResetAreaElement"
+    },
+    {
+      "name": "ResetBackgroundColor",
+      "signature": "ResetBackgroundColor()",
+      "summary": "Reset the background color",
+      "remarks": "Reset the background color",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.ResetBackgroundColor"
+    },
+    {
+      "name": "SetBackgroundColor",
+      "signature": "SetBackgroundColor(colorID: int)",
+      "summary": "Set the background color",
+      "remarks": "Set the background color",
+      "params": [
+        {
+          "name": "colorID",
+          "type": "int",
+          "doc": "Background color ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetBackgroundColor"
+    },
+    {
+      "name": "SetBitmapName",
+      "signature": "SetBitmapName(bitmapName: str)",
+      "summary": "Set the name of the bitmap",
+      "remarks": "Set the name of the bitmap",
+      "params": [
+        {
+          "name": "bitmapName",
+          "type": "str",
+          "doc": "Bitmap name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetBitmapName"
+    },
+    {
+      "name": "SetCalculationMode",
+      "signature": "SetCalculationMode(calculationMode: int)",
+      "summary": "Set the calculation mode",
+      "remarks": "Set the calculation mode",
+      "params": [
+        {
+          "name": "calculationMode",
+          "type": "int",
+          "doc": "Calculation mode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetCalculationMode"
+    },
+    {
+      "name": "SetCircleDivision",
+      "signature": "SetCircleDivision(circleDivision: int)",
+      "summary": "Set the circle division",
+      "remarks": "Set the circle division",
+      "params": [
+        {
+          "name": "circleDivision",
+          "type": "int",
+          "doc": "Circle division",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetCircleDivision"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(comProp: CommonProperties)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "comProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetCommonProperties"
+    },
+    {
+      "name": "SetFaceStyle",
+      "signature": "SetFaceStyle(faceStyleID: int)",
+      "summary": "Set the face style",
+      "remarks": "Set the face style",
+      "params": [
+        {
+          "name": "faceStyleID",
+          "type": "int",
+          "doc": "Face style ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetFaceStyle"
+    },
+    {
+      "name": "SetFactor",
+      "signature": "SetFactor(factor: float)",
+      "summary": "Set the factor",
+      "remarks": "Set the factor",
+      "params": [
+        {
+          "name": "factor",
+          "type": "float",
+          "doc": "Factor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetFactor"
+    },
+    {
+      "name": "SetFilling",
+      "signature": "SetFilling(fillingID: int)",
+      "summary": "Set the filling",
+      "remarks": "Set the filling",
+      "params": [
+        {
+          "name": "fillingID",
+          "type": "int",
+          "doc": "Filling ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetFilling"
+    },
+    {
+      "name": "SetHatch",
+      "signature": "SetHatch(hatchID: int)",
+      "summary": "Set the hatch",
+      "remarks": "Set the hatch",
+      "params": [
+        {
+          "name": "hatchID",
+          "type": "int",
+          "doc": "Hatch ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetHatch"
+    },
+    {
+      "name": "SetMaterial",
+      "signature": "SetMaterial(material: str)",
+      "summary": "Set the material",
+      "remarks": "Set the material",
+      "params": [
+        {
+          "name": "material",
+          "type": "str",
+          "doc": "Material",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetMaterial"
+    },
+    {
+      "name": "SetName",
+      "signature": "SetName(name: str)",
+      "summary": "Set the name",
+      "remarks": "Set the name",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetName"
+    },
+    {
+      "name": "SetPattern",
+      "signature": "SetPattern(patternID: int)",
+      "summary": "Set the pattern",
+      "remarks": "Set the pattern",
+      "params": [
+        {
+          "name": "patternID",
+          "type": "int",
+          "doc": "Pattern ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetPattern"
+    },
+    {
+      "name": "SetPlaneReferences",
+      "signature": "SetPlaneReferences(planeRef: PlaneReferences)",
+      "summary": "Set the plane references",
+      "remarks": "Set the plane references",
+      "params": [
+        {
+          "name": "planeRef",
+          "type": "PlaneReferences",
+          "doc": "Plane references",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetPlaneReferences"
+    },
+    {
+      "name": "SetPriority",
+      "signature": "SetPriority(priority: int)",
+      "summary": "Set the priority",
+      "remarks": "Set the priority",
+      "params": [
+        {
+          "name": "priority",
+          "type": "int",
+          "doc": "Priority",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetPriority"
+    },
+    {
+      "name": "SetShowAreaElementInGroundView",
+      "signature": "SetShowAreaElementInGroundView(showInGroundView: bool)",
+      "summary": "Set the show area element in ground view state",
+      "remarks": "Set the show area element in ground view state",
+      "params": [
+        {
+          "name": "showInGroundView",
+          "type": "bool",
+          "doc": "Show the area element in the ground view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetShowAreaElementInGroundView"
+    },
+    {
+      "name": "SetStatus",
+      "signature": "SetStatus(statusID: int)",
+      "summary": "Set the Status ID",
+      "remarks": "Set the Status ID",
+      "params": [
+        {
+          "name": "statusID",
+          "type": "int",
+          "doc": "Status ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetStatus"
+    },
+    {
+      "name": "SetSurface",
+      "signature": "SetSurface(surface: str)",
+      "summary": "Set the surface",
+      "remarks": "Set the surface",
+      "params": [
+        {
+          "name": "surface",
+          "type": "str",
+          "doc": "Surface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetSurface"
+    },
+    {
+      "name": "SetTrade",
+      "signature": "SetTrade(value: int)",
+      "summary": "Set the trade index",
+      "remarks": "Set the trade index",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Trade index according to the definition of the enumeration attribute trade (@209@)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.SetTrade"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the background color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.BackgroundColor"
+    },
+    {
+      "name": "BitmapName",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the name of the bitmap",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.BitmapName"
+    },
+    {
+      "name": "CalculationMode",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Calculation mode, represented by an integer as follows:",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.CalculationMode"
+    },
+    {
+      "name": "CircleDivision",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Number the circle segments in case of a circular cross section",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.CircleDivision"
+    },
+    {
+      "name": "CommonProperties",
+      "type": "CommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the common properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.CommonProperties"
+    },
+    {
+      "name": "FaceStyle",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the face style ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.FaceStyle"
+    },
+    {
+      "name": "Factor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the factor",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Factor"
+    },
+    {
+      "name": "Filling",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the filling ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Filling"
+    },
+    {
+      "name": "Hatch",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hatch ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Hatch"
+    },
+    {
+      "name": "Material",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the material",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Material"
+    },
+    {
+      "name": "Name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the name",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Name"
+    },
+    {
+      "name": "Pattern",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the pattern ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Pattern"
+    },
+    {
+      "name": "PlaneReferences",
+      "type": "PlaneReferences",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the plane references",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.PlaneReferences"
+    },
+    {
+      "name": "Priority",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the priority",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Priority"
+    },
+    {
+      "name": "Status",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Status ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Status"
+    },
+    {
+      "name": "Surface",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the surface name and path",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Surface"
+    },
+    {
+      "name": "Trade",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Trade index according to the definition of the enumeration attribute trade (@209@)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.Trade"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

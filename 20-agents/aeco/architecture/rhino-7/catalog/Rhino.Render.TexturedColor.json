@@ -1,0 +1,91 @@
+{
+  "name": "TexturedColor",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Color4f specialization of TexturedValue.",
+  "base": "TexturedValue\u003CColor4f\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_TexturedColor.htm",
+  "constructors": [
+    {
+      "name": "TexturedColor",
+      "signature": "public TexturedColor(string name, Color4f value, bool on, float amount)",
+      "summary": "Initializes a new instance of the TexturedColor class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedColor.#ctor(System.String,Rhino.Display.Color4f,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedColor.#ctor(System.String,Rhino.Display.Color4f,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedColor.#ctor(System.String,Rhino.Display.Color4f,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022amount\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedColor.#ctor(System.String,Rhino.Display.Color4f,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_TexturedColor__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Amount",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from TexturedValue\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Render_TexturedValue_1_Amount.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from TexturedValue\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Render_TexturedValue_1_Name.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from TexturedValue\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Render_TexturedValue_1_On.htm"
+    },
+    {
+      "name": "Texture",
+      "type": "RenderTexture",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from TexturedValue\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Render_TexturedValue_1_Texture.htm"
+    },
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from TexturedValue\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Render_TexturedValue_1_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,35 @@
+{
+  "name": "BaseFilterObject",
+  "namespace": "ScriptObjectInteractors.BaseFilterObject",
+  "kind": "class",
+  "summary": "implementation of the base filter object",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseFilterObject/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__(_element: BaseElementAdapter) -\u003E bool",
+      "summary": "execute the filtering",
+      "remarks": "execute the filtering",
+      "params": [
+        {
+          "name": "_element",
+          "type": "BaseElementAdapter",
+          "doc": "element to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "element fulfills the filter: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseFilterObject/#ScriptObjectInteractors.BaseFilterObject.BaseFilterObject.__call__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

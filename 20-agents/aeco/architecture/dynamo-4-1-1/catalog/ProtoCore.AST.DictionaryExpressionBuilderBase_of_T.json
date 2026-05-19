@@ -1,0 +1,102 @@
+{
+  "name": "DictionaryExpressionBuilderBase\u003CT\u003E",
+  "namespace": "ProtoCore.AST",
+  "kind": "class",
+  "summary": "Dictionary syntax like { \u0022foo\u0022 : 12 } isn\u0027t part of the AST. Instead, this helper class exists to build a function call to build a Dictionary via zero touch.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs",
+  "constructors": [
+    {
+      "name": "DictionaryExpressionBuilderBase()",
+      "signature": "void DictionaryExpressionBuilderBase()",
+      "summary": "DictionaryExpressionBuilderBase.DictionaryExpressionBuilderBase",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddKey(T)",
+      "signature": "void AddKey(T value)",
+      "summary": "DictionaryExpressionBuilderBase.AddKey",
+      "params": [
+        {
+          "name": "value",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    },
+    {
+      "name": "AddValue(T)",
+      "signature": "void AddValue(T value)",
+      "summary": "DictionaryExpressionBuilderBase.AddValue",
+      "params": [
+        {
+          "name": "value",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    },
+    {
+      "name": "SetNodeEndLocation(ProtoCore.DesignScriptParser.Token)",
+      "signature": "void SetNodeEndLocation(ProtoCore.DesignScriptParser.Token token)",
+      "summary": "DictionaryExpressionBuilderBase.SetNodeEndLocation",
+      "params": [
+        {
+          "name": "token",
+          "type": "ProtoCore.DesignScriptParser.Token",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    },
+    {
+      "name": "SetNodeStartLocation(ProtoCore.DesignScriptParser.Token)",
+      "signature": "void SetNodeStartLocation(ProtoCore.DesignScriptParser.Token token)",
+      "summary": "DictionaryExpressionBuilderBase.SetNodeStartLocation",
+      "params": [
+        {
+          "name": "token",
+          "type": "ProtoCore.DesignScriptParser.Token",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    },
+    {
+      "name": "ToFunctionCall",
+      "signature": "T ToFunctionCall()",
+      "summary": "DictionaryExpressionBuilderBase.ToFunctionCall",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

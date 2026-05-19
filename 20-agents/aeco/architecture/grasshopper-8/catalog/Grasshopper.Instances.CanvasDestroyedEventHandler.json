@@ -1,0 +1,14 @@
+{
+  "name": "Instances.CanvasDestroyedEventHandler",
+  "namespace": "Grasshopper",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.Instances.CanvasDestroyedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Instances_CanvasDestroyedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void CanvasDestroyedEventHandler( GH_Canvas canvas )"
+}

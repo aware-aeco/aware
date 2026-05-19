@@ -1,0 +1,49 @@
+{
+  "name": "IsoStatus",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for isoparametric curve direction on a surface, such as X or Y, and curve sides, such as North or West boundary. Note: odd values are all x-constant; even values \u003E 0 are all y-constant.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_IsoStatus.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "curve is not an isoparametric curve."
+    },
+    {
+      "name": "X",
+      "value": 1,
+      "summary": "curve is a \u0022x\u0022 = constant (vertical) isoparametric curve in the interior of the surface\u0027s domain."
+    },
+    {
+      "name": "Y",
+      "value": 2,
+      "summary": "curve is a \u0022y\u0022 = constant (horizontal) isoparametric curve in the interior of the surface\u0027s domain."
+    },
+    {
+      "name": "West",
+      "value": 3,
+      "summary": "curve is a \u0022x\u0022 = constant isoparametric curve along the west side of the surface\u0027s domain."
+    },
+    {
+      "name": "South",
+      "value": 4,
+      "summary": "curve is a \u0022y\u0022 = constant isoparametric curve along the south side of the surface\u0027s domain."
+    },
+    {
+      "name": "East",
+      "value": 5,
+      "summary": "curve is a \u0022x\u0022 = constant isoparametric curve along the east side of the surface\u0027s domain."
+    },
+    {
+      "name": "North",
+      "value": 6,
+      "summary": "curve is a \u0022y\u0022 = constant isoparametric curve along the north side of the surface\u0027s domain."
+    }
+  ]
+}

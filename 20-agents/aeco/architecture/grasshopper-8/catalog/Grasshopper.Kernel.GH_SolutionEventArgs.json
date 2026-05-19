@@ -1,0 +1,39 @@
+{
+  "name": "GH_SolutionEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Event arguments used for Document Solution events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_SolutionEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that raised the event, should be the same as the \u0022sender\u0022 parameter in the event handler.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SolutionEventArgs_Document.htm"
+    },
+    {
+      "name": "Duration",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the duration for this solution. The duration is a more accurate measure than EndTime-StartTime.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SolutionEventArgs_Duration.htm"
+    },
+    {
+      "name": "StartTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the time when the current solution began.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SolutionEventArgs_StartTime.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

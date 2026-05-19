@@ -1,0 +1,365 @@
+{
+  "name": "Decal",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Represents a decal, or a picture that can be moved on an object.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_Decal.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decal.ConstPointer\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_ConstPointer.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public static Decal Create(DecalCreateParams createParams)",
+      "summary": "",
+      "params": [
+        {
+          "name": "createParams",
+          "type": "Rhino.Render.DecalCreateParams",
+          "doc": "[Missing \u003Cparam name=\u0022createParams\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.Create(Rhino.Render.DecalCreateParams)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Decal",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decal.Create(Rhino.Render.DecalCreateParams)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_Create.htm"
+    },
+    {
+      "name": "CustomData",
+      "signature": "public List\u003CNamedValue\u003E CustomData()",
+      "summary": "Gets custom data associated with this decal - see Rhino.Plugins.RenderPlugIn.ShowDecalProperties.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CNamedValue\u003E",
+        "doc": "The return value can be null if there is no data associated with this decal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_CustomData.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the Decal",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "public void Dispose(bool isDisposing)",
+      "summary": "Releases the unmanaged resources used by the Decal and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_Finalize.htm"
+    },
+    {
+      "name": "GetTextureMapping",
+      "signature": "public TextureMapping GetTextureMapping()",
+      "summary": "The TextureMapping of the decal.",
+      "params": [],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decal.GetTextureMapping\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_GetTextureMapping.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decal.NonConstPointer\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_NonConstPointer.htm"
+    },
+    {
+      "name": "TextureRenderCRC(TextureRenderHashFlags)",
+      "signature": "public uint TextureRenderCRC(TextureRenderHashFlags rh)",
+      "summary": "Get the texture render CRC for the referenced texture using the TextureRenderHashFlags given",
+      "params": [
+        {
+          "name": "rh",
+          "type": "Rhino.Render.TextureRenderHashFlags",
+          "doc": "[Missing \u003Cparam name=\u0022rh\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.TextureRenderCRC(Rhino.Render.TextureRenderHashFlags)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decal.TextureRenderCRC(Rhino.Render.TextureRenderHashFlags)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_TextureRenderCRC.htm"
+    },
+    {
+      "name": "TextureRenderCRC(TextureRenderHashFlags, LinearWorkflow)",
+      "signature": "public uint TextureRenderCRC(TextureRenderHashFlags rh, LinearWorkflow lw)",
+      "summary": "Get the texture render CRC for the referenced texture using the TextureRenderHashFlags given along with the LinearWorkflow",
+      "params": [
+        {
+          "name": "rh",
+          "type": "Rhino.Render.TextureRenderHashFlags",
+          "doc": "[Missing \u003Cparam name=\u0022rh\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.TextureRenderCRC(Rhino.Render.TextureRenderHashFlags,Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "lw",
+          "type": "Rhino.Render.LinearWorkflow",
+          "doc": "[Missing \u003Cparam name=\u0022lw\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.TextureRenderCRC(Rhino.Render.TextureRenderHashFlags,Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Decal.TextureRenderCRC(Rhino.Render.TextureRenderHashFlags,Rhino.Render.LinearWorkflow)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_TextureRenderCRC_1.htm"
+    },
+    {
+      "name": "TryGetColor",
+      "signature": "public bool TryGetColor(Point3d point, Vector3d normal, ref Color4f colInOut, ref Point2d uvOut)",
+      "summary": "Blend color with the decal color at a given point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point in space or, if the decal is uv-mapped, the uv-coordinate of that point.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The face normal of the given point.",
+          "optional": false
+        },
+        {
+          "name": "colInOut",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The color to blend the decal color to.",
+          "optional": false
+        },
+        {
+          "name": "uvOut",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "the UV on the texture that the color point was read from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the given point hits the decal, else false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_TryGetColor.htm"
+    },
+    {
+      "name": "UVBounds",
+      "signature": "public void UVBounds(ref double minUOut, ref double minVOut, ref double maxUOut, ref double maxVOut)",
+      "summary": "The UV bounds of the decal. Only used when mapping is UV.",
+      "params": [
+        {
+          "name": "minUOut",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022minUOut\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.UVBounds(System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "minVOut",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022minVOut\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.UVBounds(System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "maxUOut",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022maxUOut\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.UVBounds(System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "maxVOut",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022maxVOut\u0022/\u003E documentation for \u0022M:Rhino.Render.Decal.UVBounds(System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Decal_UVBounds.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CRC",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The decal CRC identifies a decal by its state. Multiple decals which would be exactly the same would have the same CRC and are culled from the system. If you store this value with the intention of using it to find the decal again later, you must update your stored value whenever the decal state changes. You can detect when a decal changes by watching for the OnUserDataTransformed event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_CRC.htm"
+    },
+    {
+      "name": "DecalMapping",
+      "type": "DecalMapping",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the mapping of the decal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_DecalMapping.htm"
+    },
+    {
+      "name": "DecalProjection",
+      "type": "DecalProjection",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the decal\u0027s projection. Used only when mapping is planar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_DecalProjection.htm"
+    },
+    {
+      "name": "EndLatitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end angle of the decal\u0027s arc of latitude or \u0027horizontal sweep\u0027. This is actually a LONGITUDINAL angle. Only used when mapping is cylindrical or spherical.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_EndLatitude.htm"
+    },
+    {
+      "name": "EndLongitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end angle of the decal\u0027s arc of longitude or \u0027vertical sweep\u0027. This is actually a LATITUDINAL angle. Only used when mapping is spherical.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_EndLongitude.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the height of the decal. Only used when mapping is cylindrical.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_Height.htm"
+    },
+    {
+      "name": "MapToInside",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Used only when mapping is cylindrical or spherical.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_MapToInside.htm"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the origin of the decal in world space.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_Origin.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the radius of the decal. Only used when mapping is cylindrical or spherical.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_Radius.htm"
+    },
+    {
+      "name": "StartLatitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the start angle of the decal\u0027s arc of latitude or \u0027horizontal sweep\u0027. This is actually a LONGITUDINAL angle. Only used when mapping is cylindrical or spherical.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_StartLatitude.htm"
+    },
+    {
+      "name": "StartLongitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the start angle of the decal\u0027s arc of longitude or \u0027vertical sweep\u0027. This is actually a LATITUDINAL angle. Only used when mapping is spherical.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_StartLongitude.htm"
+    },
+    {
+      "name": "TextureInstanceId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the texture ID for this decal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_TextureInstanceId.htm"
+    },
+    {
+      "name": "Transparency",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the decal\u0027s transparency in the range 0 to 1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_Transparency.htm"
+    },
+    {
+      "name": "VectorAcross",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the vector across. For cylindrical and spherical mapping, the vector is unitized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_VectorAcross.htm"
+    },
+    {
+      "name": "VectorUp",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "For cylindrical and spherical mapping, the vector is unitized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Decal_VectorUp.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

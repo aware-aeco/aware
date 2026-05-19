@@ -1,0 +1,54 @@
+{
+  "name": "File3dmMeshModifiers",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents the mesh modifiers attached to file3dm object attributes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmMeshModifiers.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurvePiping",
+      "type": "File3dmCurvePiping",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an object that provides access to curve piping information. If no curve piping information is present, the method returns null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmMeshModifiers_CurvePiping.htm"
+    },
+    {
+      "name": "Displacement",
+      "type": "File3dmDisplacement",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an object that provides access to displacement information. If no displacement information is present, the method returns null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmMeshModifiers_Displacement.htm"
+    },
+    {
+      "name": "EdgeSoftening",
+      "type": "File3dmEdgeSoftening",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an object that provides access to edge softening information. If no edge softening information is present, the method returns null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmMeshModifiers_EdgeSoftening.htm"
+    },
+    {
+      "name": "ShutLining",
+      "type": "File3dmShutLining",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an object that provides access to shut-lining information. If no shutlining information is present, the method returns null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmMeshModifiers_ShutLining.htm"
+    },
+    {
+      "name": "Thickening",
+      "type": "File3dmThickening",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an object that provides access to thickening information. If no thickening information is present, the method returns null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmMeshModifiers_Thickening.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

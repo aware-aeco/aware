@@ -1,0 +1,61 @@
+{
+  "name": "Image",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "A raster image entity.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Image.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Image(path, bounds)",
+      "summary": "The #initialize method creates a new Layout::Image from a given image file.",
+      "remarks": "The #initialize method creates a new Layout::Image from a given image file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The path to the file",
+          "optional": false
+        },
+        {
+          "name": "bounds",
+          "type": "Geom::Bounds2d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if bounds are zero size"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if there was an error reading the image file, such as the file name being invalid"
+        },
+        {
+          "type": "RuntimeError",
+          "when": "if there was an error allocating memory for the image"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Image.html#initialize-instance_method"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "clip_mask",
+      "type": "Layout::Entity",
+      "getter": true,
+      "setter": true,
+      "summary": "The #clip_mask method returns the clip mask of the Layout::Image, or nil if it does not have a clip mask.",
+      "remarks": "The #clip_mask method returns the clip mask of the Layout::Image, or nil if it does not have a clip mask.",
+      "doc_url": "https://ruby.sketchup.com/Layout/Image.html#clip_mask-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

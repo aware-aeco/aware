@@ -1,0 +1,14 @@
+{
+  "name": "PolyhedronTypesList",
+  "namespace": "TypeCollections.PolyhedronTypesList",
+  "kind": "class",
+  "summary": "implementation of the list for the polyhedron types",
+  "base": "list[Polyhedron3D | Cylinder3D | ExtrudedAreaSolid3D | Polygon3D | Line3D | Polyline3D | ClippedSweptSolid3D]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/PolyhedronTypesList/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

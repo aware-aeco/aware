@@ -1,0 +1,69 @@
+{
+  "name": "ModificationElementList",
+  "namespace": "TypeCollections.ModificationElementList",
+  "kind": "class",
+  "summary": "implementation of the list with the data of the modification elements",
+  "base": "list[str | BaseElementAdapter]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/ModificationElementList/",
+  "constructors": [
+    {
+      "name": "ModificationElementList",
+      "signature": "ModificationElementList(elements: list[str | ModificationElementList() | ModificationElementList()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "elements",
+          "type": "list[str | BaseElementAdapter] | None",
+          "doc": "elements to modify",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/ModificationElementList/#TypeCollections.ModificationElementList.ModificationElementList.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "get_base_element_adapter",
+      "signature": "get_base_element_adapter(doc: DocumentAdapter) -\u003E BaseElementAdapter",
+      "summary": "get the BaseElementAdapter for the index",
+      "remarks": "get the BaseElementAdapter for the index",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "BaseElementAdapter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/ModificationElementList/#TypeCollections.ModificationElementList.ModificationElementList.get_base_element_adapter"
+    },
+    {
+      "name": "is_modification_element",
+      "signature": "is_modification_element() -\u003E bool",
+      "summary": "check for an existing modification element",
+      "remarks": "check for an existing modification element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "modification element state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/ModificationElementList/#TypeCollections.ModificationElementList.ModificationElementList.is_modification_element"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

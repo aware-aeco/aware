@@ -1,0 +1,34 @@
+{
+  "name": "VertexProperties",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Vertex properties enumeration.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.VertexProperties",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "None"
+    },
+    {
+      "name": "HasNormals",
+      "value": 1,
+      "summary": "Normals"
+    },
+    {
+      "name": "HasColors",
+      "value": 2,
+      "summary": "Colours"
+    },
+    {
+      "name": "HasTextureCoordinates",
+      "value": 4,
+      "summary": "Texture co-ordinates"
+    }
+  ]
+}

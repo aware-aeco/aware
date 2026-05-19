@@ -1,0 +1,50 @@
+{
+  "name": "AnalysisModelAnalysisProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelAnalysisProperties class contains the analysis property information for an analysis model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/df9bd9d1-a56b-8056-735f-a3a523c4dab3",
+  "constructors": [
+    {
+      "name": "AnalysisModelAnalysisProperties",
+      "signature": "public AnalysisModelAnalysisProperties()",
+      "summary": "Creates a new analysis model analysis properties instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc62f9ec-5844-9bf2-43ea-fcbc407d82e9"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AccuracyOfIterations",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The accuracy of the iterations.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5812de09-7038-ea89-7207-dd6b7677195f"
+    },
+    {
+      "name": "AnalysisMethod",
+      "type": "AnalysisModelAnalysisProperties.AnalysisMethodEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The analysis method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2fb669fe-5415-f36b-e68d-23075c382a25"
+    },
+    {
+      "name": "MaxIterations",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The maximum number of iterations.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/93b6444f-12d5-7249-d897-6bb7d5be601a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

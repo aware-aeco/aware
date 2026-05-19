@@ -1,0 +1,37 @@
+{
+  "name": "IGH_RenderAwareData",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in your IGH_Goo type if you wish to send geometry to a render queue.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_RenderAwareData.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AppendRenderGeometry",
+      "signature": "void AppendRenderGeometry(GH_RenderArgs args, RenderMaterial material)",
+      "summary": "Push this geometry down a render pipeline.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_RenderArgs",
+          "doc": "Render pipeline details.",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "RenderMaterial",
+          "doc": "Material to use if you can\u0027t think of one yourself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_RenderAwareData_AppendRenderGeometry.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,79 @@
+{
+  "name": "BendSurfaceNode",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The BendSurfaceNode class represents a bend surface geometry tree node.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/587d9a1d-e196-e65c-eaf5-130c137c8b60",
+  "constructors": [
+    {
+      "name": "BendSurfaceNode",
+      "signature": "public BendSurfaceNode(BendSurface surface)",
+      "summary": "Initializes a new instance of the BendSurfaceNode class.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Tekla.Structures.Model.BendSurface",
+          "doc": "The contour of the node.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9ca4d68d-23a4-10c2-8220-532a7a96fb69"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AcceptVisitor",
+      "signature": "public abstract void AcceptVisitor(IGeometryNodeVisitor visitor)",
+      "summary": "Entry method for the visitor pattern",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "Tekla.Structures.Model.IGeometryNodeVisitor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/df878108-a5a3-e0d1-8617-f114f2490b6d"
+    },
+    {
+      "name": "Clone",
+      "signature": "public abstract IGeometryNode Clone()",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "returns": {
+        "type": "IGeometryNode",
+        "doc": "A new object that is a copy of the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5cb016ba-46b5-d41d-8e6a-760ba327a50f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsAutomatic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this geometry node was automatically generated (returns false if it was originally a user-defined part)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e111624-05f3-3f95-51f5-6bedc676a42d"
+    },
+    {
+      "name": "Surface",
+      "type": "BendSurface",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the bend surface geometry.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c55389bb-a93b-e47d-d71e-b2c6d5de0d9a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

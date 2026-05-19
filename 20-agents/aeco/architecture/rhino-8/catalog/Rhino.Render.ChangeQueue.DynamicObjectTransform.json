@@ -1,0 +1,44 @@
+{
+  "name": "DynamicObjectTransform",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "ChangeQueue DynamicObject",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_DynamicObjectTransform.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "String representation of DynamicObject",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.DynamicObjectTransform.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_DynamicObjectTransform_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MeshInstanceId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the mesh instance id for this dynamic object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_DynamicObjectTransform_MeshInstanceId.htm"
+    },
+    {
+      "name": "Transform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Transform for the DynamicObject",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_DynamicObjectTransform_Transform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

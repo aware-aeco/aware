@@ -1,0 +1,49 @@
+{
+  "name": "FileGHSReadOptions.ReadViewType",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileGHSReadOptions.ReadViewType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileGHSReadOptions_ReadViewType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Body",
+      "value": 0,
+      "summary": "BodyView"
+    },
+    {
+      "name": "Profile",
+      "value": 1,
+      "summary": "Profile View"
+    },
+    {
+      "name": "Plan",
+      "value": 2,
+      "summary": "Plan View"
+    },
+    {
+      "name": "Wire",
+      "value": 3,
+      "summary": "Wireframe"
+    },
+    {
+      "name": "Solid",
+      "value": 4,
+      "summary": "Mesh"
+    },
+    {
+      "name": "Camera",
+      "value": 5,
+      "summary": "eCAMERA"
+    },
+    {
+      "name": "Custom",
+      "value": 6,
+      "summary": "eCUSTOM"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "DotPrintColor",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Output color mode.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/edd92030-a090-d4ab-ee00-61bcb093e92b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Color",
+      "value": 0,
+      "summary": "Color mode."
+    },
+    {
+      "name": "BlackAndWhite",
+      "value": 1,
+      "summary": "Black and white mode."
+    },
+    {
+      "name": "GreyScale",
+      "value": 2,
+      "summary": "Grey scale mode."
+    }
+  ]
+}

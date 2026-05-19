@@ -1,0 +1,156 @@
+{
+  "name": "DetailMark.DetailMarkAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DetailMarkAttributes class is the attributes class for detail marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/59e6e3c9-3096-fa15-6c87-984312b000dd",
+  "constructors": [
+    {
+      "name": "DetailMark.DetailMarkAttributes()",
+      "signature": "public DetailMarkAttributes()",
+      "summary": "Creates a new default DetailMarkAttributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cd4359cf-5a73-f0f1-ba20-5904a1a63a24"
+    },
+    {
+      "name": "DetailMark.DetailMarkAttributes(String)",
+      "signature": "public DetailMarkAttributes(string attributesFile)",
+      "summary": "Creates a new DetailMarkAttributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "attributesFile",
+          "type": "System.String",
+          "doc": "The attributes file\u0027s filename.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17dbc94f-d484-ec22-f00a-778ed8913a9b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/604b5a6c-d054-ecfe-1a32-06b0a8b7be63"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string attributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "attributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7c3e3b03-d742-f29f-31f8-4f949e810d91"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundaryLineColor",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "Obsolete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0b8a4713-f64f-ebfa-60bb-179a75f0ed40"
+    },
+    {
+      "name": "BoundaryLineType",
+      "type": "LineTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "Obsolete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24901be2-567c-4a4e-46cd-449ed88502d6"
+    },
+    {
+      "name": "BoundaryShape",
+      "type": "DetailMark.DetailMarkAttributes.DetailBoundaryShape",
+      "getter": true,
+      "setter": true,
+      "summary": "The detail mark boundary shape.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/058830c9-0e7c-759e-6be6-4206540f093d"
+    },
+    {
+      "name": "BoundingLine",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the line type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/00ffbcd9-7832-e548-a85f-7a04100d5cdd"
+    },
+    {
+      "name": "MarkName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The detail mark name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9b056588-7be5-882f-45bb-7654794c8d19"
+    },
+    {
+      "name": "MarkSymbolAttributes",
+      "type": "DetailMarkSymbolAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The detail mark symbol attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e64f2176-15f8-8000-4978-0a96f272537f"
+    },
+    {
+      "name": "MarkSymbolColor",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1277f613-c45a-ea0d-38da-c180b8f04b5f"
+    },
+    {
+      "name": "TagsAttributes",
+      "type": "DetailMarkTagsAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The attributes for detail mark tags.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b11447d2-11ec-de73-5a64-648ea2768a44"
+    },
+    {
+      "name": "TrueMarkSymbolColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (rgb enabled) of the detail mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3292fd71-a404-8d6e-fbd9-1f84db8b0a59"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

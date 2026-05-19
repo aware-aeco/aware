@@ -1,0 +1,85 @@
+{
+  "name": "PackageManagerResult",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type PackageManagerResult",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerResult.cs",
+  "constructors": [
+    {
+      "name": "PackageManagerResult(string, bool)",
+      "signature": "void PackageManagerResult(string error, bool success)",
+      "summary": "PackageManagerResult.PackageManagerResult",
+      "params": [
+        {
+          "name": "error",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerResult.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Failed(string)",
+      "signature": "Dynamo.PackageManager.PackageManagerResult Failed(string error)",
+      "summary": "PackageManagerResult.Failed",
+      "params": [
+        {
+          "name": "error",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.PackageManagerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerResult.cs"
+    },
+    {
+      "name": "Succeeded",
+      "signature": "Dynamo.PackageManager.PackageManagerResult Succeeded()",
+      "summary": "PackageManagerResult.Succeeded",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.PackageManager.PackageManagerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerResult.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Error",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageManagerResult.Error",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerResult.cs"
+    },
+    {
+      "name": "Success",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageManagerResult.Success",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerResult.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

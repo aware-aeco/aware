@@ -1,0 +1,124 @@
+{
+  "name": "WpfShapeCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The WpfShapeCatalog class represents a group of controls to select shapes using the shape catalog.",
+  "base": "System.Windows.Controls.UserControl",
+  "interfaces": [
+    "IComponentConnector"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8ded86a9-90a9-c7ba-9e81-a500d188759c",
+  "constructors": [
+    {
+      "name": "WpfShapeCatalog()",
+      "signature": "public WpfShapeCatalog()",
+      "summary": "Initializes a new instance of the ShapeCatalog class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50083d0b-2059-a5d4-4ed5-cfaa2da7c2cc"
+    },
+    {
+      "name": "WpfShapeCatalog(String)",
+      "signature": "public WpfShapeCatalog(string shape)",
+      "summary": "Initializes a new instance of the ShapeCatalog class and will select the Shape (if available) in the tree.",
+      "params": [
+        {
+          "name": "shape",
+          "type": "System.String",
+          "doc": "The Shape to be selected in the dialog.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca864005-02d8-28a7-0855-41b4a60efab9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InitializeComponent",
+      "signature": "public void InitializeComponent()",
+      "summary": "InitializeComponent",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ea6ca8b-0b2d-50df-69c4-a6edf3aaea70"
+    },
+    {
+      "name": "OnValueChanged",
+      "signature": "public void OnValueChanged(Object data)",
+      "summary": "Event handler for passing generic catalog data back to dialog",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "value data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6142c281-2aea-1606-72b4-abf7c44ed66e"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ButtonHeight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the height of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ec1a0d49-f8b6-6024-4c01-fc384b4e194f"
+    },
+    {
+      "name": "ButtonText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the text of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/984caa80-ce1b-bcd9-e7a7-e3ed0614146e"
+    },
+    {
+      "name": "ButtonWidth",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the width of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17fdbb65-6633-3f92-320c-fd7002941680"
+    },
+    {
+      "name": "SelectedShape",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected Shape in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d59fccd0-193d-62cb-2410-23ef863133ff"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a3c217b-d39b-f5da-4c55-6508b2802ea9",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f6e92018-f5e0-9b42-e141-04b5aa0134fc",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

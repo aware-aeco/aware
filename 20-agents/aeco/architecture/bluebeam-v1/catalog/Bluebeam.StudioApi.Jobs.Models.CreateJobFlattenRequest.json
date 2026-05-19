@@ -1,0 +1,70 @@
+{
+  "name": "CreateJobFlattenRequest",
+  "namespace": "Bluebeam.StudioApi.Jobs.Models",
+  "kind": "class",
+  "summary": "Request body DTO for the corresponding \u0060CreateJobFlatten\u0060 operation. Synthesized from the Postman example schema.",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurrentPassword",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060CurrentPassword\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "LayerName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060LayerName\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "OutputFileName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060OutputFileName\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "OutputPath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060OutputPath\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "PageRange",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060PageRange\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "Priority",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Priority\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "Recoverable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Recoverable\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "RebarSplitter.SplitTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The split type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/27e2d4a2-4414-58ac-6830-edf05f2ea5e7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LAPPING",
+      "value": 0,
+      "summary": "Lapping."
+    },
+    {
+      "name": "CRANKING",
+      "value": 1,
+      "summary": "Cranking."
+    }
+  ]
+}

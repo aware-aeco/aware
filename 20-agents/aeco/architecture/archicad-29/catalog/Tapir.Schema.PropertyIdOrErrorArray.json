@@ -1,0 +1,22 @@
+{
+  "name": "PropertyIdOrErrorArray",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of property identifiers.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyIdOrErrorArray",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "PropertyIdOrError[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyIdOrErrorArray"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

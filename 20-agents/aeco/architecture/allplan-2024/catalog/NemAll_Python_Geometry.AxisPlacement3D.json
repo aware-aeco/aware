@@ -1,0 +1,325 @@
+{
+  "name": "AxisPlacement3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for orthogonal axis placement in 3D space",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/",
+  "constructors": [
+    {
+      "name": "AxisPlacement3D",
+      "signature": "AxisPlacement3D() | AxisPlacement3D(refPoint) | AxisPlacement3D(refPoint, xvector, zvector) | AxisPlacement3D(rotationAxis, rotationStart) | AxisPlacement3D(matrix) | AxisPlacement3D(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CalcGlobalPoint",
+      "signature": "CalcGlobalPoint(point)",
+      "summary": "Calculate global point from local coordinate system of placement 3D",
+      "remarks": "Calculate global point from local coordinate system of placement 3D",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "local point 3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D instance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.CalcGlobalPoint"
+    },
+    {
+      "name": "CalcLocalPoint",
+      "signature": "CalcLocalPoint(point)",
+      "summary": "Calculate local point in coordinate system of placement 3D",
+      "remarks": "Calculate local point in coordinate system of placement 3D",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "global point 3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D instance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.CalcLocalPoint"
+    },
+    {
+      "name": "GetOrigin",
+      "signature": "GetOrigin()",
+      "summary": "Get origin",
+      "remarks": "Get origin",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Origin"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.GetOrigin"
+    },
+    {
+      "name": "GetRotationMatrix",
+      "signature": "GetRotationMatrix()",
+      "summary": "Get Rotation matrix given by placement 3D",
+      "remarks": "Get Rotation matrix given by placement 3D",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Matrix3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.GetRotationMatrix"
+    },
+    {
+      "name": "GetTransformationMatrix",
+      "signature": "GetTransformationMatrix()",
+      "summary": "Get Transformation matrix given by placement 3D",
+      "remarks": "Get Transformation matrix given by placement 3D",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Matrix3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.GetTransformationMatrix"
+    },
+    {
+      "name": "GetXDirection",
+      "signature": "GetXDirection()",
+      "summary": "Get x-direction",
+      "remarks": "Get x-direction",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.GetXDirection"
+    },
+    {
+      "name": "GetYDirection",
+      "signature": "GetYDirection()",
+      "summary": "Get direction of local y-axis",
+      "remarks": "Get direction of local y-axis",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.GetYDirection"
+    },
+    {
+      "name": "GetZDirection",
+      "signature": "GetZDirection()",
+      "summary": "Get z-direction",
+      "remarks": "Get z-direction",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.GetZDirection"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Check if the placement is valid",
+      "remarks": "Check if the placement is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if it is a valid placement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.IsValid"
+    },
+    {
+      "name": "RotateAroundLocalZAxis",
+      "signature": "RotateAroundLocalZAxis(angle)",
+      "summary": "Rotate the placement around it\u0027s Z-axis",
+      "remarks": "Rotate the placement around it\u0027s Z-axis",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.RotateAroundLocalZAxis"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(origin, xDir, zDir)",
+      "summary": "Set the placement",
+      "remarks": "Set the placement",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Point3D",
+          "doc": "New origin",
+          "optional": false
+        },
+        {
+          "name": "xDir",
+          "type": "Vector3D",
+          "doc": "New X-direction",
+          "optional": false
+        },
+        {
+          "name": "zDir",
+          "type": "Vector3D",
+          "doc": "New Z-direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.Set"
+    },
+    {
+      "name": "SetOrigin",
+      "signature": "SetOrigin(origin)",
+      "summary": "Set origin",
+      "remarks": "Set origin",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Point3D",
+          "doc": "New origin",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.SetOrigin"
+    },
+    {
+      "name": "SetXDirection",
+      "signature": "SetXDirection(dir)",
+      "summary": "Set x-direction",
+      "remarks": "Set x-direction",
+      "params": [
+        {
+          "name": "dir",
+          "type": "Vector3D",
+          "doc": "Vector3D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.SetXDirection"
+    },
+    {
+      "name": "SetZDirection",
+      "signature": "SetZDirection(dir)",
+      "summary": "Set z-direction",
+      "remarks": "Set z-direction",
+      "params": [
+        {
+          "name": "dir",
+          "type": "Vector3D",
+          "doc": "Vector3D const reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.SetZDirection"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(axis_placement)",
+      "summary": "Comparison of axis placements. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of axis placements. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "axis_placement",
+          "type": "AxisPlacement3D",
+          "doc": "axis placement to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when axis placements are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Origin",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get origin",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.Origin"
+    },
+    {
+      "name": "XDirection",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get x-direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.XDirection"
+    },
+    {
+      "name": "ZDirection",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get z-direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/#NemAll_Python_Geometry.AxisPlacement3D.ZDirection"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

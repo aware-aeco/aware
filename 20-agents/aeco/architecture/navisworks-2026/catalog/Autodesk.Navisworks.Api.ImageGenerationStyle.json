@@ -1,0 +1,29 @@
+{
+  "name": "ImageGenerationStyle",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Defines the style of the image generation",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ImageGenerationStyle",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Scene",
+      "value": 0,
+      "summary": "Render scene"
+    },
+    {
+      "name": "SceneUsingRayTrace",
+      "value": 1,
+      "summary": "Render scene using ray trace"
+    },
+    {
+      "name": "ScenePlusOverlay",
+      "value": 2,
+      "summary": "Render scene plus any overlay such as Redlines"
+    }
+  ]
+}

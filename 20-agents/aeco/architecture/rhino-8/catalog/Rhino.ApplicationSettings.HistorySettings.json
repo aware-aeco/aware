@@ -1,0 +1,54 @@
+{
+  "name": "HistorySettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Provides static (Shared in Vb.Net) properties to modify Rhino History settings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_HistorySettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BrokenRecordWarningEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Displays a warning dialog when an action is taken that breaks the link between the output and input objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_HistorySettings_BrokenRecordWarningEnabled.htm"
+    },
+    {
+      "name": "ObjectLockingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When history object locking is enabled, objects with history on them act as if they were locked and the only way to modify these objects is to edit their inputs.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_HistorySettings_ObjectLockingEnabled.htm"
+    },
+    {
+      "name": "RecordingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When history recording is enabled, new objects keep a record of how they were constructed so that they can be updated if an input object changes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_HistorySettings_RecordingEnabled.htm"
+    },
+    {
+      "name": "RecordNextCommand",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable history recording until the end of the next command",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_HistorySettings_RecordNextCommand.htm"
+    },
+    {
+      "name": "UpdateEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When history update is enabled, dependent objects are automatically updated when an antecedent is modified.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_HistorySettings_UpdateEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

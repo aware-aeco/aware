@@ -1,0 +1,164 @@
+{
+  "name": "Grid.GridAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The GridAttributes class is the attributes class for the grid.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4d60e400-344e-9cc9-f842-f5c9abd32819",
+  "constructors": [
+    {
+      "name": "Grid.GridAttributes()",
+      "signature": "public GridAttributes()",
+      "summary": "Creates a new default grid attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c1667790-1bf2-4aa7-7331-c8466f57d2e2"
+    },
+    {
+      "name": "Grid.GridAttributes(String)",
+      "signature": "public GridAttributes(string AttributesFile)",
+      "summary": "Creates a new grid attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/faaa9c92-45aa-a366-9556-3bb166729971"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8c08ec6f-c6cd-22d9-ece4-8f6dca8a1339"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/edf66ccf-da28-90ec-e685-81c2a4649c9a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawOnlyTextLabelsNotGrids",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you don\u0027t want to draw the grids, only show the grids\u0027 text labels.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/55ac09c4-3409-de3a-cee1-0d72f3c8d440"
+    },
+    {
+      "name": "DrawTextAtBottomOfGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you want to show the grid\u0027s text labels at the bottom of the grid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1fa18467-27e5-6ddf-a750-c95838c23a5f"
+    },
+    {
+      "name": "DrawTextAtLeftOfGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you want to show the grid\u0027s text labels at the left of the grid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a5cf1aab-6516-47f8-88d4-fe48b6ae7bab"
+    },
+    {
+      "name": "DrawTextAtRightOfGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you want to show the grid\u0027s text labels at the right of the grid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ba586a47-f13b-1f22-a043-1c98076d4c46"
+    },
+    {
+      "name": "DrawTextAtTopOfGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set as true if you want to show the grid\u0027s text labels at the top of the grid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/69ef8912-2b58-47d9-e394-1217c6b7097f"
+    },
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid\u0027s font attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/394db31c-ed8c-a2fc-fe5d-96c4cb7a2113"
+    },
+    {
+      "name": "Frame",
+      "type": "Frame",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame attributes of the grid\u0027s labels.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3937810b-27a0-98f9-4c18-b6c4ae7d4ed1"
+    },
+    {
+      "name": "Line",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid\u0027s line attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df0d8b68-2d83-aef9-f24f-aa1790c6f91f"
+    },
+    {
+      "name": "OffsetAtEndOfLine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset for the end of the grid lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9b72949a-44ce-1c34-cf9d-12ce35025e0f"
+    },
+    {
+      "name": "OffsetAtStartOfLine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset for the beginning of the grid lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98235e30-f8ed-4236-c36e-3d2fb1e0922d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

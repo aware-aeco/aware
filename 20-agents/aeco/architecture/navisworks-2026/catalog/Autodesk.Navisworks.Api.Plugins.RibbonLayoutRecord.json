@@ -1,0 +1,22 @@
+{
+  "name": "RibbonLayoutRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents the definition of a ribbon layout in the GUI system",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.RibbonLayoutRecord",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Xaml",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The path to the Xaml file that specifies the layout of ribbon and commands",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonLayoutRecord.Xaml"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

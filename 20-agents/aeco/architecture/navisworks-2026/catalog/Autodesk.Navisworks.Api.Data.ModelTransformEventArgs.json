@@ -1,0 +1,63 @@
+{
+  "name": "ModelTransformEventArgs",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Event arguments for the model units and transform change event",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.ModelTransformEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AllowChange",
+      "type": "bool",
+      "getter": false,
+      "setter": true,
+      "summary": "Sets the allow change value. Unit and transform updates are not applied to the model when allow change is set to false.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.ModelTransformEventArgs.AllowChange"
+    },
+    {
+      "name": "GetSourceIsUI",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the whether the event source is the UI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.ModelTransformEventArgs.GetSourceIsUI"
+    },
+    {
+      "name": "LinearUnits",
+      "type": "Autodesk.Navisworks.Api.Units",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the model linear units to be applied.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.ModelTransformEventArgs.LinearUnits"
+    },
+    {
+      "name": "Model",
+      "type": "Autodesk.Navisworks.Api.Model",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the model.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.ModelTransformEventArgs.Model"
+    },
+    {
+      "name": "Transform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the transform to be applied.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.ModelTransformEventArgs.Transform"
+    },
+    {
+      "name": "TransformReverses",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the whether the transform will be reversed when applied.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.ModelTransformEventArgs.TransformReverses"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

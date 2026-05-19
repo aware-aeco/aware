@@ -1,0 +1,95 @@
+{
+  "name": "Worksession",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Manages a list of models that are being used as reference geometry.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Worksession.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FileNameFromRuntimeSerialNumber",
+      "signature": "public static string FileNameFromRuntimeSerialNumber(uint runtimeSerialNumber)",
+      "summary": "Returns the path to the open worksession, or .rws, file. If there is no worksession file open, or the active worksession has not yet been saved, then null is returned.",
+      "params": [
+        {
+          "name": "runtimeSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022runtimeSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Worksession.FileNameFromRuntimeSerialNumber(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Worksession.FileNameFromRuntimeSerialNumber(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Worksession_FileNameFromRuntimeSerialNumber.htm"
+    },
+    {
+      "name": "ModelPathFromSerialNumber",
+      "signature": "public string ModelPathFromSerialNumber(uint modelSerialNumber)",
+      "summary": "Returns the path to a model, used by the worksession, given a reference model serial number",
+      "params": [
+        {
+          "name": "modelSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The reference model serial number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The path to the model if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Worksession_ModelPathFromSerialNumber.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that owns this worksession.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Worksession_Document.htm"
+    },
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the path to the open worksession, or .rws, file. If there is no worksession file open, or the active worksession has not yet been saved, then null is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Worksession_FileName.htm"
+    },
+    {
+      "name": "ModelCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of models in the worksession. The active model will included in this count whether or not it has been saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Worksession_ModelCount.htm"
+    },
+    {
+      "name": "ModelPaths",
+      "type": "String[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the paths to the models used by the worksession. If the active model has not been saved, then it will not be included in the output array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Worksession_ModelPaths.htm"
+    },
+    {
+      "name": "RuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique serial number for the worksession while the application is running. This is not a persistent value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Worksession_RuntimeSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "IDocumentTimeliner",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "interface",
+  "summary": "Discoverable Document Part for Timeliner",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.IDocumentTimeliner",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

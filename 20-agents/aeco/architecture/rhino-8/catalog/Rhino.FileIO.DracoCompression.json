@@ -1,0 +1,267 @@
+{
+  "name": "DracoCompression",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Google Draco compression for mesh and point cloud data",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_DracoCompression.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Compress(Mesh)",
+      "signature": "public static DracoCompression Compress(Mesh mesh)",
+      "summary": "Compress a mesh using default compression options.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "mesh to compress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DracoCompression",
+        "doc": "instance of class representing the compressed data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_Compress.htm"
+    },
+    {
+      "name": "Compress(PointCloud)",
+      "signature": "public static DracoCompression Compress(PointCloud pointCloud)",
+      "summary": "Compress a point cloud",
+      "params": [
+        {
+          "name": "pointCloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "point cloud to compress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DracoCompression",
+        "doc": "instance of class representing the compressed data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_Compress_2.htm"
+    },
+    {
+      "name": "Compress(Mesh, DracoCompressionOptions)",
+      "signature": "public static DracoCompression Compress(Mesh mesh, DracoCompressionOptions options)",
+      "summary": "Compress a mesh",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "mesh to compress",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.DracoCompressionOptions",
+          "doc": "options used to determine how the compression will occur",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DracoCompression",
+        "doc": "instance of class representing the compressed data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_Compress_1.htm"
+    },
+    {
+      "name": "Compress(PointCloud, DracoCompressionOptions)",
+      "signature": "public static DracoCompression Compress(PointCloud pointCloud, DracoCompressionOptions options)",
+      "summary": "Compress a point cloud",
+      "params": [
+        {
+          "name": "pointCloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "point cloud to compress",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.DracoCompressionOptions",
+          "doc": "options used to determine how the compression will occur",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DracoCompression",
+        "doc": "instance of class representing the compressed data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_Compress_3.htm"
+    },
+    {
+      "name": "DecompressBase64String",
+      "signature": "public static GeometryBase DecompressBase64String(string encoded)",
+      "summary": "Decompress base64 encoded version of Draco data into either a mesh or point cloud",
+      "params": [
+        {
+          "name": "encoded",
+          "type": "System.String",
+          "doc": "compressed Draco data",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "Mesh or point cloud on success. null on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_DecompressBase64String.htm"
+    },
+    {
+      "name": "DecompressByteArray",
+      "signature": "public static GeometryBase DecompressByteArray(byte[] bytes)",
+      "summary": "Decompress data into either a mesh or point cloud.",
+      "params": [
+        {
+          "name": "bytes",
+          "type": "System.Byte[]",
+          "doc": "compressed Draco data",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "Mesh or point cloud on success. null on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_DecompressByteArray.htm"
+    },
+    {
+      "name": "DecompressFile",
+      "signature": "public static GeometryBase DecompressFile(string path)",
+      "summary": "Read compressed data from disk and decompress to RhinoCommon geometry",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to read from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "Mesh or point cloud on success. null on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_DecompressFile.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer for DracoCompression",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_Finalize.htm"
+    },
+    {
+      "name": "ToBase64String",
+      "signature": "public string ToBase64String()",
+      "summary": "Convert byte array of Draco compressed data into a base64 encoded string",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.DracoCompression.ToBase64String\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_ToBase64String.htm"
+    },
+    {
+      "name": "ToByteArray",
+      "signature": "public byte[] ToByteArray()",
+      "summary": "Gets the Draco compressed data as a byte array",
+      "params": [],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.DracoCompression.ToByteArray\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_ToByteArray.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(string path)",
+      "summary": "Write the compressed data to disk",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to write to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_DracoCompression_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "NormalAttributePosition",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The attribute position for normals when compressed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_DracoCompression_NormalAttributePosition.htm"
+    },
+    {
+      "name": "TextureCoordinatesAttributePosition",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The attribute position for texture coordinates when compressed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_DracoCompression_TextureCoordinatesAttributePosition.htm"
+    },
+    {
+      "name": "VertexAttributePosition",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The attribute position for vertices when compressed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_DracoCompression_VertexAttributePosition.htm"
+    },
+    {
+      "name": "VertexColorAttributePosition",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The attribute position for vertex colors when compressed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_DracoCompression_VertexColorAttributePosition.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

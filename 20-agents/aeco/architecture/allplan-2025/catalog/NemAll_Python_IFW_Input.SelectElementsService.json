@@ -1,0 +1,111 @@
+{
+  "name": "SelectElementsService",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.SelectElementsService.)",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectElementsService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SelectByPolygon",
+      "signature": "SelectByPolygon( doc: DocumentAdapter, polygon: Polygon2D, viewProjection: ViewWorldProjection, selCond: eSelectCondition, filter: SelectionQuery, isWorldPolygon: bool = False, ) -\u003E BaseElementAdapterList",
+      "summary": "Select an element by a point",
+      "remarks": "Select an element by a point",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "surrounding search polygon (view coordinates)",
+          "optional": false
+        },
+        {
+          "name": "viewProjection",
+          "type": "ViewWorldProjection",
+          "doc": "Identification of view projection (window)",
+          "optional": false
+        },
+        {
+          "name": "selCond",
+          "type": "eSelectCondition",
+          "doc": "True when elements inside rectangle must be selected only",
+          "optional": false
+        },
+        {
+          "name": "filter",
+          "type": "SelectionQuery",
+          "doc": "Selection filter",
+          "optional": false
+        },
+        {
+          "name": "isWorldPolygon",
+          "type": "bool",
+          "doc": "true=world polygon, false=view polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Data of the selected elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectElementsService/#NemAll_Python_IFW_Input.SelectElementsService.SelectByPolygon"
+    },
+    {
+      "name": "SelectByRect",
+      "signature": "SelectByRect( cursorLeftBottomPoint: Point2D, cursorRightTopPoint: Point2D, viewProjection: ViewWorldProjection, selCond: eSelectCondition, filter: SelectionQuery, ) -\u003E BaseElementAdapterList",
+      "summary": "Select an element by a point",
+      "remarks": "Select an element by a point",
+      "params": [
+        {
+          "name": "cursorLeftBottomPoint",
+          "type": "Point2D",
+          "doc": "Coordinate of left bottom point where elements will be searching",
+          "optional": false
+        },
+        {
+          "name": "cursorRightTopPoint",
+          "type": "Point2D",
+          "doc": "Coordinate of right top point where elements will be searching",
+          "optional": false
+        },
+        {
+          "name": "viewProjection",
+          "type": "ViewWorldProjection",
+          "doc": "Identification of view projection (window)",
+          "optional": false
+        },
+        {
+          "name": "selCond",
+          "type": "eSelectCondition",
+          "doc": "True when elements inside rectangle must be selected only",
+          "optional": false
+        },
+        {
+          "name": "filter",
+          "type": "SelectionQuery",
+          "doc": "Selection filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Data of the selected elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectElementsService/#NemAll_Python_IFW_Input.SelectElementsService.SelectByRect"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "GH_SelectionState",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible effects of a specific selection operation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_SelectionState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Changed",
+      "value": 0
+    },
+    {
+      "name": "Unchanged",
+      "value": 1
+    }
+  ]
+}

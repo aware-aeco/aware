@@ -1,0 +1,14 @@
+{
+  "name": "Events.ProjectInfoChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for change in project info.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f7c4a1ff-5621-bb91-19d9-dc984645810f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ProjectInfoChangedDelegate()"
+}

@@ -1,0 +1,77 @@
+{
+  "name": "TextAlignmentUtil",
+  "namespace": "Utils.TextAlignmentUtil",
+  "kind": "class",
+  "summary": "Implementation of the text alignment utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TextAlignmentUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_ref_point_button_index_from_text_alignment",
+      "signature": "get_ref_point_button_index_from_text_alignment( text_align: TextAlignment, ) -\u003E int",
+      "summary": "get the text point position from the text alignment",
+      "remarks": "get the text point position from the text alignment",
+      "params": [
+        {
+          "name": "text_align",
+          "type": "TextAlignment",
+          "doc": "text alignment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "reference point button index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TextAlignmentUtil/#Utils.TextAlignmentUtil.TextAlignmentUtil.get_ref_point_button_index_from_text_alignment"
+    },
+    {
+      "name": "get_text_alignment_from_ref_point_button_index",
+      "signature": "get_text_alignment_from_ref_point_button_index( ref_point_button_index: RefPointPosition, ) -\u003E TextAlignment",
+      "summary": "get the text alignment from the text point position",
+      "remarks": "get the text alignment from the text point position",
+      "params": [
+        {
+          "name": "ref_point_button_index",
+          "type": "RefPointPosition",
+          "doc": "ref point button index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextAlignment",
+        "doc": "text alignment"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TextAlignmentUtil/#Utils.TextAlignmentUtil.TextAlignmentUtil.get_text_alignment_from_ref_point_button_index"
+    },
+    {
+      "name": "get_text_alignment_from_text_point_position",
+      "signature": "get_text_alignment_from_text_point_position( ref_point_position: TextReferencePointPosition, ) -\u003E TextAlignment",
+      "summary": "get the text alignment from the text point position",
+      "remarks": "get the text alignment from the text point position",
+      "params": [
+        {
+          "name": "ref_point_position",
+          "type": "TextReferencePointPosition",
+          "doc": "ref point position",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextAlignment",
+        "doc": "text alignment"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TextAlignmentUtil/#Utils.TextAlignmentUtil.TextAlignmentUtil.get_text_alignment_from_text_point_position"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,253 @@
+{
+  "name": "PlaneMeshPlacement",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the mesh placement element",
+  "base": "ReinfElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/",
+  "constructors": [
+    {
+      "name": "PlaneMeshPlacement",
+      "signature": "PlaneMeshPlacement() | PlaneMeshPlacement(placement: PlaneMeshPlacement) | PlaneMeshPlacement( positionNumber: int, meshData: MeshData, meshLength: float, meshWidth: float, meshPolygon: Polygon3D, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCommonProperties",
+      "signature": "GetCommonProperties() -\u003E CommonProperties",
+      "summary": "Get the common properties",
+      "remarks": "Get the common properties",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Common properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.GetCommonProperties"
+    },
+    {
+      "name": "GetMeshData",
+      "signature": "GetMeshData() -\u003E MeshData",
+      "summary": "Get the mesh data",
+      "remarks": "Get the mesh data",
+      "params": [],
+      "returns": {
+        "type": "MeshData",
+        "doc": "Mesh data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.GetMeshData"
+    },
+    {
+      "name": "GetMeshLength",
+      "signature": "GetMeshLength() -\u003E float",
+      "summary": "Get the mesh length",
+      "remarks": "Get the mesh length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Mesh length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.GetMeshLength"
+    },
+    {
+      "name": "GetMeshPolygon",
+      "signature": "GetMeshPolygon() -\u003E Polygon3D",
+      "summary": "Get the shape polyline",
+      "remarks": "Get the shape polyline",
+      "params": [],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "Shape polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.GetMeshPolygon"
+    },
+    {
+      "name": "GetMeshWidth",
+      "signature": "GetMeshWidth() -\u003E float",
+      "summary": "Get the mesh width",
+      "remarks": "Get the mesh width",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Mesh width"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.GetMeshWidth"
+    },
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber() -\u003E int",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.GetPositionNumber"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Get the state of the shape",
+      "remarks": "Get the state of the shape",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Shape is valid: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.IsValid"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(transVec: Vector3D)",
+      "summary": "Move the placement",
+      "remarks": "Move the placement",
+      "params": [
+        {
+          "name": "transVec",
+          "type": "Vector3D",
+          "doc": "Move vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.Move"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp: CommonProperties)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.SetCommonProperties"
+    },
+    {
+      "name": "SetMeshPolygon",
+      "signature": "SetMeshPolygon(shape: Polygon3D)",
+      "summary": "Set the reinforcement shape",
+      "remarks": "Set the reinforcement shape",
+      "params": [
+        {
+          "name": "shape",
+          "type": "Polygon3D",
+          "doc": "Reinforcement shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.SetMeshPolygon"
+    },
+    {
+      "name": "SetPositionNumber",
+      "signature": "SetPositionNumber(positionNumber: int)",
+      "summary": "Set the position number",
+      "remarks": "Set the position number",
+      "params": [
+        {
+          "name": "positionNumber",
+          "type": "int",
+          "doc": "Position number",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.SetPositionNumber"
+    },
+    {
+      "name": "Transform",
+      "signature": "Transform(transMat: Matrix3D)",
+      "summary": "Transform the placement",
+      "remarks": "Transform the placement",
+      "params": [
+        {
+          "name": "transMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.Transform"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommonProperties",
+      "type": "CommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the common properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.CommonProperties"
+    },
+    {
+      "name": "MeshPolygon",
+      "type": "Polygon3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the shape polyline",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.MeshPolygon"
+    },
+    {
+      "name": "PositionNumber",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.PositionNumber"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

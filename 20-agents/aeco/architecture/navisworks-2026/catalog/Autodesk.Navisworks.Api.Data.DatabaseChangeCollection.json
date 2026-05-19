@@ -1,0 +1,122 @@
+{
+  "name": "DatabaseChangeCollection",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Collection of DatabaseChange that only supports Enumerable style interfaces",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.DatabaseChangeCollection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Where",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E Where(Autodesk.Navisworks.Api.Data.DatabaseChangeTypes changeType)",
+      "summary": "Filters the changes based on changeType",
+      "params": [
+        {
+          "name": "changeType",
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseChangeTypes",
+          "doc": "Which DatabaseChangeTypes will be cared",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseChangeCollection.Where%28Autodesk.Navisworks.Api.Data.DatabaseChangeTypes%29"
+    },
+    {
+      "name": "Where",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E Where(string tableNames)",
+      "summary": "Filters the changes based on tablesName",
+      "params": [
+        {
+          "name": "tableNames",
+          "type": "string",
+          "doc": "Which tables would be cared. support multi tables and use white space between table names, Like \u0022ABC def\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseChangeCollection.Where%28System.String%29"
+    },
+    {
+      "name": "Where",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E Where(string tableNames, Autodesk.Navisworks.Api.Data.DatabaseChangeTypes changeType)",
+      "summary": "Filters the changes based on tableNames and changeType",
+      "params": [
+        {
+          "name": "tableNames",
+          "type": "string",
+          "doc": "Which tables would be cared. support multi tables and use white space between table names, Like \u0022ABC def\u0022.",
+          "optional": false
+        },
+        {
+          "name": "changeType",
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseChangeTypes",
+          "doc": "Which DatabaseChangeTypes will be cared",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseChangeCollection.Where%28System.String%2CAutodesk.Navisworks.Api.Data.DatabaseChangeTypes%29"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that can iterate through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.Data.DatabaseChange\u003E",
+        "doc": "An IEnumerator that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseChangeCollection.GetEnumerator"
+    },
+    {
+      "name": "InternalGetEnumerator",
+      "signature": "System.Collections.IEnumerator InternalGetEnumerator()",
+      "summary": "InternalGetEnumerator method of DatabaseChangeCollection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseChangeCollection.InternalGetEnumerator"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.DatabaseChangeCollection.ToString"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

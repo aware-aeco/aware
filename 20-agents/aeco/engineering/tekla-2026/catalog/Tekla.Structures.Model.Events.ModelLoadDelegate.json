@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelLoadDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for model load.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5ff47b5e-6907-32b6-2927-2d88b765bb73",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelLoadDelegate()"
+}

@@ -1,0 +1,199 @@
+{
+  "name": "NavisworksDataAdapter",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Implementation of DbDataAdapter.",
+  "base": "System.Data.Common.DbDataAdapter",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.NavisworksDataAdapter",
+  "constructors": [
+    {
+      "name": "NavisworksDataAdapter()",
+      "signature": "NavisworksDataAdapter()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.%23ctor"
+    },
+    {
+      "name": "NavisworksDataAdapter(Autodesk.Navisworks.Api.Data.NavisworksCommand)",
+      "signature": "NavisworksDataAdapter(Autodesk.Navisworks.Api.Data.NavisworksCommand selectCommand)",
+      "summary": "Constructs a data adapter using the specified select command.",
+      "params": [
+        {
+          "name": "selectCommand",
+          "type": "Autodesk.Navisworks.Api.Data.NavisworksCommand",
+          "doc": "The select command to associate with the adapter.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.%23ctor%28Autodesk.Navisworks.Api.Data.NavisworksCommand%29"
+    },
+    {
+      "name": "NavisworksDataAdapter(string, Autodesk.Navisworks.Api.Data.NavisworksConnection)",
+      "signature": "NavisworksDataAdapter(string commandText, Autodesk.Navisworks.Api.Data.NavisworksConnection connection)",
+      "summary": "Constructs a data adapter with the supplied select command text and associated with the specified connection.",
+      "params": [
+        {
+          "name": "commandText",
+          "type": "string",
+          "doc": "The select command text to associate with the data adapter.",
+          "optional": false
+        },
+        {
+          "name": "connection",
+          "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+          "doc": "The connection to associate with the select command.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.%23ctor%28System.String%2CAutodesk.Navisworks.Api.Data.NavisworksConnection%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Update",
+      "signature": "int Update(System.Data.DataRow[] data_row)",
+      "summary": "Not implement",
+      "params": [
+        {
+          "name": "data_row",
+          "type": "System.Data.DataRow[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.Update%28System.Data.DataRow%5B%5D%29"
+    },
+    {
+      "name": "Update",
+      "signature": "int Update(System.Data.DataSet ds)",
+      "summary": "Not implement",
+      "params": [
+        {
+          "name": "ds",
+          "type": "System.Data.DataSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.Update%28System.Data.DataSet%29"
+    },
+    {
+      "name": "Update",
+      "signature": "int Update(System.Data.DataSet dt, string datatable_name)",
+      "summary": "Not implement",
+      "params": [
+        {
+          "name": "dt",
+          "type": "System.Data.DataSet",
+          "optional": false
+        },
+        {
+          "name": "datatable_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.Update%28System.Data.DataSet%2CSystem.String%29"
+    },
+    {
+      "name": "Update",
+      "signature": "int Update(System.Data.DataTable dt)",
+      "summary": "Not implement",
+      "params": [
+        {
+          "name": "dt",
+          "type": "System.Data.DataTable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.Update%28System.Data.DataTable%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DeleteCommand",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksCommand",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets/sets the delete command for this DataAdapter",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.DeleteCommand"
+    },
+    {
+      "name": "InsertCommand",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksCommand",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets/sets the insert command for this DataAdapter",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.InsertCommand"
+    },
+    {
+      "name": "SelectCommand",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksCommand",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets/sets the select command for this DataAdapter",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.SelectCommand"
+    },
+    {
+      "name": "UpdateCommand",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksCommand",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets/sets the update command for this DataAdapter",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.UpdateCommand"
+    }
+  ],
+  "events": [
+    {
+      "name": "RowUpdated",
+      "delegate": "System.EventHandler\u003CSystem.Data.Common.RowUpdatedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.Data.Common.RowUpdatedEventArgs\u003E RowUpdated",
+      "summary": "Row updated event handler",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.RowUpdated",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RowUpdating",
+      "delegate": "System.EventHandler\u003CSystem.Data.Common.RowUpdatingEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.Data.Common.RowUpdatingEventArgs\u003E RowUpdating",
+      "summary": "Row updating event handler",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Data.NavisworksDataAdapter.RowUpdating",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

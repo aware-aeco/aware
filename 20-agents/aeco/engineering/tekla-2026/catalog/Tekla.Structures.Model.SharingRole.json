@@ -1,0 +1,44 @@
+{
+  "name": "SharingRole",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Model sharing user roles.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e1076cdb-18ce-ecd5-d61d-26dc647af00a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No role assigned."
+    },
+    {
+      "name": "AccessDenied",
+      "value": 1,
+      "summary": "Access denied to the model."
+    },
+    {
+      "name": "Viewer",
+      "value": 10,
+      "summary": "Model viewer role."
+    },
+    {
+      "name": "Editor",
+      "value": 20,
+      "summary": "Model editor role."
+    },
+    {
+      "name": "ProjectViewer",
+      "value": 21,
+      "summary": "Project viewer role."
+    },
+    {
+      "name": "Owner",
+      "value": 30,
+      "summary": "Model owner role."
+    }
+  ]
+}

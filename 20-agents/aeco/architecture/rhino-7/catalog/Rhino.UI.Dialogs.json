@@ -1,0 +1,997 @@
+{
+  "name": "Dialogs",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Dialogs\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Dialogs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "KillSplash",
+      "signature": "public static void KillSplash()",
+      "summary": "Destroy the splash screen if it is being displayed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_KillSplash.htm"
+    },
+    {
+      "name": "SetCustomColorDialog",
+      "signature": "public static void SetCustomColorDialog(EventHandler\u003CGetColorEventArgs\u003E handler)",
+      "summary": "",
+      "params": [
+        {
+          "name": "handler",
+          "type": "System.EventHandler\u003CGetColorEventArgs\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022handler\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.SetCustomColorDialog(System.EventHandler{Rhino.UI.GetColorEventArgs})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_SetCustomColorDialog.htm"
+    },
+    {
+      "name": "ShowAboutDialog",
+      "signature": "public static void ShowAboutDialog(bool forceSimpleDialog)",
+      "summary": "",
+      "params": [
+        {
+          "name": "forceSimpleDialog",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022forceSimpleDialog\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowAboutDialog(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowAboutDialog.htm"
+    },
+    {
+      "name": "ShowCheckListBox",
+      "signature": "public static bool[] ShowCheckListBox(string title, string message, IList items, IList\u003Cbool\u003E checkState)",
+      "summary": "Displays Rhino\u0027s check list box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "A list of items to show.",
+          "optional": false
+        },
+        {
+          "name": "checkState",
+          "type": "System.Collections.Generic.IList\u003CBoolean\u003E",
+          "doc": "A list of true/false boolean values.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean[]",
+        "doc": "An array or boolean values determining if the user checked the corresponding box. On error, null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowCheckListBox.htm"
+    },
+    {
+      "name": "ShowColorDialog(Color)",
+      "signature": "public static bool ShowColorDialog(ref Color color)",
+      "summary": "Display Rhino\u0027s color selection dialog.",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[in/out] Default color for dialog, and will receive new color if function returns true.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the color changed. false if the color has not changed or the user pressed cancel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog_1.htm"
+    },
+    {
+      "name": "ShowColorDialog(Color4f, Boolean)",
+      "signature": "public static bool ShowColorDialog(ref Color4f color, bool allowAlpha)",
+      "summary": "Displays the standard modal color picker dialog for floating point colors.",
+      "params": [
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The initial color to set the picker to and also accepts the user\u0027s choice.",
+          "optional": false
+        },
+        {
+          "name": "allowAlpha",
+          "type": "System.Boolean",
+          "doc": "Specifies if the color picker should allow changes to the alpha channel or not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a color was picked, false if the user canceled the picker dialog."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog.htm"
+    },
+    {
+      "name": "ShowColorDialog(Color, Boolean, String)",
+      "signature": "public static bool ShowColorDialog(ref Color color, bool includeButtonColors, string dialogTitle)",
+      "summary": "Display Rhino\u0027s color selection dialog.",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[in/out] Default color for dialog, and will receive new color if function returns true.",
+          "optional": false
+        },
+        {
+          "name": "includeButtonColors",
+          "type": "System.Boolean",
+          "doc": "Display button face and text options at top of named color list.",
+          "optional": false
+        },
+        {
+          "name": "dialogTitle",
+          "type": "System.String",
+          "doc": "The title of the dialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the color changed. false if the color has not changed or the user pressed cancel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog_2.htm"
+    },
+    {
+      "name": "ShowColorDialog(Object, Color4f, Boolean)",
+      "signature": "public static bool ShowColorDialog(Object parent, ref Color4f color, bool allowAlpha)",
+      "summary": "Displays the standard modal color picker dialog for floating point colors.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Object",
+          "doc": "Parent window for this dialog, should always pass this if calling from a form or user control.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The initial color to set the picker to and also accepts the user\u0027s choice.",
+          "optional": false
+        },
+        {
+          "name": "allowAlpha",
+          "type": "System.Boolean",
+          "doc": "Specifies if the color picker should allow changes to the alpha channel or not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a color was picked, false if the user canceled the picker dialog."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog_4.htm"
+    },
+    {
+      "name": "ShowColorDialog(IWin32Window, Color4f, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Use ShowColorDialog(object parent, ref Color4f color, bool allowAlpha)\u0022)] public static bool ShowColorDialog(IWin32Window parent, ref Color4f color, bool allowAlpha)",
+      "summary": "Displays the standard modal color picker dialog for floating point colors.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Windows.Forms.IWin32Window",
+          "doc": "Parent window for this dialog, should always pass this if calling from a form or user control.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The initial color to set the picker to and also accepts the user\u0027s choice.",
+          "optional": false
+        },
+        {
+          "name": "allowAlpha",
+          "type": "System.Boolean",
+          "doc": "Specifies if the color picker should allow changes to the alpha channel or not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a color was picked, false if the user canceled the picker dialog."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog_7.htm"
+    },
+    {
+      "name": "ShowColorDialog(Color, Boolean, String, NamedColorList)",
+      "signature": "public static bool ShowColorDialog(ref Color color, bool includeButtonColors, string dialogTitle, NamedColorList namedColorList)",
+      "summary": "Display Rhino\u0027s color selection dialog.",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[in/out] Default color for dialog, and will receive new color if function returns true.",
+          "optional": false
+        },
+        {
+          "name": "includeButtonColors",
+          "type": "System.Boolean",
+          "doc": "Display button face and text options at top of named color list.",
+          "optional": false
+        },
+        {
+          "name": "dialogTitle",
+          "type": "System.String",
+          "doc": "The title of the dialog.",
+          "optional": false
+        },
+        {
+          "name": "namedColorList",
+          "type": "Rhino.UI.NamedColorList",
+          "doc": "If not null and contains one or more named colors the Rhino color dialog named color list will be replaces with this list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the color changed. false if the color has not changed or the user pressed cancel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog_3.htm"
+    },
+    {
+      "name": "ShowColorDialog(Object, Color4f, Boolean, Dialogs.OnColorChangedEvent)",
+      "signature": "public static bool ShowColorDialog(Object parent, ref Color4f color, bool allowAlpha, Dialogs.OnColorChangedEvent colorCallback)",
+      "summary": "Displays the standard modal color picker dialog for floating point colors.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Object",
+          "doc": "Parent window for this dialog, should always pass this if calling from a form or user control.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The initial color to set the picker to and also accepts the user\u0027s choice.",
+          "optional": false
+        },
+        {
+          "name": "allowAlpha",
+          "type": "System.Boolean",
+          "doc": "Specifies if the color picker should allow changes to the alpha channel or not.",
+          "optional": false
+        },
+        {
+          "name": "colorCallback",
+          "type": "Rhino.UI.Dialogs.OnColorChangedEvent",
+          "doc": "May be optionally passed to ShowColorDialog and will get called when the color value changes in the color dialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a color was picked, false if the user canceled the picker dialog."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog_5.htm"
+    },
+    {
+      "name": "ShowColorDialog(Object, Color4f, Boolean, NamedColorList, Dialogs.OnColorChangedEvent)",
+      "signature": "public static bool ShowColorDialog(Object parent, ref Color4f color, bool allowAlpha, NamedColorList namedColorList, Dialogs.OnColorChangedEvent colorCallback)",
+      "summary": "Displays the standard modal color picker dialog for floating point colors.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Object",
+          "doc": "Parent window for this dialog, should always pass this if calling from a form or user control.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The initial color to set the picker to and also accepts the user\u0027s choice.",
+          "optional": false
+        },
+        {
+          "name": "allowAlpha",
+          "type": "System.Boolean",
+          "doc": "Specifies if the color picker should allow changes to the alpha channel or not.",
+          "optional": false
+        },
+        {
+          "name": "namedColorList",
+          "type": "Rhino.UI.NamedColorList",
+          "doc": "If not null and contains at least one named color this list will replace the standard Rhino Color list displayed by the rhino color dialog.",
+          "optional": false
+        },
+        {
+          "name": "colorCallback",
+          "type": "Rhino.UI.Dialogs.OnColorChangedEvent",
+          "doc": "May be optionally passed to ShowColorDialog and will get called when the color value changes in the color dialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a color was picked, false if the user canceled the picker dialog."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowColorDialog_6.htm"
+    },
+    {
+      "name": "ShowComboListBox",
+      "signature": "public static Object ShowComboListBox(string title, string message, IList items)",
+      "summary": "Displays Rhino\u0027s combo list box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "A list of items to show.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "selected item.null if the user canceled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowComboListBox.htm"
+    },
+    {
+      "name": "ShowContextMenu",
+      "signature": "public static int ShowContextMenu(IEnumerable\u003Cstring\u003E items, Point screenPoint, IEnumerable\u003Cint\u003E modes)",
+      "summary": "Creates an ETO ContextMenu from an array of strings. Use the modes array to enable/disable menu items",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowContextMenu(System.Collections.Generic.IEnumerable{System.String},System.Drawing.Point,System.Collections.Generic.IEnumerable{System.Int32})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "screenPoint",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022screenPoint\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowContextMenu(System.Collections.Generic.IEnumerable{System.String},System.Drawing.Point,System.Collections.Generic.IEnumerable{System.Int32})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "modes",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022modes\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowContextMenu(System.Collections.Generic.IEnumerable{System.String},System.Drawing.Point,System.Collections.Generic.IEnumerable{System.Int32})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowContextMenu(System.Collections.Generic.IEnumerable{System.String},System.Drawing.Point,System.Collections.Generic.IEnumerable{System.Int32})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowContextMenu.htm"
+    },
+    {
+      "name": "ShowEditBox",
+      "signature": "public static bool ShowEditBox(string title, string message, string defaultText, bool multiline, out string text)",
+      "summary": "Displays Rhino\u0027s string edit box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "defaultText",
+          "type": "System.String",
+          "doc": "The default text.",
+          "optional": false
+        },
+        {
+          "name": "multiline",
+          "type": "System.Boolean",
+          "doc": "Set true for multi line editing.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The modified text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true of OK was clicked, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowEditBox.htm"
+    },
+    {
+      "name": "ShowLineTypes",
+      "signature": "public static Object ShowLineTypes(string title, string message, RhinoDoc doc)",
+      "summary": "Displays Rhino\u0027s LineType list box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The active document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The id of the selected item if successful, null on cancel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowLineTypes.htm"
+    },
+    {
+      "name": "ShowListBox(String, String, IList)",
+      "signature": "public static Object ShowListBox(string title, string message, IList items)",
+      "summary": "Displays Rhino\u0027s list box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "A list of items to show.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The selected item if successful, null on cancel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowListBox.htm"
+    },
+    {
+      "name": "ShowListBox(String, String, IList, Object)",
+      "signature": "public static Object ShowListBox(string title, string message, IList items, Object selectedItem)",
+      "summary": "Displays Rhino\u0027s list box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "A list of items to show.",
+          "optional": false
+        },
+        {
+          "name": "selectedItem",
+          "type": "System.Object",
+          "doc": "The item to preselect.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The selected item if successful, null on cancel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowListBox_1.htm"
+    },
+    {
+      "name": "ShowMessage(String, String)",
+      "signature": "public static ShowMessageResult ShowMessage(string message, string title)",
+      "summary": "Same as System.Windows.Forms.MessageBox.Show but using a message box tailored to Rhino.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Message box text content.",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Message box title text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ShowMessageResult",
+        "doc": "One of the ShowMessageBoxResult values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowMessage_1.htm"
+    },
+    {
+      "name": "ShowMessage(String, String, ShowMessageButton, ShowMessageIcon)",
+      "signature": "public static ShowMessageResult ShowMessage(string message, string title, ShowMessageButton buttons, ShowMessageIcon icon)",
+      "summary": "Same as System.Windows.Forms.MessageBox.Show but using a message box tailored to Rhino.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Message box text content.",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Message box title text.",
+          "optional": false
+        },
+        {
+          "name": "buttons",
+          "type": "Rhino.UI.ShowMessageButton",
+          "doc": "Which buttons to display in the message box.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "Rhino.UI.ShowMessageIcon",
+          "doc": "Which icon to display in the message box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ShowMessageResult",
+        "doc": "One of the ShowMessageBoxResult values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowMessage_2.htm"
+    },
+    {
+      "name": "ShowMessage(Object, String, String, ShowMessageButton, ShowMessageIcon, ShowMessageDefaultButton, ShowMessageOptions, ShowMessageMode)",
+      "signature": "public static ShowMessageResult ShowMessage(Object parent, string message, string title, ShowMessageButton buttons, ShowMessageIcon icon, ShowMessageDefaultButton defaultButton, ShowMessageOptions options, ShowMessageMode mode)",
+      "summary": "Same as System.Windows.Forms.MessageBox.Show but using a message box tailored to Rhino.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Object",
+          "doc": "Parent window",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Message box text content.",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Message box title text.",
+          "optional": false
+        },
+        {
+          "name": "buttons",
+          "type": "Rhino.UI.ShowMessageButton",
+          "doc": "Which buttons to display in the message box.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "Rhino.UI.ShowMessageIcon",
+          "doc": "Which icon to display in the message box.",
+          "optional": false
+        },
+        {
+          "name": "defaultButton",
+          "type": "Rhino.UI.ShowMessageDefaultButton",
+          "doc": "Which button is the default button.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.UI.ShowMessageOptions",
+          "doc": "Additional message box options.",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Rhino.UI.ShowMessageMode",
+          "doc": "The modality of the message box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ShowMessageResult",
+        "doc": "One of the ShowMessageBoxResult values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowMessage.htm"
+    },
+    {
+      "name": "ShowMultiListBox",
+      "signature": "public static string[] ShowMultiListBox(string title, string message, IList\u003Cstring\u003E items, IList\u003Cstring\u003E defaults = null)",
+      "summary": "Displays Rhino\u0027s multiple selection list box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "A list of items to show.",
+          "optional": false
+        },
+        {
+          "name": "defaults",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "The items to preselect.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "The selected items if successful, null on cancel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowMultiListBox.htm"
+    },
+    {
+      "name": "ShowNumberBox(String, String, Double)",
+      "signature": "public static bool ShowNumberBox(string title, string message, ref double number)",
+      "summary": "Displays Rhino\u0027s number edit box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "The default and return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true of OK was clicked, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowNumberBox.htm"
+    },
+    {
+      "name": "ShowNumberBox(String, String, Double, Double, Double)",
+      "signature": "public static bool ShowNumberBox(string title, string message, ref double number, double minimum, double maximum)",
+      "summary": "Displays Rhino\u0027s number edit box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "The default and return value.",
+          "optional": false
+        },
+        {
+          "name": "minimum",
+          "type": "System.Double",
+          "doc": "The minimum allowable value.",
+          "optional": false
+        },
+        {
+          "name": "maximum",
+          "type": "System.Double",
+          "doc": "The maximum allowable value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true of OK was clicked, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowNumberBox_1.htm"
+    },
+    {
+      "name": "ShowPropertyListBox",
+      "signature": "public static string[] ShowPropertyListBox(string title, string message, IList items, IList\u003Cstring\u003E values)",
+      "summary": "Displays Rhino\u0027s property list box.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The dialog message.",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "A list of property names.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "A list of property values.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "A list of property values if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowPropertyListBox.htm"
+    },
+    {
+      "name": "ShowSelectLayerDialog",
+      "signature": "public static bool ShowSelectLayerDialog(ref int layerIndex, string dialogTitle, bool showNewLayerButton, bool showSetCurrentButton, ref bool initialSetCurrentState)",
+      "summary": "Displays Rhino\u0027s single layer selection dialog.",
+      "params": [
+        {
+          "name": "layerIndex",
+          "type": "System.Int32",
+          "doc": "Initial layer for the dialog, and will receive selected layer if function returns DialogResult.OK.",
+          "optional": false
+        },
+        {
+          "name": "dialogTitle",
+          "type": "System.String",
+          "doc": "The dialog title.",
+          "optional": false
+        },
+        {
+          "name": "showNewLayerButton",
+          "type": "System.Boolean",
+          "doc": "true if the new layer button will be visible.",
+          "optional": false
+        },
+        {
+          "name": "showSetCurrentButton",
+          "type": "System.Boolean",
+          "doc": "true if the set current button will be visible.",
+          "optional": false
+        },
+        {
+          "name": "initialSetCurrentState",
+          "type": "System.Boolean",
+          "doc": "true if the current state will be initially set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the dialog was closed with the OK button. False if the dialog was closed with escape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowSelectLayerDialog.htm"
+    },
+    {
+      "name": "ShowSelectLinetypeDialog",
+      "signature": "public static bool ShowSelectLinetypeDialog(ref int linetypeIndex, bool displayByLayer)",
+      "summary": "Displays Rhino\u0027s single linetype selection dialog.",
+      "params": [
+        {
+          "name": "linetypeIndex",
+          "type": "System.Int32",
+          "doc": "Initial linetype for the dialog, and will receive selected linetype if function returns true.",
+          "optional": false
+        },
+        {
+          "name": "displayByLayer",
+          "type": "System.Boolean",
+          "doc": "Displays the \u0022ByLayer\u0022 linetype in the list. Defaults to false.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the dialog was closed with the OK button. False if the dialog was closed with escape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowSelectLinetypeDialog.htm"
+    },
+    {
+      "name": "ShowSelectMultipleLayersDialog",
+      "signature": "public static bool ShowSelectMultipleLayersDialog(IEnumerable\u003Cint\u003E defaultLayerIndices, string dialogTitle, bool showNewLayerButton, out int[] layerIndices)",
+      "summary": "",
+      "params": [
+        {
+          "name": "defaultLayerIndices",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022defaultLayerIndices\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowSelectMultipleLayersDialog(System.Collections.Generic.IEnumerable{System.Int32},System.String,System.Boolean,System.Int32[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dialogTitle",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022dialogTitle\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowSelectMultipleLayersDialog(System.Collections.Generic.IEnumerable{System.Int32},System.String,System.Boolean,System.Int32[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "showNewLayerButton",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022showNewLayerButton\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowSelectMultipleLayersDialog(System.Collections.Generic.IEnumerable{System.Int32},System.String,System.Boolean,System.Int32[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "layerIndices",
+          "type": "System.Int32[]",
+          "doc": "[Missing \u003Cparam name=\u0022layerIndices\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowSelectMultipleLayersDialog(System.Collections.Generic.IEnumerable{System.Int32},System.String,System.Boolean,System.Int32[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the dialog was closed with the OK button. False if the dialog was closed with escape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowSelectMultipleLayersDialog.htm"
+    },
+    {
+      "name": "ShowSunDialog",
+      "signature": "public static bool ShowSunDialog(Sun sun)",
+      "summary": "Show the tabbed sun dialog.",
+      "params": [
+        {
+          "name": "sun",
+          "type": "Rhino.Render.Sun",
+          "doc": "[Missing \u003Cparam name=\u0022sun\u0022/\u003E documentation for \u0022M:Rhino.UI.Dialogs.ShowSunDialog(Rhino.Render.Sun)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the user clicked OK, or false if the user canceled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowSunDialog.htm"
+    },
+    {
+      "name": "ShowTextDialog",
+      "signature": "public static void ShowTextDialog(string message, string title)",
+      "summary": "Display a text dialog similar to the dialog used for the \u0022What\u0022 command.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Text to display as the message content.",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Test to display as the form title.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Dialogs_ShowTextDialog.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

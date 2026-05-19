@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisModelAnalysisProperties.AnalysisMethodEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the analysis method.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5f51756b-a4ea-585c-f137-e0fb47cbda85",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FIRST_ORDER",
+      "value": 1,
+      "summary": "The first order calculation method."
+    },
+    {
+      "name": "P_DELTA",
+      "value": 2,
+      "summary": "The P-delta calculation method."
+    },
+    {
+      "name": "NON_LINEAR",
+      "value": 3,
+      "summary": "The non-linear calculation method."
+    }
+  ]
+}

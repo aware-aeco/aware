@@ -1,0 +1,39 @@
+{
+  "name": "IRhRdkContentThumbnailList_Sizes",
+  "namespace": "Rhino.UI.Controls.ThumbnailUI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ThumbnailUI.IRhRdkContentThumbnailList_Sizes\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_ThumbnailUI_IRhRdkContentThumbnailList_Sizes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Tiny",
+      "value": 0,
+      "summary": "Tiny thumbnails."
+    },
+    {
+      "name": "Small",
+      "value": 1,
+      "summary": "Small thumbnails."
+    },
+    {
+      "name": "Medium",
+      "value": 2,
+      "summary": "Medium thumbnails."
+    },
+    {
+      "name": "Large",
+      "value": 3,
+      "summary": "Large thumbnails."
+    },
+    {
+      "name": "Custom",
+      "value": 4,
+      "summary": "Custom-sized thumbnails."
+    }
+  ]
+}

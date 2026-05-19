@@ -1,0 +1,86 @@
+{
+  "name": "Interpreter",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type Interpreter",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Interpreter.cs",
+  "constructors": [
+    {
+      "name": "Interpreter(ProtoCore.RuntimeCore, bool)",
+      "signature": "void Interpreter(ProtoCore.RuntimeCore runtimeCore, bool isFEP)",
+      "summary": "Interpreter.Interpreter",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "isFEP",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Interpreter.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Push(ProtoCore.DSASM.StackValue)",
+      "signature": "void Push(ProtoCore.DSASM.StackValue val)",
+      "summary": "Interpreter.Push",
+      "params": [
+        {
+          "name": "val",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Interpreter.cs"
+    },
+    {
+      "name": "Run(int, int, ProtoCore.Language, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E)",
+      "signature": "ProtoCore.DSASM.StackValue Run(int codeblock, int entry, ProtoCore.Language lang, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E breakpoints)",
+      "summary": "Interpreter.Run",
+      "params": [
+        {
+          "name": "codeblock",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "lang",
+          "type": "ProtoCore.Language",
+          "optional": false
+        },
+        {
+          "name": "breakpoints",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Interpreter.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

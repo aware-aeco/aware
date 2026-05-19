@@ -1,0 +1,2949 @@
+{
+  "host": "tedds",
+  "host_version": "25.0",
+  "source": {
+    "kind": "scrape",
+    "urls": [
+      "https://developer.tekla.com/doc/tekla-tedds/2025/41820"
+    ],
+    "extracted_at": "2026-05-19T04:01:56.8300187Z"
+  },
+  "types": [
+    {
+      "name": "AliasAttribute",
+      "namespace": "Tekla.Structural.ExpressoAddIn",
+      "kind": "class",
+      "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.AliasAttribute.)",
+      "base": "Attribute",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-aliasattribute-41824",
+      "constructors": [
+        {
+          "name": "AliasAttribute(string)",
+          "signature": "public AliasAttribute(string alias)",
+          "summary": "",
+          "params": [
+            {
+              "name": "alias",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/849f0f217ebd1cdb0a393ae3a204c240d16cee1c8f0e7f2f0bcfd5289323d538"
+        },
+        {
+          "name": "AliasAttribute(string, bool)",
+          "signature": "public AliasAttribute(string alias, bool aliasOnly)",
+          "summary": "",
+          "params": [
+            {
+              "name": "alias",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "aliasOnly",
+              "type": "bool",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/849f0f217ebd1cdb0a393ae3a204c240d16cee1c8f0e7f2f0bcfd5289323d538"
+        }
+      ],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "FieldAttribute",
+      "namespace": "Tekla.Structural.ExpressoAddIn",
+      "kind": "class",
+      "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.FieldAttribute.)",
+      "base": "Attribute",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-fieldattribute-41825",
+      "constructors": [
+        {
+          "name": "FieldAttribute(FieldOutput, bool)",
+          "signature": "public FieldAttribute(FieldOutput output = FieldOutput.PlainText, bool generateFunction = false)",
+          "summary": "",
+          "params": [
+            {
+              "name": "output",
+              "type": "FieldOutput",
+              "optional": false
+            },
+            {
+              "name": "generateFunction",
+              "type": "bool",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/5cd772b93ec502ee86349d86b20d5543a568d978096857619eeaa6efc2a311a4"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "Function",
+          "type": "bool",
+          "getter": true,
+          "setter": false,
+          "summary": "",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/6f420526076942dcfd475f42ba0a6f6602e12f30c1ff6e570f811ae807210b71"
+        },
+        {
+          "name": "Output",
+          "type": "FieldOutput",
+          "getter": true,
+          "setter": false,
+          "summary": "",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d0acbaf9df5367f56dae0b098db33057a51b2ea8cd2c8007f248736d42996229"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "FieldOutput",
+      "namespace": "Tekla.Structural.ExpressoAddIn",
+      "kind": "enum",
+      "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.FieldOutput.)",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-fieldoutput-41826",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "AsciiTextFile",
+          "value": 13
+        },
+        {
+          "name": "EnhancedMetafile",
+          "value": 30
+        },
+        {
+          "name": "PlainText",
+          "value": 11
+        },
+        {
+          "name": "ResultText",
+          "value": 16
+        },
+        {
+          "name": "Rtf",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "name": "Requirement",
+      "namespace": "Tekla.Structural.ExpressoAddIn",
+      "kind": "enum",
+      "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.Requirement.)",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-requirement-41827",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Negative",
+          "value": 0
+        },
+        {
+          "name": "NonZero",
+          "value": 2
+        },
+        {
+          "name": "NonZeroNegative",
+          "value": 1
+        },
+        {
+          "name": "NonZeroPositive",
+          "value": 3
+        },
+        {
+          "name": "Positive",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "name": "RequirementAttribute",
+      "namespace": "Tekla.Structural.ExpressoAddIn",
+      "kind": "class",
+      "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.RequirementAttribute.)",
+      "base": "Attribute",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-requirementattribute-41828",
+      "constructors": [
+        {
+          "name": "RequirementAttribute(string, params char[])",
+          "signature": "public RequirementAttribute(string errorMessage, params char[] invalidChars)",
+          "summary": "",
+          "params": [
+            {
+              "name": "errorMessage",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "invalidChars",
+              "type": "char[]",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+        },
+        {
+          "name": "RequirementAttribute(string, double, double)",
+          "signature": "public RequirementAttribute(string errorMessage, double min, double max)",
+          "summary": "",
+          "params": [
+            {
+              "name": "errorMessage",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "min",
+              "type": "double",
+              "optional": false
+            },
+            {
+              "name": "max",
+              "type": "double",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+        },
+        {
+          "name": "RequirementAttribute(string, Func\u003Cstring, bool\u003E)",
+          "signature": "protected RequirementAttribute(string errorMessage, Func\u003Cstring, bool\u003E validator)",
+          "summary": "",
+          "params": [
+            {
+              "name": "errorMessage",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "validator",
+              "type": "Func\u003Cstring, bool\u003E",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+        },
+        {
+          "name": "RequirementAttribute(string, Requirement)",
+          "signature": "public RequirementAttribute(string errorMessage, Requirement requirement)",
+          "summary": "",
+          "params": [
+            {
+              "name": "errorMessage",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "requirement",
+              "type": "Requirement",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+        }
+      ],
+      "methods": [
+        {
+          "name": "Validate(IExpresso, object)",
+          "signature": "protected virtual bool Validate(IExpresso expresso, object value)",
+          "summary": "",
+          "params": [
+            {
+              "name": "expresso",
+              "type": "IExpresso",
+              "optional": false
+            },
+            {
+              "name": "value",
+              "type": "object",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "bool",
+            "doc": ""
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/fb9fb084615248460ff035486dedca71c56abffcbd9d773ea3326b2f74a970a6"
+        }
+      ],
+      "properties": [
+        {
+          "name": "ErrorMessage",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/2bef399026a1d894aebe2a0955d3dddb23db1ca1362397ec48ded6881882d1af"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "UnitsAttribute",
+      "namespace": "Tekla.Structural.ExpressoAddIn",
+      "kind": "class",
+      "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.UnitsAttribute.)",
+      "base": "Attribute",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-unitsattribute-41829",
+      "constructors": [
+        {
+          "name": "UnitsAttribute(double, string)",
+          "signature": "public UnitsAttribute(double factor, string unit)",
+          "summary": "",
+          "params": [
+            {
+              "name": "factor",
+              "type": "double",
+              "optional": false
+            },
+            {
+              "name": "unit",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/98cc973975bba6fe5a146aaa1eec3904387b2c6a4d71a7f0267b5cbc33f8a90c"
+        },
+        {
+          "name": "UnitsAttribute(string)",
+          "signature": "public UnitsAttribute(string unit)",
+          "summary": "",
+          "params": [
+            {
+              "name": "unit",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/98cc973975bba6fe5a146aaa1eec3904387b2c6a4d71a7f0267b5cbc33f8a90c"
+        }
+      ],
+      "methods": [
+        {
+          "name": "GetUnit(IExpresso)",
+          "signature": "protected virtual string GetUnit(IExpresso expresso)",
+          "summary": "",
+          "params": [
+            {
+              "name": "expresso",
+              "type": "IExpresso",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "string",
+            "doc": ""
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/0fe78571d3d1c2037c8c0c1871c80a6d49c5c15e63b6c9551b041292acade688"
+        }
+      ],
+      "properties": [],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "ValidTypesAttribute",
+      "namespace": "Tekla.Structural.ExpressoAddIn",
+      "kind": "class",
+      "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.ValidTypesAttribute.)",
+      "base": "Attribute",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-validtypesattribute-41830",
+      "constructors": [
+        {
+          "name": "ValidTypesAttribute(params Type[])",
+          "signature": "public ValidTypesAttribute(params Type[] types)",
+          "summary": "",
+          "params": [
+            {
+              "name": "types",
+              "type": "Type[]",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/562a24427daefbd3debee780df72712b5152195a05af1fee3a3e978fcb13822c"
+        }
+      ],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "IApplication",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for the Main application",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iapplication-41831",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "Activate()",
+          "signature": "void Activate()",
+          "summary": "Activates the user interface of the application",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/af0684849d8f93ec5a6a39b618034ad7b37f7a5ab59970268dabd913d9d21f4a"
+        },
+        {
+          "name": "Move(int, int)",
+          "signature": "void Move(int Left, int Top)",
+          "summary": "Move the applications main window",
+          "params": [
+            {
+              "name": "Left",
+              "type": "int",
+              "doc": "New position of left edge of window in screen co-ordinates",
+              "optional": false
+            },
+            {
+              "name": "Top",
+              "type": "int",
+              "doc": "New position of top edge of window in screen co-ordinates",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/e2494933c1fd5b4a31a2fcde3ba43eec6ecc4a463047910485860aa5afefea6f"
+        },
+        {
+          "name": "Quit(bool)",
+          "signature": "void Quit(bool SaveChanges)",
+          "summary": "Exit the application",
+          "params": [
+            {
+              "name": "SaveChanges",
+              "type": "bool",
+              "doc": "Determines whether changes to unsaved documents should be saved or discarded",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/1acbb71ed797106f3b430841e1721be0b1179e63fcb1fefeb4cc2bd40406043f"
+        },
+        {
+          "name": "Resize(int, int)",
+          "signature": "void Resize(int Width, int Height)",
+          "summary": "Size the applications main window",
+          "params": [
+            {
+              "name": "Width",
+              "type": "int",
+              "doc": "Width of window in pixels",
+              "optional": false
+            },
+            {
+              "name": "Height",
+              "type": "int",
+              "doc": "Height of window in pixels",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/0744c98b7353e04e55c9605b2d6150f965d126e1ea28c19e91517173ce9f0ceb"
+        }
+      ],
+      "properties": [
+        {
+          "name": "ActiveDocument",
+          "type": "ITeddsDocument",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns active document",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/a323b04bcfc5d3da07d7e64208701f9ed205e09664fd665dff986cc826b1c3f4"
+        },
+        {
+          "name": "Build",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the version build number of the Tedds software",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/e4f081295405dcee2361ee5b690dbc8e78ffc2590f6d23ee2118c86c5edc5df7"
+        },
+        {
+          "name": "Documents",
+          "type": "ITeddsDocuments",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns A Documents collection which represents all the open documents",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/0f6d477a7d3fd31c517e9d6a205e06afcebe6c6502a37d3be04a6beebca436dd"
+        },
+        {
+          "name": "Height",
+          "type": "int",
+          "getter": true,
+          "setter": true,
+          "summary": "Height of the applications main window",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/1fb0d18a11bae5ac5f2e6c0310c788ee42cfc0f2c7005ffafeadb95a90d8d60a"
+        },
+        {
+          "name": "Left",
+          "type": "int",
+          "getter": true,
+          "setter": true,
+          "summary": "Position of the left edge of the applications main window",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/217bec789c2a60f690acbb6a49f6c9bb72794d76c400be1d3d3d86dab7fb4e23"
+        },
+        {
+          "name": "Project",
+          "type": "ITeddsProject",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the active project",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/607953a7a278d83b4bf03a8c36cd793e6ca99b93253969b06117555ed7083074"
+        },
+        {
+          "name": "Top",
+          "type": "int",
+          "getter": true,
+          "setter": true,
+          "summary": "Position of the top edge of the applications main window",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/ca8bb05487788b716ed4b6bd3387ae75780798683381c4d0c3503afd6d0f0da1"
+        },
+        {
+          "name": "Version",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the version number of the Tedds software",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/83de4e5d7614333942d82e32595919d720a557b8fde8695e189b09ff360f0ab0"
+        },
+        {
+          "name": "VersionLibraryMajor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the major version number of the Tedds Engineering Library",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/442a3a994296012530aa8444679df1932cbeeb2883cb96a17b4cdd0ca1600041"
+        },
+        {
+          "name": "VersionLibraryMinor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the minor version number of the Tedds Engineering Library",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/468126769f70b15d0bbfac21d8c2e5265ccbcd8f01f22ffa30e3772f1e2f8f90"
+        },
+        {
+          "name": "VersionMajor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the major version number of the Tedds software",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/04d58e1295a817f60596b5eef9aaca0e1fd25c3ec32ed34b5dc9b38e89b21e2a"
+        },
+        {
+          "name": "VersionMinor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the minor version number of the Tedds software",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/f8c9f0f064ace4027cee08d4351717c2e642e4c859de8dba8f26d0a7ef0224ce"
+        },
+        {
+          "name": "Visible",
+          "type": "bool",
+          "getter": true,
+          "setter": true,
+          "summary": "Visibility status of the applications user interface",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/fa98b47ba13d4d137bbbe382921cb23a68908c0ddf62bb87d03027b06392d76f"
+        },
+        {
+          "name": "Width",
+          "type": "int",
+          "getter": true,
+          "setter": true,
+          "summary": "Width of the applications main window",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/4321c55cf45359cdf9edfc5a27f27a27f8cef0aa9973ba65595e99ffc7fa8efe"
+        },
+        {
+          "name": "WindowHandle",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the window handle of the applications main window",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d5b8fba186d7730fed4334b0b80c9c3ce0b662b6a502b6d43a3d4774deb68a2b"
+        },
+        {
+          "name": "WindowState",
+          "type": "TdsWindowState",
+          "getter": true,
+          "setter": true,
+          "summary": "View state of the applications main window",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/3d29a6b5ef040dd1bb601409daf2314f282a0fe08e7bfe075e00da14417ee743"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "IBimProject",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "BIM project",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-ibimproject-41832",
+      "constructors": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "ModelId",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Model identifier",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/924ee4068b149a18040089cf6f4944e46546b9359f0e7abc9a69870372337da7"
+        },
+        {
+          "name": "ProjectId",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Project identifier",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/f53ca8286491fa42d8684c0adbed5f3afa477235db41dffbf2b0824676968d03"
+        },
+        {
+          "name": "ServiceId",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Service provider identifier",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/285bcadbe8eed7f574a826c2029407bfdf5a2d70e56c8e470539be989f2e21d0"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "ILibraryCalcItem",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for a library calc item",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-ilibrarycalcitem-41833",
+      "constructors": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "CalcName",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Calculation name",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/667bf436285161868bbb694115f747555f7e9fa9480cad250eb3d09955a078f7"
+        },
+        {
+          "name": "FileName",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Calc library file name including the path which may contain placeholders",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/180c6cd5553e983f784495830ad2524ebdfa29cdbfe9fcea7f712e657df12d36"
+        },
+        {
+          "name": "ItemName",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Calc library item name",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/6b1af2005cd8bc71ad9325750bd07e13c50dedcdca550e5c24dc8a08166618eb"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "IProjectFileItem",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for a project file item",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iprojectfileitem-41834",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "Open()",
+          "signature": "ITeddsDocument Open()",
+          "summary": "Open the referenced file and return the ITeddsDocument interface",
+          "params": [],
+          "returns": {
+            "type": "ITeddsDocument",
+            "doc": "Opened document"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/8709ba851fc346ac762a3f2277591629d38fa02471af293b8d8e210a6e0f3c39"
+        }
+      ],
+      "properties": [
+        {
+          "name": "FullName",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the full path and file name of the referenced file",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dbabe2a39ba25a9d78cc97731ff1657aad2fb3ebd929a3362c769dadb17a969d"
+        },
+        {
+          "name": "IsFolder",
+          "type": "bool",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns whether the object is a folder",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/5b6e873a2b7ea16e567b59d40938b35a6e0b0f8bce0f17fd2811cd8669c7e68a"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "File name (excluding file extension)",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/eda9e4a6e3f519494af35d33b1cfb1e253dfbdb5615b491812ab65c275f0b4a4"
+        },
+        {
+          "name": "ParentFolder",
+          "type": "IProjectFolderItem",
+          "getter": true,
+          "setter": false,
+          "summary": "Parent folder in the project hierarchy",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/485751623f12f1a1b48992ff9c7b6258cc4efb33b08c67a53954f3da16604c0f"
+        },
+        {
+          "name": "Path",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the path of the referenced file",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/67f7d83b88fe02d884d26bd2bac57298d9b0894721abe307696534c47efb1df4"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "IProjectFolderItem",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for a project folder",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iprojectfolderitem-41835",
+      "constructors": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "IsFolder",
+          "type": "bool",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns whether the object is a folder",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/014d5106701cfe6eb5da497036970a31371c587da18e48100834afe0a6b4ed6f"
+        },
+        {
+          "name": "Items",
+          "type": "IProjectItems",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the collection of child project item in the folder",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d416068a2f4aadd147399b6dc2d6dc5f8a9602f399d380d4d0747fb1e57b6bbf"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Folder name",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/4605561ea563ca547cdfb0827a907b324de4bb9e4087768f49bc100f6c25770b"
+        },
+        {
+          "name": "ParentFolder",
+          "type": "IProjectFolderItem",
+          "getter": true,
+          "setter": false,
+          "summary": "Parent folder in the project hierarchy",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/e35785a25efb7cb927ac5c83d7e22592f809967af9c9a5df65dcb40c13eddcce"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "IProjectItem",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for a project item",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iprojectitem-41836",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "Remove()",
+          "signature": "void Remove()",
+          "summary": "Remove project item from the project",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/6823224116e6c65be115e853c5da1bfe4de5eafdb5058ca68a887e6566bcd086"
+        }
+      ],
+      "properties": [
+        {
+          "name": "IsFolder",
+          "type": "bool",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns whether the object is a folder",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/04dd2d28851d47fce4425742bcc2e0ae5a2c613780a45c6fcde83db02bf9ddec"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Name of the project item",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dc3bc6ec412be8101fd9956af3830feab881be4853e2527dc352be3460d758ce"
+        },
+        {
+          "name": "ParentFolder",
+          "type": "IProjectFolderItem",
+          "getter": true,
+          "setter": false,
+          "summary": "Parent folder in the project hierarchy",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/67077060c2450c1e09ad2a69f1d97fee824f9039e2362ed2df90a5638582e06b"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "IProjectItems",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for a collection of Project items",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iprojectitems-41837",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "AddDocument(ITeddsDocument)",
+          "signature": "IProjectFileItem AddDocument(ITeddsDocument Document)",
+          "summary": "Add an existing open document to the end of the collection of project items",
+          "params": [
+            {
+              "name": "Document",
+              "type": "ITeddsDocument",
+              "doc": "Document to add",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "IProjectFileItem",
+            "doc": "New project file object"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d9162bd93cb1943d2e30b75278a028c2388e9fda3a7fb8eea3a44bb308ac3747"
+        },
+        {
+          "name": "AddFile(string)",
+          "signature": "IProjectFileItem AddFile(string FilePath)",
+          "summary": "Add a reference to a Tedds document file to the end of the collection of project items",
+          "params": [
+            {
+              "name": "FilePath",
+              "type": "string",
+              "doc": "Full file path of the file to add",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "IProjectFileItem",
+            "doc": "New project file object"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/948a05bcc216da51464939cae5218447eda15f85a15a86dae7d1f1eb750c92ca"
+        },
+        {
+          "name": "AddFolder(string)",
+          "signature": "IProjectFolderItem AddFolder(string Name)",
+          "summary": "Add a new folder to the end of the collection of project items",
+          "params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "doc": "Name of the folder",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "IProjectFolderItem",
+            "doc": "New project folder object"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/f6fa5a8682001a1e694926f8c31413572e3c9667a95a0c02514408c2a56948b5"
+        },
+        {
+          "name": "AddFromPath(string)",
+          "signature": "void AddFromPath(string FilePath)",
+          "summary": "Add a single Tedds project file or a complete folder hierarchy from a full file path",
+          "params": [
+            {
+              "name": "FilePath",
+              "type": "string",
+              "doc": "Full path to a file or folder",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/c3cbc28e95402a077dfc2000cc1f079458a4dfb8a224091fd1829f371e0c14cb"
+        },
+        {
+          "name": "GetEnumerator()",
+          "signature": "IEnumerator GetEnumerator()",
+          "summary": "Enumeration interface for iterating the items in the collection",
+          "params": [],
+          "returns": {
+            "type": "IEnumerator",
+            "doc": "Enumeration interface"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/b8ec794715b4ea12de62b8e45f468a7f59bf11908c2e701720e095b30a8ee7a8"
+        },
+        {
+          "name": "Remove(object)",
+          "signature": "void Remove(object Item)",
+          "summary": "Remove a project item from the collection",
+          "params": [
+            {
+              "name": "Item",
+              "type": "object",
+              "doc": "Item Identifier of the project item to remove which is either a one based index of the item in the",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/3f9a6fc64aed8addaa5c1d92c1a6243a15f0780c2e09812e2f85fe46b10b00ce"
+        }
+      ],
+      "properties": [
+        {
+          "name": "Count",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Return the number of items in the collection",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/185f639e0a991c756b8905db91d496213bb857645de11076af262bfb6637ed32"
+        },
+        {
+          "name": "this[object]",
+          "type": "IProjectItem",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns a single item in the collection",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/8ff7e714f0d9b473341976d79abc0a72dd4506b96b304b1a7884491ec4bfd94a"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "ITeddsDocument",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for an open Document",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iteddsdocument-41838",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "Activate()",
+          "signature": "void Activate()",
+          "summary": "Activate this document",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/b72ce91ea2daab02e20725fd1b22c289fddebba79f7777b5e1ef1b64efaa5454"
+        },
+        {
+          "name": "Calculate()",
+          "signature": "void Calculate()",
+          "summary": "Calculate document",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/96565629bd31e7a5c2bd4002c8fad2bf50cff944022568d1d597ed1ca912e81d"
+        },
+        {
+          "name": "Calculate2()",
+          "signature": "TdsCalcStatus Calculate2()",
+          "summary": "Calculate the document and return the calculation status code",
+          "params": [],
+          "returns": {
+            "type": "TdsCalcStatus",
+            "doc": "Calculation status code"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/ab9a16f635d573a4fc1e06b05a63b116b5960ae0569e0e91e58340668e182645"
+        },
+        {
+          "name": "Close(TdsSaveOptions)",
+          "signature": "void Close(TdsSaveOptions SaveChanges)",
+          "summary": "Close the document",
+          "params": [
+            {
+              "name": "SaveChanges",
+              "type": "TdsSaveOptions",
+              "doc": "Determines whether changes should be saved or discarded",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/0724db0ab7e28031bfb8e4e94f0cd2bd38efcc782ffe9379f2ed90e3899640f3"
+        },
+        {
+          "name": "Save()",
+          "signature": "void Save()",
+          "summary": "Save changes to the document",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/98e1cb2125038836139c70819aaa8cae76dfa7f311a3b49a359cd9823cd8c91e"
+        },
+        {
+          "name": "SaveAs(object)",
+          "signature": "void SaveAs(object FileName)",
+          "summary": "Save document to a new file location",
+          "params": [
+            {
+              "name": "FileName",
+              "type": "object",
+              "doc": "Full path of file location",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/608135ecfcc6798c77a31e28dc96da4bbd4f2c5878e1fd1163f7f8d5ca156523"
+        },
+        {
+          "name": "SaveAsPdf(object)",
+          "signature": "void SaveAsPdf(object FileName)",
+          "summary": "Save the document in Adobe PDF format",
+          "params": [
+            {
+              "name": "FileName",
+              "type": "object",
+              "doc": "Full path and filename of location to save file",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/92bbbb7d8f2a0245f6c997d8c3b8302553b7a691691a2a26fd9cf3762273008c"
+        }
+      ],
+      "properties": [
+        {
+          "name": "BimObjectId",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Returns a BIM object identifier associated with the document",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/9614d3353c3c3f0c31bfc4d2cdab2df968980c82ae25d4a02081b8a9dabac3f8"
+        },
+        {
+          "name": "CalcItem",
+          "type": "object",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns a CalcItem object which represents the calculation associated with the document",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/1078e663367f2398f83e0cb212db89eeb03d7739f4dd1e4e49bc86ca6111d0cf"
+        },
+        {
+          "name": "FullName",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the document full path and file name",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/1bdf50d1a7d631e259d1c3d592bad9c3726a3a2a8e2121c0d90615fff9218e98"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the documents name (excluding file extension)",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/40f3342913837c3aa8e38b9dfae4a36fc07ea0057cbfdf0c3bacb3e061442b96"
+        },
+        {
+          "name": "Path",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Return documents file path (excluding file name)",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/82e5a21e10e11d5dd2d345093d3a692dce772c1130fb2688acee4d84fac0c471"
+        },
+        {
+          "name": "Saved",
+          "type": "bool",
+          "getter": true,
+          "setter": true,
+          "summary": "Saved status of document",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/30f3758481456595bf1e94c8a100ade1d711fa06c14e98772645eae6e3a0f549"
+        },
+        {
+          "name": "VariablesXml",
+          "type": "string",
+          "getter": true,
+          "setter": true,
+          "summary": "Variables defined in the document in the Tedds XML schema format",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/09bc3dd9cde0db0ca8e46bace6942dd16b398172bfff8c9d945ceca94139da44"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "ITeddsDocuments",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for a collection of open documents",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iteddsdocuments-41839",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "Add()",
+          "signature": "ITeddsDocument Add()",
+          "summary": "Add a new document",
+          "remarks": "Adding a new document will prompt the user to choose the calculation they want to use and the document will be calculated.",
+          "params": [],
+          "returns": {
+            "type": "ITeddsDocument",
+            "doc": "The new document"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/6668469fd04a141cd73e6529dad1efe590488f4d0bdaa6a784e210e293e14303"
+        },
+        {
+          "name": "Add2(string, string, string)",
+          "signature": "ITeddsDocument Add2(string libraryFileName, string libraryItemName, string VariablesXml)",
+          "summary": "Add a new document using the specified Calc Item and input variables",
+          "params": [
+            {
+              "name": "libraryFileName",
+              "type": "string",
+              "doc": "Name of the Calc Library file in which the Calc Item exists",
+              "optional": false
+            },
+            {
+              "name": "libraryItemName",
+              "type": "string",
+              "doc": "Short name of the Calc Item which is used to start the calculation",
+              "optional": false
+            },
+            {
+              "name": "VariablesXml",
+              "type": "string",
+              "doc": "Input variables for the document which have been created using an existing document or via the Tedds Calculator API.",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "ITeddsDocument",
+            "doc": "The new document"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/52340a54a523df5fdc8cb0ca66f6b53c9d4b29ef1801af9f43a414a1153b48f3"
+        },
+        {
+          "name": "Add3(string, string, string, string, string)",
+          "signature": "ITeddsDocument Add3(string documentName, string libraryFileName, string libraryItemName, string VariablesXml, string outputRtf)",
+          "summary": "Add a new document using the specified Calc Item, input variables and pre-calculated RTF",
+          "remarks": "The input variables XML and the output RTF can be directly retrieved by using the Tedds Calculator API.",
+          "params": [
+            {
+              "name": "documentName",
+              "type": "string",
+              "doc": "Name for the new document",
+              "optional": false
+            },
+            {
+              "name": "libraryFileName",
+              "type": "string",
+              "doc": "Name of the Calc Library file in which the Calc Item exists",
+              "optional": false
+            },
+            {
+              "name": "libraryItemName",
+              "type": "string",
+              "doc": "Short name of the Calc Item which is used to start the calculation",
+              "optional": false
+            },
+            {
+              "name": "VariablesXml",
+              "type": "string",
+              "doc": "Input variables for the document which have been created using an existing document or via the Tedds Calculator API .",
+              "optional": false
+            },
+            {
+              "name": "outputRtf",
+              "type": "string",
+              "doc": "Output in RTF format which has been retrieved from an existing document or via the Tedds Calculator API.",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "ITeddsDocument",
+            "doc": "The new document"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/8100f1a6190a880e4f0e983d9526421c00fce8b535031f5d4907624881e6269b"
+        },
+        {
+          "name": "Close(bool)",
+          "signature": "void Close(bool SaveChanges)",
+          "summary": "Close all documents",
+          "params": [
+            {
+              "name": "SaveChanges",
+              "type": "bool",
+              "doc": "false to discard unsaved changes; otherwise save changes",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/571eec996e9813b9de40df102b3714e8411d30cea66a20bd60ae4a02ab117a43"
+        },
+        {
+          "name": "GetEnumerator()",
+          "signature": "IEnumerator GetEnumerator()",
+          "summary": "Enumeration interface for iterating the items in the collection",
+          "params": [],
+          "returns": {
+            "type": "IEnumerator",
+            "doc": "Enumeration interface"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/e752a76a0ddcc4bf3d07e87f81b98a0244b2b5d6e7c9ae6dff083f32dd92d25f"
+        },
+        {
+          "name": "Open(string)",
+          "signature": "ITeddsDocument Open(string FilePath)",
+          "summary": "Open an existing document",
+          "params": [
+            {
+              "name": "FilePath",
+              "type": "string",
+              "doc": "Full path and file name",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "ITeddsDocument",
+            "doc": "Open document"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/b234bdbd437e001a0180baabb7f5d3333b3123c55ead97950944871041ce3c4e"
+        },
+        {
+          "name": "Save()",
+          "signature": "void Save()",
+          "summary": "Saved changes to all open documents",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dd7411ea67dd1c4b29dc84eb203fde9aec82902a2ae0a156504af837f34f6535"
+        }
+      ],
+      "properties": [
+        {
+          "name": "Count",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the number of documents in the collection",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/569ea41a21022c206e6abc8cb3067bff5ec3d7ca8a80b781e4b4ef81be65d352"
+        },
+        {
+          "name": "this[object]",
+          "type": "ITeddsDocument",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns a single document in the collection",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/c3e7caa9d5d793bf8527e1c367674747177510779948edc3adabfbeeb0a48cf7"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "ITeddsProject",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for a project",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iteddsproject-41840",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "Calculate()",
+          "signature": "void Calculate()",
+          "summary": "Calculate all documents in the project",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/2838496f69be1f7a83cba03368fa67a812931523f69728bda5db4093d59142ba"
+        },
+        {
+          "name": "Close(object)",
+          "signature": "void Close(object SaveChanges)",
+          "summary": "Close the active project",
+          "params": [
+            {
+              "name": "SaveChanges",
+              "type": "object",
+              "doc": "false to discard unsaved project file changes; otherwise save changes",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/2c87f3248346ed285fe563afde1337da50b9b562006f59af90b5a415dd65851a"
+        },
+        {
+          "name": "New(string)",
+          "signature": "void New(string Name)",
+          "summary": "Create a new project",
+          "params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "doc": "Name for the new project",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/f450f22c6de708cac674cd161b16011a1453cbc42c965b2b908403c9c1dd45d9"
+        },
+        {
+          "name": "Open(string)",
+          "signature": "void Open(string FileName)",
+          "summary": "Open an existing project",
+          "params": [
+            {
+              "name": "FileName",
+              "type": "string",
+              "doc": "Full path to project file",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/c4360567d5ecb42097b5757d2e677f3db24eca2067c6f85ae3b0ac67f6445a24"
+        },
+        {
+          "name": "Save()",
+          "signature": "void Save()",
+          "summary": "Save the active project file",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/690c80c88800cd7ac0044f0fc7ea5e87100a46e94d76e52b25518402b2457a54"
+        },
+        {
+          "name": "SaveAs(object)",
+          "signature": "void SaveAs(object FileName)",
+          "summary": "Save the active project file to a new location",
+          "params": [
+            {
+              "name": "FileName",
+              "type": "object",
+              "doc": "Full path to project file",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/4322db7d765395e3247fe7c22aa17849757bf97adc8ef419629dcbd837fbf1f8"
+        },
+        {
+          "name": "SaveAsPdf(string, TdsProjectSavePdf)",
+          "signature": "string[] SaveAsPdf(string folderName, TdsProjectSavePdf options)",
+          "summary": "Save all the documents in the project in PDF format",
+          "params": [
+            {
+              "name": "folderName",
+              "type": "string",
+              "doc": "Path of location where to save files",
+              "optional": false
+            },
+            {
+              "name": "options",
+              "type": "TdsProjectSavePdf",
+              "doc": "Save project to PDF options",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "string[]",
+            "doc": "Array of full file paths for all the output PDF files created"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/bb489743c62a33e414db7190b50da208c87078375f088a5688b75c6ef00cdfcd"
+        },
+        {
+          "name": "SendToWord(bool)",
+          "signature": "void SendToWord(bool LoadTedds)",
+          "summary": "Export the project to Microsoft Word or Tedds for Word",
+          "params": [
+            {
+              "name": "LoadTedds",
+              "type": "bool",
+              "doc": "false to just load Microsoft Word; otherwise also load the Tedds for Word Add-In",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/7e32f74ab249fcacf436e6678d913be8bb4c8810103a12b4daa0e2e4088af50f"
+        },
+        {
+          "name": "SetBimProject(string, string)",
+          "signature": "void SetBimProject(string serviceId, string projectId)",
+          "summary": "Link the Tedds project to a BIM project",
+          "params": [
+            {
+              "name": "serviceId",
+              "type": "string",
+              "doc": "Service identifier",
+              "optional": false
+            },
+            {
+              "name": "projectId",
+              "type": "string",
+              "doc": "Project identifier",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/0a95195fed20f819a0532d7984d1b6a196a1e67c9596a66a32e725b1fc065716"
+        }
+      ],
+      "properties": [
+        {
+          "name": "BimProject",
+          "type": "IBimProject",
+          "getter": true,
+          "setter": false,
+          "summary": "Linked BIM project",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/194192a41163a4642b36140dfed48c1bed2ccd2557508604c7aa796d743a3fe1"
+        },
+        {
+          "name": "FullName",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Full path of project file including file name",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/484cda718fd2f2a94d99a16ba9965a5fce888710154b48a095e147cb5980fe2d"
+        },
+        {
+          "name": "IsOpen",
+          "type": "bool",
+          "getter": true,
+          "setter": false,
+          "summary": "Is a project currently open",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d7306f713f0bcfd3eff9482b6739cb3dc1f2e9d36b0b16de35f58ea0601926b8"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Project name",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d531a2723b903841809f8546047b0531ebde5443b982712432f6a943538c32cf"
+        },
+        {
+          "name": "Path",
+          "type": "string",
+          "getter": true,
+          "setter": false,
+          "summary": "Project file path (excludes file name)",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/2b4a629f8c58f07c3b29d2e3dd9c8729abacdf00052bdfbe6b849583ab520de6"
+        },
+        {
+          "name": "RootFolder",
+          "type": "IProjectFolderItem",
+          "getter": true,
+          "setter": false,
+          "summary": "Root folder in the project tree",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/3fa5070f41550783e29b50c05380d99d2c2e4e5734002699fd6202a69bba0880"
+        },
+        {
+          "name": "Saved",
+          "type": "bool",
+          "getter": true,
+          "setter": true,
+          "summary": "Saved status of project file",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/3b712942f082596b4c11e27657c445d9345f6e7bb6701ff5247b7b6f529228f1"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "TdsCalcStatus",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "enum",
+      "summary": "Calculation status",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-tdscalcstatus-41841",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Aborted",
+          "value": -1,
+          "summary": "Calculation process was aborted"
+        },
+        {
+          "name": "Interrupted",
+          "value": 2,
+          "summary": "The calculation process was interrupted by the user"
+        },
+        {
+          "name": "NotInitialized",
+          "value": 0,
+          "summary": "The Tedds Calculator has not been initialized"
+        },
+        {
+          "name": "Ok",
+          "value": 1,
+          "summary": "Calculating completed successfully"
+        }
+      ]
+    },
+    {
+      "name": "TdsProjectSavePdf",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "enum",
+      "summary": "Save project to PDF options",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-tdsprojectsavepdf-41842",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "HideOptions",
+          "value": 4,
+          "summary": "Hide options user interface"
+        },
+        {
+          "name": "HideProgress",
+          "value": 8,
+          "summary": "Hide progress"
+        },
+        {
+          "name": "InsertDocPageBreaks",
+          "value": 16,
+          "summary": "Insert document page breaks"
+        },
+        {
+          "name": "OneFilePerDocument",
+          "value": 1,
+          "summary": "Save each document as a separate PDF"
+        },
+        {
+          "name": "ToDocumentFolder",
+          "value": 2,
+          "summary": "Save PDFs to document folder"
+        }
+      ]
+    },
+    {
+      "name": "TdsSaveOptions",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "enum",
+      "summary": "File save options",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-tdssaveoptions-41843",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "DoNotSaveChanges",
+          "value": 0,
+          "summary": "Discard unsaved changes"
+        },
+        {
+          "name": "PromptToSaveChanges",
+          "value": -2,
+          "summary": "Prompt the user to confirm saving any unsaved changes"
+        },
+        {
+          "name": "SaveChanges",
+          "value": -1,
+          "summary": "Save any unsaved changes"
+        }
+      ]
+    },
+    {
+      "name": "TdsWindowState",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "enum",
+      "summary": "Window state",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-tdswindowstate-41844",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Maximize",
+          "value": 1,
+          "summary": "Maximize"
+        },
+        {
+          "name": "Minimize",
+          "value": 2,
+          "summary": "Minimize"
+        },
+        {
+          "name": "Normal",
+          "value": 0,
+          "summary": "Normal"
+        }
+      ]
+    },
+    {
+      "name": "_IApplicationEvents",
+      "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+      "kind": "interface",
+      "summary": "Interface for Tedds application events",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iapplicationevents-41845",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "DocumentExported(ITeddsDocument, string)",
+          "signature": "void DocumentExported(ITeddsDocument document, string fileName)",
+          "summary": "A document has been exported",
+          "params": [
+            {
+              "name": "document",
+              "type": "ITeddsDocument",
+              "doc": "The document that was exported",
+              "optional": false
+            },
+            {
+              "name": "fileName",
+              "type": "string",
+              "doc": "The filename of the document that was exported",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/783978bfae273b231e878a27dbe58cdc1cf878d71910c3ec33d41ff565187f88"
+        },
+        {
+          "name": "ProjectBimProjectModified(ITeddsProject)",
+          "signature": "void ProjectBimProjectModified(ITeddsProject project)",
+          "summary": "A project\u0027s BIM project modified",
+          "params": [
+            {
+              "name": "project",
+              "type": "ITeddsProject",
+              "doc": "The project that was modified",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d6ae6e5b78aa170fac8d93c3aea4deb3287c4596f0a3f92ff12ba1e80106ba2f"
+        },
+        {
+          "name": "ProjectClosed()",
+          "signature": "void ProjectClosed()",
+          "summary": "A project has been closed",
+          "params": [],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/f70a6fb6bd6f50e3ee15b827a4c7fa07619ca8eb6eacec36700019a060bdf154"
+        },
+        {
+          "name": "ProjectCreated(ITeddsProject)",
+          "signature": "void ProjectCreated(ITeddsProject project)",
+          "summary": "A new project has been created",
+          "params": [
+            {
+              "name": "project",
+              "type": "ITeddsProject",
+              "doc": "The new project",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/364e05a164d560e8ea2757032d1208118e2494e464739b490301c86d7689733c"
+        },
+        {
+          "name": "ProjectOpened(ITeddsProject)",
+          "signature": "void ProjectOpened(ITeddsProject project)",
+          "summary": "A project has been opened",
+          "params": [
+            {
+              "name": "project",
+              "type": "ITeddsProject",
+              "doc": "The project that was opened",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/91f6856f2ed839f15f5b96314d914eb12180318e87b2deb35708bdcd3b7393ea"
+        }
+      ],
+      "properties": [],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "CalcErrorType",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "enum",
+      "summary": "Error types",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcerrortype-41846",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Expression",
+          "value": 1,
+          "summary": "Expresso expression error - can continue, interrrupt or abort"
+        },
+        {
+          "name": "Filter",
+          "value": 4,
+          "summary": "Filter error - cannot continue"
+        },
+        {
+          "name": "System",
+          "value": 0,
+          "summary": "System error - cannot continue"
+        },
+        {
+          "name": "Units",
+          "value": 3,
+          "summary": "Units library error - can continue only"
+        },
+        {
+          "name": "Variables",
+          "value": 2,
+          "summary": "Variables library error - can continue only"
+        }
+      ]
+    },
+    {
+      "name": "CalcProgressEvent",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "enum",
+      "summary": "Progress bar modes",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcprogressevent-41847",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "ProgressAddOutput",
+          "value": 6,
+          "summary": "Add item to output log"
+        },
+        {
+          "name": "ProgressClearOutput",
+          "value": 7,
+          "summary": "Clear output log"
+        },
+        {
+          "name": "ProgressDisable",
+          "value": 3,
+          "summary": "Disable"
+        },
+        {
+          "name": "ProgressEnable",
+          "value": 4,
+          "summary": "Enable"
+        },
+        {
+          "name": "ProgressFinished",
+          "value": 8,
+          "summary": "Notify finish"
+        },
+        {
+          "name": "ProgressGetStatus",
+          "value": 5,
+          "summary": "Get state"
+        },
+        {
+          "name": "ProgressHide",
+          "value": 12,
+          "summary": "Hide progress log"
+        },
+        {
+          "name": "ProgressReset",
+          "value": 0,
+          "summary": "Reset position to 0"
+        },
+        {
+          "name": "ProgressSetDestroyOnFinish",
+          "value": 9,
+          "summary": "Set flag to destroy on finish"
+        },
+        {
+          "name": "ProgressSetHideOnFinish",
+          "value": 10,
+          "summary": "Set flag to hide on finish"
+        },
+        {
+          "name": "ProgressSetPos",
+          "value": 1,
+          "summary": "Set position"
+        },
+        {
+          "name": "ProgressSetText",
+          "value": 2,
+          "summary": "Set text"
+        },
+        {
+          "name": "ProgressShow",
+          "value": 11,
+          "summary": "Show progress log"
+        }
+      ]
+    },
+    {
+      "name": "CalcStatus",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "enum",
+      "summary": "Calculate status codes. Values less than zero are considered failures, values greater than zero are considered successful.",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcstatus-41848",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Aborted",
+          "value": -1,
+          "summary": "Calculating was aborted"
+        },
+        {
+          "name": "Interrupted",
+          "value": 2,
+          "summary": "The user interrupted the calculation process therefore the state of the results and output is indeterminate"
+        },
+        {
+          "name": "NotInitialized",
+          "value": 0,
+          "summary": "The Tedds Calculator has not been initialized"
+        },
+        {
+          "name": "Ok",
+          "value": 1,
+          "summary": "Calculating completed successfully"
+        }
+      ]
+    },
+    {
+      "name": "CalcValueFormat",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "enum",
+      "summary": "Formats for converting numeric values to a string",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcvalueformat-41849",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Engineering",
+          "value": 3,
+          "summary": "Engineering format"
+        },
+        {
+          "name": "Fixed",
+          "value": 0,
+          "summary": "Fixed format"
+        },
+        {
+          "name": "General",
+          "value": 2,
+          "summary": "General format"
+        },
+        {
+          "name": "InputOutput",
+          "value": 4,
+          "summary": "Data Input/Output format for interoperability with other software"
+        },
+        {
+          "name": "Scientific",
+          "value": 1,
+          "summary": "Scientific format"
+        },
+        {
+          "name": "UserInput",
+          "value": 5,
+          "summary": "User interface input format"
+        }
+      ]
+    },
+    {
+      "name": "CalcValueType",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "enum",
+      "summary": "Value data types",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcvaluetype-41850",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Expression",
+          "value": 3,
+          "summary": "Sequence of characters which can be calculated"
+        },
+        {
+          "name": "Number",
+          "value": 1,
+          "summary": "Numerical value including unit dimensions"
+        },
+        {
+          "name": "String",
+          "value": 2,
+          "summary": "Sequence of characters"
+        }
+      ]
+    },
+    {
+      "name": "ICalcValue",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "interface",
+      "summary": "Interface for an ICalcValue, the fundamental data type used by the calculator for input and output values",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalcvalue-41851",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "ToBool()",
+          "signature": "bool ToBool()",
+          "summary": "Returns the objects value converted to a boolean. Only applicable for objects of type Number.",
+          "params": [],
+          "returns": {
+            "type": "bool",
+            "doc": "true if the object contains a non zero value; otherwise false"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/b4fdc83e0046694954d62505f12c88689326d8fa91a1934fa6045addf7e17d76"
+        },
+        {
+          "name": "ToDouble(string)",
+          "signature": "double ToDouble(string units)",
+          "summary": "Returns the objects value converted to a double. Only applicable for CalcValue objects of type Number.",
+          "params": [
+            {
+              "name": "units",
+              "type": "string",
+              "doc": "Units to use for the conversion, if omitted the value will be returned in base units.",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "double",
+            "doc": "The objects numeric value in the specified units"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/0e4047330c7daa66f6d692e0d6fd0bf7a0c5406bf847ad3b2446a715a20657db"
+        },
+        {
+          "name": "ToInt()",
+          "signature": "int ToInt()",
+          "summary": "Returns the objects value converted to an integer. Only applicable for CalcValue objects of type Number.",
+          "params": [],
+          "returns": {
+            "type": "int",
+            "doc": "The objects value as an integer"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/9bcdc3eede78155e5168291a89eb96ce32646f90006eecd99409e7e8c7584126"
+        },
+        {
+          "name": "ToString(string, CalcValueFormat, int)",
+          "signature": "string ToString(string units, CalcValueFormat format = CalcValueFormat.Fixed, int precision = 3)",
+          "summary": "Returns the objects value represented as a string.",
+          "params": [
+            {
+              "name": "units",
+              "type": "string",
+              "doc": "Units to use for converting the numeric value, if omitted the value will be represented in base units.",
+              "optional": false
+            },
+            {
+              "name": "format",
+              "type": "CalcValueFormat",
+              "doc": "format Expression text format to use for representing the numerical value (E = Engineering, F = Fixed, G = General, S = Scientific, O = Data Input/Output, U = User input)",
+              "optional": false
+            },
+            {
+              "name": "precision",
+              "type": "int",
+              "doc": "Numeric precision to use",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "string",
+            "doc": "The objects value as a string"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/a85846735f25776e4707ab06a57ec3b5dbcc30d13e6e3ceccf954bb55ac109e9"
+        }
+      ],
+      "properties": [
+        {
+          "name": "Degrees",
+          "type": "double",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the linear degrees dimension of the object. Only applicable for objects of type Number.",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/c0560fcd8bec23f2bd98746d3afb6d3778676b20074784b8ad202d9047c2a3f7"
+        },
+        {
+          "name": "IsDimensionless",
+          "type": "bool",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns whether the units of a numeric object has dimensions. Only applicable for objects of type Number.",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/0fc21d68fec212f26efc45491b5e139fdb2bc1f2846531682e71ce18a7522dfe"
+        },
+        {
+          "name": "Length",
+          "type": "double",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the length dimension of the object. Only applicable for objects of type Number.",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/85a4d8dd74ab4214b34fc410c4fde5fca9aeb048db4a782a8b4c3976fd6ed844"
+        },
+        {
+          "name": "Mass",
+          "type": "double",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the mass dimension of the object. Only applicable for objects of type Number.",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/5bea48166379dd295be7189bc520327f80d33c3f27a1f53148d694bc7ed5a58c"
+        },
+        {
+          "name": "Time",
+          "type": "double",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the time dimension of the object. Only applicable for objects of type Number.",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/a9279fad27f01e01479aae57682c24711cbf08f8b106bae267f6adea75578f5a"
+        },
+        {
+          "name": "Type",
+          "type": "CalcValueType",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the objects data type",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/72b15e6e85f6bc6f80f5bdbfd22a389c49e6fbf3cdc4b2a4bd43b35a32d4e913"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "ICalculator",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "interface",
+      "summary": "Interface for the main Tedds Calculator",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculator-41852",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "CopyOutputToClipboard(OutputFormat)",
+          "signature": "void CopyOutputToClipboard(OutputFormat format = OutputFormat.Rtf)",
+          "summary": "Copies the output item to the Windows clipboard in the specified format",
+          "params": [
+            {
+              "name": "format",
+              "type": "OutputFormat",
+              "doc": "Output format, the default is Microsoft Rich Text Format (RTF)",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/7459dca22bddaf39178a117918019b0c30050bf7acb67db38adba29948b9afcd"
+        },
+        {
+          "name": "GetOutput(OutputFormat)",
+          "signature": "string GetOutput(OutputFormat format = OutputFormat.Rtf)",
+          "summary": "Returns the documented output from the calculator in the specified format.",
+          "remarks": "In order to obtain output the calculator must have been initialized with RTF, using InitializeCalc or Initialize. If the scenario you are implementing requires both input and output then you will typically initialize the Calculator object twice, the first time to create the input variables for the calculation and the second time to initialise the calculator using those input variables to start a specific calculation. When the output is requested in PDF format the resulting string must be processed correctly. PDF is a binary format and as such the string should not be modified because it is likely to contain invalid characters and null terminators which will not be processed correctly by most string processing functions. The string should be converted to raw bytes before further processing or saving to disk.",
+          "params": [
+            {
+              "name": "format",
+              "type": "OutputFormat",
+              "doc": "Output format, the default is Microsoft Rich Text Format",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "string",
+            "doc": "Output documentation."
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/ca45d8f35efea7491dd22f92bf3f1930264669cef90c8c5fa6e46c1f2518d015"
+        },
+        {
+          "name": "GetVariables(VariableFormat)",
+          "signature": "string GetVariables(VariableFormat format = VariableFormat.Xml)",
+          "summary": "Returns all the variables defined in the calculator excluding temporary variables",
+          "params": [
+            {
+              "name": "format",
+              "type": "VariableFormat",
+              "doc": "Format in which to return the variables, the default is XML",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "string",
+            "doc": "A string which defines the variables and their associated values and attributes. Temporary variables are excluded, if you require the temporary variables use GetVariables2"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/c6ba2c4dba023815ffb9c2a21ed88b88b96e2ed4b4dac49d14a89be26cf54f3f"
+        },
+        {
+          "name": "GetVariables2(VariableFormat, bool)",
+          "signature": "string GetVariables2(VariableFormat format = VariableFormat.Xml, bool includeTemporaryVariables = false)",
+          "summary": "Returns the current Document and Calc Section variables in the specified data format",
+          "params": [
+            {
+              "name": "format",
+              "type": "VariableFormat",
+              "doc": "Format in which to return the variables, the default is XML",
+              "optional": false
+            },
+            {
+              "name": "includeTemporaryVariables",
+              "type": "bool",
+              "doc": "Determines whether to include temporary variables",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "string",
+            "doc": "A string which defines the variables and their associated values and attributes"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/dad1d22b7a396d2fb9774f8182fe2cd9422ce37cfb055455f8b0a8d40d3ebcc1"
+        },
+        {
+          "name": "GetVariables3(VariableFormat, bool, bool)",
+          "signature": "string GetVariables3(VariableFormat format = VariableFormat.Xml, bool includeTemporaryVariables = false, bool includeModifiedAttribute = false)",
+          "summary": "Returns the current Document and Calc Section variables in the specified data format",
+          "params": [
+            {
+              "name": "format",
+              "type": "VariableFormat",
+              "doc": "Format in which to return the variables, the default is XML",
+              "optional": false
+            },
+            {
+              "name": "includeTemporaryVariables",
+              "type": "bool",
+              "doc": "Determines whether to include temporary variables",
+              "optional": false
+            },
+            {
+              "name": "includeModifiedAttribute",
+              "type": "bool",
+              "doc": "Determines whether to include the modified attribute for each variable",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "string",
+            "doc": "A string which defines the variables and their associated values and attributes"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/fd6733c2fade95aa5a08a45363589f1daa68f1ab5221b76c6d30a86ade441688"
+        },
+        {
+          "name": "Initialize(string, string, string, int, int, int)",
+          "signature": "void Initialize(string inputRtf, string variables, string sectionName, int sectionId = 0, int pageWidth = 180, int pageHeight = 260)",
+          "summary": "Initializes the calculator to start calculating",
+          "remarks": "The initialize method is often used without any parameters, the optional parameters are required to run an existing calculation or to retrieve the final output, however also consider using InitializeCalc. The inputRtf is required if you want to calculate an existing RTF source, for example if you wanted to integrate Tedds with an alternative word processor you would get the RTF from the document and pass it as this parameter so that Tedds would calculate the expressions in the RTF. The inputRtf is also required if you want to obtain output RTF once calculating is finished. Output is obtained by using the GetOutput method but if no inputRtf has been specified to the Initialize function (or the InitializeCalc function) then GetOutput will not return any output. If the calculator has been used to perform a calculation and you want to save the variables so that they can be used for re-calculating then you can use the optional variables parameter to initialise the calculator with the previously saved variables. The variables from a previous calculation are retrieved by using the GetVariables function.",
+          "params": [
+            {
+              "name": "inputRtf",
+              "type": "string",
+              "doc": "Optional input formatted in Microsoft Rich Text Format(RTF) which will be calculated",
+              "optional": false
+            },
+            {
+              "name": "variables",
+              "type": "string",
+              "doc": "Xml string of the variables to initialize the calculator with, usually created by GetVariables",
+              "optional": false
+            },
+            {
+              "name": "sectionName",
+              "type": "string",
+              "doc": "Calc Section name",
+              "optional": false
+            },
+            {
+              "name": "sectionId",
+              "type": "int",
+              "doc": "Calc Section unique numeric identifier",
+              "optional": false
+            },
+            {
+              "name": "pageWidth",
+              "type": "int",
+              "doc": "Output page width in twips, default is 180 twips",
+              "optional": false
+            },
+            {
+              "name": "pageHeight",
+              "type": "int",
+              "doc": "Output page height in twips, default is 260 twips",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/3ab2a6a338f894c330b63592f689966056f69beb09047175f6e40986902c5841"
+        },
+        {
+          "name": "InitializeCalc(string, string, string, string, int, int, int)",
+          "signature": "void InitializeCalc(string calcFileName, string calcItemName, string variables, string sectionName, int sectionId = 0, int pageWidth = 180, int pageHeight = 260)",
+          "summary": "Initializes the calculator and starts calculating using the specified Calc Library Item",
+          "remarks": "The fileName and itemName are required and determine the Calc Item in the specified Calc Library which will be calculated. If you want to retrieve the document output when calculating is finished the calc item you calculate must be in the RTF format. Output is obtained by using the GetOutput method. If the calculator has been used to perform a calculation and you want to save the variables so that they can be used at a later date for re-calculating then you can use the optional variables parameter to initialise the calculator with the previously saved variables.The variables from a previous calculation are retrieved by using the GetVariables method.",
+          "params": [
+            {
+              "name": "calcFileName",
+              "type": "string",
+              "doc": "File name of the Calc Library file which contains the calc item to calculate",
+              "optional": false
+            },
+            {
+              "name": "calcItemName",
+              "type": "string",
+              "doc": "Item name of the Calc Item to calculate",
+              "optional": false
+            },
+            {
+              "name": "variables",
+              "type": "string",
+              "doc": "Xml string of the variables to initialize the calculator instance with",
+              "optional": false
+            },
+            {
+              "name": "sectionName",
+              "type": "string",
+              "doc": "Initial section name",
+              "optional": false
+            },
+            {
+              "name": "sectionId",
+              "type": "int",
+              "doc": "Initial section identifier",
+              "optional": false
+            },
+            {
+              "name": "pageWidth",
+              "type": "int",
+              "doc": "Output page width in twips, default is 180 twips",
+              "optional": false
+            },
+            {
+              "name": "pageHeight",
+              "type": "int",
+              "doc": "Output page height in twips, default is 260 twips",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/4ea1d7cff39c130aecc6be90103a3e4900815e9b473cb3713fbd77ef9c115700"
+        },
+        {
+          "name": "SetForegroundWindow(int)",
+          "signature": "void SetForegroundWindow(int WindowHandle)",
+          "summary": "Executes the Windows API function SetForegroundWindow from the Tedds calculator process.",
+          "params": [
+            {
+              "name": "WindowHandle",
+              "type": "int",
+              "doc": "Handle of window to make the foreground window",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/a4d66c046b6b69511f04dc3a35fe80aacc19569cf0fe72682802b18bb1aa82aa"
+        },
+        {
+          "name": "SetOwnerWindow(int)",
+          "signature": "void SetOwnerWindow(int ownerWindowHandle)",
+          "summary": "Sets which window owns the Tedds calculator\u0027s main window",
+          "remarks": "The main Tedds calculator window is always hidden but acts as the parent window for all other windows displayed by the Tedds calculator. The window handle may be required to ensure that the Calculator process is brought to the foreground when the calling processes expects the Tedds calculator to show a user interface.",
+          "params": [
+            {
+              "name": "ownerWindowHandle",
+              "type": "int",
+              "doc": "Window handle of the window which will be the owner of the Tedds calculator\u0027s main window",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/00b41f48802759a1cb72ea566e7961c29ab524ee3df4237a2b1d6a631d40cca0"
+        },
+        {
+          "name": "SetVariables(string, VariableFormat)",
+          "signature": "void SetVariables(string variables, VariableFormat format = VariableFormat.Xml)",
+          "summary": "Assign the specified variables to the calculator instance",
+          "remarks": "The Calculator currently supports one format for defining variables which uses XML. The XML schema is not documented and is subject to change, however the Tedds Calculator itself can be used to generate the required XML. To create the XML string create an instance of the XML calculator and initialize the calculator using Initialize, omitting all of the optional parameters. For each variable you wish to assign in the XML use Functions.SetVar or Functions.SetVarExpr. Once all the required variables have been assigned use @ref GetVariables to retrieve an XML string of all the variables which have been defined. This XML string can then be used with SetVariables although normally the variables would be initialized using one of the Initialize or InitializeCalc functions.",
+          "params": [
+            {
+              "name": "variables",
+              "type": "string",
+              "doc": "Variables and their associated values and attributes in the specified data format",
+              "optional": false
+            },
+            {
+              "name": "format",
+              "type": "VariableFormat",
+              "doc": "Format of the variables, the default is XML",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/174504dc6f5330c8dce44c982607f92bea731c0b66eb45a7205c08bf21173782"
+        }
+      ],
+      "properties": [
+        {
+          "name": "CalculatingErrorEvents",
+          "type": "bool",
+          "getter": true,
+          "setter": true,
+          "summary": "Determines whether error events are fired to the event listeners",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/3912c4e13261ced4a1ea49bc6294c7eccab612464959ec1570f9188871c02ee1"
+        },
+        {
+          "name": "CalculatingProgressEvents",
+          "type": "bool",
+          "getter": true,
+          "setter": true,
+          "summary": "Determines whether progress events are fired to the event listeners",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/8361db3e7b335ffc121a081ce10a200a67d8c68fa82490ad8d4840e300994e8f"
+        },
+        {
+          "name": "Functions",
+          "type": "IFunctions",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns an object supporting the IFunctions interface which is used to access the internal Tedds calculator functions",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/1533a575e76c73b4332afd67321f308cdc2fa997b7d0fc614abe96a6e2596c0c"
+        },
+        {
+          "name": "Status",
+          "type": "CalcStatus",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the status of the Tedds calculator when the last evaluation finished.",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/10fb5377fd29a84572422e67c1bd9f7966d76429728988462a6f17ac315776ee"
+        },
+        {
+          "name": "UndefinedVariableEvents",
+          "type": "bool",
+          "getter": true,
+          "setter": true,
+          "summary": "Determines whether undefined variable events are fired to the event listeners",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/4db4a6ab79010cc47e0b03ab7530d565e2ca8b29c27a79304b699292b4c708f0"
+        },
+        {
+          "name": "VersionLibraryMajor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the major version number of the Tedds Engineering Library",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/949dde2e4808e3b18258b70fd25068cc75b0ad4555fb008f2560fa96fe5daf4d"
+        },
+        {
+          "name": "VersionLibraryMinor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the minor version number of the Tedds Engineering Library",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/75ec3d250927d802592be3e2c9819568f579a013fc88f8f01ed8a647c58755fa"
+        },
+        {
+          "name": "VersionMajor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the major version number of the Tedds software",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/3f1999512d695cf5f036bbd9df1d766cdc356cc764b3c122f8c28df86f094854"
+        },
+        {
+          "name": "VersionMinor",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the minor version number of the Tedds software",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/904aacd146514ae2190c47cb095af4bac08da3f4253a29666d378c7504026e1c"
+        },
+        {
+          "name": "WindowHandle",
+          "type": "int",
+          "getter": true,
+          "setter": false,
+          "summary": "Returns the Tedds calculator\u0027s main window handle",
+          "remarks": "The main Tedds calculator window is always hidden but acts as the parent window for all other windows displayed by the Tedds calculator. The window handle may be required to ensure that the Calculator process is brought to the foreground when the calling processes expects the Tedds calculator to show a user interface.",
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/1d287bc784880535cb6e65fd7a9ebe216a5753b632a38f0e4562beddf6e5e944"
+        }
+      ],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "ICalculatorExEvents",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "interface",
+      "summary": "Interface for Calculator events.",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-icalculatorexevents-41853",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "CalculatingError(CalcErrorType, uint, string, string, string, uint, ref CalcStatus)",
+          "signature": "void CalculatingError(CalcErrorType errorType, uint errorCode, string context, string message, string expression, uint options, ref CalcStatus status)",
+          "summary": "Calculating error event",
+          "params": [
+            {
+              "name": "errorType",
+              "type": "CalcErrorType",
+              "doc": "Type of error",
+              "optional": false
+            },
+            {
+              "name": "errorCode",
+              "type": "uint",
+              "doc": "Error code identifier",
+              "optional": false
+            },
+            {
+              "name": "context",
+              "type": "string",
+              "doc": "Context of error",
+              "optional": false
+            },
+            {
+              "name": "message",
+              "type": "string",
+              "doc": "Error message",
+              "optional": false
+            },
+            {
+              "name": "expression",
+              "type": "string",
+              "doc": "Expression which caused error",
+              "optional": false
+            },
+            {
+              "name": "options",
+              "type": "uint",
+              "doc": "Error handler option flags",
+              "optional": false
+            },
+            {
+              "name": "status",
+              "type": "CalcStatus",
+              "doc": "Calculation status, to stop calculation process return Aborted or Interrupted",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/c4360bc2c3c5e2e9d0c653895e0e3fdacea13c19280b1fa12cefa7a9e0395dba"
+        },
+        {
+          "name": "CalculatingProgress(CalcProgressEvent, uint, string, ref CalcStatus)",
+          "signature": "void CalculatingProgress(CalcProgressEvent progressEvent, uint progressValue, string text, ref CalcStatus status)",
+          "summary": "Calculating progress event",
+          "params": [
+            {
+              "name": "progressEvent",
+              "type": "CalcProgressEvent",
+              "doc": "Progress event type",
+              "optional": false
+            },
+            {
+              "name": "progressValue",
+              "type": "uint",
+              "doc": "Progress value for the current event",
+              "optional": false
+            },
+            {
+              "name": "text",
+              "type": "string",
+              "doc": "Text for the current event",
+              "optional": false
+            },
+            {
+              "name": "status",
+              "type": "CalcStatus",
+              "doc": "Calculation status after the event has been processed, the caller can change the state to stop the calculation process",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/d38ce4e7579dc46cf0472a9676b6bed654649e1707ef6ab3b5d986e6da89700f"
+        },
+        {
+          "name": "UndefinedVariable(string, out string)",
+          "signature": "void UndefinedVariable(string variableName, out string value)",
+          "summary": "Undefined variable event",
+          "remarks": "The undefined variable event can be used to provide a hook into the data model or API of another software system. If a variable is referred to in your calculations which doesn\u0027t exist then your event handler will be called and you have the opportunity to provide a value for the referenced name. Note that once a value has been provided the variable will then exist in Tedds so the undefined event will not fire again for that variable unless it is explicitly deleted.",
+          "params": [
+            {
+              "name": "variableName",
+              "type": "string",
+              "doc": "Name of undefined variable",
+              "optional": false
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "doc": "Value to be assigned to variable",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/f29fc3008f656adc287c7f03ed166ee3b54ecc5de60323d34228921aed6cd5b8"
+        },
+        {
+          "name": "UndefinedVariable2(string, out string, out string)",
+          "signature": "void UndefinedVariable2(string variableName, out string value, out string attributes)",
+          "summary": "Undefined variable event",
+          "remarks": "The undefined variable event can be used to provide a hook into the data model or API of another software system. If a variable is referred to in your calculations which doesn\u0027t exist then your event handler will be called and you have the opportunity to provide a value for the referenced name. Note that once a value has been provided the variable will then exist in Tedds so the undefined event will not fire again for that variable unless it is explicitly deleted.",
+          "params": [
+            {
+              "name": "variableName",
+              "type": "string",
+              "doc": "Name of undefined variable",
+              "optional": false
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "doc": "Value to be assigned to variable",
+              "optional": false
+            },
+            {
+              "name": "attributes",
+              "type": "string",
+              "doc": "Attributes to be assigned to variable",
+              "optional": false
+            }
+          ],
+          "returns": null,
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/bfd3e49e17020062b9d18a5b43246ba9381130d53f97d6f94fe7d2190dbff63a"
+        }
+      ],
+      "properties": [],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "IFunctions",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "interface",
+      "summary": "Interface for executing calculation commands",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-ifunctions-41854",
+      "constructors": [],
+      "methods": [
+        {
+          "name": "AddSection()",
+          "signature": "int AddSection()",
+          "summary": "Add a new variable section using the Tedds \u0027AddSection\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+          "params": [],
+          "returns": {
+            "type": "int",
+            "doc": "Returns the unique identifier of the new variable section"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/cf6f8832e7b6969398c9ceea55831ef219bfb40e6df7f228337dc225c5b6e61b"
+        },
+        {
+          "name": "Eval(string)",
+          "signature": "ICalcValue Eval(string Expression)",
+          "summary": "Returns the result of calculating an expression using the Tedds \u0027Eval\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+          "params": [
+            {
+              "name": "Expression",
+              "type": "string",
+              "doc": "Expression to calculate",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "ICalcValue",
+            "doc": "Result of expression"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/f12c48fb7e6b02853b7fd3e115ef93ba3d6485cbbde1c3e4caa508c64c053fc4"
+        },
+        {
+          "name": "GetVar(string)",
+          "signature": "ICalcValue GetVar(string name)",
+          "summary": "Returns the value of a named variable using the Tedds \u0027GetVar\u0027 function",
+          "params": [
+            {
+              "name": "name",
+              "type": "string",
+              "doc": "Name of the variable",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "ICalcValue",
+            "doc": "Variables value"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/06724dd15ce9e7ecae0e434ae49c424386e8db35cf88628ed181367f1568c5c5"
+        },
+        {
+          "name": "SetSection(int, string)",
+          "signature": "bool SetSection(int sectionId, string name)",
+          "summary": "Set the active variable section using the Tedds \u0027SetSection\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+          "params": [
+            {
+              "name": "sectionId",
+              "type": "int",
+              "doc": "Unique numeric identifier of the section which is to become the active section",
+              "optional": false
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "doc": "Display name of the section",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "bool",
+            "doc": "true if successful; otherwise false"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/4f0bba553d273c2ad4ca659bda6b5a4d2e56cbea2d65e54802a66a82cef76a59"
+        },
+        {
+          "name": "SetVar(string, object, string, string)",
+          "signature": "ICalcValue SetVar(string name, object value, string units = \u0022\u0022, string attributes = \u0022\u0022)",
+          "summary": "Assigns a value to the named variable using the Tedds \u0027SetVar\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+          "params": [
+            {
+              "name": "name",
+              "type": "string",
+              "doc": "Name of the variable",
+              "optional": false
+            },
+            {
+              "name": "value",
+              "type": "object",
+              "doc": "Value to assign",
+              "optional": false
+            },
+            {
+              "name": "units",
+              "type": "string",
+              "doc": "Units of the assigned value, only applicable if the value is numeric.",
+              "optional": false
+            },
+            {
+              "name": "attributes",
+              "type": "string",
+              "doc": "Variable attribute flags (h = hidden, t = temporary, e = expression, r = readonly)",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "ICalcValue",
+            "doc": "Actual value of variable"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/355af9947c940067d8dec66613858a8b7a2e3e3a8413f309dad0abaf4fe6e968"
+        },
+        {
+          "name": "SetVarExpr(string, string, string)",
+          "signature": "ICalcValue SetVarExpr(string name, string value, string attributes = \u0022e\u0022)",
+          "summary": "Assigns an expression value to the named variable using the Tedds \u0027SetVar\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+          "params": [
+            {
+              "name": "name",
+              "type": "string",
+              "doc": "Name of the variable",
+              "optional": false
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "doc": "Expression to assign",
+              "optional": false
+            },
+            {
+              "name": "attributes",
+              "type": "string",
+              "doc": "attributes Variable attribute flags (h = hidden, t = temporary, e = expression, r = readonly)",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "ICalcValue",
+            "doc": "numerical error code"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/59fc94f41fcb37cd176f6ba197b309e77d3c9589bca3de51a838caf6d37a9cb3"
+        },
+        {
+          "name": "VarExists(string)",
+          "signature": "bool VarExists(string name)",
+          "summary": "Returns true if the named variable already exists using the Tedds \u0027VarExists\u0027 function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at \u0022Writing your own custom calculations\\Calculation writing documentation\\Tedds functions\u0022",
+          "params": [
+            {
+              "name": "name",
+              "type": "string",
+              "doc": "Name of the variable",
+              "optional": false
+            }
+          ],
+          "returns": {
+            "type": "bool",
+            "doc": "true if the variable already exists; otherwise false"
+          },
+          "throws": [],
+          "events_related": [],
+          "doc_url": "https://developer.tekla.com/topic/en/20/45/9ec27b9571900c755ad66a85fd2f3330299740800e8ac6c407eb68205c40f53e"
+        }
+      ],
+      "properties": [],
+      "events": [],
+      "enum_values": []
+    },
+    {
+      "name": "OutputFormat",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "enum",
+      "summary": "Document output formats",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-outputformat-41855",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Pdf",
+          "value": 2,
+          "summary": "Adobe Portable Document Format"
+        },
+        {
+          "name": "Rtf",
+          "value": 1,
+          "summary": "Microsoft Rich Text Format"
+        }
+      ]
+    },
+    {
+      "name": "VariableFormat",
+      "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+      "kind": "enum",
+      "summary": "Data formats for variables, currently only XML format is supported",
+      "interfaces": [],
+      "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-variableformat-41856",
+      "constructors": [],
+      "methods": [],
+      "properties": [],
+      "events": [],
+      "enum_values": [
+        {
+          "name": "Xml",
+          "value": 1,
+          "summary": "XML format"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "page_count": 37,
+    "type_count": 33,
+    "method_count": 77,
+    "event_count": 0,
+    "property_count": 71
+  }
+}

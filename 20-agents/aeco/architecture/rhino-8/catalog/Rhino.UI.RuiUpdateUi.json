@@ -1,0 +1,172 @@
+{
+  "name": "RuiUpdateUi",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.RuiUpdateUi\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_RuiUpdateUi.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RegisterMenuItem(Guid, Guid, Guid, RuiUpdateUi.UpdateMenuItemEventHandler)",
+      "signature": "public static bool RegisterMenuItem(Guid file, Guid menu, Guid item, RuiUpdateUi.UpdateMenuItemEventHandler callBack)",
+      "summary": "Register menu item update delegate",
+      "params": [
+        {
+          "name": "file",
+          "type": "System.Guid",
+          "doc": "Menu file Id",
+          "optional": false
+        },
+        {
+          "name": "menu",
+          "type": "System.Guid",
+          "doc": "Menu Id",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "System.Guid",
+          "doc": "Menu item Id",
+          "optional": false
+        },
+        {
+          "name": "callBack",
+          "type": "Rhino.UI.RuiUpdateUi.UpdateMenuItemEventHandler",
+          "doc": "[Missing \u003Cparam name=\u0022callBack\u0022/\u003E documentation for \u0022M:Rhino.UI.RuiUpdateUi.RegisterMenuItem(System.Guid,System.Guid,System.Guid,Rhino.UI.RuiUpdateUi.UpdateMenuItemEventHandler)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if Registered otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_RuiUpdateUi_RegisterMenuItem.htm"
+    },
+    {
+      "name": "RegisterMenuItem(String, String, String, RuiUpdateUi.UpdateMenuItemEventHandler)",
+      "signature": "public static bool RegisterMenuItem(string fileId, string menuId, string itemId, RuiUpdateUi.UpdateMenuItemEventHandler callBack)",
+      "summary": "Register menu item update delegate",
+      "params": [
+        {
+          "name": "fileId",
+          "type": "System.String",
+          "doc": "Menu file Id",
+          "optional": false
+        },
+        {
+          "name": "menuId",
+          "type": "System.String",
+          "doc": "Menu Id",
+          "optional": false
+        },
+        {
+          "name": "itemId",
+          "type": "System.String",
+          "doc": "Menu item Id",
+          "optional": false
+        },
+        {
+          "name": "callBack",
+          "type": "Rhino.UI.RuiUpdateUi.UpdateMenuItemEventHandler",
+          "doc": "[Missing \u003Cparam name=\u0022callBack\u0022/\u003E documentation for \u0022M:Rhino.UI.RuiUpdateUi.RegisterMenuItem(System.String,System.String,System.String,Rhino.UI.RuiUpdateUi.UpdateMenuItemEventHandler)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if Registered otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_RuiUpdateUi_RegisterMenuItem_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Checked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to true to enable menu item or false to check menu item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_Checked.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to true to enable menu item or false to disable menu item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_Enabled.htm"
+    },
+    {
+      "name": "FileId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id of the RUI file that owns this menu item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_FileId.htm"
+    },
+    {
+      "name": "MenuHandle",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Windows menu handle of menu that contains this item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_MenuHandle.htm"
+    },
+    {
+      "name": "MenuId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id of the menu that owns this menu item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_MenuId.htm"
+    },
+    {
+      "name": "MenuIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Zero based index of item in the Windows menu",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_MenuIndex.htm"
+    },
+    {
+      "name": "MenuItemId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id of the menu item that owns this menu item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_MenuItemId.htm"
+    },
+    {
+      "name": "RadioChecked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to true to enable menu item or false to check menu item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_RadioChecked.htm"
+    },
+    {
+      "name": "Text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Menu item text",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_Text.htm"
+    },
+    {
+      "name": "WindowsMenuItemId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Windows menu item ID",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_RuiUpdateUi_WindowsMenuItemId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

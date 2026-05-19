@@ -1,0 +1,31 @@
+{
+  "name": "GH_CanvasViewportChangedEventArgs",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "These arguments are used in the ViewportChanged event on GH_Canvas.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasViewportChangedEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Canvas",
+      "type": "GH_Canvas",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Canvas whose viewport was changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasViewportChangedEventArgs_Canvas.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "GH_Viewport",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the new Viewport.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasViewportChangedEventArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,40 @@
+{
+  "name": "DragDropNodeSearchElementInfo",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "This class returns Dynamo.Search.SearchElements.NodeSearchElement which is used for creating a node, when the element is drag and dropped.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs",
+  "constructors": [
+    {
+      "name": "DragDropNodeSearchElementInfo(Dynamo.Search.SearchElements.NodeSearchElement)",
+      "signature": "void DragDropNodeSearchElementInfo(Dynamo.Search.SearchElements.NodeSearchElement searchElement)",
+      "summary": "Initializes a new instance of the Dynamo.Search.SearchElements.DragDropNodeSearchElementInfo class.",
+      "params": [
+        {
+          "name": "searchElement",
+          "type": "Dynamo.Search.SearchElements.NodeSearchElement",
+          "doc": "Element to drag on the canvas",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SearchElement",
+      "type": "Dynamo.Search.SearchElements.NodeSearchElement",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Search.SearchElements.NodeSearchElement to drag and drop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeSearchElement.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

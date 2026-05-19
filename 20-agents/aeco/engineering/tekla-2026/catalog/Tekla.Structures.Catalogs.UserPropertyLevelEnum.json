@@ -1,0 +1,39 @@
+{
+  "name": "UserPropertyLevelEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "The user property level.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3809973f-fff1-b1d8-28d0-84d1de565582",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LEVEL_MODEL",
+      "value": 1,
+      "summary": "The user property has been defined as a model user property."
+    },
+    {
+      "name": "LEVEL_PROJECT",
+      "value": 2,
+      "summary": "The user property has been defined as a project user property."
+    },
+    {
+      "name": "LEVEL_FIRM",
+      "value": 3,
+      "summary": "The user property has been defined as a firm user property."
+    },
+    {
+      "name": "LEVEL_ENVIRONMENT",
+      "value": 4,
+      "summary": "The user property has been defined as an environment user property."
+    },
+    {
+      "name": "LEVEL_COMMONDEFAULT",
+      "value": 5,
+      "summary": "The user property has been defined as a common default user property."
+    }
+  ]
+}

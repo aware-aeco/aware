@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisModelDesignProperties.DesignMethodEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The design methods.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/815f1c81-f8d4-c17f-b993-121c5846c569",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NONE",
+      "value": 1,
+      "summary": "The design method is none."
+    },
+    {
+      "name": "CHECK_DESIGN",
+      "value": 2,
+      "summary": "The design method is check design."
+    },
+    {
+      "name": "OPTIMISE",
+      "value": 3,
+      "summary": "The design method is optimise."
+    }
+  ]
+}

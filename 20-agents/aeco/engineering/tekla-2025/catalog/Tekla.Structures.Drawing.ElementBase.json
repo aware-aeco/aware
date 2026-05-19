@@ -1,0 +1,61 @@
+{
+  "name": "ElementBase",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ElementBase class is the abstract base class for all mark elements.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/912b7474-052f-6236-b82b-fee837c57e62",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public abstract Object Clone()",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A new object that is a copy of the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/020dbce5-3810-0ebb-8cc3-66b14d32d46c"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "public abstract string GetUnformattedString()",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/813c9266-4b18-84d8-87fd-205f9178ec3e"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with the given object. Checks every field of both objects for equality.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "An object of the same type to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the field values of both objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/85182d02-6b31-f730-dfbb-ee91936b7d42"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

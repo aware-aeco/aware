@@ -1,0 +1,49 @@
+{
+  "name": "WorkspaceMigrations",
+  "namespace": "Dynamo.Migration",
+  "kind": "class",
+  "summary": "Contains methods to migrate a workspace from one version to another",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/WorkspaceMigrations.cs",
+  "constructors": [
+    {
+      "name": "WorkspaceMigrations(Dynamo.Models.DynamoModel)",
+      "signature": "void WorkspaceMigrations(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "Initializes a new instance of the Dynamo.Migration.WorkspaceMigrations class with current Dynamo.Models.DynamoModel object.",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "doc": "Current Dynamo.Models.DynamoModel object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/WorkspaceMigrations.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Migrate_0_5_3_to_0_6_0(System.Xml.XmlDocument)",
+      "signature": "void Migrate_0_5_3_to_0_6_0(System.Xml.XmlDocument doc)",
+      "summary": "Performs migration of a workspace from 0.5.3.0 to 0.6.1.0.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "System.Xml.XmlDocument",
+          "doc": "The System.Xml.XmlDocument object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/WorkspaceMigrations.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Arrowhead",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Arrowhead used by annotation",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Arrowhead.htm",
+  "constructors": [
+    {
+      "name": "Arrowhead()",
+      "signature": "public Arrowhead()",
+      "summary": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Arrowhead__ctor.htm"
+    },
+    {
+      "name": "Arrowhead(DimensionStyle.ArrowType, Guid)",
+      "signature": "public Arrowhead(DimensionStyle.ArrowType arrowType, Guid blockId)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "arrowType",
+          "type": "Rhino.DocObjects.DimensionStyle.ArrowType",
+          "doc": "type of this arrowhead",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "System.Guid",
+          "doc": "Guid of the block used for user defined display",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Arrowhead__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ArrowType",
+      "type": "DimensionStyle.ArrowType",
+      "getter": true,
+      "setter": false,
+      "summary": "Type of arrowhead used by annotation",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Arrowhead_ArrowType.htm"
+    },
+    {
+      "name": "BlockId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Id of block used for user-defined arrowhead",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Arrowhead_BlockId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

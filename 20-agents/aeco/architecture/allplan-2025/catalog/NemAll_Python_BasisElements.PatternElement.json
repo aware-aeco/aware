@@ -1,0 +1,81 @@
+{
+  "name": "PatternElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of pattern in Allplan",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/",
+  "constructors": [
+    {
+      "name": "PatternElement",
+      "signature": "PatternElement() | PatternElement( commonProp: CommonProperties, patternProp: PatternProperties, polygon: Polygon2D, ) | PatternElement(element: PatternElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/#NemAll_Python_BasisElements.PatternElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetPatternProperties",
+      "signature": "GetPatternProperties() -\u003E PatternProperties",
+      "summary": "Get the Pattern properties",
+      "remarks": "Get the Pattern properties",
+      "params": [],
+      "returns": {
+        "type": "PatternProperties",
+        "doc": "Pattern properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/#NemAll_Python_BasisElements.PatternElement.GetPatternProperties"
+    },
+    {
+      "name": "SetPatternProperties",
+      "signature": "SetPatternProperties(patternProp: PatternProperties)",
+      "summary": "Set the Pattern properties",
+      "remarks": "Set the Pattern properties",
+      "params": [
+        {
+          "name": "patternProp",
+          "type": "PatternProperties",
+          "doc": "Pattern properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/#NemAll_Python_BasisElements.PatternElement.SetPatternProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/#NemAll_Python_BasisElements.PatternElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PatternProperties",
+      "type": "PatternProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Pattern properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/#NemAll_Python_BasisElements.PatternElement.PatternProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

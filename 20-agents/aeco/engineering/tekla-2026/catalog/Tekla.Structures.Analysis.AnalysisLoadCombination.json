@@ -1,0 +1,206 @@
+{
+  "name": "AnalysisLoadCombination",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisLoadCombination class contains information related to analysis load combinations.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3398e50a-555b-78be-e25a-f8c7c92aa83d",
+  "constructors": [
+    {
+      "name": "AnalysisLoadCombination",
+      "signature": "public AnalysisLoadCombination()",
+      "summary": "Initializes a new instance of the AnalysisLoadCombination class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/66bb9653-9eb6-594b-4de1-aa2e522b0853"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public void Delete()",
+      "summary": "Deletes an analysis load combination. The AnalysisModelName and ID have to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/943ade7c-b4ff-bc04-439f-bc5a62bda9b0"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert()",
+      "summary": "Inserts an analysis load combination. The AnalysisModelName has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2fb0708b-a2a9-740b-b25e-8cab93c8f0e8"
+    },
+    {
+      "name": "Modify",
+      "signature": "public void Modify()",
+      "summary": "Modifies an analysis load combination. The AnalysisModelName and ID have to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5b5a160e-31f8-767c-0533-ac0a0caf0854"
+    },
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis load combination. The AnalysisModelName and ID have to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a035c2cd-3fbc-3158-6575-808a2262cbde"
+    },
+    {
+      "name": "SetLoads",
+      "signature": "public void SetLoads(List\u003CIdentifier\u003E groupIDs, List\u003Cdouble\u003E scalingFactors, List\u003Cdouble\u003E reductionFactors, List\u003Cdouble\u003E partialSafetyFactors)",
+      "summary": "Sets the loads.",
+      "params": [
+        {
+          "name": "groupIDs",
+          "type": "System.Collections.Generic.List\u003CIdentifier\u003E",
+          "doc": "The group identifiers.",
+          "optional": false
+        },
+        {
+          "name": "scalingFactors",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The scaling factors.",
+          "optional": false
+        },
+        {
+          "name": "reductionFactors",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The reduction factors.",
+          "optional": false
+        },
+        {
+          "name": "partialSafetyFactors",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The partial safety factors.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2da09cbf-b58c-9aab-7c3a-e2a4797d2d8a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "GroupIDs",
+      "type": "List\u003CIdentifier\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifiers of the groups of the analysis load combination.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/05708237-5495-ef1a-d196-6be1aeb0c927"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the analysis load combination.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b299b2f7-0530-a611-fe00-90175edba7e3"
+    },
+    {
+      "name": "PartialSafetyFactors",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the partial safety factors of the analysis load combination.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9bf9496-fc3a-60a1-c747-0955965757ab"
+    },
+    {
+      "name": "ReductionFactors",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the reduction factors of the analysis load combination.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2ab859e0-a211-c960-3e1d-6429c8cb7592"
+    },
+    {
+      "name": "ScalingFactors",
+      "type": "List\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scaling factors of the analysis load combination.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/48d0d089-b58b-39bb-4974-8fe9722a0a51"
+    },
+    {
+      "name": "Type",
+      "type": "AnalysisLoadCombination.LoadCombinationEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the combination type of the analysis load combination.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d002c8c8-40d9-8dcf-e693-48a4549804f7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

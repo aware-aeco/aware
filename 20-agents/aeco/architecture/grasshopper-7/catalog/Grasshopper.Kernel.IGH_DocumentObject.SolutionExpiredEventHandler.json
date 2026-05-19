@@ -1,0 +1,14 @@
+{
+  "name": "IGH_DocumentObject.SolutionExpiredEventHandler",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.IGH_DocumentObject.SolutionExpiredEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_DocumentObject_SolutionExpiredEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void SolutionExpiredEventHandler( IGH_DocumentObject sender, GH_SolutionExpiredEventArgs e )"
+}

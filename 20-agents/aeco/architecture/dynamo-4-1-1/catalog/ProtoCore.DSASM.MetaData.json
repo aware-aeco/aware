@@ -1,0 +1,13 @@
+{
+  "name": "MetaData",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "struct",
+  "summary": "Type MetaData",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

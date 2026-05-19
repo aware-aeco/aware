@@ -1,0 +1,150 @@
+{
+  "name": "Tracing",
+  "namespace": "Grasshopper",
+  "kind": "class",
+  "summary": "Class that provides useful static methods for debugging, tracing and messaging.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Tracing.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Assert(Guid)",
+      "signature": "public static void Assert(Guid assert_id)",
+      "summary": "Display a typical ASSERT dialog with stack information.",
+      "params": [
+        {
+          "name": "assert_id",
+          "type": "System.Guid",
+          "doc": "ID of assert message. Every assert must have a unique ID so individual messages can be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Tracing_Assert.htm"
+    },
+    {
+      "name": "Assert(Guid, Exception)",
+      "signature": "public static void Assert(Guid assert_id, Exception exception)",
+      "summary": "Display a typical assert dialog with stack information.",
+      "params": [
+        {
+          "name": "assert_id",
+          "type": "System.Guid",
+          "doc": "ID of assert message. Every assert must have a unique ID so individual messages can be ignored.",
+          "optional": false
+        },
+        {
+          "name": "exception",
+          "type": "System.Exception",
+          "doc": "Exception object to harvest further information from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Tracing_Assert_1.htm"
+    },
+    {
+      "name": "Assert(Guid, String)",
+      "signature": "public static void Assert(Guid assert_id, string message)",
+      "summary": "Display a typical assert dialog with stack information.",
+      "params": [
+        {
+          "name": "assert_id",
+          "type": "System.Guid",
+          "doc": "ID of assert message. Every assert must have a unique ID so individual messages can be ignored.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The text to display as the assert message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Tracing_Assert_2.htm"
+    },
+    {
+      "name": "Assert(Guid, String, Exception)",
+      "signature": "public static void Assert(Guid assert_id, string message, Exception exception)",
+      "summary": "Display a typical assert dialog with stack information.",
+      "params": [
+        {
+          "name": "assert_id",
+          "type": "System.Guid",
+          "doc": "ID of assert message. Every assert must have a unique ID so individual messages can be ignored.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The text to display as the assert message.",
+          "optional": false
+        },
+        {
+          "name": "exception",
+          "type": "System.Exception",
+          "doc": "Exception object to harvest further information from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Tracing_Assert_3.htm"
+    },
+    {
+      "name": "DebugLogAddEntry",
+      "signature": "public static void DebugLogAddEntry(string message)",
+      "summary": "Add a message to the debug log. If the debug log doesn\u0027t exist yet, it will be created. This function will only work if the Grasshopper window exists. This method is threadsafe.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Message to post.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Tracing_DebugLogAddEntry.htm"
+    },
+    {
+      "name": "DebugLogBeginBlock",
+      "signature": "public static void DebugLogBeginBlock(string name)",
+      "summary": "Start a new block in the debug data. You must end all your own blocks. This function will only work if the Grasshopper window exists. This method is threadsafe.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of block",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Tracing_DebugLogBeginBlock.htm"
+    },
+    {
+      "name": "DebugLogEndBlock",
+      "signature": "public static void DebugLogEndBlock()",
+      "summary": "Start a new block in the debug data. You must end all your own blocks. This function will only work if the Grasshopper window exists. This method is threadsafe.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Tracing_DebugLogEndBlock.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,425 @@
+{
+  "name": "Angle",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "Provides support for angles using either the current Tekla Structures units, or user defined units",
+  "base": "System.Object",
+  "interfaces": [
+    "IFormattable",
+    "IComparable\u003CAngle\u003E",
+    "IEquatable\u003CAngle\u003E"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/08e0a838-72ea-816e-f76e-3344b1d23e2f",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Angle other)",
+      "summary": "Compares this angle with another angle",
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Datatype.Angle",
+          "doc": "Angle to compare to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Greater than zero if this angle is greater than other, otherwise less than zero if this angle is less than other, otherwise 0 if they are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9b50fc0f-955f-1707-d103-d0a2f68d2fca"
+    },
+    {
+      "name": "Equals",
+      "signature": "public bool Equals(Angle other)",
+      "summary": "Checks for approximate angle equality",
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Datatype.Angle",
+          "doc": "Angle to compare to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the angles are the same, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6eb7ef8e-82ab-34b5-8cab-b271146fce8d"
+    },
+    {
+      "name": "FromCurrentUnit",
+      "signature": "public static Angle FromCurrentUnit(double angle)",
+      "summary": "Creates an angle given in the current unit type",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Angle given in the current unit type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "An Angle object representing the given angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8eea6759-0d84-ac54-4123-08f75daafd8e"
+    },
+    {
+      "name": "FromDegrees",
+      "signature": "public static Angle FromDegrees(double degrees)",
+      "summary": "Creates an angle from a value in degrees",
+      "params": [
+        {
+          "name": "degrees",
+          "type": "System.Double",
+          "doc": "The angle in degrees",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "An Angle object representing the given angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f3b45685-c2c6-c229-bd8d-a60a3993b690"
+    },
+    {
+      "name": "FromRadians",
+      "signature": "public static Angle FromRadians(double radians)",
+      "summary": "Creates an angle from a value in radians",
+      "params": [
+        {
+          "name": "radians",
+          "type": "System.Double",
+          "doc": "The angle in radians",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "An Angle object representing the given angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce4f5faa-0af0-5d4a-3054-91f419644f30"
+    },
+    {
+      "name": "Parse(String)",
+      "signature": "public static Angle Parse(string text)",
+      "summary": "Parses the given text as an angle in the current unit type",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "Resulting angle from the text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6392e038-4934-caf1-743b-cb2f4a110187"
+    },
+    {
+      "name": "Parse(String, IFormatProvider)",
+      "signature": "public static Angle Parse(string text, IFormatProvider formatProvider)",
+      "summary": "Parses the given text as an angle in the current unit type",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "Format provider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "Resulting angle from the text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fed77922-44d4-c8ce-763b-f4f3ccc7e793"
+    },
+    {
+      "name": "Parse(String, IFormatProvider, Angle.UnitType)",
+      "signature": "public static Angle Parse(string text, IFormatProvider formatProvider, Angle.UnitType unitType)",
+      "summary": "Parses the given text as an angle in the current unit type",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "Format provider",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Angle.UnitType",
+          "doc": "Input unit type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "Resulting angle from the text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e50fed20-8e48-aa8a-defe-5dd610183f40"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Converts the represented angle to a string in the current units",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "This angle as a string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4aa323d3-8ea8-8f87-565a-304f1ac29617"
+    },
+    {
+      "name": "ToString(Angle.UnitType)",
+      "signature": "public string ToString(Angle.UnitType unitType)",
+      "summary": "Converts the represented angle to a string in the given units",
+      "params": [
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Angle.UnitType",
+          "doc": "Input unit type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "This angle as a string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/03bfa56e-97b9-9274-eb38-aa22528502dd"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Converts the represented angle to a string with the given parameters",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string. Can be null.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "This angle as a string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6a45a7f7-9fca-bd37-df54-e6a26e58f575"
+    },
+    {
+      "name": "ToString(String, IFormatProvider, Angle.UnitType)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider, Angle.UnitType angleUnit)",
+      "summary": "Converts the represented angle to a string with the given parameters",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string. Can be null.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "angleUnit",
+          "type": "Tekla.Structures.Datatype.Angle.UnitType",
+          "doc": "The unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "This angle as a string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/79ca5535-ce7d-7f31-3ef0-d0d87bbb19ae"
+    },
+    {
+      "name": "TryParse(String, Angle.)",
+      "signature": "public static bool TryParse(string text, out Angle result)",
+      "summary": "Parses the given text as an angle in the current unit type",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Tekla.Structures.Datatype.Angle.",
+          "doc": "Resulting angle if success",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the conversion succeeds, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c93cffab-483e-40cb-fe9d-a557d004038f"
+    },
+    {
+      "name": "TryParse(String, IFormatProvider, Angle.)",
+      "signature": "public static bool TryParse(string text, IFormatProvider formatProvider, out Angle result)",
+      "summary": "Parses the given text as an angle in the current unit type",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "Format provider",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Tekla.Structures.Datatype.Angle.",
+          "doc": "Resulting angle if success",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the conversion succeeds, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/30a22c28-8ae0-dc9d-00dd-f42c6079d87c"
+    },
+    {
+      "name": "TryParse(String, IFormatProvider, Angle.UnitType, Angle.)",
+      "signature": "public static bool TryParse(string text, IFormatProvider formatProvider, Angle.UnitType unitType, out Angle result)",
+      "summary": "Parses the given text as an angle in the current unit type",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "Format provider",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Angle.UnitType",
+          "doc": "Input unit type",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Tekla.Structures.Datatype.Angle.",
+          "doc": "Resulting angle if success",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the conversion succeeds, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/892a0ae8-d10f-36f9-a991-1aa9ccfef95b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentUnitType",
+      "type": "Angle.UnitType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Tekla Structures current angle type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c4f2be8a-fe58-9cd8-587b-1ca7a3b17963"
+    },
+    {
+      "name": "CurrentUnitValue",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the angle in the current unit",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e144c30-d6e8-3f9b-1321-affa406d2f6e"
+    },
+    {
+      "name": "DecimalPlaces",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the number of decimal places used for angles.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a50b771a-f695-c036-652b-b1ca283b192a"
+    },
+    {
+      "name": "Degrees",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the angle value in degrees",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fd1a9406-848e-7b2a-b2d7-959b8c7d090e"
+    },
+    {
+      "name": "Radians",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the angle value in radians",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6c5ebf71-8fe3-1ffc-cae3-0e4e93379981"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "LcOpRedlineType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpRedlineType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRedlineType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eTYPE_LINE",
+      "value": 0
+    },
+    {
+      "name": "eTYPE_ELLIPSE",
+      "value": 1
+    },
+    {
+      "name": "eTYPE_CLOUD",
+      "value": 2
+    },
+    {
+      "name": "eTYPE_TAG",
+      "value": 3
+    },
+    {
+      "name": "eTYPE_TEXT",
+      "value": 4
+    },
+    {
+      "name": "eTYPE_ARROW",
+      "value": 5
+    }
+  ]
+}

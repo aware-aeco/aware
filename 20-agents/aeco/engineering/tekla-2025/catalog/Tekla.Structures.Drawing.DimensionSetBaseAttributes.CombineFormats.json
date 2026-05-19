@@ -1,0 +1,29 @@
+{
+  "name": "DimensionSetBaseAttributes.CombineFormats",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The combined dimension formats.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/28b0d248-7c2b-9615-1140-d9f538025098",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Off",
+      "value": 0,
+      "summary": "No combining."
+    },
+    {
+      "name": "NumberOfItemsTimesLength",
+      "value": 1,
+      "summary": "The number of items times the dimension length. E.g. 3*60."
+    },
+    {
+      "name": "NumberOfItemsTimesLengthEqualsResult",
+      "value": 2,
+      "summary": "The number of items times the dimension length equals the result. E.g. 3*60=180."
+    }
+  ]
+}

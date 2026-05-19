@@ -1,0 +1,77 @@
+{
+  "name": "ProfileUtil",
+  "namespace": "TestHelper.ProfileUtil",
+  "kind": "class",
+  "summary": "Profiler utility class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtil/ProfileUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "profile",
+      "signature": "profile( function: Callable, *param: Any, calls_to_print: int = 20, description: str = \u0022\u0022, show_graphical_results: bool = False, profiler_type: ProfilerType = C_PROFILE, show_separator_line: bool = False, result_file_name: str = \u0022\u0022 ) -\u003E Any",
+      "summary": "profile by cprofile",
+      "remarks": "profile by cprofile",
+      "params": [
+        {
+          "name": "function",
+          "type": "Callable",
+          "doc": "function to execute",
+          "optional": false
+        },
+        {
+          "name": "param",
+          "type": "Any",
+          "doc": "function parameter",
+          "optional": false
+        },
+        {
+          "name": "calls_to_print",
+          "type": "int",
+          "doc": "number of calls shown in the profile report (only for C_Profile)",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "description of the text",
+          "optional": false
+        },
+        {
+          "name": "show_graphical_results",
+          "type": "bool",
+          "doc": "show graphical results (only for C_Profile)",
+          "optional": false
+        },
+        {
+          "name": "profiler_type",
+          "type": "ProfilerType",
+          "doc": "type of the profiler",
+          "optional": false
+        },
+        {
+          "name": "show_separator_line",
+          "type": "bool",
+          "doc": "show a separator line before the results",
+          "optional": false
+        },
+        {
+          "name": "result_file_name",
+          "type": "str",
+          "doc": "name of the result file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Any",
+        "doc": "return value of the call function"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtil/ProfileUtil/#TestHelper.ProfileUtil.ProfileUtil.profile"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

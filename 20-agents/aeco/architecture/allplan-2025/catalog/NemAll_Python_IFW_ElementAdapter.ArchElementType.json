@@ -1,0 +1,31 @@
+{
+  "name": "ArchElementType",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "enum",
+  "summary": "Architecture element types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ArchElementType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "tInvalid",
+      "value": 0
+    },
+    {
+      "name": "tSheet",
+      "value": 2
+    },
+    {
+      "name": "tSolid",
+      "value": 3
+    },
+    {
+      "name": "tWire",
+      "value": 1
+    }
+  ]
+}

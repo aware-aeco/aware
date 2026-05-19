@@ -1,0 +1,34 @@
+{
+  "name": "GH_GraftMode",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "enum",
+  "summary": "Enumerates all predefined grafting modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_GraftMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Don\u0027t include null items or empty lists."
+    },
+    {
+      "name": "GraftNullItems",
+      "value": 1,
+      "summary": "Null items are included in the grafted tree."
+    },
+    {
+      "name": "GraftEmptyLists",
+      "value": 2,
+      "summary": "Empty lists are included in the grafted tree."
+    },
+    {
+      "name": "GraftAll",
+      "value": 3,
+      "summary": "Null items and empty lists are both included in the grafted tree."
+    }
+  ]
+}

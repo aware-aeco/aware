@@ -1,0 +1,96 @@
+{
+  "name": "Page",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.Page.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Page/",
+  "constructors": [
+    {
+      "name": "Page",
+      "signature": "Page(doc: DocumentAdapter, pageNr: int, anchors: list) | Page( doc: DocumentAdapter, pageNr: int, anchors: list, conditionTemplate: str ) | Page( doc: DocumentAdapter, pageNr: int, anchors: list, size: MinMax2D, centeringCells: bool, ) | Page( doc: DocumentAdapter, pageNr: int, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, ) | Page( doc: DocumentAdapter, pageNr: int, scale: float, anchors: list, size: MinMax2D, centeringCells: bool, ) | Page( doc: DocumentAdapter, pageNr: int, scale: float, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, ) | Page( doc: DocumentAdapter, pageNr: int, scales: list, anchors: list, size: MinMax2D, centeringCells: bool, ) | Page( doc: DocumentAdapter, pageNr: int, scales: list, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "Anchors",
+          "type": "object",
+          "doc": "BaseReferenceModelElements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Page/#NemAll_Python_Precast.Page.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_anchor",
+      "signature": "add_anchor(anchor: Anchor)",
+      "summary": "Adds an anchor to the page",
+      "remarks": "Adds an anchor to the page",
+      "params": [
+        {
+          "name": "Anchor",
+          "type": "object",
+          "doc": "to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Page/#NemAll_Python_Precast.Page.add_anchor"
+    },
+    {
+      "name": "add_anchors",
+      "signature": "add_anchors(anchors: list)",
+      "summary": "Adds anchors to the page",
+      "remarks": "Adds anchors to the page",
+      "params": [
+        {
+          "name": "Anchors",
+          "type": "object",
+          "doc": "to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Page/#NemAll_Python_Precast.Page.add_anchors"
+    },
+    {
+      "name": "add_cell",
+      "signature": "add_cell(cell: Cell)",
+      "summary": "Adds a cell (labelStyle/legend/view) to the page",
+      "remarks": "Adds a cell (labelStyle/legend/view) to the page",
+      "params": [
+        {
+          "name": "Cell",
+          "type": "object",
+          "doc": "to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Page/#NemAll_Python_Precast.Page.add_cell"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawingFile",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Sets the drawing file where the page should be placed Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Page/#NemAll_Python_Precast.Page.DrawingFile"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

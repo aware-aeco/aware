@@ -1,0 +1,93 @@
+{
+  "name": "StructuralBeamElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.StructuralBeamElement.)",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/",
+  "constructors": [
+    {
+      "name": "StructuralBeamElement",
+      "signature": "StructuralBeamElement() | StructuralBeamElement(structuralBeamProperties) | StructuralBeamElement(structuralBeamElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/#NemAll_Python_ArchElements.StructuralBeamElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetStructuralBeamProperties",
+      "signature": "GetStructuralBeamProperties()",
+      "summary": "Get the StructuralBeam properties",
+      "remarks": "Get the StructuralBeam properties",
+      "params": [],
+      "returns": {
+        "type": "StructuralBeamProperties",
+        "doc": "StructuralBeam properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/#NemAll_Python_ArchElements.StructuralBeamElement.GetStructuralBeamProperties"
+    },
+    {
+      "name": "SetAxisVisibility",
+      "signature": "SetAxisVisibility(value)",
+      "summary": "Set the Visibility of element axis",
+      "remarks": "Set the Visibility of element axis",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool",
+          "doc": "Bool if axis of element should be visible",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/#NemAll_Python_ArchElements.StructuralBeamElement.SetAxisVisibility"
+    },
+    {
+      "name": "SetStructuralBeamProperties",
+      "signature": "SetStructuralBeamProperties(structuralBeamProp)",
+      "summary": "Set the StructuralBeam properties",
+      "remarks": "Set the StructuralBeam properties",
+      "params": [
+        {
+          "name": "structuralBeamProp",
+          "type": "StructuralBeamProperties",
+          "doc": "StructuralBeam properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/#NemAll_Python_ArchElements.StructuralBeamElement.SetStructuralBeamProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/#NemAll_Python_ArchElements.StructuralBeamElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "PourObjectFilterExpressions.ConcreteMixture",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The ConcreteMixture class represents the concrete mixture filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f2306ca0-f78a-4c06-8d8c-6d5d298a1580",
+  "constructors": [
+    {
+      "name": "PourObjectFilterExpressions.ConcreteMixture",
+      "signature": "public ConcreteMixture()",
+      "summary": "Initializes a new instance of the ConcreteMixture class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f04f53b-776b-0cf1-c43e-142c65327c0e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

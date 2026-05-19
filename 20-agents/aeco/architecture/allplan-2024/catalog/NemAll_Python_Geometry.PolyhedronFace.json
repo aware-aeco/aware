@@ -1,0 +1,190 @@
+{
+  "name": "PolyhedronFace",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Polyhedron face All constructors are prohibited, only Polyhedron3D can instantiate this class. This behavior is dependant on old %Allplan architecture and can be changed.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/",
+  "constructors": [
+    {
+      "name": "PolyhedronFace",
+      "signature": "PolyhedronFace(face)",
+      "summary": "Standard copy constructor",
+      "remarks": "Standard copy constructor",
+      "params": [
+        {
+          "name": "face",
+          "type": "PolyhedronFace",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendEdge",
+      "signature": "AppendEdge(edgeHandle, positiveOrientation) | AppendEdge(edge)",
+      "summary": "Append edge into face",
+      "remarks": "Append edge into face",
+      "params": [
+        {
+          "name": "edgeHandle",
+          "type": "int",
+          "doc": "Appended EdgeHandle.",
+          "optional": false
+        },
+        {
+          "name": "positiveOrientation",
+          "type": "bool",
+          "doc": "True for positive, false for negative orientation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.AppendEdge"
+    },
+    {
+      "name": "AppendEdges",
+      "signature": "AppendEdges(edges)",
+      "summary": "Append edges into face",
+      "remarks": "Append edges into face",
+      "params": [
+        {
+          "name": "edges",
+          "type": "OrientedEdgeList",
+          "doc": "Vector of edges.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.AppendEdges"
+    },
+    {
+      "name": "GetEdge",
+      "signature": "GetEdge(edgeIndex)",
+      "summary": "Get the edge index on specified position Old interface: getFaceEdge",
+      "remarks": "Get the edge index on specified position Old interface: getFaceEdge",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "Specified position in edge vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "False when edgeIndex is out of range or when occurred another error, otherwise true.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.GetEdge"
+    },
+    {
+      "name": "GetEdges",
+      "signature": "GetEdges()",
+      "summary": "Get the edge index on specified position",
+      "remarks": "Get the edge index on specified position",
+      "params": [],
+      "returns": {
+        "type": "OrientedEdgeList",
+        "doc": "Vector of oriented edges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.GetEdges"
+    },
+    {
+      "name": "GetEdgesCount",
+      "signature": "GetEdgesCount()",
+      "summary": "Get count of edges Old interface: getFaceEdgeCount",
+      "remarks": "Get count of edges Old interface: getFaceEdgeCount",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of edges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.GetEdgesCount"
+    },
+    {
+      "name": "GetFlags",
+      "signature": "GetFlags()",
+      "summary": "Get the flags of the face",
+      "remarks": "Get the flags of the face",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Face flags."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.GetFlags"
+    },
+    {
+      "name": "SetFlags",
+      "signature": "SetFlags(flags)",
+      "summary": "Set the flags of the face",
+      "remarks": "Set the flags of the face",
+      "params": [
+        {
+          "name": "flags",
+          "type": "int",
+          "doc": "Face flags.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.SetFlags"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(edgeIndex)",
+      "summary": "Get the edge index on specified position Method can throw exception when index is out of range. Please use the GetEdgeIndex with return flag when you do not used exception handler. Old interface: getFaceEdge",
+      "remarks": "Get the edge index on specified position Method can throw exception when index is out of range. Please use the GetEdgeIndex with return flag when you do not used exception handler. Old interface: getFaceEdge",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "Specified position in edge vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "OrientedEdge",
+        "doc": "Edge index, not reference."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.__getitem__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

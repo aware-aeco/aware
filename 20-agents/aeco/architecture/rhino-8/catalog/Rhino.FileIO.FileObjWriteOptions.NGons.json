@@ -1,0 +1,29 @@
+{
+  "name": "FileObjWriteOptions.NGons",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileObjWriteOptions.NGons\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileObjWriteOptions_NGons.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Ngons will not be created, nor will they be exported if they already exist"
+    },
+    {
+      "name": "Preserve",
+      "value": 1,
+      "summary": "If ngons already exist, they will be used as is, no ngons will be created"
+    },
+    {
+      "name": "Create",
+      "value": 2,
+      "summary": "Ngons will be created, if possible, by calling Mesh.Ngons.AddPlanarNgons"
+    }
+  ]
+}

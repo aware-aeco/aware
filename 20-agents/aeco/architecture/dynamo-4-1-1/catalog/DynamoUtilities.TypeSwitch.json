@@ -1,0 +1,92 @@
+{
+  "name": "TypeSwitch",
+  "namespace": "DynamoUtilities",
+  "kind": "static-class",
+  "summary": "Type TypeSwitch",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Case(System.Action)",
+      "signature": "DynamoUtilities.TypeSwitch.CaseInfo Case\u003CT\u003E(System.Action action)",
+      "summary": "TypeSwitch.Case",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DynamoUtilities.TypeSwitch.CaseInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    },
+    {
+      "name": "Case(System.Action\u003CT\u003E)",
+      "signature": "DynamoUtilities.TypeSwitch.CaseInfo Case\u003CT\u003E(System.Action\u003CT\u003E action)",
+      "summary": "TypeSwitch.Case",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DynamoUtilities.TypeSwitch.CaseInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    },
+    {
+      "name": "Default(System.Action)",
+      "signature": "DynamoUtilities.TypeSwitch.CaseInfo Default(System.Action action)",
+      "summary": "TypeSwitch.Default",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DynamoUtilities.TypeSwitch.CaseInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    },
+    {
+      "name": "Do(object, DynamoUtilities.TypeSwitch.CaseInfo[])",
+      "signature": "void Do(object source, DynamoUtilities.TypeSwitch.CaseInfo[] cases)",
+      "summary": "TypeSwitch.Do",
+      "params": [
+        {
+          "name": "source",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "cases",
+          "type": "DynamoUtilities.TypeSwitch.CaseInfo[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

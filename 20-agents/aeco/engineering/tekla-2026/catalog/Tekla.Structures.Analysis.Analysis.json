@@ -1,0 +1,52 @@
+{
+  "name": "Analysis",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The Analysis class is a class from which the user can query analysis instances.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/47cb0854-5cb1-9863-234f-acf7ca8ae087",
+  "constructors": [
+    {
+      "name": "Analysis",
+      "signature": "public Analysis()",
+      "summary": "Initializes a new instance of the Analysis class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3197bc6b-758e-69aa-8274-63e69cad7e6d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAnalysisObjectSelector",
+      "signature": "public AnalysisObjectSelector GetAnalysisObjectSelector()",
+      "summary": "Returns the analysis object selector.",
+      "params": [],
+      "returns": {
+        "type": "AnalysisObjectSelector",
+        "doc": "The analysis object selector on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d6520431-c9b4-c5f5-f4d5-b1d04b4e3bc8"
+    },
+    {
+      "name": "GetConnectionStatus",
+      "signature": "public bool GetConnectionStatus()",
+      "summary": "Checks the connection status of the Tekla Structures process.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a proper connection to the Tekla Structures process has been established. Currently there\u0027s no way to re-establish the connection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/acbd9e7c-d498-507f-1f7a-2a09269dfca8"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

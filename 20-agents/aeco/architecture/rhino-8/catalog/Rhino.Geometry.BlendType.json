@@ -1,0 +1,29 @@
+{
+  "name": "BlendType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Blend types used for creating filleted Brep edges",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_BlendType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Chamfer",
+      "value": 0,
+      "summary": "Creates a ruled surface between brep edges with varying chamfer distances."
+    },
+    {
+      "name": "Fillet",
+      "value": 1,
+      "summary": "Creates a tangent surface between brep edges with varying radius values."
+    },
+    {
+      "name": "Blend",
+      "value": 2,
+      "summary": "Creates a curvature-continuous blend surface between brep edges with varying radius values."
+    }
+  ]
+}

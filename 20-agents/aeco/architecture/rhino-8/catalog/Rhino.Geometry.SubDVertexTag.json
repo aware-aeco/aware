@@ -1,0 +1,39 @@
+{
+  "name": "SubDVertexTag",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubDVertexTag identifies the type of subdivision vertex. Different tags use different subdivision algorithms to determine where the subdivision point and limit point are located. There are topological constraints that restrict which tags can be assigned.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDVertexTag.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not a valid vertex tag and the default value for ON_SubDVertex.m_vertex_tag. This encourages developers to thoughtfully initialize ON_SubDVertex.m_vertex_tag or use ON_SubD.UpdateAllTagsAndSectorCoefficients() to automatically set the m_vertex_tag values at an appropriate time."
+    },
+    {
+      "name": "Smooth",
+      "value": 1,
+      "summary": "Must be an interior vertex. All edges attached to a smooth vertex must be tagged as ON_SubDEdgeTag::Smooth and must have 2 faces."
+    },
+    {
+      "name": "Crease",
+      "value": 2,
+      "summary": "Can be an interior or a boundary vertex. Exactly two edges ending at a crease vertex must be tagged as ON_SubDEdgeTag::Crease and may have 1 or 2 faces. All other edges ending at a crease must be tagged as tagON_SubD::EdgeTag::Smooth and have 2 faces. Below P = ON_SubDVertex.ControlNetPoint() and Ai = ON_SubDVertex.Edge(i)-\u003EOtherEndVertex()-\u003EControlNetPoint(). A crease vertex subdivision point is (6*P \u002B A1 \u002B A2)/8. A crease vertex limit surface point is (4*P \u002B A1 \u002B A2)/6."
+    },
+    {
+      "name": "Corner",
+      "value": 3,
+      "summary": "Can be an interior, boundary, nonmanifold, or isolated vertex. The location of a corner vertex is fixed. The all subdivision points and the limit point are at the initial vertex location. The edges ending at a corner vertex can be smooth or crease edges. A corner vertex subdivision point is P where P = ON_SubDVertex.ControlNetPoint(). A corner vertex limit surface point is P where P = ON_SubDVertex.ControlNetPoint()."
+    },
+    {
+      "name": "Dart",
+      "value": 4,
+      "summary": "Must be an interior vertex. Every edge attached to a dart vertex must have 2 faces. Exactly one edge attached to a dart vertex must be tagged as ON_SubDEdgeTag::Crease and every other attached edge must be tagged as ON_SubDEdgeTag::smooth."
+    }
+  ]
+}

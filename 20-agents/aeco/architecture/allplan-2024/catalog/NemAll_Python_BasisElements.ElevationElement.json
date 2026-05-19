@@ -1,0 +1,44 @@
+{
+  "name": "ElevationElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "ElevationElement class",
+  "base": "DimensionLineElement",
+  "interfaces": [
+    "BasisElement",
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElevationElement/",
+  "constructors": [
+    {
+      "name": "ElevationElement",
+      "signature": "ElevationElement() | ElevationElement(dimensionPoints, placementVector, directionVector, settings)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElevationElement/#NemAll_Python_BasisElements.ElevationElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElevationElement/#NemAll_Python_BasisElements.ElevationElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,2014 @@
+{
+  "name": "Resources",
+  "namespace": "Dynamo.Properties",
+  "kind": "class",
+  "summary": "A strongly-typed resource class, for looking up localized strings, etc.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ArggOKButton",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Arrrrg, ok.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ArgumentNullException",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Value cannot be null. Parameter name: {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "Autocomplete",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Autocomplete.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "AutocompleteLowConfidenceMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No confident suggestions available. The model is continuously improving - check back soon..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "AutocompleteLowConfidenceTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Low confidence.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "AutocompleteLowConfidenceTooltip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Show Recommendations that are below the confidence level..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "AutocompleteNoRecommendationsMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The model is continuously improving - check back soon.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "AutocompleteNoRecommendationsTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No suggestions available.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "AutocompleteSearchTextBlockText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Search Autocomplete Results.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "BackUpOriginalFileMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Original file \u0027{0}\u0027 gets backed up at \u0027{1}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "BackupSavedMsg",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Backup file is saved.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "BadIdentifierSyntax",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Bad identifier syntax: \u0022{0}\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "BadRangeSyntax",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Bad range syntax: not of format \\\u0022start..end[..(increment|#count)]\\\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "BuildSublistsDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Build sublists from a list using DesignScript range syntax..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ButtonDownloadLastest",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Download latest version.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ButtonProcess",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Proceed anyway.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CancelButton",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cancel.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CannotHave0Step",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Can\u0027t have 0 step..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CannotOpenFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file cannot be opened.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ClearingWorkSpace",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Clearing workspace....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ClearingWorkflow",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Clearing workflow....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CodeBlockDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Allows for DesignScript code to be authored directly.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CodeBlockNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Allows for DesignScript code to be authored directly.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CodeBlockSearchTags",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to codeblock;.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CodeBlockTempIdentifierOutputLabel",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Value of expression at line {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ComposeFunctionNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Composes two single parameter functions into one function..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ComposeFunctionPortDataFunctionToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A Function.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ComposeFunctionPortDataResultToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Composed function: g(f(x)).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CoreLibraryLoadFailureForBlockedAssembly",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} This assembly is likely blocked. Try restarting Dynamo after unblocking this assembly and all other core assemblies that might be blocked. If you are running a downloaded DynamoSandbox build that is extracted from a .zip file, try using 7zip to extract the Dynamo binaries and try again..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CoreLibraryLoadFailureMessageBoxTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Core library load failure.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CouldNotCompressFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Could not compress file. Is the file in use?.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CouldNotGetLatestBuild",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Couldn\u0027t get the latest build from S3.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CouldNotGetUpdateData",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Couldn\u0027t get update data from {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CouldNotLoadTypes",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Could not load types..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CouldNotRepairOneNodeHoles",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Could not repair 1-node holes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CreatingConnectorError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to ERROR : Could not create connector between {0} and {1}..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "Culture",
+      "type": "System.Globalization.CultureInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "Overrides the current thread\u0027s CurrentUICulture property for all resource lookups using this strongly typed resource class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CustomNodeCouldNotBeInitialized",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Custom node \\\u0022{0}\\\u0022 could not be initialized..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CustomNodeDesciption",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Instance of a Custom Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CustomNodeFolderLoadFailure",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to load custom node directory. Do you have permission to access {0}?.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CustomNodeNotLoaded",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Custom node definition is not loaded! href=CustomNodeNotLoaded.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DSFunctionNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to DesignScript Builtin Functions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DefaultCustomNodeCategory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Custom nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DefaultHomeWorkspaceName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Home.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DefaultValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Default value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DefaultValueDisabled",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to (disabled).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DescriptionResource1",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to some description.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DirectoryNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Directory not found : {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DisplayEngineFailureMessageDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The virtual machine that powers Dynamo is experiencing some unexpected errors internally and is likely having great difficulties pulling itself together. It is recommended that you save your work now and reload the file. Giving the Dynamo VM a new lease of life can potentially make it feel happier and behave better. If you don\u0027t mind, it would be helpful for you to send us your file. That will make it quicker for us to get these issues fixed..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DllLoadException",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Dll Load Exception:.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DocsExperimentalPrefixMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This node is currently experimental. Its behavior, name, and signature are subject to change..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DownloadLatestButton",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Download latest version.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DulicatedPackage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A duplicate of the package called {0} was found at {1}. Ignoring it..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DummyNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This is an obsolete node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DuplicateMigrationTypeRegistered",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Duplicate migration type registered for {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DuplicatedModelGuidError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The map already contains a model with this id, the id must be unique for the workspace that is currently being deserialized: {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DuplicatedNewerPackage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A newer version of the package called {0} version {2} was found at {1} with version {3}. The newer version has been ignored..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DuplicatedOlderPackage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to An older version of the package called {0} version {2} was found at {1} with version {3}. The older version has been ignored..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DynamoLanguages_noxlate",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Default,English,\u010Ce\u0161tina,Deutsch,Espa\u00F1ol,Fran\u00E7ais,Italiano,\u65E5\u672C\u8A9E,\uD55C\uAD6D\uC5B4,Polski,Portugu\u00EAs (Brasil),\u0420\u0443\u0441\u0441\u043A\u0438\u0439,\u7B80\u4F53\u4E2D\u6587,\u7E41\u9AD4\u4E2D\u6587.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DynamoUpToDate",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Dynamo is up to date..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ElapsedWhenLoadingXml",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} elapsed for loading xml..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "EvaluationCompleted",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Evaluation completed in {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ExceptionEncountered",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Exception encountered scanning the package directory at {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedInsertFileNodeExistNotification",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to insert the file as some of the nodes already exist in the current worspace..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToGetMirrorVariable",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to get mirror for variable: {0}; reason: {1}..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToHandleReadyEvent",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to call Ready() in extension: .",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToLoad",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to load {0}\\n, Exception: {1}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToLoadCustomNode",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to load custom node: {0}. Replacing with proxy custom node..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToLoadHeader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to ERROR: The header for the custom node at {0} failed to load. It will be left out of search..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToLoadLibrary",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to load library: {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToLoadType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to load type from {0}. The type was {1}..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToSave",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to save {0}\\n, Exception: {1}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FileBackUpLocation",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Original file \u0027{0}\u0027 gets backed up at \u0027{1}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FileCannotBeOpened",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file cannot be opened..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FileLoadFailureMessageBoxTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to File load failure.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FileNotOpenedCorrectly",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file may not open correctly.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FormulaDSConversionFailure",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Formula failed to convert to DesignScript code. Please edit the formula manually to use it in a CodeBlock node..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FormulaMigrated",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Formula node has been deprecated. It has been automatically migrated to a CodeBlock node. Note that results may vary after the migration depending on lacing options selected on the original Formula node. Appropriate replication guides might need to be applied to the CodeBlock node script..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FunctionDefinitionOverwrittenMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Attempting to load customNode {0} loaded by package {1}, but a previous definition named {2} exists with no associated package. The new customNode definition has been loaded, but Dynamo may be in an unstable state, please avoid loading multiple custom nodes with the id..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FunctionDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Instance of a Custom Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FunctionNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to DesignScript Builtin Functions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FutureFileDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file \u0027{0}\u0027 was created in future version \u0027{1}\u0027 and may not open correctly in your installed version of Dynamo \u0027{2}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FutureFileSummary",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file may not open correctly.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FutureFileTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Future File.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GoodByeLog",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Goodbye.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupDefaultText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Description \u003CDouble click here to edit group description\u003E.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupNameDefaultText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Title \u003CDouble click here to edit group title\u003E.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultActions",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Actions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultActionsColor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to B9F9E1.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultInputs",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Inputs.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultInputsColor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to FFB8D8.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultOutputs",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Outputs.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultOutputsColor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to FFC999.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultReview",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Review.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GroupStyleDefaultReviewColor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A4E1FF.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "HeaderAction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to ACTIONS.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "HeaderCreate",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to CREATE.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "HeaderQuery",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to QUERY.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "IdentifiersNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No identifiers found..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "IncompatibleOfFileAndDynamo",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file \u0027{0}\u0027 of version \u0027{1}\u0027 cannot be opened by this version of Dynamo ({2}).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "IncorrectVersionToOpenFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file \u0027{0}\u0027 was created in future version \u0027{1}\u0027 and may not open correctly in your installed version of Dynamo \u0027{2}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "IncorrectlyFormattedNodeLibraryDisplay",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This is the incorrectly formatted library name:.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "IncorrectlyFormattedNodeLibraryWarning",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Incorrectly formatted package node library encountered, this may result in a package assembly not being loaded!.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InputLabel",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to INPUT.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InputNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A function parameter, use with custom nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InputNodeRenameHint",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to default input name, rename me!.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InputNodeSearchTags",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to variable;argument;parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InputPortAlternativeName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to input.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InsertDialogBoxText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Insert Dynamo Graph....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InsertGraphRunModeNotificationText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Example file added to workspace. Run mode changed to Manual..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidCustomNodeFolderWarning",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The folder \u0027{0}\u0027 does not exist.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidInputSymbolCustomNodeWarning",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This custom node contains an invalid input. Please fix the input before saving the custom node..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidInputSymbolErrorMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This input symbol is not currently valid, and cannot be saved until it is fixed. Valid inputs take the form: name : type = defaultValue The input name should be a valid variable name, without spaces. An input type and default value are optional..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidInputSymbolWarningMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This custom node currently contains some invalid inputs, and cannot be saved until the inputs are fixed. If the custom node is saved using SaveAs, the invalid inputs will revert to generic inputs. Valid inputs take the form: name : type = defaultValue The input name should be a valid variable name, without spaces. An input type and default value are optional..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidInputSymbolWarningShortMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This custom node cannot be saved until invalid inputs are removed or fixed..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidInputSymbolWarningTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Custom Node Contains Invalid Inputs and Cannot Be Saved..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidLibraryFormat",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Invalid library format..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidPackageVersion",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The version of the package called {0} found at {1} is invalid (version: \u0022{2}\u0022). Ignoring it..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidStartOrEndOfRange",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The start or end of a range is greater than the number of available elements in the list..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LegacyTraceDataWarning",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This workspace contains element binding data in a legacy format that is no longer supported in Dynamo 3.0 and higher versions. Element binding data will be saved in the new format the next time you run and save this workspace..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LibraryBuildError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Build error for library: {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LibraryHasBeenLoaded",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Library {0} has been loaded..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LibraryIsDumped",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Library is dumped to \\\u0022{0}\\\u0022..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LibraryLoadFailureForBlockedAssembly",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} This assembly is likely blocked. Try importing it again after unblocking the assembly..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LibraryLoadFailureMessageBoxTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Library load failure.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LibraryPathCannotBeFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot find library path: {0}..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LoadingNodeDefinition",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Loading node definition for \u0022{0}\u0022 from: {1}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LocateInDisk",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Locate in Disk...",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LoginNeededMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to You need to login to your account to get recommendations. Please log in or switch to node type match autocomplete..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "LoginNeededTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Not authenticated.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MalformedHeaderPackage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} contains a package with a malformed header. Ignoring it..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MessageCustomNodePackageFailedToLoad",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {1} cannot be loaded. Installing it will conflict with one or more node definitions that already exist in {0}, which is currently loaded. To install {1}, Dynamo needs to first uninstall {0}. Restart Dynamo to complete the uninstall..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MissingXmlTagConsoleMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} is missing some XML documentation tags..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ModelNotFoundError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to UpdateModelValue: Model not found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MoreButtonTextFormat",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to SHOW MORE ({0}).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MoveLabel",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Move.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NewNoteString",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to New Note.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NoDescriptionAvailable",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No description available.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NoHeaderPackage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} contains a package without a header. Ignoring it..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NoMatchesFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No matches found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NodeDeprecatedMsg",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Node \u0027{0}\u0027 is now deprecated..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NodeInformationalStateShowAllErrors",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Show all errors.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NodeNotResolvedMsg",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Node \u0027{0}\u0027 cannot be resolved..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NodeOfTypeDeprecatedMsg",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Node of type \u0027{0}\u0027,from assembly \u0027{1}\u0027, is now deprecated..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NodeOfTypeNotResolvedMsg",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Node of type \u0027{0}\u0027, from assembly \u0027{1}\u0027, cannot be resolved..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NodeProblemEncountered",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Whilst preparing to run, this node encountered a problem. Please talk to the creators of the node, and give them this message:.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NodeUnhandledMsg",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unhandled \u0027DummyNode.NodeNature\u0027 value: {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NoneLinterDescriptorName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to None.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NoneString",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to none.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NothingIsSelectedWarning",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Nothing is selected. href=NothingIsSelectedWarning.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NumberNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Creates a number..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OKButton",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to OK.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ObsoleteFileDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Your file \u0027{0}\u0027 of version \u0027{1}\u0027 cannot be opened by this version of Dynamo ({2}).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ObsoleteFileTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Obsolete File.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OpenWorkbenchError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to There was an error opening the workbench..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OpenWorkspaceError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to There was an error opening the workspace..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OpeningHomeWorkspace",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Opening home workspace {0}....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OutputLabel",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to OUTPUT.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OutputNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A function output, use with custom nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OutputPortAlternativeName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to output.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageEmpty",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The package was found to be empty and was not installed..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageLoadFailureForBlockedAssembly",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} This package likely contains an assembly that is blocked. You will need to load the package again after unblocking the assembly. Restart Dynamo to reload the package..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageManagerPackageAlreadyExists",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A package with the given name already exists..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageManagerPackagePreviewCounter",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} files and {1} folders will be created..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageManagerPackageSelectCounter",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} files and {1} folders loaded..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageManagerUserIsNotAMaintainer",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The current user, \u0027{0}\u0027, is not a maintainer of the package \u0027{1}\u0027..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStateError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Error.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStateErrorTooltip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unloaded. This package has not been loaded due to an unexpected error..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStateLoaded",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStateLoadedTooltip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Loaded. This package is loaded and ready to be used..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStatePendingUnload",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Scheduled to be unloaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStatePendingUnloadTooltip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Scheduled to be unloaded. This package will be unloaded after the next Dynamo restart..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStateUnloaded",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unloaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageStateUnloadedTooltip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unloaded. This package has not been loaded because another conflicting package was loaded before it..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PackageTooLarge",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The package is too large! The package must be less than 15 MB!.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PathNotRegconizableAsStableOrDailyBuild",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The specified file path is not recognizable as a stable or a daily build.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataFunctionOutputToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to function output.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataInputToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Input #{0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataOutputToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Output #{0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataParameterToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataPathToFileToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Path to the file.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataReturnValueToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to return value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataSymbolToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Symbol.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortDataVariableToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to variable.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PortsNameDescriptionDoNotEqualWarningMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Number of port names does not equal number of port descriptions..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "Preview3DOutageTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to 3D preview has been deactivated.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ProceedButton",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Proceed anyway.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PythonTemplateAppData",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Python template loaded from AppData.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PythonTemplateDefaultFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Python template set to default..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PythonTemplateDefinedByHost",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Python template set by host integrator.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "PythonTemplateUserFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Python template loaded from DynamoSettings.xml path.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangeEndCouldNotBeParsed",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Range end could not be parsed..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangeOrApprIdentifierAlrUsed",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot use range or approx. identifier on increment field when one has already been used to specify a count..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangePortDataAmountToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Amount of numbers or letters in the sequence Default value: 10.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangePortDataEndToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Number or letter to end the sequence at Default value: 9.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangePortDataSeqToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to New list of type: var[]..[].",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangePortDataStartToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Number or letter to start the sequence at Default value: 0.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangePortDataStepToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Space between numbers or letters Default value: 1.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangeStepCouldNotBeParsed",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Range step could not be parsed..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangeValuesGreaterThanZero",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Range values must be greater than zero..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RemoveLabel",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Remove.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RequestingVersionUpdate",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Requesting version update info....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ResourceManager",
+      "type": "System.Resources.ResourceManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the cached ResourceManager instance used by this class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ResourcePropertyIsNotStringTypeMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Resource Property is not String Type.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ResourceTypeDoesNotHavePropertyMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Resource Type does not have Property.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RunTypeToolTipAutomatically",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Run whenever an input to the graph is updated..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RunTypeToolTipManually",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Run when you click the Run button..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RunTypeToolTipPeriodicallyDisabled",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Run Periodic is only available when there are nodes in the graph that support periodic update..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RunTypeToolTipPeriodicallyEnabled",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Run at the specified interval..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SavingInProgress",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Saving {0} ....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SearchTextBlockText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Search.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SplashScreenInitPreferencesSettings",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Initializing preferences....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SplashScreenLoadNodeLibrary",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Loading Node Library....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "StringNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Creates a string..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SublistPortDataResultToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The sublists..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SublistsPortDataListToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The list from which to create sublists..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SublistsPortDataOffsetToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The offset to apply to the sub-list. Ex. The range \u00220..2\u0022 with an offset of 1 will yield sublists {0,1,2}{1,2,3}{2,3,4}....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SubmitBugButton",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Submit Bug To Github.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SubmitBugToGithub",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Submit Bug To Github.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SymbolNodeDescription",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A function parameter, use with custom nodes. You can specify the type and default value for parameter. E.g., input : var[]..[] value : bool = false.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SymbolSearchTags",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to variable;argument;parameter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToastFileNodeAutoCompleteDoubleClick",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Click on the sparkle icon next to the port to activate Node Autocomplete..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToolTipForTempVar",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Statement Output.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToolTipFunctionOutput",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to function output.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToolTipInput",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Input #.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToolTipInputData",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Input Data.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToolTipOutput",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Output #.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToolTipOutputData",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Output Data.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ToolTipReturnValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to return value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "TopResult",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Top Result.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnableToCreateCustomNodeID",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unable to create instance of custom node with id: \\\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnhandledExceptionInDynamoEngine",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unhandled exception in Dynamo engine.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnhandledExceptionSummary",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unhandled exception in Dynamo engine.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnhandledExceptionTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unhandled Exception.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnknownErrorProcessingFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to An unknown error occurred while processing the file..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnknownVersion",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unknown.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnresolvedNodesWarningMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to This may be caused by a missing package, incompatible package version, or missing host program. If you Save As, the unresolved nodes will be removed. Resolve or remove the unresolved nodes and try again..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnresolvedNodesWarningShortMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The graph has unresolved nodes and cannot be saved..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnresolvedNodesWarningTitle",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unable to save graph.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UpdateAvailable",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Update available: {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UpdateDownloadComplete",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Update download complete..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UpdateDownloadProgress",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Update download progress: {0}%.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UpdateDownloadStarted",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Update download started....",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UsageReportingErrorMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Uh oh... We\u0027re sorry - we tried to save your decisions, but something went wrong. The decision probably hasn\u0027t been saved. This really shouldn\u0027t have happened. Please get in touch via GitHub and send us this information. You can also try deleting [FILEPATH] and trying again. Depending on your previous choice, analytics may still be running, if you\u0027re worried about this, please consider not using Dynamo until we\u0027ve got back to you to solve the problem. Sorry about that..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "WarningCannotFindType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot find type \u0027{0}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "WarningInvalidInput",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Invalid input. The name of parameter should start with alphabetic character. You can specify its type and default value. E.g., input : var[]..[] value: bool = false.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "WarningInvalidOutput",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Only comments and single variable are allowed in output node..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "WatermarkLabelText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Enter code here.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "WelcomeMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Welcome to Dynamo!.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "WorkbenchNotOpen",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Workbench could not be opened..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

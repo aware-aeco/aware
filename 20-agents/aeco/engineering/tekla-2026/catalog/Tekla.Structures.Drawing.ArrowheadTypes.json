@@ -1,0 +1,39 @@
+{
+  "name": "ArrowheadTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The arrowhead types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/102571cd-edbe-ea94-45dd-f3fd265f745d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoArrow",
+      "value": -1005,
+      "summary": "No arrowhead."
+    },
+    {
+      "name": "FilledArrow",
+      "value": -1004,
+      "summary": "The filled arrowhead."
+    },
+    {
+      "name": "LineArrow",
+      "value": -1003,
+      "summary": "The line arrowhead."
+    },
+    {
+      "name": "CircleArrow",
+      "value": -1002,
+      "summary": "The open circle arrowhead."
+    },
+    {
+      "name": "FilledCircleArrow",
+      "value": -1001,
+      "summary": "The filled circle arrowhead."
+    }
+  ]
+}

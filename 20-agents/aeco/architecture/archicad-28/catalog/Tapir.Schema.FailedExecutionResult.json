@@ -1,0 +1,32 @@
+{
+  "name": "FailedExecutionResult",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The result of a failed execution.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FailedExecutionResult",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "success",
+      "type": "boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060success\u0060 of type \u0060boolean\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FailedExecutionResult"
+    },
+    {
+      "name": "error",
+      "type": "Error",
+      "getter": true,
+      "setter": false,
+      "summary": "The details of an execution failure.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FailedExecutionResult"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

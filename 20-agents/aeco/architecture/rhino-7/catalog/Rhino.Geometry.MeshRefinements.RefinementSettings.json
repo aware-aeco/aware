@@ -1,0 +1,57 @@
+{
+  "name": "RefinementSettings",
+  "namespace": "Rhino.Geometry.MeshRefinements",
+  "kind": "class",
+  "summary": "Defines the way a mesh refinement modifier works.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshRefinements_RefinementSettings.htm",
+  "constructors": [
+    {
+      "name": "RefinementSettings",
+      "signature": "public RefinementSettings()",
+      "summary": "Creates a default operation settings object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshRefinements_RefinementSettings__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ContinueRequest",
+      "type": "CancellationToken",
+      "getter": true,
+      "setter": true,
+      "summary": "A token to request computation termination.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshRefinements_RefinementSettings_ContinueRequest.htm"
+    },
+    {
+      "name": "HasPull",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this subdivision should create a result on a specific surface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshRefinements_RefinementSettings_HasPull.htm"
+    },
+    {
+      "name": "Level",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The level of subdivision to achieve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshRefinements_RefinementSettings_Level.htm"
+    },
+    {
+      "name": "NakedEdgeMode",
+      "type": "CreaseEdges",
+      "getter": true,
+      "setter": true,
+      "summary": "Set this property to define how naked edges should be treated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshRefinements_RefinementSettings_NakedEdgeMode.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

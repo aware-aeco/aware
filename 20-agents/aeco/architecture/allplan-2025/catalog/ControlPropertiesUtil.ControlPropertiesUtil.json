@@ -1,0 +1,387 @@
+{
+  "name": "ControlPropertiesUtil",
+  "namespace": "ControlPropertiesUtil",
+  "kind": "class",
+  "summary": "Implementation of the control properties utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/",
+  "constructors": [
+    {
+      "name": "ControlPropertiesUtil",
+      "signature": "ControlPropertiesUtil( control_props_list: list[BuildingElementControlProperties], build_ele_list: list[BuildingElement], )",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "control_props_list",
+          "type": "list[BuildingElementControlProperties]",
+          "doc": "list with the control properties",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "set_background_color",
+      "signature": "set_background_color( value_name: str, background_color: str, element_id: str = \u0022\u0022 )",
+      "summary": "set the background color control property",
+      "remarks": "set the background color control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "background_color",
+          "type": "str",
+          "doc": "background color in the format \u0022(red, green, blue)\u0022 with \u0022(-1, -1, -1)\u0022 as default",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_background_color"
+    },
+    {
+      "name": "set_enable_condition",
+      "signature": "set_enable_condition( value_name: str, enable_condition: str, element_id: str = \u0022\u0022 )",
+      "summary": "set the enable condition control property",
+      "remarks": "set the enable condition control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "enable_condition",
+          "type": "str",
+          "doc": "enable condition control property",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_enable_condition"
+    },
+    {
+      "name": "set_enable_function",
+      "signature": "set_enable_function( value_name: str, enable_function: Callable[..., bool] | None, element_id: str = \u0022\u0022, )",
+      "summary": "set the enable function control property",
+      "remarks": "set the enable function control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "enable_function",
+          "type": "Callable[..., bool] | None",
+          "doc": "enable function control property",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_enable_function"
+    },
+    {
+      "name": "set_global_attributes",
+      "signature": "set_global_attributes(global_attributes: dict[str, Any])",
+      "summary": "set the global attributes",
+      "remarks": "set the global attributes",
+      "params": [
+        {
+          "name": "global_attributes",
+          "type": "dict[str, Any]",
+          "doc": "global attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_global_attributes"
+    },
+    {
+      "name": "set_max_value",
+      "signature": "set_max_value(value_name: str, max_value: str, element_id: str = \u0027\u0027)",
+      "summary": "set the max value control property",
+      "remarks": "set the max value control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "object",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "max_value",
+          "type": "",
+          "doc": "maximal value",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "object",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_max_value"
+    },
+    {
+      "name": "set_min_value",
+      "signature": "set_min_value(value_name: str, min_value: str, element_id: str = \u0027\u0027)",
+      "summary": "set the min value control property",
+      "remarks": "set the min value control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "object",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "min_value",
+          "type": "",
+          "doc": "minimal value",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "object",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_min_value"
+    },
+    {
+      "name": "set_text",
+      "signature": "set_text(value_name: str, text: str, element_id: str = \u0027\u0027)",
+      "summary": "set the text control property",
+      "remarks": "set the text control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text control property",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_text"
+    },
+    {
+      "name": "set_value_list",
+      "signature": "set_value_list(value_name: str, value_list: str, element_id: str = \u0027\u0027)",
+      "summary": "set the value list control property",
+      "remarks": "set the value list control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "value_list",
+          "type": "str",
+          "doc": "value list control property",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_value_list"
+    },
+    {
+      "name": "set_value_list_2",
+      "signature": "set_value_list_2(value_name: str, value_list_2: str, element_id: str = \u0027\u0027)",
+      "summary": "set the value list 2 control property",
+      "remarks": "set the value list 2 control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "value_list_2",
+          "type": "str",
+          "doc": "value list 2 control property",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_value_list_2"
+    },
+    {
+      "name": "set_value_text_list",
+      "signature": "set_value_text_list( value_name: str, value_text_list: str, element_id: str = \u0022\u0022 )",
+      "summary": "set the value list 2 control property",
+      "remarks": "set the value list 2 control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "value_text_list",
+          "type": "str",
+          "doc": "value text list",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_value_text_list"
+    },
+    {
+      "name": "set_visible_condition",
+      "signature": "set_visible_condition( value_name: str, visible_condition: str, element_id: str = \u0022\u0022 )",
+      "summary": "set the visible condition control property",
+      "remarks": "set the visible condition control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "visible_condition",
+          "type": "str",
+          "doc": "visible condition control property",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_visible_condition"
+    },
+    {
+      "name": "set_visible_function",
+      "signature": "set_visible_function( value_name: str, visible_function: Callable[..., bool] | None, element_id: str = \u0022\u0022, )",
+      "summary": "set the visible function control property",
+      "remarks": "set the visible function control property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "value name of the control",
+          "optional": false
+        },
+        {
+          "name": "visible_function",
+          "type": "Callable[..., bool] | None",
+          "doc": "visible function control property",
+          "optional": false
+        },
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID of the building element. Defaults to \u0022\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlPropertiesUtil/#ControlPropertiesUtil.ControlPropertiesUtil.set_visible_function"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,46 @@
+{
+  "name": "ICurrentEnvironment_Get",
+  "namespace": "Rhino.Render",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.ICurrentEnvironment_Get\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ICurrentEnvironment_Get.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ForBackground",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the RenderEnvironment used as the 360 degree backdrop environment. Null will be returned if the background mode is set to \u0027Solid Color\u0027 or \u0027Gradient\u0027 (i.e., not \u0027Environment\u0027).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ICurrentEnvironment_Get_ForBackground.htm"
+    },
+    {
+      "name": "ForBackground_CheckMode",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ICurrentEnvironment_Get_ForBackground_CheckMode.htm"
+    },
+    {
+      "name": "ForLighting",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the RenderEnvironment used as custom skylighting environment. Null will be returned if the custom skylighting environment override is disabled.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ICurrentEnvironment_Get_ForLighting.htm"
+    },
+    {
+      "name": "ForReflectionAndRefraction",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the RenderEnvironment used as custom reflection (and refraction) environment. Null will be returned if the custom reflection override is disabled.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ICurrentEnvironment_Get_ForReflectionAndRefraction.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

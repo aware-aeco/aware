@@ -1,0 +1,41 @@
+{
+  "name": "NormalNumberPropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A number property value containing a valid numeric value.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberPropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060type\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberPropertyValue"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060status\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberPropertyValue"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060value\u0060 of type \u0060number\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalNumberPropertyValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

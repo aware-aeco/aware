@@ -1,0 +1,14 @@
+{
+  "name": "Events.LayoutEditingModeEnteredDelegate",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "delegate",
+  "summary": "The delegate to use for entering layout edit mode.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7f3005ca-2bb9-2728-458f-741c7a9a1e07",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void LayoutEditingModeEnteredDelegate()"
+}

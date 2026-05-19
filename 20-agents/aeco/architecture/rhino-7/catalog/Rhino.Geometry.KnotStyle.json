@@ -1,0 +1,44 @@
+{
+  "name": "KnotStyle",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Knot styles for NURBS curves and surfaces. If a knot vector meets the conditions of two styles, then the style with the lowest value is used.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_KnotStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0,
+      "summary": "Unknown knot style"
+    },
+    {
+      "name": "Uniform",
+      "value": 1,
+      "summary": "Uniform knots (ends not clamped)."
+    },
+    {
+      "name": "QuasiUniform",
+      "value": 2,
+      "summary": "Uniform knots (clamped ends, degree \u003E= 2)."
+    },
+    {
+      "name": "PiecewiseBezier",
+      "value": 3,
+      "summary": "All internal knots have full multiplicity."
+    },
+    {
+      "name": "ClampedEnd",
+      "value": 4,
+      "summary": "Clamped end knots (with at least one interior non-uniform knot)."
+    },
+    {
+      "name": "NonUniform",
+      "value": 5,
+      "summary": "Known to be none of the other styles"
+    }
+  ]
+}

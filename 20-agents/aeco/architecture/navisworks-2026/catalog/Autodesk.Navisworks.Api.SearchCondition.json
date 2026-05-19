@@ -1,0 +1,650 @@
+{
+  "name": "SearchCondition",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Defines a PropertyCategories based condition for use in searches. Immutable.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SearchCondition",
+  "constructors": [
+    {
+      "name": "SearchCondition(Autodesk.Navisworks.Api.NamedConstant, Autodesk.Navisworks.Api.NamedConstant, Autodesk.Navisworks.Api.SearchConditionOptions, Autodesk.Navisworks.Api.SearchConditionComparison, Autodesk.Navisworks.Api.VariantData)",
+      "signature": "SearchCondition(Autodesk.Navisworks.Api.NamedConstant categoryCombinedName, Autodesk.Navisworks.Api.NamedConstant propertyCombinedName, Autodesk.Navisworks.Api.SearchConditionOptions options, Autodesk.Navisworks.Api.SearchConditionComparison comparison, Autodesk.Navisworks.Api.VariantData value)",
+      "summary": "Create a search condition",
+      "params": [
+        {
+          "name": "categoryCombinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "doc": "Combined name for category to compare against",
+          "optional": false
+        },
+        {
+          "name": "propertyCombinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "doc": "Combined name for property to compare against",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.SearchConditionOptions",
+          "doc": "Options to use when evaluating condition",
+          "optional": false
+        },
+        {
+          "name": "comparison",
+          "type": "Autodesk.Navisworks.Api.SearchConditionComparison",
+          "doc": "Comparison operator to use when evaluating condition",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "doc": "Value to compare against when evaluating condition",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027categoryCombinedName\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027propertyCombinedName\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.%23ctor%28Autodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.SearchConditionOptions%2CAutodesk.Navisworks.Api.SearchConditionComparison%2CAutodesk.Navisworks.Api.VariantData%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareWith",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition CompareWith(Autodesk.Navisworks.Api.SearchConditionComparison comparison, Autodesk.Navisworks.Api.VariantData value)",
+      "summary": "Creates condition that matches if item has property specified by this condition and compares successfully with value",
+      "params": [
+        {
+          "name": "comparison",
+          "type": "Autodesk.Navisworks.Api.SearchConditionComparison",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Invalid operation when \u0027!PropertyCombinedName\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.CompareWith%28Autodesk.Navisworks.Api.SearchConditionComparison%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "DisplayStringContains",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition DisplayStringContains(string value)",
+      "summary": "Creates condition that matches if item has property specified by this condition and has a DisplayString value that contains specified string",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Invalid operation when \u0027!PropertyCombinedName\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.DisplayStringContains%28System.String%29"
+    },
+    {
+      "name": "DisplayStringWildcard",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition DisplayStringWildcard(string value)",
+      "summary": "Creates condition that matches if item has property specified by this condition and has a DisplayString value that matches specified wildcard string",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Invalid operation when \u0027!PropertyCombinedName\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.DisplayStringWildcard%28System.String%29"
+    },
+    {
+      "name": "EqualValue",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition EqualValue(Autodesk.Navisworks.Api.VariantData value)",
+      "summary": "Creates condition that matches if item has property specified by this condition and equal value",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Invalid operation when \u0027!PropertyCombinedName\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.EqualValue%28Autodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "IgnoreStringValueAccents",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition IgnoreStringValueAccents()",
+      "summary": "Creates condition that matches if item matches this condition while ignoring accents during string value comparisons",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.IgnoreStringValueAccents"
+    },
+    {
+      "name": "IgnoreStringValueCase",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition IgnoreStringValueCase()",
+      "summary": "Creates condition that matches if item matches this condition while ignoring case during string value comparisons",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.IgnoreStringValueCase"
+    },
+    {
+      "name": "IgnoreStringValueCharWidths",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition IgnoreStringValueCharWidths()",
+      "summary": "Creates condition that matches if item matches this condition while ignoring character widths during string value comparisons",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.IgnoreStringValueCharWidths"
+    },
+    {
+      "name": "Negate",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition Negate()",
+      "summary": "Creates condition that matches if item does not match this condition",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.Negate"
+    },
+    {
+      "name": "SameType",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition SameType(Autodesk.Navisworks.Api.VariantDataType type)",
+      "summary": "Creates condition that matches if item has property specified by this condition and value of specified type",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.VariantDataType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Invalid operation when \u0027!PropertyCombinedName\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.SameType%28Autodesk.Navisworks.Api.VariantDataType%29"
+    },
+    {
+      "name": "StartGroup",
+      "signature": "Autodesk.Navisworks.Api.SearchCondition StartGroup()",
+      "summary": "Creates condition that is same as this condition with StartGroup option set",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.StartGroup"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.GetHashCode"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SearchCondition.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "HasCategoryByCombinedName",
+      "signature": "static Autodesk.Navisworks.Api.SearchCondition HasCategoryByCombinedName(Autodesk.Navisworks.Api.NamedConstant combinedName)",
+      "summary": "Creates condition that matches if item has category with specified CombinedName",
+      "params": [
+        {
+          "name": "combinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027combinedName\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027combinedName\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.HasCategoryByCombinedName%28Autodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "HasCategoryByDisplayName",
+      "signature": "static Autodesk.Navisworks.Api.SearchCondition HasCategoryByDisplayName(string displayName)",
+      "summary": "Creates condition that matches if item has category with specified DisplayName",
+      "params": [
+        {
+          "name": "displayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027displayName\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.HasCategoryByDisplayName%28System.String%29"
+    },
+    {
+      "name": "HasCategoryByName",
+      "signature": "static Autodesk.Navisworks.Api.SearchCondition HasCategoryByName(string name)",
+      "summary": "Creates condition that matches if item has category with specified Name",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027name\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.HasCategoryByName%28System.String%29"
+    },
+    {
+      "name": "HasPropertyByCombinedName",
+      "signature": "static Autodesk.Navisworks.Api.SearchCondition HasPropertyByCombinedName(Autodesk.Navisworks.Api.NamedConstant categoryCombinedName, Autodesk.Navisworks.Api.NamedConstant propertyCombinedName)",
+      "summary": "Creates condition that matches if item has property in category with specified CombinedNames",
+      "params": [
+        {
+          "name": "categoryCombinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        },
+        {
+          "name": "propertyCombinedName",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027categoryCombinedName\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027categoryCombinedName\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027propertyCombinedName\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027propertyCombinedName\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.HasPropertyByCombinedName%28Autodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "HasPropertyByDisplayName",
+      "signature": "static Autodesk.Navisworks.Api.SearchCondition HasPropertyByDisplayName(string categoryDisplayName, string propertyDisplayName)",
+      "summary": "Creates condition that matches if item has property in category with specified DisplayNames",
+      "params": [
+        {
+          "name": "categoryDisplayName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyDisplayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027categoryDisplayName\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027propertyDisplayName\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.HasPropertyByDisplayName%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "HasPropertyByName",
+      "signature": "static Autodesk.Navisworks.Api.SearchCondition HasPropertyByName(string categoryName, string propertyName)",
+      "summary": "Creates condition that matches if item has property in category with specified Names",
+      "params": [
+        {
+          "name": "categoryName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027categoryName\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027propertyName\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.HasPropertyByName%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.SearchCondition InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SearchCondition.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SearchCondition",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SearchCondition.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CategoryCombinedName",
+      "type": "Autodesk.Navisworks.Api.NamedConstant",
+      "getter": true,
+      "setter": false,
+      "summary": "Combined name for category to compare against",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SearchCondition.CategoryCombinedName"
+    },
+    {
+      "name": "Comparison",
+      "type": "Autodesk.Navisworks.Api.SearchConditionComparison",
+      "getter": true,
+      "setter": false,
+      "summary": "Comparison operator to use when evaluating condition",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SearchCondition.Comparison"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SearchCondition.IsReadOnly"
+    },
+    {
+      "name": "Options",
+      "type": "Autodesk.Navisworks.Api.SearchConditionOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "Options to use when evaluating condition",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SearchCondition.Options"
+    },
+    {
+      "name": "PropertyCombinedName",
+      "type": "Autodesk.Navisworks.Api.NamedConstant",
+      "getter": true,
+      "setter": false,
+      "summary": "Combined name for property to compare against",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SearchCondition.PropertyCombinedName"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.VariantData",
+      "getter": true,
+      "setter": false,
+      "summary": "Value to compare against when evaluating condition",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SearchCondition.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "SubDEdgeTag",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubDEdgeTag identifies the type of subdivision edge. Different tags use different subdivision algorithms to calculate the subdivision point.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDEdgeTag.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not a valid edge tag and the default value for ON_SubDEdge.m_edge_tag. This encourages developers to thoughtfully initialize ON_SubDEdge.m_edge_tag. or use ON_SubD.UpdateAllTagsAndSectorCoefficients() to automatically set the m_edge_tag values at an appropriate time."
+    },
+    {
+      "name": "Smooth",
+      "value": 1,
+      "summary": "At least one the edge\u0027s vertices must be tagged as ON_SubDVertexTag::Smooth. The edge must have exactly two faces. The edge\u0027s subdivision point is (A1 \u002B A2 \u002B S(f1) \u002B S(f2))/4, where Ai = ON_SubDEdge.Vertex(i)-\u003EControlNetPoint() and S(fi) = ON_SubDEdge.Face(i)-\u003ESubdivisionPoint()."
+    },
+    {
+      "name": "Crease",
+      "value": 2,
+      "summary": "Both of the edge\u0027s vertices must be tagged as ON_SubDVertexTag::Dart, ON_SubDVertexTag::Crease, or ON_SubDVertexTag::Corner. (The vertex tags can be different.) The edge can have any number of faces. The edge\u0027s subdivision point is (A1\u002BA2)/2 where Ai = ON_SubDEdge.Vertex(i)-\u003EControlNetPoint()."
+    },
+    {
+      "name": "SmoothX",
+      "value": 4,
+      "summary": "This tag appears only on level 0 edges that have exactly two neighboring faces and both of the edge\u0027s vertices are tagged as ON_SubDVertexTag::Dart, ON_SubDVertexTag::Crease, or ON_SubDVertexTag::Corner. The level 1 subdivision point for a level 0 edge tagged as ON_SubDEdgeTag::SmoothX is the standard smooth edge subdivision point. When subdivided, the new subdivision vertex will be tagged as ON_SubDVertexTag::Smooth and the subdivided edges will be tagged as ON_SubDEdgeTag::Smooth. The tag ON_SubDEdgeTag::SmoothX can only appear on a level 0 edge. This tag exists because the ON_SubD subdivision algorithm requires any edge with both end vertices tagged as not smooth must be subdivided at its midpoint. Sector iterators treat \u0022SmoothX\u0022 edges as smooth. Both edge m_sector_coefficient[] values must be set so the smooth subdivided edges will be valid."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "GH_ComponentServer.GHAFileLoadedEventHandler",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.GH_ComponentServer.GHAFileLoadedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ComponentServer_GHAFileLoadedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void GHAFileLoadedEventHandler( Object sender, GH_GHALoadingEventArgs e )"
+}

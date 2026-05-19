@@ -1,0 +1,129 @@
+{
+  "name": "PythonEngineUpgradeService",
+  "namespace": "Dynamo.Models.Migration.Python",
+  "kind": "class",
+  "summary": "Headless service that detects Python engine usage in a workspace, performs temporary engine upgrades on nodes, and (optionally) commits permanent upgrades for custom node workspaces.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/PythonEngineUpgradeService.cs",
+  "constructors": [
+    {
+      "name": "PythonEngineUpgradeService(Dynamo.Models.DynamoModel, Dynamo.Interfaces.IPathManager)",
+      "signature": "void PythonEngineUpgradeService(Dynamo.Models.DynamoModel dynamoModel, Dynamo.Interfaces.IPathManager pathManager)",
+      "summary": "PythonEngineUpgradeService.PythonEngineUpgradeService",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        },
+        {
+          "name": "pathManager",
+          "type": "Dynamo.Interfaces.IPathManager",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildBackupFilePath(Dynamo.Graph.Workspaces.WorkspaceModel, string)",
+      "signature": "string BuildBackupFilePath(Dynamo.Graph.Workspaces.WorkspaceModel workspace, string token)",
+      "summary": "Build a backup file path for a .dyn or .dyf backup",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        },
+        {
+          "name": "token",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    },
+    {
+      "name": "CommitCustomNodeMigrationsOnSave(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void CommitCustomNodeMigrationsOnSave(Dynamo.Graph.Workspaces.WorkspaceModel hostWorkspace)",
+      "summary": "Commits migration changes for custom-node workspaces by editing the .dyf JSON in place: switches Python nodes from CPython3 to PythonNet3 and saves a backup file",
+      "params": [
+        {
+          "name": "hostWorkspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    },
+    {
+      "name": "DetectPythonUsage(Dynamo.Graph.Workspaces.WorkspaceModel, System.Func\u003CDynamo.Graph.Nodes.NodeModel, bool\u003E)",
+      "signature": "Dynamo.Models.Migration.Python.PythonEngineUpgradeService.Usage DetectPythonUsage(Dynamo.Graph.Workspaces.WorkspaceModel workspace, System.Func\u003CDynamo.Graph.Nodes.NodeModel, bool\u003E isPythonNode)",
+      "summary": "Scan the workspace for python usage (direct) and one level of custom nodes.",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        },
+        {
+          "name": "isPythonNode",
+          "type": "System.Func\u003CDynamo.Graph.Nodes.NodeModel, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Models.Migration.Python.PythonEngineUpgradeService.Usage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    },
+    {
+      "name": "UpgradeNodesInMemory(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, Dynamo.Graph.Workspaces.WorkspaceModel, System.Action\u003CDynamo.Graph.Nodes.NodeModel, Dynamo.Graph.Workspaces.WorkspaceModel\u003E)",
+      "signature": "int UpgradeNodesInMemory(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E pyNodes, Dynamo.Graph.Workspaces.WorkspaceModel workspace, System.Action\u003CDynamo.Graph.Nodes.NodeModel, Dynamo.Graph.Workspaces.WorkspaceModel\u003E setEngine)",
+      "summary": "Upgrade the engine for a set of python nodes in memory and return the count changed.",
+      "params": [
+        {
+          "name": "pyNodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        },
+        {
+          "name": "setEngine",
+          "type": "System.Action\u003CDynamo.Graph.Nodes.NodeModel, Dynamo.Graph.Workspaces.WorkspaceModel\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,71 @@
+{
+  "name": "LabelTextDimensionUnit",
+  "namespace": "Utils.LabelTextUtil",
+  "kind": "enum",
+  "summary": "definition the label text dimension unit",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextDimensionUnit/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CM",
+      "value": 1
+    },
+    {
+      "name": "CM2",
+      "value": 5
+    },
+    {
+      "name": "CM3",
+      "value": 9
+    },
+    {
+      "name": "DEG",
+      "value": 12
+    },
+    {
+      "name": "DM",
+      "value": 2
+    },
+    {
+      "name": "DM2",
+      "value": 6
+    },
+    {
+      "name": "DM3",
+      "value": 10
+    },
+    {
+      "name": "M",
+      "value": 3
+    },
+    {
+      "name": "M2",
+      "value": 7
+    },
+    {
+      "name": "M3",
+      "value": 11
+    },
+    {
+      "name": "MM",
+      "value": 0
+    },
+    {
+      "name": "MM2",
+      "value": 4
+    },
+    {
+      "name": "MM3",
+      "value": 8
+    },
+    {
+      "name": "NO",
+      "value": 13
+    }
+  ]
+}

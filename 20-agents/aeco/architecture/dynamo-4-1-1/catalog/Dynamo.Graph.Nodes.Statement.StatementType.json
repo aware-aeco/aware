@@ -1,0 +1,38 @@
+{
+  "name": "StatementType",
+  "namespace": "Dynamo.Graph.Nodes.Statement",
+  "kind": "enum",
+  "summary": "Type StatementType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AssignmentVar",
+      "value": 4
+    },
+    {
+      "name": "Collection",
+      "value": 3
+    },
+    {
+      "name": "Expression",
+      "value": 1
+    },
+    {
+      "name": "FuncDeclaration",
+      "value": 5
+    },
+    {
+      "name": "Literal",
+      "value": 2
+    },
+    {
+      "name": "None",
+      "value": 0
+    }
+  ]
+}

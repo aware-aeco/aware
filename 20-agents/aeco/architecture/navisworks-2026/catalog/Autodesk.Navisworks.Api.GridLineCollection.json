@@ -1,0 +1,412 @@
+{
+  "name": "GridLineCollection",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A collection of GridLines",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [
+    "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.GridLine\u003E",
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.GridLine\u003E",
+    "System.Collections.Generic.IList\u003CAutodesk.Navisworks.Api.GridLine\u003E",
+    "System.Collections.ICollection",
+    "System.Collections.IEnumerable",
+    "System.Collections.IList"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.GridLineCollection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.GridLine\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that can iterate through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.GridLine\u003E",
+        "doc": "An IEnumerator that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.GetEnumerator"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.GridLine item)",
+      "summary": "Determines whether the SavedItemCollection contains a specific value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.GridLine",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.Contains%28Autodesk.Navisworks.Api.GridLine%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.GridLine item)",
+      "summary": "Removes the first occurrence of a specific item from the collection.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.GridLine",
+          "doc": "The object to remove from the collection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if item was successfully removed from the collection; otherwise, false.\nThis method also returns false if item is not found in the original collection."
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "The collection is read-only."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is ReadOnly"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.Remove%28Autodesk.Navisworks.Api.GridLine%29"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "int IndexOf(Autodesk.Navisworks.Api.GridLine item)",
+      "summary": "Determines the index of a specific item in the Collection",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.GridLine",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.IndexOf%28Autodesk.Navisworks.Api.GridLine%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.GridLineCollection InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of GridLineCollection.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.GridLineCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of GridLineCollection.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(Autodesk.Navisworks.Api.GridLine item)",
+      "summary": "Adds item to the end of the collection.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.GridLine",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is ReadOnly"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.Add%28Autodesk.Navisworks.Api.GridLine%29"
+    },
+    {
+      "name": "AddRange",
+      "signature": "void AddRange(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.GridLine\u003E from)",
+      "summary": "Add the items of the specified collection to the SavedItemCollection",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.GridLine\u003E",
+          "doc": "The collection to add items from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.AddRange%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.GridLine%7D%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Removes all items from the collection",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.Clear"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.GridLine\u003E from)",
+      "summary": "Sets the contents of the collection to the items in from",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.GridLine\u003E",
+          "doc": "The collection to copy contents from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.CopyFrom%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.GridLine%7D%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(Autodesk.Navisworks.Api.GridLine[] array, int arrayIndex)",
+      "summary": "Copies the elements of the ICollection\u00601 to an Array, starting at a particular Array index.",
+      "params": [
+        {
+          "name": "array",
+          "type": "Autodesk.Navisworks.Api.GridLine[]",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from ICollection\u00601. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "int",
+          "doc": "The zero-based index in array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "arrayIndex is less than 0."
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "array is null."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "array is multidimensional.-or-arrayIndex is equal to or greater than the length of array.-or-The number of elements in the source ICollection\u00601 is greater than the available space from arrayIndex to the end of the destination array.-or-Type T cannot be cast automatically to the type of the destination array."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.CopyTo%28Autodesk.Navisworks.Api.GridLine%5B%5D%2CSystem.Int32%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.GridLine\u003E to)",
+      "summary": "Enumerates over the collection and copies the items into to",
+      "params": [
+        {
+          "name": "to",
+          "type": "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.GridLine\u003E",
+          "doc": "Collection to copy into",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.CopyTo%28System.Collections.Generic.ICollection%7BAutodesk.Navisworks.Api.GridLine%7D%29"
+    },
+    {
+      "name": "Insert",
+      "signature": "void Insert(int index, Autodesk.Navisworks.Api.GridLine item)",
+      "summary": "Inserts item into the collection at the specified index",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.GridLine",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is ReadOnly"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.Insert%28System.Int32%2CAutodesk.Navisworks.Api.GridLine%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(int index)",
+      "summary": "Removes the IList\u00601 item at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "The zero-based index of the item to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "The IList\u00601 is read-only."
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "index is not a valid index in the IList\u00601."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridLineCollection.RemoveAt%28System.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements contained in the collection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridLineCollection.Count"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridLineCollection.IsReadOnly"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.GridLine",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of GridLineCollection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridLineCollection.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

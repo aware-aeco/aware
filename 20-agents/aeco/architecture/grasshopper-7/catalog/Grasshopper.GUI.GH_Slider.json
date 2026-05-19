@@ -1,0 +1,317 @@
+{
+  "name": "GH_Slider",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Provides a standard Grasshopper slider as a winforms control.",
+  "base": "GH_TextInputBaseControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_Slider.htm",
+  "constructors": [
+    {
+      "name": "GH_Slider",
+      "signature": "public GH_Slider()",
+      "summary": "Initializes a new instance of the GH_Slider class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Input_Assign",
+      "signature": "protected override void Input_Assign(string text)",
+      "summary": "(Overrides GH_TextInputBaseControl.Input_Assign(String).)",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Input_Assign.htm"
+    },
+    {
+      "name": "Input_Parse",
+      "signature": "protected override bool Input_Parse(string text)",
+      "summary": "(Overrides GH_TextInputBaseControl.Input_Parse(String).)",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Input_Parse.htm"
+    },
+    {
+      "name": "Input_Supply",
+      "signature": "protected override string Input_Supply()",
+      "summary": "(Overrides GH_TextInputBaseControl.Input_Supply().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Input_Supply.htm"
+    },
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides ScrollableControl.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_OnPaintBackground.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ControlEdgeColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the EdgeColor for this slider control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_ControlEdgeColour.htm"
+    },
+    {
+      "name": "ControlShadowColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Shadow colour for this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_ControlShadowColour.htm"
+    },
+    {
+      "name": "DecimalPlaces",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of decimal places allowed for Floating Point Sliders.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_DecimalPlaces.htm"
+    },
+    {
+      "name": "DrawControlBorder",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the border of the slider should be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_DrawControlBorder.htm"
+    },
+    {
+      "name": "DrawControlShadows",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the drop shadows of the slider should be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_DrawControlShadows.htm"
+    },
+    {
+      "name": "FormatMask",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the string format mask to use for the display. Should contain at least one \u0022{0}\u0022 element.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_FormatMask.htm"
+    },
+    {
+      "name": "GripBottomColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fill colour for the bottom edge of the slider grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_GripBottomColour.htm"
+    },
+    {
+      "name": "GripDisplay",
+      "type": "GH_SliderGripDisplay",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets how the slider grip (or thumb) is drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_GripDisplay.htm"
+    },
+    {
+      "name": "GripEdgeColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the edge colour for the slider grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_GripEdgeColour.htm"
+    },
+    {
+      "name": "GripTopColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fill colour for the top edge of the slider grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_GripTopColour.htm"
+    },
+    {
+      "name": "InternalSlider",
+      "type": "GH_SliderBase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the internal slider.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_InternalSlider.htm"
+    },
+    {
+      "name": "Maximum",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the upper numeric limit for the slider range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Maximum.htm"
+    },
+    {
+      "name": "Minimum",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lower numeric limit for the slider range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Minimum.htm"
+    },
+    {
+      "name": "RailBrightColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the edge colour for the bright parts of the rail.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_RailBrightColour.htm"
+    },
+    {
+      "name": "RailDarkColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the edge colour for the dark parts of the rail.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_RailDarkColour.htm"
+    },
+    {
+      "name": "RailDisplay",
+      "type": "GH_SliderRailDisplay",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets how the slider rail (or track) is drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_RailDisplay.htm"
+    },
+    {
+      "name": "RailEmptyColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fill colour for the empty portion of the rail.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_RailEmptyColour.htm"
+    },
+    {
+      "name": "RailFullColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fill colour for the full portion of the rail.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_RailFullColour.htm"
+    },
+    {
+      "name": "ShadowSize",
+      "type": "Padding",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size of the border shadow along all edges of the box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_ShadowSize.htm"
+    },
+    {
+      "name": "TextColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fill colour for the slider text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_TextColour.htm"
+    },
+    {
+      "name": "TickCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of ticks.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_TickCount.htm"
+    },
+    {
+      "name": "TickDisplay",
+      "type": "GH_SliderTickDisplay",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets how the slider ticks are drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_TickDisplay.htm"
+    },
+    {
+      "name": "TickFrequency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the frequency of large ticks vs small ticks.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_TickFrequency.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_SliderAccuracy",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numeric type of this slider.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Type.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numeric value for the slider range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Value.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ValueChanged",
+      "delegate": "Grasshopper.GUI.GH_Slider.ValueChangedEventHandler",
+      "signature": "public event GH_Slider.ValueChangedEventHandler ValueChanged",
+      "summary": "Raised whenever the value of the slider is changed via GUI interaction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_Slider_ValueChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

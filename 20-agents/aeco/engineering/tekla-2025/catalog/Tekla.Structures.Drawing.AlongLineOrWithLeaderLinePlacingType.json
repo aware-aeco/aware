@@ -1,0 +1,25 @@
+{
+  "name": "AlongLineOrWithLeaderLinePlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The AlongLineOrWithLeaderLinePlacingType class defines a placing type that places the object using the along line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/71b65a9e-490c-8fad-d0f6-73e58516134a",
+  "constructors": [
+    {
+      "name": "AlongLineOrWithLeaderLinePlacingType",
+      "signature": "public AlongLineOrWithLeaderLinePlacingType()",
+      "summary": "Creates a new along line or with leader line placing type instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/45aaa392-1385-0596-78b9-359df2991016"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

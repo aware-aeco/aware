@@ -1,0 +1,37 @@
+{
+  "name": "IGH_PreviewMeshData",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface if your data deals with preview meshes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_PreviewMeshData.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DestroyPreviewMeshes",
+      "signature": "void DestroyPreviewMeshes()",
+      "summary": "Erase all cached preview meshes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewMeshData_DestroyPreviewMeshes.htm"
+    },
+    {
+      "name": "GetPreviewMeshes",
+      "signature": "Mesh[] GetPreviewMeshes()",
+      "summary": "Gets all the preview meshes associated with this data.",
+      "params": [],
+      "returns": {
+        "type": "Mesh[]",
+        "doc": "An array of meshes that represent the preview meshes of this data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewMeshData_GetPreviewMeshes.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

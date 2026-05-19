@@ -1,0 +1,35 @@
+{
+  "name": "CenterCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class to calculate the center of an object",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate(line) | Calculate(line) | Calculate(polyline, edge) | Calculate(polyline, edge) | Calculate(polygon, bPlaneCenter, edge) | Calculate(polygon, bPlaneCenter, edge) | Calculate(arc, center) | Calculate(arc, center) | Calculate(spline, eps) | Calculate(spline, eps) | Calculate(spline, eps, bAreaCenter) | Calculate(spline, eps) | Calculate(clothoid, eps) | Calculate(path, eps, bAreaCenter) | Calculate(path, eps, bAreaCenter) | Calculate(geoObject, eps, bArcCenter, edge)",
+      "summary": "Calculates the center of a Line2D",
+      "remarks": "Calculates the center of a Line2D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D on which to calculate the center",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "center calculated,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

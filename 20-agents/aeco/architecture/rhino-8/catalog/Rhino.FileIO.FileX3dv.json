@@ -1,0 +1,46 @@
+{
+  "name": "FileX3dv",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for writing x3dv file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileX3dv.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Write",
+      "signature": "public static bool Write(string path, RhinoDoc doc, FileX3dvWriteOptions options)",
+      "summary": "Write a x3dv file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to write a file to",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to get geometry from",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileX3dvWriteOptions",
+          "doc": "options used for generating the x3dv file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileX3dv_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

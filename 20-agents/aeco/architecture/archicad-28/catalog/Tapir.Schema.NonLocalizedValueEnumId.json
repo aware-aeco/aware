@@ -1,0 +1,32 @@
+{
+  "name": "NonLocalizedValueEnumId",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "An enumeration value identifier using the nonlocalized value.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NonLocalizedValueEnumId",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060type\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NonLocalizedValueEnumId"
+    },
+    {
+      "name": "nonLocalizedValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060nonLocalizedValue\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NonLocalizedValueEnumId"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

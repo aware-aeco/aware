@@ -1,0 +1,1857 @@
+{
+  "name": "ViewportInfo",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Represents a viewing frustum.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_ViewportInfo.htm",
+  "constructors": [
+    {
+      "name": "ViewportInfo()",
+      "signature": "public ViewportInfo()",
+      "summary": "Initializes a new instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo__ctor.htm"
+    },
+    {
+      "name": "ViewportInfo(RhinoViewport)",
+      "signature": "public ViewportInfo(RhinoViewport rhinoViewport)",
+      "summary": "Copies all of the ViewportInfo data from an existing RhinoViewport.",
+      "params": [
+        {
+          "name": "rhinoViewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "A viewport to copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo__ctor_1.htm"
+    },
+    {
+      "name": "ViewportInfo(ViewportInfo)",
+      "signature": "public ViewportInfo(ViewportInfo other)",
+      "summary": "Initializes a new instance by copying values from another instance.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The other viewport info.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CalculateCameraRotationAngle",
+      "signature": "public static double CalculateCameraRotationAngle(Vector3d direction, Vector3d up)",
+      "summary": "Calculates the camera rotation angle.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The camera direction.",
+          "optional": false
+        },
+        {
+          "name": "up",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The camera up direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The camera rotation angle in radians."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_CalculateCameraRotationAngle.htm"
+    },
+    {
+      "name": "CalculateCameraUpDirection",
+      "signature": "public static Vector3d CalculateCameraUpDirection(Point3d location, Vector3d direction, double angle)",
+      "summary": "Calculates the camera up direction.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The camera location.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The camera direction.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "The camera rotation angle in radians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The camera up direction."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_CalculateCameraUpDirection.htm"
+    },
+    {
+      "name": "ChangeToParallelProjection",
+      "signature": "public bool ChangeToParallelProjection(bool symmetricFrustum)",
+      "summary": "Use this function to change projections of valid viewports from parallel to perspective. It will make common additional adjustments to the frustum and camera location so the resulting views are similar. The camera direction and target point are not be changed. If the current projection is parallel and symmetricFrustum, FrustumIsLeftRightSymmetric() and FrustumIsTopBottomSymmetric() are all equal, then no changes are made and true is returned.",
+      "params": [
+        {
+          "name": "symmetricFrustum",
+          "type": "System.Boolean",
+          "doc": "true if you want the resulting frustum to be symmetric.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_ChangeToParallelProjection.htm"
+    },
+    {
+      "name": "ChangeToPerspectiveProjection",
+      "signature": "public bool ChangeToPerspectiveProjection(double targetDistance, bool symmetricFrustum, double lensLength)",
+      "summary": "Use this function to change projections of valid viewports from parallel to perspective. It will make common additional adjustments to the frustum and camera location so the resulting views are similar. The camera direction and target point are not changed. If the current projection is perspective and symmetricFrustum, IsFrustumIsLeftRightSymmetric, and IsFrustumIsTopBottomSymmetric are all equal, then no changes are made and true is returned.",
+      "params": [
+        {
+          "name": "targetDistance",
+          "type": "System.Double",
+          "doc": "If RhinoMath.UnsetValue this parameter is ignored. Otherwise it must be \u003E 0 and indicates which plane in the current view frustum should be preserved.",
+          "optional": false
+        },
+        {
+          "name": "symmetricFrustum",
+          "type": "System.Boolean",
+          "doc": "true if you want the resulting frustum to be symmetric.",
+          "optional": false
+        },
+        {
+          "name": "lensLength",
+          "type": "System.Double",
+          "doc": "(pass 50.0 when in doubt) 35 mm lens length to use when changing from parallel to perspective projections. If the current projection is perspective or lens_length is \u003C= 0.0, then this parameter is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_ChangeToPerspectiveProjection.htm"
+    },
+    {
+      "name": "ChangeToSymmetricFrustum",
+      "signature": "public bool ChangeToSymmetricFrustum(bool isLeftRightSymmetric, bool isTopBottomSymmetric, double targetDistance)",
+      "summary": "If needed, adjusts the current frustum so it has the specified symmetries and adjust the camera location so the target plane remains visible.",
+      "params": [
+        {
+          "name": "isLeftRightSymmetric",
+          "type": "System.Boolean",
+          "doc": "If true, the frustum will be adjusted so left = -right.",
+          "optional": false
+        },
+        {
+          "name": "isTopBottomSymmetric",
+          "type": "System.Boolean",
+          "doc": "If true, the frustum will be adjusted so top = -bottom.",
+          "optional": false
+        },
+        {
+          "name": "targetDistance",
+          "type": "System.Double",
+          "doc": "If projection is not perspective or target_distance is RhinoMath.UnsetValue, then this parameter is ignored. If the projection is perspective and targetDistance is not RhinoMath.UnsetValue, then it must be \u003E 0.0 and it is used to determine which plane in the old frustum will appear unchanged in the new frustum.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the viewport has now a frustum with the specified symmetries."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_ChangeToSymmetricFrustum.htm"
+    },
+    {
+      "name": "ChangeToTwoPointPerspectiveProjection",
+      "signature": "public bool ChangeToTwoPointPerspectiveProjection(double targetDistance, Vector3d up, double lensLength)",
+      "summary": "Changes projections of valid viewports to a two point perspective. It will make common additional adjustments to the frustum and camera location and direction so the resulting views are similar. If the current projection is perspective and IsFrustumIsLeftRightSymmetric is true and IsFrustumIsTopBottomSymmetric is false, then no changes are made and true is returned.",
+      "params": [
+        {
+          "name": "targetDistance",
+          "type": "System.Double",
+          "doc": "If RhinoMath.UnsetValue this parameter is ignored. Otherwise it must be \u003E 0 and indicates which plane in the current view frustum should be preserved.",
+          "optional": false
+        },
+        {
+          "name": "up",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The locked up direction. Pass Vector3d.Zero if you want to use the world axis direction that is closest to the current up direction. Pass CameraY() if you want to preserve the current up direction.",
+          "optional": false
+        },
+        {
+          "name": "lensLength",
+          "type": "System.Double",
+          "doc": "(pass 50.0 when in doubt) 35 mm lens length to use when changing from parallel to perspective projections. If the current projection is perspective or lens_length is \u003C= 0.0, then this parameter is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_ChangeToTwoPointPerspectiveProjection.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "DollyCamera",
+      "signature": "public bool DollyCamera(Vector3d dollyVector)",
+      "summary": "DollyCamera() does not update the frustum\u0027s clipping planes. To update the frustum\u0027s clipping planes call DollyFrustum(d) with d = dollyVector o cameraFrameZ. To convert screen locations into a dolly vector, use GetDollyCameraVector(). Does not update frustum. To update frustum use DollyFrustum(d) with d = dollyVector o cameraFrameZ.",
+      "params": [
+        {
+          "name": "dollyVector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "dolly vector in world coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_DollyCamera.htm"
+    },
+    {
+      "name": "DollyExtents(BoundingBox, Double)",
+      "signature": "public bool DollyExtents(BoundingBox cameraCoordinateBoundingBox, double border)",
+      "summary": "Dolly the camera location and so that the view frustum contains all of the document objects that can be seen in view. If the projection is perspective, the camera angle is not changed.",
+      "params": [
+        {
+          "name": "cameraCoordinateBoundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "[Missing \u003Cparam name=\u0022cameraCoordinateBoundingBox\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewportInfo.DollyExtents(Rhino.Geometry.BoundingBox,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "border",
+          "type": "System.Double",
+          "doc": "If border \u003E 1.0, then the frustum in enlarged by this factor to provide a border around the view. 1.1 works well for parallel projections; 0.0 is suggested for perspective projections.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_DollyExtents.htm"
+    },
+    {
+      "name": "DollyExtents(IEnumerable\u003CGeometryBase\u003E, Double)",
+      "signature": "public bool DollyExtents(IEnumerable\u003CGeometryBase\u003E geometry, double border)",
+      "summary": "Dolly the camera location and so that the view frustum contains all of the document objects that can be seen in view. If the projection is perspective, the camera angle is not changed.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022geometry\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewportInfo.DollyExtents(System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase},System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "border",
+          "type": "System.Double",
+          "doc": "If border \u003E 1.0, then the frustum in enlarged by this factor to provide a border around the view. 1.1 works well for parallel projections; 0.0 is suggested for perspective projections.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_DollyExtents_1.htm"
+    },
+    {
+      "name": "DollyFrustum",
+      "signature": "public bool DollyFrustum(double dollyDistance)",
+      "summary": "Moves the frustum clipping planes.",
+      "params": [
+        {
+          "name": "dollyDistance",
+          "type": "System.Double",
+          "doc": "Distance to move in camera direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_DollyFrustum.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Extents(Double, BoundingBox)",
+      "signature": "public bool Extents(double halfViewAngleRadians, BoundingBox bbox)",
+      "summary": "Extends this viewport view to include a bounding box. Use Extents() as a quick way to set a viewport to so that bounding volume is inside of a viewports frustum. The view angle is used to determine the position of the camera.",
+      "params": [
+        {
+          "name": "halfViewAngleRadians",
+          "type": "System.Double",
+          "doc": "1/2 smallest subtended view angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box in 3d world coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_Extents.htm"
+    },
+    {
+      "name": "Extents(Double, Sphere)",
+      "signature": "public bool Extents(double halfViewAngleRadians, Sphere sphere)",
+      "summary": "Extends this viewport view to include a sphere. Use Extents() as a quick way to set a viewport to so that bounding volume is inside of a viewports frustum. The view angle is used to determine the position of the camera.",
+      "params": [
+        {
+          "name": "halfViewAngleRadians",
+          "type": "System.Double",
+          "doc": "1/2 smallest subtended view angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "A sphere in 3d world coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_Extents_1.htm"
+    },
+    {
+      "name": "FrustumCenterPoint",
+      "signature": "public Point3d FrustumCenterPoint(double targetDistance)",
+      "summary": "Return a point on the central axis of the view frustum. This point is a good choice for a general purpose target point.",
+      "params": [
+        {
+          "name": "targetDistance",
+          "type": "System.Double",
+          "doc": "If targetDistance \u003E 0.0, then the distance from the returned point to the camera plane will be targetDistance. Note that if the frustum is not symmetric, the distance from the returned point to the camera location will be larger than targetDistance. If targetDistance == ON_UNSET_VALUE and the frustum is valid with near \u003E 0.0, then 0.5*(near \u002B far) will be used as the targetDistance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A point on the frustum\u0027s central axis. If the viewport or input is not valid, then ON_3dPoint::UnsetPoint is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_FrustumCenterPoint.htm"
+    },
+    {
+      "name": "GetBoundingBoxDepth",
+      "signature": "public bool GetBoundingBoxDepth(BoundingBox bbox, out double nearDistance, out double farDistance)",
+      "summary": "Gets near and far clipping distances of a bounding box. This function ignores the current value of the viewport\u0027s near and far settings. If the viewport is a perspective projection, the it intersects the semi infinite frustum volume with the bounding box and returns the near and far distances of the intersection. If the viewport is a parallel projection, it intersects the infinite view region with the bounding box and returns the near and far distances of the projection.",
+      "params": [
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "The bounding box to sample.",
+          "optional": false
+        },
+        {
+          "name": "nearDistance",
+          "type": "System.Double",
+          "doc": "Near distance of the box. This value can be zero or negative when the camera location is inside box.",
+          "optional": false
+        },
+        {
+          "name": "farDistance",
+          "type": "System.Double",
+          "doc": "Far distance of the box. This value can be equal to near_dist, zero or negative when the camera location is in front of the bounding box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the bounding box intersects the view frustum and near_dist/far_dist were set. false if the bounding box does not intersect the view frustum."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetBoundingBoxDepth.htm"
+    },
+    {
+      "name": "GetCameraAngles",
+      "signature": "public bool GetCameraAngles(out double halfDiagonalAngleRadians, out double halfVerticalAngleRadians, out double halfHorizontalAngleRadians)",
+      "summary": "Gets the field of view angles.",
+      "params": [
+        {
+          "name": "halfDiagonalAngleRadians",
+          "type": "System.Double",
+          "doc": "1/2 of diagonal subtended angle. This out parameter is assigned during this call.",
+          "optional": false
+        },
+        {
+          "name": "halfVerticalAngleRadians",
+          "type": "System.Double",
+          "doc": "1/2 of vertical subtended angle. This out parameter is assigned during this call.",
+          "optional": false
+        },
+        {
+          "name": "halfHorizontalAngleRadians",
+          "type": "System.Double",
+          "doc": "1/2 of horizontal subtended angle. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetCameraAngles.htm"
+    },
+    {
+      "name": "GetCameraFrame",
+      "signature": "public bool GetCameraFrame(out Point3d location, out Vector3d cameraX, out Vector3d cameraY, out Vector3d cameraZ)",
+      "summary": "Gets location and vectors of this camera.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "An out parameter that will be filled with a point during the call.",
+          "optional": false
+        },
+        {
+          "name": "cameraX",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "An out parameter that will be filled with the X vector during the call.",
+          "optional": false
+        },
+        {
+          "name": "cameraY",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "An out parameter that will be filled with the Y vector during the call.",
+          "optional": false
+        },
+        {
+          "name": "cameraZ",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "An out parameter that will be filled with the Z vector during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if current camera orientation is valid; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetCameraFrame.htm"
+    },
+    {
+      "name": "GetDollyCameraVector(Point, Point, Double)",
+      "signature": "public Vector3d GetDollyCameraVector(Point screen0, Point screen1, double projectionPlaneDistance)",
+      "summary": "Gets a world coordinate dolly vector that can be passed to DollyCamera().",
+      "params": [
+        {
+          "name": "screen0",
+          "type": "System.Drawing.Point",
+          "doc": "Start point.",
+          "optional": false
+        },
+        {
+          "name": "screen1",
+          "type": "System.Drawing.Point",
+          "doc": "End point.",
+          "optional": false
+        },
+        {
+          "name": "projectionPlaneDistance",
+          "type": "System.Double",
+          "doc": "Distance of projection plane from camera. When in doubt, use 0.5*(frus_near\u002Bfrus_far).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The world coordinate dolly vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetDollyCameraVector.htm"
+    },
+    {
+      "name": "GetDollyCameraVector(Int32, Int32, Int32, Int32, Double)",
+      "signature": "public Vector3d GetDollyCameraVector(int screenX0, int screenY0, int screenX1, int screenY1, double projectionPlaneDistance)",
+      "summary": "Gets a world coordinate dolly vector that can be passed to DollyCamera().",
+      "params": [
+        {
+          "name": "screenX0",
+          "type": "System.Int32",
+          "doc": "Screen coordinates of start point.",
+          "optional": false
+        },
+        {
+          "name": "screenY0",
+          "type": "System.Int32",
+          "doc": "Screen coordinates of start point.",
+          "optional": false
+        },
+        {
+          "name": "screenX1",
+          "type": "System.Int32",
+          "doc": "Screen coordinates of end point.",
+          "optional": false
+        },
+        {
+          "name": "screenY1",
+          "type": "System.Int32",
+          "doc": "Screen coordinates of end point.",
+          "optional": false
+        },
+        {
+          "name": "projectionPlaneDistance",
+          "type": "System.Double",
+          "doc": "Distance of projection plane from camera. When in doubt, use 0.5*(frus_near\u002Bfrus_far).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The world coordinate dolly vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetDollyCameraVector_1.htm"
+    },
+    {
+      "name": "GetFarPlaneCorners",
+      "signature": "public Point3d[] GetFarPlaneCorners()",
+      "summary": "Gets the corners of far clipping plane rectangle. 4 points are returned in the order of bottom left, bottom right, top left, top right.",
+      "params": [],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "Four corner points on success. Empty array if viewport is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetFarPlaneCorners.htm"
+    },
+    {
+      "name": "GetFrustum",
+      "signature": "public bool GetFrustum(out double left, out double right, out double bottom, out double top, out double nearDistance, out double farDistance)",
+      "summary": "Gets the view frustum.",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Double",
+          "doc": "A left value that will be filled during the call.",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Double",
+          "doc": "A right value that will be filled during the call.",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Double",
+          "doc": "A bottom value that will be filled during the call.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Double",
+          "doc": "A top value that will be filled during the call.",
+          "optional": false
+        },
+        {
+          "name": "nearDistance",
+          "type": "System.Double",
+          "doc": "A near distance value that will be filled during the call.",
+          "optional": false
+        },
+        {
+          "name": "farDistance",
+          "type": "System.Double",
+          "doc": "A far distance value that will be filled during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetFrustum.htm"
+    },
+    {
+      "name": "GetFrustumLine(Point)",
+      "signature": "public Line GetFrustumLine(Point screenPoint)",
+      "summary": "Gets the world coordinate line in the view frustum that projects to a point on the screen.",
+      "params": [
+        {
+          "name": "screenPoint",
+          "type": "System.Drawing.Point",
+          "doc": "screen location",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "3d world coordinate line segment starting on the near clipping plane and ending on the far clipping plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetFrustumLine_1.htm"
+    },
+    {
+      "name": "GetFrustumLine(PointF)",
+      "signature": "public Line GetFrustumLine(PointF screenPoint)",
+      "summary": "Gets the world coordinate line in the view frustum that projects to a point on the screen.",
+      "params": [
+        {
+          "name": "screenPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "screen location",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "3d world coordinate line segment starting on the near clipping plane and ending on the far clipping plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetFrustumLine_2.htm"
+    },
+    {
+      "name": "GetFrustumLine(Double, Double)",
+      "signature": "public Line GetFrustumLine(double screenX, double screenY)",
+      "summary": "Gets the world coordinate line in the view frustum that projects to a point on the screen.",
+      "params": [
+        {
+          "name": "screenX",
+          "type": "System.Double",
+          "doc": "(screenx,screeny) = screen location.",
+          "optional": false
+        },
+        {
+          "name": "screenY",
+          "type": "System.Double",
+          "doc": "(screenx,screeny) = screen location.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "3d world coordinate line segment starting on the near clipping plane and ending on the far clipping plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetFrustumLine.htm"
+    },
+    {
+      "name": "GetNearPlaneCorners",
+      "signature": "public Point3d[] GetNearPlaneCorners()",
+      "summary": "Gets the corners of near clipping plane rectangle. 4 points are returned in the order of bottom left, bottom right, top left, top right.",
+      "params": [],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "Four corner points on success. Empty array if viewport is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetNearPlaneCorners.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetPointDepth",
+      "signature": "public bool GetPointDepth(Point3d point, out double distance)",
+      "summary": "Gets the clipping distance of a point. This function ignores the current value of the viewport\u0027s near and far settings. If the viewport is a perspective projection, then it intersects the semi infinite frustum volume with the bounding box and returns the near and far distances of the intersection. If the viewport is a parallel projection, it intersects the infinite view region with the bounding box and returns the near and far distances of the projection.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point to measure.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "distance of the point (can be \u003C 0)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the bounding box intersects the view frustum and near_dist/far_dist were set. false if the bounding box does not intersect the view frustum."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetPointDepth.htm"
+    },
+    {
+      "name": "GetScreenPort()",
+      "signature": "public Rectangle GetScreenPort()",
+      "summary": "Gets the location of viewport in pixels. See documentation for SetScreenPort.",
+      "params": [],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The rectangle, or Empty rectangle on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetScreenPort.htm"
+    },
+    {
+      "name": "GetScreenPort(Int32, Int32)",
+      "signature": "public Rectangle GetScreenPort(out int near, out int far)",
+      "summary": "Gets the location of viewport in pixels. See value meanings in SetScreenPort.",
+      "params": [
+        {
+          "name": "near",
+          "type": "System.Int32",
+          "doc": "The near value. This out parameter is assigned during the call.",
+          "optional": false
+        },
+        {
+          "name": "far",
+          "type": "System.Int32",
+          "doc": "The far value. This out parameter is assigned during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The rectangle, or Empty rectangle on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetScreenPort_1.htm"
+    },
+    {
+      "name": "GetScreenPortLocation",
+      "signature": "public void GetScreenPortLocation(out int left, out int top, out int right, out int bottom)",
+      "summary": "Get the location of viewport in pixels (non System.Drawing version of GetScreenPort)",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022left\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewportInfo.GetScreenPortLocation(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022top\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewportInfo.GetScreenPortLocation(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022right\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewportInfo.GetScreenPortLocation(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022bottom\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewportInfo.GetScreenPortLocation(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetScreenPortLocation.htm"
+    },
+    {
+      "name": "GetSphereDepth",
+      "signature": "public bool GetSphereDepth(Sphere sphere, out double nearDistance, out double farDistance)",
+      "summary": "Gets near and far clipping distances of a bounding sphere.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "The sphere to sample.",
+          "optional": false
+        },
+        {
+          "name": "nearDistance",
+          "type": "System.Double",
+          "doc": "Near distance of the sphere (can be \u003C 0)",
+          "optional": false
+        },
+        {
+          "name": "farDistance",
+          "type": "System.Double",
+          "doc": "Far distance of the sphere (can be equal to near_dist)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the sphere intersects the view frustum and near_dist/far_dist were set. false if the sphere does not intersect the view frustum."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetSphereDepth.htm"
+    },
+    {
+      "name": "GetWorldToScreenScale",
+      "signature": "public double GetWorldToScreenScale(Point3d pointInFrustum)",
+      "summary": "Gets the scale factor from point in frustum to screen scale.",
+      "params": [
+        {
+          "name": "pointInFrustum",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "point in viewing frustum.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "number of pixels per world unit at the 3d point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetWorldToScreenScale.htm"
+    },
+    {
+      "name": "GetXform",
+      "signature": "public Transform GetXform(CoordinateSystem sourceSystem, CoordinateSystem destinationSystem)",
+      "summary": "Computes a transform from a coordinate system to another.",
+      "params": [
+        {
+          "name": "sourceSystem",
+          "type": "Rhino.DocObjects.CoordinateSystem",
+          "doc": "The coordinate system to map from.",
+          "optional": false
+        },
+        {
+          "name": "destinationSystem",
+          "type": "Rhino.DocObjects.CoordinateSystem",
+          "doc": "The coordinate system to map into.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "The 4x4 transformation matrix (acts on the left)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_GetXform.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "RotateCamera",
+      "signature": "public bool RotateCamera(double rotationAngleRadians, Vector3d rotationAxis, Point3d rotationCenter)",
+      "summary": "Rotates the view camera.",
+      "params": [
+        {
+          "name": "rotationAngleRadians",
+          "type": "System.Double",
+          "doc": "The amount to rotate expressed in radians.",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The axis to rotate around.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point to rotate around.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if rotation is successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_RotateCamera.htm"
+    },
+    {
+      "name": "SetCameraDirection",
+      "signature": "public bool SetCameraDirection(Vector3d direction)",
+      "summary": "Sets the direction that the camera faces.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A new direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the direction was set; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetCameraDirection.htm"
+    },
+    {
+      "name": "SetCameraLocation",
+      "signature": "public bool SetCameraLocation(Point3d location)",
+      "summary": "Sets the camera location (position) point.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022location\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewportInfo.SetCameraLocation(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetCameraLocation.htm"
+    },
+    {
+      "name": "SetCameraUp",
+      "signature": "public bool SetCameraUp(Vector3d up)",
+      "summary": "Sets the camera up vector.",
+      "params": [
+        {
+          "name": "up",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A new direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the direction was set; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetCameraUp.htm"
+    },
+    {
+      "name": "SetFrustum",
+      "signature": "public bool SetFrustum(double left, double right, double bottom, double top, double nearDistance, double farDistance)",
+      "summary": "Sets the view frustum. If FrustumSymmetryIsLocked() is true and left != -right or bottom != -top, then they will be adjusted so the resulting frustum is symmetric.",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Double",
+          "doc": "A new left value.",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Double",
+          "doc": "A new right value.",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Double",
+          "doc": "A new bottom value.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Double",
+          "doc": "A new top value.",
+          "optional": false
+        },
+        {
+          "name": "nearDistance",
+          "type": "System.Double",
+          "doc": "A new near distance value.",
+          "optional": false
+        },
+        {
+          "name": "farDistance",
+          "type": "System.Double",
+          "doc": "A new far distance value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetFrustum.htm"
+    },
+    {
+      "name": "SetFrustumNearFar(BoundingBox)",
+      "signature": "public bool SetFrustumNearFar(BoundingBox boundingBox)",
+      "summary": "Sets the frustum near and far using a bounding box.",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A bounding box to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetFrustumNearFar.htm"
+    },
+    {
+      "name": "SetFrustumNearFar(Double, Double)",
+      "signature": "public bool SetFrustumNearFar(double nearDistance, double farDistance)",
+      "summary": "Sets the frustum near and far distances using two values.",
+      "params": [
+        {
+          "name": "nearDistance",
+          "type": "System.Double",
+          "doc": "The new near distance.",
+          "optional": false
+        },
+        {
+          "name": "farDistance",
+          "type": "System.Double",
+          "doc": "The new far distance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetFrustumNearFar_2.htm"
+    },
+    {
+      "name": "SetFrustumNearFar(Point3d, Double)",
+      "signature": "public bool SetFrustumNearFar(Point3d center, double radius)",
+      "summary": "Sets the frustum near and far using a center point and radius.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A center point.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "A radius value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetFrustumNearFar_1.htm"
+    },
+    {
+      "name": "SetFrustumNearFar(Double, Double, Double, Double, Double)",
+      "signature": "public bool SetFrustumNearFar(double nearDistance, double farDistance, double minNearDistance, double minNearOverFar, double targetDistance)",
+      "summary": "Sets near and far clipping distance subject to constraints.",
+      "params": [
+        {
+          "name": "nearDistance",
+          "type": "System.Double",
+          "doc": "(\u003E0) desired near clipping distance.",
+          "optional": false
+        },
+        {
+          "name": "farDistance",
+          "type": "System.Double",
+          "doc": "(\u003Enear_dist) desired near clipping distance.",
+          "optional": false
+        },
+        {
+          "name": "minNearDistance",
+          "type": "System.Double",
+          "doc": "If min_near_dist \u003C= 0.0, it is ignored. If min_near_dist \u003E 0 and near_dist \u003C min_near_dist, then the frustum\u0027s near_dist will be increased to min_near_dist.",
+          "optional": false
+        },
+        {
+          "name": "minNearOverFar",
+          "type": "System.Double",
+          "doc": "If min_near_over_far \u003C= 0.0, it is ignored. If near_dist \u003C far_dist*min_near_over_far, then near_dist is increased and/or far_dist is decreased so that near_dist = far_dist*min_near_over_far. If near_dist \u003C target_dist \u003C far_dist, then near_dist near_dist is increased and far_dist is decreased so that projection precision will be good at target_dist. Otherwise, near_dist is simply set to far_dist*min_near_over_far.",
+          "optional": false
+        },
+        {
+          "name": "targetDistance",
+          "type": "System.Double",
+          "doc": "If target_dist \u003C= 0.0, it is ignored. If target_dist \u003E 0, it is used as described in the description of the min_near_over_far parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetFrustumNearFar_3.htm"
+    },
+    {
+      "name": "SetScreenPort(Rectangle)",
+      "signature": "public bool SetScreenPort(Rectangle windowRectangle)",
+      "summary": "Gets the location of viewport in pixels. See value meanings in SetScreenPort.",
+      "params": [
+        {
+          "name": "windowRectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "A new rectangle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if input is valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetScreenPort.htm"
+    },
+    {
+      "name": "SetScreenPort(Rectangle, Int32, Int32)",
+      "signature": "public bool SetScreenPort(Rectangle windowRectangle, int near, int far)",
+      "summary": "Gets the location of viewport in pixels. See value meanings in SetScreenPort.",
+      "params": [
+        {
+          "name": "windowRectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "A new rectangle.",
+          "optional": false
+        },
+        {
+          "name": "near",
+          "type": "System.Int32",
+          "doc": "The near value.",
+          "optional": false
+        },
+        {
+          "name": "far",
+          "type": "System.Int32",
+          "doc": "The far value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if input is valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetScreenPort_1.htm"
+    },
+    {
+      "name": "SetScreenPort(Int32, Int32, Int32, Int32, Int32, Int32)",
+      "signature": "public bool SetScreenPort(int left, int right, int bottom, int top, int near, int far)",
+      "summary": "Location of viewport in pixels. These are provided so you can set the port you are using and get the appropriate transformations to and from screen space. // For a Windows window / int width = width of window client area in pixels; / int height = height of window client area in pixels; / port_left = 0; / port_right = width; / port_top = 0; / port_bottom = height; / port_near = 0; / port_far = 1; / SetScreenPort( port_left, port_right, / port_bottom, port_top, / port_near, port_far );",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Int32",
+          "doc": "A left value.",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Int32",
+          "doc": "A left value. (port_left != port_right)",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Int32",
+          "doc": "A bottom value.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Int32",
+          "doc": "A top value. (port_top != port_bottom)",
+          "optional": false
+        },
+        {
+          "name": "near",
+          "type": "System.Int32",
+          "doc": "A near value.",
+          "optional": false
+        },
+        {
+          "name": "far",
+          "type": "System.Int32",
+          "doc": "A far value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if input is valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_SetScreenPort_2.htm"
+    },
+    {
+      "name": "TargetDistance",
+      "signature": "public double TargetDistance(bool useFrustumCenterFallback)",
+      "summary": "Gets the distance from the target point to the camera plane. Note that if the frustum is not symmetric, then this distance is shorter than the distance from the target to the camera location.",
+      "params": [
+        {
+          "name": "useFrustumCenterFallback",
+          "type": "System.Boolean",
+          "doc": "If bUseFrustumCenterFallback is false and the target point is not valid, then ON_UNSET_VALUE is returned. If bUseFrustumCenterFallback is true and the frustum is valid and current target point is not valid or is behind the camera, then 0.5*(near \u002B far) is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Shortest signed distance from camera plane to target point. If the target point is on the visible side of the camera, a positive value is returned. ON_UNSET_VALUE is returned when the input of view is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_TargetDistance.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "TransformCamera",
+      "signature": "public bool TransformCamera(Transform xform)",
+      "summary": "Transforms the view camera location, direction, and up.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to camera.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if a valid camera was transformed, false if invalid camera, frustum, or transformation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_TransformCamera.htm"
+    },
+    {
+      "name": "UnlockCamera",
+      "signature": "public void UnlockCamera()",
+      "summary": "Unlocks the camera vectors and location.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_UnlockCamera.htm"
+    },
+    {
+      "name": "UnlockFrustumSymmetry",
+      "signature": "public void UnlockFrustumSymmetry()",
+      "summary": "Unlocks frustum horizontal and vertical symmetries.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_UnlockFrustumSymmetry.htm"
+    },
+    {
+      "name": "ZoomToScreenRect(Rectangle)",
+      "signature": "public bool ZoomToScreenRect(Rectangle windowRectangle)",
+      "summary": "Zooms to a screen zone. View changing from screen input points. Handy for using a mouse to manipulate a view. ZoomToScreenRect() may change camera and frustum settings.",
+      "params": [
+        {
+          "name": "windowRectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "The new window rectangle in screen space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_ZoomToScreenRect.htm"
+    },
+    {
+      "name": "ZoomToScreenRect(Int32, Int32, Int32, Int32)",
+      "signature": "public bool ZoomToScreenRect(int left, int top, int right, int bottom)",
+      "summary": "Zooms to a screen zone. View changing from screen input points. Handy for using a mouse to manipulate a view. ZoomToScreenRect() may change camera and frustum settings.",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Int32",
+          "doc": "Screen coordinate.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Int32",
+          "doc": "Screen coordinate.",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Int32",
+          "doc": "Screen coordinate.",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Int32",
+          "doc": "Screen coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ViewportInfo_ZoomToScreenRect_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Camera35mmLensLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "This property assumes the camera is horizontal and crop the film rather than the image when the aspect of the frustum is not 36/24. (35mm film is 36mm wide and 24mm high.) Setting preserves camera location, changes the frustum, but maintains the frustum\u0027s aspect.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_Camera35mmLensLength.htm"
+    },
+    {
+      "name": "CameraAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the 1/2 smallest angle. See GetCameraAngles(Double, Double, Double) for more information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_CameraAngle.htm"
+    },
+    {
+      "name": "CameraDirection",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the direction that the camera faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_CameraDirection.htm"
+    },
+    {
+      "name": "CameraLocation",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the camera location (position) point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_CameraLocation.htm"
+    },
+    {
+      "name": "CameraUp",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the camera up vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_CameraUp.htm"
+    },
+    {
+      "name": "CameraX",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the unit \u0022to the right\u0022 vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_CameraX.htm"
+    },
+    {
+      "name": "CameraY",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the unit \u0022up\u0022 vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_CameraY.htm"
+    },
+    {
+      "name": "CameraZ",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the unit vector in -CameraDirection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_CameraZ.htm"
+    },
+    {
+      "name": "DefaultCameraDirection",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Default z=up perspective camera direction",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_DefaultCameraDirection.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "FrustumAspect",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting FrustumAspect changes the larger of the frustum\u0027s width/height so that the resulting value of width/height matches the requested aspect. The camera angle is not changed. If you change the shape of the view port with a call SetScreenPort(), then you generally want to call SetFrustumAspect() with the value returned by GetScreenPortAspect().",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumAspect.htm"
+    },
+    {
+      "name": "FrustumBottom",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum bottom value. This is -top if the frustum has a horizontal symmetry axis. This number is usually negative.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumBottom.htm"
+    },
+    {
+      "name": "FrustumBottomPlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum bottom plane that separates visible from off-screen.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumBottomPlane.htm"
+    },
+    {
+      "name": "FrustumCenter",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum center point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumCenter.htm"
+    },
+    {
+      "name": "FrustumFar",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum far-cutting value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumFar.htm"
+    },
+    {
+      "name": "FrustumFarPlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets far clipping plane if camera and frustum are valid. The plane\u0027s frame is the same as the camera\u0027s frame. The origin is located at the intersection of the camera direction ray and the far clipping plane. The plane\u0027s normal points into the frustum towards the camera location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumFarPlane.htm"
+    },
+    {
+      "name": "FrustumHeight",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum height. This is FrustumTop - FrustumBottom.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumHeight.htm"
+    },
+    {
+      "name": "FrustumLeft",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum left value. This is -right if the frustum has a vertical symmetry axis. This number is usually negative.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumLeft.htm"
+    },
+    {
+      "name": "FrustumLeftPlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum left plane that separates visible from off-screen.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumLeftPlane.htm"
+    },
+    {
+      "name": "FrustumMaximumDiameter",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum maximum diameter, or the maximum between FrustumWidth and FrustumHeight.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumMaximumDiameter.htm"
+    },
+    {
+      "name": "FrustumMinimumDiameter",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum minimum diameter, or the minimum between FrustumWidth and FrustumHeight.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumMinimumDiameter.htm"
+    },
+    {
+      "name": "FrustumNear",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum near-cutting value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumNear.htm"
+    },
+    {
+      "name": "FrustumNearPlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets near clipping plane if camera and frustum are valid. The plane\u0027s frame is the same as the camera\u0027s frame. The origin is located at the intersection of the camera direction ray and the near clipping plane. The plane\u0027s normal points out of the frustum towards the camera location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumNearPlane.htm"
+    },
+    {
+      "name": "FrustumRight",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum right value. This is -left if the frustum has a vertical symmetry axis. This number is usually positive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumRight.htm"
+    },
+    {
+      "name": "FrustumRightPlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum right plane that separates visible from off-screen.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumRightPlane.htm"
+    },
+    {
+      "name": "FrustumTop",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum top value. This is -bottom if the frustum has a horizontal symmetry axis. This number is usually positive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumTop.htm"
+    },
+    {
+      "name": "FrustumTopPlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum top plane that separates visible from off-screen.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumTopPlane.htm"
+    },
+    {
+      "name": "FrustumWidth",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frustum width. This is FrustumRight - FrustumLeft.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_FrustumWidth.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Sets the viewport\u0027s id to the value used to uniquely identify this viewport. There is no approved way to change the viewport id once it is set in order to maintain consistency across multiple viewports and those routines that manage them.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_Id.htm"
+    },
+    {
+      "name": "IsCameraDirectionLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that indicates whether the direction that the camera faces is unmodifiable.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsCameraDirectionLocked.htm"
+    },
+    {
+      "name": "IsCameraLocationLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that indicates whether the camera location is unmodifiable.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsCameraLocationLocked.htm"
+    },
+    {
+      "name": "IsCameraUpLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that indicates whether the camera up vector is unmodifiable.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsCameraUpLocked.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsFrustumLeftRightSymmetric",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that indicates whether the camera frustum has a vertical symmetry axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsFrustumLeftRightSymmetric.htm"
+    },
+    {
+      "name": "IsFrustumTopBottomSymmetric",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that indicates whether the camera frustum has a horizontal symmetry axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsFrustumTopBottomSymmetric.htm"
+    },
+    {
+      "name": "IsParallelProjection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set whether this projection is parallel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsParallelProjection.htm"
+    },
+    {
+      "name": "IsPerspectiveProjection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set whether this projection is perspective.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsPerspectiveProjection.htm"
+    },
+    {
+      "name": "IsTwoPointPerspectiveProjection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether this projection is a two-point perspective.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsTwoPointPerspectiveProjection.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "IsValidCamera",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether the camera is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsValidCamera.htm"
+    },
+    {
+      "name": "IsValidFrustum",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether the frustum is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_IsValidFrustum.htm"
+    },
+    {
+      "name": "PerspectiveMinNearDist",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Expert user function to control the minimum value of near when perspective projections are being used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_PerspectiveMinNearDist.htm"
+    },
+    {
+      "name": "PerspectiveMinNearOverFar",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Expert user function to control the minimum ratio of near/far when perspective projections are begin used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_PerspectiveMinNearOverFar.htm"
+    },
+    {
+      "name": "ScreenPort",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the screen port. SetScreenPort(Rectangle) and",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_ScreenPort.htm"
+    },
+    {
+      "name": "ScreenPortAspect",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the screen aspect ratio. This is width / height.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_ScreenPortAspect.htm"
+    },
+    {
+      "name": "TargetPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "The current value of the target point. This point does not play a role in the view projection calculations. It can be used as a fixed point when changing the camera so the visible regions of the before and after frustums both contain the region of interest. The default constructor sets this point on ON_3dPoint::UnsetPoint. You must explicitly call one SetTargetPoint() functions to set the target point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_TargetPoint.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use sharable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "ViewScale",
+      "type": "SizeF",
+      "getter": true,
+      "setter": true,
+      "summary": "Applies scaling factors to parallel projection clipping coordinates by setting the m_clip_mod transformation. If you want to compress the view projection across the viewing plane, then set x = 0.5, y = 1.0, and z = 1.0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ViewportInfo_ViewScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

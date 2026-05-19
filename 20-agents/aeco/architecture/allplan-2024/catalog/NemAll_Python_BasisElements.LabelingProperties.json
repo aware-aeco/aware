@@ -1,0 +1,58 @@
+{
+  "name": "LabelingProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Labeling properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/",
+  "constructors": [
+    {
+      "name": "LabelingProperties",
+      "signature": "LabelingProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AddProjectionName",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for adding the projection name :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.AddProjectionName"
+    },
+    {
+      "name": "HeadingOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the heading on :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.HeadingOn"
+    },
+    {
+      "name": "HeadingText",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the heading text :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.HeadingText"
+    },
+    {
+      "name": "IsScaleOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the scal on :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelingProperties/#NemAll_Python_BasisElements.LabelingProperties.IsScaleOn"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

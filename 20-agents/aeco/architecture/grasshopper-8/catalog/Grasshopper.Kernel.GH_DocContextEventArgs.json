@@ -1,0 +1,31 @@
+{
+  "name": "GH_DocContextEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "These arguments are passed along with SettingsChanged events on GH_Document.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocContextEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Context",
+      "type": "GH_DocumentContext",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of the document context flag at the time the event was raised, it may have been changed in between by other event handlers.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocContextEventArgs_Context.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that raised the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocContextEventArgs_Document.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

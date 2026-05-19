@@ -1,0 +1,56 @@
+{
+  "name": "DesignOptionsCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Design Options Commands\u0027 command group \u2014 3 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDesignOptions",
+      "signature": "GetDesignOptions(): object",
+      "summary": "Retrieves information about existing design options. Available from Archicad 29.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: designOptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetDesignOptions",
+      "since": "1.2.9"
+    },
+    {
+      "name": "GetDesignOptionSets",
+      "signature": "GetDesignOptionSets(): object",
+      "summary": "Retrieves information about existing design option sets. Available from Archicad 29.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: designOptionSets."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetDesignOptionSets",
+      "since": "1.2.9"
+    },
+    {
+      "name": "GetDesignOptionCombinations",
+      "signature": "GetDesignOptionCombinations(): object",
+      "summary": "Retrieves information about existing design option combinations.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: designOptionCombinations."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetDesignOptionCombinations",
+      "since": "1.2.9"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

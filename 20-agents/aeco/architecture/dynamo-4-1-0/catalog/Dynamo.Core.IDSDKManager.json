@@ -1,0 +1,163 @@
+{
+  "name": "IDSDKManager",
+  "namespace": "Dynamo.Core",
+  "kind": "class",
+  "summary": "The class to provide auth APIs for IDSDK related methods.",
+  "interfaces": [
+    "Greg.IOAuth2AuthProvider",
+    "Greg.IAuthProvider",
+    "Greg.IOAuth2AccessTokenProvider",
+    "Greg.IOAuth2UserIDProvider",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs",
+  "constructors": [
+    {
+      "name": "IDSDKManager()",
+      "signature": "void IDSDKManager()",
+      "summary": "IDSDKManager.IDSDKManager",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "IDSDKManager.Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "GetAccessToken",
+      "signature": "string GetAccessToken()",
+      "summary": "IDSDKManager.GetAccessToken",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "IsLoggedIn",
+      "signature": "bool IsLoggedIn()",
+      "summary": "Returns the login status of the current session.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Boolean Status Value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "Login",
+      "signature": "bool Login()",
+      "summary": "Triggers login using Auth API, if the user is not already logged in.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True, if login was successfull, else False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "Logout",
+      "signature": "void Logout()",
+      "summary": "Logs out the user from the current session.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "SignRequest(ref RestSharp.RestRequest, RestSharp.RestClient)",
+      "signature": "void SignRequest(ref RestSharp.RestRequest m, RestSharp.RestClient client)",
+      "summary": "Used by the auth provider to sign request with the authorized token.",
+      "params": [
+        {
+          "name": "m",
+          "type": "ref RestSharp.RestRequest",
+          "optional": false
+        },
+        {
+          "name": "client",
+          "type": "RestSharp.RestClient",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsIDSDKInitialized",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the status of IDSDK installation, will return false if IDSDK fails to initialize.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "LoginState",
+      "type": "Greg.AuthProviders.LoginState",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the login status of the current session.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "UserId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the userid of the logged in user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the username of the logged in user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "LoginStateChanged",
+      "delegate": "System.Action\u003CGreg.AuthProviders.LoginState\u003E",
+      "signature": "public event System.Action\u003CGreg.AuthProviders.LoginState\u003E LoginStateChanged",
+      "summary": "Tracks any change in the login status.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestLogin",
+      "delegate": "System.Func\u003Cobject, bool\u003E",
+      "signature": "public event System.Func\u003Cobject, bool\u003E RequestLogin",
+      "summary": "Used by the auth provider to request authentication.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/IDSDKManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

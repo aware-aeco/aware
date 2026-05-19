@@ -1,0 +1,46 @@
+{
+  "name": "LcUSysErrorSeverity",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUSysErrorSeverity enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSysErrorSeverity",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eANY",
+      "value": -1
+    },
+    {
+      "name": "eERROR",
+      "value": 0
+    },
+    {
+      "name": "eWARNING",
+      "value": 1
+    },
+    {
+      "name": "ePRECONDITION",
+      "value": 2
+    },
+    {
+      "name": "eASSERT",
+      "value": 3
+    },
+    {
+      "name": "eDEBUG",
+      "value": 4
+    },
+    {
+      "name": "eLOG",
+      "value": 5
+    },
+    {
+      "name": "eNUM_SEVERITY",
+      "value": 6
+    }
+  ]
+}

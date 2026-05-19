@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingEditorOpenedDelegate",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing editor opening.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f462b10f-c16f-42e4-d1c4-1289a5d1bf74",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingEditorOpenedDelegate()"
+}

@@ -1,0 +1,57 @@
+{
+  "name": "MappingTag",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Holds texture mapping information.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_MappingTag.htm",
+  "constructors": [
+    {
+      "name": "MappingTag",
+      "signature": "public MappingTag()",
+      "summary": "Initializes a new instance of the MappingTag class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_MappingTag__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a map globally unique identifier.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_MappingTag_Id.htm"
+    },
+    {
+      "name": "MappingCRC",
+      "type": "UInt32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cyclic redundancy check on the mapping. See also CRC32(UInt32, Byte[]).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_MappingTag_MappingCRC.htm"
+    },
+    {
+      "name": "MappingType",
+      "type": "TextureMappingType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a texture mapping type: linear, cylinder, etc...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_MappingTag_MappingType.htm"
+    },
+    {
+      "name": "MeshTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a 4x4 matrix transform.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_MappingTag_MeshTransform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

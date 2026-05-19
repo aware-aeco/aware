@@ -1,0 +1,242 @@
+{
+  "name": "ZoomService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Implementation of the zoom service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/",
+  "constructors": [
+    {
+      "name": "ZoomService",
+      "signature": "ZoomService() | ZoomService(element: ZoomService)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ZoomToElement",
+      "signature": "ZoomToElement( element: BaseElementAdapter, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, )",
+      "summary": "Zoom to the element",
+      "remarks": "Zoom to the element",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "inflateValue",
+          "type": "float",
+          "doc": "Inflate value for the min/max box",
+          "optional": false
+        },
+        {
+          "name": "bZoomAll",
+          "type": "bool",
+          "doc": "Zoom in all views state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToElement"
+    },
+    {
+      "name": "ZoomToElementWithFactor",
+      "signature": "ZoomToElementWithFactor( element: BaseElementAdapter, viewProj: ViewWorldProjection, factor: float, bZoomAll: bool, )",
+      "summary": "Zoom to the element",
+      "remarks": "Zoom to the element",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "float",
+          "doc": "Factor for zooming, 0.5 means 50% zooming",
+          "optional": false
+        },
+        {
+          "name": "bZoomAll",
+          "type": "bool",
+          "doc": "Zoom in all views state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToElementWithFactor"
+    },
+    {
+      "name": "ZoomToElements",
+      "signature": "ZoomToElements( elements: BaseElementAdapterList, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, )",
+      "summary": "Zoom to the elements",
+      "remarks": "Zoom to the elements",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "inflateValue",
+          "type": "float",
+          "doc": "Inflate value for the min/max box",
+          "optional": false
+        },
+        {
+          "name": "bZoomAll",
+          "type": "bool",
+          "doc": "Zoom in all views state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToElements"
+    },
+    {
+      "name": "ZoomToElementsWithFactor",
+      "signature": "ZoomToElementsWithFactor( elements: BaseElementAdapterList, viewProj: ViewWorldProjection, factor: float, bZoomAll: bool, )",
+      "summary": "Zoom to the elements",
+      "remarks": "Zoom to the elements",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "float",
+          "doc": "Factor for zooming, 0.5 means 50% zooming",
+          "optional": false
+        },
+        {
+          "name": "bZoomAll",
+          "type": "bool",
+          "doc": "Zoom in all views state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToElementsWithFactor"
+    },
+    {
+      "name": "ZoomToMinMaxBox",
+      "signature": "ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, ) | ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValueX: float, inflateValueY: float, inflateValueZ: float, bZoomAll: bool, )",
+      "summary": "Zoom to the min/max box",
+      "remarks": "Zoom to the min/max box",
+      "params": [
+        {
+          "name": "minMaxBox",
+          "type": "MinMax3D",
+          "doc": "Zoom area",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "inflateValue",
+          "type": "float",
+          "doc": "Inflate value for the min/max box",
+          "optional": false
+        },
+        {
+          "name": "bZoomAll",
+          "type": "bool",
+          "doc": "Zoom in all views state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToMinMaxBox"
+    },
+    {
+      "name": "ZoomToMinMaxBoxWithFactor",
+      "signature": "ZoomToMinMaxBoxWithFactor( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, factor: float, bZoomAll: bool, )",
+      "summary": "Zoom to the min/max box",
+      "remarks": "Zoom to the min/max box",
+      "params": [
+        {
+          "name": "minMaxBox",
+          "type": "MinMax3D",
+          "doc": "Zoom area",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "float",
+          "doc": "Factor for zooming, 0.5 means 50% zooming",
+          "optional": false
+        },
+        {
+          "name": "bZoomAll",
+          "type": "bool",
+          "doc": "Zoom in all views state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToMinMaxBoxWithFactor"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

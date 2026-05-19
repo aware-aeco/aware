@@ -1,0 +1,116 @@
+{
+  "name": "Rectangle.RectangleAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The RectangleAttributes class is the attributes class of the rectangle.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d916e102-2fc3-f888-8399-dc94fc4cfebf",
+  "constructors": [
+    {
+      "name": "Rectangle.RectangleAttributes()",
+      "signature": "public RectangleAttributes()",
+      "summary": "Creates a new default rectangle attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1e37a306-39bc-4913-b1ca-30ba9997e563"
+    },
+    {
+      "name": "Rectangle.RectangleAttributes(String)",
+      "signature": "public RectangleAttributes(string AttributesFile)",
+      "summary": "Creates a new rectangle attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e971538a-cee6-ebfa-74a3-d0856a6ed539"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6e4b5fa1-be4f-1840-4fd0-de810b7e10bf"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9e964ef1-34b9-4ffb-33fe-480366a83dd1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BehindModelObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the closed graphic object is drawn behind model objects",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f3d8e0e-95ab-ddc8-0eed-41a8f547f5e5"
+    },
+    {
+      "name": "Bulge",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The bulge value for the rectangle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f1e40ce3-cc7c-fdb0-2ead-241fad84120b"
+    },
+    {
+      "name": "Hatch",
+      "type": "GraphicObjectHatchAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch attributes of the closed graphic object (the closed graphic object is hatchable).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a4e0e3d4-102f-e2cb-68f2-da8c9f63fba0"
+    },
+    {
+      "name": "Line",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3483367b-c555-6997-e0a4-988358d7ce9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

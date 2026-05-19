@@ -1,0 +1,81 @@
+{
+  "name": "FlushPierElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the FlushPier element",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/",
+  "constructors": [
+    {
+      "name": "FlushPierElement",
+      "signature": "FlushPierElement() | FlushPierElement( flushPierProp: FlushPierProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, ) | FlushPierElement(element: FlushPierElement)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/#NemAll_Python_ArchElements.FlushPierElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties() -\u003E FlushPierProperties",
+      "summary": "Get the FlushPier properties",
+      "remarks": "Get the FlushPier properties",
+      "params": [],
+      "returns": {
+        "type": "FlushPierProperties",
+        "doc": "FlushPier properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/#NemAll_Python_ArchElements.FlushPierElement.GetProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(FlushPierProp: FlushPierProperties)",
+      "summary": "Set the FlushPier properties",
+      "remarks": "Set the FlushPier properties",
+      "params": [
+        {
+          "name": "FlushPierProp",
+          "type": "FlushPierProperties",
+          "doc": "FlushPier properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/#NemAll_Python_ArchElements.FlushPierElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/#NemAll_Python_ArchElements.FlushPierElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "FlushPierProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the FlushPier properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/#NemAll_Python_ArchElements.FlushPierElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

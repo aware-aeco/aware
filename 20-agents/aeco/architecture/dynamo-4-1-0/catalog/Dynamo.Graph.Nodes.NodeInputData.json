@@ -1,0 +1,141 @@
+{
+  "name": "NodeInputData",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Represents a node which acts as a UI input for the graph - may also hold a value for that input",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs",
+  "constructors": [
+    {
+      "name": "NodeInputData()",
+      "signature": "void NodeInputData()",
+      "summary": "NodeInputData.NodeInputData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "NodeInputData.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Choices",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "If this input is a dropdownSelection type a list of choices a user can select.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Description displayed to user of this input node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "Id",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "The id of the node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "MaximumValue",
+      "type": "System.Nullable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "if this input is a Number, the max value of that number.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "MinimumValue",
+      "type": "System.Nullable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "if this input is a Number, the min value of that number.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Display name of the input node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "NumberType",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "if this input is a Number, the number type Double or Integer that the number returns.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "SelectedIndex",
+      "type": "System.Nullable\u003Cint\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the selected item.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "StepValue",
+      "type": "System.Nullable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "if this input is a Number, the step value of that number when it acts as a slider.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "Type",
+      "type": "Dynamo.Graph.Nodes.NodeInputTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of input this node is.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "Type2",
+      "type": "Dynamo.Graph.Nodes.NodeInputTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of input this node is.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    },
+    {
+      "name": "Value",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The value of the input when the graph was saved. This should always be a string for all types.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

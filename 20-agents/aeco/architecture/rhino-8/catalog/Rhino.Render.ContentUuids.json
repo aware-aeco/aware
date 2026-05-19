@@ -1,0 +1,502 @@
+{
+  "name": "ContentUuids",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Content Guids of RenderContent provided by the RDK SDK. These Guids can be used to check against RenderContent.TypeId.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ContentUuids.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AddTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_AddTextureType.htm"
+    },
+    {
+      "name": "AdvancedDotTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_AdvancedDotTextureType.htm"
+    },
+    {
+      "name": "BasicEnvironmentCCI",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BasicEnvironmentCCI.htm"
+    },
+    {
+      "name": "BasicEnvironmentType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BasicEnvironmentType.htm"
+    },
+    {
+      "name": "BasicMaterialCCI",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BasicMaterialCCI.htm"
+    },
+    {
+      "name": "BasicMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BasicMaterialType.htm"
+    },
+    {
+      "name": "BitmapTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BitmapTextureType.htm"
+    },
+    {
+      "name": "BlendMaterialCCI",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BlendMaterialCCI.htm"
+    },
+    {
+      "name": "BlendMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BlendMaterialType.htm"
+    },
+    {
+      "name": "BlendTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_BlendTextureType.htm"
+    },
+    {
+      "name": "CompositeMaterialCCI",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_CompositeMaterialCCI.htm"
+    },
+    {
+      "name": "CompositeMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_CompositeMaterialType.htm"
+    },
+    {
+      "name": "CrossHatchBumpTexture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_CrossHatchBumpTexture.htm"
+    },
+    {
+      "name": "CubeMapTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_CubeMapTextureType.htm"
+    },
+    {
+      "name": "DefaultEnvironmentInstance",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_DefaultEnvironmentInstance.htm"
+    },
+    {
+      "name": "DefaultMaterialInstance",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_DefaultMaterialInstance.htm"
+    },
+    {
+      "name": "DisplayAttributeMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_DisplayAttributeMaterialType.htm"
+    },
+    {
+      "name": "DotBumpTexture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_DotBumpTexture.htm"
+    },
+    {
+      "name": "DoubleSidedMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_DoubleSidedMaterialType.htm"
+    },
+    {
+      "name": "EmissionMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_EmissionMaterialType.htm"
+    },
+    {
+      "name": "ExposureTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_ExposureTextureType.htm"
+    },
+    {
+      "name": "EXRTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_EXRTextureType.htm"
+    },
+    {
+      "name": "FBmTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_FBmTextureType.htm"
+    },
+    {
+      "name": "GemMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_GemMaterialType.htm"
+    },
+    {
+      "name": "GlassMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_GlassMaterialType.htm"
+    },
+    {
+      "name": "GradientTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_GradientTextureType.htm"
+    },
+    {
+      "name": "GraniteTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_GraniteTextureType.htm"
+    },
+    {
+      "name": "GridTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_GridTextureType.htm"
+    },
+    {
+      "name": "GritBumpTexture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_GritBumpTexture.htm"
+    },
+    {
+      "name": "HatchBumpTexture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_HatchBumpTexture.htm"
+    },
+    {
+      "name": "HDRTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_HDRTextureType.htm"
+    },
+    {
+      "name": "LeatherBumpTexture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_LeatherBumpTexture.htm"
+    },
+    {
+      "name": "MarbleTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_MarbleTextureType.htm"
+    },
+    {
+      "name": "MaskTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_MaskTextureType.htm"
+    },
+    {
+      "name": "MetalMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_MetalMaterialType.htm"
+    },
+    {
+      "name": "MultiplyTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_MultiplyTextureType.htm"
+    },
+    {
+      "name": "NoiseTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_NoiseTextureType.htm"
+    },
+    {
+      "name": "PaintMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PaintMaterialType.htm"
+    },
+    {
+      "name": "PerlinMarbleTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PerlinMarbleTextureType.htm"
+    },
+    {
+      "name": "PerturbingTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PerturbingTextureType.htm"
+    },
+    {
+      "name": "PhysicallyBasedMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PhysicallyBasedMaterialType.htm"
+    },
+    {
+      "name": "PhysicalSkyTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PhysicalSkyTextureType.htm"
+    },
+    {
+      "name": "PictureMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PictureMaterialType.htm"
+    },
+    {
+      "name": "PlasterMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PlasterMaterialType.htm"
+    },
+    {
+      "name": "PlasticMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_PlasticMaterialType.htm"
+    },
+    {
+      "name": "ProjectionChangerTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_ProjectionChangerTextureType.htm"
+    },
+    {
+      "name": "RealtimeDisplayMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_RealtimeDisplayMaterialType.htm"
+    },
+    {
+      "name": "ResampleTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_ResampleTextureType.htm"
+    },
+    {
+      "name": "SimpleBitmapTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_SimpleBitmapTextureType.htm"
+    },
+    {
+      "name": "SingleColorTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_SingleColorTextureType.htm"
+    },
+    {
+      "name": "SpeckleBumpTexture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_SpeckleBumpTexture.htm"
+    },
+    {
+      "name": "StuccoTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_StuccoTextureType.htm"
+    },
+    {
+      "name": "Texture2DCheckerTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_Texture2DCheckerTextureType.htm"
+    },
+    {
+      "name": "Texture3DCheckerTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_Texture3DCheckerTextureType.htm"
+    },
+    {
+      "name": "TextureAdjustmentTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_TextureAdjustmentTextureType.htm"
+    },
+    {
+      "name": "TileTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_TileTextureType.htm"
+    },
+    {
+      "name": "TurbulenceTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_TurbulenceTextureType.htm"
+    },
+    {
+      "name": "V8BlendMaterialType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino V8 Blend material type Guid",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_V8BlendMaterialType.htm"
+    },
+    {
+      "name": "WavesTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_WavesTextureType.htm"
+    },
+    {
+      "name": "WoodBumpTexture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_WoodBumpTexture.htm"
+    },
+    {
+      "name": "WoodTextureType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentUuids_WoodTextureType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

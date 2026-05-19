@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingStatusChangedDelegate",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing status change.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f6dd9476-1c9e-539b-f889-af972c6b43c1",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingStatusChangedDelegate()"
+}

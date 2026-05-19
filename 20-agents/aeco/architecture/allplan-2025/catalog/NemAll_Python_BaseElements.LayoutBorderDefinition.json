@@ -1,0 +1,218 @@
+{
+  "name": "LayoutBorderDefinition",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Representation of the print layout border.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/",
+  "constructors": [
+    {
+      "name": "LayoutBorderDefinition",
+      "signature": "LayoutBorderDefinition()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DistanceBinding",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the distance binding :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.DistanceBinding"
+    },
+    {
+      "name": "DistanceDefault",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the default distance :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.DistanceDefault"
+    },
+    {
+      "name": "ExtraLineColor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the extra line color :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.ExtraLineColor"
+    },
+    {
+      "name": "ExtraLinePen",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the extra line peb :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.ExtraLinePen"
+    },
+    {
+      "name": "ExtraLineStroke",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the extra line stroke :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.ExtraLineStroke"
+    },
+    {
+      "name": "FoldingBindingWidth",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingBindingWidth"
+    },
+    {
+      "name": "FoldingPageHeight",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the folding - height of the pages :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingPageHeight"
+    },
+    {
+      "name": "FoldingPageHeightTolNeg",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the folding - max. negative tolerance of page height :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingPageHeightTolNeg"
+    },
+    {
+      "name": "FoldingPageHeightTolPlus",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the folding - max. positive tolerance of page height :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingPageHeightTolPlus"
+    },
+    {
+      "name": "FoldingPageWidth",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the folding - width of the pages :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingPageWidth"
+    },
+    {
+      "name": "FoldingPageWidthTolNeg",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the folding - max. negative tolerance of page width :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingPageWidthTolNeg"
+    },
+    {
+      "name": "FoldingPageWidthTolPlus",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the folding - max. positive tolerance of page width :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingPageWidthTolPlus"
+    },
+    {
+      "name": "FoldingType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the folding type :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.FoldingType"
+    },
+    {
+      "name": "Index",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the index :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.Index"
+    },
+    {
+      "name": "InnerLineColor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the inner line color :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.InnerLineColor"
+    },
+    {
+      "name": "InnerLinePen",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the inner line pen :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.InnerLinePen"
+    },
+    {
+      "name": "InnerLineStroke",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the inner line stroke :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.InnerLineStroke"
+    },
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the name :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.Name"
+    },
+    {
+      "name": "OuterLineColor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the outer line color :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.OuterLineColor"
+    },
+    {
+      "name": "OuterLinePen",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the outer line pen :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.OuterLinePen"
+    },
+    {
+      "name": "OuterLineStroke",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the outer line stroke :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.OuterLineStroke"
+    },
+    {
+      "name": "UseExtraLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the extra line state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.UseExtraLine"
+    },
+    {
+      "name": "UseInnerLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the inner line state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.UseInnerLine"
+    },
+    {
+      "name": "UserDefined",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the user defined state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutBorderDefinition/#NemAll_Python_BaseElements.LayoutBorderDefinition.UserDefined"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

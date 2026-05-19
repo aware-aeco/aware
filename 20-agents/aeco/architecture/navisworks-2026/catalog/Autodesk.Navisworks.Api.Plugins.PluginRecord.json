@@ -1,0 +1,186 @@
+{
+  "name": "PluginRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Metadata for a plugin that can be loaded into Navisworks. The information in PluginRecord is available even if the corresponding Plugin hasn\u2019t been loaded.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.PluginRecord",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindInterfaceRecord",
+      "signature": "Autodesk.Navisworks.Api.Plugins.InterfaceRecord FindInterfaceRecord(string interfaceId)",
+      "summary": "Finds an InterfaceRecord",
+      "params": [
+        {
+          "name": "interfaceId",
+          "type": "string",
+          "doc": "The Id of the InterfaceRecord",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.InterfaceRecord",
+        "doc": "null if the InterfaceRecord cannot be found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.FindInterfaceRecord%28System.String%29"
+    },
+    {
+      "name": "LoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.Plugin LoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.Plugin",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.LoadPlugin"
+    },
+    {
+      "name": "TryLoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.Plugin TryLoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.Plugin",
+        "doc": "null if plugin failed to load"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.TryLoadPlugin"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DeveloperId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 4 character ADN developer code or a GUID. The combination of this and Name should make the plugin unique",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.DeveloperId"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Text to display in the Navisworks GUI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.DisplayName"
+    },
+    {
+      "name": "ExtendedToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Extended Tooltip to display when the Plugin is highlighted in the Navisworks GUI",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.ExtendedToolTip"
+    },
+    {
+      "name": "HasAttemptedCreate",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if an attempt has been made to create the Plugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.HasAttemptedCreate"
+    },
+    {
+      "name": "HasFailedCreate",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if an attempt has been made to create the plugin, and it has failed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.HasFailedCreate"
+    },
+    {
+      "name": "HasFailedIsSelfEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Where SupportsIsSelfEnabled is true then the plugin will be created early and IsSelfEnabled will be called to determine the result. Will return false if the plugin could not be created to make the call.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.HasFailedIsSelfEnabled"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The full identifier for the plugin. This is formed as Name.DeveloperId",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.Id"
+    },
+    {
+      "name": "InterfaceRecords",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.InterfaceRecord\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a collection of InterfaceRecords that declare which interfaces we support",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.InterfaceRecords"
+    },
+    {
+      "name": "IsEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Plugin is currently enabled for use or not.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.IsEnabled"
+    },
+    {
+      "name": "IsLoaded",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Plugin is currently loaded",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.IsLoaded"
+    },
+    {
+      "name": "LoadedPlugin",
+      "type": "Autodesk.Navisworks.Api.Plugins.Plugin",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the plugin if loaded, otherwise null",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.LoadedPlugin"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the Plugin. The combination of this and DeveloperId should make the plugin unique",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.Name"
+    },
+    {
+      "name": "PluginOptions",
+      "type": "Autodesk.Navisworks.Api.Plugins.PluginOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets flags for how plugins run",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.PluginOptions"
+    },
+    {
+      "name": "SupportsIsSelfEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if IsSelfEnabled will be called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.SupportsIsSelfEnabled"
+    },
+    {
+      "name": "ToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Tooltip to display when the Plugin is highlighted in the Navisworks GUI",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.PluginRecord.ToolTip"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

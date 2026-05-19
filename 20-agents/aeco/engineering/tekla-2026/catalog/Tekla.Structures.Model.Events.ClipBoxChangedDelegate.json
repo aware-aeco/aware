@@ -1,0 +1,14 @@
+{
+  "name": "Events.ClipBoxChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for clip box events.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/984cae98-1bd2-0bc1-2f5c-f8db017f7b11",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ClipBoxChangedDelegate( int viewId, ChangeData.ChangeTypeEnum operation )"
+}

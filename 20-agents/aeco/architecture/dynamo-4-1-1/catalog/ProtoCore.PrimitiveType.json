@@ -1,0 +1,70 @@
+{
+  "name": "PrimitiveType",
+  "namespace": "ProtoCore",
+  "kind": "enum",
+  "summary": "Type PrimitiveType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Type.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Array",
+      "value": 1
+    },
+    {
+      "name": "Bool",
+      "value": 4
+    },
+    {
+      "name": "Char",
+      "value": 5
+    },
+    {
+      "name": "Double",
+      "value": 2
+    },
+    {
+      "name": "FunctionPointer",
+      "value": 10
+    },
+    {
+      "name": "Integer",
+      "value": 3
+    },
+    {
+      "name": "InvalidType",
+      "value": -1
+    },
+    {
+      "name": "MaxPrimitive",
+      "value": 12
+    },
+    {
+      "name": "Null",
+      "value": 0
+    },
+    {
+      "name": "Pointer",
+      "value": 9
+    },
+    {
+      "name": "Return",
+      "value": 11
+    },
+    {
+      "name": "String",
+      "value": 6
+    },
+    {
+      "name": "Var",
+      "value": 7
+    },
+    {
+      "name": "Void",
+      "value": 8
+    }
+  ]
+}

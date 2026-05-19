@@ -1,0 +1,1668 @@
+{
+  "name": "Transform",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the values in a 4x4 transform matrix. This is parallel to C\u002B\u002B ON_Xform.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Transform.htm",
+  "constructors": [
+    {
+      "name": "Transform(Double)",
+      "signature": "public Transform(double diagonalValue)",
+      "summary": "Initializes a new transform matrix with a specified value along the diagonal.",
+      "params": [
+        {
+          "name": "diagonalValue",
+          "type": "System.Double",
+          "doc": "Value to assign to all diagonal cells except M33 which is set to 1.0.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform__ctor_1.htm"
+    },
+    {
+      "name": "Transform(Transform)",
+      "signature": "public Transform(Transform value)",
+      "summary": "Initializes a new transform matrix with a specified value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Value to assign to all cells.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Affineize",
+      "signature": "public void Affineize()",
+      "summary": "Replaces the last row with (0 0 0 1), discarding any perspective part of this transform",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Affineize.htm"
+    },
+    {
+      "name": "ChangeBasis(Plane, Plane)",
+      "signature": "public static Transform ChangeBasis(Plane plane0, Plane plane1)",
+      "summary": "Computes a change of basis transformation. A basis change is essentially a remapping of geometry from one coordinate system to another.",
+      "params": [
+        {
+          "name": "plane0",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Coordinate system in which the geometry is currently described.",
+          "optional": false
+        },
+        {
+          "name": "plane1",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Target coordinate system in which we want the geometry to be described.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix which orients geometry from one coordinate system to another on success. Transform.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_ChangeBasis.htm"
+    },
+    {
+      "name": "ChangeBasis(Vector3d, Vector3d, Vector3d, Vector3d, Vector3d, Vector3d)",
+      "signature": "public static Transform ChangeBasis(Vector3d initialBasisX, Vector3d initialBasisY, Vector3d initialBasisZ, Vector3d finalBasisX, Vector3d finalBasisY, Vector3d finalBasisZ)",
+      "summary": "Computes a change of basis transformation. A basis change is essentially a remapping of geometry from one coordinate system to another.",
+      "params": [
+        {
+          "name": "initialBasisX",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "can be any 3d basis.",
+          "optional": false
+        },
+        {
+          "name": "initialBasisY",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "can be any 3d basis.",
+          "optional": false
+        },
+        {
+          "name": "initialBasisZ",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "can be any 3d basis.",
+          "optional": false
+        },
+        {
+          "name": "finalBasisX",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "can be any 3d basis.",
+          "optional": false
+        },
+        {
+          "name": "finalBasisY",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "can be any 3d basis.",
+          "optional": false
+        },
+        {
+          "name": "finalBasisZ",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "can be any 3d basis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix which orients geometry from one coordinate system to another on success. Transform.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_ChangeBasis_1.htm"
+    },
+    {
+      "name": "Clone",
+      "signature": "public Transform Clone()",
+      "summary": "Returns a deep copy of the transform. For languages that treat structures as value types, this can be accomplished by a simple assignment.",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": "A deep copy of this data structure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Clone.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Transform other)",
+      "summary": "Compares this transform with another transform. M33 has highest value, then M32, etc..",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Another transform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "-1 if this \u003C other; 0 if both are equal; 1 otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_CompareTo.htm"
+    },
+    {
+      "name": "DecomposeAffine(Transform, Vector3d)",
+      "signature": "public bool DecomposeAffine(out Transform linear, out Vector3d translation)",
+      "summary": "Decomposes an affine transformation. A transformation is affine if it is valid and its last row is [0, 0, 0, 1]. An affine transformation can be broken into a linear transformation and a translation. Note, a perspective transformation is not affine.",
+      "remarks": "If X.DecomposeAffine(L, T) is true then X == L* Translation(T). DecomposeAffine(L, T) may fail for affine transformations if L is not invertible, and is more computationally expensive then X.DecomposeAffine(T, L).",
+      "params": [
+        {
+          "name": "linear",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Linear transformation.",
+          "optional": false
+        },
+        {
+          "name": "translation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful decomposition."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_DecomposeAffine.htm"
+    },
+    {
+      "name": "DecomposeAffine(Vector3d, Transform)",
+      "signature": "public bool DecomposeAffine(out Vector3d translation, out Transform linear)",
+      "summary": "Decomposes an affine transformation. A transformation is affine if it is valid and its last row is [0, 0, 0, 1]. An affine transformation can be broken into a linear transformation and a translation. Note, a perspective transformation is not affine.",
+      "remarks": "If X.DecomposeAffine(T, L) is true then X == Translation(T)*L. DecomposeAffine(T,L) succeeds for all affine transformations and is a simple copying of values.",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation vector.",
+          "optional": false
+        },
+        {
+          "name": "linear",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Linear transformation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful decomposition."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_DecomposeAffine_1.htm"
+    },
+    {
+      "name": "DecomposeAffine(Vector3d, Transform, Transform, Vector3d)",
+      "signature": "public bool DecomposeAffine(out Vector3d translation, out Transform rotation, out Transform orthogonal, out Vector3d diagonal)",
+      "summary": "An affine transformation can be decomposed into a Symmetric, Rotation and Translation. Then the Symmetric component may be further decomposed as non-uniform scale in an orthonormal coordinate system.",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation vector.",
+          "optional": false
+        },
+        {
+          "name": "rotation",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Proper rotation transformation.",
+          "optional": false
+        },
+        {
+          "name": "orthogonal",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Orthogonal basis.",
+          "optional": false
+        },
+        {
+          "name": "diagonal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Diagonal elements of a Diagonal transformation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful decomposition."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_DecomposeAffine_2.htm"
+    },
+    {
+      "name": "DecomposeRigid",
+      "signature": "public TransformRigidType DecomposeRigid(out Vector3d translation, out Transform rotation, double tolerance)",
+      "summary": "Decomposes a rigid transformation. The transformation must be affine.",
+      "remarks": "If X.DecomposeRigid(T, R) is 1, then X ~ Translation(T)*R. If X.DecomposeRigid(T, R) is -1, then X ~ Transform(-1) * Translation(T)*R. DecomposeRigid will find the closest rotation to the linear part of this transformation.",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation vector.",
+          "optional": false
+        },
+        {
+          "name": "rotation",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Proper rotation transformation, where R*Transpose(R)=I and det(R)=1.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The evaluation tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformRigidType",
+        "doc": "The rigid type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_DecomposeRigid.htm"
+    },
+    {
+      "name": "DecomposeSimilarity",
+      "signature": "public TransformSimilarityType DecomposeSimilarity(out Vector3d translation, out double dilation, out Transform rotation, double tolerance)",
+      "summary": "Decomposes a similarity transformation. The transformation must be affine. A similarity transformation can be broken into a sequence of a dilation, translation, rotation, and a reflection.",
+      "remarks": "If X.DecomposeSimilarity(T, d, R, tol) !=0 then X ~ Translation(T)*Diagonal(d)*R note when d gt;0 the transformation is orientation preserving. If dilation lt; 0 then Diagonal(dilation) is actually a reflection combined with a true dilation, or Diagonal(dilation) = Diagonal(-1) * Diagonal(|diagonal|).",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation vector.",
+          "optional": false
+        },
+        {
+          "name": "dilation",
+          "type": "System.Double",
+          "doc": "Dilation, where dilation lt; 0 if this is an orientation reversing similarity.",
+          "optional": false
+        },
+        {
+          "name": "rotation",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A proper rotation transformation, where R*Transpose(R)=I and Determinant(R)=1.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The evaluation tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformSimilarityType",
+        "doc": "The similarity type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_DecomposeSimilarity.htm"
+    },
+    {
+      "name": "DecomposeSymmetric",
+      "signature": "public bool DecomposeSymmetric(out Transform matrix, out Vector3d diagonal)",
+      "summary": "A Symmetric linear transformation can be decomposed A = Q * Diag * Q ^ T, where Diag is a diagonal transformation. Diag[i][i] is an eigenvalue of A and the i-th column of Q is a corresponding unit length eigenvector. Note, this transformation must be Linear and Symmetric.",
+      "remarks": "If success, this== Q*Diagonal(diagonal) * QT, where QT == Q.Transpose(). If L.IsLinear and LT==L.Transpose then LT*L is symmetric and is a common source of symmetric transformations.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "An orthonormal matrix of eigenvectors (Q).",
+          "optional": false
+        },
+        {
+          "name": "diagonal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector of eigenvalues.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_DecomposeSymmetric.htm"
+    },
+    {
+      "name": "Diagonal(Vector3d)",
+      "signature": "public static Transform Diagonal(Vector3d diagonal)",
+      "summary": "Constructs a new transformation with diagonal (d0,d1,d2,1.0).",
+      "params": [
+        {
+          "name": "diagonal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The diagonal values.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation with diagonal (d0,d1,d2,1.0)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Diagonal.htm"
+    },
+    {
+      "name": "Diagonal(Double, Double, Double)",
+      "signature": "public static Transform Diagonal(double d0, double d1, double d2)",
+      "summary": "Constructs a new transformation with diagonal (d0,d1,d2,1.0).",
+      "params": [
+        {
+          "name": "d0",
+          "type": "System.Double",
+          "doc": "Transform.M00 value.",
+          "optional": false
+        },
+        {
+          "name": "d1",
+          "type": "System.Double",
+          "doc": "Transform.M11 value.",
+          "optional": false
+        },
+        {
+          "name": "d2",
+          "type": "System.Double",
+          "doc": "Transform.M22 value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation with diagonal (d0,d1,d2,1.0)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Diagonal_1.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines if another object is a transform and its value equals this transform value.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "Another object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a transform and has the same value as this transform; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Transform)",
+      "signature": "public bool Equals(Transform other)",
+      "summary": "Determines if another transform equals this transform value.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Another transform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if other has the same value as this transform; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Equals.htm"
+    },
+    {
+      "name": "GetEulerZYZ",
+      "signature": "public bool GetEulerZYZ(out double alpha, out double beta, out double gamma)",
+      "summary": "Find the Euler angles for a rotation transformation.",
+      "remarks": "Note, alpha and gamma are in the range (-pi, pi] while beta in the range [0, pi]",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Angle of rotation, in radians, about the Z axis.",
+          "optional": false
+        },
+        {
+          "name": "beta",
+          "type": "System.Double",
+          "doc": "Angle of rotation, in radians, about the Y axis.",
+          "optional": false
+        },
+        {
+          "name": "gamma",
+          "type": "System.Double",
+          "doc": "Angle of rotation, in radians, about the Z axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If true, then this = RotationZYZ(alpha, beta, gamma) = R_z(alpha) * R_y(beta) * R_z(gamma) where R_*(angle) is rotation of angle radians about the corresponding *-world coordinate axis. If false, then this is not a rotation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_GetEulerZYZ.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets a non-unique hashing code for this transform.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A number that can be used to hash this transform in a dictionary."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_GetHashCode.htm"
+    },
+    {
+      "name": "GetQuaternion",
+      "signature": "public bool GetQuaternion(out Quaternion quaternion)",
+      "summary": "If this transform is a proper rotation, then find the eqivalent quaternion.",
+      "params": [
+        {
+          "name": "quaternion",
+          "type": "Rhino.Geometry.Quaternion",
+          "doc": "Quaternion that represents this rotation tranformation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this transform is a proper rotation, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_GetQuaternion.htm"
+    },
+    {
+      "name": "GetYawPitchRoll",
+      "signature": "public bool GetYawPitchRoll(out double yaw, out double pitch, out double roll)",
+      "summary": "Find the Tait-Byran angles (also loosely called Euler angles) for a rotation transformation.",
+      "params": [
+        {
+          "name": "yaw",
+          "type": "System.Double",
+          "doc": "Angle of rotation, in radians, about the Z axis.",
+          "optional": false
+        },
+        {
+          "name": "pitch",
+          "type": "System.Double",
+          "doc": "Angle of rotation, in radians, about the Y axis.",
+          "optional": false
+        },
+        {
+          "name": "roll",
+          "type": "System.Double",
+          "doc": "Angle of rotation, in radians, about the X axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If true, then this = RotationZYX(yaw, pitch, roll) = R_z(yaw) * R_y(pitch) * R_x(roll) where R_*(angle) is rotation of angle radians about the corresponding world coordinate axis. If false, then this is not a rotation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_GetYawPitchRoll.htm"
+    },
+    {
+      "name": "IsRigid",
+      "signature": "public TransformRigidType IsRigid(double tolerance)",
+      "summary": "Gets a value indicating whether or not the Transform is rigid. A rigid transformation can be broken into a proper rotation and a translation, while an isometry transformation could also include a reflection.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The evaluation tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformRigidType",
+        "doc": "The rigid type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_IsRigid.htm"
+    },
+    {
+      "name": "IsSimilarity",
+      "signature": "public TransformSimilarityType IsSimilarity(double tolerance)",
+      "summary": "Gets a value indicating whether or not the Transform maintains similarity. A similarity transformation can be broken into a sequence of a dilation, translation, rotation, and a reflection.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The evaluation tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformSimilarityType",
+        "doc": "The similarity type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_IsSimilarity.htm"
+    },
+    {
+      "name": "IsZeroTransformationWithTolerance",
+      "signature": "public bool IsZeroTransformationWithTolerance(double zeroTolerance)",
+      "summary": "True if all values are 0 within tolerance, except for M33 which is exactly 1.",
+      "params": [
+        {
+          "name": "zeroTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance for 0 elements.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the transformation matrix is ON_Xform::ZeroTransformation, with xform[3][3] equal to 1: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 An element x of the matrix is \u0022zero\u0022 if fabs(x) \u2264 zeroTolerance. IsZeroTransformation is the same as IsZeroTransformationWithTolerance(0.0)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_IsZeroTransformationWithTolerance.htm"
+    },
+    {
+      "name": "Linearize",
+      "signature": "public void Linearize()",
+      "summary": "Affinitize() and replaces the last column with (0 0 0 1)^T, discarding any translation part of this transform.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Linearize.htm"
+    },
+    {
+      "name": "Mirror(Plane)",
+      "signature": "public static Transform Mirror(Plane mirrorPlane)",
+      "summary": "Constructs a new Mirror transformation.",
+      "params": [
+        {
+          "name": "mirrorPlane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane that defines the mirror orientation and position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix which mirrors geometry in a specified plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Mirror.htm"
+    },
+    {
+      "name": "Mirror(Point3d, Vector3d)",
+      "signature": "public static Transform Mirror(Point3d pointOnMirrorPlane, Vector3d normalToMirrorPlane)",
+      "summary": "Create mirror transformation matrix The mirror transform maps a point Q to Q - (2*(Q-P)oN)*N, where P = pointOnMirrorPlane and N = normalToMirrorPlane.",
+      "params": [
+        {
+          "name": "pointOnMirrorPlane",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point on the mirror plane.",
+          "optional": false
+        },
+        {
+          "name": "normalToMirrorPlane",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Normal vector to the mirror plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix which mirrors geometry in a specified plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Mirror_1.htm"
+    },
+    {
+      "name": "Multiply",
+      "signature": "public static Transform Multiply(Transform a, Transform b)",
+      "summary": "Multiplies (combines) two transformations. This is the same as the * operator between two transformations.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "First transformation.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Second transformation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix that combines the effect of both input transformations. The resulting Transform gives the same result as though you\u0027d first apply B then A."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Multiply.htm"
+    },
+    {
+      "name": "Orthogonalize",
+      "signature": "public bool Orthogonalize(double tolerance)",
+      "summary": "Force the linear part of this transformation to be a rotation (or a rotation with reflection). Use DecomposeRigid(T,R) to find the nearest rotation.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The evaluation tolerance",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Orthogonalize.htm"
+    },
+    {
+      "name": "PlanarProjection",
+      "signature": "public static Transform PlanarProjection(Plane plane)",
+      "summary": "Constructs a projection transformation.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane onto which everything will be perpendicularly projected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix which projects geometry onto a specified plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_PlanarProjection.htm"
+    },
+    {
+      "name": "PlaneToPlane",
+      "signature": "public static Transform PlaneToPlane(Plane plane0, Plane plane1)",
+      "summary": "Create a rotation transformation that orients plane0 to plane1. If you want to orient objects from one plane to another, use this form of transformation.",
+      "params": [
+        {
+          "name": "plane0",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane to orient from.",
+          "optional": false
+        },
+        {
+          "name": "plane1",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "the plane to orient to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "The translation transformation if successful, Transform.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_PlaneToPlane.htm"
+    },
+    {
+      "name": "ProjectAlong",
+      "signature": "public static Transform ProjectAlong(Plane plane, Vector3d direction)",
+      "summary": "Construct a projection onto a plane along a specific direction.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to project onto.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Projection direction, must not be parallel to the plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "Projection transformation or identity transformation if projection could not be calculated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_ProjectAlong.htm"
+    },
+    {
+      "name": "Rotation(Double, Point3d)",
+      "signature": "public static Transform Rotation(double angleRadians, Point3d rotationCenter)",
+      "summary": "Constructs a new rotation transformation with specified angle and rotation center. The axis of rotation is ZAxis.",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Rotation angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "3D center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A rotation transformation matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Rotation_2.htm"
+    },
+    {
+      "name": "Rotation(Double, Vector3d, Point3d)",
+      "signature": "public static Transform Rotation(double angleRadians, Vector3d rotationAxis, Point3d rotationCenter)",
+      "summary": "Constructs a new rotation transformation with specified angle, rotation center and rotation axis.",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Rotation angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "3D unit axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "3D center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A rotation transformation matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Rotation_3.htm"
+    },
+    {
+      "name": "Rotation(Vector3d, Vector3d, Point3d)",
+      "signature": "public static Transform Rotation(Vector3d startDirection, Vector3d endDirection, Point3d rotationCenter)",
+      "summary": "Constructs a new rotation transformation with start and end directions and rotation center.",
+      "params": [
+        {
+          "name": "startDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A start direction.",
+          "optional": false
+        },
+        {
+          "name": "endDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "An end direction.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "3D center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A rotation transformation matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Rotation.htm"
+    },
+    {
+      "name": "Rotation(Double, Double, Vector3d, Point3d)",
+      "signature": "public static Transform Rotation(double sinAngle, double cosAngle, Vector3d rotationAxis, Point3d rotationCenter)",
+      "summary": "Constructs a new rotation transformation with specified angle, rotation center and rotation axis.",
+      "params": [
+        {
+          "name": "sinAngle",
+          "type": "System.Double",
+          "doc": "Sine of the rotation angle.",
+          "optional": false
+        },
+        {
+          "name": "cosAngle",
+          "type": "System.Double",
+          "doc": "Cosine of the rotation angle.",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "3D unit axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "3D center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A rotation transformation matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Rotation_4.htm"
+    },
+    {
+      "name": "Rotation(Vector3d, Vector3d, Vector3d, Vector3d, Vector3d, Vector3d)",
+      "signature": "public static Transform Rotation(Vector3d x0, Vector3d y0, Vector3d z0, Vector3d x1, Vector3d y1, Vector3d z1)",
+      "summary": "Constructs a transformation that maps X0 to X1, Y0 to Y1, Z0 to Z1. The frames should be right hand orthonormal frames (unit vectors with Z = X x Y). The resulting rotation fixes the origin (0,0,0), maps initial X to final X, initial Y to final Y, and initial Z to final Z.",
+      "params": [
+        {
+          "name": "x0",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial frame X.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial frame Y.",
+          "optional": false
+        },
+        {
+          "name": "z0",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial frame Z.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Final frame X.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Final frame Y.",
+          "optional": false
+        },
+        {
+          "name": "z1",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Final frame Z.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A rotation transformation matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Rotation_1.htm"
+    },
+    {
+      "name": "RotationZYX",
+      "signature": "public static Transform RotationZYX(double yaw, double pitch, double roll)",
+      "summary": "Create rotation transformation From Tait-Byran angles (also loosely known as Euler angles).",
+      "remarks": "RotationZYX(yaw, pitch, roll) = R_z(yaw) * R_y(pitch) * R_x(roll) where R_*(angle) is rotation of angle radians about the corresponding world coordinate axis.",
+      "params": [
+        {
+          "name": "yaw",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the Z axis.",
+          "optional": false
+        },
+        {
+          "name": "pitch",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the Y axis.",
+          "optional": false
+        },
+        {
+          "name": "roll",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the X axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transform matrix from Tait-Byran angles."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_RotationZYX.htm"
+    },
+    {
+      "name": "RotationZYZ",
+      "signature": "public static Transform RotationZYZ(double alpha, double beta, double gamma)",
+      "summary": "Create rotation transformation From Euler angles.",
+      "remarks": "RotationZYZ(alpha, beta, gamma) = R_z(alpha) * R_y(beta) * R_z(gamma) where R_*(angle) is rotation of angle radians about the corresponding *-world coordinate axis. Note, alpha and gamma are in the range (-pi, pi] while beta in the range [0, pi]",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the Z axis.",
+          "optional": false
+        },
+        {
+          "name": "beta",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the Y axis.",
+          "optional": false
+        },
+        {
+          "name": "gamma",
+          "type": "System.Double",
+          "doc": "Angle, in radians, to rotate about the X axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transform matrix from Euler angles."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_RotationZYZ.htm"
+    },
+    {
+      "name": "Scale(Point3d, Double)",
+      "signature": "public static Transform Scale(Point3d anchor, double scaleFactor)",
+      "summary": "Constructs a new uniform scaling transformation with a specified scaling anchor point.",
+      "params": [
+        {
+          "name": "anchor",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Defines the anchor point of the scaling operation.",
+          "optional": false
+        },
+        {
+          "name": "scaleFactor",
+          "type": "System.Double",
+          "doc": "Scaling factor in all directions.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transform matrix which scales geometry uniformly around the anchor point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Scale_1.htm"
+    },
+    {
+      "name": "Scale(Plane, Double, Double, Double)",
+      "signature": "public static Transform Scale(Plane plane, double xScaleFactor, double yScaleFactor, double zScaleFactor)",
+      "summary": "Constructs a new non-uniform scaling transformation with a specified scaling anchor point.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Defines the center and orientation of the scaling operation.",
+          "optional": false
+        },
+        {
+          "name": "xScaleFactor",
+          "type": "System.Double",
+          "doc": "Scaling factor along the anchor plane X-Axis direction.",
+          "optional": false
+        },
+        {
+          "name": "yScaleFactor",
+          "type": "System.Double",
+          "doc": "Scaling factor along the anchor plane Y-Axis direction.",
+          "optional": false
+        },
+        {
+          "name": "zScaleFactor",
+          "type": "System.Double",
+          "doc": "Scaling factor along the anchor plane Z-Axis direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix which scales geometry non-uniformly."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Scale.htm"
+    },
+    {
+      "name": "Shear",
+      "signature": "public static Transform Shear(Plane plane, Vector3d x, Vector3d y, Vector3d z)",
+      "summary": "Constructs a Shear transformation.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane for shear.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Shearing vector along plane x-axis.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Shearing vector along plane y-axis.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Shearing vector along plane z-axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix which shear geometry."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Shear.htm"
+    },
+    {
+      "name": "ToFloatArray",
+      "signature": "public float[] ToFloatArray(bool rowDominant)",
+      "summary": "Return the matrix as a linear array of 16 float values",
+      "params": [
+        {
+          "name": "rowDominant",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022rowDominant\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Transform.ToFloatArray(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Transform.ToFloatArray(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_ToFloatArray.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns a string representation of this transform.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A textual representation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_ToString.htm"
+    },
+    {
+      "name": "TransformBoundingBox",
+      "signature": "public BoundingBox TransformBoundingBox(BoundingBox bbox)",
+      "summary": "Computes a new bounding box that is the smallest axis aligned bounding box that contains the transformed result of its 8 original corner points.",
+      "params": [
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "[Missing \u003Cparam name=\u0022bbox\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Transform.TransformBoundingBox(Rhino.Geometry.BoundingBox)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A new bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_TransformBoundingBox.htm"
+    },
+    {
+      "name": "TransformList",
+      "signature": "public Point3d[] TransformList(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Given a list, an array or any enumerable set of points, computes a new array of transformed points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of points to be left untouched and copied.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "A new array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_TransformList.htm"
+    },
+    {
+      "name": "Translation(Vector3d)",
+      "signature": "public static Transform Translation(Vector3d motion)",
+      "summary": "Constructs a new translation (move) transformation.",
+      "params": [
+        {
+          "name": "motion",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation (motion) vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transform matrix which moves geometry along the motion vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Translation.htm"
+    },
+    {
+      "name": "Translation(Double, Double, Double)",
+      "signature": "public static Transform Translation(double dx, double dy, double dz)",
+      "summary": "Constructs a new translation (move) transformation. Right column is (dx, dy, dz, 1.0).",
+      "params": [
+        {
+          "name": "dx",
+          "type": "System.Double",
+          "doc": "Distance to translate (move) geometry along the world X axis.",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "System.Double",
+          "doc": "Distance to translate (move) geometry along the world Y axis.",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "System.Double",
+          "doc": "Distance to translate (move) geometry along the world Z axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transform matrix which moves geometry with the specified distances."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Translation_1.htm"
+    },
+    {
+      "name": "Transpose",
+      "signature": "public Transform Transpose()",
+      "summary": "Flip row/column values",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Transform.Transpose\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_Transpose.htm"
+    },
+    {
+      "name": "TryGetInverse",
+      "signature": "public bool TryGetInverse(out Transform inverseTransform)",
+      "summary": "Attempts to get the inverse transform of this transform.",
+      "params": [
+        {
+          "name": "inverseTransform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The inverse transform. This out reference will be assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success. If false is returned and this Transform is Invalid, inserveTransform will be set to this Transform. If false is returned and this Transform is Valid, inverseTransform will be set to a pseudo inverse."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_TryGetInverse.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Transform a, Transform b)",
+      "summary": "Determines if two transformations are equal in value.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A transform.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Another transform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if transforms are equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Transform a, Transform b)",
+      "summary": "Determines if two transformations are different in value.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A transform.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Another transform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if transforms are different; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_op_Inequality.htm"
+    },
+    {
+      "name": "Multiply(Transform, Point3d)",
+      "signature": "public static Point3d operator *(Transform m, Point3d p)",
+      "summary": "Multiplies a transformation by a point and gets a new point.",
+      "remarks": "Note well: The right hand column and bottom row have an important effect when transforming a Euclidean point and have no effect when transforming a vector. Be sure you understand the differences between vectors and points when applying a 4x4 transformation.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A transformation.",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The transformed point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_op_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Transform, Transform)",
+      "signature": "public static Transform operator *(Transform a, Transform b)",
+      "summary": "Multiplies (combines) two transformations.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "First transformation.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Second transformation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Transform",
+        "doc": "A transformation matrix that combines the effect of both input transformations. The resulting Transform gives the same result as though you\u0027d first apply B then A."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_op_Multiply_1.htm"
+    },
+    {
+      "name": "Multiply(Transform, Vector3d)",
+      "signature": "public static Vector3d operator *(Transform m, Vector3d v)",
+      "summary": "Multiplies a transformation by a vector and gets a new vector.",
+      "remarks": "Note well: The right hand column and bottom row have an important effect when transforming a Euclidean point and have no effect when transforming a vector. Be sure you understand the differences between vectors and points when applying a 4x4 transformation.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A transformation.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The transformed vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Transform_op_Multiply_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Determinant",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The determinant of this 4x4 matrix.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_Determinant.htm"
+    },
+    {
+      "name": "Identity",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a new identity transform matrix. An identity matrix defines no transformation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_Identity.htm"
+    },
+    {
+      "name": "IsAffine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests for an affine transformation. A transformation is affine if it is valid and its last row is [0, 0, 0, 1]. An affine transformation can be broken into a linear transformation and a translation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsAffine.htm"
+    },
+    {
+      "name": "IsIdentity",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Return true if this Transform is the identity transform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsIdentity.htm"
+    },
+    {
+      "name": "IsLinear",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests for a linear transformation. A transformation is affine if it is valid and its last row is [0, 0, 0, 1]. If in addition its last column is ( 0, 0, 0, 1)^T then it is linear. An affine transformation can be broken into a linear transformation and a translation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsLinear.htm"
+    },
+    {
+      "name": "IsRotation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if this is a proper rotation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsRotation.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this Transform is a valid matrix. A valid transform matrix is not allowed to have any invalid numbers.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsValid.htm"
+    },
+    {
+      "name": "IsZero",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if matrix is Zero4x4, ZeroTransformation, or some other type of zero. The value xform[3][3] can be anything.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsZero.htm"
+    },
+    {
+      "name": "IsZero4x4",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if all values are 0",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsZero4x4.htm"
+    },
+    {
+      "name": "IsZeroTransformation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if all values are 0, except for M33 which is 1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_IsZeroTransformation.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the matrix value at the given row and column indices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_Item.htm"
+    },
+    {
+      "name": "M00",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[0,0].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M00.htm"
+    },
+    {
+      "name": "M01",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[0,1].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M01.htm"
+    },
+    {
+      "name": "M02",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[0,2].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M02.htm"
+    },
+    {
+      "name": "M03",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[0,3].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M03.htm"
+    },
+    {
+      "name": "M10",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[1,0].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M10.htm"
+    },
+    {
+      "name": "M11",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[1,1].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M11.htm"
+    },
+    {
+      "name": "M12",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[1,2].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M12.htm"
+    },
+    {
+      "name": "M13",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[1,3].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M13.htm"
+    },
+    {
+      "name": "M20",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[2,0].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M20.htm"
+    },
+    {
+      "name": "M21",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[2,1].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M21.htm"
+    },
+    {
+      "name": "M22",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[2,2].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M22.htm"
+    },
+    {
+      "name": "M23",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[2,3].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M23.htm"
+    },
+    {
+      "name": "M30",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[3,0].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M30.htm"
+    },
+    {
+      "name": "M31",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[3,1].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M31.htm"
+    },
+    {
+      "name": "M32",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[3,2].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M32.htm"
+    },
+    {
+      "name": "M33",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets this[3,3].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_M33.htm"
+    },
+    {
+      "name": "RigidType",
+      "type": "TransformRigidType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the Transform is rigid. A rigid transformation can be broken into a proper rotation and a translation, while an isometry transformation could also include a reflection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_RigidType.htm"
+    },
+    {
+      "name": "SimilarityType",
+      "type": "TransformSimilarityType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the Transform maintains similarity. The easiest way to think of Similarity is that any circle, when transformed, remains a circle. Whereas a non-similarity Transform deforms circles into ellipses.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_SimilarityType.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an XForm filled with RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_Unset.htm"
+    },
+    {
+      "name": "ZeroTransformation",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "ZeroTransformation diagonal = (0,0,0,1)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Transform_ZeroTransformation.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,224 @@
+{
+  "name": "ProjectsUsersApi",
+  "namespace": "Bluebeam.StudioApi.Projects",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Projects / Users endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetUser",
+      "signature": "Task GetUser(Guid projectId, Guid id)",
+      "summary": "Get a single user in a project",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateUser",
+      "signature": "Task UpdateUser(Guid projectId, Guid id, UpdateUserRequest request)",
+      "summary": "Update user in a project",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateUserRequest",
+          "doc": "Request body. JSON object with fields: RestrictedStatus.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "DeleteUser",
+      "signature": "Task DeleteUser(Guid projectId, Guid id)",
+      "summary": "Remove user from project",
+      "remarks": "HTTP DELETE \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListUserPermissions",
+      "signature": "Task ListUserPermissions(Guid projectId, Guid userId)",
+      "summary": "Get project user permissions",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/users/{userId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "userId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060userId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateUserPermissions",
+      "signature": "Task UpdateUserPermissions(Guid projectId, Guid userId, UpdateUserPermissionsRequest request)",
+      "summary": "Update project user permissions.              Permission types: CreateSessions, UndoCheckouts, Invite, ManageParticipants, ManagePermissions, FullControl, ShareItems.              Set value to allow, deny, or default",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{projectId}/users/{userId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "userId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060userId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateUserPermissionsRequest",
+          "doc": "Request body. JSON object with fields: Allow, Type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CreateProjectUser",
+      "signature": "Task CreateProjectUser(Guid projectId, CreateProjectUserRequest request)",
+      "summary": "Add user to a project",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/users\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CreateProjectUserRequest",
+          "doc": "Request body. JSON object with fields: Email, Message, SendEmail.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListProjectUsers",
+      "signature": "Task ListProjectUsers(Guid projectId)",
+      "summary": "Get all users in a project",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/users\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/users\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

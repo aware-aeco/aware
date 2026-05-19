@@ -1,0 +1,41 @@
+{
+  "name": "PolyArc",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Representation of an arc segment of a two dimensional polygon/polyline.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolyArc",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "begIndex",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "Node index of one end point of the arc.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolyArc"
+    },
+    {
+      "name": "endIndex",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "Node index of the other end point of the arc.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolyArc"
+    },
+    {
+      "name": "arcAngle",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Angle of the arc; it is positive, if the arc is on the right-hand side of the straight segment.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolyArc"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

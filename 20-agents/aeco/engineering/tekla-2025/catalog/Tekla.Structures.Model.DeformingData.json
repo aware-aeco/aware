@@ -1,0 +1,58 @@
+{
+  "name": "DeformingData",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The DeformingData class holds information about the deforming of parts. Deformed parts are parts that have been warped, cambered or shortened.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d344d31d-6c1a-e537-ddf0-57d0a2c0a48f",
+  "constructors": [
+    {
+      "name": "DeformingData",
+      "signature": "public DeformingData()",
+      "summary": "Instantiates a deforming data instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d519639c-0624-8119-df21-8ab77ab030e7"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle of the part at its start point, relative to the part reference line. For example, if the beam is warped 45 degrees at the end point, in the Angle field the value is 0, and the value is 45 in the Angle2 field.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c407aea8-1424-fc64-664b-78c3e805d02f"
+    },
+    {
+      "name": "Angle2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle of the part at its end point, relative to the part reference line. For example, if the beam is warped 45 degrees at the end point, in the Angle field the value is 0, and the value is 45 in the Angle2 field.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7f03cba7-88eb-0504-a26c-2c0f84a8c7b5"
+    },
+    {
+      "name": "Cambering",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The degree of cambering.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a1e55fe8-bc82-e842-a4ae-8d8bf795a841"
+    },
+    {
+      "name": "Shortening",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The degree of shortening.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/07bd604d-6518-e984-be21-b73ba2fd90b7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,53 @@
+{
+  "name": "FieldAttribute",
+  "namespace": "Tekla.Structural.ExpressoAddIn",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.FieldAttribute.)",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-expressoaddin-fieldattribute-41825",
+  "constructors": [
+    {
+      "name": "FieldAttribute(FieldOutput, bool)",
+      "signature": "public FieldAttribute(FieldOutput output = FieldOutput.PlainText, bool generateFunction = false)",
+      "summary": "",
+      "params": [
+        {
+          "name": "output",
+          "type": "FieldOutput",
+          "optional": false
+        },
+        {
+          "name": "generateFunction",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/5cd772b93ec502ee86349d86b20d5543a568d978096857619eeaa6efc2a311a4"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Function",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/6f420526076942dcfd475f42ba0a6f6602e12f30c1ff6e570f811ae807210b71"
+    },
+    {
+      "name": "Output",
+      "type": "FieldOutput",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/d0acbaf9df5367f56dae0b098db33057a51b2ea8cd2c8007f248736d42996229"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

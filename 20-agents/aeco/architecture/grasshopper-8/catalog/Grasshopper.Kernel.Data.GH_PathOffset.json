@@ -1,0 +1,240 @@
+{
+  "name": "GH_PathOffset",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Represents a relative offset within a data structure.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_PathOffset.htm",
+  "constructors": [
+    {
+      "name": "GH_PathOffset()",
+      "signature": "public GH_PathOffset()",
+      "summary": "Initializes a new instance of the GH_PathOffset class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset__ctor.htm"
+    },
+    {
+      "name": "GH_PathOffset(IEnumerable\u003CInt32\u003E)",
+      "signature": "public GH_PathOffset(IEnumerable\u003Cint\u003E pathShift)",
+      "summary": "Initializes a new instance of the GH_PathOffset class",
+      "params": [
+        {
+          "name": "pathShift",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset__ctor_1.htm"
+    },
+    {
+      "name": "GH_PathOffset(IEnumerable\u003CInt32\u003E, Int32)",
+      "signature": "public GH_PathOffset(IEnumerable\u003Cint\u003E pathShift, int itemShift)",
+      "summary": "Initializes a new instance of the GH_PathOffset class",
+      "params": [
+        {
+          "name": "pathShift",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "optional": false
+        },
+        {
+          "name": "itemShift",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset__ctor_2.htm"
+    },
+    {
+      "name": "GH_PathOffset(IEnumerable\u003CInt32\u003E, Int32, Boolean, Boolean)",
+      "signature": "public GH_PathOffset(IEnumerable\u003Cint\u003E pathShift, int itemShift, bool pathWrap, bool itemWrap)",
+      "summary": "Initializes a new instance of the GH_PathOffset class",
+      "params": [
+        {
+          "name": "pathShift",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "optional": false
+        },
+        {
+          "name": "itemShift",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "pathWrap",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "itemWrap",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OffsetPath(GH_Path, Int32, GH_Path, Int32)",
+      "signature": "public bool OffsetPath(GH_Path path, int index, ref GH_Path rel_path, ref int rel_index)",
+      "summary": "Offset a path \u002B index value without wrapping.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to offset.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Item to offset.",
+          "optional": false
+        },
+        {
+          "name": "rel_path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Offsetted path.",
+          "optional": false
+        },
+        {
+          "name": "rel_index",
+          "type": "System.Int32",
+          "doc": "Offsetted index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset_OffsetPath.htm"
+    },
+    {
+      "name": "OffsetPath(GH_Path, Int32, IGH_Structure, GH_Path, Int32)",
+      "signature": "public bool OffsetPath(GH_Path path, int index, IGH_Structure tree, out GH_Path relativePath, out int relativeIndex)",
+      "summary": "Offset a path \u002B index value with wrapping and bounds checking.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to offset.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Item to offset.",
+          "optional": false
+        },
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.IGH_Structure",
+          "doc": "Structure context for offset.",
+          "optional": false
+        },
+        {
+          "name": "relativePath",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Offsetted path.",
+          "optional": false
+        },
+        {
+          "name": "relativeIndex",
+          "type": "System.Int32",
+          "doc": "Offsetted index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset_OffsetPath_1.htm"
+    },
+    {
+      "name": "ParseString",
+      "signature": "public static GH_PathOffset ParseString(string mask)",
+      "summary": "",
+      "params": [
+        {
+          "name": "mask",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_PathOffset",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset_ParseString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Format the Path Offset.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_PathOffset_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ItemOffset",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the relative offset for branch items.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_PathOffset_ItemOffset.htm"
+    },
+    {
+      "name": "ItemWrap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ItemWrap flag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_PathOffset_ItemWrap.htm"
+    },
+    {
+      "name": "PathOffset",
+      "type": "List\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets access to the relative offsets for path indices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_PathOffset_PathOffset.htm"
+    },
+    {
+      "name": "PathWrap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the PathWrap flag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_PathOffset_PathWrap.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

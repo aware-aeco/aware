@@ -1,0 +1,231 @@
+{
+  "name": "Scale",
+  "namespace": "Grasshopper.Kernel.Types.Transforms",
+  "kind": "class",
+  "summary": "Implements a scaling transformation.",
+  "interfaces": [
+    "ITransform"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_Transforms_Scale.htm",
+  "constructors": [
+    {
+      "name": "Scale()",
+      "signature": "public Scale()",
+      "summary": "Initializes a new instance of the Scale class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale__ctor.htm"
+    },
+    {
+      "name": "Scale(Plane, Double)",
+      "signature": "public Scale(Plane frame, double scale)",
+      "summary": "Initializes a new instance of the Scale class",
+      "params": [
+        {
+          "name": "frame",
+          "type": "Plane",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale__ctor_1.htm"
+    },
+    {
+      "name": "Scale(Point3d, Double)",
+      "signature": "public Scale(Point3d point, double scale)",
+      "summary": "Initializes a new instance of the Scale class",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3d",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale__ctor_3.htm"
+    },
+    {
+      "name": "Scale(Plane, Double, Double, Double)",
+      "signature": "public Scale(Plane frame, double xscale, double yscale, double zscale)",
+      "summary": "Initializes a new instance of the Scale class",
+      "params": [
+        {
+          "name": "frame",
+          "type": "Plane",
+          "optional": false
+        },
+        {
+          "name": "xscale",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "yscale",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "zscale",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Duplicate",
+      "signature": "public ITransform Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ITransform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale_Duplicate.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale_Read.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public ITransform Reverse()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ITransform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale_Reverse.htm"
+    },
+    {
+      "name": "ToMatrix",
+      "signature": "public Transform ToMatrix()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale_ToMatrix.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale_ToString.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Scale_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_Scale_Name.htm"
+    },
+    {
+      "name": "ScaleXFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_Scale_ScaleXFactor.htm"
+    },
+    {
+      "name": "ScaleYFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_Scale_ScaleYFactor.htm"
+    },
+    {
+      "name": "ScaleZFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_Scale_ScaleZFactor.htm"
+    },
+    {
+      "name": "ScalingFrame",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_Scale_ScalingFrame.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

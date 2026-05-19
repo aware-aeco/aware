@@ -1,0 +1,125 @@
+{
+  "name": "AnalysisVolume",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisVolume class contains information related to analysis volumes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4782bb1f-4628-07bb-aa4f-99094c3629cb",
+  "constructors": [
+    {
+      "name": "AnalysisVolume",
+      "signature": "public AnalysisVolume()",
+      "summary": "Initializes a new instance of the AnalysisVolume class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4fd4ca2a-e4bf-985b-bbd2-a5383b550dfd"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "public override void Select()",
+      "summary": "Selects an analysis volume. The ID has to be set.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7303bff4-75d9-7040-a1a9-b07d136174d2"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "AnalysisObject.AnalysisObjectEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "Identifier",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Material",
+      "type": "AnalysisMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "The material of the analysis volume.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5e95c91a-fbfd-4508-39cd-40dcf5d13903"
+    },
+    {
+      "name": "Profile",
+      "type": "AnalysisCrossSection",
+      "getter": true,
+      "setter": false,
+      "summary": "The profile of the analysis volume.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/817bac7b-2732-8fbd-448a-566e20f037c6"
+    },
+    {
+      "name": "Volume",
+      "type": "AnalysisVolumeItem",
+      "getter": true,
+      "setter": false,
+      "summary": "The volume item.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a36cfa86-44d0-093b-66b7-c211e1f0f0e2"
+    },
+    {
+      "name": "VolumeHoles",
+      "type": "List\u003CAnalysisVolumeItem\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The volume holes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/671326c0-c092-636f-d73d-defcab8bdd5a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

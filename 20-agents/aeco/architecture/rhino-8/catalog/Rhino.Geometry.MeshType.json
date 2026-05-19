@@ -1,0 +1,39 @@
+{
+  "name": "MeshType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for various mesh types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0,
+      "summary": "The default mesh."
+    },
+    {
+      "name": "Render",
+      "value": 1,
+      "summary": "The render mesh."
+    },
+    {
+      "name": "Analysis",
+      "value": 2,
+      "summary": "The analysis mesh."
+    },
+    {
+      "name": "Preview",
+      "value": 3,
+      "summary": "The preview mesh."
+    },
+    {
+      "name": "Any",
+      "value": 4,
+      "summary": "Any mesh that is available."
+    }
+  ]
+}

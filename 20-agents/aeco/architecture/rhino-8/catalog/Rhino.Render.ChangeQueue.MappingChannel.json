@@ -1,0 +1,38 @@
+{
+  "name": "MappingChannel",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "Mapping Channel for a ChangeQueue Mesh",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_MappingChannel.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Channel",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get channel number for this MappingChannel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_MappingChannel_Channel.htm"
+    },
+    {
+      "name": "Local",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Local transform for the mapping",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_MappingChannel_Local.htm"
+    },
+    {
+      "name": "Mapping",
+      "type": "TextureMapping",
+      "getter": true,
+      "setter": false,
+      "summary": "Return TexturMapping for this MappingChannel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_MappingChannel_Mapping.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

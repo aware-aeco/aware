@@ -1,0 +1,49 @@
+{
+  "name": "AddInLocation",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "enum",
+  "summary": "Location of an AddInPlugin in the Navisworks menus system",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.AddInLocation",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Do not display in the menus"
+    },
+    {
+      "name": "AddIn",
+      "value": 1,
+      "summary": "Display in the Addin menu"
+    },
+    {
+      "name": "Import",
+      "value": 2,
+      "summary": "Display in the Import menu"
+    },
+    {
+      "name": "Export",
+      "value": 3,
+      "summary": "Display in the Export menu"
+    },
+    {
+      "name": "Help",
+      "value": 4,
+      "summary": "Display in the Help menu"
+    },
+    {
+      "name": "CurrentSelectionContextMenu",
+      "value": 5,
+      "summary": "Display in the Context menu for currently selected ModelItem"
+    },
+    {
+      "name": "CurrentSelection2DContextMenu",
+      "value": 6,
+      "summary": "Display in the 2D Context menu for currently selected ModelItem"
+    }
+  ]
+}

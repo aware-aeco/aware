@@ -1,0 +1,72 @@
+{
+  "name": "NodeLinterRule",
+  "namespace": "Dynamo.Linting.Rules",
+  "kind": "class",
+  "summary": "Base class for creating Node related linter rules",
+  "base": "Dynamo.Linting.Rules.LinterRule",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/Rules/NodeLinterRule.cs",
+  "constructors": [
+    {
+      "name": "NodeLinterRule()",
+      "signature": "void NodeLinterRule()",
+      "summary": "NodeLinterRule.NodeLinterRule",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/Rules/NodeLinterRule.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EvaluateFunction(Dynamo.Graph.Nodes.NodeModel, string)",
+      "signature": "Dynamo.Linting.Interfaces.RuleEvaluationStatusEnum EvaluateFunction(Dynamo.Graph.Nodes.NodeModel nodeModel, string changedEvent)",
+      "summary": "Function used to evaluate this rule",
+      "params": [
+        {
+          "name": "nodeModel",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Node to evaluate",
+          "optional": false
+        },
+        {
+          "name": "changedEvent",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Linting.Interfaces.RuleEvaluationStatusEnum",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/Rules/NodeLinterRule.cs"
+    },
+    {
+      "name": "InitFunction(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "System.Collections.Generic.List\u003CSystem.Tuple\u003CDynamo.Linting.Interfaces.RuleEvaluationStatusEnum, string\u003E\u003E InitFunction(Dynamo.Graph.Workspaces.WorkspaceModel workspaceModel)",
+      "summary": "The init function is used when the Linter extension implementing this Rule is initialized.",
+      "params": [
+        {
+          "name": "workspaceModel",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Tuple\u003CDynamo.Linting.Interfaces.RuleEvaluationStatusEnum, string\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/Rules/NodeLinterRule.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,206 @@
+{
+  "name": "LineInteractor",
+  "namespace": "ScriptObjectInteractors.LineInteractor",
+  "kind": "class",
+  "summary": "Implementation of the interactor for line input",
+  "base": "BaseScriptObjectInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/",
+  "constructors": [
+    {
+      "name": "LineInteractor",
+      "signature": "LineInteractor( interactor_result: LineInteractorResult, is_first_input: bool, prompt: str, allow_pick_up: bool = False, uvs_to_world: bool = False, preview_function: Callable[[Line3D], list] | LineInteractor() | LineInteractor()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "interactor_result",
+          "type": "LineInteractorResult",
+          "doc": "result of the interactor",
+          "optional": false
+        },
+        {
+          "name": "is_first_input",
+          "type": "bool",
+          "doc": "is this the first input in an input sequence",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "str",
+          "doc": "prompt message shown in the dialog line",
+          "optional": false
+        },
+        {
+          "name": "allow_pick_up",
+          "type": "bool",
+          "doc": "allow to pick up a line from an existing element",
+          "optional": false
+        },
+        {
+          "name": "uvs_to_world",
+          "type": "bool",
+          "doc": "when True and line is input in an UVS, the resulting line will be transformed to from UVS to world coordinate system",
+          "optional": false
+        },
+        {
+          "name": "preview_function",
+          "type": "Callable[[Line3D], list] | None",
+          "doc": "function for generating preview elements during the input",
+          "optional": false
+        },
+        {
+          "name": "default_input_value",
+          "type": "float | None",
+          "doc": "default input value. If set to None, no input value field is provided.",
+          "optional": false
+        },
+        {
+          "name": "abscissa_element",
+          "type": "CURVES",
+          "doc": "abscissa element for the point projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "draw_preview",
+      "signature": "draw_preview(line: Line3D) -\u003E None",
+      "summary": "Draw the preview during the input. If a function generating preview elements from a 3D line is defined, use it. Otherwise preview a red 3D line.",
+      "remarks": "Draw the preview during the input. If a function generating preview elements from a 3D line is defined, use it. Otherwise preview a red 3D line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "line to preview",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.draw_preview"
+    },
+    {
+      "name": "get_input_line",
+      "signature": "get_input_line() -\u003E Line3D | get_input_line(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E Line3D",
+      "summary": "Construct the input line from the mouse message. This overload is meant to be used inside events, where no mouse message is available ().",
+      "remarks": "Construct the input line from the mouse message. This overload is meant to be used inside events, where no mouse message is available ().",
+      "params": [],
+      "returns": {
+        "type": "Line3D",
+        "doc": "The input line as follows:"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.get_input_line"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E OnCancelFunctionResult",
+      "summary": "Handles the event of hitting ESC during the input Cancels the input, when ESC is hit during the start point input. Otherwise restarts the start point input.",
+      "remarks": "Handles the event of hitting ESC during the input Cancels the input, when ESC is hit during the start point input. Otherwise restarts the start point input.",
+      "params": [],
+      "returns": {
+        "type": "OnCancelFunctionResult",
+        "doc": "False during the start point input, True otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.on_cancel_function"
+    },
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the event of mouse leaving the viewport",
+      "remarks": "Handles the event of mouse leaving the viewport",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event",
+      "remarks": "Handles the preview draw event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.on_preview_draw"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "AddMsgInfo",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.process_mouse_msg"
+    },
+    {
+      "name": "start_end_point_input",
+      "signature": "start_end_point_input()",
+      "summary": "Start the input of the line\u0027s end point",
+      "remarks": "Start the input of the line\u0027s end point",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.start_end_point_input"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "Start the input of the line\u0027s start point",
+      "remarks": "Start the input of the line\u0027s start point",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

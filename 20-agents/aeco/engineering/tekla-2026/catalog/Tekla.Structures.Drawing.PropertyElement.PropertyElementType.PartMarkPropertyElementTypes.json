@@ -1,0 +1,210 @@
+{
+  "name": "PropertyElement.PropertyElementType.PartMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PartMarkPropertyElementTypes class represents the available property element types for part marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a05d6a56-8938-bc56-9d19-3f600e238718",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AssemblyPosition",
+      "signature": "public static PropertyElement.PropertyElementType AssemblyPosition()",
+      "summary": "Returns the assembly position property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/afad0710-1da5-130b-05f8-68b575327119"
+    },
+    {
+      "name": "Camber",
+      "signature": "public static PropertyElement.PropertyElementType Camber()",
+      "summary": "Returns the camber property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0709b579-58a2-2914-da29-fd19389c3995"
+    },
+    {
+      "name": "CenterToCenterDistance",
+      "signature": "public static PropertyElement.PropertyElementType CenterToCenterDistance()",
+      "summary": "Returns the center-to-center distance property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/665f5d5e-b516-32ad-d490-5f2dc76a0ff6"
+    },
+    {
+      "name": "Class",
+      "signature": "public static PropertyElement.PropertyElementType Class()",
+      "summary": "Returns the class property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0ffff76e-2d03-690f-b528-ce6c798b7802"
+    },
+    {
+      "name": "FaceDirection",
+      "signature": "public static PropertyElement.PropertyElementType FaceDirection()",
+      "summary": "Returns the face direction property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e64a5d5c-5276-1ab7-0d0b-a6977d26bc57"
+    },
+    {
+      "name": "Finish",
+      "signature": "public static PropertyElement.PropertyElementType Finish()",
+      "summary": "Returns the finish property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3b0ce7f8-7b74-b5df-c423-d8d0183c6221"
+    },
+    {
+      "name": "FittingsNsFs",
+      "signature": "public static PropertyElement.PropertyElementType FittingsNsFs()",
+      "summary": "Returns the fittings (NS/FS) property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3c678fb-43fb-0885-9331-43c01e7bbc17"
+    },
+    {
+      "name": "GageOfOutstandingLeg",
+      "signature": "public static PropertyElement.PropertyElementType GageOfOutstandingLeg()",
+      "summary": "Returns the gage of the outstanding leg property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/61ec229a-0d26-3ce7-c406-3274a9b455aa"
+    },
+    {
+      "name": "Length",
+      "signature": "public static PropertyElement.PropertyElementType Length()",
+      "summary": "Returns the length property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7c5bc94f-d334-2d99-c083-4110db02a883"
+    },
+    {
+      "name": "Material",
+      "signature": "public static PropertyElement.PropertyElementType Material()",
+      "summary": "Returns the material property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b58eb34e-d398-abb4-5361-6716d387c8ad"
+    },
+    {
+      "name": "Name",
+      "signature": "public static PropertyElement.PropertyElementType Name()",
+      "summary": "Returns the name property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa2a98cc-12f0-db4c-24f9-4f6e7ea22171"
+    },
+    {
+      "name": "PartPosition",
+      "signature": "public static PropertyElement.PropertyElementType PartPosition()",
+      "summary": "Returns the part position property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bdf77fd5-57f5-7c9a-183c-e4c95ec10a78"
+    },
+    {
+      "name": "Profile",
+      "signature": "public static PropertyElement.PropertyElementType Profile()",
+      "summary": "Returns the profile property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ac95960-913b-a58b-d824-71168994785d"
+    },
+    {
+      "name": "RotationAngle",
+      "signature": "public static PropertyElement.PropertyElementType RotationAngle()",
+      "summary": "Returns the rotation angle property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc9a1c05-9270-b3b6-0bca-cf11eafd1a6b"
+    },
+    {
+      "name": "Size",
+      "signature": "public static PropertyElement.PropertyElementType Size()",
+      "summary": "Returns the size property element type.",
+      "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3c1f8f4d-9b6b-7c4e-c497-cf505fafa371"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,341 @@
+{
+  "name": "Font",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Defines a format for text.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Font.htm",
+  "constructors": [
+    {
+      "name": "Font(String)",
+      "signature": "public Font(string familyName)",
+      "summary": "Initializes a new instance of the Font class",
+      "params": [
+        {
+          "name": "familyName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022familyName\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.#ctor(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Font__ctor.htm"
+    },
+    {
+      "name": "Font(String, Font.FontWeight, Font.FontStyle, Boolean, Boolean)",
+      "signature": "public Font(string familyName, Font.FontWeight weight, Font.FontStyle style, bool underlined, bool strikethrough)",
+      "summary": "Initializes a new instance of the Font class",
+      "params": [
+        {
+          "name": "familyName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022familyName\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.#ctor(System.String,Rhino.DocObjects.Font.FontWeight,Rhino.DocObjects.Font.FontStyle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "Rhino.DocObjects.Font.FontWeight",
+          "doc": "[Missing \u003Cparam name=\u0022weight\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.#ctor(System.String,Rhino.DocObjects.Font.FontWeight,Rhino.DocObjects.Font.FontStyle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Rhino.DocObjects.Font.FontStyle",
+          "doc": "[Missing \u003Cparam name=\u0022style\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.#ctor(System.String,Rhino.DocObjects.Font.FontWeight,Rhino.DocObjects.Font.FontStyle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "underlined",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022underlined\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.#ctor(System.String,Rhino.DocObjects.Font.FontWeight,Rhino.DocObjects.Font.FontStyle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strikethrough",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022strikethrough\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.#ctor(System.String,Rhino.DocObjects.Font.FontWeight,Rhino.DocObjects.Font.FontStyle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Font__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AvailableFontFaceNames",
+      "signature": "public static string[] AvailableFontFaceNames()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Font.AvailableFontFaceNames\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Font_AvailableFontFaceNames.htm"
+    },
+    {
+      "name": "FromQuartetProperties",
+      "signature": "public static Font FromQuartetProperties(string quartetName, bool bold, bool italic)",
+      "summary": "",
+      "params": [
+        {
+          "name": "quartetName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022quartetName\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.FromQuartetProperties(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bold\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.FromQuartetProperties(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022italic\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.FromQuartetProperties(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Font.FromQuartetProperties(System.String,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Font_FromQuartetProperties.htm"
+    },
+    {
+      "name": "InstalledFonts()",
+      "signature": "public static Font[] InstalledFonts()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Font[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Font.InstalledFonts\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Font_InstalledFonts.htm"
+    },
+    {
+      "name": "InstalledFonts(String)",
+      "signature": "public static Font[] InstalledFonts(string familyName)",
+      "summary": "",
+      "params": [
+        {
+          "name": "familyName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022familyName\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Font.InstalledFonts(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Font[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Font.InstalledFonts(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Font_InstalledFonts_1.htm"
+    },
+    {
+      "name": "InstalledFontsAsQuartets",
+      "signature": "public static FontQuartet[] InstalledFontsAsQuartets()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "FontQuartet[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Font.InstalledFontsAsQuartets\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Font_InstalledFontsAsQuartets.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Bold",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_Bold.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a long description that includes family, face, weight, stretch and style information. Generally not useful for finding matching fonts.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_Description.htm"
+    },
+    {
+      "name": "EnglishFaceName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns English Face name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_EnglishFaceName.htm"
+    },
+    {
+      "name": "EnglishFamilyName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_EnglishFamilyName.htm"
+    },
+    {
+      "name": "EnglishQuartetName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_EnglishQuartetName.htm"
+    },
+    {
+      "name": "FaceName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Face name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_FaceName.htm"
+    },
+    {
+      "name": "FamilyName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_FamilyName.htm"
+    },
+    {
+      "name": "FamilyPlusFaceName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns concatenated Family and Face names",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_FamilyPlusFaceName.htm"
+    },
+    {
+      "name": "IsEngravingFont",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_IsEngravingFont.htm"
+    },
+    {
+      "name": "IsSimulated",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_IsSimulated.htm"
+    },
+    {
+      "name": "IsSingleStrokeFont",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_IsSingleStrokeFont.htm"
+    },
+    {
+      "name": "IsSymbolFont",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_IsSymbolFont.htm"
+    },
+    {
+      "name": "Italic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_Italic.htm"
+    },
+    {
+      "name": "LogfontName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Windows LOGFONT Face name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_LogfontName.htm"
+    },
+    {
+      "name": "PointSize",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_PointSize.htm"
+    },
+    {
+      "name": "PostScriptName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Font PostScriptName - \u0022Apple font name\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_PostScriptName.htm"
+    },
+    {
+      "name": "QuartetName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_QuartetName.htm"
+    },
+    {
+      "name": "RichTextFontName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Font RichTextFontName used in RTF strings: {\\\\fonttbl...{\\\\fN RichTextFontName;}...}",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_RichTextFontName.htm"
+    },
+    {
+      "name": "Strikeout",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_Strikeout.htm"
+    },
+    {
+      "name": "Style",
+      "type": "Font.FontStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_Style.htm"
+    },
+    {
+      "name": "Underlined",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_Underlined.htm"
+    },
+    {
+      "name": "Weight",
+      "type": "Font.FontWeight",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Font_Weight.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

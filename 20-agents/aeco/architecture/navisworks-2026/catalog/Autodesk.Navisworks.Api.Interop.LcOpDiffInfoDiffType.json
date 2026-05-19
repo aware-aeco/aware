@@ -1,0 +1,54 @@
+{
+  "name": "LcOpDiffInfoDiffType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpDiffInfoDiffType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDiffInfoDiffType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Geometry",
+      "value": 0
+    },
+    {
+      "name": "Name",
+      "value": 1
+    },
+    {
+      "name": "OverriddenMaterial",
+      "value": 2
+    },
+    {
+      "name": "OverriddenTransform",
+      "value": 3
+    },
+    {
+      "name": "Properties",
+      "value": 4
+    },
+    {
+      "name": "Tree",
+      "value": 5
+    },
+    {
+      "name": "Type",
+      "value": 6
+    },
+    {
+      "name": "UniqueIds",
+      "value": 7
+    },
+    {
+      "name": "Path",
+      "value": 8
+    },
+    {
+      "name": "NumTypes",
+      "value": 9
+    }
+  ]
+}

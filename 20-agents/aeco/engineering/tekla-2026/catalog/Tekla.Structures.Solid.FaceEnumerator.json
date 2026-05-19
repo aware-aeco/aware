@@ -1,0 +1,49 @@
+{
+  "name": "FaceEnumerator",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The FaceEnumerator class is used to enumerate the faces of a solid.",
+  "base": "System.Object",
+  "interfaces": [
+    "IEnumerator"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ddfdfd4e-696e-a234-32b3-9cc3c7041cb3",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7cb685be-03b2-c801-d86b-76a8de3c24ec"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/870623c5-5457-156a-56fd-4eb684ca26d5"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "Face",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the current face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d4f0ddb7-96f3-436a-0075-82e097ff32b7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

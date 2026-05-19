@@ -1,0 +1,212 @@
+{
+  "name": "Plane3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D plane.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/",
+  "constructors": [
+    {
+      "name": "Plane3D",
+      "signature": "Plane3D() | Plane3D(plane) | Plane3D(point, normalVector) | Plane3D(point1, point2, point3) | Plane3D(axis)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix) | __mul__(matrix)",
+      "summary": "2D matrix transformation.",
+      "remarks": "2D matrix transformation.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "2D transformation Matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Plane3D",
+        "doc": "Copy of transformed 3D plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__mul__"
+    },
+    {
+      "name": "CalcPlaneVectors",
+      "signature": "CalcPlaneVectors()",
+      "summary": "Calc X and Y axis vectors for plane",
+      "remarks": "Calc X and Y axis vectors for plane",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tuple(Vector of X axis,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.CalcPlaneVectors"
+    },
+    {
+      "name": "GetPoint",
+      "signature": "GetPoint()",
+      "summary": "Get 3D Plane reference point",
+      "remarks": "Get 3D Plane reference point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.GetPoint"
+    },
+    {
+      "name": "GetTransformationMatrix",
+      "signature": "GetTransformationMatrix()",
+      "summary": "Get transformation matrix for given plane 3D",
+      "remarks": "Get transformation matrix for given plane 3D",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Matrix3D const reference"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.GetTransformationMatrix"
+    },
+    {
+      "name": "GetVector",
+      "signature": "GetVector()",
+      "summary": "Get the Normal Vector",
+      "remarks": "Get the Normal Vector",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.GetVector"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(point, normalVector)",
+      "summary": "Initialize Plane from point and vector",
+      "remarks": "Initialize Plane from point and vector",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "New point.",
+          "optional": false
+        },
+        {
+          "name": "normalVector",
+          "type": "Vector3D",
+          "doc": "New vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.Set"
+    },
+    {
+      "name": "SetPoint",
+      "signature": "SetPoint(point)",
+      "summary": "Set reference point",
+      "remarks": "Set reference point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "New point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.SetPoint"
+    },
+    {
+      "name": "SetVector",
+      "signature": "SetVector(vec)",
+      "summary": "Set the Normal Vector",
+      "remarks": "Set the Normal Vector",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "New vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.SetVector"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(plane)",
+      "summary": "Comparison of planes without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of planes without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Compared plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when planes are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Point",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get 3D Plane reference point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.Point"
+    },
+    {
+      "name": "Vector",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Normal Vector",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.Vector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

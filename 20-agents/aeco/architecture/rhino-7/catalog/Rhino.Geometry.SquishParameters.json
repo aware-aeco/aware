@@ -1,0 +1,233 @@
+{
+  "name": "SquishParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Parameters used by the \u0027Squish\u0027 command flattening algorithm",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SquishParameters.htm",
+  "constructors": [
+    {
+      "name": "SquishParameters",
+      "signature": "public SquishParameters()",
+      "summary": "Initializes a new instance with default values. Initial values are same as Default.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SquishParameters__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SquishParameters_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SquishParameters_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SquishParameters_Finalize.htm"
+    },
+    {
+      "name": "GetSpringConstants",
+      "signature": "public bool GetSpringConstants(out double boundaryBias, out double deformationBias)",
+      "summary": "See if the spring constants could have been set with SetSpringConstants().",
+      "params": [
+        {
+          "name": "boundaryBias",
+          "type": "System.Double",
+          "doc": "boundary_bias: 0.0 to 1.0 0.0: boundary and interior treated the same 1.0: strongest bias to preserving boundary lengths at the expense of interior distortion.",
+          "optional": false
+        },
+        {
+          "name": "deformationBias",
+          "type": "System.Double",
+          "doc": "deformation_bias: -1.0 to 1.0 -1.0: strongest bias in favor of compression. 0.0: no preference between compression and stretching 1.0: strongest bias in favor of stretching",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If the spring constants have values that could be set by calling SetSpringConstants(), then boundary_bias and deformation_bias are set to those values and this function returns true. Otherwise, boundaryBias and deformationBias are set to 0.0 and false is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SquishParameters_GetSpringConstants.htm"
+    },
+    {
+      "name": "SetDeformation",
+      "signature": "public void SetDeformation(SquishDeformation deformation, bool bPreserveBoundary, double boundaryStretchConstant, double boundaryCompressConstant, double interiorStretchConstant, double interiorCompressConstant)",
+      "summary": "Sets the squish deformation characteristics",
+      "params": [
+        {
+          "name": "deformation",
+          "type": "Rhino.Geometry.SquishDeformation",
+          "doc": "[Missing \u003Cparam name=\u0022deformation\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SquishParameters.SetDeformation(Rhino.Geometry.SquishDeformation,System.Boolean,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bPreserveBoundary",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bPreserveBoundary\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SquishParameters.SetDeformation(Rhino.Geometry.SquishDeformation,System.Boolean,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "boundaryStretchConstant",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022boundaryStretchConstant\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SquishParameters.SetDeformation(Rhino.Geometry.SquishDeformation,System.Boolean,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "boundaryCompressConstant",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022boundaryCompressConstant\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SquishParameters.SetDeformation(Rhino.Geometry.SquishDeformation,System.Boolean,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "interiorStretchConstant",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022interiorStretchConstant\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SquishParameters.SetDeformation(Rhino.Geometry.SquishDeformation,System.Boolean,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "interiorCompressConstant",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022interiorCompressConstant\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SquishParameters.SetDeformation(Rhino.Geometry.SquishDeformation,System.Boolean,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SquishParameters_SetDeformation.htm"
+    },
+    {
+      "name": "SetSpringConstants",
+      "signature": "public void SetSpringConstants(double boundaryBias, double deformationBias)",
+      "summary": "A simplified interface for setting the Stretch and Compression spring constants",
+      "params": [
+        {
+          "name": "boundaryBias",
+          "type": "System.Double",
+          "doc": "boundary_bias: 0.0 to 1.0 0.0: boundary and interior treated the same 1.0: strongest bias to preserving boundary lengths at the expense of interior distortion.",
+          "optional": false
+        },
+        {
+          "name": "deformationBias",
+          "type": "System.Double",
+          "doc": "deformation_bias: -1.0 to 1.0 -1.0: strongest bias in favor of compression. 0.0: no preference between compression and stretching 1.0: strongest bias in favor of stretching",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SquishParameters_SetSpringConstants.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AbsoluteLimit",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "If -1.0 \u003C= AnsoluteLimit \u003C 0.0, then then an absolute compression limit is applied so that (2d length)/(3d length) \u003E= abs(AbsoluteLimit). In particular, Absolute = -1.0, then no compression is permitted(2d length) \u003E= (3d length). If 0.0 \u003C m_absolute_limit \u003C= 1.0 then then an absolute stretching limit is applied so that (2d length)/(3d length) \u003C= 1/abs(AbsoluteLimit). Examples: AbsoluteLimit 1.0: no stretching, (2d length) \u003C= 1.0*(3d length) 0.5: cap on stretching, 0.5*(2d length) \u003C= (3d length) -0.5: cap on compression, (2d length) \u003E= 0.5*(3d length) -1.0: no compression, (2d length) \u003E= 1.0*(3d length)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_AbsoluteLimit.htm"
+    },
+    {
+      "name": "Algorithm",
+      "type": "SquishFlatteningAlgorithm",
+      "getter": true,
+      "setter": true,
+      "summary": "The flattening agorithm to use: Geometric: (scale independent)the \u0022spring\u0022 constant is proportional to 1/L^2 and the result is independent of scale. PhysicalStress: (scale dependent) the \u0022spring\u0022 constant is proportional to 1/L.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_Algorithm.htm"
+    },
+    {
+      "name": "BoundaryCompressConstant",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Spring constant for compressed boundary edges times the rest length",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_BoundaryCompressConstant.htm"
+    },
+    {
+      "name": "BoundaryStretchConstant",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Spring constant for stretched boundary edges",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_BoundaryStretchConstant.htm"
+    },
+    {
+      "name": "Default",
+      "type": "SquishParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default Squishing parameters",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_Default.htm"
+    },
+    {
+      "name": "InteriorCompressConstant",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Spring constant for compressed interior edges times the rest length",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_InteriorCompressConstant.htm"
+    },
+    {
+      "name": "InteriorStretchConstant",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Spring constant for stretched boundary edges times the rest length",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_InteriorStretchConstant.htm"
+    },
+    {
+      "name": "PreserveTopology",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "the mesh has coincident vertices and PreserveTopology is true, then the flattening is based on the mesh\u0027s topology and coincident vertices will remain coincident. Otherwise coincident vertices are free to move apart.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_PreserveTopology.htm"
+    },
+    {
+      "name": "SaveMapping",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If SaveMapping is true, then ON_SquishMesh() will save extra information on the squished mesh so 3d points and curves near the input mesh can be mapped to the squished mesh and 2d points and curves on the squished mesh can be mapped back to the 3d mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SquishParameters_SaveMapping.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

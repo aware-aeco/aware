@@ -1,0 +1,299 @@
+{
+  "name": "LicenseLease",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "LicenseLease represents a lease returned from the Cloud Zoo",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_LicenseLease.htm",
+  "constructors": [
+    {
+      "name": "LicenseLease(IntPtr)",
+      "signature": "public LicenseLease(IntPtr unmanagedPointer)",
+      "summary": "Initializes a new instance of the LicenseLease class",
+      "params": [
+        {
+          "name": "unmanagedPointer",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022unmanagedPointer\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_LicenseLease__ctor.htm"
+    },
+    {
+      "name": "LicenseLease(String, String, String, String, String, String, String, String, String, DateTime, DateTime)",
+      "signature": "public LicenseLease(string productId, string groupName, string groupId, string userName, string userId, string productTitle, string productVersion, string productEdition, string leaseId, DateTime iat, DateTime exp)",
+      "summary": "Initializes a new instance of the LicenseLease class",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "groupName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022groupName\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "groupId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022groupId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "userName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022userName\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "userId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022userId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productTitle",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productTitle\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productVersion",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productVersion\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productEdition",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productEdition\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "leaseId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022leaseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "iat",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022iat\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "exp",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022exp\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_LicenseLease__ctor_1.htm"
+    },
+    {
+      "name": "LicenseLease(String, String, String, String, String, String, String, String, String, DateTime, DateTime, DateTime)",
+      "signature": "public LicenseLease(string productId, string groupName, string groupId, string userName, string userId, string productTitle, string productVersion, string productEdition, string leaseId, DateTime iat, DateTime exp, DateTime renewable_until)",
+      "summary": "Initializes a new instance of the LicenseLease class",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "groupName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022groupName\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "groupId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022groupId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "userName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022userName\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "userId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022userId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productTitle",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productTitle\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productVersion",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productVersion\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productEdition",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productEdition\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "leaseId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022leaseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "iat",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022iat\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "exp",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022exp\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "renewable_until",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022renewable_until\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseLease.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.DateTime,System.DateTime)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_LicenseLease__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_LicenseLease_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Expiration",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "The date when this lease will expire",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_Expiration.htm"
+    },
+    {
+      "name": "GroupId",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "ID of Rhino Accounts group that this lease came from",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_GroupId.htm"
+    },
+    {
+      "name": "GroupName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Rhino Accounts group that this lease came from",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_GroupName.htm"
+    },
+    {
+      "name": "IssuedAt",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "The date this lease was issued",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_IssuedAt.htm"
+    },
+    {
+      "name": "LeaseId",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The ID of this lease.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_LeaseId.htm"
+    },
+    {
+      "name": "ProductEdition",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Edition of product that this lease is issued to. For example, \u0022Commercial\u0022 or \u0022Beta\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_ProductEdition.htm"
+    },
+    {
+      "name": "ProductId",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The ID of the product that this lease is issued to",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_ProductId.htm"
+    },
+    {
+      "name": "ProductTitle",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Title of product that this lease is issued to. For example, \u0022Rhino 6\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_ProductTitle.htm"
+    },
+    {
+      "name": "ProductVersion",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Version of product that this lease is issued to. For example, \u00226.0\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_ProductVersion.htm"
+    },
+    {
+      "name": "RenewableUntil",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The date when the license in the cloud zoo entity will expire, if any",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_RenewableUntil.htm"
+    },
+    {
+      "name": "UserId",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "ID of Rhino Accounts user that was logged in when this lease was obtained",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_UserId.htm"
+    },
+    {
+      "name": "UserName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Rhino Accounts user that was logged in when this lease was obtained",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseLease_UserName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,175 @@
+{
+  "name": "GH_AutoSaveSettings",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides access to all AutoSave event flags.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_AutoSaveSettings.htm",
+  "constructors": [
+    {
+      "name": "GH_AutoSaveSettings",
+      "signature": "public GH_AutoSaveSettings()",
+      "summary": "Initializes a new instance of the GH_AutoSaveSettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_AutoSaveSettings__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AutosaveFilter",
+      "signature": "public static bool AutosaveFilter(GH_AutoSaveTrigger trigger)",
+      "summary": "Tests a given trigger to see if it allows an autosave operation.",
+      "params": [
+        {
+          "name": "trigger",
+          "type": "Grasshopper.Kernel.GH_AutoSaveTrigger",
+          "doc": "Trigger to filter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the trigger ought to start an AutoSave op."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_AutoSaveSettings_AutosaveFilter.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EnableAutoSave",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AutoSaveSettings_EnableAutoSave.htm"
+    },
+    {
+      "name": "SaveOnDataFlattening",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnDataFlattening.htm"
+    },
+    {
+      "name": "SaveOnDocumentUnload",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnDocumentUnload.htm"
+    },
+    {
+      "name": "SaveOnObjectAdded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnObjectAdded.htm"
+    },
+    {
+      "name": "SaveOnObjectChange",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnObjectChange.htm"
+    },
+    {
+      "name": "SaveOnObjectRemoved",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnObjectRemoved.htm"
+    },
+    {
+      "name": "SaveOnWireEvent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnWireEvent.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "AutoSaveFileFormatChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.AutoSaveFileFormatChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.AutoSaveFileFormatChangedEventHandler AutoSaveFileFormatChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_AutoSaveFileFormatChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EnableAutoSaveChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.EnableAutoSaveChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.EnableAutoSaveChangedEventHandler EnableAutoSaveChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_EnableAutoSaveChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SaveOnDataFlatteningChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.SaveOnDataFlatteningChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.SaveOnDataFlatteningChangedEventHandler SaveOnDataFlatteningChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnDataFlatteningChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SaveOnDocumentUnloadChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.SaveOnDocumentUnloadChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.SaveOnDocumentUnloadChangedEventHandler SaveOnDocumentUnloadChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnDocumentUnloadChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SaveOnObjectAddedChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.SaveOnObjectAddedChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.SaveOnObjectAddedChangedEventHandler SaveOnObjectAddedChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnObjectAddedChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SaveOnObjectChangeChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.SaveOnObjectChangeChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.SaveOnObjectChangeChangedEventHandler SaveOnObjectChangeChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnObjectChangeChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SaveOnObjectRemovedChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.SaveOnObjectRemovedChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.SaveOnObjectRemovedChangedEventHandler SaveOnObjectRemovedChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnObjectRemovedChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SaveOnWireEventChanged",
+      "delegate": "Grasshopper.Kernel.GH_AutoSaveSettings.SaveOnWireEventChangedEventHandler",
+      "signature": "public static event GH_AutoSaveSettings.SaveOnWireEventChangedEventHandler SaveOnWireEventChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_AutoSaveSettings_SaveOnWireEventChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "CurveOrientation",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for closed curve orientations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_CurveOrientation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "Unable to compute the curve\u0027s orientation."
+    },
+    {
+      "name": "Clockwise",
+      "value": -1,
+      "summary": "The curve\u0027s orientation is clockwise in the XY plane."
+    },
+    {
+      "name": "CounterClockwise",
+      "value": 1,
+      "summary": "The curve\u0027s orientation is counter clockwise in the XY plane."
+    }
+  ]
+}

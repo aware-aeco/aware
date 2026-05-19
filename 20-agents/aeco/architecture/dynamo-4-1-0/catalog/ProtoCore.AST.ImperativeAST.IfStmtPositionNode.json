@@ -1,0 +1,83 @@
+{
+  "name": "IfStmtPositionNode",
+  "namespace": "ProtoCore.AST.ImperativeAST",
+  "kind": "class",
+  "summary": "Type IfStmtPositionNode",
+  "base": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/ImperativeAST.cs",
+  "constructors": [
+    {
+      "name": "IfStmtPositionNode()",
+      "signature": "void IfStmtPositionNode()",
+      "summary": "IfStmtPositionNode.IfStmtPositionNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/ImperativeAST.cs"
+    },
+    {
+      "name": "IfStmtPositionNode(ProtoCore.AST.ImperativeAST.IfStmtPositionNode)",
+      "signature": "void IfStmtPositionNode(ProtoCore.AST.ImperativeAST.IfStmtPositionNode rhs)",
+      "summary": "IfStmtPositionNode.IfStmtPositionNode",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.ImperativeAST.IfStmtPositionNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/ImperativeAST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Accept(ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E)",
+      "signature": "TResult Accept\u003CTResult\u003E(ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E visitor)",
+      "summary": "IfStmtPositionNode.Accept",
+      "params": [
+        {
+          "name": "visitor",
+          "type": "ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/ImperativeAST.cs"
+    },
+    {
+      "name": "Children",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Children()",
+      "summary": "IfStmtPositionNode.Children",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/ImperativeAST.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "ProtoCore.AST.ImperativeAST.AstKind",
+      "getter": true,
+      "setter": false,
+      "summary": "IfStmtPositionNode.Kind",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/ImperativeAST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

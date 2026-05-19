@@ -1,0 +1,62 @@
+{
+  "name": "PrecastElement",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.PrecastElement.)",
+  "base": "AllplanElement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElement/",
+  "constructors": [
+    {
+      "name": "PrecastElement",
+      "signature": "PrecastElement(Properties)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "elementProp",
+          "type": "object",
+          "doc": "Element properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElement/#NemAll_Python_Precast.PrecastElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElement/#NemAll_Python_Precast.PrecastElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElement/#NemAll_Python_Precast.PrecastElement.Properties"
+    },
+    {
+      "name": "deletePython",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property to delete Python after elementation :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElement/#NemAll_Python_Precast.PrecastElement.deletePython"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

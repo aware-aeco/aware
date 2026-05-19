@@ -1,0 +1,24 @@
+{
+  "name": "AnalysisDecomposedLoad.LoadCoordinateEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "This defines whether local or global coordinates are used for loading the coordinate system.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3238e019-d3c8-abff-6066-9fc11a80623d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "USE_LOCAL_COORDINATES",
+      "value": 0,
+      "summary": "Local coordinates are used."
+    },
+    {
+      "name": "USE_GLOBAL_COORDINATES",
+      "value": 1,
+      "summary": "Global coordinates are used."
+    }
+  ]
+}

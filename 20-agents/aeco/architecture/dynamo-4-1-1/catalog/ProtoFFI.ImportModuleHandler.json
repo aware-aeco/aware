@@ -1,0 +1,108 @@
+{
+  "name": "ImportModuleHandler",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type ImportModuleHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/ImportModuleHandler.cs",
+  "constructors": [
+    {
+      "name": "ImportModuleHandler(ProtoCore.Core)",
+      "signature": "void ImportModuleHandler(ProtoCore.Core coreObj)",
+      "summary": "ImportModuleHandler.ImportModuleHandler",
+      "params": [
+        {
+          "name": "coreObj",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/ImportModuleHandler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Import(string, string, string, int, int)",
+      "signature": "ProtoCore.AST.AssociativeAST.ImportNode Import(string moduleName, string typeName, string alias, int line, int col)",
+      "summary": "ImportModuleHandler.Import",
+      "params": [
+        {
+          "name": "moduleName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "typeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "alias",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.ImportNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/ImportModuleHandler.cs"
+    },
+    {
+      "name": "TryGetClassNode(ProtoCore.AST.AssociativeAST.CodeBlockNode, string, ref ProtoCore.AST.AssociativeAST.ClassDeclNode)",
+      "signature": "bool TryGetClassNode(ProtoCore.AST.AssociativeAST.CodeBlockNode node, string typeName, ref ProtoCore.AST.AssociativeAST.ClassDeclNode classNode)",
+      "summary": "ImportModuleHandler.TryGetClassNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        },
+        {
+          "name": "typeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classNode",
+          "type": "ref ProtoCore.AST.AssociativeAST.ClassDeclNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/ImportModuleHandler.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "RootImportNode",
+      "type": "ProtoCore.AST.AssociativeAST.ImportNode",
+      "getter": true,
+      "setter": false,
+      "summary": "ImportModuleHandler.RootImportNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/ImportModuleHandler.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

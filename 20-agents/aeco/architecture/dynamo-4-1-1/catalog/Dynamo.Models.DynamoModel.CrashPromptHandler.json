@@ -1,0 +1,108 @@
+{
+  "name": "CrashPromptHandler",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "delegate",
+  "summary": "Type CrashPromptHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEvents.cs",
+  "constructors": [
+    {
+      "name": "CrashPromptHandler(object, IntPtr)",
+      "signature": "void CrashPromptHandler(object object, IntPtr method)",
+      "summary": "CrashPromptHandler.CrashPromptHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEvents.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(object, Dynamo.Core.CrashPromptArgs, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(object sender, Dynamo.Core.CrashPromptArgs e, System.AsyncCallback callback, object object)",
+      "summary": "CrashPromptHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Dynamo.Core.CrashPromptArgs",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEvents.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "CrashPromptHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEvents.cs"
+    },
+    {
+      "name": "Invoke(object, Dynamo.Core.CrashPromptArgs)",
+      "signature": "void Invoke(object sender, Dynamo.Core.CrashPromptArgs e)",
+      "summary": "CrashPromptHandler.Invoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Dynamo.Core.CrashPromptArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEvents.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(object sender, Dynamo.Core.CrashPromptArgs e)"
+}

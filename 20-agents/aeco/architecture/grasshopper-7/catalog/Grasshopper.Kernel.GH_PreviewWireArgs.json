@@ -1,0 +1,78 @@
+{
+  "name": "GH_PreviewWireArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "This class is passed to objects that implement IGH_PreviewData during wire drawing operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_PreviewWireArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_PreviewWireArgs",
+      "signature": "public GH_PreviewWireArgs(RhinoViewport vp, DisplayPipeline pl, Color col, int thickness)",
+      "summary": "Initializes a new instance of the GH_PreviewWireArgs class",
+      "params": [
+        {
+          "name": "vp",
+          "type": "RhinoViewport",
+          "optional": false
+        },
+        {
+          "name": "pl",
+          "type": "DisplayPipeline",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "System.Drawing.Color",
+          "optional": false
+        },
+        {
+          "name": "thickness",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewWireArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the color in which wires ought to be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewWireArgs_Color.htm"
+    },
+    {
+      "name": "Pipeline",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Display Pipeline we\u0027re currently drawing with.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewWireArgs_Pipeline.htm"
+    },
+    {
+      "name": "Thickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the thickness in which wires ought to be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewWireArgs_Thickness.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Viewport in which we\u0027re currently drawing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewWireArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

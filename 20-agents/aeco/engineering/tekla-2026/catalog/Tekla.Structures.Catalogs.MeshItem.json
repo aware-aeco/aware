@@ -1,0 +1,201 @@
+{
+  "name": "MeshItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The MeshItem class contains information from the meshes in the catalog (mesh_database.inp).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f4d9b53a-3f68-8d8a-92c2-eff42b83b925",
+  "constructors": [
+    {
+      "name": "MeshItem",
+      "signature": "public MeshItem()",
+      "summary": "Creates a new mesh item instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9e58eaf-54c8-7c6b-6bb1-0afbb294b892"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Export",
+      "signature": "public bool Export(ref string filename)",
+      "summary": "Exports the rebar item in the catlog to given file name. If path is not given rebar is exported to model folder. If filename is empty rebar name is used as filename.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a6eb55ef-fcd9-90f8-3467-1b69037491ea"
+    },
+    {
+      "name": "Select",
+      "signature": "public bool Select(string MeshName, string MeshGrade)",
+      "summary": "Selects the mesh item in the mesh database.",
+      "params": [
+        {
+          "name": "MeshName",
+          "type": "System.String",
+          "doc": "The name of the mesh item to select.",
+          "optional": false
+        },
+        {
+          "name": "MeshGrade",
+          "type": "System.String",
+          "doc": "The grade of the mesh item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/553fb3e2-fcc9-33bc-79e3-fdacd64003c9"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DiameterCross",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s cross direction bar size.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d74a09e8-98d5-bfdb-0ae2-fced3e9e5b38"
+    },
+    {
+      "name": "DiameterLongitudinal",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s longitudinal direction bar size.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e41680a4-59d4-aaa6-d4d4-c2138eaef847"
+    },
+    {
+      "name": "DistanceCross",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s cross direction distance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/af4e315b-8d1f-76a9-37b2-70cd65f59c4a"
+    },
+    {
+      "name": "DistanceLongitudinal",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s longitudinal direction distance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b70ca4b-cb9c-4425-833a-0273f7146a4c"
+    },
+    {
+      "name": "Grade",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s grade.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d31679d7-9fc1-71df-cfd2-095402e8df90"
+    },
+    {
+      "name": "LeftOverhangCross",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s cross direction left overhang.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/714ba81c-b54c-a2df-912a-7f25e41d3fa7"
+    },
+    {
+      "name": "LeftOverhangLongitudinal",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s longitudinal direction left overhang.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0f7558df-02ba-d095-bb2b-a5d5e8935939"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/70705681-7c57-697e-9ed8-ca4cc60bee31"
+    },
+    {
+      "name": "MaximumOverlappingCross",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s cross direction maximum overlapping.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f6b1bff3-b8f8-278d-ab7f-85c42e088e46"
+    },
+    {
+      "name": "MaximumOverlappingLongitudinal",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s longitudinal direction maximum overlapping.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6d8716e5-2205-5fbd-c854-8e55e860bc77"
+    },
+    {
+      "name": "MinimumOverlappingCross",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s cross direction minimum overlapping.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf0930cd-a688-6aa3-2ca0-3382c2bc97c6"
+    },
+    {
+      "name": "MinimumOverlappingLongitudinal",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s longitudinal direction minimum overlapping.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/76854187-dd02-8536-639b-d020c949fd71"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/575b226e-1d61-5324-fc8f-0d14509fbfac"
+    },
+    {
+      "name": "RightOverhangCross",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s cross direction right overhang.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dcb82c85-8085-1366-f82e-6312fa05a244"
+    },
+    {
+      "name": "RightOverhangLongitudinal",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s longitudinal direction right overhang.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c03d8dd-4200-f0b0-9fa5-0547b06a013e"
+    },
+    {
+      "name": "Width",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh item\u0027s width.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e9b30bba-dca7-3e90-1999-58e60e5817f7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

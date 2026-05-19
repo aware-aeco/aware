@@ -1,0 +1,38 @@
+{
+  "name": "ConTemplateApplyResult",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConTemplateApplyResult.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConTemplateApplyResult.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AppliedWithoutIssues",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplateApplyResult.appliedWithoutIssues.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConTemplateApplyResult.md"
+    },
+    {
+      "name": "TemplateModel",
+      "type": "ConConnectionTemplate",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplateApplyResult.templateModel.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConTemplateApplyResult.md"
+    },
+    {
+      "name": "Issues",
+      "type": "List\u003CConNonConformityIssue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplateApplyResult.issues.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConTemplateApplyResult.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,254 @@
+{
+  "name": "GH_DigitNumber",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "Maintains and provides functionality for evaluating and modifying numbers as used in the GH_DigitScrollerBase control.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_DigitNumber.htm",
+  "constructors": [
+    {
+      "name": "GH_DigitNumber(Int32)",
+      "signature": "public GH_DigitNumber(int decimalPlaces)",
+      "summary": "Create a new GH_DigitNumber instance with the specified number of decimal places.",
+      "params": [
+        {
+          "name": "decimalPlaces",
+          "type": "System.Int32",
+          "doc": "Amount of decimal places.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber__ctor_1.htm"
+    },
+    {
+      "name": "GH_DigitNumber(GH_DigitNumber)",
+      "signature": "public GH_DigitNumber(GH_DigitNumber other)",
+      "summary": "Create an exact duplicate of another GH_DigitNumber instance.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.GUI.Base.GH_DigitNumber",
+          "doc": "Number to copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber__ctor.htm"
+    },
+    {
+      "name": "GH_DigitNumber(Int32, Int32)",
+      "signature": "public GH_DigitNumber(int decimalPlaces, int radixPosition)",
+      "summary": "Create a new GH_DigitNumber instance with the specified number of decimal places and a given radix position.",
+      "params": [
+        {
+          "name": "decimalPlaces",
+          "type": "System.Int32",
+          "doc": "Amount of decimal places",
+          "optional": false
+        },
+        {
+          "name": "radixPosition",
+          "type": "System.Int32",
+          "doc": "Index of radix symbol, -1 to disable the radix altogether.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AssignOffset",
+      "signature": "public bool AssignOffset(int index, decimal offset)",
+      "summary": "Assign an offset to a given digit and recursively adjust all leftwards offsets if needed.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of digit to offset.",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "System.Decimal",
+          "doc": "New offset for digit.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber_AssignOffset.htm"
+    },
+    {
+      "name": "LimitValue",
+      "signature": "public void LimitValue()",
+      "summary": "Limits the value to the minimum and maximum domain.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber_LimitValue.htm"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Reset all parts to zero.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber_Reset.htm"
+    },
+    {
+      "name": "Round",
+      "signature": "public void Round()",
+      "summary": "Round the number by cancelling the offset in the proper direction.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber_Round.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_DigitNumber_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DigitCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets or sets the amount of digits in this number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_DigitCount.htm"
+    },
+    {
+      "name": "Epsilon",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the smallest possible change.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_Epsilon.htm"
+    },
+    {
+      "name": "IsPrimaryDigitSignificant",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the primary digit at the given index is significant.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_IsPrimaryDigitSignificant.htm"
+    },
+    {
+      "name": "IsSecondaryDigitSignificant",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the secondary digit at the given index is significant.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_IsSecondaryDigitSignificant.htm"
+    },
+    {
+      "name": "Maximum",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the maximum value allowed in this number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_Maximum.htm"
+    },
+    {
+      "name": "Minimum",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the minimum value allowed in this number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_Minimum.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the offset between the primary and secondary digits.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_Offset.htm"
+    },
+    {
+      "name": "PrimaryDigits",
+      "type": "IList\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the internal list of primary digits. Do not modify this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_PrimaryDigits.htm"
+    },
+    {
+      "name": "PrimaryPositive",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the number is positive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_PrimaryPositive.htm"
+    },
+    {
+      "name": "Radix",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radix point index. A negative radix index disables the radix point, zero is not a valid index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_Radix.htm"
+    },
+    {
+      "name": "RadixIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the mapped radix.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_RadixIndex.htm"
+    },
+    {
+      "name": "SecondaryDigits",
+      "type": "IList\u003CInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the internal list of secondary digits. Do not modify this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_SecondaryDigits.htm"
+    },
+    {
+      "name": "SecondaryPositive",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the secondary number is positive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_SecondaryPositive.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value of this number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitNumber_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

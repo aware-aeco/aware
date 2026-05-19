@@ -1,0 +1,74 @@
+{
+  "name": "AnalysisPartEnd",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartEnd class contains information related to analysis part ends.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e9e24f96-5487-123d-4b75-1bf34e51f390",
+  "constructors": [
+    {
+      "name": "AnalysisPartEnd",
+      "signature": "public AnalysisPartEnd()",
+      "summary": "Initializes a new instance of the AnalysisPartEnd class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/292506d2-8371-c8bc-37b2-7c7b5c97bef1"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Condition",
+      "type": "AnalysisPartEnd.ConditionEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The condition of the part end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/113ebc68-417f-2394-38fa-1300fe8c3e51"
+    },
+    {
+      "name": "Connectivity",
+      "type": "AnalysisConnectivity",
+      "getter": true,
+      "setter": true,
+      "summary": "The connectivity of the part end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31dafc51-50eb-f93e-89af-9e1a756a32db"
+    },
+    {
+      "name": "Eccentricity",
+      "type": "Vector",
+      "getter": true,
+      "setter": true,
+      "summary": "The eccentricity of the part end (in the local coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ac325b70-a9bc-7f72-a474-5ed965182312"
+    },
+    {
+      "name": "EccentricityMode",
+      "type": "AnalysisPartEnd.EccentricityModeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The eccentricity mode of the part end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e63b3970-15f2-d892-cc56-41433270dbad"
+    },
+    {
+      "name": "Support",
+      "type": "AnalysisSupport",
+      "getter": true,
+      "setter": true,
+      "summary": "The support of the part end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/675c5d73-bc08-1238-e347-52da17b59a59"
+    },
+    {
+      "name": "SupportCoordSystem",
+      "type": "CoordinateSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinate system of the support.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c2475e1e-b357-25b0-20ad-6aee1267ff1f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

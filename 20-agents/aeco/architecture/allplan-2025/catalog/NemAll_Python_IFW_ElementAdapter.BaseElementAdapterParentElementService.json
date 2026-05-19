@@ -1,0 +1,35 @@
+{
+  "name": "BaseElementAdapterParentElementService",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.BaseElementAdapterParentElementService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterParentElementService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetParentElement",
+      "signature": "GetParentElement(ele: BaseElementAdapter) -\u003E BaseElementAdapter",
+      "summary": "Get the parent element adapter from the element adapter",
+      "remarks": "Get the parent element adapter from the element adapter",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Parent element adapter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterParentElementService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterParentElementService.GetParentElement"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

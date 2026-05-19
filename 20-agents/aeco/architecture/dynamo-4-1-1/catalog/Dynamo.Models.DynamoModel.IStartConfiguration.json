@@ -1,0 +1,134 @@
+{
+  "name": "IStartConfiguration",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "interface",
+  "summary": "Type IStartConfiguration",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AuthProvider",
+      "type": "Greg.IAuthProvider",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.AuthProvider",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Context",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.Context",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "DynamoCorePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.DynamoCorePath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "DynamoHostPath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.DynamoHostPath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "EnableUnTrustedLocationsNotifications",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Enables or disables notifications about untrusted file locations. When true (default), notifications are shown in the notification center when trusted locations contain paths pointing to the common application data (ProgramData) directory. When false, no notifications are displayed for untrusted locations. Default value is true to maintain backward compatibility. Note: This does not affect the file trust warning popup when opening files from untrusted locations.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Extensions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.Extensions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "GeometryFactoryPath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.GeometryFactoryPath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "HostAnalyticsInfo",
+      "type": "Dynamo.Models.HostAnalyticsInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "Configuration object that contains host information like Host name, parent id and session id.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsHeadless",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, the program does not have a UI. No update checks or analytics collection should be done.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "NoNetworkMode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Configuration option to start Dynamo in offline mode.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PathResolver",
+      "type": "Dynamo.Interfaces.IPathResolver",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.PathResolver",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Preferences",
+      "type": "Dynamo.Interfaces.IPreferences",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.Preferences",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ProcessMode",
+      "type": "Dynamo.Scheduler.TaskProcessMode",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.ProcessMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "SchedulerThread",
+      "type": "Dynamo.Scheduler.ISchedulerThread",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.SchedulerThread",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "StartInTestMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "IStartConfiguration.StartInTestMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

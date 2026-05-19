@@ -1,0 +1,4621 @@
+{
+  "name": "FieldDictionary",
+  "namespace": "Rhino.Render.Fields",
+  "kind": "class",
+  "summary": "Dictionary containing RenderContent data fields. Add fields to this dictionary in your derived RenderContent classes constructor. Get field values using the TryGet[data type]() methods and set them using the Set() method.",
+  "interfaces": [
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_Fields_FieldDictionary.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(String, Color4f)",
+      "signature": "public Color4fField Add(string key, Color4f value)",
+      "summary": "Add a new Color4fField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Display.Color4f)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add.htm"
+    },
+    {
+      "name": "Add(String, Point2d)",
+      "signature": "public Point2dField Add(string key, Point2d value)",
+      "summary": "Add a new Point2dField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point2d)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_3.htm"
+    },
+    {
+      "name": "Add(String, Point3d)",
+      "signature": "public Point3dField Add(string key, Point3d value)",
+      "summary": "Add a new Point3dField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_6.htm"
+    },
+    {
+      "name": "Add(String, Point4d)",
+      "signature": "public Point4dField Add(string key, Point4d value)",
+      "summary": "Add a new Point4dField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point4d)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_9.htm"
+    },
+    {
+      "name": "Add(String, Transform)",
+      "signature": "public TransformField Add(string key, Transform value)",
+      "summary": "Add a new TransformField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Transform)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_12.htm"
+    },
+    {
+      "name": "Add(String, Vector2d)",
+      "signature": "public Vector2dField Add(string key, Vector2d value)",
+      "summary": "Add a new Vector2dField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Vector2d)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_15.htm"
+    },
+    {
+      "name": "Add(String, Vector3d)",
+      "signature": "public Vector3dField Add(string key, Vector3d value)",
+      "summary": "Add a new Vector3dField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Vector3d)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_18.htm"
+    },
+    {
+      "name": "Add(String, Boolean)",
+      "signature": "public BoolField Add(string key, bool value)",
+      "summary": "Add a new BoolField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoolField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_21.htm"
+    },
+    {
+      "name": "Add(String, Byte[])",
+      "signature": "public ByteArrayField Add(string key, byte[] value)",
+      "summary": "AddField a new ByteArrayField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte[]",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ByteArrayField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Byte[])\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_24.htm"
+    },
+    {
+      "name": "Add(String, DateTime)",
+      "signature": "public DateTimeField Add(string key, DateTime value)",
+      "summary": "Add a new DateTimeField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTimeField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.DateTime)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_25.htm"
+    },
+    {
+      "name": "Add(String, Double)",
+      "signature": "public DoubleField Add(string key, double value)",
+      "summary": "AddField a new DoubleField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DoubleField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Double)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_28.htm"
+    },
+    {
+      "name": "Add(String, Color)",
+      "signature": "public Color4fField Add(string key, Color value)",
+      "summary": "Add a new Color4fField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Drawing.Color)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_31.htm"
+    },
+    {
+      "name": "Add(String, Guid)",
+      "signature": "public GuidField Add(string key, Guid value)",
+      "summary": "Add a new GuidField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GuidField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Guid)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_33.htm"
+    },
+    {
+      "name": "Add(String, Int32)",
+      "signature": "public IntField Add(string key, int value)",
+      "summary": "Add a new IntField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_36.htm"
+    },
+    {
+      "name": "Add(String, Single)",
+      "signature": "public FloatField Add(string key, float value)",
+      "summary": "Add a new FloatField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FloatField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Single)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_39.htm"
+    },
+    {
+      "name": "Add(String, String)",
+      "signature": "public StringField Add(string key, string value)",
+      "summary": "Add a new StringField to the dictionary. This will be a data only field and not show up in the content browsers.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Initial value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_42.htm"
+    },
+    {
+      "name": "Add(String, Color4f, String)",
+      "signature": "public Color4fField Add(string key, Color4f value, string prompt)",
+      "summary": "Add a new Color4fField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Display.Color4f,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_1.htm"
+    },
+    {
+      "name": "Add(String, Point2d, String)",
+      "signature": "public Point2dField Add(string key, Point2d value, string prompt)",
+      "summary": "Add a new Point2dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point2d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_4.htm"
+    },
+    {
+      "name": "Add(String, Point3d, String)",
+      "signature": "public Point3dField Add(string key, Point3d value, string prompt)",
+      "summary": "Add a new Point3dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point3d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_7.htm"
+    },
+    {
+      "name": "Add(String, Point4d, String)",
+      "signature": "public Point4dField Add(string key, Point4d value, string prompt)",
+      "summary": "Add a new Point4dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point4d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_10.htm"
+    },
+    {
+      "name": "Add(String, Transform, String)",
+      "signature": "public TransformField Add(string key, Transform value, string prompt)",
+      "summary": "Add a new TransformField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Transform,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_13.htm"
+    },
+    {
+      "name": "Add(String, Vector2d, String)",
+      "signature": "public Vector2dField Add(string key, Vector2d value, string prompt)",
+      "summary": "Add a new Vector2dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Vector2d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_16.htm"
+    },
+    {
+      "name": "Add(String, Vector3d, String)",
+      "signature": "public Vector3dField Add(string key, Vector3d value, string prompt)",
+      "summary": "Add a new Vector3dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Vector3d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_19.htm"
+    },
+    {
+      "name": "Add(String, Boolean, String)",
+      "signature": "public BoolField Add(string key, bool value, string prompt)",
+      "summary": "Add a new BoolField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoolField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Boolean,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_22.htm"
+    },
+    {
+      "name": "Add(String, DateTime, String)",
+      "signature": "public DateTimeField Add(string key, DateTime value, string prompt)",
+      "summary": "Add a new DateTimeField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTimeField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.DateTime,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_26.htm"
+    },
+    {
+      "name": "Add(String, Double, String)",
+      "signature": "public DoubleField Add(string key, double value, string prompt)",
+      "summary": "Add a new DoubleField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DoubleField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Double,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_29.htm"
+    },
+    {
+      "name": "Add(String, Color, String)",
+      "signature": "public Color4fField Add(string key, Color value, string prompt)",
+      "summary": "Add a new Color4fField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Drawing.Color,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_32.htm"
+    },
+    {
+      "name": "Add(String, Guid, String)",
+      "signature": "public GuidField Add(string key, Guid value, string prompt)",
+      "summary": "Add a new GuidField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GuidField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Guid,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_34.htm"
+    },
+    {
+      "name": "Add(String, Int32, String)",
+      "signature": "public IntField Add(string key, int value, string prompt)",
+      "summary": "Add a new IntField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Int32,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_37.htm"
+    },
+    {
+      "name": "Add(String, Single, String)",
+      "signature": "public FloatField Add(string key, float value, string prompt)",
+      "summary": "AddField a new FloatField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FloatField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Single,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_40.htm"
+    },
+    {
+      "name": "Add(String, String, Int32)",
+      "signature": "public NullField Add(string key, string prompt, int sectionId)",
+      "summary": "Add a new NullField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "Id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NullField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_43.htm"
+    },
+    {
+      "name": "Add(String, String, String)",
+      "signature": "public StringField Add(string key, string value, string prompt)",
+      "summary": "Add a new StringField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.String,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_44.htm"
+    },
+    {
+      "name": "Add(String, Color4f, String, Int32)",
+      "signature": "public Color4fField Add(string key, Color4f value, string prompt, int sectionId)",
+      "summary": "Add a new Color4fField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Display.Color4f,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_2.htm"
+    },
+    {
+      "name": "Add(String, Point2d, String, Int32)",
+      "signature": "public Point2dField Add(string key, Point2d value, string prompt, int sectionId)",
+      "summary": "Add a new Point2dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point2d,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_5.htm"
+    },
+    {
+      "name": "Add(String, Point3d, String, Int32)",
+      "signature": "public Point3dField Add(string key, Point3d value, string prompt, int sectionId)",
+      "summary": "Add a new Point3dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point3d,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_8.htm"
+    },
+    {
+      "name": "Add(String, Point4d, String, Int32)",
+      "signature": "public Point4dField Add(string key, Point4d value, string prompt, int sectionId)",
+      "summary": "Add a new Point4dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Point4d,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_11.htm"
+    },
+    {
+      "name": "Add(String, Transform, String, Int32)",
+      "signature": "public TransformField Add(string key, Transform value, string prompt, int sectionId)",
+      "summary": "Add a new TransformField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Transform,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_14.htm"
+    },
+    {
+      "name": "Add(String, Vector2d, String, Int32)",
+      "signature": "public Vector2dField Add(string key, Vector2d value, string prompt, int sectionId)",
+      "summary": "Add a new Vector2dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Vector2d,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_17.htm"
+    },
+    {
+      "name": "Add(String, Vector3d, String, Int32)",
+      "signature": "public Vector3dField Add(string key, Vector3d value, string prompt, int sectionId)",
+      "summary": "Add a new Vector3dField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,Rhino.Geometry.Vector3d,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_20.htm"
+    },
+    {
+      "name": "Add(String, Boolean, String, Int32)",
+      "signature": "public BoolField Add(string key, bool value, string prompt, int sectionId)",
+      "summary": "Add a new BoolField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoolField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Boolean,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_23.htm"
+    },
+    {
+      "name": "Add(String, DateTime, String, Int32)",
+      "signature": "public DateTimeField Add(string key, DateTime value, string prompt, int sectionId)",
+      "summary": "Add a new DateTimeField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTimeField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.DateTime,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_27.htm"
+    },
+    {
+      "name": "Add(String, Double, String, Int32)",
+      "signature": "public DoubleField Add(string key, double value, string prompt, int sectionId)",
+      "summary": "Add a new DoubleField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DoubleField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Double,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_30.htm"
+    },
+    {
+      "name": "Add(String, Guid, String, Int32)",
+      "signature": "public GuidField Add(string key, Guid value, string prompt, int sectionId)",
+      "summary": "Add a new GuidField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GuidField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Guid,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_35.htm"
+    },
+    {
+      "name": "Add(String, Int32, String, Int32)",
+      "signature": "public IntField Add(string key, int value, string prompt, int sectionId)",
+      "summary": "Add a new IntField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Int32,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_38.htm"
+    },
+    {
+      "name": "Add(String, Single, String, Int32)",
+      "signature": "public FloatField Add(string key, float value, string prompt, int sectionId)",
+      "summary": "AddField a new FloatField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FloatField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.Single,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_41.htm"
+    },
+    {
+      "name": "Add(String, String, String, Int32)",
+      "signature": "public StringField Add(string key, string value, string prompt, int sectionId)",
+      "summary": "Add a new StringField to the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.Add(System.String,System.String,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Add_45.htm"
+    },
+    {
+      "name": "AddFilename",
+      "signature": "public StringField AddFilename(string key, string value, string prompt, int sectionId)",
+      "summary": "Add a new StringField to the dictionary which will reference a filename. A file watcher will automatically be attached to the referenced file, and the content will be considered changed when the file is changed on disk.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddFilename(System.String,System.String,System.String,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddFilename.htm"
+    },
+    {
+      "name": "AddTextured(String, String)",
+      "signature": "public NullField AddTextured(string key, string prompt)",
+      "summary": "Add a new NullField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NullField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_41.htm"
+    },
+    {
+      "name": "AddTextured(String, Color4f, String)",
+      "signature": "[ObsoleteAttribute] public Color4fField AddTextured(string key, Color4f value, string prompt)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Display.Color4f,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Display.Color4f,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022prompt\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Display.Color4f,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Display.Color4f,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured.htm"
+    },
+    {
+      "name": "AddTextured(String, Point2d, String)",
+      "signature": "public Point2dField AddTextured(string key, Point2d value, string prompt)",
+      "summary": "Add a new Point2dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point2d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_3.htm"
+    },
+    {
+      "name": "AddTextured(String, Point3d, String)",
+      "signature": "public Point3dField AddTextured(string key, Point3d value, string prompt)",
+      "summary": "Add a new Point3dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point3d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_6.htm"
+    },
+    {
+      "name": "AddTextured(String, Point4d, String)",
+      "signature": "public Point4dField AddTextured(string key, Point4d value, string prompt)",
+      "summary": "Add a new Point4dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point4d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_9.htm"
+    },
+    {
+      "name": "AddTextured(String, Transform, String)",
+      "signature": "public TransformField AddTextured(string key, Transform value, string prompt)",
+      "summary": "Add a new TransformField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Transform,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_12.htm"
+    },
+    {
+      "name": "AddTextured(String, Vector2d, String)",
+      "signature": "public Vector2dField AddTextured(string key, Vector2d value, string prompt)",
+      "summary": "Add a new Vector2dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Vector2d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_15.htm"
+    },
+    {
+      "name": "AddTextured(String, Vector3d, String)",
+      "signature": "public Vector3dField AddTextured(string key, Vector3d value, string prompt)",
+      "summary": "Add a new Vector3dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Vector3d,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_18.htm"
+    },
+    {
+      "name": "AddTextured(String, Boolean, String)",
+      "signature": "public BoolField AddTextured(string key, bool value, string prompt)",
+      "summary": "Add a new BoolField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoolField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Boolean,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_21.htm"
+    },
+    {
+      "name": "AddTextured(String, DateTime, String)",
+      "signature": "public DateTimeField AddTextured(string key, DateTime value, string prompt)",
+      "summary": "Add a new DateTimeField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTimeField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.DateTime,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_24.htm"
+    },
+    {
+      "name": "AddTextured(String, Double, String)",
+      "signature": "public DoubleField AddTextured(string key, double value, string prompt)",
+      "summary": "Add a new DoubleField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DoubleField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Double,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_27.htm"
+    },
+    {
+      "name": "AddTextured(String, Color, String)",
+      "signature": "public Color4fField AddTextured(string key, Color value, string prompt)",
+      "summary": "Add a new Color4fField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Drawing.Color,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_30.htm"
+    },
+    {
+      "name": "AddTextured(String, Guid, String)",
+      "signature": "public GuidField AddTextured(string key, Guid value, string prompt)",
+      "summary": "Add a new GuidField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GuidField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Guid,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_32.htm"
+    },
+    {
+      "name": "AddTextured(String, Int32, String)",
+      "signature": "public IntField AddTextured(string key, int value, string prompt)",
+      "summary": "Add a new IntField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Int32,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_35.htm"
+    },
+    {
+      "name": "AddTextured(String, Single, String)",
+      "signature": "public FloatField AddTextured(string key, float value, string prompt)",
+      "summary": "Add a new FloatField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FloatField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Single,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_38.htm"
+    },
+    {
+      "name": "AddTextured(String, String, Boolean)",
+      "signature": "public NullField AddTextured(string key, string prompt, bool treatAsLinear)",
+      "summary": "Add a new NullField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NullField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_42.htm"
+    },
+    {
+      "name": "AddTextured(String, String, String)",
+      "signature": "public StringField AddTextured(string key, string value, string prompt)",
+      "summary": "Add a new StringField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.String,System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_44.htm"
+    },
+    {
+      "name": "AddTextured(String, Color4f, String, Boolean)",
+      "signature": "public Color4fField AddTextured(string key, Color4f value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new Color4fField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Display.Color4f,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_1.htm"
+    },
+    {
+      "name": "AddTextured(String, Point2d, String, Boolean)",
+      "signature": "public Point2dField AddTextured(string key, Point2d value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new Point2dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point2d,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_4.htm"
+    },
+    {
+      "name": "AddTextured(String, Point3d, String, Boolean)",
+      "signature": "public Point3dField AddTextured(string key, Point3d value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new Point3dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point3d,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_7.htm"
+    },
+    {
+      "name": "AddTextured(String, Point4d, String, Boolean)",
+      "signature": "public Point4dField AddTextured(string key, Point4d value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new Point4dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point4d,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_10.htm"
+    },
+    {
+      "name": "AddTextured(String, Transform, String, Boolean)",
+      "signature": "public TransformField AddTextured(string key, Transform value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new TransformField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Transform,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_13.htm"
+    },
+    {
+      "name": "AddTextured(String, Vector2d, String, Boolean)",
+      "signature": "public Vector2dField AddTextured(string key, Vector2d value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new Vector2dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Vector2d,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_16.htm"
+    },
+    {
+      "name": "AddTextured(String, Vector3d, String, Boolean)",
+      "signature": "public Vector3dField AddTextured(string key, Vector3d value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new Vector3dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Vector3d,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_19.htm"
+    },
+    {
+      "name": "AddTextured(String, Boolean, String, Boolean)",
+      "signature": "public BoolField AddTextured(string key, bool value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new BoolField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoolField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Boolean,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_22.htm"
+    },
+    {
+      "name": "AddTextured(String, DateTime, String, Boolean)",
+      "signature": "public DateTimeField AddTextured(string key, DateTime value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new DateTimeField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTimeField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.DateTime,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_25.htm"
+    },
+    {
+      "name": "AddTextured(String, Double, String, Boolean)",
+      "signature": "public DoubleField AddTextured(string key, double value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new DoubleField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DoubleField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Double,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_28.htm"
+    },
+    {
+      "name": "AddTextured(String, Color, String, Boolean)",
+      "signature": "public Color4fField AddTextured(string key, Color value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new Color4fField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Drawing.Color,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_31.htm"
+    },
+    {
+      "name": "AddTextured(String, Guid, String, Boolean)",
+      "signature": "public GuidField AddTextured(string key, Guid value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new GuidField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GuidField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Guid,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_33.htm"
+    },
+    {
+      "name": "AddTextured(String, Int32, String, Boolean)",
+      "signature": "public IntField AddTextured(string key, int value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new IntField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Int32,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_36.htm"
+    },
+    {
+      "name": "AddTextured(String, Single, String, Boolean)",
+      "signature": "public FloatField AddTextured(string key, float value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new FloatField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FloatField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Single,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_39.htm"
+    },
+    {
+      "name": "AddTextured(String, String, Boolean, Int32)",
+      "signature": "public NullField AddTextured(string key, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new NullField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NullField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_43.htm"
+    },
+    {
+      "name": "AddTextured(String, String, String, Boolean)",
+      "signature": "public StringField AddTextured(string key, string value, string prompt, bool treatAsLinear)",
+      "summary": "Add a new StringField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.String,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_45.htm"
+    },
+    {
+      "name": "AddTextured(String, Color4f, String, Boolean, Int32)",
+      "signature": "public Color4fField AddTextured(string key, Color4f value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new Color4fField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4fField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Display.Color4f,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_2.htm"
+    },
+    {
+      "name": "AddTextured(String, Point2d, String, Boolean, Int32)",
+      "signature": "public Point2dField AddTextured(string key, Point2d value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new Point2dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point2d,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_5.htm"
+    },
+    {
+      "name": "AddTextured(String, Point3d, String, Boolean, Int32)",
+      "signature": "public Point3dField AddTextured(string key, Point3d value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new Point3dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point3d,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_8.htm"
+    },
+    {
+      "name": "AddTextured(String, Point4d, String, Boolean, Int32)",
+      "signature": "public Point4dField AddTextured(string key, Point4d value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new Point4dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Point4d,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_11.htm"
+    },
+    {
+      "name": "AddTextured(String, Transform, String, Boolean, Int32)",
+      "signature": "public TransformField AddTextured(string key, Transform value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new TransformField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TransformField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Transform,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_14.htm"
+    },
+    {
+      "name": "AddTextured(String, Vector2d, String, Boolean, Int32)",
+      "signature": "public Vector2dField AddTextured(string key, Vector2d value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new Vector2dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Vector2d,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_17.htm"
+    },
+    {
+      "name": "AddTextured(String, Vector3d, String, Boolean, Int32)",
+      "signature": "public Vector3dField AddTextured(string key, Vector3d value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new Vector3dField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3dField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,Rhino.Geometry.Vector3d,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_20.htm"
+    },
+    {
+      "name": "AddTextured(String, Boolean, String, Boolean, Int32)",
+      "signature": "public BoolField AddTextured(string key, bool value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new BoolField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoolField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Boolean,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_23.htm"
+    },
+    {
+      "name": "AddTextured(String, DateTime, String, Boolean, Int32)",
+      "signature": "public DateTimeField AddTextured(string key, DateTime value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new DateTimeField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTimeField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.DateTime,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_26.htm"
+    },
+    {
+      "name": "AddTextured(String, Double, String, Boolean, Int32)",
+      "signature": "public DoubleField AddTextured(string key, double value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new DoubleField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DoubleField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Double,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_29.htm"
+    },
+    {
+      "name": "AddTextured(String, Guid, String, Boolean, Int32)",
+      "signature": "public GuidField AddTextured(string key, Guid value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new GuidField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GuidField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Guid,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_34.htm"
+    },
+    {
+      "name": "AddTextured(String, Int32, String, Boolean, Int32)",
+      "signature": "public IntField AddTextured(string key, int value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new IntField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Int32,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_37.htm"
+    },
+    {
+      "name": "AddTextured(String, Single, String, Boolean, Int32)",
+      "signature": "public FloatField AddTextured(string key, float value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new FloatField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FloatField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.Single,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_40.htm"
+    },
+    {
+      "name": "AddTextured(String, String, String, Boolean, Int32)",
+      "signature": "public StringField AddTextured(string key, string value, string prompt, bool treatAsLinear, int sectionId)",
+      "summary": "Add a new StringField to the dictionary. This overload will cause the field to be tagged as \u0022textured\u0022 so that the texturing UI will appear in automatic UIs.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to add. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Initial value for this field.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "Prompt to display in the user interface (Content Browsers) if this is null or an empty string the this field is a data only field and will not appear in the user interface.",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "Determines whether the texture in this slot will be treated as linear by rendering engines (ie - not gamma packed).",
+          "optional": false
+        },
+        {
+          "name": "sectionId",
+          "type": "System.Int32",
+          "doc": "The id of the section containing the field",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringField",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.AddTextured(System.String,System.String,System.String,System.Boolean,System.Int32)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "An element with the same key already exists in the dictionary"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_AddTextured_46.htm"
+    },
+    {
+      "name": "ContainsField",
+      "signature": "public bool ContainsField(string fieldName)",
+      "summary": "Call this method to determine if a this FieldsList contains a field with the specified field name.",
+      "params": [
+        {
+          "name": "fieldName",
+          "type": "System.String",
+          "doc": "Field to search for",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if a field with that matches fieldName is found or false if it is not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_ContainsField.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CField\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CField\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_GetEnumerator.htm"
+    },
+    {
+      "name": "GetField",
+      "signature": "public Field GetField(string fieldName)",
+      "summary": "Call this method to get the field with the specified name.",
+      "params": [
+        {
+          "name": "fieldName",
+          "type": "System.String",
+          "doc": "Field name to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Field",
+        "doc": "If the field exists in the Fields dictionary then the field is returned otherwise; null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_GetField.htm"
+    },
+    {
+      "name": "RemoveField",
+      "signature": "public void RemoveField(string fieldName)",
+      "summary": "",
+      "params": [
+        {
+          "name": "fieldName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022fieldName\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.FieldDictionary.RemoveField(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_RemoveField.htm"
+    },
+    {
+      "name": "Set(String, Color4f)",
+      "signature": "public void Set(string key, Color4f value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set.htm"
+    },
+    {
+      "name": "Set(String, Point2d)",
+      "signature": "public void Set(string key, Point2d value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_1.htm"
+    },
+    {
+      "name": "Set(String, Point3d)",
+      "signature": "public void Set(string key, Point3d value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_2.htm"
+    },
+    {
+      "name": "Set(String, Point4d)",
+      "signature": "public void Set(string key, Point4d value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_3.htm"
+    },
+    {
+      "name": "Set(String, Transform)",
+      "signature": "public void Set(string key, Transform value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_4.htm"
+    },
+    {
+      "name": "Set(String, Vector2d)",
+      "signature": "public void Set(string key, Vector2d value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_5.htm"
+    },
+    {
+      "name": "Set(String, Vector3d)",
+      "signature": "public void Set(string key, Vector3d value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_6.htm"
+    },
+    {
+      "name": "Set(String, Boolean)",
+      "signature": "public void Set(string key, bool value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_7.htm"
+    },
+    {
+      "name": "Set(String, Byte[])",
+      "signature": "public void Set(string key, byte[] value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte[]",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_8.htm"
+    },
+    {
+      "name": "Set(String, DateTime)",
+      "signature": "public void Set(string key, DateTime value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_9.htm"
+    },
+    {
+      "name": "Set(String, Double)",
+      "signature": "public void Set(string key, double value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_10.htm"
+    },
+    {
+      "name": "Set(String, Color)",
+      "signature": "public void Set(string key, Color value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_11.htm"
+    },
+    {
+      "name": "Set(String, Guid)",
+      "signature": "public void Set(string key, Guid value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_12.htm"
+    },
+    {
+      "name": "Set(String, Int32)",
+      "signature": "public void Set(string key, int value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_13.htm"
+    },
+    {
+      "name": "Set(String, Single)",
+      "signature": "public void Set(string key, float value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_14.htm"
+    },
+    {
+      "name": "Set(String, String)",
+      "signature": "public void Set(string key, string value)",
+      "summary": "Set the field value and send the appropriate change notification to the render SDK. Will throw a InvalidOperationException exception if the key name is not valid.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for the field value to change. See important note above.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "New value for this field.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_Set_15.htm"
+    },
+    {
+      "name": "TryGetValue(String, Color4f)",
+      "signature": "public bool TryGetValue(string key, out Color4f value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue.htm"
+    },
+    {
+      "name": "TryGetValue(String, Point2d)",
+      "signature": "public bool TryGetValue(string key, out Point2d value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_1.htm"
+    },
+    {
+      "name": "TryGetValue(String, Point3d)",
+      "signature": "public bool TryGetValue(string key, out Point3d value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_2.htm"
+    },
+    {
+      "name": "TryGetValue(String, Point4d)",
+      "signature": "public bool TryGetValue(string key, out Point4d value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_3.htm"
+    },
+    {
+      "name": "TryGetValue(String, Transform)",
+      "signature": "public bool TryGetValue(string key, out Transform value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_4.htm"
+    },
+    {
+      "name": "TryGetValue(String, Vector2d)",
+      "signature": "public bool TryGetValue(string key, out Vector2d value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_5.htm"
+    },
+    {
+      "name": "TryGetValue(String, Vector3d)",
+      "signature": "public bool TryGetValue(string key, out Vector3d value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_6.htm"
+    },
+    {
+      "name": "TryGetValue(String, Boolean)",
+      "signature": "public bool TryGetValue(string key, out bool value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_7.htm"
+    },
+    {
+      "name": "TryGetValue(String, Byte[])",
+      "signature": "public bool TryGetValue(string key, out byte[] value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte[]",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_8.htm"
+    },
+    {
+      "name": "TryGetValue(String, DateTime)",
+      "signature": "public bool TryGetValue(string key, out DateTime value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_9.htm"
+    },
+    {
+      "name": "TryGetValue(String, Double)",
+      "signature": "public bool TryGetValue(string key, out double value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_10.htm"
+    },
+    {
+      "name": "TryGetValue(String, Color)",
+      "signature": "public bool TryGetValue(string key, out Color value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_11.htm"
+    },
+    {
+      "name": "TryGetValue(String, Guid)",
+      "signature": "public bool TryGetValue(string key, out Guid value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_12.htm"
+    },
+    {
+      "name": "TryGetValue(String, Int32)",
+      "signature": "public bool TryGetValue(string key, out int value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_13.htm"
+    },
+    {
+      "name": "TryGetValue(String, Single)",
+      "signature": "public bool TryGetValue(string key, out float value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_14.htm"
+    },
+    {
+      "name": "TryGetValue(String, String)",
+      "signature": "public bool TryGetValue(string key, out string value)",
+      "summary": "Find a field with the specified key and get its value if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name of the field to get a value for.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Output parameter which will receive the field value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key is found and the value parameter is set to the field value. Returns false if the field was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue_15.htm"
+    },
+    {
+      "name": "TryGetValue\u003CT\u003E(String, T)",
+      "signature": "public bool TryGetValue\u003CT\u003E(string key, out T value)",
+      "summary": "Parametrized version of TryGetValue.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Name of field to find.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "T",
+          "doc": "out parameter to be set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if field was found. If false out parameter value will be set to default(T)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_Fields_FieldDictionary_TryGetValue__1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

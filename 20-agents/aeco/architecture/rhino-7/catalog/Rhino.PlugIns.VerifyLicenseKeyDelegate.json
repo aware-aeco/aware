@@ -1,0 +1,14 @@
+{
+  "name": "VerifyLicenseKeyDelegate",
+  "namespace": "Rhino.PlugIns",
+  "kind": "delegate",
+  "summary": "Called by Rhino to verify a license key. For details, see http://developer.rhino3d.com/guides/rhinocommon/rhinocommon-zoo-plugins/",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_VerifyLicenseKeyDelegate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate ValidateResult VerifyLicenseKeyDelegate( string licenseKey, string validationCode, DateTime validationCodeInstallDate, bool gracePeriodExpired, out LicenseData licenseData )"
+}

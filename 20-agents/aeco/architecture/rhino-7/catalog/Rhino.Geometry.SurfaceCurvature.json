@@ -1,0 +1,115 @@
+{
+  "name": "SurfaceCurvature",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Maintains computed information for surface curvature evaluation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SurfaceCurvature.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Direction",
+      "signature": "public Vector3d Direction(int direction)",
+      "summary": "Gets the principal curvature direction vector.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "Direction index, valid values are 0 and 1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The specified direction vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SurfaceCurvature_Direction.htm"
+    },
+    {
+      "name": "Kappa",
+      "signature": "public double Kappa(int direction)",
+      "summary": "Gets the principal curvature values. Kappa(0) - Principal curvature with maximum absolute value Kappa(1) - Principal curvature with minimum absolute value",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "Kappa index, valid values are 0 and 1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The specified kappa value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SurfaceCurvature_Kappa.htm"
+    },
+    {
+      "name": "OsculatingCircle",
+      "signature": "public Circle OsculatingCircle(int direction)",
+      "summary": "Computes the osculating circle along the given direction.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "Direction index, valid values are 0 and 1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "The osculating circle in the given direction or Circle.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SurfaceCurvature_OsculatingCircle.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Gaussian",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Gaussian curvature value at UV.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SurfaceCurvature_Gaussian.htm"
+    },
+    {
+      "name": "Mean",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Mean curvature value at UV.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SurfaceCurvature_Mean.htm"
+    },
+    {
+      "name": "Normal",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the surface normal at UV.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SurfaceCurvature_Normal.htm"
+    },
+    {
+      "name": "Point",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the surface point at UV.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SurfaceCurvature_Point.htm"
+    },
+    {
+      "name": "UVPoint",
+      "type": "Point2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the UV location where the curvature was computed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SurfaceCurvature_UVPoint.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

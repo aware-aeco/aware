@@ -1,0 +1,39 @@
+{
+  "name": "FileResolvingEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::FileResolving event",
+  "base": "Autodesk.Navisworks.Api.FileResolutionEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileResolvingEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileNameToOpen",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Set file name to open to read contents of resolved file. Leave as null if ResolveToOpen is false or file can\u2019t be resolved.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolvingEventArgs.FileNameToOpen"
+    },
+    {
+      "name": "Handled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Set whether event handler has handled file resolution. If set to true, default file resolution will not occur.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolvingEventArgs.Handled"
+    },
+    {
+      "name": "ResolvedFileReference",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Set file reference that FileReference has been resolved to. Leave as null if file can\u2019t be resolved.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolvingEventArgs.ResolvedFileReference"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

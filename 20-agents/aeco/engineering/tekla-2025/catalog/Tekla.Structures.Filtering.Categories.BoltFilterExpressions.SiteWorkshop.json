@@ -1,0 +1,39 @@
+{
+  "name": "BoltFilterExpressions.SiteWorkshop",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The SiteWorkshop class represents the site/workshop filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6a238d5f-5b2d-49e2-7e2a-5278588fd1a1",
+  "constructors": [
+    {
+      "name": "BoltFilterExpressions.SiteWorkshop",
+      "signature": "public SiteWorkshop()",
+      "summary": "Initializes a new instance of the SiteWorkshop class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80f87ce1-705c-870c-685a-0bf5688b7d4c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

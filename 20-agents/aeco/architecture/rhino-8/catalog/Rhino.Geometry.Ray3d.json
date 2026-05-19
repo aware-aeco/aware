@@ -1,0 +1,206 @@
+{
+  "name": "Ray3d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents an immutable ray in three dimensions, using position and direction.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Ray3d.htm",
+  "constructors": [
+    {
+      "name": "Ray3d",
+      "signature": "public Ray3d(Point3d position, Vector3d direction)",
+      "summary": "Initializes a new Ray3d instance.",
+      "params": [
+        {
+          "name": "position",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The position.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Ray3d other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Ray3d.EpsilonEquals(Rhino.Geometry.Ray3d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Ray3d.EpsilonEquals(Rhino.Geometry.Ray3d,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Ray3d.EpsilonEquals(Rhino.Geometry.Ray3d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified System.Object is a Ray3d and has the same values as the present ray.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The specified object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a Ray3d and has the same position and direction as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Ray3d)",
+      "signature": "public bool Equals(Ray3d ray)",
+      "summary": "Determines whether the specified Ray3d has the same value as the present ray.",
+      "params": [
+        {
+          "name": "ray",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "The specified ray.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if ray has the same position and direction as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes a hashing number that represents the current ray.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A signed integer that represents both position and direction, but is not unique."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d_GetHashCode.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double t)",
+      "summary": "Evaluates a point along the ray.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "The t parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A point at (Direction*t \u002B Position)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d_PointAt.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Ray3d a, Ray3d b)",
+      "summary": "Determines whether two Ray3d have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "The first Ray3d.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "The second Ray3d.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if position and direction of the two rays are equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Ray3d a, Ray3d b)",
+      "summary": "Determines whether two Ray3d have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "The first Ray3d.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "The second Ray3d.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if position or direction (or both) in the two rays are different; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Ray3d_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Direction",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the direction vector of this ray.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Ray3d_Direction.htm"
+    },
+    {
+      "name": "Position",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the starting position of this ray.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Ray3d_Position.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

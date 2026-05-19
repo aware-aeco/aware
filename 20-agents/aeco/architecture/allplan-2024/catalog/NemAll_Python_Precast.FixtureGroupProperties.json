@@ -1,0 +1,70 @@
+{
+  "name": "FixtureGroupProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "FixtureGroupProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/",
+  "constructors": [
+    {
+      "name": "FixtureGroupProperties",
+      "signature": "FixtureGroupProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "FixtureGroupProperties",
+          "doc": "FixtureGroupProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for name :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupProperties/#NemAll_Python_Precast.FixtureGroupProperties.Name"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

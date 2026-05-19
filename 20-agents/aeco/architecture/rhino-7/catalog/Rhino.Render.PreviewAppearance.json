@@ -1,0 +1,290 @@
+{
+  "name": "PreviewAppearance",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "PreviewAppearance class",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PreviewAppearance.htm",
+  "constructors": [
+    {
+      "name": "PreviewAppearance",
+      "signature": "public PreviewAppearance(IntPtr pRenderContent)",
+      "summary": "Constructor for previewappearance",
+      "params": [
+        {
+          "name": "pRenderContent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRenderContent\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Background",
+      "signature": "public PreviewBackground Background()",
+      "summary": "Background",
+      "params": [],
+      "returns": {
+        "type": "PreviewBackground",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.Background\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_Background.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose for previewappearance",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor for previewappearance",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_Finalize.htm"
+    },
+    {
+      "name": "FromMetaData",
+      "signature": "public void FromMetaData(MetaData md)",
+      "summary": "Copy data from MetaData to PreviewAppearance",
+      "params": [
+        {
+          "name": "md",
+          "type": "Rhino.Render.DataSources.MetaData",
+          "doc": "[Missing \u003Cparam name=\u0022md\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.FromMetaData(Rhino.Render.DataSources.MetaData)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_FromMetaData.htm"
+    },
+    {
+      "name": "Geometry",
+      "signature": "public PreviewGeometry Geometry()",
+      "summary": "Geometry",
+      "params": [],
+      "returns": {
+        "type": "PreviewGeometry",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.Geometry\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_Geometry.htm"
+    },
+    {
+      "name": "Lighting",
+      "signature": "public PreviewLighting Lighting()",
+      "summary": "Lighting",
+      "params": [],
+      "returns": {
+        "type": "PreviewLighting",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.Lighting\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_Lighting.htm"
+    },
+    {
+      "name": "RotationType",
+      "signature": "public IRhRdkPreviewSceneServer_eRotationType RotationType()",
+      "summary": "RotationType",
+      "params": [],
+      "returns": {
+        "type": "IRhRdkPreviewSceneServer_eRotationType",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.RotationType\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_RotationType.htm"
+    },
+    {
+      "name": "RotationX",
+      "signature": "public double RotationX()",
+      "summary": "RotationX",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.RotationX\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_RotationX.htm"
+    },
+    {
+      "name": "RotationY",
+      "signature": "public double RotationY()",
+      "summary": "RotationY",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.RotationY\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_RotationY.htm"
+    },
+    {
+      "name": "SetRotationType",
+      "signature": "public void SetRotationType(IRhRdkPreviewSceneServer_eRotationType type)",
+      "summary": "SetRotationType",
+      "params": [
+        {
+          "name": "type",
+          "type": "Rhino.Render.IRhRdkPreviewSceneServer_eRotationType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.SetRotationType(Rhino.Render.IRhRdkPreviewSceneServer_eRotationType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_SetRotationType.htm"
+    },
+    {
+      "name": "SetRotationX",
+      "signature": "public void SetRotationX(double d)",
+      "summary": "SetRotationX",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.SetRotationX(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_SetRotationX.htm"
+    },
+    {
+      "name": "SetRotationY",
+      "signature": "public void SetRotationY(double d)",
+      "summary": "SetRotationY",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.SetRotationY(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_SetRotationY.htm"
+    },
+    {
+      "name": "SetSize",
+      "signature": "[ObsoleteAttribute(\u0022Use Scale instead\u0022)] public void SetSize(double d)",
+      "summary": "SetSize",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.SetSize(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_SetSize.htm"
+    },
+    {
+      "name": "Size",
+      "signature": "[ObsoleteAttribute(\u0022Use Scale instead\u0022)] public double Size()",
+      "summary": "Size - used in the UI. Always meters.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.Size\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_Size.htm"
+    },
+    {
+      "name": "ToMetaData()",
+      "signature": "public void ToMetaData()",
+      "summary": "Copy PreviewAppearance to MetaData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_ToMetaData.htm"
+    },
+    {
+      "name": "ToMetaData(MetaDataProxy)",
+      "signature": "public void ToMetaData(MetaDataProxy mdp)",
+      "summary": "Copy PreviewAppearance to MetaData",
+      "params": [
+        {
+          "name": "mdp",
+          "type": "Rhino.Render.MetaDataProxy",
+          "doc": "[Missing \u003Cparam name=\u0022mdp\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewAppearance.ToMetaData(Rhino.Render.MetaDataProxy)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewAppearance_ToMetaData_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Previewappearances c\u002B\u002B pointer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PreviewAppearance_CppPointer.htm"
+    },
+    {
+      "name": "MetaData",
+      "type": "MetaData",
+      "getter": true,
+      "setter": false,
+      "summary": "Previewappearance MetaData",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PreviewAppearance_MetaData.htm"
+    },
+    {
+      "name": "Scale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Size - used in the UI. Always meters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PreviewAppearance_Scale.htm"
+    },
+    {
+      "name": "SceneScale",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Scene size - the actual size that is rendered",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PreviewAppearance_SceneScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

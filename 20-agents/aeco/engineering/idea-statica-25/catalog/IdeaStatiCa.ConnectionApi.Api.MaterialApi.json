@@ -1,0 +1,358 @@
+{
+  "name": "MaterialApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Material endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetAllMaterialsAsync(Guid projectId)",
+      "summary": "Gets materials used in the specified project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetSteelMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetSteelMaterialsAsync(Guid projectId)",
+      "summary": "Gets materials used in the specified project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddMaterialSteelAsync",
+      "signature": "Task AddMaterialSteelAsync(Guid projectId, ConMprlElement conMprlElement)",
+      "summary": "Adds a material to the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "conMprlElement",
+          "type": "ConMprlElement",
+          "doc": "Definition of the new material to be added to the project.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetConcreteMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetConcreteMaterialsAsync(Guid projectId)",
+      "summary": "Gets materials used in the specified project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddMaterialConcreteAsync",
+      "signature": "Task AddMaterialConcreteAsync(Guid projectId, ConMprlElement conMprlElement)",
+      "summary": "Adds a material to the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "conMprlElement",
+          "type": "ConMprlElement",
+          "doc": "Definition of the new material to be added to the project.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetBoltGradeMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetBoltGradeMaterialsAsync(Guid projectId)",
+      "summary": "Gets materials used in the specified project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddMaterialBoltGradeAsync",
+      "signature": "Task AddMaterialBoltGradeAsync(Guid projectId, ConMprlElement conMprlElement)",
+      "summary": "Adds a material to the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "conMprlElement",
+          "type": "ConMprlElement",
+          "doc": "Definition of the new material to be added to the project.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetWeldingMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetWeldingMaterialsAsync(Guid projectId)",
+      "summary": "Gets materials used in the specified project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddMaterialWeldAsync",
+      "signature": "Task AddMaterialWeldAsync(Guid projectId, ConMprlElement conMprlElement)",
+      "summary": "Adds a material to the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "conMprlElement",
+          "type": "ConMprlElement",
+          "doc": "Definition of the new material to be added to the project.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetCrossSectionsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetCrossSectionsAsync(Guid projectId)",
+      "summary": "Gets cross sections used in the specified project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddCrossSectionAsync",
+      "signature": "Task AddCrossSectionAsync(Guid projectId, ConMprlCrossSection conMprlCrossSection)",
+      "summary": "Add cross section to the project",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        },
+        {
+          "name": "conMprlCrossSection",
+          "type": "ConMprlCrossSection",
+          "doc": "Definition of a new cross-section to be added to the project",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetBoltAssembliesAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetBoltAssembliesAsync(Guid projectId)",
+      "summary": "Gets bolt assemblies used in the specified project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddBoltAssemblyAsync",
+      "signature": "Task AddBoltAssemblyAsync(Guid projectId, ConMprlElement conMprlElement)",
+      "summary": "Add bolt assembly to the project",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        },
+        {
+          "name": "conMprlElement",
+          "type": "ConMprlElement",
+          "doc": "Definition of a new bolt assemby to be added to the project",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/MaterialApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

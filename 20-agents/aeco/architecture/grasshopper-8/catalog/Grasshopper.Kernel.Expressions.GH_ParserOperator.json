@@ -1,0 +1,132 @@
+{
+  "name": "GH_ParserOperator",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_ParserOperator.)",
+  "interfaces": [
+    "IComparable\u003CGH_ParserOperator\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_ParserOperator.htm",
+  "constructors": [
+    {
+      "name": "GH_ParserOperator",
+      "signature": "public GH_ParserOperator(string name, char symbol, GH_ParserPrecedence precedence, GH_OperatorType type, string description)",
+      "summary": "Initializes a new instance of the GH_ParserOperator class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "System.Char",
+          "optional": false
+        },
+        {
+          "name": "precedence",
+          "type": "Grasshopper.Kernel.Expressions.GH_ParserPrecedence",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Grasshopper.Kernel.Expressions.GH_OperatorType",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserOperator__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(GH_ParserOperator other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Expressions.GH_ParserOperator",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserOperator_CompareTo.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ParserOperator_Equals.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "m_description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserOperator_m_description.htm"
+    },
+    {
+      "name": "m_name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserOperator_m_name.htm"
+    },
+    {
+      "name": "m_precedence",
+      "type": "GH_ParserPrecedence",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserOperator_m_precedence.htm"
+    },
+    {
+      "name": "m_symbol",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserOperator_m_symbol.htm"
+    },
+    {
+      "name": "m_type",
+      "type": "GH_OperatorType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_ParserOperator_m_type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,96 @@
+{
+  "name": "DivideBarsParameters",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Parameters for dividing engineering geometry",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/",
+  "constructors": [
+    {
+      "name": "DivideBarsParameters",
+      "signature": "DivideBarsParameters() | DivideBarsParameters( DivideMode: eDivideMode, OverlapPosition: eLengthPosition, OverlapLength: float, GapPosition: eLengthPosition, GapLength: float, ) | DivideBarsParameters(element: DivideBarsParameters)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetTrimLens",
+      "signature": "GetTrimLens() -\u003E tuple[float, float]",
+      "summary": "Get necessary length to lengthen/shorten bar parts",
+      "remarks": "Get necessary length to lengthen/shorten bar parts",
+      "params": [],
+      "returns": {
+        "type": "tuple[float, float]",
+        "doc": "tuple(lengthen/shorten left bar part, lengthen/shorten right bar part)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.GetTrimLens"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DivideMode",
+      "type": "eDivideMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the mode of division",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.DivideMode"
+    },
+    {
+      "name": "GapLength",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the gap length",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.GapLength"
+    },
+    {
+      "name": "GapPosition",
+      "type": "eLengthPosition",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position of gap",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.GapPosition"
+    },
+    {
+      "name": "OverlapLength",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the overlap length",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.OverlapLength"
+    },
+    {
+      "name": "OverlapPosition",
+      "type": "eLengthPosition",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position of overlap",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.OverlapPosition"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

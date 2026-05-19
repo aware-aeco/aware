@@ -1,0 +1,29 @@
+{
+  "name": "GH_Target",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "enum",
+  "summary": "Enumerates the possible link targets in Grasshopper documentation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Documentation_GH_Target.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Glossary",
+      "value": 0,
+      "summary": "Specifies a link into the Glossary."
+    },
+    {
+      "name": "Topic",
+      "value": 1,
+      "summary": "Specifies a link to another topic."
+    },
+    {
+      "name": "External",
+      "value": 2,
+      "summary": "Specifies a link to some external web-page."
+    }
+  ]
+}

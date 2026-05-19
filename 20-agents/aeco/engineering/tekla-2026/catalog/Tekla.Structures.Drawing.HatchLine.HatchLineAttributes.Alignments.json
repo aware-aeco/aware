@@ -1,0 +1,29 @@
+{
+  "name": "HatchLine.HatchLineAttributes.Alignments",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Alignment options for the hatch line.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4697a65a-962c-2019-6f34-f3927b45c3d5",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Center",
+      "value": 0,
+      "summary": "Specifies that the hatch line is center aligned."
+    },
+    {
+      "name": "LeftEdge",
+      "value": 1,
+      "summary": "Specifies that the hatch line is left edge aligned."
+    },
+    {
+      "name": "RightEdge",
+      "value": 2,
+      "summary": "Specifies that the hatch line is right edge aligned."
+    }
+  ]
+}

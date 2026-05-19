@@ -1,0 +1,76 @@
+{
+  "name": "RenderPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin that can perform custom rendering.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.RenderPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MakeRenderBoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D MakeRenderBoundingBox(Autodesk.Navisworks.Api.View viewer)",
+      "summary": "Should return bounding box of any additional model space geometry that will be rendered so that near/far clipping planes can be adjusted accordingly.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": "Bounding box"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.RenderPlugin.MakeRenderBoundingBox%28Autodesk.Navisworks.Api.View%29"
+    },
+    {
+      "name": "OverlayRender",
+      "signature": "void OverlayRender(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.Graphics graphics)",
+      "summary": "Override to allow custom drawing overlayed on main render.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "Autodesk.Navisworks.Api.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.RenderPlugin.OverlayRender%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.Graphics%29"
+    },
+    {
+      "name": "Render",
+      "signature": "void Render(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.Graphics graphics)",
+      "summary": "Override to allow custom drawing in main render.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "Autodesk.Navisworks.Api.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.RenderPlugin.Render%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.Graphics%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

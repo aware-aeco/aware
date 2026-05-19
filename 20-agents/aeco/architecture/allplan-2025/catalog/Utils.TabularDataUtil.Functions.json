@@ -1,0 +1,203 @@
+{
+  "name": "Functions",
+  "namespace": "Utils.TabularDataUtil",
+  "kind": "static-class",
+  "summary": "Module-level functions of Utils.TabularDataUtil",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "read_csv",
+      "signature": "read_csv(csv_path: str) -\u003E DataFrame",
+      "summary": "read the data from the csv file",
+      "remarks": "read the data from the csv file",
+      "params": [
+        {
+          "name": "csv_path",
+          "type": "str",
+          "doc": "path of the csv file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DataFrame",
+        "doc": "data frame"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/#Utils.TabularDataUtil.read_csv"
+    },
+    {
+      "name": "read_xml",
+      "signature": "read_xml(xml_path: str, *args: list[Any]) -\u003E Optional[DataFrame]",
+      "summary": "Read partial data from xml file and return a DataFrame. Xml file should be those which can be converted into tabular data.",
+      "remarks": "Read partial data from xml file and return a DataFrame. Xml file should be those which can be converted into tabular data.",
+      "params": [
+        {
+          "name": "xml_path",
+          "type": "str",
+          "doc": "xml file path",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "list[Any]",
+          "doc": "string, the ElementTree tags, which serve later as column labels of data frame",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[DataFrame]",
+        "doc": "data frame"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/#Utils.TabularDataUtil.read_xml"
+    },
+    {
+      "name": "read_xlsx",
+      "signature": "read_xlsx(xlsx_path: str, sheet: Union[int, str] = 0) -\u003E DataFrame",
+      "summary": "read an Excel file",
+      "remarks": "read an Excel file",
+      "params": [
+        {
+          "name": "xlsx_path",
+          "type": "str",
+          "doc": "excel path",
+          "optional": false
+        },
+        {
+          "name": "sheet",
+          "type": "Union[int, str]",
+          "doc": "sheet index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DataFrame",
+        "doc": "data frame"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/#Utils.TabularDataUtil.read_xlsx"
+    },
+    {
+      "name": "read_matrix",
+      "signature": "read_matrix(lists: List[List[Any]]) -\u003E DataFrame",
+      "summary": "read a matrix",
+      "remarks": "read a matrix",
+      "params": [
+        {
+          "name": "lists",
+          "type": "List[List[Any]]",
+          "doc": "lists",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DataFrame",
+        "doc": "matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/#Utils.TabularDataUtil.read_matrix"
+    },
+    {
+      "name": "has_duplicates",
+      "signature": "has_duplicates( data_frame: DataFrame, duplicates: List[Union[int, str]] ) -\u003E bool",
+      "summary": "check if data frame has duplicated column headers and return them if it has",
+      "remarks": "check if data frame has duplicated column headers and return them if it has",
+      "params": [
+        {
+          "name": "data_frame",
+          "type": "DataFrame",
+          "doc": "data frame",
+          "optional": false
+        },
+        {
+          "name": "duplicates",
+          "type": "List[Union[int, str]]",
+          "doc": "duplicates",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "duplicated state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/#Utils.TabularDataUtil.has_duplicates"
+    },
+    {
+      "name": "concat",
+      "signature": "concat( data_frames: List[DataFrame], _ignore_index: bool = False, _keys: Any = None ) -\u003E Optional[DataFrame]",
+      "summary": "concatenate",
+      "remarks": "concatenate",
+      "params": [
+        {
+          "name": "data_frames",
+          "type": "List[DataFrame]",
+          "doc": "data frames",
+          "optional": false
+        },
+        {
+          "name": "_ignore_index",
+          "type": "bool",
+          "doc": "ignored index state",
+          "optional": false
+        },
+        {
+          "name": "_keys",
+          "type": "Any",
+          "doc": "keys",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[DataFrame]",
+        "doc": "concatenated data frame"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/#Utils.TabularDataUtil.concat"
+    },
+    {
+      "name": "eval_noex",
+      "signature": "eval_noex(value: Any, default: Any = None, value_type: Any = None) -\u003E Any",
+      "summary": "Evaluate value from Table without throwing exceptions, only used to evaluate value that is string or None",
+      "remarks": "Evaluate value from Table without throwing exceptions, only used to evaluate value that is string or None",
+      "params": [
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "new value",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Any",
+          "doc": "has a higher priority than value_type, when both default and value_type are given",
+          "optional": false
+        },
+        {
+          "name": "value_type",
+          "type": "Any",
+          "doc": "string that indicates the value type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Any",
+        "doc": "eval result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/#Utils.TabularDataUtil.eval_noex"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

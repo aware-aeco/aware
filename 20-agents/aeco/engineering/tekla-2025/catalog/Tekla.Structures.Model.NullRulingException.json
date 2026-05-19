@@ -1,0 +1,25 @@
+{
+  "name": "NullRulingException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This class represent an exception thrown when a ruling of the lofted plate (i.e. the lines that swipe the plate surface between the base curves) would become zero because of a lofted plate operation",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6a6c5f35-ba15-bf0c-ebff-7e205ead76fd",
+  "constructors": [
+    {
+      "name": "NullRulingException",
+      "signature": "public NullRulingException()",
+      "summary": "Constructs an instance of the class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dbb068bd-e438-69aa-c8d5-34d1d7caeccc"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

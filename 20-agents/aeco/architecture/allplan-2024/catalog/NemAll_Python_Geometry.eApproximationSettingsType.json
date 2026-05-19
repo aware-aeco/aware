@@ -1,0 +1,53 @@
+{
+  "name": "eApproximationSettingsType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Type of Approximation setting",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eApproximationSettingsType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eApproximationSettingsType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eApproximationSettingsType/#NemAll_Python_Geometry.eApproximationSettingsType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ASET_BREP_TESSELATION",
+      "value": 3
+    },
+    {
+      "name": "ASET_MAX_DISTANCE",
+      "value": 2
+    },
+    {
+      "name": "ASET_MAX_LENGTH",
+      "value": 1
+    },
+    {
+      "name": "ASET_SEGMENTATION",
+      "value": 0
+    }
+  ]
+}

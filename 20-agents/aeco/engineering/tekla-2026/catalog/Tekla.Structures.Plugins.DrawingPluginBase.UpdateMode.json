@@ -1,0 +1,29 @@
+{
+  "name": "DrawingPluginBase.UpdateMode",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the update mode of the drawing plug-in. The update mode tells the system when the plug-in is executed.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2ca38da1-1e87-f979-1b85-b488ab7fc312",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CREATE_ONLY",
+      "value": 0,
+      "summary": "The plug-in is never updated. Plug-ins are executed from the plug-in dialog instead of the component catalog. The created objects do not have any relation to the plug-in anymore. The plug-in dialog cannot be opened from the created objects."
+    },
+    {
+      "name": "INPUT_CHANGED",
+      "value": 1,
+      "summary": "The plug-in is updated when the input is a point and the point is moved or when the input is an object and the object changes. The plug-in is executed when the input is an object and its properties are changed in the drawing editor. This mode is the default which is used if the update mode is not defined in the plug-in source."
+    },
+    {
+      "name": "DRAWING_OPENED",
+      "value": 2,
+      "summary": "The plug-in is updated also when a drawing is opened. The plug-in is executed when the input is changed or during drawing opening."
+    }
+  ]
+}

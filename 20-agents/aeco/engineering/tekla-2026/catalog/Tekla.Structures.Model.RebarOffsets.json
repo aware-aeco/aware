@@ -1,0 +1,50 @@
+{
+  "name": "RebarOffsets",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This class can be used to specify the offset and the shortenings to be applied at the start and end of the bars to satisfy concrete cover and layering needs. This is only applicable to frozen rebar sets and where the same values are to be applied to all of the bars, and all legs in each bar.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/535dc6ed-a94a-8b5e-149b-f531bc4ea683",
+  "constructors": [
+    {
+      "name": "RebarOffsets",
+      "signature": "public RebarOffsets()",
+      "summary": "Initializes a new instance of the RebarOffsets class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5c8de5ba-62c5-b992-7741-28a16f128ff2"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AtDepth",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the depth to offset each bar leg, not including bar radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8d6914e2-bc79-5da5-9ee5-333cc26da7f4"
+    },
+    {
+      "name": "End",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the distance from the end of the bar to the surface of the concrete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8aaa11ac-842c-c50e-79ac-e3ddc3452c19"
+    },
+    {
+      "name": "Start",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the distance from the start of the bar to the surface of the concrete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0cefba0a-a334-302c-7b89-a1679db91f59"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

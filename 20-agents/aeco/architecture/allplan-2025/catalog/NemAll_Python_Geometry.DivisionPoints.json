@@ -1,0 +1,199 @@
+{
+  "name": "DivisionPoints",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class for DivisionPoints",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/",
+  "constructors": [
+    {
+      "name": "DivisionPoints",
+      "signature": "DivisionPoints(path: Path2D, sectionLength: float, eps: float) | DivisionPoints(geoObject: object, number: int, eps: float) | DivisionPoints(path: Path2D, number: int, eps: float) | DivisionPoints(geoObject: object, sectionLength: float, eps: float)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path2D",
+          "doc": "Path to divide",
+          "optional": false
+        },
+        {
+          "name": "sectionLength",
+          "type": "float",
+          "doc": "length of one division section",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "tolerance",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Count",
+      "signature": "Count() -\u003E int",
+      "summary": "Get number of division points",
+      "remarks": "Get number of division points",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "number of division points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.Count"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint() -\u003E Point3D",
+      "summary": "Get the end point",
+      "remarks": "Get the end point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "End Point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetEndPoint"
+    },
+    {
+      "name": "GetEndPointAngle",
+      "signature": "GetEndPointAngle() -\u003E Angle",
+      "summary": "Get the angle at the end point",
+      "remarks": "Get the angle at the end point",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Angle at the end point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetEndPointAngle"
+    },
+    {
+      "name": "GetPoint",
+      "signature": "GetPoint(index: int) -\u003E Point3D",
+      "summary": "Get division point",
+      "remarks": "Get division point",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "index of the division point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "division point as Point3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetPoint"
+    },
+    {
+      "name": "GetPointAngle",
+      "signature": "GetPointAngle(index: int) -\u003E Angle",
+      "summary": "Get the angle of a division point",
+      "remarks": "Get the angle of a division point",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "index of the division point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "angle as Angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetPointAngle"
+    },
+    {
+      "name": "GetPointAngles",
+      "signature": "GetPointAngles() -\u003E AngleList",
+      "summary": "Get the angles of the division points",
+      "remarks": "Get the angles of the division points",
+      "params": [],
+      "returns": {
+        "type": "AngleList",
+        "doc": "copy of the angles of the division points as vector of Angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetPointAngles"
+    },
+    {
+      "name": "GetPoints",
+      "signature": "GetPoints() -\u003E Point3DList",
+      "summary": "Get the calculated division points",
+      "remarks": "Get the calculated division points",
+      "params": [],
+      "returns": {
+        "type": "Point3DList",
+        "doc": "copy of the division points as vector of Point3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetPoints"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point3D",
+      "summary": "Get the start point",
+      "remarks": "Get the start point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Start Point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetStartPoint"
+    },
+    {
+      "name": "GetStartPointAngle",
+      "signature": "GetStartPointAngle() -\u003E Angle",
+      "summary": "Get the angle at the start point",
+      "remarks": "Get the angle at the start point",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Angle at the start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.GetStartPointAngle"
+    },
+    {
+      "name": "IsSuccessful",
+      "signature": "IsSuccessful() -\u003E bool",
+      "summary": "Get the result of the computation",
+      "remarks": "Get the result of the computation",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Computation successful: true / false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.IsSuccessful"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

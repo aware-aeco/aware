@@ -1,0 +1,106 @@
+{
+  "name": "LcUNameStandardNameEnum",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUNameStandardNameEnum enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUNameStandardNameEnum",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSTANDARD_USER_NAME",
+      "value": 0
+    },
+    {
+      "name": "eSTANDARD_CLASS_USER_NAME",
+      "value": 1
+    },
+    {
+      "name": "eSTANDARD_CLASS_NAME",
+      "value": 2
+    },
+    {
+      "name": "eSTANDARD_CLASS_NODE",
+      "value": 3
+    },
+    {
+      "name": "eSTANDARD_CLASS_MATERIAL",
+      "value": 4
+    },
+    {
+      "name": "eSTANDARD_CLASS_TRANSFORM",
+      "value": 5
+    },
+    {
+      "name": "eSTANDARD_CLASS_URL",
+      "value": 6
+    },
+    {
+      "name": "eSTANDARD_CLASS_XREF",
+      "value": 7
+    },
+    {
+      "name": "eSTANDARD_TEXT_TEXT",
+      "value": 8
+    },
+    {
+      "name": "eSTANDARD_PARTITION_FILENAME",
+      "value": 9
+    },
+    {
+      "name": "eSTANDARD_CLASS_UNIT",
+      "value": 10
+    },
+    {
+      "name": "eSTANDARD_URL_CATEGORY_HYPERLINK",
+      "value": 11
+    },
+    {
+      "name": "eSTANDARD_URL_CATEGORY_TAG",
+      "value": 12
+    },
+    {
+      "name": "eSTANDARD_URL_CATEGORY_USER_DEFINED",
+      "value": 13
+    },
+    {
+      "name": "eSTANDARD_NODE_HIDDEN",
+      "value": 14
+    },
+    {
+      "name": "eSTANDARD_NODE_REQUIRED",
+      "value": 15
+    },
+    {
+      "name": "eSTANDARD_PARTITION_SOURCE_FILENAME",
+      "value": 16
+    },
+    {
+      "name": "eSTANDARD_NODE_LAYER",
+      "value": 17
+    },
+    {
+      "name": "eSTANDARD_NODE_MATERIAL",
+      "value": 18
+    },
+    {
+      "name": "eSTANDARD_NODE_SOURCE_FILE",
+      "value": 19
+    },
+    {
+      "name": "eSTANDARD_NODE_ICON",
+      "value": 20
+    },
+    {
+      "name": "eSTANDARD_XREF_PATH",
+      "value": 21
+    },
+    {
+      "name": "eSTANDARD_NODE_GUID",
+      "value": 22
+    }
+  ]
+}

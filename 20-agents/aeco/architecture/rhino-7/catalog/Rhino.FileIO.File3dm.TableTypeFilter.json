@@ -1,0 +1,86 @@
+{
+  "name": "File3dm.TableTypeFilter",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.File3dm.TableTypeFilter\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_File3dm_TableTypeFilter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Properties",
+      "value": 1
+    },
+    {
+      "name": "Settings",
+      "value": 2
+    },
+    {
+      "name": "Bitmap",
+      "value": 4
+    },
+    {
+      "name": "TextureMapping",
+      "value": 8
+    },
+    {
+      "name": "Material",
+      "value": 16
+    },
+    {
+      "name": "Linetype",
+      "value": 32
+    },
+    {
+      "name": "Layer",
+      "value": 64
+    },
+    {
+      "name": "Group",
+      "value": 128
+    },
+    {
+      "name": "Font",
+      "value": 256
+    },
+    {
+      "name": "FutureFont",
+      "value": 512
+    },
+    {
+      "name": "Dimstyle",
+      "value": 1024
+    },
+    {
+      "name": "Light",
+      "value": 2048
+    },
+    {
+      "name": "Hatchpattern",
+      "value": 4096
+    },
+    {
+      "name": "InstanceDefinition",
+      "value": 8192
+    },
+    {
+      "name": "ObjectTable",
+      "value": 16384
+    },
+    {
+      "name": "Historyrecord",
+      "value": 32768
+    },
+    {
+      "name": "UserTable",
+      "value": 65536
+    }
+  ]
+}

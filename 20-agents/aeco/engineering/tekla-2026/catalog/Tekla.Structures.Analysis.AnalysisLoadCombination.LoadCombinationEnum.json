@@ -1,0 +1,194 @@
+{
+  "name": "AnalysisLoadCombination.LoadCombinationEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The load combination types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4e32fda4-81f6-2f3c-b147-125b3902f8d2",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_DEFINED",
+      "value": 0,
+      "summary": "The load combination type has not been defined."
+    },
+    {
+      "name": "LG",
+      "value": 1,
+      "summary": "The LG load combination type."
+    },
+    {
+      "name": "ULS",
+      "value": 2,
+      "summary": "The ULS load combination type."
+    },
+    {
+      "name": "SLSRC",
+      "value": 3,
+      "summary": "The SLSRC load combination type."
+    },
+    {
+      "name": "SLSQP",
+      "value": 4,
+      "summary": "The SLSQP load combination type."
+    },
+    {
+      "name": "ULSAC",
+      "value": 5,
+      "summary": "The ULSAC load combination type."
+    },
+    {
+      "name": "USLEQ",
+      "value": 6,
+      "summary": "The USLEQ load combination type."
+    },
+    {
+      "name": "SLS",
+      "value": 7,
+      "summary": "The SLS load combination type."
+    },
+    {
+      "name": "SLSFC",
+      "value": 8,
+      "summary": "The SLSFC load combination type."
+    },
+    {
+      "name": "ULSNL",
+      "value": 9,
+      "summary": "The ULSNL load combination type."
+    },
+    {
+      "name": "ULSEL",
+      "value": 10,
+      "summary": "The ULSEL load combination type."
+    },
+    {
+      "name": "SLSD",
+      "value": 11,
+      "summary": "The SLSD load combination type."
+    },
+    {
+      "name": "ACC",
+      "value": 12,
+      "summary": "The ACC load combination type."
+    },
+    {
+      "name": "SLSNL",
+      "value": 13,
+      "summary": "The SLSNL load combination type."
+    },
+    {
+      "name": "ULSUL",
+      "value": 14,
+      "summary": "The ULSUL load combiantion type."
+    },
+    {
+      "name": "ACCUL",
+      "value": 15,
+      "summary": "The ACCUL load combination type."
+    },
+    {
+      "name": "LFPSS",
+      "value": 16,
+      "summary": "The LFPSS load combination type."
+    },
+    {
+      "name": "LFPSSWS",
+      "value": 17,
+      "summary": "The LFPSSWS load combination type."
+    },
+    {
+      "name": "LFSS",
+      "value": 18,
+      "summary": "The LFSS load combination type."
+    },
+    {
+      "name": "LFSSWS",
+      "value": 19,
+      "summary": "The LFSSWS load combination type."
+    },
+    {
+      "name": "LFPCS",
+      "value": 20,
+      "summary": "The LFPCS load combination type."
+    },
+    {
+      "name": "LFPCSWS",
+      "value": 21,
+      "summary": "The LFPCSWS load combination type."
+    },
+    {
+      "name": "LFCS",
+      "value": 22,
+      "summary": "The LFCS load combination type."
+    },
+    {
+      "name": "LFCSWS",
+      "value": 23,
+      "summary": "The LFCSWS load combination type."
+    },
+    {
+      "name": "LFPS",
+      "value": 24,
+      "summary": "The LFPS load combination type."
+    },
+    {
+      "name": "LFPSWS",
+      "value": 25,
+      "summary": "The LFPSWS load combination type."
+    },
+    {
+      "name": "LFNPS",
+      "value": 26,
+      "summary": "The LFNPS load combination type."
+    },
+    {
+      "name": "LFNPSWS",
+      "value": 27,
+      "summary": "The LFNPSWS load combination type."
+    },
+    {
+      "name": "ACITABLE1",
+      "value": 28,
+      "summary": "The ACITABLE1 load combination type."
+    },
+    {
+      "name": "ACITABLE2",
+      "value": 29,
+      "summary": "The ACITABLE2 load combination type."
+    },
+    {
+      "name": "ACITABLE3",
+      "value": 30,
+      "summary": "The ACITABLE3 load combination type."
+    },
+    {
+      "name": "ACITABLE4",
+      "value": 31,
+      "summary": "The ACITABLE4 load combination type."
+    },
+    {
+      "name": "ACITABLE5",
+      "value": 32,
+      "summary": "The ACITABLE5 load combination type."
+    },
+    {
+      "name": "ACITABLE6",
+      "value": 33,
+      "summary": "The ACITABLE6 load combination type."
+    },
+    {
+      "name": "ACITABLE7",
+      "value": 34,
+      "summary": "The ACITABLE7 load combination type."
+    },
+    {
+      "name": "ACITABLE8",
+      "value": 35,
+      "summary": "The ACITABLE8 load combination type."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "name": "LinterManager",
+  "namespace": "Dynamo.Linting",
+  "kind": "class",
+  "summary": "This class handles registration of Linter extensions and linter rule evaluation management.",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/LinterManager.cs",
+  "constructors": [
+    {
+      "name": "LinterManager(Dynamo.Extensions.IExtensionManager)",
+      "signature": "void LinterManager(Dynamo.Extensions.IExtensionManager extensionManager)",
+      "summary": "LinterManager.LinterManager",
+      "params": [
+        {
+          "name": "extensionManager",
+          "type": "Dynamo.Extensions.IExtensionManager",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/LinterManager.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "LinterManager.Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/LinterManager.cs"
+    },
+    {
+      "name": "SetActiveLinter(Dynamo.Linting.LinterExtensionDescriptor, bool)",
+      "signature": "void SetActiveLinter(Dynamo.Linting.LinterExtensionDescriptor value, bool fullActivation)",
+      "summary": "The LinterDescriptor setter that can be fully or partially activated",
+      "params": [
+        {
+          "name": "value",
+          "type": "Dynamo.Linting.LinterExtensionDescriptor",
+          "optional": false
+        },
+        {
+          "name": "fullActivation",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/LinterManager.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveLinter",
+      "type": "Dynamo.Linting.LinterExtensionDescriptor",
+      "getter": true,
+      "setter": false,
+      "summary": "The LinterDescriptor that is currently set as active",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/LinterManager.cs"
+    },
+    {
+      "name": "AvailableLinters",
+      "type": "System.Collections.Generic.HashSet\u003CDynamo.Linting.LinterExtensionDescriptor\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Available linters",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Linting/LinterManager.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

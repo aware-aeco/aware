@@ -1,0 +1,4241 @@
+{
+  "name": "PythonWpfPaletteBuilder",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "class",
+  "summary": "Implementation of the Python WPF palette builder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/",
+  "constructors": [
+    {
+      "name": "PythonWpfPaletteBuilder",
+      "signature": "PythonWpfPaletteBuilder(element: PythonWpfPaletteBuilder)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "PythonWpfPaletteBuilder",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAngleValue",
+      "signature": "AddAngleValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, minValue: float, maxValue: float, intervalValue: float, asSlider: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add a angle value to the palette",
+      "remarks": "Add a angle value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "intervalValue",
+          "type": "float",
+          "doc": "Interval value for the slider",
+          "optional": false
+        },
+        {
+          "name": "asSlider",
+          "type": "bool",
+          "doc": "Show as slider: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color of the control as red, green, blue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddAngleValue"
+    },
+    {
+      "name": "AddAreaFixtureCatalogRef",
+      "signature": "AddAreaFixtureCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add an area fixture precastcatalog reference - all, only point, line or area",
+      "remarks": "Add an area fixture precastcatalog reference - all, only point, line or area",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddAreaFixtureCatalogRef"
+    },
+    {
+      "name": "AddAreaValue",
+      "signature": "AddAreaValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, minValue: float, maxValue: float, intervalValue: float, asSlider: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add a area value to the palette",
+      "remarks": "Add a area value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "intervalValue",
+          "type": "float",
+          "doc": "Interval value for the slider",
+          "optional": false
+        },
+        {
+          "name": "asSlider",
+          "type": "bool",
+          "doc": "Show as slider: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color of the control as red, green, blue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddAreaValue"
+    },
+    {
+      "name": "AddBarDiameter",
+      "signature": "AddBarDiameter( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add an bar diameter value to the palette",
+      "remarks": "Add an bar diameter value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddBarDiameter"
+    },
+    {
+      "name": "AddBendingRollerValue",
+      "signature": "AddBendingRollerValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a bending roller value to the palette",
+      "remarks": "Add a bending roller value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddBendingRollerValue"
+    },
+    {
+      "name": "AddBrickTileCatalogRef",
+      "signature": "AddBrickTileCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a brick/tile reference",
+      "remarks": "Add a brick/tile reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddBrickTileCatalogRef"
+    },
+    {
+      "name": "AddButton",
+      "signature": "AddButton( description: str, name: str, eventId: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontStyle: int, fontFaceCode: int, )",
+      "summary": "Add a button to the palette",
+      "remarks": "Add a button to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "eventId",
+          "type": "int",
+          "doc": "Value holds the event ID pressing the button",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontStyle",
+          "type": "int",
+          "doc": "Font size: 0=small, 1=extra small, 2=large",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddButton"
+    },
+    {
+      "name": "AddCheckboxValue",
+      "signature": "AddCheckboxValue( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a checkbox value to the palette",
+      "remarks": "Add a checkbox value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddCheckboxValue"
+    },
+    {
+      "name": "AddColorValue",
+      "signature": "AddColorValue( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a color value to the palette",
+      "remarks": "Add a color value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddColorValue"
+    },
+    {
+      "name": "AddComboBoxValue",
+      "signature": "AddComboBoxValue( description: str, name: str, value: str, listValues: str, ctrlType: PaletteCtrlType, valueType: PaletteValueType, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, isEditable: bool, )",
+      "summary": "Add a combo box value to the palette",
+      "remarks": "Add a combo box value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "listValues",
+          "type": "str",
+          "doc": "List values",
+          "optional": false
+        },
+        {
+          "name": "ctrlType",
+          "type": "PaletteCtrlType",
+          "doc": "Control type",
+          "optional": false
+        },
+        {
+          "name": "valueType",
+          "type": "PaletteValueType",
+          "doc": "Value type",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color",
+          "optional": false
+        },
+        {
+          "name": "isEditable",
+          "type": "bool",
+          "doc": "Is editable state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddComboBoxValue"
+    },
+    {
+      "name": "AddConcreteCoverValue",
+      "signature": "AddConcreteCoverValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a concrete cover value to the palette",
+      "remarks": "Add a concrete cover value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddConcreteCoverValue"
+    },
+    {
+      "name": "AddConcreteGrade",
+      "signature": "AddConcreteGrade( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a concrete grade value to the palette",
+      "remarks": "Add a concrete grade value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddConcreteGrade"
+    },
+    {
+      "name": "AddConcreteGradeCatalogRef",
+      "signature": "AddConcreteGradeCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a concreteGrade reference",
+      "remarks": "Add a concreteGrade reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddConcreteGradeCatalogRef"
+    },
+    {
+      "name": "AddDoubleValue",
+      "signature": "AddDoubleValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, minValue: float, maxValue: float, intervalValue: float, asSlider: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add a double value to the palette",
+      "remarks": "Add a double value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "intervalValue",
+          "type": "float",
+          "doc": "Interval value for the slider",
+          "optional": false
+        },
+        {
+          "name": "asSlider",
+          "type": "bool",
+          "doc": "Show as slider: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color of the control as red, green, blue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddDoubleValue"
+    },
+    {
+      "name": "AddFaceStyleValue",
+      "signature": "AddFaceStyleValue( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a face style combobox to the palette",
+      "remarks": "Add a face style combobox to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "ID name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Selected value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddFaceStyleValue"
+    },
+    {
+      "name": "AddFactoryCatalogRef",
+      "signature": "AddFactoryCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a factory precastcatalog reference",
+      "remarks": "Add a factory precastcatalog reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddFactoryCatalogRef"
+    },
+    {
+      "name": "AddFixtureCatalogRef",
+      "signature": "AddFixtureCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a fixture precastcatalog reference - all, only point, line or area",
+      "remarks": "Add a fixture precastcatalog reference - all, only point, line or area",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddFixtureCatalogRef"
+    },
+    {
+      "name": "AddFixtureValues",
+      "signature": "AddFixtureValues( descriptionPath: str, descriptionGroup: str, descriptionElement: str, name: str, fixture: FixtureProperties, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add the fixture values",
+      "remarks": "Add the fixture values",
+      "params": [
+        {
+          "name": "descriptionPath",
+          "type": "str",
+          "doc": "Description of the path value",
+          "optional": false
+        },
+        {
+          "name": "descriptionGroup",
+          "type": "str",
+          "doc": "Description of the group value",
+          "optional": false
+        },
+        {
+          "name": "descriptionElement",
+          "type": "str",
+          "doc": "Description of the element value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "fixture",
+          "type": "FixtureProperties",
+          "doc": "Properties of the fixture",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Pate",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddFixtureValues"
+    },
+    {
+      "name": "AddHatchValue",
+      "signature": "AddHatchValue( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a hatch combobox to the palette",
+      "remarks": "Add a hatch combobox to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "ID name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Selected value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddHatchValue"
+    },
+    {
+      "name": "AddInsulationCatalogRef",
+      "signature": "AddInsulationCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a insulation reference",
+      "remarks": "Add a insulation reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddInsulationCatalogRef"
+    },
+    {
+      "name": "AddIntValue",
+      "signature": "AddIntValue( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, minValue: float, maxValue: float, intervalValue: float, asSlider: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add an integer value to the palette",
+      "remarks": "Add an integer value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "intervalValue",
+          "type": "float",
+          "doc": "Interval value for the slider",
+          "optional": false
+        },
+        {
+          "name": "asSlider",
+          "type": "bool",
+          "doc": "Show as slider: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color of the control as red, green, blue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddIntValue"
+    },
+    {
+      "name": "AddLayer",
+      "signature": "AddLayer( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a layer value to the palette",
+      "remarks": "Add a layer value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddLayer"
+    },
+    {
+      "name": "AddLengthValue",
+      "signature": "AddLengthValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, minValue: float, maxValue: float, intervalValue: float, asSlider: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add a length value to the palette",
+      "remarks": "Add a length value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "intervalValue",
+          "type": "float",
+          "doc": "Interval value for the slider",
+          "optional": false
+        },
+        {
+          "name": "asSlider",
+          "type": "bool",
+          "doc": "Show as slider: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color of the control as red, green, blue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddLengthValue"
+    },
+    {
+      "name": "AddLineFixtureCatalogRef",
+      "signature": "AddLineFixtureCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a line fixture precastcatalog reference - all, only point, line or area",
+      "remarks": "Add a line fixture precastcatalog reference - all, only point, line or area",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddLineFixtureCatalogRef"
+    },
+    {
+      "name": "AddMaterialButton",
+      "signature": "AddMaterialButton( description: str, name: str, value: str, buttonType: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a material button to the palette",
+      "remarks": "Add a material button to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "String of material",
+          "optional": false
+        },
+        {
+          "name": "buttonType",
+          "type": "int",
+          "doc": "Button type (0: simple material button, 1: mat button \u002B switch off button)",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddMaterialButton"
+    },
+    {
+      "name": "AddMeshGroup",
+      "signature": "AddMeshGroup( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a mesh group value to the palette",
+      "remarks": "Add a mesh group value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddMeshGroup"
+    },
+    {
+      "name": "AddMeshType",
+      "signature": "AddMeshType( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, meshGroup: int, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a mesh type value to the palette",
+      "remarks": "Add a mesh type value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "meshGroup",
+          "type": "int",
+          "doc": "Mesh group",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddMeshType"
+    },
+    {
+      "name": "AddMultiMaterialLayoutCatalogRef",
+      "signature": "AddMultiMaterialLayoutCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, ) -\u003E int",
+      "summary": "Add a multimaterial layout catalog reference",
+      "remarks": "Add a multimaterial layout catalog reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "ex",
+          "type": "object",
+          "doc": "of layout",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddMultiMaterialLayoutCatalogRef"
+    },
+    {
+      "name": "AddNormCatalogRef",
+      "signature": "AddNormCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a norm catalog reference",
+      "remarks": "Add a norm catalog reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddNormCatalogRef"
+    },
+    {
+      "name": "AddPage",
+      "signature": "AddPage(name: str, description: str)",
+      "summary": "Add a page to the palette",
+      "remarks": "Add a page to the palette",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "ID name",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description text (localized)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPage"
+    },
+    {
+      "name": "AddPatternValue",
+      "signature": "AddPatternValue( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a pattern combobox to the palette",
+      "remarks": "Add a pattern combobox to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "ID name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Selected value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPatternValue"
+    },
+    {
+      "name": "AddPenValue",
+      "signature": "AddPenValue( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a pen value to the palette",
+      "remarks": "Add a pen value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPenValue"
+    },
+    {
+      "name": "AddPicture",
+      "signature": "AddPicture( description: str, name: str, pictureName: str, libPath: str, orientation: Orientation, page: int, expanderName: str, rowName: str, )",
+      "summary": "Add a picture to the palette",
+      "remarks": "Add a picture to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description used for the tooltip",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "ID name",
+          "optional": false
+        },
+        {
+          "name": "pictureName",
+          "type": "str",
+          "doc": "Name of the picture",
+          "optional": false
+        },
+        {
+          "name": "libPath",
+          "type": "str",
+          "doc": "Library path",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Orientation",
+          "doc": "Orientation (0:LEFT, 1:MIDDLE, 2:RIGHT)",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPicture"
+    },
+    {
+      "name": "AddPictureButton",
+      "signature": "AddPictureButton( description: str, name: str, value: str, eventId: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a picture button to the palette",
+      "remarks": "Add a picture button to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "eventId",
+          "type": "int",
+          "doc": "Value holds the event ID pressing the button",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPictureButton"
+    },
+    {
+      "name": "AddPictureButtonList",
+      "signature": "AddPictureButtonList( description: str, name: str, value: int, picturePath: str, pictureList: str, valueList: str, textList: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a picture button list to the palette",
+      "remarks": "Add a picture button list to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value holds the selected picture button in buttons",
+          "optional": false
+        },
+        {
+          "name": "picturePath",
+          "type": "str",
+          "doc": "Path of pictures",
+          "optional": false
+        },
+        {
+          "name": "pictureList",
+          "type": "str",
+          "doc": "Picture list holds the images for the buttons - example: a.png|b.png|c.png",
+          "optional": false
+        },
+        {
+          "name": "valueList",
+          "type": "str",
+          "doc": "Value list of possible values - example: 0|1|2",
+          "optional": false
+        },
+        {
+          "name": "textList",
+          "type": "str",
+          "doc": "Text list for the tooltips",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPictureButtonList"
+    },
+    {
+      "name": "AddPictureComboBox",
+      "signature": "AddPictureComboBox( description: str, name: str, value: int, picturePath: str, pictureList: str, valueList: str, textList: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a picture combobox to the palette",
+      "remarks": "Add a picture combobox to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value holds the selected picture button in buttons",
+          "optional": false
+        },
+        {
+          "name": "picturePath",
+          "type": "str",
+          "doc": "Path of pictures",
+          "optional": false
+        },
+        {
+          "name": "pictureList",
+          "type": "str",
+          "doc": "Picture list holds the images for the buttons - example: a.png|b.png|c.png",
+          "optional": false
+        },
+        {
+          "name": "valueList",
+          "type": "str",
+          "doc": "Value list of possible values - example: 0|1|2",
+          "optional": false
+        },
+        {
+          "name": "textList",
+          "type": "str",
+          "doc": "Text list for the tooltips",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPictureComboBox"
+    },
+    {
+      "name": "AddPictureResourceButton",
+      "signature": "AddPictureResourceButton( description: str, name: str, value: int, eventId: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a picture button to the palette",
+      "remarks": "Add a picture button to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value holds the resource ID",
+          "optional": false
+        },
+        {
+          "name": "eventId",
+          "type": "int",
+          "doc": "Value holds the event ID pressing the button",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPictureResourceButton"
+    },
+    {
+      "name": "AddPictureResourceButtonList",
+      "signature": "AddPictureResourceButtonList( description: str, name: str, value: int, pictureList: str, valueList: str, textList: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a picture resource button list to the palette",
+      "remarks": "Add a picture resource button list to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value holds the selected picture button in buttons",
+          "optional": false
+        },
+        {
+          "name": "pictureList",
+          "type": "str",
+          "doc": "Picture list holds the images for the buttons - example: 16433|16441|16449",
+          "optional": false
+        },
+        {
+          "name": "valueList",
+          "type": "str",
+          "doc": "Value list of possible values - example: 0|1|2",
+          "optional": false
+        },
+        {
+          "name": "textList",
+          "type": "str",
+          "doc": "Text list for the tooltips",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPictureResourceButtonList"
+    },
+    {
+      "name": "AddPictureResourceComboBox",
+      "signature": "AddPictureResourceComboBox( description: str, name: str, value: int, pictureList: str, valueList: str, textList: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a picture resource combobox to the palette",
+      "remarks": "Add a picture resource combobox to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value holds the selected picture button in buttons",
+          "optional": false
+        },
+        {
+          "name": "pictureList",
+          "type": "str",
+          "doc": "Picture list holds the images for the buttons - example: 16433|16441|16449",
+          "optional": false
+        },
+        {
+          "name": "valueList",
+          "type": "str",
+          "doc": "Value list of possible values - example: 0|1|2",
+          "optional": false
+        },
+        {
+          "name": "textList",
+          "type": "str",
+          "doc": "Text list for the tooltips",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPictureResourceComboBox"
+    },
+    {
+      "name": "AddPictureResourceToggleButton",
+      "signature": "AddPictureResourceToggleButton( description: str, name: str, value: int, pictureList: str, valueList: str, textList: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a picture toggle button to the palette",
+      "remarks": "Add a picture toggle button to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value holds the selected picture button in buttons",
+          "optional": false
+        },
+        {
+          "name": "pictureList",
+          "type": "str",
+          "doc": "Picture list holds the images for the buttons - example: a.png|b.png|c.png",
+          "optional": false
+        },
+        {
+          "name": "valueList",
+          "type": "str",
+          "doc": "Value list of possible values - example: 0|1|2",
+          "optional": false
+        },
+        {
+          "name": "textList",
+          "type": "str",
+          "doc": "Text list for the tooltips",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPictureResourceToggleButton"
+    },
+    {
+      "name": "AddPlaneReferencesButton",
+      "signature": "AddPlaneReferencesButton( description: str, name: str, planeRefs: BasePlaneReferences, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a plane references button to the palette",
+      "remarks": "Add a plane references button to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "planeRefs",
+          "type": "BasePlaneReferences",
+          "doc": "Plane references",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPlaneReferencesButton"
+    },
+    {
+      "name": "AddPointFixtureCatalogRef",
+      "signature": "AddPointFixtureCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a point fixture precastcatalog reference - all, only point, line or area",
+      "remarks": "Add a point fixture precastcatalog reference - all, only point, line or area",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPointFixtureCatalogRef"
+    },
+    {
+      "name": "AddPrecastElementTypeCatalogRef",
+      "signature": "AddPrecastElementTypeCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, ) -\u003E str",
+      "summary": "Add a precastElementType catalog reference",
+      "remarks": "Add a precastElementType catalog reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddPrecastElementTypeCatalogRef"
+    },
+    {
+      "name": "AddRadioButton",
+      "signature": "AddRadioButton( radioButtonGroupDescription: str, radioButtonGroupName: str, radioButtonDescription: str, value: object, selectedValueInGroup: object, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a radio button to the palette",
+      "remarks": "Add a radio button to the palette",
+      "params": [
+        {
+          "name": "radioButtonGroupDescription",
+          "type": "str",
+          "doc": "Radio button group description",
+          "optional": false
+        },
+        {
+          "name": "radioButtonGroupName",
+          "type": "str",
+          "doc": "Radio button group ID name",
+          "optional": false
+        },
+        {
+          "name": "radioButtonDescription",
+          "type": "str",
+          "doc": "Radio button description",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "Double value of this radio button",
+          "optional": false
+        },
+        {
+          "name": "selectedValueInGroup",
+          "type": "object",
+          "doc": "Selected value of radio button group",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddRadioButton"
+    },
+    {
+      "name": "AddRefPointButton",
+      "signature": "AddRefPointButton( description: str, name: str, refPointPosition: RefPointPosition, refPointType: RefPointButtonType, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a reference point button to the palette",
+      "remarks": "Add a reference point button to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "refPointPosition",
+          "type": "RefPointPosition",
+          "doc": "Reference point ID (1,...,9)",
+          "optional": false
+        },
+        {
+          "name": "refPointType",
+          "type": "RefPointButtonType",
+          "doc": "Reference point type",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddRefPointButton"
+    },
+    {
+      "name": "AddResourcePicture",
+      "signature": "AddResourcePicture( description: str, name: str, pictureResourceID: int, page: int, expanderName: str, rowName: str, height: int, width: int, )",
+      "summary": "Add a picture from a resource to the palette",
+      "remarks": "Add a picture from a resource to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description used for the tooltip",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "ID name",
+          "optional": false
+        },
+        {
+          "name": "pictureResourceID",
+          "type": "int",
+          "doc": "Resource id of the picture",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddResourcePicture"
+    },
+    {
+      "name": "AddSeparator",
+      "signature": "AddSeparator(page: int, expanderName: str)",
+      "summary": "Add a separator to the palette",
+      "remarks": "Add a separator to the palette",
+      "params": [
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddSeparator"
+    },
+    {
+      "name": "AddSteelGrade",
+      "signature": "AddSteelGrade( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a steel grade value to the palette",
+      "remarks": "Add a steel grade value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddSteelGrade"
+    },
+    {
+      "name": "AddStringValue",
+      "signature": "AddStringValue( description: str, name: str, str: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add a string value to the palette",
+      "remarks": "Add a string value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "str",
+          "doc": "String",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddStringValue"
+    },
+    {
+      "name": "AddStroke",
+      "signature": "AddStroke( description: str, name: str, value: int, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a stroke value to the palette",
+      "remarks": "Add a stroke value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddStroke"
+    },
+    {
+      "name": "AddSurfaceCatalogRef",
+      "signature": "AddSurfaceCatalogRef( description: str, name: str, value: str, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontFaceCode: int, )",
+      "summary": "Add a Surface catalog reference",
+      "remarks": "Add a Surface catalog reference",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddSurfaceCatalogRef"
+    },
+    {
+      "name": "AddText",
+      "signature": "AddText( description: str, value: str, orientation: Orientation, page: int, expanderName: str, rowName: str, bEnabled: bool, height: int, width: int, fontStyle: int, fontFaceCode: int, )",
+      "summary": "Add a text",
+      "remarks": "Add a text",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Orientation",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Font size: 0=small, 1=extra small, 2=large",
+          "optional": false
+        },
+        {
+          "name": "fontStyle",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddText"
+    },
+    {
+      "name": "AddVolumeValue",
+      "signature": "AddVolumeValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, minValue: float, maxValue: float, intervalValue: float, asSlider: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add a volume value to the palette",
+      "remarks": "Add a volume value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "intervalValue",
+          "type": "float",
+          "doc": "Interval value for the slider",
+          "optional": false
+        },
+        {
+          "name": "asSlider",
+          "type": "bool",
+          "doc": "Show as slider: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color of the control as red, green, blue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddVolumeValue"
+    },
+    {
+      "name": "AddWeightValue",
+      "signature": "AddWeightValue( description: str, name: str, value: float, page: int, expanderName: str, rowName: str, bEnabled: bool, minValue: float, maxValue: float, intervalValue: float, asSlider: bool, height: int, width: int, fontFaceCode: int, backgroundColor: list[int] | VecIntList, )",
+      "summary": "Add a weight value to the palette",
+      "remarks": "Add a weight value to the palette",
+      "params": [
+        {
+          "name": "description",
+          "type": "str",
+          "doc": "Description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Value name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "expanderName",
+          "type": "str",
+          "doc": "Expander section name",
+          "optional": false
+        },
+        {
+          "name": "rowName",
+          "type": "str",
+          "doc": "Name of the row",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Control is enabled: true/false",
+          "optional": false
+        },
+        {
+          "name": "minValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "maxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "intervalValue",
+          "type": "float",
+          "doc": "Interval value for the slider",
+          "optional": false
+        },
+        {
+          "name": "asSlider",
+          "type": "bool",
+          "doc": "Show as slider: true/false",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "doc": "Control height, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "doc": "Control width, only used for a row",
+          "optional": false
+        },
+        {
+          "name": "fontFaceCode",
+          "type": "int",
+          "doc": "Face code: 0=normal, 1=bold, 2=italic, 4=underline",
+          "optional": false
+        },
+        {
+          "name": "backgroundColor",
+          "type": "list[int] | VecIntList",
+          "doc": "Background color of the control as red, green, blue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.AddWeightValue"
+    },
+    {
+      "name": "IsConcreteCoverPaletteUpdate",
+      "signature": "IsConcreteCoverPaletteUpdate(cover: float) -\u003E bool",
+      "summary": "Check for a palette update due to a new concrete cover",
+      "remarks": "Check for a palette update due to a new concrete cover",
+      "params": [
+        {
+          "name": "cover",
+          "type": "float",
+          "doc": "Concrete cover",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Palette update: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.IsConcreteCoverPaletteUpdate"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset()",
+      "summary": "Reset the data",
+      "remarks": "Reset the data",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/#NemAll_Python_Palette.PythonWpfPaletteBuilder.Reset"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

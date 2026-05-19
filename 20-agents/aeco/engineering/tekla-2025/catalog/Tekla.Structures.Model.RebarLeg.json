@@ -1,0 +1,31 @@
+{
+  "name": "RebarLeg",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This represents a leg of a rebar and is used in the RebarComplexGeometry class.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6d6067fc-12b2-75b5-12b6-55671ccce55f",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Curve",
+      "type": "ICurve",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the curve of the leg",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d46c9f66-c299-13c7-ec5f-3eaa52fc642a"
+    },
+    {
+      "name": "Origin",
+      "type": "RebarLeg.OriginEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the origin of the leg",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8612fb22-2ad1-14cb-e560-cf6e25a4c3f2"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

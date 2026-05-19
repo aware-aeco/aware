@@ -1,0 +1,79 @@
+{
+  "name": "IFC2X3_ParametricObject_CircleProfile",
+  "namespace": "Tekla.Structures.Model.Collaboration",
+  "kind": "class",
+  "summary": "The IFC2X3_ParametricObject_CircleProfile class contains the circular profile definition.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0d72d508-d685-beaa-ba69-deb68cf62feb",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The description of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ef1a853-3a08-64d7-d9e1-7a972a0d95e5"
+    },
+    {
+      "name": "Extrusion",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The extrusion vector.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3e9298b4-f968-cb57-f5ac-956c82e4c313"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43a7f690-62b8-9b4e-e09e-0eeed73914fa"
+    },
+    {
+      "name": "ObjectType",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The object type of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f0fd3c96-e406-88ca-3007-cfc1aad8e489"
+    },
+    {
+      "name": "Origin",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "The origin of the extrusion.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79c545ba-bb67-a069-6955-04b7403bc9b8"
+    },
+    {
+      "name": "ProfileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the profile (often empty).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9c5b500f-8651-e219-ab65-8a5297a10e01"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b2f0ba00-5650-1684-7275-2dcc2716e2a3"
+    },
+    {
+      "name": "xDir",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The X-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c58725d-7f05-89c1-bbe6-5ad2ed4e00eb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

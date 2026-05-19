@@ -1,0 +1,14 @@
+{
+  "name": "ViewCaptureWriter.SetClipRectProc",
+  "namespace": "Rhino.Runtime",
+  "kind": "delegate",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.ViewCaptureWriter.SetClipRectProc\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_ViewCaptureWriter_SetClipRectProc.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void SetClipRectProc( ref int left, ref int top, ref int right, ref int bottom )"
+}

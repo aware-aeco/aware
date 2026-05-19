@@ -1,0 +1,43 @@
+{
+  "name": "AttributeContainer",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "AttributeContainer class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AttributeContainer/",
+  "constructors": [
+    {
+      "name": "AttributeContainer",
+      "signature": "AttributeContainer() | AttributeContainer(attributesObject: object)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AttributeContainer/#NemAll_Python_BasisElements.AttributeContainer.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AttributeContainer/#NemAll_Python_BasisElements.AttributeContainer.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

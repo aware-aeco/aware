@@ -1,0 +1,44 @@
+{
+  "name": "BaseWeld.WeldFinishEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The weld finish.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/703b6027-cf2b-26da-c3b9-32edb1fba8ce",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WELD_FINISH_NONE",
+      "value": 0,
+      "summary": "No weld finish."
+    },
+    {
+      "name": "WELD_FINISH_GRIND",
+      "value": 1,
+      "summary": "The grind finish."
+    },
+    {
+      "name": "WELD_FINISH_MACHINE",
+      "value": 2,
+      "summary": "The machine finish."
+    },
+    {
+      "name": "WELD_FINISH_CHIP",
+      "value": 3,
+      "summary": "The chip finish."
+    },
+    {
+      "name": "WELD_FINISH_FINISHED_WELD",
+      "value": 4,
+      "summary": "The normally treated finish."
+    },
+    {
+      "name": "WELS_FINISH_SMOOTH_TRANSITION",
+      "value": 5,
+      "summary": "The smooth transition finish."
+    }
+  ]
+}

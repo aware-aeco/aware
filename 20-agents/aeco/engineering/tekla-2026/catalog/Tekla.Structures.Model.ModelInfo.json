@@ -1,0 +1,63 @@
+{
+  "name": "ModelInfo",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ModelInfo class provides information about the currently open Tekla Structures model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cc2d593e-65f0-07c0-e4ab-17c60fe4f221",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurrentPhase",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of the Tekla Structures model\u0027s current phase.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9cc76937-fbe9-cf1e-b602-19903db01729"
+    },
+    {
+      "name": "ModelName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the Tekla Structures model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fc9af438-6571-813e-b7b1-2782e5b2f5f8"
+    },
+    {
+      "name": "ModelPath",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The path to the Tekla Structures model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/367ec345-63e0-8566-2656-031f3fbc5c38"
+    },
+    {
+      "name": "NorthDirection",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The north direction of the current Tekla Structures model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/65825b64-3104-c758-5d49-55e6c4292de7"
+    },
+    {
+      "name": "SharedModel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The read-only property of the Tekla Structures model\u0027s sharing status.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/300232de-cd77-22a2-139c-ff284f47776f"
+    },
+    {
+      "name": "SingleUserModel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The read-only property if the Tekla Structures model is a single user model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99600dcd-c81a-b8dd-fd95-0e0f344e2366"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

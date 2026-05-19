@@ -1,0 +1,112 @@
+{
+  "name": "PropertyElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PropertyElement class may represent any of the many different mark element types, such as the profile, the material and the name. The property is defined by the name and it is converted into a textual value before the mark is drawn.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/91af96df-1eb0-e9ac-31c9-33a3bd2abbdc",
+  "constructors": [
+    {
+      "name": "PropertyElement",
+      "signature": "public PropertyElement(PropertyElement.PropertyElementType PropertyType)",
+      "summary": "Creates a new property element instance with the given property element type.",
+      "params": [
+        {
+          "name": "PropertyType",
+          "type": "Tekla.Structures.Drawing.PropertyElement.PropertyElementType",
+          "doc": "The property element type to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b91b63c4-c1c4-12ed-ccb7-ef616be31da9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public override Object Clone()",
+      "summary": "Clones the object.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a3b5281a-031c-19d2-f42b-65a64fe2d6db"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "public override string GetUnformattedString()",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/825d769f-e545-be31-92b9-85a86bb9a3ac"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/db24463c-811c-73fb-56bf-2fa2c4b07f34"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Font",
+      "type": "FontAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The font of the property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1f0e7233-1491-1b75-3d99-28962e736faa"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The property name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d16b9bb3-b8cc-09fd-7fd4-0e741b64733b"
+    },
+    {
+      "name": "PropertyType",
+      "type": "PropertyElement.PropertyElementType",
+      "getter": true,
+      "setter": false,
+      "summary": "The type of the property element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/28e43173-745e-1c9a-d537-5b0b41840eb3"
+    },
+    {
+      "name": "Value",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The current value of the property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4ffe4b63-2a93-310d-6147-b76cba0d56b4"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

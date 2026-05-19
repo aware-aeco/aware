@@ -1,0 +1,156 @@
+{
+  "name": "MarkBase.MarkBaseAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The MarkBaseAttributes class is the attributes class for the mark base.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0a855c11-4d75-8d03-91e3-450ddbd154f4",
+  "constructors": [
+    {
+      "name": "MarkBase.MarkBaseAttributes()",
+      "signature": "public MarkBaseAttributes()",
+      "summary": "Creates a new default mark base attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/52214b9b-80f3-eab5-1d35-2319cf719747"
+    },
+    {
+      "name": "MarkBase.MarkBaseAttributes(String)",
+      "signature": "public MarkBaseAttributes(string AttributesFile)",
+      "summary": "Creates a new mark base attributes instance with the given attributes file\u0027s filename.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef65f614-e81b-b7b7-0729-5b4391c97fab"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/da11fa4f-a98d-c770-d0e2-f458bc3b82dc"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public abstract bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the specified file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file. Use only the filename, not the extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5597a575-45e2-aa83-6576-390f23af3e48"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The actual angle of the mark, in degrees. Can differ from the rotation angle set by the user for marks, e.g. 45-degree column marks in GA drawings or when placing mark along part edges.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4d09de42-a61f-2b59-af2e-df5bc654defd"
+    },
+    {
+      "name": "ArrowHead",
+      "type": "ArrowheadAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead of the leader line(s).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c3ba42a0-744a-9b5d-c65e-23e380190899"
+    },
+    {
+      "name": "CustomPresentation",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4bf280a6-17ed-e2db-3313-cda35b139fa3"
+    },
+    {
+      "name": "Frame",
+      "type": "Frame",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame attributes of the mark\u0027s labels.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f7460815-3488-7e38-eea8-96d1f4feeb47"
+    },
+    {
+      "name": "PlacingAttributes",
+      "type": "PlacingAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ccf1cbda-5520-b694-b7c8-60e33eb16d04"
+    },
+    {
+      "name": "PreferredPlacing",
+      "type": "PreferredPlacingTypeBase",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f1e78cd8-64cc-7e9c-c3e0-a972599934bb"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The mark rotation angle set by the user. Unit is degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7efb8b2e-0d41-ba47-ea87-423cb02a1ef2"
+    },
+    {
+      "name": "TextAlignment",
+      "type": "MarkBase.MarkBaseAttributes.TextAlignOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "The mark text alignment.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d4a3f9e2-6a2b-6572-9df5-fbdf00926040"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The mark text background transparency. (transparent/opaque)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ae9a4e8-a67c-61a6-2a3a-2cfcb3cb3ea8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

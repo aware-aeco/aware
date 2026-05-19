@@ -1,0 +1,44 @@
+{
+  "name": "ReinforcementBase.StraightEndSymbolTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The available straight end symbol types. See Tekla Structures help, \u0022Reinforcement appearance\u0022, for more information.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/291c577a-03d1-f01b-e1ec-64975aab8399",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoSymbol",
+      "value": 1,
+      "summary": "No straight end symbol."
+    },
+    {
+      "name": "HooksOnInnerSide",
+      "value": 2,
+      "summary": "Draws half hooks on the reinforcement\u0027s inner side."
+    },
+    {
+      "name": "HooksOnOuterSide",
+      "value": 3,
+      "summary": "Draws half hooks on the reinforcement\u0027s outer side."
+    },
+    {
+      "name": "HookOnReinforcementStartOuterSide",
+      "value": 4,
+      "summary": "Draws a half hook on the reinforcement\u0027s outer side in the reinforcement\u0027s start point, and another half hook on the inner side in the end point."
+    },
+    {
+      "name": "HookOnReinforcementStartInnerSide",
+      "value": 5,
+      "summary": "Draws a half hook on the reinforcement\u0027s inner side in the reinforcement\u0027s start point, and another half hook on the outer side in the end point."
+    },
+    {
+      "name": "FullHooks",
+      "value": 6,
+      "summary": "Draws full hooks in the reinforcement\u0027s end points."
+    }
+  ]
+}

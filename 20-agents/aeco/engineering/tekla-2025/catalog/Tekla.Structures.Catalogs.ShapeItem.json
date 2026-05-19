@@ -1,0 +1,460 @@
+{
+  "name": "ShapeItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The Shape class contains information about the shapes in the Tekla Structures shape catalog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3b2b9bdd-99b2-1ed9-3e1f-6a79989bfbd8",
+  "constructors": [
+    {
+      "name": "ShapeItem",
+      "signature": "public ShapeItem()",
+      "summary": "Creates a new shape instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f7ccc361-1d5d-442f-75a4-78cfce2559fb"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CleanAndModify",
+      "signature": "public bool CleanAndModify(ref bool isSolid)",
+      "summary": "Cleans and stores the brep into the shape catalog",
+      "params": [
+        {
+          "name": "isSolid",
+          "type": "System.Boolean.",
+          "doc": "Parameter indicating if is solid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if cleaning and storing to catalog was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4edee409-2a8c-032a-7970-1ffafd7de5d2"
+    },
+    {
+      "name": "Delete",
+      "signature": "public bool Delete()",
+      "summary": "Deletes a shape from shape catalog based on the shape name.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8c1f5ced-f600-2cea-a417-a76c1d7dded0"
+    },
+    {
+      "name": "DeleteMetadata",
+      "signature": "public bool DeleteMetadata(string key)",
+      "summary": "Delete the Shape item\u0027s metadata.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key of metadata.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if success or False if key not found or deletion failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/76dde3bd-f5f5-1871-781d-9ed67bc3627f"
+    },
+    {
+      "name": "Export",
+      "signature": "public virtual bool Export(ref string filename)",
+      "summary": "Exports the shape item in *.tsc-format to the to given file name. If path is not given shape is exported to model folder. If filename is empty shape name is used as filename.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the shape item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c627bccd-30f5-48b6-0ed0-158be2852701"
+    },
+    {
+      "name": "GetAllMetadataKeys",
+      "signature": "public List\u003Cstring\u003E GetAllMetadataKeys()",
+      "summary": "Get the Shape item\u0027s metadata keys.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "A list of strings containing the keys."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff0a336a-d372-dee9-0668-a42a5a154dd6"
+    },
+    {
+      "name": "GetInstanceCount",
+      "signature": "public int GetInstanceCount()",
+      "summary": "Get the number of instances used in the model of a shape",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of shape instances"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/42331a86-fac0-a1be-b369-7e3274919ce5"
+    },
+    {
+      "name": "GetMetadata",
+      "signature": "public bool GetMetadata(string key, ref ShapeMetadataTypeEnum type, ref Object value, ref string label, ref string description)",
+      "summary": "Get the Shape item\u0027s metadata.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key of metadata.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Catalogs.ShapeMetadataTypeEnum.",
+          "doc": "The type of metadata.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object.",
+          "doc": "The value of metadata.",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "System.String.",
+          "doc": "The label of metadata.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String.",
+          "doc": "The description of metadata.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if success or False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b91542e-8190-0ef5-0b9f-b31aa67cf9eb"
+    },
+    {
+      "name": "Insert",
+      "signature": "public bool Insert()",
+      "summary": "Inserts a shape to the shape catalog based on the shape geometry (does not allow duplicate geometry).",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/16c8423e-6b2e-db2c-d8d7-7f6e267eac0c"
+    },
+    {
+      "name": "InsertOrGetGuidsOfShapesWithMatchingGeometry",
+      "signature": "public bool InsertOrGetGuidsOfShapesWithMatchingGeometry(out List\u003Cstring\u003E existingShapeGuids)",
+      "summary": "Inserts a shape to the shape catalog based on the shape geometry (does not allow duplicate geometry). If, based on fingerprint, the geometry already exists it populates a list of Guids of shapes using that same geometry.",
+      "params": [
+        {
+          "name": "existingShapeGuids",
+          "type": "System.Collections.Generic.List\u003CString\u003E.",
+          "doc": "A list of guids of any shapes with matching geometry fingerprints.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true on success; false if not successful."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if Insert failed due to an internal reason."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if the shape data is invalid (see message for more specific cause)."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "Thrown if an implementation error occurred."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c2fb6b7e-357a-84f5-2d75-5df5689de671"
+    },
+    {
+      "name": "InsertUsingNormals",
+      "signature": "public bool InsertUsingNormals()",
+      "summary": "Inserts a shape to the shape catalog using the shape geometry. Uses vertex normals to determine edge visibility. If the normal vectors of the vertices belonging to one geometrical location are close enough, the edge will be considered smooth and will be marked as hidden.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11c11135-9e1b-f831-fcd5-5c5c894ed8a2"
+    },
+    {
+      "name": "InsertUsingNormalsAllowDuplicates",
+      "signature": "public bool InsertUsingNormalsAllowDuplicates()",
+      "summary": "Inserts a shape to the shape catalog using the shape geometry allowing duplicates. Uses vertex normals to determine edge visibility. If the normal vectors of the vertices belonging to one geometrical location are close enough, the edge will be considered smooth and will be marked as hidden.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7aa8d76b-bf72-dc00-4c25-9db20221065e"
+    },
+    {
+      "name": "Modify",
+      "signature": "public bool Modify()",
+      "summary": "Modifies a shape in the shape catalog based on the shape name or if not found, based on shape guid.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e26d3968-b0c4-cbe4-7072-5c594b6e10ee"
+    },
+    {
+      "name": "Rename",
+      "signature": "public bool Rename(string newName)",
+      "summary": "Renames a shape in the shape catalog with the given shape name.",
+      "params": [
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if the new name is empty or duplicated as the current name, or other exceptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e5d7d104-0f1a-2437-122c-c95d57bc1ecd"
+    },
+    {
+      "name": "Select()",
+      "signature": "public bool Select()",
+      "summary": "Selects the shape from the database based on the name given in this instance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if the shape was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/44b27784-3b82-a5a3-48bd-8b6d31e62693"
+    },
+    {
+      "name": "Select(String)",
+      "signature": "public bool Select(string name)",
+      "summary": "Selects the shape based on the given name from the database.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the shape.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False if the shape was not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78fd7218-d17a-1dd0-fd3c-bda69433da65"
+    },
+    {
+      "name": "SetHandlePoints",
+      "signature": "public bool SetHandlePoints(List\u003CPoint\u003E HandlePoints)",
+      "summary": "Set the Shape item\u0027s Handle Points",
+      "params": [
+        {
+          "name": "HandlePoints",
+          "type": "System.Collections.Generic.List\u003CPoint\u003E",
+          "doc": "The handle points.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if success or False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/32d1759c-965f-dda0-00c4-29c8348115f3"
+    },
+    {
+      "name": "SetMetadata",
+      "signature": "public bool SetMetadata(string key, ShapeMetadataTypeEnum type, Object value, string label, string description)",
+      "summary": "Set the Shape item\u0027s metadata. Inserts the metadata if key is not found, otherwise modifies existing data.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key of metadata.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Catalogs.ShapeMetadataTypeEnum",
+          "doc": "The type of metadata.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The value of metadata.",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The label of metadata.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of metadata.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if success or False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8053f599-8299-bd82-4c5b-85741968a43c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BrepType",
+      "type": "BrepType",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines BrepType of shapes. @see enum BrepType",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f2c91019-582a-0825-b472-6f21110838d2"
+    },
+    {
+      "name": "Extrema",
+      "type": "AABB",
+      "getter": true,
+      "setter": false,
+      "summary": "The extrema of the shape as an axis-aligned bounding box, as opposed to object-aligned",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1703944d-6426-4bcb-556e-5b8a96b27971"
+    },
+    {
+      "name": "Fingerprint",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "A fingerprint value calculated by Tekla Structures to provide quick comparison of geometries to avoid inserting same shape multiple times to the catalog. More rigorous comparison is done only for geometries that result in identical fingerprints.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/280bdf04-0f26-74f2-a480-c1c7c08b1b3d"
+    },
+    {
+      "name": "GeometryGuid",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "A unique identifier of the shape geometry, given initially by BrepStorage. This GUID is used as the body of the filename for the shape geometry information found in the ShapeGeometries directory",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d21a7e86-3e88-1d33-d79b-84d760b8fb69"
+    },
+    {
+      "name": "GeometryHash",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "This obsolete property can still be used to store and externally provided unique hash value identifying the shape. However, Tekla Structures does not use this value internally for anything. It is strongly recommended to use the newer Fingerprint property for future implementations. That value is automatically calculated by Tekla Structures for all inserted shapes and is used internally for shape identification.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b796ddcb-d1ce-9ff9-9459-fd64f98b6d54"
+    },
+    {
+      "name": "Guid",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "A unique identifier of the actual shape, given initially by the ShapeCatalog. This GUID is used as the body of the filename for the shape information found in the Shape directory",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3bba663b-044b-05ca-d524-54edeef2c9a8"
+    },
+    {
+      "name": "HandlePoints",
+      "type": "List\u003CPoint\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines handle points of the shape.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3bee6dbb-c1b6-f8f8-281a-b31e6fc597be"
+    },
+    {
+      "name": "IsSolid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Set to true if the shape is detected by TS Core to be a valid solid",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0cc1c18a-7bbb-0877-92f6-96a62556deec"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The shape Name",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/220ad418-f3ce-95ef-b7fb-f1a23c5b04da"
+    },
+    {
+      "name": "ShapeFacetedBrep",
+      "type": "FacetedBrep",
+      "getter": true,
+      "setter": true,
+      "summary": "The data structure containing the geometric information of the shape as a FacetedBRep",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/19128014-736c-8d4d-af15-1bc6d205edd3"
+    },
+    {
+      "name": "UpAxis",
+      "type": "ShapeUpAxis",
+      "getter": true,
+      "setter": true,
+      "summary": "The direction defining what is understood as \u0022up\u0022 in the shape that the API user is providing. Typically this is the z-axis, if the data is in global coordinates, coming from a system where Z-axis points to global up direction. Possible values are: Undefined = 0, X_Axis = 1, Y_Axis = 2, Z_Axis = 3. It is highly recommendable to orient shapes in the Tekla Structures native way, that is x-axis on the extrusion line and Y-axis pointing up. NOTE: Specifying UpAxis to be ShapeUpAxis.Undefined may throw a \u2018System.ArgumentOutOfRangeException\u2019 exception in certain operations, because the system can not proceed without that information.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ee8a9af-5756-9569-3f05-13fc729084ad"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

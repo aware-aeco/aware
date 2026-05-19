@@ -1,0 +1,216 @@
+{
+  "name": "ViewInfo",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Represents the name and orientation of a View (and named view). views can be thought of as cameras.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ViewInfo.htm",
+  "constructors": [
+    {
+      "name": "ViewInfo()",
+      "signature": "public ViewInfo()",
+      "summary": "Create a default ViewInfo instance",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ViewInfo__ctor.htm"
+    },
+    {
+      "name": "ViewInfo(RhinoViewport)",
+      "signature": "public ViewInfo(RhinoViewport rhinoViewPort)",
+      "summary": "Access to the ViewInfo for given RhinoViewport",
+      "params": [
+        {
+          "name": "rhinoViewPort",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022rhinoViewPort\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ViewInfo.#ctor(Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ViewInfo__ctor_1.htm"
+    },
+    {
+      "name": "ViewInfo(UInt32)",
+      "signature": "public ViewInfo(uint docRuntimeSerialNumber)",
+      "summary": "Construct the ViewInfo for active viewport of given doc.",
+      "params": [
+        {
+          "name": "docRuntimeSerialNumber",
+          "type": "System.UInt32",
+          "doc": "Runtime serial number of the document to query for the active viewport",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ViewInfo__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClippingPlaneSurfaces",
+      "signature": "public ClippingPlaneSurface[] ClippingPlaneSurfaces()",
+      "summary": "Returns a list of ClippingPlaneSurfaces for this view.",
+      "params": [],
+      "returns": {
+        "type": "ClippingPlaneSurface[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ViewInfo.ClippingPlaneSurfaces\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ViewInfo_ClippingPlaneSurfaces.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ViewInfo_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ViewInfo_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ViewInfo_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClippingPlanesIds",
+      "type": "Guid[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a list of clipping plane Ids associated with this view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_ClippingPlanesIds.htm"
+    },
+    {
+      "name": "FocalBlurAperture",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Focal blur aperture of the active viewport",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_FocalBlurAperture.htm"
+    },
+    {
+      "name": "FocalBlurDistance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Focal blur distance of the active viewport",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_FocalBlurDistance.htm"
+    },
+    {
+      "name": "FocalBlurJitter",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Focal blur jitter of the active viewport",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_FocalBlurJitter.htm"
+    },
+    {
+      "name": "FocalBlurMode",
+      "type": "ViewInfoFocalBlurModes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Focal blur mode of the active viewport",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_FocalBlurMode.htm"
+    },
+    {
+      "name": "FocalBlurSampleCount",
+      "type": "UInt32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Focal blur sample count of the active viewport",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_FocalBlurSampleCount.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_Name.htm"
+    },
+    {
+      "name": "NamedViewId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a unique id if this is a named view otherwise an empty Guid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_NamedViewId.htm"
+    },
+    {
+      "name": "SectionBehavior",
+      "type": "ViewSectionBehavior",
+      "getter": true,
+      "setter": true,
+      "summary": "How a view will interact with clipping planes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_SectionBehavior.htm"
+    },
+    {
+      "name": "ShowWallpaperInGrayScale",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if wallpaper (if any) is to be shown in gray scale in this view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_ShowWallpaperInGrayScale.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "ViewportInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the viewport, or viewing frustum, associated with this view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_Viewport.htm"
+    },
+    {
+      "name": "WallpaperFilename",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get filename for wallpaper set to this view, if any.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_WallpaperFilename.htm"
+    },
+    {
+      "name": "WallpaperHidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if wallpaper (if any) is to be hidden from this view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ViewInfo_WallpaperHidden.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,61 @@
+{
+  "name": "SelectionQuery",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Class containing checking procedures to obtain, whether an element is valid for being selected during element selection.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/",
+  "constructors": [
+    {
+      "name": "SelectionQuery",
+      "signature": "SelectionQuery() | SelectionQuery(query: SelectionQuery) | SelectionQuery(query: list[QueryTypeID | SelectionQuery() | SelectionQuery() | SelectionQuery()",
+      "summary": "Construct empty query. All elements are considered valid for selection",
+      "remarks": "Construct empty query. All elements are considered valid for selection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear the query",
+      "remarks": "Clear the query",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.Clear"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty() -\u003E bool",
+      "summary": "Check for an empty query",
+      "remarks": "Check for an empty query",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Filter is empty: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.IsEmpty"
+    },
+    {
+      "name": "__call__",
+      "signature": "__call__(arg2: BaseElementAdapter) -\u003E bool",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.__call__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

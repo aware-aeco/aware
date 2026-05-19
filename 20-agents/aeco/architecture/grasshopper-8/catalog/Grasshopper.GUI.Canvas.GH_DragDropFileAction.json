@@ -1,0 +1,44 @@
+{
+  "name": "GH_DragDropFileAction",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates the possible actions for drag\u002Bdrop loading ghx files.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_DragDropFileAction.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Indicates no action is defined."
+    },
+    {
+      "name": "Open",
+      "value": 1,
+      "summary": "Open the file(s) as a new document."
+    },
+    {
+      "name": "Examine",
+      "value": 2,
+      "summary": "Examine the file(s) using FileViewer.exe"
+    },
+    {
+      "name": "Insert",
+      "value": 3,
+      "summary": "Insert the file(s) into the current document."
+    },
+    {
+      "name": "Group",
+      "value": 4,
+      "summary": "Insert the file(s) into the current document as separate groups."
+    },
+    {
+      "name": "Cluster",
+      "value": 5,
+      "summary": "Insert the file(s) into the current document as clusters."
+    }
+  ]
+}

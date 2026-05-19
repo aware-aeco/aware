@@ -1,0 +1,113 @@
+{
+  "name": "ProjectService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.ProjectService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CloseAllplan",
+      "signature": "CloseAllplan()",
+      "summary": "Close Allplan",
+      "remarks": "Close Allplan",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectService/#NemAll_Python_BaseElements.ProjectService.CloseAllplan"
+    },
+    {
+      "name": "GetCurrentProjectNameAndHost",
+      "signature": "GetCurrentProjectNameAndHost()",
+      "summary": "Get the project and host name",
+      "remarks": "Get the project and host name",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "tuple(project name, host name)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectService/#NemAll_Python_BaseElements.ProjectService.GetCurrentProjectNameAndHost"
+    },
+    {
+      "name": "GetCurrentUserAsBwsPath",
+      "signature": "GetCurrentUserAsBwsPath()",
+      "summary": "Get the current user as BWS path",
+      "remarks": "Get the current user as BWS path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "User as BWS path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectService/#NemAll_Python_BaseElements.ProjectService.GetCurrentUserAsBwsPath"
+    },
+    {
+      "name": "GetProjectPath",
+      "signature": "GetProjectPath(projectName, hostName)",
+      "summary": "Get the project path",
+      "remarks": "Get the project path",
+      "params": [
+        {
+          "name": "hostName",
+          "type": "str",
+          "doc": "Host name",
+          "optional": false
+        },
+        {
+          "name": "projectName",
+          "type": "str",
+          "doc": "Project name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "tuple(Error, project path)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectService/#NemAll_Python_BaseElements.ProjectService.GetProjectPath"
+    },
+    {
+      "name": "OpenProject",
+      "signature": "OpenProject(hostName, projectName, doc)",
+      "summary": "Open the project",
+      "remarks": "Open the project",
+      "params": [
+        {
+          "name": "doc",
+          "type": "str",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "hostName",
+          "type": "DocumentAdapter",
+          "doc": "Host name",
+          "optional": false
+        },
+        {
+          "name": "projectName",
+          "type": "str",
+          "doc": "Project name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Active project"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectService/#NemAll_Python_BaseElements.ProjectService.OpenProject"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,78 @@
+{
+  "name": "GetFileNameMode",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.GetFileNameMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_GetFileNameMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Open",
+      "value": 0
+    },
+    {
+      "name": "OpenTemplate",
+      "value": 1
+    },
+    {
+      "name": "OpenImage",
+      "value": 2
+    },
+    {
+      "name": "OpenRhinoOnly",
+      "value": 3
+    },
+    {
+      "name": "OpenTextFile",
+      "value": 5
+    },
+    {
+      "name": "OpenWorksession",
+      "value": 6
+    },
+    {
+      "name": "Import",
+      "value": 7
+    },
+    {
+      "name": "Attach",
+      "value": 8
+    },
+    {
+      "name": "LoadPlugIn",
+      "value": 9
+    },
+    {
+      "name": "Save",
+      "value": 10
+    },
+    {
+      "name": "SaveSmall",
+      "value": 11
+    },
+    {
+      "name": "SaveTemplate",
+      "value": 12
+    },
+    {
+      "name": "SaveImage",
+      "value": 13
+    },
+    {
+      "name": "Export",
+      "value": 14
+    },
+    {
+      "name": "SaveTextFile",
+      "value": 17
+    },
+    {
+      "name": "SaveWorksession",
+      "value": 18
+    }
+  ]
+}

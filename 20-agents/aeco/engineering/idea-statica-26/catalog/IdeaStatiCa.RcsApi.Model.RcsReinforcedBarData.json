@@ -1,0 +1,38 @@
+{
+  "name": "RcsReinforcedBarData",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsReinforcedBarData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedBarData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Diameter",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedBarData.diameter.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedBarData.md"
+    },
+    {
+      "name": "Point",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedBarData.point.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedBarData.md"
+    },
+    {
+      "name": "MaterialName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedBarData.materialName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedBarData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,91 @@
+{
+  "name": "IGH_TaskCapableComponent",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "GH_Component that can choose to support the use of Tasks to compute solutions When UseTasks returns true, the component has it\u0027s SolveInstance enumeration called twice. The first pass (InPreSolve=True) is intended solely for collecting data and starting calculation tasks. The second pass (InPreSolve=False) takes results or the tasks and sets the output.",
+  "interfaces": [
+    "IGH_Component"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_TaskCapableComponent.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RequestTaskCancellation",
+      "signature": "void RequestTaskCancellation()",
+      "summary": "Called by the framework when solving has been interrupted and tasks do not need to complete.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_TaskCapableComponent_RequestTaskCancellation.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "InConstructor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the constructor flag for this instance. If InConstructor = True, it means the component is still registering parameters and the layout is not yet complete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_InConstructor.htm"
+    },
+    {
+      "name": "InPreSolve",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Is set to True by the framework right before a \u0022use tasks\u0022 pass is made on SolveIntance calls. When True, SolveInstance should be using Tasks to start calculations on input data. When False, SolveInstance should be setting the output data by either using the result of a task or directly computing the results.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_TaskCapableComponent_InPreSolve.htm"
+    },
+    {
+      "name": "IsValidMasterParameterIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the MasterParameterIndex property identifies a valid parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_IsValidMasterParameterIndex.htm"
+    },
+    {
+      "name": "MasterParameterIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the master parameter index override. Negative indices or indices larger than or equal to the input parameter count will be ignored and regular master parameter detection will kick in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_MasterParameterIndex.htm"
+    },
+    {
+      "name": "Message",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a custom message to be displayed underneath the component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_Message.htm"
+    },
+    {
+      "name": "Params",
+      "type": "GH_ComponentParamServer",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Params object that managed input and output parameters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_Params.htm"
+    },
+    {
+      "name": "RunCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating how many times the SolveInstance method was called on this component during the last solution. This property will return -1 if no valid runcount is available.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_RunCount.htm"
+    },
+    {
+      "name": "UseTasks",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns True if the component is set to support tasks. Components can have this feature turned on/off. Note that even if UseTasks returns True, there is a chance that a multipass task based solution may not be invoked depending on if multiple calls need to be made during enumeration. You must pay attention to the value of InPreSolve during SolveInstance. The set version of this property can be called by the framework if we want to provide a technique to globally turn on/off task support for all components in a definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_TaskCapableComponent_UseTasks.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

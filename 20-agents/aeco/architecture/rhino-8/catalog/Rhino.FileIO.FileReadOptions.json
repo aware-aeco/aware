@@ -1,0 +1,161 @@
+{
+  "name": "FileReadOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileReadOptions\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileReadOptions.htm",
+  "constructors": [
+    {
+      "name": "FileReadOptions",
+      "signature": "public FileReadOptions()",
+      "summary": "Initializes a new instance of the FileReadOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReadOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the FileReadOptions",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReadOptions_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the FileReadOptions and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReadOptions_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReadOptions_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BatchMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means you cannot ask questions during reading. (no dialogs, no \u0022getters\u0022, etc.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_BatchMode.htm"
+    },
+    {
+      "name": "ImportMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means we are merging whatever is being read into an existing document. This means you need to consider things like: If the information being read is in a different unit system, it should be scaled if UseScaleGeometry is true. There can be existing layers, fonts, materials, dimension styles, hatch patterns, and so on with the same name as items being read from the file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_ImportMode.htm"
+    },
+    {
+      "name": "ImportReferenceMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means we are reading information for a work session reference model or a linked instance definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_ImportReferenceMode.htm"
+    },
+    {
+      "name": "InsertMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means we are reading information that will be used to create an instance definition or some other type of \u0022inserting\u0022 that is supported by Rhino\u0027s \u0022Insert\u0022 command.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_InsertMode.htm"
+    },
+    {
+      "name": "LinkedInstanceDefinitionSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "If a file is being read to create an instance definition, then this value will be the serial number of the instance definition being created. Otherwise, this value will be 0;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_LinkedInstanceDefinitionSerialNumber.htm"
+    },
+    {
+      "name": "NewMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means we are reading template information in something like a OnFileNew event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_NewMode.htm"
+    },
+    {
+      "name": "OpenMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means we are reading the information into an empty document. This means you need to consider things like: Setting the unit system (if the file has a unit system)Creating a default layer if one is not there.Setting up appropriate views when you\u0027re finished reading.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_OpenMode.htm"
+    },
+    {
+      "name": "OptionsDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Additional read options.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_OptionsDictionary.htm"
+    },
+    {
+      "name": "ReferenceModelGrandParentLayerId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Information that ultimately is part of a worksession reference model or linked instance definition model is being read, all layers are added as sub-layers of a grand-parent layer.When the information being read is destined for the active model, no grandparent layer is used. Value is Guid.Empty if no grandparent layer is in use.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_ReferenceModelGrandParentLayerId.htm"
+    },
+    {
+      "name": "ScaleGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true: If ImportMode is true and the geometry in the file being read has a unit system different from the model\u0027s unit system, then apply the unit conversion scale to the file\u0027s geometry before adding it to the model. false: Do not scale. Once case where this happens is when an instance definition is read from a file and the model space instance references have been scaled. In case the instance definition geometry cannot be scaled or the net result is that the size of the instance reference object is scaled by the square of the scale factor.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_ScaleGeometry.htm"
+    },
+    {
+      "name": "UseScaleGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If this parameter is true, then no questions are asked when unit conversion scaling is optional and the setting specified by ScaleGeometry is used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_UseScaleGeometry.htm"
+    },
+    {
+      "name": "WorkSessionReferenceModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "If a worksession reference model is being read, then a value \u003E= 1000 will be returned. Otherwise, this value will be 0;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReadOptions_WorkSessionReferenceModelSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

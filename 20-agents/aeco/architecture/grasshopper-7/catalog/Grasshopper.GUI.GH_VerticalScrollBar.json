@@ -1,0 +1,117 @@
+{
+  "name": "GH_VerticalScrollBar",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Scroll bar control with floating point accuracy.",
+  "base": "GH_DoubleBufferedPanel",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_VerticalScrollBar.htm",
+  "constructors": [
+    {
+      "name": "GH_VerticalScrollBar",
+      "signature": "public GH_VerticalScrollBar()",
+      "summary": "Initializes a new instance of the GH_VerticalScrollBar class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_VerticalScrollBar__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_VerticalScrollBar_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides ScrollableControl.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_VerticalScrollBar_OnPaintBackground.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Grip",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the actual dimensions of the scroll bar grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_VerticalScrollBar_Grip.htm"
+    },
+    {
+      "name": "GripRegion",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the grip region for this scroll bar. The Grip Region is the area in which the grip can be found. It is essentially the Client area minus the padding.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_VerticalScrollBar_GripRegion.htm"
+    },
+    {
+      "name": "ImpliedVerticalOffset",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the offset of the target region as implied by the scroll ratio. If you set this value, the ratio is reverse engineered.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_VerticalScrollBar_ImpliedVerticalOffset.htm"
+    },
+    {
+      "name": "ScreenHeight",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the height of the screen area (the visible area)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_VerticalScrollBar_ScreenHeight.htm"
+    },
+    {
+      "name": "TargetHeight",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the height of the target area (the area being scrolled)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_VerticalScrollBar_TargetHeight.htm"
+    },
+    {
+      "name": "TargetRatio",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scroll ration. If the scroll ratio is changed, the OnScrollRatioChanged event will be raised.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_VerticalScrollBar_TargetRatio.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ScrollRatioChanged",
+      "delegate": "Grasshopper.GUI.GH_VerticalScrollBar.ScrollRatioChangedEventHandler",
+      "signature": "public event GH_VerticalScrollBar.ScrollRatioChangedEventHandler ScrollRatioChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_VerticalScrollBar_ScrollRatioChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

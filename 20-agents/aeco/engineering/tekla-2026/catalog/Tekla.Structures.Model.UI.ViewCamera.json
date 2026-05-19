@@ -1,0 +1,101 @@
+{
+  "name": "ViewCamera",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The ViewCamera class defines a camera which can be used together with a visible view. Always supply a properly orthogonalized camera up vector when rotating the camera.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fb51cafc-b3f3-36b6-d022-453d1f1d6da3",
+  "constructors": [
+    {
+      "name": "ViewCamera",
+      "signature": "public ViewCamera()",
+      "summary": "Instantiates a new view camera instance with zero length vectors.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/127a00c3-072b-3fe2-f76a-d6671697d7fd"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Modify",
+      "signature": "public bool Modify()",
+      "summary": "Updates the camera to the application view.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25b308fd-2fdb-630f-ef81-dbe854987574"
+    },
+    {
+      "name": "Select",
+      "signature": "public bool Select()",
+      "summary": "Updates the camera parameters from the application view.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/32e5ccf7-e831-0b1f-6bdc-f27f9d9c5a3b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DirectionVector",
+      "type": "Vector",
+      "getter": true,
+      "setter": true,
+      "summary": "The camera direction (controls the camera pan and tilt).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0830f63b-9937-3139-6f05-9a04c4a7ed06"
+    },
+    {
+      "name": "FieldOfView",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The camera field of view as an angle (degrees) in the perspective view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d6bed2f8-305d-9c8e-5852-4d70b9abe54c"
+    },
+    {
+      "name": "Location",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The camera location in global coordinates (XYZ).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4d85abd8-d2b6-e8a1-2a1c-84ab2e2e3892"
+    },
+    {
+      "name": "UpVector",
+      "type": "Vector",
+      "getter": true,
+      "setter": true,
+      "summary": "The camera up vector (controls the camera roll).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c15f180e-7d55-b348-1fee-0ed8519f5a6b"
+    },
+    {
+      "name": "View",
+      "type": "View",
+      "getter": true,
+      "setter": true,
+      "summary": "The view where the camera belongs to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e40c4866-f7a6-198c-23c4-e805463ce505"
+    },
+    {
+      "name": "ZoomFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The camera zoom factor (meter/pixel) in the orthogonal view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b17d81e4-0a73-5a57-9743-250ad8b8ba1a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelSaveInfoDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for model save with context information.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/bf917674-1611-c405-e798-55e4d1afa4e9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelSaveInfoDelegate( string ModelSaveInfo )"
+}

@@ -1,0 +1,322 @@
+{
+  "name": "GH_Predicate",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Types.GH_Predicate.)",
+  "interfaces": [
+    "IGH_Goo"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Predicate.htm",
+  "constructors": [
+    {
+      "name": "GH_Predicate",
+      "signature": "public GH_Predicate(Predicate\u003CObject\u003E predicate, string description)",
+      "summary": "Initializes a new instance of the GH_Predicate class",
+      "params": [
+        {
+          "name": "predicate",
+          "type": "System.Predicate\u003CObject\u003E",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static GH_Predicate Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Predicate",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E",
+      "signature": "public bool CastTo\u003CT\u003E(out T target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_CastTo__1.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public IGH_Goo Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_Duplicate.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public IGH_GooProxy EmitProxy()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_EmitProxy.htm"
+    },
+    {
+      "name": "Format",
+      "signature": "public string Format(Object value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_Format.htm"
+    },
+    {
+      "name": "Invoke",
+      "signature": "public bool Invoke(Object value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_Invoke.htm"
+    },
+    {
+      "name": "Negate",
+      "signature": "public GH_Predicate Negate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_Predicate",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_Negate.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public Object ScriptVariable()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_ScriptVariable.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_ToString.htm"
+    },
+    {
+      "name": "TryCastTo\u003CT\u003E",
+      "signature": "public static bool TryCastTo\u003CT\u003E(Object source, out T target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_TryCastTo__1.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Predicate_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_Description.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "GH_Predicate",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_Empty.htm"
+    },
+    {
+      "name": "False",
+      "type": "GH_Predicate",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_False.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_IsValidWhyNot.htm"
+    },
+    {
+      "name": "Missing",
+      "type": "GH_Predicate",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_Missing.htm"
+    },
+    {
+      "name": "Present",
+      "type": "GH_Predicate",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_Present.htm"
+    },
+    {
+      "name": "True",
+      "type": "GH_Predicate",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_True.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Predicate_TypeName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

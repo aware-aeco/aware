@@ -1,0 +1,119 @@
+{
+  "name": "BrepVertexList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to all the Vertices in a Brep object",
+  "interfaces": [
+    "IEnumerable\u003CBrepVertex\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_BrepVertexList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add()",
+      "signature": "public BrepVertex Add()",
+      "summary": "Create and add a new vertex to this list",
+      "params": [],
+      "returns": {
+        "type": "BrepVertex",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepVertexList.Add\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepVertexList_Add.htm"
+    },
+    {
+      "name": "Add(Point3d, Double)",
+      "signature": "public BrepVertex Add(Point3d point, double vertexTolerance)",
+      "summary": "Create and add a new vertex to this list",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022point\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepVertexList.Add(Rhino.Geometry.Point3d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "vertexTolerance",
+          "type": "System.Double",
+          "doc": "Use RhinoMath.UnsetTolerance if you are unsure",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepVertex",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepVertexList.Add(Rhino.Geometry.Point3d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepVertexList_Add_1.htm"
+    },
+    {
+      "name": "AddPointOnFace",
+      "signature": "public BrepVertex AddPointOnFace(BrepFace face, double s, double t)",
+      "summary": "Adds a new point on face to the brep",
+      "remarks": "If a vertex is a point on a face, then brep.Edges[edge_index] will be an edge with no 3d curve. This edge will have a single trim with type BrepTrimType.CurveOnSurface. There will be a loop containing this single trim.",
+      "params": [
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "face that vertex lies on",
+          "optional": false
+        },
+        {
+          "name": "s",
+          "type": "System.Double",
+          "doc": "surface parameters",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "surface parameters",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepVertex",
+        "doc": "new vertex that represents the point on face"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepVertexList_AddPointOnFace.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CBrepVertex\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that visits all surfaces.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CBrepVertex\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_BrepVertexList_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of brep vertices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepVertexList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "BrepVertex",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the BrepVertex at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_BrepVertexList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

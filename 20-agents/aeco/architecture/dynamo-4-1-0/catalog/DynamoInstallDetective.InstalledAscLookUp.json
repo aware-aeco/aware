@@ -1,0 +1,64 @@
+{
+  "name": "InstalledAscLookUp",
+  "namespace": "DynamoInstallDetective",
+  "kind": "class",
+  "summary": "Type InstalledAscLookUp",
+  "base": "DynamoInstallDetective.InstalledProductLookUp",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs",
+  "constructors": [
+    {
+      "name": "InstalledAscLookUp(string)",
+      "signature": "void InstalledAscLookUp(string fileLookup)",
+      "summary": "InstalledAscLookUp.InstalledAscLookUp",
+      "params": [
+        {
+          "name": "fileLookup",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetInstallLocationFromProductName(string)",
+      "signature": "string GetInstallLocationFromProductName(string name)",
+      "summary": "InstalledAscLookUp.GetInstallLocationFromProductName",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetProductNameList",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GetProductNameList()",
+      "summary": "InstalledAscLookUp.GetProductNameList",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

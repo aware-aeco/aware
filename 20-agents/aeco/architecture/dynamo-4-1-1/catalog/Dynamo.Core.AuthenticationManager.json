@@ -1,0 +1,82 @@
+{
+  "name": "AuthenticationManager",
+  "namespace": "Dynamo.Core",
+  "kind": "class",
+  "summary": "This is a wrapper for Greg.IAuthProvider functionality. It is used for oxygen authentication.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs",
+  "constructors": [
+    {
+      "name": "AuthenticationManager(Greg.IAuthProvider)",
+      "signature": "void AuthenticationManager(Greg.IAuthProvider authProvider)",
+      "summary": "Initializes a new instance of the Dynamo.Core.AuthenticationManager class.",
+      "params": [
+        {
+          "name": "authProvider",
+          "type": "Greg.IAuthProvider",
+          "doc": "IAuthProvider functionality",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AuthProvider",
+      "type": "Greg.IAuthProvider",
+      "getter": true,
+      "setter": false,
+      "summary": "Current IAuthProvider",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs"
+    },
+    {
+      "name": "HasAuthProvider",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the this.client has login capabilities",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs"
+    },
+    {
+      "name": "LoginState",
+      "type": "Greg.AuthProviders.LoginState",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies whether the user is logged in or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs"
+    },
+    {
+      "name": "LoginStateInitial",
+      "type": "Greg.AuthProviders.LoginState",
+      "getter": true,
+      "setter": false,
+      "summary": "This Property will return the initial LoginState assigned in the constructor in order to be used in the Initialization flow. Others features require direct calls to the LoginState due to are on demand.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs"
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The username of the current user, if logged in. Otherwise null",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "LoginStateChanged",
+      "delegate": "System.Action\u003CGreg.AuthProviders.LoginState\u003E",
+      "signature": "public event System.Action\u003CGreg.AuthProviders.LoginState\u003E LoginStateChanged",
+      "summary": "Occurs when login state is changed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/AuthenticationManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

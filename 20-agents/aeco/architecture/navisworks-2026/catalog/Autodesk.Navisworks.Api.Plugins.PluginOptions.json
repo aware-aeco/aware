@@ -1,0 +1,24 @@
+{
+  "name": "PluginOptions",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "enum",
+  "summary": "Options that modify how a plugin behaves",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.PluginOptions",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No additional options"
+    },
+    {
+      "name": "SupportsControls",
+      "value": 1,
+      "summary": "Supports being used in a control (see Autodesk.Navisworks.Api.Controls)"
+    }
+  ]
+}

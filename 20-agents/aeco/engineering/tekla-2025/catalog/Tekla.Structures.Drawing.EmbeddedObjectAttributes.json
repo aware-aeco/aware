@@ -1,0 +1,116 @@
+{
+  "name": "EmbeddedObjectAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The EmbeddedObjectAttributes class contains attributes for embedded objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/596ae9f6-fcde-e827-a806-61f33418be18",
+  "constructors": [
+    {
+      "name": "EmbeddedObjectAttributes()",
+      "signature": "public EmbeddedObjectAttributes()",
+      "summary": "Initializes a new instance of the EmbeddedObjectAttributes class that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5940f55d-83b2-32f4-ffc5-c48ec9431923"
+    },
+    {
+      "name": "EmbeddedObjectAttributes(String)",
+      "signature": "public EmbeddedObjectAttributes(string AttributeFile)",
+      "summary": "Initializes a new instance of the EmbeddedObjectAttributes class that loads given attributes.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/de94d88c-4d99-e8d5-1499-9a6105f39ddf"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f8df975c-3c1c-23b9-96cb-2bfe8ae31ac6"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the specified attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/27635ad9-d4d6-ad93-a827-16cb3992936c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Frame",
+      "type": "EmbeddedObjectFrame",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/109ef16a-142d-b2e2-b8a8-c6af92eadab3"
+    },
+    {
+      "name": "Scaling",
+      "type": "EmbeddedObjectScalingOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scaling type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/94bcfe63-b56a-6f17-9f3c-f7c76f056909"
+    },
+    {
+      "name": "XScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X scaling value. Changing this property will set the scaling type to ScaleXY.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d7179a7e-32c5-1e66-4b41-39eb449305b0"
+    },
+    {
+      "name": "YScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y scaling value. Changing this property will set the scaling type to ScaleXY.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7a7adb51-05b5-dfa6-fc01-61a4eea5cde0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

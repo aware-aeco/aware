@@ -1,0 +1,173 @@
+{
+  "name": "Texture",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The Texture class contains methods for obtaining information about textures that are part of your materials in your model (within the In-Model section of the Materials Browser). Remember, textures are repeatable images that \u201Ctile\u201D when painted on a surface.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "average_color",
+      "signature": "average_color =\u003E Sketchup::Color?",
+      "summary": "The average_color method retrieves a color object with the average color found in the texture.",
+      "remarks": "The average_color method retrieves a color object with the average color found in the texture.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Color, nil",
+        "doc": "a color object (if successful), nil if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#average_color-instance_method"
+    },
+    {
+      "name": "filename",
+      "signature": "filename =\u003E String",
+      "summary": "Note: Since SketchUp 2021.",
+      "remarks": "Note: Since SketchUp 2021.0 this method will append a file extension matching the image format if the file extension is missing from stored filepath. The #filename method retrieves the full path, if available, for a texture object. Textures for materials shipping with SketchUp might only have a filename, since the path would be invalid on the end user\u0027s machine. Textures dynamically created from ImageRep objects may have an empty path unless saved with ImageRep#save_file or until the texture is saved with #write. If you need only the filename of the texture use filename = File.basename(texture.filename).",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a string representation of the path and filename used for the texture."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#filename-instance_method"
+    },
+    {
+      "name": "height",
+      "signature": "height =\u003E Integer",
+      "summary": "The height method is used to get the height of a repeatable texture image, in inches.",
+      "remarks": "The height method is used to get the height of a repeatable texture image, in inches.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the height, in inches, of the texture pattern"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#height-instance_method"
+    },
+    {
+      "name": "image_height",
+      "signature": "image_height =\u003E Integer",
+      "summary": "The image_height method retrieves the height of the repeatable texture image, in pixels.",
+      "remarks": "The image_height method retrieves the height of the repeatable texture image, in pixels.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the height, in pixels, of the texture pattern"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#image_height-instance_method"
+    },
+    {
+      "name": "image_rep",
+      "signature": "image_rep(colorized = false) =\u003E Sketchup::ImageRep",
+      "summary": "The #image_rep method returns a copy of a ImageRep object representing the texture pixel data.",
+      "remarks": "The #image_rep method returns a copy of a ImageRep object representing the texture pixel data.",
+      "params": [
+        {
+          "name": "colorized",
+          "type": "Boolean",
+          "doc": "Set to true to obtain the colorized version.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ImageRep",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#image_rep-instance_method"
+    },
+    {
+      "name": "image_width",
+      "signature": "image_width =\u003E Integer",
+      "summary": "The image_width method retrieves the width of the repeatable texture image, in pixels.",
+      "remarks": "The image_width method retrieves the width of the repeatable texture image, in pixels.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the width, in pixels, of the texture pattern"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#image_width-instance_method"
+    },
+    {
+      "name": "valid?",
+      "signature": "valid? =\u003E Boolean",
+      "summary": "The valid? method ensures that a texture is valid.",
+      "remarks": "The valid? method ensures that a texture is valid.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#valid?-instance_method"
+    },
+    {
+      "name": "width",
+      "signature": "width =\u003E Integer",
+      "summary": "The width method is used to get the width of a repeatable texture image, in inches.",
+      "remarks": "The width method is used to get the width of a repeatable texture image, in inches.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the width, in inches, of the texture pattern"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#width-instance_method"
+    },
+    {
+      "name": "write",
+      "signature": "write(path, colorize = false) =\u003E Boolean",
+      "summary": "Writes the texture to file with option to preserve the color adjustments made by the material.",
+      "remarks": "Writes the texture to file with option to preserve the color adjustments made by the material.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The file path to write the texture to.",
+          "optional": false
+        },
+        {
+          "name": "colorize",
+          "type": "Boolean",
+          "doc": "Boolean - Allows for the texture to be exported with the color adjustments.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the method succeeded"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#write-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "size",
+      "type": "Integer, Array(Integer, Integer)",
+      "getter": false,
+      "setter": true,
+      "summary": "The size= method allows you to set the size of the repeatable texture image, in inches,",
+      "remarks": "The size= method allows you to set the size of the repeatable texture image, in inches,",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Texture.html#size=-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

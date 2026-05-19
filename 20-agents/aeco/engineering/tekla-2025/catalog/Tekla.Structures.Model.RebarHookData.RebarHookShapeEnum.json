@@ -1,0 +1,39 @@
+{
+  "name": "RebarHookData.RebarHookShapeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different hook shapes.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b689fb8e-0a78-1764-54db-a24472dbe63e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NO_HOOK",
+      "value": 0,
+      "summary": "No hook."
+    },
+    {
+      "name": "HOOK_90_DEGREES",
+      "value": 1,
+      "summary": "The standard 90-degree hook."
+    },
+    {
+      "name": "HOOK_135_DEGREES",
+      "value": 2,
+      "summary": "The standard 135-degree hook."
+    },
+    {
+      "name": "HOOK_180_DEGREES",
+      "value": 3,
+      "summary": "The standard 180-degree hook."
+    },
+    {
+      "name": "CUSTOM_HOOK",
+      "value": 4,
+      "summary": "The custom hook shape to manually define the angle, radius and length of a hook."
+    }
+  ]
+}

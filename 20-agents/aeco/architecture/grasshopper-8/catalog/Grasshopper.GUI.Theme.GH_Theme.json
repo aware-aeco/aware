@@ -1,0 +1,150 @@
+{
+  "name": "GH_Theme",
+  "namespace": "Grasshopper.GUI.Theme",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Theme.GH_Theme.)",
+  "base": "GH_ISerializable",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Theme_GH_Theme.htm",
+  "constructors": [
+    {
+      "name": "GH_Theme()",
+      "signature": "public GH_Theme()",
+      "summary": "Create a new default theme.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Theme_GH_Theme__ctor.htm"
+    },
+    {
+      "name": "GH_Theme(GH_Theme)",
+      "signature": "public GH_Theme(GH_Theme other)",
+      "summary": "Make a duplicate of another theme.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.GUI.Theme.GH_Theme",
+          "doc": "Theme to copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Theme_GH_Theme__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "LoadTheme",
+      "signature": "public void LoadTheme()",
+      "summary": "Instantiate all palette and gui defaults. This function reads the colour values out of grasshopper_gui.xml settings database if it exists.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Theme_GH_Theme_LoadTheme.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Theme_GH_Theme_Read.htm"
+    },
+    {
+      "name": "SaveTheme",
+      "signature": "public void SaveTheme()",
+      "summary": "Store all palette and gui defaults. This function writes the colour values out to grasshopper_gui.xml settings database.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Theme_GH_Theme_SaveTheme.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Theme_GH_Theme_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackGround",
+      "type": "GH_BackgroundSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the theme background settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_Theme_BackGround.htm"
+    },
+    {
+      "name": "DefaultTheme",
+      "type": "GH_Theme",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_Theme_DefaultTheme.htm"
+    },
+    {
+      "name": "Objects",
+      "type": "GH_ObjectSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the theme objects and ZUI settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_Theme_Objects.htm"
+    },
+    {
+      "name": "Page",
+      "type": "GH_PageSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the theme page and grid settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_Theme_Page.htm"
+    },
+    {
+      "name": "Palettes",
+      "type": "GH_PaletteSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the theme palette settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_Theme_Palettes.htm"
+    },
+    {
+      "name": "Wires",
+      "type": "GH_WireSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the theme wire settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_Theme_Wires.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

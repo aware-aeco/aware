@@ -1,0 +1,379 @@
+{
+  "name": "GH_Skin",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Provides static access to typical Palletes and other GUI colours.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Skin.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadSkin",
+      "signature": "public static void LoadSkin()",
+      "summary": "Instantiate all palette and gui defaults. This function reads the colour values out of grasshopper_gui.xml settings database if it exists.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Skin_LoadSkin.htm"
+    },
+    {
+      "name": "SaveSkin",
+      "signature": "public static void SaveSkin()",
+      "summary": "Store all palette and gui defaults. This function writes the colour values out to grasshopper_gui.xml settings database.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Skin_SaveSkin.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "canvas_back",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies canvas background colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_back.htm"
+    },
+    {
+      "name": "canvas_edge",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies canvas edge colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_edge.htm"
+    },
+    {
+      "name": "canvas_grid",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies canvas grid colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_grid.htm"
+    },
+    {
+      "name": "canvas_grid_col",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the interval of the canvas grid columns.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_grid_col.htm"
+    },
+    {
+      "name": "canvas_grid_row",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the interval of the canvas grid rows.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_grid_row.htm"
+    },
+    {
+      "name": "canvas_mono",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Canvas monochromatic flag. If True, the canvas background is a solid colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_mono.htm"
+    },
+    {
+      "name": "canvas_mono_color",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "If canvas_mono is set to true, this colour specified the solid background fill for the canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_mono_color.htm"
+    },
+    {
+      "name": "canvas_shade",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the colour of the canvas drop shadow.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_shade.htm"
+    },
+    {
+      "name": "canvas_shade_size",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the size of the canvas drop shadow.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_canvas_shade_size.htm"
+    },
+    {
+      "name": "group_back",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the default fill colour for Group objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_group_back.htm"
+    },
+    {
+      "name": "palette_black_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Black palette, selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_black_selected.htm"
+    },
+    {
+      "name": "palette_black_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Black palette, unselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_black_standard.htm"
+    },
+    {
+      "name": "palette_blue_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Blue palette, selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_blue_selected.htm"
+    },
+    {
+      "name": "palette_blue_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Blue palette, unselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_blue_standard.htm"
+    },
+    {
+      "name": "palette_brown_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Brown palette, selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_brown_selected.htm"
+    },
+    {
+      "name": "palette_brown_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Brown palette, unselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_brown_standard.htm"
+    },
+    {
+      "name": "palette_error_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Errors, selected palette. Default background for parameters and components that carry errors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_error_selected.htm"
+    },
+    {
+      "name": "palette_error_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Errors, unselected palette. Default background for parameters and components that carry errors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_error_standard.htm"
+    },
+    {
+      "name": "palette_grey_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Grey palette, selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_grey_selected.htm"
+    },
+    {
+      "name": "palette_grey_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Grey palette, unselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_grey_standard.htm"
+    },
+    {
+      "name": "palette_hidden_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Hidden, selected palette. Default background for PanelHidden (preview=off) parameters and components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_hidden_selected.htm"
+    },
+    {
+      "name": "palette_hidden_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Hidden, unselected palette. Default background for PanelHidden (preview=off) parameters and components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_hidden_standard.htm"
+    },
+    {
+      "name": "palette_locked_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Locked, selected palette. Default background for locked parameters and components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_locked_selected.htm"
+    },
+    {
+      "name": "palette_locked_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Locked, unselected palette. Default background for locked parameters and components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_locked_standard.htm"
+    },
+    {
+      "name": "palette_normal_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Normal, selected palette. Default background for parameters and components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_normal_selected.htm"
+    },
+    {
+      "name": "palette_normal_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Normal, unselected palette. Default background for parameters and components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_normal_standard.htm"
+    },
+    {
+      "name": "palette_pink_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Pink palette, selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_pink_selected.htm"
+    },
+    {
+      "name": "palette_pink_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Pink palette, unselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_pink_standard.htm"
+    },
+    {
+      "name": "palette_trans_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Transparent palette, selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_trans_selected.htm"
+    },
+    {
+      "name": "palette_trans_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Transparent palette, unselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_trans_standard.htm"
+    },
+    {
+      "name": "palette_warning_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Warnings, selected palette. Default background for parameters and components that carry warnings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_warning_selected.htm"
+    },
+    {
+      "name": "palette_warning_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Warnings, unselected palette. Default background for parameters and components that carry warnings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_warning_standard.htm"
+    },
+    {
+      "name": "palette_white_selected",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "White palette, selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_white_selected.htm"
+    },
+    {
+      "name": "palette_white_standard",
+      "type": "GH_PaletteStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "White palette, unselected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_palette_white_standard.htm"
+    },
+    {
+      "name": "panel_back",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the default fill colour for Panel objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_panel_back.htm"
+    },
+    {
+      "name": "wire_default",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the default wire colour.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_wire_default.htm"
+    },
+    {
+      "name": "wire_empty",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the colour for empty (null) wires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_wire_empty.htm"
+    },
+    {
+      "name": "wire_selected_a",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the colour for wires at the selected end.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_wire_selected_a.htm"
+    },
+    {
+      "name": "wire_selected_b",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the colour for wires at the unselected end.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_wire_selected_b.htm"
+    },
+    {
+      "name": "zui_edge",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the default edge colour for ZUI elements.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_zui_edge.htm"
+    },
+    {
+      "name": "zui_edge_highlight",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the default edge colour for highlighted ZUI elements.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_zui_edge_highlight.htm"
+    },
+    {
+      "name": "zui_fill",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the default fill colour for ZUI elements.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_zui_fill.htm"
+    },
+    {
+      "name": "zui_fill_highlight",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies the default fill colour for highlighted ZUI elements.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Skin_zui_fill_highlight.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

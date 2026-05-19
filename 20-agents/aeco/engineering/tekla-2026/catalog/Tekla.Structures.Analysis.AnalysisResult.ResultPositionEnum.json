@@ -1,0 +1,64 @@
+{
+  "name": "AnalysisResult.ResultPositionEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The result position.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a85864c1-c111-0d43-86d4-fc708b681cae",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "POSITION_BY_COORDINATES",
+      "value": 0,
+      "summary": "The position given by the coordinates X, Y and Z."
+    },
+    {
+      "name": "POSITION_BY_COORDINATES_MINUS",
+      "value": 6,
+      "summary": "The position given by the coordinates X, Y and Z (minus side)."
+    },
+    {
+      "name": "POSITION_BY_COORDINATES_PLUS",
+      "value": 7,
+      "summary": "The position given by the coordinates X, Y and Z (plus side)."
+    },
+    {
+      "name": "POSITION_BEAM_START_POINT",
+      "value": 1,
+      "summary": "The member start position."
+    },
+    {
+      "name": "POSITION_BEAM_END_POINT",
+      "value": 2,
+      "summary": "The member end position."
+    },
+    {
+      "name": "POSITION_BEAM_MID_POINT",
+      "value": 3,
+      "summary": "The member middle position."
+    },
+    {
+      "name": "POSITION_BEAM_MID_POINT_MINUS",
+      "value": 4,
+      "summary": "The member middle position (minus side)."
+    },
+    {
+      "name": "POSITION_BEAM_MID_POINT_PLUS",
+      "value": 5,
+      "summary": "The member middle position (plus side)."
+    },
+    {
+      "name": "POSITION_MAX_NO_COORDINATES",
+      "value": 201,
+      "summary": "No position specified, gets the maximum."
+    },
+    {
+      "name": "POSITION_MIN_NO_COORDINATES",
+      "value": 203,
+      "summary": "No position specified, gets the minimum."
+    }
+  ]
+}

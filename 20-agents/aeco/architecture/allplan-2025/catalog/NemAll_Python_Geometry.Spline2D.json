@@ -1,0 +1,186 @@
+{
+  "name": "Spline2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D spline.",
+  "base": "PolyPoints2D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/",
+  "constructors": [
+    {
+      "name": "Spline2D",
+      "signature": "Spline2D() | Spline2D(spline: Spline2D) | Spline2D(pntList: List[Point2D])",
+      "summary": "Initialize empty spline",
+      "remarks": "Initialize empty spline",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEndVector",
+      "signature": "GetEndVector() -\u003E Vector2D",
+      "summary": "Get end vector.",
+      "remarks": "Get end vector.",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "end vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.GetEndVector"
+    },
+    {
+      "name": "GetStartVector",
+      "signature": "GetStartVector() -\u003E Vector2D",
+      "summary": "Get start vector.",
+      "remarks": "Get start vector.",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "start vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.GetStartVector"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed() -\u003E bool",
+      "summary": "Check if spline is closed ( first/last points are equal )",
+      "remarks": "Check if spline is closed ( first/last points are equal )",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "closed spline true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.IsClosed"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "remarks": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.Reverse"
+    },
+    {
+      "name": "SetEndVector",
+      "signature": "SetEndVector(vec: Vector2D)",
+      "summary": "Set end vector.",
+      "remarks": "Set end vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "new end vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.SetEndVector"
+    },
+    {
+      "name": "SetStartVector",
+      "signature": "SetStartVector(vec: Vector2D)",
+      "summary": "Set start vector.",
+      "remarks": "Set start vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "new start vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.SetStartVector"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(spline: Spline2D) -\u003E object",
+      "summary": "Comparison of splines without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of splines without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline2D",
+          "doc": "Compared spline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when splines are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.__eq__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E Spline2D",
+      "summary": "Multiple Spline with matrix.",
+      "remarks": "Multiple Spline with matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "Transformation matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Spline2D",
+        "doc": "Transformed spline."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndVector",
+      "type": "Vector2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end vector.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.EndVector"
+    },
+    {
+      "name": "StartVector",
+      "type": "Vector2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start vector.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.StartVector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

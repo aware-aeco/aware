@@ -1,0 +1,13 @@
+{
+  "name": "Operation.IFCExportVersionEnum",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "enum",
+  "summary": "IFC export version enum.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/db39e1d0-5b7b-a4f5-9fd5-f4f9ebdae72a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

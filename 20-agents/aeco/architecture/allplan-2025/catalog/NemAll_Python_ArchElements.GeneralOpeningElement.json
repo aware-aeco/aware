@@ -1,0 +1,49 @@
+{
+  "name": "GeneralOpeningElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of (polygonal) niche, recess, slit or opening.",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/",
+  "constructors": [
+    {
+      "name": "GeneralOpeningElement",
+      "signature": "GeneralOpeningElement() | GeneralOpeningElement( wallOpeningProp: GeneralOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, ) | GeneralOpeningElement( wallOpeningProp: GeneralOpeningProperties, generalEle: BaseElementAdapter, groundPlanePolygon: Polygon2D, drawPlacementPreview: bool, ) | GeneralOpeningElement(element: GeneralOpeningElement)",
+      "summary": "Initialize with default values",
+      "remarks": "Initialize with default values",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "GeneralOpeningProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Opening properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,108 @@
+{
+  "name": "NodeEventHandler",
+  "namespace": "Dynamo.Models",
+  "kind": "delegate",
+  "summary": "This delegate is used in workspace events.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs",
+  "constructors": [
+    {
+      "name": "NodeEventHandler(object, IntPtr)",
+      "signature": "void NodeEventHandler(object object, IntPtr method)",
+      "summary": "NodeEventHandler.NodeEventHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(object, System.EventArgs, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(object sender, System.EventArgs e, System.AsyncCallback callback, object object)",
+      "summary": "NodeEventHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.EventArgs",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "NodeEventHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "Invoke(object, System.EventArgs)",
+      "signature": "void Invoke(object sender, System.EventArgs e)",
+      "summary": "NodeEventHandler.Invoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.EventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(object sender, System.EventArgs e)"
+}

@@ -1,0 +1,790 @@
+{
+  "name": "ViewWorldProjection",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the view - world projection",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/",
+  "constructors": [
+    {
+      "name": "ViewWorldProjection",
+      "signature": "ViewWorldProjection() | ViewWorldProjection(element: ViewWorldProjection)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateForUnitTest",
+      "signature": "CreateForUnitTest(doc: DocumentAdapter) -\u003E ViewWorldProjection",
+      "summary": "Create the object for a unit test",
+      "remarks": "Create the object for a unit test",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ViewWorldProjection",
+        "doc": "created object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.CreateForUnitTest"
+    },
+    {
+      "name": "GetDocumentID",
+      "signature": "GetDocumentID() -\u003E int",
+      "summary": "Get the document ID",
+      "remarks": "Get the document ID",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Document ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetDocumentID"
+    },
+    {
+      "name": "GetEyePoint",
+      "signature": "GetEyePoint() -\u003E Point3D",
+      "summary": "Get eye point of current projection Eye point is point where camera is.",
+      "remarks": "Get eye point of current projection Eye point is point where camera is.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Eye point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetEyePoint"
+    },
+    {
+      "name": "GetIsoProjection",
+      "signature": "GetIsoProjection() -\u003E eProjectionType",
+      "summary": "Get the isometric projection of the view",
+      "remarks": "Get the isometric projection of the view",
+      "params": [],
+      "returns": {
+        "type": "eProjectionType",
+        "doc": "Isometric projection of the view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetIsoProjection"
+    },
+    {
+      "name": "GetMatrix",
+      "signature": "GetMatrix() -\u003E Matrix3D",
+      "summary": "Get the view matrix",
+      "remarks": "Get the view matrix",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetMatrix"
+    },
+    {
+      "name": "GetPixelFactor",
+      "signature": "GetPixelFactor() -\u003E tuple[float, float]",
+      "summary": "Get factor of pixel to world coordinates Used when you need calculate how much millimeters are one pixel",
+      "remarks": "Get factor of pixel to world coordinates Used when you need calculate how much millimeters are one pixel",
+      "params": [],
+      "returns": {
+        "type": "tuple[float, float]",
+        "doc": "tuple(Pixel factor in x direction, Pixel factor in y direction)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetPixelFactor"
+    },
+    {
+      "name": "GetScreenScale",
+      "signature": "GetScreenScale() -\u003E float",
+      "summary": "Get the screen scale",
+      "remarks": "Get the screen scale",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Screen scale"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetScreenScale"
+    },
+    {
+      "name": "GetSearchRadiusByPixel",
+      "signature": "GetSearchRadiusByPixel(pixel: int) -\u003E float",
+      "summary": "Get the search radius by pixel",
+      "remarks": "Get the search radius by pixel",
+      "params": [
+        {
+          "name": "pixel",
+          "type": "int",
+          "doc": "Pixel of the search radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Search radius in view size"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetSearchRadiusByPixel"
+    },
+    {
+      "name": "GetViewAngle",
+      "signature": "GetViewAngle() -\u003E float",
+      "summary": "Get the rotation angle of the view",
+      "remarks": "Get the rotation angle of the view",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Rotation angle of the view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetViewAngle"
+    },
+    {
+      "name": "GetViewPoint",
+      "signature": "GetViewPoint() -\u003E Point3D",
+      "summary": "Get view point of current projection View point is point where you are looking (focused). View point lie in plain of drawn data.",
+      "remarks": "Get view point of current projection View point is point where you are looking (focused). View point lie in plain of drawn data.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Eye point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetViewPoint"
+    },
+    {
+      "name": "GetViewSize",
+      "signature": "GetViewSize() -\u003E Vector2D",
+      "summary": "Get the size of the view",
+      "remarks": "Get the size of the view",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Size of the view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetViewSize"
+    },
+    {
+      "name": "GetViewZAngle",
+      "signature": "GetViewZAngle() -\u003E float",
+      "summary": "Get the rotation angle of the view in z-direction",
+      "remarks": "Get the rotation angle of the view in z-direction",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Rotation angle of the view in z-direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetViewZAngle"
+    },
+    {
+      "name": "GetWindowNumber",
+      "signature": "GetWindowNumber() -\u003E int",
+      "summary": "Get the window number",
+      "remarks": "Get the window number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Window number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetWindowNumber"
+    },
+    {
+      "name": "GetZoomWindowNumber",
+      "signature": "GetZoomWindowNumber() -\u003E int",
+      "summary": "Get the zoom window number. Numbers 1 and more for active zoom window.",
+      "remarks": "Get the zoom window number. Numbers 1 and more for active zoom window.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Window number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetZoomWindowNumber"
+    },
+    {
+      "name": "GetZoomWndTextFac",
+      "signature": "GetZoomWndTextFac() -\u003E float",
+      "summary": "Get the text-factor of the zoom window",
+      "remarks": "Get the text-factor of the zoom window",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Text-factor of the zoom window"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetZoomWndTextFac"
+    },
+    {
+      "name": "GetZoomWndXFac",
+      "signature": "GetZoomWndXFac() -\u003E float",
+      "summary": "Get the x-factor of the zoom window",
+      "remarks": "Get the x-factor of the zoom window",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "X-factor of the zoom window"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetZoomWndXFac"
+    },
+    {
+      "name": "GetZoomWndYFac",
+      "signature": "GetZoomWndYFac() -\u003E float",
+      "summary": "Get the y-factor of the zoom window",
+      "remarks": "Get the y-factor of the zoom window",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Y-factor of the zoom window"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.GetZoomWndYFac"
+    },
+    {
+      "name": "IsAssistWindow",
+      "signature": "IsAssistWindow() -\u003E bool",
+      "summary": "Check for assist window",
+      "remarks": "Check for assist window",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "The document is an assist window: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsAssistWindow"
+    },
+    {
+      "name": "IsCentralProjection",
+      "signature": "IsCentralProjection() -\u003E bool",
+      "summary": "Check, whether the projection is a central projection",
+      "remarks": "Check, whether the projection is a central projection",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Central projection: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsCentralProjection"
+    },
+    {
+      "name": "IsFreeProjection",
+      "signature": "IsFreeProjection() -\u003E bool",
+      "summary": "Check, whether the projection is a free projection",
+      "remarks": "Check, whether the projection is a free projection",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Projection is a free view: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsFreeProjection"
+    },
+    {
+      "name": "IsGroundplanView",
+      "signature": "IsGroundplanView() -\u003E bool",
+      "summary": "Check, whether the projection is ground plan view",
+      "remarks": "Check, whether the projection is ground plan view",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Projection is ground plan view: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsGroundplanView"
+    },
+    {
+      "name": "IsInView",
+      "signature": "IsInView(pnt: Point2D) -\u003E bool",
+      "summary": "Check, whether the point is inside the view",
+      "remarks": "Check, whether the point is inside the view",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Point is inside the view: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsInView"
+    },
+    {
+      "name": "IsIsometricProjection",
+      "signature": "IsIsometricProjection() -\u003E bool",
+      "summary": "Check, whether the projection is a isometric projection",
+      "remarks": "Check, whether the projection is a isometric projection",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Projection is a isometric projection: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsIsometricProjection"
+    },
+    {
+      "name": "IsSideView",
+      "signature": "IsSideView() -\u003E bool",
+      "summary": "Check, whether the projection is a side view",
+      "remarks": "Check, whether the projection is a side view",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Projection is a side view: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsSideView"
+    },
+    {
+      "name": "IsZoomWindow",
+      "signature": "IsZoomWindow() -\u003E bool",
+      "summary": "Check if the input is inside the zoom window",
+      "remarks": "Check if the input is inside the zoom window",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Window number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.IsZoomWindow"
+    },
+    {
+      "name": "ProjectionToWorld",
+      "signature": "ProjectionToWorld(pnt: Point2D, refPnt: Point3D) -\u003E Point3D",
+      "summary": "Get the world 3D point from a projection 2D point and a reference point",
+      "remarks": "Get the world 3D point from a projection 2D point and a reference point",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View Point",
+          "optional": false
+        },
+        {
+          "name": "refPnt",
+          "type": "Point3D",
+          "doc": "Reference point with the additional coordinate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World 3D point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ProjectionToWorld"
+    },
+    {
+      "name": "SetPointDepth",
+      "signature": "SetPointDepth(pointWithDepth: Point3D) -\u003E Point3D",
+      "summary": "Set point depth by current view projection type and pointWithDepth",
+      "remarks": "Set point depth by current view projection type and pointWithDepth",
+      "params": [
+        {
+          "name": "pointWithDepth",
+          "type": "Point3D",
+          "doc": "Point with depth",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point to set"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.SetPointDepth"
+    },
+    {
+      "name": "ViewPerpendicularToWorld",
+      "signature": "ViewPerpendicularToWorld(line3D: Line3D, pnt: Point3D) -\u003E Point3D",
+      "summary": "Transform a view perpendicular point to a world perpendicular point",
+      "remarks": "Transform a view perpendicular point to a world perpendicular point",
+      "params": [
+        {
+          "name": "line3D",
+          "type": "Line3D",
+          "doc": "3D perpendicular line",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "Reference point for the perpendicular",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World perpendicular point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewPerpendicularToWorld"
+    },
+    {
+      "name": "ViewToPixel",
+      "signature": "ViewToPixel( pnt: Point2D, bBottomTop: bool, considerZoomwindow: bool = True ) -\u003E Point2D",
+      "summary": "Transform a view point to a pixel coordinate",
+      "remarks": "Transform a view point to a pixel coordinate",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        },
+        {
+          "name": "bBottomTop",
+          "type": "bool",
+          "doc": "The y zero point is on the bottom of the screen: true/false",
+          "optional": false
+        },
+        {
+          "name": "considerZoomwindow",
+          "type": "bool",
+          "doc": "if true and the position is in a zoom window, then the zoom window will be used for the calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Pixel view point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewToPixel"
+    },
+    {
+      "name": "ViewToWorld",
+      "signature": "ViewToWorld(pnt: Point2D, z: float = 0) -\u003E Point3D",
+      "summary": "Transform a view point to a world point",
+      "remarks": "Transform a view point to a world point",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "doc": "z-coordinate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewToWorld"
+    },
+    {
+      "name": "ViewToWorldBaseZ",
+      "signature": "ViewToWorldBaseZ(pnt: Point2D, zWorld: float) -\u003E Point3D",
+      "summary": "Transform a view point to a world point with resulting z-coordinate",
+      "remarks": "Transform a view point to a world point with resulting z-coordinate",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        },
+        {
+          "name": "zWorld",
+          "type": "float",
+          "doc": "Z-coordinate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World point with resulting z-coordinate"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewToWorldBaseZ"
+    },
+    {
+      "name": "ViewToWorldBaseZ0",
+      "signature": "ViewToWorldBaseZ0(pnt: Point2D) -\u003E Point3D",
+      "summary": "Transform a view point to a world point with resulting z-world = 0",
+      "remarks": "Transform a view point to a world point with resulting z-world = 0",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World point with z=0"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewToWorldBaseZ0"
+    },
+    {
+      "name": "ViewToWorldPlane",
+      "signature": "ViewToWorldPlane(pnt: Point2D, plane: Plane3D) -\u003E Point3D",
+      "summary": "Transform the view point to a world plane",
+      "remarks": "Transform the view point to a world plane",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World point at the plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewToWorldPlane"
+    },
+    {
+      "name": "ViewToWorldRay",
+      "signature": "ViewToWorldRay(pnt: Point2D) -\u003E tuple[Point3D, Vector3D]",
+      "summary": "Calculates a ray Calculates a ray (for non-vanishing-point-projections, rather a line) from the given view 2D point. Can be used for pick-point calculations. Note that we have a right-hand view coordinate system, so its Z axis points towards the eye.",
+      "remarks": "Calculates a ray Calculates a ray (for non-vanishing-point-projections, rather a line) from the given view 2D point. Can be used for pick-point calculations. Note that we have a right-hand view coordinate system, so its Z axis points towards the eye.",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Point3D, Vector3D]",
+        "doc": "tuple(World point of ray, Vector of calculated ray point)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewToWorldRay"
+    },
+    {
+      "name": "ViewToWorldViewZ",
+      "signature": "ViewToWorldViewZ(pnt: Point2D, viewZ: float) -\u003E Point3D",
+      "summary": "Transform a view 2D point with view Z coordinate to a world point",
+      "remarks": "Transform a view 2D point with view Z coordinate to a world point",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View point",
+          "optional": false
+        },
+        {
+          "name": "viewZ",
+          "type": "float",
+          "doc": "z-coordinate in view transformation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.ViewToWorldViewZ"
+    },
+    {
+      "name": "WorldToPixel",
+      "signature": "WorldToPixel(pnt: Point3D, bBottomTop: bool) -\u003E Point2D",
+      "summary": "Transform the world point to a pixel point",
+      "remarks": "Transform the world point to a pixel point",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "World point",
+          "optional": false
+        },
+        {
+          "name": "bBottomTop",
+          "type": "bool",
+          "doc": "The y zero point is on the bottom of the screen: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Pixel point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToPixel"
+    },
+    {
+      "name": "WorldToProjection",
+      "signature": "WorldToProjection(pnt: Point3D) -\u003E Point2D | WorldToProjection(line: Line3D) -\u003E Line2D",
+      "summary": "Get the projection 2D point from a world 3D point",
+      "remarks": "Get the projection 2D point from a world 3D point",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "World point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "2D projection point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjection"
+    },
+    {
+      "name": "WorldToProjectionBase0",
+      "signature": "WorldToProjectionBase0(pnt: Point3D) -\u003E Point3D | WorldToProjectionBase0(line: Line3D) -\u003E Line3D",
+      "summary": "Get the world projection point with the base 0",
+      "remarks": "Get the world projection point with the base 0",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "World point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "World projection point with the base 0"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjectionBase0"
+    },
+    {
+      "name": "WorldToView",
+      "signature": "WorldToView(pnt: Point3D) -\u003E Point2D | WorldToView(pnt: Point2D) -\u003E Point2D | WorldToView(x: float, y: float, z: float) -\u003E Point2D | WorldToView(line: Line3D) -\u003E Line2D | WorldToView(line: Line2D) -\u003E Line2D | WorldToView(polyline3D: Polyline3D) -\u003E Polyline2D",
+      "summary": "Transform a world point to a view point",
+      "remarks": "Transform a world point to a view point",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "World point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "View point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView"
+    },
+    {
+      "name": "WorldToView3D",
+      "signature": "WorldToView3D(pnt: Point3D) -\u003E Point3D",
+      "summary": "Transform a world point to a view 3D point If Z coordinate of returned view point is positive, then world point is before eye (i.e. is visible).",
+      "remarks": "Transform a world point to a view 3D point If Z coordinate of returned view point is positive, then world point is before eye (i.e. is visible).",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "World point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "View point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView3D"
+    },
+    {
+      "name": "WorldToWorldPlane",
+      "signature": "WorldToWorldPlane(pnt: Point3D, plane: Plane3D) -\u003E Point3D | WorldToWorldPlane(line: Line3D, plane: Plane3D) -\u003E Line3D",
+      "summary": "Transform a world point to a plane point",
+      "remarks": "Transform a world point to a plane point",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point3D",
+          "doc": "World point",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Plane point in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToWorldPlane"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,50 @@
+{
+  "name": "TextureEnvironmentMappingMode",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.TextureEnvironmentMappingMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_TextureEnvironmentMappingMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Automatic",
+      "value": 0
+    },
+    {
+      "name": "Spherical",
+      "value": 1
+    },
+    {
+      "name": "EnvironmentMap",
+      "value": 2
+    },
+    {
+      "name": "Box",
+      "value": 3
+    },
+    {
+      "name": "LightProbe",
+      "value": 5
+    },
+    {
+      "name": "Cube",
+      "value": 6
+    },
+    {
+      "name": "VerticalCrossCube",
+      "value": 7
+    },
+    {
+      "name": "HorizontalCrossCube",
+      "value": 8
+    },
+    {
+      "name": "Hemispherical",
+      "value": 9
+    }
+  ]
+}

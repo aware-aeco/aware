@@ -1,0 +1,215 @@
+{
+  "name": "PropertyCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Property Commands\u0027 command group \u2014 10 JSON-RPC commands (Archicad 28.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllPropertyGroupIds",
+      "signature": "GetAllPropertyGroupIds(propertyType?: PropertyType): object",
+      "summary": "Returns the identifier of every property group in the current plan. The optional propertyType parameter can be used to filter the results based on the type of the property group (Built-in or User Defined).",
+      "params": [
+        {
+          "name": "propertyType",
+          "type": "PropertyType",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyGroupIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAllPropertyGroupIds"
+    },
+    {
+      "name": "GetAllPropertyIds",
+      "signature": "GetAllPropertyIds(propertyType?: PropertyType): object",
+      "summary": "Returns the identifier of every property in the current plan. The optional propertyType parameter can be used to filter the results based on the type of the property (Built-in or User Defined).",
+      "params": [
+        {
+          "name": "propertyType",
+          "type": "PropertyType",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAllPropertyIds"
+    },
+    {
+      "name": "GetAllPropertyIdsOfElements",
+      "signature": "GetAllPropertyIdsOfElements(elements: Elements, propertyType?: PropertyType): object",
+      "summary": "Returns all property identifiers of the given elements. The optional propertyType parameter can be used to filter the results based on the type of the property (Built-in or User Defined).",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "propertyType",
+          "type": "PropertyType",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyIdsOfElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAllPropertyIdsOfElements"
+    },
+    {
+      "name": "GetAllPropertyNames",
+      "signature": "GetAllPropertyNames(): object",
+      "summary": "Returns the human-readable names of available Property definitions for debug and development purposes.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: properties."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAllPropertyNames"
+    },
+    {
+      "name": "GetDetailsOfProperties",
+      "signature": "GetDetailsOfProperties(properties: PropertyIds): object",
+      "summary": "Returns the details of property definitions.",
+      "params": [
+        {
+          "name": "properties",
+          "type": "PropertyIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyDefinitions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetDetailsOfProperties"
+    },
+    {
+      "name": "GetPropertyDefinitionAvailability",
+      "signature": "GetPropertyDefinitionAvailability(propertyIds: PropertyIds): object",
+      "summary": "Returns the ids of classification items a given property definition is available for.",
+      "params": [
+        {
+          "name": "propertyIds",
+          "type": "PropertyIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyDefinitionAvailabilityList."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetPropertyDefinitionAvailability"
+    },
+    {
+      "name": "GetPropertyGroups",
+      "signature": "GetPropertyGroups(propertyGroupIds: PropertyGroupIds): object",
+      "summary": "Returns the details of property groups.",
+      "params": [
+        {
+          "name": "propertyGroupIds",
+          "type": "PropertyGroupIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyGroups."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetPropertyGroups"
+    },
+    {
+      "name": "GetPropertyIds",
+      "signature": "GetPropertyIds(properties: PropertyUserIds): object",
+      "summary": "Returns the identifiers of property definitions for the requested property names.",
+      "params": [
+        {
+          "name": "properties",
+          "type": "PropertyUserIds",
+          "doc": "List of property names whose ids are requested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: properties."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetPropertyIds"
+    },
+    {
+      "name": "GetPropertyValuesOfElements",
+      "signature": "GetPropertyValuesOfElements(elements: Elements, properties: PropertyIds, onlySupportedTypes?: boolean): object",
+      "summary": "Returns the property values of the elements for the given property.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "PropertyIds",
+          "optional": false
+        },
+        {
+          "name": "onlySupportedTypes",
+          "type": "boolean",
+          "doc": "Optional parameter. When it is set to true, only elements with types that are supported by any other JSON API command will be returned.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: propertyValuesForElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetPropertyValuesOfElements"
+    },
+    {
+      "name": "SetPropertyValuesOfElements",
+      "signature": "SetPropertyValuesOfElements(elementPropertyValues: ElementPropertyValues): object",
+      "summary": "Sets the property values of elements.",
+      "params": [
+        {
+          "name": "elementPropertyValues",
+          "type": "ElementPropertyValues",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#SetPropertyValuesOfElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

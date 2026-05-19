@@ -1,0 +1,74 @@
+{
+  "name": "CommandState",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents the state of a command in the GUI",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.CommandState",
+  "constructors": [
+    {
+      "name": "CommandState()",
+      "signature": "CommandState()",
+      "summary": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandState.%23ctor"
+    },
+    {
+      "name": "CommandState(bool)",
+      "signature": "CommandState(bool enabled)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "doc": "Allows specifiecation of Enabled",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandState.%23ctor%28System.Boolean%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsChecked",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if the command should be checked",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandState.IsChecked"
+    },
+    {
+      "name": "IsEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if the command should be enabled",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandState.IsEnabled"
+    },
+    {
+      "name": "IsVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if the command should be visible",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandState.IsVisible"
+    },
+    {
+      "name": "OverrideDisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if the display name for the command should be overridden",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandState.OverrideDisplayName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

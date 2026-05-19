@@ -1,0 +1,312 @@
+{
+  "name": "DefinitionList",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "A DefinitionList object holds a list of all of the ComponentDefinition objects in a model. This class contains methods for adding and retrieving definitions from the list.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index) =\u003E Sketchup::ComponentDefinition? | [](name) =\u003E Sketchup::ComponentDefinition? | [](guid) =\u003E Sketchup::ComponentDefinition?",
+      "summary": "The [] method is used to retrieve a component definition from the list.",
+      "remarks": "The [] method is used to retrieve a component definition from the list. You can give an integer index in the range 0 to length, a string which represents the GUID (a unique internal identifier), or a string that is the name of the definition.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index for a specific component definition.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#[]-instance_method"
+    },
+    {
+      "name": "add",
+      "signature": "add(def_name) =\u003E Sketchup::ComponentDefinition",
+      "summary": "The add method is used to add a new component definition to the definition list with the given name.",
+      "remarks": "The add method is used to add a new component definition to the definition list with the given name.",
+      "params": [
+        {
+          "name": "def_name",
+          "type": "String",
+          "doc": "The new component definition to add to the definition list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition",
+        "doc": "the ComponentDefinition object that was added (if successful)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#add-instance_method"
+    },
+    {
+      "name": "add_observer",
+      "signature": "add_observer(observer) =\u003E Boolean",
+      "summary": "The add_observer method is used to add an observer to the current object.",
+      "remarks": "The add_observer method is used to add an observer to the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#add_observer-instance_method"
+    },
+    {
+      "name": "[]",
+      "signature": "[](index) =\u003E Sketchup::ComponentDefinition? | [](name) =\u003E Sketchup::ComponentDefinition? | [](guid) =\u003E Sketchup::ComponentDefinition?",
+      "summary": "The [] method is used to retrieve a component definition from the list.",
+      "remarks": "The [] method is used to retrieve a component definition from the list. You can give an integer index in the range 0 to length, a string which represents the GUID (a unique internal identifier), or a string that is the name of the definition.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index for a specific component definition.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#at-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Integer",
+      "summary": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module.",
+      "remarks": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module. Prior to that the #count method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#count-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|definition| ... } =\u003E Sketchup::ComponentDefinition",
+      "summary": "Note: Don\u0027t remove content from this collection while iterating over it with #each.",
+      "remarks": "Note: Don\u0027t remove content from this collection while iterating over it with #each. This would change the size of the collection and cause elements to be skipped as the indices change. Instead copy the current collection to an array using to_a and then use each on the array, when removing content. The #each method is used to iterate through all of the component definitions in the definition list.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#each-instance_method"
+    },
+    {
+      "name": "import",
+      "signature": "import(path, options = {}) =\u003E Sketchup::ComponentDefinition",
+      "summary": "The #import method is used to import a (non-SketchUp) 3d model file as a definition.",
+      "remarks": "The #import method is used to import a (non-SketchUp) 3d model file as a definition. Importers using the C API SketchUpModelImporterInterface interface are supported (those in the Importers/ directory). See the Importer Options file for information on creating a valid hash for the various importers. For SketchUp models, instead use #load.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Hash",
+          "optional": true,
+          "default": "{}"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "IOError",
+          "when": "if the file is missing."
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if no suitable importer could be found."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#import-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method is used to retrieve number of component definitions in the list.",
+      "remarks": "The #length method is used to retrieve number of component definitions in the list.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#length-instance_method"
+    },
+    {
+      "name": "load",
+      "signature": "load(path) =\u003E Sketchup::ComponentDefinition | load(path, allow_newer: false) =\u003E Sketchup::ComponentDefinition",
+      "summary": "The #load method is used to load a component from a file.",
+      "remarks": "The #load method is used to load a component from a file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The path where the component definition file is located.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition",
+        "doc": "the loaded ComponentDefinition"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#load-instance_method"
+    },
+    {
+      "name": "load_from_url",
+      "signature": "load_from_url(url) =\u003E Sketchup::ComponentDefinition | load_from_url(url, load_handler) =\u003E Sketchup::ComponentDefinition",
+      "summary": "The #load_from_url method loads a component from a location specified by string url.",
+      "remarks": "The #load_from_url method loads a component from a location specified by string url. This method throws an exception if an url string is not given, or an error occurs during retrieval from URL and a load_handler was not given.",
+      "params": [
+        {
+          "name": "url",
+          "type": "String",
+          "doc": "URL to load a .skp file from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#load_from_url-instance_method"
+    },
+    {
+      "name": "purge_unused",
+      "signature": "purge_unused =\u003E Sketchup::DefinitionList",
+      "summary": "The purge_unused method is used to remove the unused component definitions.",
+      "remarks": "The purge_unused method is used to remove the unused component definitions.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::DefinitionList",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#purge_unused-instance_method"
+    },
+    {
+      "name": "remove",
+      "signature": "remove(definition) =\u003E Boolean",
+      "summary": "The #remove method is used to remove a component definition from the definition list with the given component definition.",
+      "remarks": "The #remove method is used to remove a component definition from the definition list with the given component definition. This will remove all instances of the definition.",
+      "params": [
+        {
+          "name": "definition",
+          "type": "Sketchup::ComponentDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the given definition is used by Model#active_path."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#remove-instance_method"
+    },
+    {
+      "name": "remove_observer",
+      "signature": "remove_observer(observer) =\u003E Boolean",
+      "summary": "The remove_observer method is used to remove an observer from the current object.",
+      "remarks": "The remove_observer method is used to remove an observer from the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#remove_observer-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method is an alias for #length.",
+      "remarks": "The #size method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#size-instance_method"
+    },
+    {
+      "name": "unique_name",
+      "signature": "unique_name(base_name) =\u003E String",
+      "summary": "The unique_name is used to generate a unique name for a definition based on a base_name string.",
+      "remarks": "The unique_name is used to generate a unique name for a definition based on a base_name string. For example, a base_name of \u201CJoe\u201D might return \u201CJoe #2\u201D",
+      "params": [
+        {
+          "name": "base_name",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "the unique name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionList.html#unique_name-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

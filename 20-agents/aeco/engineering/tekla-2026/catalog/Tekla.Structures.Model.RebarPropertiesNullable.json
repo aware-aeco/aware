@@ -1,0 +1,74 @@
+{
+  "name": "RebarPropertiesNullable",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarPropertiesNullable class defines the properties of the reinforcing bars affected by a RebarPropertyModifier.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c532391c-a2bf-3795-52e9-e6bbea31ad1c",
+  "constructors": [
+    {
+      "name": "RebarPropertiesNullable",
+      "signature": "public RebarPropertiesNullable()",
+      "summary": "Initializes a new instance of the RebarPropertiesNullable class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/64e9d22e-8ab6-12e6-9fce-4f6448f76f06"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BendingRadius",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bending radius radius of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fb422634-aa58-ca26-e3ed-199b0fc2f5d1"
+    },
+    {
+      "name": "Class",
+      "type": "Nullable\u003CInt32\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the class of the reinforcement. The class is used to group reinforcements.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/66b6e0a2-abbc-c395-1a6f-5aae0cfd9c34"
+    },
+    {
+      "name": "Grade",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/abd5e76c-be0f-6f36-d83b-db840503e72c"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8d57c38f-512a-3b03-a8f7-e8d39aad48a9"
+    },
+    {
+      "name": "NumberingSeries",
+      "type": "NumberingSeriesNullable",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numbering series of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a952bf80-b5b9-4eac-7036-a72956d3cb19"
+    },
+    {
+      "name": "Size",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/96681e22-fdf3-b72d-6e28-e72e45ad8d56"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

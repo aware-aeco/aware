@@ -1,0 +1,134 @@
+{
+  "name": "StringHolder",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "This class is used to pass strings back and forth between managed and unmanaged code. This should not be needed by plug-ins. If you are just dealing with an ON_wString*, use StringWrapper",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_InteropWrappers_StringHolder.htm",
+  "constructors": [
+    {
+      "name": "StringHolder",
+      "signature": "public StringHolder()",
+      "summary": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "C\u002B\u002B pointer used to access the ON_wString, managed plug-ins should never need this.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringHolder.ConstPointer\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "IDispose implementation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Called by Dispose and finalizer",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_Finalize.htm"
+    },
+    {
+      "name": "GetString",
+      "signature": "public static string GetString(IntPtr pStringHolder)",
+      "summary": "Gets managed string from unmanaged ON_wString pointer.",
+      "params": [
+        {
+          "name": "pStringHolder",
+          "type": "System.IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Null if pStringHolder has no reference, otherwise, the string. This may be an empty string, if setting an empty string is possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_GetString.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "C\u002B\u002B pointer used to access the ON_wString, managed plug-ins should never need this.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringHolder.NonConstPointer\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_NonConstPointer.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Marshals unmanaged ON_wString to a managed .NET string",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringHolder.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_ToString.htm"
+    },
+    {
+      "name": "ToStringSafe",
+      "signature": "public string ToStringSafe()",
+      "summary": "Marshals unmanaged ON_wString to a managed .NET string and never returns null.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringHolder.ToStringSafe\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringHolder_ToStringSafe.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

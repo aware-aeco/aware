@@ -1,0 +1,173 @@
+{
+  "name": "FacetedBrepWithNormals",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The FacetedBRepWithNormals class defines a faceted BREP that has also vertex normal vectors.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9ce06f7c-25e8-3267-435d-f3943a722c9e",
+  "constructors": [
+    {
+      "name": "FacetedBrepWithNormals",
+      "signature": "public FacetedBrepWithNormals(Vector[] vertices, int[][] outerWires, IDictionary\u003Cint, int[][]\u003E innerWires, Vector[] normals)",
+      "summary": "Initializes a new instance of the FacetedBrepWithNormals class.",
+      "params": [
+        {
+          "name": "vertices",
+          "type": ".Tekla.Structures.Geometry3d.Vector.",
+          "doc": "The vertex geometries.",
+          "optional": false
+        },
+        {
+          "name": "outerWires",
+          "type": "..System.Int32..",
+          "doc": "The outer wires as a two dimensional array. Integer indexes are used for identifying the corresponding vertex for the node in the wire from the array provided by parameter vertices.",
+          "optional": false
+        },
+        {
+          "name": "innerWires",
+          "type": "System.Collections.Generic.IDictionary\u003CInt32,..Int32..\u003E",
+          "doc": "The inner wires also known as inner loops or holes.",
+          "optional": false
+        },
+        {
+          "name": "normals",
+          "type": ".Tekla.Structures.Geometry3d.Vector.",
+          "doc": "Normal unit vectors for each vertex in vertices.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/57f72837-1ecc-661d-1729-ef2972679a18"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CheckForTwoManifold",
+      "signature": "public bool CheckForTwoManifold()",
+      "summary": "Gets a value indicating whether this instance is 2-manifold.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this instance is 2-manifold; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ed60d58-765f-eb09-d6e3-4fab3bbfd756"
+    },
+    {
+      "name": "GetInnerFace",
+      "signature": "public int[] GetInnerFace(int faceIndex)",
+      "summary": "Gets the inner face at the specified index.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": ".Int32.",
+        "doc": "The array of vertex indexes for the inner face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cff69feb-f110-d653-a99a-5ce21f4e314e"
+    },
+    {
+      "name": "GetInnerFaceCount",
+      "signature": "public int GetInnerFaceCount(int faceIndex)",
+      "summary": "Gets the inner face count of the outer face at the specified index.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The count of inner faces for the outer face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/885fcb90-953a-2c8f-0aa9-a636087c2f0a"
+    },
+    {
+      "name": "GetOuterFace",
+      "signature": "public int[] GetOuterFace(int faceIndex)",
+      "summary": "Gets the outer face at the specified index.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "The index of the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": ".Int32.",
+        "doc": "The array of vertex indexes for the outer face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/43194089-a2f0-b88b-ec45-94b6039e0393"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Faces",
+      "type": "ICollection\u003CFacetedBrepFace\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the faces.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/29dece6c-3a94-7235-84e8-bebee02e09d6"
+    },
+    {
+      "name": "GetEdges",
+      "type": "IList\u003CIndirectPolymeshEdge\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the edges.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f70eccfb-0fb8-9c54-c9a3-c5c7c8db8180"
+    },
+    {
+      "name": "InnerWires",
+      "type": "IDictionary\u003CInt32,..Int32..\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the inner wires.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fbf699d1-391f-884c-a315-9dbdc6bf12ff"
+    },
+    {
+      "name": "Normals",
+      "type": ".Vector.",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the vertex normal unit vectors",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9117b106-24a4-9ab5-fc85-fc7964178c46"
+    },
+    {
+      "name": "OuterWires",
+      "type": "..Int32..",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the outer wires.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0543cf25-a8b8-3b92-890f-fbab1afb4cdd"
+    },
+    {
+      "name": "Vertices",
+      "type": "IList\u003CVector\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the vertices.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/290c21fc-2017-f88f-644d-1e004bb2fdc5"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,42 @@
+{
+  "name": "CannotGetAttributeForPluginException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotGetAttributeForPluginException class defines the exception that is thrown when Plugin.GetAttribute is called but the attribute cannot be fetched.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3b434c42-0064-df39-c5b6-891eb1ded242",
+  "constructors": [
+    {
+      "name": "CannotGetAttributeForPluginException()",
+      "signature": "public CannotGetAttributeForPluginException()",
+      "summary": "Creates a new CannotGetAttributeForPluginException instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9b92a45-6c84-8049-6854-f6adb2539663"
+    },
+    {
+      "name": "CannotGetAttributeForPluginException(String)",
+      "signature": "public CannotGetAttributeForPluginException(string Description)",
+      "summary": "Creates a new CannotGetAttributeForPluginException instance.",
+      "params": [
+        {
+          "name": "Description",
+          "type": "System.String",
+          "doc": "The additional description.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98e31fa6-0fb7-3a31-3178-c07f52780e11"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

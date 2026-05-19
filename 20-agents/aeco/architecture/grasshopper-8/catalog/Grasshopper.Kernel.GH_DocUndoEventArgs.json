@@ -1,0 +1,39 @@
+{
+  "name": "GH_DocUndoEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "These arguments are passed along with UndoStateChanged events on GH_Document.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocUndoEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that raised the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocUndoEventArgs_Document.htm"
+    },
+    {
+      "name": "Operation",
+      "type": "GH_UndoOperation",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of undo operation that caused this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocUndoEventArgs_Operation.htm"
+    },
+    {
+      "name": "Record",
+      "type": "GH_UndoRecord",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the UndoRecord pertaining to this event. Not every Event type has a single record associated with it so be sure to test for null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocUndoEventArgs_Record.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

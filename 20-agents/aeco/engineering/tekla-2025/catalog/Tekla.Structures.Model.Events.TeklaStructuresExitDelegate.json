@@ -1,0 +1,14 @@
+{
+  "name": "Events.TeklaStructuresExitDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for Tekla Structures exit.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6adc90d0-84db-6db6-d8d3-fffbd87aaca8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void TeklaStructuresExitDelegate()"
+}

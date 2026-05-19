@@ -1,0 +1,65 @@
+{
+  "name": "AssemblyResolver",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Assembly Resolver for the Rhino App Domain.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_AssemblyResolver.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddSearchFile",
+      "signature": "public static void AddSearchFile(string file)",
+      "summary": "Register another file with the Assembly Resolver. File must be a .NET assembly, so it should probably be a dll, rhp or exe.",
+      "params": [
+        {
+          "name": "file",
+          "type": "System.String",
+          "doc": "Path of file to include during Assembly Resolver events.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_AssemblyResolver_AddSearchFile.htm"
+    },
+    {
+      "name": "AddSearchFolder",
+      "signature": "public static void AddSearchFolder(string folder)",
+      "summary": "Register a custom folder with the Assembly Resolver. Folders will be searched recursively, so this could potentially be a very expensive operation. If at all possible, you should consider only registering individual files.",
+      "params": [
+        {
+          "name": "folder",
+          "type": "System.String",
+          "doc": "Path of folder to include during Assembly Resolver events.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_AssemblyResolver_AddSearchFolder.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentDomainAssemblyResolve",
+      "type": "ResolveEventHandler",
+      "getter": true,
+      "setter": false,
+      "summary": "Standard resolver function used by Rhino in execution context. This is added to the Current AssemblyResolve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_AssemblyResolver_CurrentDomainAssemblyResolve.htm"
+    },
+    {
+      "name": "CurrentDomainReflectionOnlyAssemblyResolve",
+      "type": "ResolveEventHandler",
+      "getter": true,
+      "setter": false,
+      "summary": "Standard resolver function used by Rhino in reflection-only context. This is added to the Current ReflectionOnlyAssemblyResolve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_AssemblyResolver_CurrentDomainReflectionOnlyAssemblyResolve.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

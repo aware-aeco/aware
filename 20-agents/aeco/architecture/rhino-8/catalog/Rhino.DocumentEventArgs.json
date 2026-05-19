@@ -1,0 +1,39 @@
+{
+  "name": "DocumentEventArgs",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Provides document information for RhinoDoc events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocumentEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document for this event. This field might be null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocumentEventArgs_Document.htm"
+    },
+    {
+      "name": "DocumentId",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document Id of the document for this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocumentEventArgs_DocumentId.htm"
+    },
+    {
+      "name": "DocumentSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the uniques document serial number for this event",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocumentEventArgs_DocumentSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,114 @@
+{
+  "name": "ArrowheadAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ArrowheadAttributes class handles attributes related to arrowheads of different objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/00085909-c077-e32b-79d7-fa0e543b5826",
+  "constructors": [
+    {
+      "name": "ArrowheadAttributes()",
+      "signature": "public ArrowheadAttributes()",
+      "summary": "Creates a new default arrowhead attributes instance. The default values are ArrowheadPositions.None, ArrowheadTypes.FilledArrow, height 2.0 and width 1.0.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5407d84b-fa5d-1ead-da9b-2bf62fe03e35"
+    },
+    {
+      "name": "ArrowheadAttributes(ArrowheadPositions, ArrowheadTypes, Double, Double)",
+      "signature": "public ArrowheadAttributes(ArrowheadPositions arrowPosition, ArrowheadTypes head, double height, double width)",
+      "summary": "Creates a new arrowhead attributes instance with the given parameters.",
+      "params": [
+        {
+          "name": "arrowPosition",
+          "type": "Tekla.Structures.Drawing.ArrowheadPositions",
+          "doc": "The arrowhead position.",
+          "optional": false
+        },
+        {
+          "name": "head",
+          "type": "Tekla.Structures.Drawing.ArrowheadTypes",
+          "doc": "The arrowhead type.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "The arrowhead height.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Double",
+          "doc": "The arrowhead width.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b7e4c81-9763-67b3-17ef-7367a4f3e733"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1cf44e40-562e-14b3-74c4-d023a20009fa"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ArrowPosition",
+      "type": "ArrowheadPositions",
+      "getter": true,
+      "setter": true,
+      "summary": "The position of the arrowhead. The position is always ArrowheadPositions.Both for dimensions.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f4ebb88-c0d6-8c1d-c3f9-e42044715519"
+    },
+    {
+      "name": "Head",
+      "type": "ArrowheadTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the arrowhead.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b3322aec-1f80-0d1c-13af-a2bf33467e2d"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the arrowhead.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/da465d5c-1138-8abd-6a74-326a6cb45508"
+    },
+    {
+      "name": "Width",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the arrowhead.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b3a8a91f-6cd7-3dc4-3163-880d4ae9cfa9"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

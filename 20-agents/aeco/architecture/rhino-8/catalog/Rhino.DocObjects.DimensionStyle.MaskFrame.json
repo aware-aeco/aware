@@ -1,0 +1,29 @@
+{
+  "name": "DimensionStyle.MaskFrame",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Draw a frame stroke around the text mask area",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DimensionStyle_MaskFrame.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoFrame",
+      "value": 0,
+      "summary": "Text mask frame not drawn"
+    },
+    {
+      "name": "RectFrame",
+      "value": 1,
+      "summary": "Text mask frame outline rectangle drawn"
+    },
+    {
+      "name": "CapsuleFrame",
+      "value": 2,
+      "summary": "Text mask frame outline capsule drawn"
+    }
+  ]
+}

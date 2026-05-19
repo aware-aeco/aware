@@ -1,0 +1,74 @@
+{
+  "name": "AnalysisModelDesignProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelDesignProperties class contains information related to analysis model design properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7cd03721-f7d8-15f8-052e-a25114c9da1a",
+  "constructors": [
+    {
+      "name": "AnalysisModelDesignProperties",
+      "signature": "public AnalysisModelDesignProperties()",
+      "summary": "Initializes a new instance of the AnalysisModelDesignProperties class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5644c606-acf5-c3fc-eb96-2aa61211f80b"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ConcreteDesign",
+      "type": "AnalysisDesignCode",
+      "getter": true,
+      "setter": true,
+      "summary": "The concrete code used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b9cff2c0-5b69-678d-e138-5b06c265adf0"
+    },
+    {
+      "name": "ConcreteDesignMethod",
+      "type": "AnalysisModelDesignProperties.DesignMethodEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The concrete design method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f281d5f-c725-8b69-be4b-9938dd6b518a"
+    },
+    {
+      "name": "SteelDesign",
+      "type": "AnalysisDesignCode",
+      "getter": true,
+      "setter": true,
+      "summary": "The steel code used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/74cbdf54-5c29-f4a6-4b83-82c32ab5dcbb"
+    },
+    {
+      "name": "SteelDesignMethod",
+      "type": "AnalysisModelDesignProperties.DesignMethodEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The steel design method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/020e6413-c8a7-d6ce-c986-a1536295ef00"
+    },
+    {
+      "name": "TimberDesign",
+      "type": "AnalysisDesignCode",
+      "getter": true,
+      "setter": true,
+      "summary": "The timber code used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c60b94e6-e800-6741-0745-2b9e591b0158"
+    },
+    {
+      "name": "TimberDesignMethod",
+      "type": "AnalysisModelDesignProperties.DesignMethodEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The timber design method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f268bbd-7dc8-e8c9-5a85-8ac0f919828e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

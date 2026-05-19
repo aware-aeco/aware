@@ -1,0 +1,89 @@
+{
+  "name": "AttributeStringVec",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "StringVec attribute",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/",
+  "constructors": [
+    {
+      "name": "AttributeStringVec",
+      "signature": "AttributeStringVec() | AttributeStringVec(id, value) | AttributeStringVec(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/#NemAll_Python_BaseElements.AttributeStringVec.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(element)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeStringVec",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/#NemAll_Python_BaseElements.AttributeStringVec.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(element)",
+      "summary": "Unequal operator",
+      "remarks": "Unequal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeStringVec",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are unequal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/#NemAll_Python_BaseElements.AttributeStringVec.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/#NemAll_Python_BaseElements.AttributeStringVec.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "NemAll_Python_Utility.VecStringList",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the attribute value",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/#NemAll_Python_BaseElements.AttributeStringVec.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

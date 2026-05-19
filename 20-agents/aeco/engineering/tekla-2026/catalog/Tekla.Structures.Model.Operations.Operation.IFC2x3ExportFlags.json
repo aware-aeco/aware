@@ -1,0 +1,142 @@
+{
+  "name": "Operation.IFC2x3ExportFlags",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "struct",
+  "summary": "Boolean flags for IFC 2x3 export.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7ded9144-e182-c22c-f38e-230f52071919",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ExcludeSinglePartAssemblies",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether single part assemblies are excluded.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6cff8092-4d70-c22b-a189-1e30da9d7734"
+    },
+    {
+      "name": "ExportAllObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether to export all objects.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/18b9b01d-1216-c198-3065-73d578bac66e"
+    },
+    {
+      "name": "ExportBrepAsExactSolid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether BREP is exported as exact solid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0d239f3-0e92-8d5d-4f7b-eaa742730636"
+    },
+    {
+      "name": "ExportBuildingHierarchy",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the building hierarchy export is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/044ce81a-a93d-9921-6678-3b04d82da58c"
+    },
+    {
+      "name": "ExportFlatBeamsAsPlates",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether flat beams are exported as plates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9dd63aa1-7a3b-c71d-c307-0c88515caf24"
+    },
+    {
+      "name": "ExportLocationsFromOrganizer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether locations are obtained from the organizer.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/86943abd-c9f5-164a-5806-018a0a4ff26a"
+    },
+    {
+      "name": "ExportPolyBeamAsSectionedSpine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether polybeams are exported as sectioned spines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0b561cb3-c52c-12f4-ecf3-6c6f9e00e77a"
+    },
+    {
+      "name": "ExportSelectedObjectsAndTheirAssemblies",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether to export selected objects and their assemblies.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9b3bb625-d52f-e0f8-0e58-88c0751926ce"
+    },
+    {
+      "name": "IncludeAssemblyHiearachy",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the assembly hierarhcy (IFCELEMENTASSEMBLY) is exported.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/16c4006f-53df-84c4-51b1-52b479322830"
+    },
+    {
+      "name": "IsBoltsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the bolts export is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5964f03b-f76e-ad33-13bf-1c5caa981e5e"
+    },
+    {
+      "name": "IsGridsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the grids export is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/54f2162c-d0ba-ab4a-f2ae-853407d33b6d"
+    },
+    {
+      "name": "IsPoursEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Pours export is enabled. True for pours, false for CIP cast-units and/or parts",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/96ad9acb-5de3-f4ef-cd85-80c05bb03766"
+    },
+    {
+      "name": "IsRebarsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the rebars export is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/601f37e0-c7f8-d8c9-2684-c69edb8761e1"
+    },
+    {
+      "name": "IsSpacesEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the export of spaces in building hierarchy is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef32febd-8788-6647-3e4d-f3d245acd121"
+    },
+    {
+      "name": "IsSurfaceTreatmentsAndSurfacesEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the surfaces and surface treatments export is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8da6ae2d-e40a-5c9c-4ee1-61247d5070bb"
+    },
+    {
+      "name": "IsWeldsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether the welds export is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f5e94075-45a1-b9ec-bf20-b782deb0cff7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

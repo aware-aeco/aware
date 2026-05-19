@@ -1,0 +1,4086 @@
+{
+  "name": "NurbsSurface",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a Non Uniform Rational B-Splines (NURBS) surface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_NurbsSurface.htm",
+  "constructors": [
+    {
+      "name": "NurbsSurface(NurbsSurface)",
+      "signature": "public NurbsSurface(NurbsSurface other)",
+      "summary": "Initializes a new NURBS surface by copying the values from another surface.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.NurbsSurface",
+          "doc": "Another surface.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface__ctor.htm"
+    },
+    {
+      "name": "NurbsSurface(SerializationInfo, StreamingContext)",
+      "signature": "protected NurbsSurface(SerializationInfo info, StreamingContext context)",
+      "summary": "Protected constructor for internal use.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "Serialization data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "Serialization stream.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestPoint",
+      "signature": "public bool ClosestPoint(Point3d testPoint, out double u, out double v)",
+      "summary": "Input the parameters of the point on the surface that is closest to testPoint.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point to test against.",
+          "optional": false
+        },
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "U parameter of the surface that is closest to testPoint.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "V parameter of the surface that is closest to testPoint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_ClosestPoint.htm"
+    },
+    {
+      "name": "ClosestSide",
+      "signature": "public IsoStatus ClosestSide(double u, double v)",
+      "summary": "Gets the side that is closest, in terms of 3D-distance, to a U and V parameter.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "A u parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "A v parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IsoStatus",
+        "doc": "A side."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_ClosestSide.htm"
+    },
+    {
+      "name": "ComponentIndex",
+      "signature": "public ComponentIndex ComponentIndex()",
+      "summary": "If this piece of geometry is a component in something larger, like a BrepEdge in a Brep, then this function returns the component index.",
+      "params": [],
+      "returns": {
+        "type": "ComponentIndex",
+        "doc": "This object\u0027s component index. If this object is not a sub-piece of a larger geometric entity, then the returned index has m_type = ComponentIndex.InvalidType and m_index = -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_ComponentIndex.htm"
+    },
+    {
+      "name": "ConstructConstObject",
+      "signature": "protected void ConstructConstObject(Object parentObject, int subobjectIndex)",
+      "summary": "Assigns a parent object and a sub-object index to this.",
+      "params": [
+        {
+          "name": "parentObject",
+          "type": "System.Object",
+          "doc": "The parent object.",
+          "optional": false
+        },
+        {
+          "name": "subobjectIndex",
+          "type": "System.Int32",
+          "doc": "The sub-object index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_ConstructConstObject.htm"
+    },
+    {
+      "name": "ConvertSpanToBezier",
+      "signature": "public BezierSurface ConvertSpanToBezier(int spanIndex0, int spanIndex1)",
+      "summary": "Convert a NURBS surface bispan into a Bezier surface.",
+      "params": [
+        {
+          "name": "spanIndex0",
+          "type": "System.Int32",
+          "doc": "Specifies the \u0022u\u0022 span",
+          "optional": false
+        },
+        {
+          "name": "spanIndex1",
+          "type": "System.Int32",
+          "doc": "Specifies the \u0022v\u0022 span",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierSurface",
+        "doc": "Bezier surface on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_ConvertSpanToBezier.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public void CopyFrom(NurbsSurface other)",
+      "summary": "Copies this NURBS surface from another NURBS surface.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.NurbsSurface",
+          "doc": "The other NURBS surface to use as source.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CopyFrom.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public static NurbsSurface Create(int dimension, bool isRational, int order0, int order1, int controlPointCount0, int controlPointCount1)",
+      "summary": "Constructs a new NURBS surface with internal uninitialized arrays.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "System.Int32",
+          "doc": "The number of dimensions.\u003E= 1. This value is usually 3.",
+          "optional": false
+        },
+        {
+          "name": "isRational",
+          "type": "System.Boolean",
+          "doc": "true to make a rational NURBS.",
+          "optional": false
+        },
+        {
+          "name": "order0",
+          "type": "System.Int32",
+          "doc": "The order in U direction.\u003E= 2.",
+          "optional": false
+        },
+        {
+          "name": "order1",
+          "type": "System.Int32",
+          "doc": "The order in V direction.\u003E= 2.",
+          "optional": false
+        },
+        {
+          "name": "controlPointCount0",
+          "type": "System.Int32",
+          "doc": "Control point count in U direction.\u003E= order0.",
+          "optional": false
+        },
+        {
+          "name": "controlPointCount1",
+          "type": "System.Int32",
+          "doc": "Control point count in V direction.\u003E= order1.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A new NURBS surface, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_Create.htm"
+    },
+    {
+      "name": "CreateCurveOnSurface",
+      "signature": "public static NurbsCurve CreateCurveOnSurface(Surface surface, IEnumerable\u003CPoint2d\u003E points, double tolerance, bool periodic)",
+      "summary": "Fit a sequence of 2d points on a surface to make a curve on the surface.",
+      "remarks": "To produce the input points, use Surface.CreateCurveOnSurfacePoints.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Surface on which to construct curve.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "Parameter space coordinates of the points to interpolate.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Curve should be within tolerance of surface and points.",
+          "optional": false
+        },
+        {
+          "name": "periodic",
+          "type": "System.Boolean",
+          "doc": "When true make a periodic curve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A curve interpolating the points if successful, null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateCurveOnSurface.htm"
+    },
+    {
+      "name": "CreateCurveOnSurfacePoints",
+      "signature": "public static Point2d[] CreateCurveOnSurfacePoints(Surface surface, IEnumerable\u003CPoint2d\u003E fixedPoints, double tolerance, bool periodic, int initCount, int levels)",
+      "summary": "Computes a discrete spline curve on the surface. In other words, computes a sequence of points on the surface, each with a corresponding parameter value.",
+      "remarks": "To create a curve from the output points, use Surface.CreateCurveOnSurface.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "The surface on which the curve is constructed. The surface should be G1 continuous. If the surface is closed in the u or v direction and is G1 at the seam, the function will construct point sequences that cross over the seam.",
+          "optional": false
+        },
+        {
+          "name": "fixedPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "Surface points to interpolate given by parameters. These must be distinct.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Relative tolerance used by the solver. When in doubt, use a tolerance of 0.0.",
+          "optional": false
+        },
+        {
+          "name": "periodic",
+          "type": "System.Boolean",
+          "doc": "When true constructs a smoothly closed curve.",
+          "optional": false
+        },
+        {
+          "name": "initCount",
+          "type": "System.Int32",
+          "doc": "Maximum number of points to insert between fixed points on the first level.",
+          "optional": false
+        },
+        {
+          "name": "levels",
+          "type": "System.Int32",
+          "doc": "The number of levels (between 1 and 3) to be used in multi-level solver. Use 1 for single level solve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d[]",
+        "doc": "A sequence of surface points, given by surface parameters, if successful. The number of output points is approximately: 2 ^ (level-1) * initCount * fixedPoints.Count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateCurveOnSurfacePoints.htm"
+    },
+    {
+      "name": "CreateFromCone",
+      "signature": "public static NurbsSurface CreateFromCone(Cone cone)",
+      "summary": "Constructs a new NURBS surfaces from cone data.",
+      "params": [
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "A cone value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A new NURBS surface, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromCone.htm"
+    },
+    {
+      "name": "CreateFromCorners(Point3d, Point3d, Point3d)",
+      "signature": "public static NurbsSurface CreateFromCorners(Point3d corner1, Point3d corner2, Point3d corner3)",
+      "summary": "Makes a surface from 3 corner points.",
+      "params": [
+        {
+          "name": "corner1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first corner.",
+          "optional": false
+        },
+        {
+          "name": "corner2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second corner.",
+          "optional": false
+        },
+        {
+          "name": "corner3",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The third corner.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "The resulting surface or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromCorners.htm"
+    },
+    {
+      "name": "CreateFromCorners(Point3d, Point3d, Point3d, Point3d)",
+      "signature": "public static NurbsSurface CreateFromCorners(Point3d corner1, Point3d corner2, Point3d corner3, Point3d corner4)",
+      "summary": "Makes a surface from 4 corner points. This is the same as calling CreateFromCorners(Point3d, Point3d, Point3d, Point3d, Double) with tolerance 0.",
+      "params": [
+        {
+          "name": "corner1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first corner.",
+          "optional": false
+        },
+        {
+          "name": "corner2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second corner.",
+          "optional": false
+        },
+        {
+          "name": "corner3",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The third corner.",
+          "optional": false
+        },
+        {
+          "name": "corner4",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The fourth corner.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "the resulting surface or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromCorners_1.htm"
+    },
+    {
+      "name": "CreateFromCorners(Point3d, Point3d, Point3d, Point3d, Double)",
+      "signature": "public static NurbsSurface CreateFromCorners(Point3d corner1, Point3d corner2, Point3d corner3, Point3d corner4, double tolerance)",
+      "summary": "Makes a surface from 4 corner points.",
+      "params": [
+        {
+          "name": "corner1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first corner.",
+          "optional": false
+        },
+        {
+          "name": "corner2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second corner.",
+          "optional": false
+        },
+        {
+          "name": "corner3",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The third corner.",
+          "optional": false
+        },
+        {
+          "name": "corner4",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The fourth corner.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Minimum edge length without collapsing to a singularity.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "The resulting surface or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromCorners_2.htm"
+    },
+    {
+      "name": "CreateFromCylinder",
+      "signature": "public static NurbsSurface CreateFromCylinder(Cylinder cylinder)",
+      "summary": "Constructs a new NURBS surfaces from cylinder data.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "A cylinder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A new NURBS surface, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromCylinder.htm"
+    },
+    {
+      "name": "CreateFromPlane",
+      "signature": "public static NurbsSurface CreateFromPlane(Plane plane, Interval uInterval, Interval vInterval, int uDegree, int vDegree, int uPointCount, int vPointCount)",
+      "summary": "Creates a NURBS surface from a plane and additional parameters.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane.",
+          "optional": false
+        },
+        {
+          "name": "uInterval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The interval describing the extends of the output surface in the U direction.",
+          "optional": false
+        },
+        {
+          "name": "vInterval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The interval describing the extends of the output surface in the V direction.",
+          "optional": false
+        },
+        {
+          "name": "uDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the output surface in the U direction.",
+          "optional": false
+        },
+        {
+          "name": "vDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the output surface in the V direction.",
+          "optional": false
+        },
+        {
+          "name": "uPointCount",
+          "type": "System.Int32",
+          "doc": "The number of control points of the output surface in the U direction.",
+          "optional": false
+        },
+        {
+          "name": "vPointCount",
+          "type": "System.Int32",
+          "doc": "The number of control points of the output surface in the V direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NURBS surface if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromPlane.htm"
+    },
+    {
+      "name": "CreateFromPoints",
+      "signature": "public static NurbsSurface CreateFromPoints(IEnumerable\u003CPoint3d\u003E points, int uCount, int vCount, int uDegree, int vDegree)",
+      "summary": "Constructs a NURBS surface from a 2D grid of control points.",
+      "remarks": "uCount multiplied by vCount must equal the number of points supplied.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Control point locations.",
+          "optional": false
+        },
+        {
+          "name": "uCount",
+          "type": "System.Int32",
+          "doc": "Number of points in U direction.",
+          "optional": false
+        },
+        {
+          "name": "vCount",
+          "type": "System.Int32",
+          "doc": "Number of points in V direction.",
+          "optional": false
+        },
+        {
+          "name": "uDegree",
+          "type": "System.Int32",
+          "doc": "Degree of surface in U direction.",
+          "optional": false
+        },
+        {
+          "name": "vDegree",
+          "type": "System.Int32",
+          "doc": "Degree of surface in V direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NurbsSurface on success or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromPoints.htm"
+    },
+    {
+      "name": "CreateFromSphere",
+      "signature": "public static NurbsSurface CreateFromSphere(Sphere sphere)",
+      "summary": "Constructs a new NURBS surfaces from sphere data.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "A sphere value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A new NURBS surface, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromSphere.htm"
+    },
+    {
+      "name": "CreateFromTorus",
+      "signature": "public static NurbsSurface CreateFromTorus(Torus torus)",
+      "summary": "Constructs a new NURBS surfaces from torus data.",
+      "params": [
+        {
+          "name": "torus",
+          "type": "Rhino.Geometry.Torus",
+          "doc": "A torus value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A new NURBS surface, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateFromTorus.htm"
+    },
+    {
+      "name": "CreateNetworkSurface(IEnumerable\u003CCurve\u003E, Int32, Double, Double, Double, Int32)",
+      "signature": "public static NurbsSurface CreateNetworkSurface(IEnumerable\u003CCurve\u003E curves, int continuity, double edgeTolerance, double interiorTolerance, double angleTolerance, out int error)",
+      "summary": "Builds a surface from an auto-sorted network of curves/edges.",
+      "params": [
+        {
+          "name": "curves",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "An array, a list or any enumerable set of curves/edges, sorted automatically into U and V curves.",
+          "optional": false
+        },
+        {
+          "name": "continuity",
+          "type": "System.Int32",
+          "doc": "continuity along edges, 0 = loose, 1 = position, 2 = tan, 3 = curvature.",
+          "optional": false
+        },
+        {
+          "name": "edgeTolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use along network surface edge.",
+          "optional": false
+        },
+        {
+          "name": "interiorTolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use for the interior curves.",
+          "optional": false
+        },
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "angle tolerance to use.",
+          "optional": false
+        },
+        {
+          "name": "error",
+          "type": "System.Int32",
+          "doc": "If the NurbsSurface could not be created, the error value describes where the failure occurred. 0 = success, 1 = curve sorter failed, 2 = network initializing failed, 3 = failed to build surface, 4 = network surface is not valid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NurbsSurface or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateNetworkSurface.htm"
+    },
+    {
+      "name": "CreateNetworkSurface(IEnumerable\u003CCurve\u003E, Int32, Int32, IEnumerable\u003CCurve\u003E, Int32, Int32, Double, Double, Double, Int32)",
+      "signature": "public static NurbsSurface CreateNetworkSurface(IEnumerable\u003CCurve\u003E uCurves, int uContinuityStart, int uContinuityEnd, IEnumerable\u003CCurve\u003E vCurves, int vContinuityStart, int vContinuityEnd, double edgeTolerance, double interiorTolerance, double angleTolerance, out int error)",
+      "summary": "Builds a surface from an ordered network of curves/edges.",
+      "params": [
+        {
+          "name": "uCurves",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "An array, a list or any enumerable set of U curves.",
+          "optional": false
+        },
+        {
+          "name": "uContinuityStart",
+          "type": "System.Int32",
+          "doc": "continuity at first U segment, 0 = loose, 1 = position, 2 = tan, 3 = curvature.",
+          "optional": false
+        },
+        {
+          "name": "uContinuityEnd",
+          "type": "System.Int32",
+          "doc": "continuity at last U segment, 0 = loose, 1 = position, 2 = tan, 3 = curvature.",
+          "optional": false
+        },
+        {
+          "name": "vCurves",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "An array, a list or any enumerable set of V curves.",
+          "optional": false
+        },
+        {
+          "name": "vContinuityStart",
+          "type": "System.Int32",
+          "doc": "continuity at first V segment, 0 = loose, 1 = position, 2 = tan, 3 = curvature.",
+          "optional": false
+        },
+        {
+          "name": "vContinuityEnd",
+          "type": "System.Int32",
+          "doc": "continuity at last V segment, 0 = loose, 1 = position, 2 = tan, 3 = curvature.",
+          "optional": false
+        },
+        {
+          "name": "edgeTolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use along network surface edge.",
+          "optional": false
+        },
+        {
+          "name": "interiorTolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use for the interior curves.",
+          "optional": false
+        },
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "angle tolerance to use.",
+          "optional": false
+        },
+        {
+          "name": "error",
+          "type": "System.Int32",
+          "doc": "If the NurbsSurface could not be created, the error value describes where the failure occurred. 0 = success, 1 = curve sorter failed, 2 = network initializing failed, 3 = failed to build surface, 4 = network surface is not valid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NurbsSurface or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateNetworkSurface_1.htm"
+    },
+    {
+      "name": "CreateRailRevolvedSurface",
+      "signature": "public static NurbsSurface CreateRailRevolvedSurface(Curve profile, Curve rail, Line axis, bool scaleHeight)",
+      "summary": "Constructs a railed Surface-of-Revolution.",
+      "params": [
+        {
+          "name": "profile",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Profile curve for revolution.",
+          "optional": false
+        },
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail curve for revolution.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Axis of revolution.",
+          "optional": false
+        },
+        {
+          "name": "scaleHeight",
+          "type": "System.Boolean",
+          "doc": "If true, surface will be locally scaled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NurbsSurface or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateRailRevolvedSurface.htm"
+    },
+    {
+      "name": "CreateRuledSurface",
+      "signature": "public static NurbsSurface CreateRuledSurface(Curve curveA, Curve curveB)",
+      "summary": "Constructs a ruled surface between two curves. Curves must share the same knot-vector.",
+      "params": [
+        {
+          "name": "curveA",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "First curve.",
+          "optional": false
+        },
+        {
+          "name": "curveB",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Second curve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A ruled surface on success or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateRuledSurface.htm"
+    },
+    {
+      "name": "CreateSubDFriendly",
+      "signature": "public static NurbsSurface CreateSubDFriendly(Surface surface)",
+      "summary": "Create a bi-cubic SubD friendly surface from a surface.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "\u003ESurface to rebuild as a SubD friendly surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A SubD friendly NURBS surface is successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateSubDFriendly.htm"
+    },
+    {
+      "name": "CreateThroughPoints",
+      "signature": "public static NurbsSurface CreateThroughPoints(IEnumerable\u003CPoint3d\u003E points, int uCount, int vCount, int uDegree, int vDegree, bool uClosed, bool vClosed)",
+      "summary": "Constructs a NURBS surface from a 2D grid of points.",
+      "remarks": "uCount multiplied by vCount must equal the number of points supplied.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Control point locations.",
+          "optional": false
+        },
+        {
+          "name": "uCount",
+          "type": "System.Int32",
+          "doc": "Number of points in U direction.",
+          "optional": false
+        },
+        {
+          "name": "vCount",
+          "type": "System.Int32",
+          "doc": "Number of points in V direction.",
+          "optional": false
+        },
+        {
+          "name": "uDegree",
+          "type": "System.Int32",
+          "doc": "Degree of surface in U direction.",
+          "optional": false
+        },
+        {
+          "name": "vDegree",
+          "type": "System.Int32",
+          "doc": "Degree of surface in V direction.",
+          "optional": false
+        },
+        {
+          "name": "uClosed",
+          "type": "System.Boolean",
+          "doc": "true if the surface should be closed in the U direction.",
+          "optional": false
+        },
+        {
+          "name": "vClosed",
+          "type": "System.Boolean",
+          "doc": "true if the surface should be closed in the V direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NurbsSurface on success or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_CreateThroughPoints.htm"
+    },
+    {
+      "name": "CurvatureAt",
+      "signature": "public SurfaceCurvature CurvatureAt(double u, double v)",
+      "summary": "Computes the curvature at the given UV coordinate.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "U parameter for evaluation.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "V parameter for evaluation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SurfaceCurvature",
+        "doc": "Surface Curvature data for the point at UV or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_CurvatureAt.htm"
+    },
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint currentRemainder)",
+      "summary": "Returns a CRC calculated from the information that defines the object. This CRC can be used as a quick way to see if two objects are not identical.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The current remainder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "CRC of the information the defines the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_DataCRC.htm"
+    },
+    {
+      "name": "Degree",
+      "signature": "public int Degree(int direction)",
+      "summary": "Returns the maximum algebraic degree of any span (or a good estimate if curve spans are not algebraic).",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 gets first parameter\u0027s domain, 1 gets second parameter\u0027s domain.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The maximum degree."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Degree.htm"
+    },
+    {
+      "name": "DeleteAllUserStrings",
+      "signature": "public void DeleteAllUserStrings()",
+      "summary": "(Inherited from GeometryBase.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_DeleteAllUserStrings.htm"
+    },
+    {
+      "name": "DeleteUserString",
+      "signature": "public bool DeleteUserString(string key)",
+      "summary": "(Inherited from GeometryBase.)",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Geometry.GeometryBase.DeleteUserString(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.GeometryBase.DeleteUserString(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_DeleteUserString.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Overridden in order to destroy local display cache information",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_Dispose.htm"
+    },
+    {
+      "name": "Domain",
+      "signature": "public Interval Domain(int direction)",
+      "summary": "Gets the domain in a direction.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 gets first parameter, 1 gets second parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "An interval value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Domain.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public virtual GeometryBase Duplicate()",
+      "summary": "Constructs a deep (full) copy of this object.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "An object of the same type as this, with the same properties and behavior."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateShallow",
+      "signature": "public GeometryBase DuplicateShallow()",
+      "summary": "Constructs a light copy of this object. By \u0022light\u0022, it is meant that the same underlying data is used until something is done to attempt to change it. For example, you could have a shallow copy of a very heavy mesh object and the same underlying data will be used when doing things like inspecting the number of faces on the mesh. If you modify the location of one of the mesh vertices, the shallow copy will create a full duplicate of the underlying mesh data and the shallow copy will become a deep copy.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "An object of the same type as this object. This behavior is overridden by implementing classes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_DuplicateShallow.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(NurbsSurface other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.NurbsSurface",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.NurbsSurface.EpsilonEquals(Rhino.Geometry.NurbsSurface,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.NurbsSurface.EpsilonEquals(Rhino.Geometry.NurbsSurface,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.NurbsSurface.EpsilonEquals(Rhino.Geometry.NurbsSurface,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_EpsilonEquals.htm"
+    },
+    {
+      "name": "Evaluate",
+      "signature": "public bool Evaluate(double u, double v, int numberDerivatives, out Point3d point, out Vector3d[] derivatives)",
+      "summary": "Evaluates a surface mathematically.",
+      "remarks": "The partial derivatives will be in the order {Su, Sv} for numberDerivatives = 1, {Su, Sv, Suu, Suv, Svv} for 2, {Su, Sv, Suu, Suv, Svv, Suuu, Suuv, Suvv, Svvv} for 3, and similar for higher counts.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "A U parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "A V parameter.",
+          "optional": false
+        },
+        {
+          "name": "numberDerivatives",
+          "type": "System.Int32",
+          "doc": "The number of derivatives.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point. This out parameter will be assigned during this call.",
+          "optional": false
+        },
+        {
+          "name": "derivatives",
+          "type": "Rhino.Geometry.Vector3d[]",
+          "doc": "A vector array. This out parameter will be assigned during this call. This can be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Evaluate.htm"
+    },
+    {
+      "name": "Extend(Int32, Interval)",
+      "signature": "public bool Extend(int direction, Interval interval)",
+      "summary": "Analytically extends the surface to include the interval.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "If 0, Surface.Domain(0) will include the interval. (the first surface parameter). If 1, Surface.Domain(1) will include the interval. (the second surface parameter).",
+          "optional": false
+        },
+        {
+          "name": "interval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "If the interval is not included in surface domain, the surface will be extended so that its domain includes the interval. Note, this method will fail if the surface is closed in the specified direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Extend_1.htm"
+    },
+    {
+      "name": "Extend(IsoStatus, Double, Boolean)",
+      "signature": "public Surface Extend(IsoStatus edge, double extensionLength, bool smooth)",
+      "summary": "Extends an untrimmed surface along one edge.",
+      "params": [
+        {
+          "name": "edge",
+          "type": "Rhino.Geometry.IsoStatus",
+          "doc": "Edge to extend. Must be North, South, East, or West.",
+          "optional": false
+        },
+        {
+          "name": "extensionLength",
+          "type": "System.Double",
+          "doc": "distance to extend.",
+          "optional": false
+        },
+        {
+          "name": "smooth",
+          "type": "System.Boolean",
+          "doc": "true for smooth (C-infinity) extension. false for a C1- ruled extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "New extended surface on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Extend.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Finalize.htm"
+    },
+    {
+      "name": "FindClosestIsoCurve",
+      "signature": "public IsoStatus FindClosestIsoCurve(Point3d testPoint)",
+      "summary": "Find the closest isoparamentric curve, given a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The test point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IsoStatus",
+        "doc": "The enumeration."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_FindClosestIsoCurve.htm"
+    },
+    {
+      "name": "Fit",
+      "signature": "public Surface Fit(int uDegree, int vDegree, double fitTolerance)",
+      "summary": "Fits a new surface through an existing surface.",
+      "params": [
+        {
+          "name": "uDegree",
+          "type": "System.Int32",
+          "doc": "the output surface U degree. Must be bigger than 1.",
+          "optional": false
+        },
+        {
+          "name": "vDegree",
+          "type": "System.Int32",
+          "doc": "the output surface V degree. Must be bigger than 1.",
+          "optional": false
+        },
+        {
+          "name": "fitTolerance",
+          "type": "System.Double",
+          "doc": "The fitting tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "A surface, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Fit.htm"
+    },
+    {
+      "name": "FitCurveToSurface",
+      "signature": "public Curve[] FitCurveToSurface(Curve trimCurve3d, Vector3d trimProjectionDir, double tolerance, IEnumerable\u003Cdouble\u003E Knots, bool divideIntoSections, ref Curve trimCurveOnSurface, ref Curve splitCurve)",
+      "summary": "(Inherited from Surface.)",
+      "params": [
+        {
+          "name": "trimCurve3d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "curve that will trim from one edge to the opposite",
+          "optional": false
+        },
+        {
+          "name": "trimProjectionDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector for projection, or zero vector for no projection",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "3d tolerance for projection, splitting, fitting...",
+          "optional": false
+        },
+        {
+          "name": "Knots",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "For TrimParamKnots=3, the custom knots to add",
+          "optional": false
+        },
+        {
+          "name": "divideIntoSections",
+          "type": "System.Boolean",
+          "doc": "If true, the surface is divided at each knot",
+          "optional": false
+        },
+        {
+          "name": "trimCurveOnSurface",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "the actual trim curve as it is projected on or pulled to the surface",
+          "optional": false
+        },
+        {
+          "name": "splitCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "the actual fit curve the split the surface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Surface.FitCurveToSurface(Rhino.Geometry.Curve,Rhino.Geometry.Vector3d,System.Double,System.Collections.Generic.IEnumerable{System.Double},System.Boolean,Rhino.Geometry.Curve@,Rhino.Geometry.Curve@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_FitCurveToSurface.htm"
+    },
+    {
+      "name": "FrameAt",
+      "signature": "public bool FrameAt(double u, double v, out Plane frame)",
+      "summary": "Computes the orient plane on a surface given a U and V parameter. This is the simple evaluation call with no error handling.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "A first parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "A second parameter.",
+          "optional": false
+        },
+        {
+          "name": "frame",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A frame plane that will be computed during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this operation succeeded; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_FrameAt.htm"
+    },
+    {
+      "name": "GetBoundingBox(Boolean)",
+      "signature": "public BoundingBox GetBoundingBox(bool accurate)",
+      "summary": "Bounding box solver. Gets the world axis aligned bounding box for the geometry.",
+      "params": [
+        {
+          "name": "accurate",
+          "type": "System.Boolean",
+          "doc": "If true, a physically accurate bounding box will be computed. If not, a bounding box estimate will be computed. For some geometry types there is no difference between the estimate and the accurate bounding box. Estimated bounding boxes can be computed much (much) faster than accurate (or \u0022tight\u0022) bounding boxes. Estimated bounding boxes are always similar to or larger than accurate bounding boxes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The bounding box of the geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_3.htm"
+    },
+    {
+      "name": "GetBoundingBox(Plane)",
+      "signature": "public BoundingBox GetBoundingBox(Plane plane)",
+      "summary": "Aligned Bounding box solver. Gets the plane aligned bounding box.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation plane for BoundingBox.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A BoundingBox in plane coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetBoundingBox(Transform)",
+      "signature": "public virtual BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "Aligned Bounding box solver. Gets the world axis aligned bounding box for the transformed geometry.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to object prior to the BoundingBox computation. The geometry itself is not modified.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The accurate bounding box of the transformed geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_2.htm"
+    },
+    {
+      "name": "GetBoundingBox(Plane, Box)",
+      "signature": "public BoundingBox GetBoundingBox(Plane plane, out Box worldBox)",
+      "summary": "Aligned Bounding box solver. Gets the plane aligned bounding box.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation plane for BoundingBox.",
+          "optional": false
+        },
+        {
+          "name": "worldBox",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Aligned box in World coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A BoundingBox in plane coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_1.htm"
+    },
+    {
+      "name": "GetNextDiscontinuity(Int32, Continuity, Double, Double, Double)",
+      "signature": "public bool GetNextDiscontinuity(int direction, Continuity continuityType, double t0, double t1, out double t)",
+      "summary": "Searches for a derivative, tangent, or curvature discontinuity.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "If 0, then \u0022u\u0022 parameter is checked. If 1, then the \u0022v\u0022 parameter is checked.",
+          "optional": false
+        },
+        {
+          "name": "continuityType",
+          "type": "Rhino.Geometry.Continuity",
+          "doc": "The desired continuity.",
+          "optional": false
+        },
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "Search begins at t0. If there is a discontinuity at t0, it will be ignored. This makes it possible to repeatedly call GetNextDiscontinuity and step through the discontinuities.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "(t0 != t1) If there is a discontinuity at t1 is will be ignored unless c is a locus discontinuity type and t1 is at the start or end of the curve.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "if a discontinuity is found, then t reports the parameter at the discontinuity.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Parametric continuity tests c = (C0_continuous, ..., G2_continuous): TRUE if a parametric discontinuity was found strictly between t0 and t1. Note well that all curves are parametrically continuous at the ends of their domains. Locus continuity tests c = (C0_locus_continuous, ...,G2_locus_continuous): TRUE if a locus discontinuity was found strictly between t0 and t1 or at t1 is the at the end of a curve. Note well that all open curves (IsClosed()=false) are locus discontinuous at the ends of their domains. All closed curves (IsClosed()=true) are at least C0_locus_continuous at the ends of their domains."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_GetNextDiscontinuity_1.htm"
+    },
+    {
+      "name": "GetNextDiscontinuity(Int32, Continuity, Double, Double, Double, Double, Double)",
+      "signature": "public bool GetNextDiscontinuity(int direction, Continuity continuityType, double t0, double t1, double cosAngleTolerance, double curvatureTolerance, out double t)",
+      "summary": "Searches for a derivative, tangent, or curvature discontinuity.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "If 0, then \u0022u\u0022 parameter is checked. If 1, then the \u0022v\u0022 parameter is checked.",
+          "optional": false
+        },
+        {
+          "name": "continuityType",
+          "type": "Rhino.Geometry.Continuity",
+          "doc": "The desired continuity.",
+          "optional": false
+        },
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "Search begins at t0. If there is a discontinuity at t0, it will be ignored. This makes it possible to repeatedly call GetNextDiscontinuity and step through the discontinuities.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "(t0 != t1) If there is a discontinuity at t1 is will be ignored unless c is a locus discontinuity type and t1 is at the start or end of the curve.",
+          "optional": false
+        },
+        {
+          "name": "cosAngleTolerance",
+          "type": "System.Double",
+          "doc": "default = cos(1 degree) Used only when continuityType is G1_continuous or G2_continuous. If the cosine of the angle between two tangent vectors is \u003C= cos_angle_tolerance, then a G1 discontinuity is reported.",
+          "optional": false
+        },
+        {
+          "name": "curvatureTolerance",
+          "type": "System.Double",
+          "doc": "(default = ON_SQRT_EPSILON) Used only when continuityType is G2_continuous. If K0 and K1 are curvatures evaluated from above and below and |K0 - K1| \u003E curvature_tolerance, then a curvature discontinuity is reported.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "if a discontinuity is found, then t reports the parameter at the discontinuity.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Parametric continuity tests c = (C0_continuous, ..., G2_continuous): TRUE if a parametric discontinuity was found strictly between t0 and t1. Note well that all curves are parametrically continuous at the ends of their domains. Locus continuity tests c = (C0_locus_continuous, ...,G2_locus_continuous): TRUE if a locus discontinuity was found strictly between t0 and t1 or at t1 is the at the end of a curve. Note well that all open curves (IsClosed()=false) are locus discontinuous at the ends of their domains. All closed curves (IsClosed()=true) are at least C0_locus_continuous at the ends of their domains."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_GetNextDiscontinuity.htm"
+    },
+    {
+      "name": "GetNurbsFormParameterFromSurfaceParameter",
+      "signature": "public bool GetNurbsFormParameterFromSurfaceParameter(double surfaceS, double surfaceT, out double nurbsS, out double nurbsT)",
+      "summary": "Translates a parameter from the current surface to the parameter space of the surface returned by ToNurbsSurface().",
+      "params": [
+        {
+          "name": "surfaceS",
+          "type": "System.Double",
+          "doc": "The parameter in the S, or sometimes U, direction, of this surface.",
+          "optional": false
+        },
+        {
+          "name": "surfaceT",
+          "type": "System.Double",
+          "doc": "The parameter in the T, or sometimes V, direction of this surface.",
+          "optional": false
+        },
+        {
+          "name": "nurbsS",
+          "type": "System.Double",
+          "doc": "S on the NURBS form.",
+          "optional": false
+        },
+        {
+          "name": "nurbsT",
+          "type": "System.Double",
+          "doc": "T on the NURBS form.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_GetNurbsFormParameterFromSurfaceParameter.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetSpanVector",
+      "signature": "public double[] GetSpanVector(int direction)",
+      "summary": "Gets array of span \u0022knots\u0022.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 gets first parameter\u0027s domain, 1 gets second parameter\u0027s domain.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double[]",
+        "doc": "An array with span vectors; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_GetSpanVector.htm"
+    },
+    {
+      "name": "GetSurfaceParameterFromNurbsFormParameter",
+      "signature": "public bool GetSurfaceParameterFromNurbsFormParameter(double nurbsS, double nurbsT, out double surfaceS, out double surfaceT)",
+      "summary": "Translates a parameter from a value on the surface returned by ToNurbsSurface() to the current surface.",
+      "params": [
+        {
+          "name": "nurbsS",
+          "type": "System.Double",
+          "doc": "The parameter in the S, or sometimes U, direction of the NURBS form surface.",
+          "optional": false
+        },
+        {
+          "name": "nurbsT",
+          "type": "System.Double",
+          "doc": "The parameter in the T, or sometimes V, direction of the NURBS form surface.",
+          "optional": false
+        },
+        {
+          "name": "surfaceS",
+          "type": "System.Double",
+          "doc": "S on this surface.",
+          "optional": false
+        },
+        {
+          "name": "surfaceT",
+          "type": "System.Double",
+          "doc": "T o n this surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_GetSurfaceParameterFromNurbsFormParameter.htm"
+    },
+    {
+      "name": "GetSurfaceSize",
+      "signature": "public bool GetSurfaceSize(out double width, out double height)",
+      "summary": "Gets an estimate of the size of the rectangle that would be created if the 3d surface where flattened into a rectangle.",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Double",
+          "doc": "corresponds to the first surface parameter.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "corresponds to the second surface parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_GetSurfaceSize.htm"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "public string GetUserString(string key)",
+      "summary": "Gets user string from this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve the string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "string associated with the key if successful. null if no key was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_GetUserString.htm"
+    },
+    {
+      "name": "GetUserStrings",
+      "signature": "public NameValueCollection GetUserStrings()",
+      "summary": "Gets a copy of all (user key string, user value string) pairs attached to this geometry.",
+      "params": [],
+      "returns": {
+        "type": "NameValueCollection",
+        "doc": "A new collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_GetUserStrings.htm"
+    },
+    {
+      "name": "HasNurbsForm",
+      "signature": "public int HasNurbsForm()",
+      "summary": "Is there a NURBS surface representation of this surface.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 unable to create NURBS representation with desired accuracy. 1 success - NURBS parameterization matches the surface\u0027s 2 success - NURBS point locus matches the surface\u0027s and the domain of the NURBS surface is correct. However, This surface\u0027s parameterization and the NURBS surface parameterization may not match. This situation happens when getting NURBS representations of surfaces that have a transcendental parameterization like spheres, cylinders, and cones."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_HasNurbsForm.htm"
+    },
+    {
+      "name": "IncreaseDegreeU",
+      "signature": "public bool IncreaseDegreeU(int desiredDegree)",
+      "summary": "Increase the degree of this surface in U direction.",
+      "params": [
+        {
+          "name": "desiredDegree",
+          "type": "System.Int32",
+          "doc": "The desired degree. Degrees should be number between and including 1 and 11.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_IncreaseDegreeU.htm"
+    },
+    {
+      "name": "IncreaseDegreeV",
+      "signature": "public bool IncreaseDegreeV(int desiredDegree)",
+      "summary": "Increase the degree of this surface in V direction.",
+      "params": [
+        {
+          "name": "desiredDegree",
+          "type": "System.Int32",
+          "doc": "The desired degree. Degrees should be number between and including 1 and 11.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_IncreaseDegreeV.htm"
+    },
+    {
+      "name": "InterpolatedCurveOnSurface",
+      "signature": "public NurbsCurve InterpolatedCurveOnSurface(IEnumerable\u003CPoint3d\u003E points, double tolerance)",
+      "summary": "Constructs an interpolated curve on a surface, using 3D points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of points.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A tolerance value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A new NURBS curve, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_InterpolatedCurveOnSurface.htm"
+    },
+    {
+      "name": "InterpolatedCurveOnSurfaceUV(IEnumerable\u003CPoint2d\u003E, Double)",
+      "signature": "public NurbsCurve InterpolatedCurveOnSurfaceUV(IEnumerable\u003CPoint2d\u003E points, double tolerance)",
+      "summary": "Returns a curve that interpolates points on a surface. The interpolant lies on the surface.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "List of at least two UV parameter locations on the surface.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance used for the fit of the push-up curve. Generally, the resulting interpolating curve will be within tolerance of the surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A new NURBS curve if successful, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_InterpolatedCurveOnSurfaceUV.htm"
+    },
+    {
+      "name": "InterpolatedCurveOnSurfaceUV(IEnumerable\u003CPoint2d\u003E, Double, Boolean, Int32)",
+      "signature": "public NurbsCurve InterpolatedCurveOnSurfaceUV(IEnumerable\u003CPoint2d\u003E points, double tolerance, bool closed, int closedSurfaceHandling)",
+      "summary": "Returns a curve that interpolates points on a surface. The interpolant lies on the surface.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "List of at least two UV parameter locations on the surface.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance used for the fit of the push-up curve. Generally, the resulting interpolating curve will be within tolerance of the surface.",
+          "optional": false
+        },
+        {
+          "name": "closed",
+          "type": "System.Boolean",
+          "doc": "If false, the interpolating curve is not closed. If true, the interpolating curve is closed, and the last point and first point should generally not be equal.",
+          "optional": false
+        },
+        {
+          "name": "closedSurfaceHandling",
+          "type": "System.Int32",
+          "doc": "If 0, all points must be in the rectangular domain of the surface. If the surface is closed in some direction, then this routine will interpret each point and place it at an appropriate location in the covering space. This is the simplest option and should give good results. If 1, then more options for more control of handling curves going across seams are available. If the surface is closed in some direction, then the points are taken as points in the covering space. Example, if srf.IsClosed(0)=true and srf.IsClosed(1)=false and srf.Domain(0)=srf.Domain(1)=Interval(0,1) then if closedSurfaceHandling=1 a point(u, v) in points can have any value for the u coordinate, but must have 0\u003C=v\u003C=1. In particular, if points = { (0.0,0.5), (2.0,0.5) } then the interpolating curve will wrap around the surface two times in the closed direction before ending at start of the curve. If closed=true the last point should equal the first point plus an integer multiple of the period on a closed direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A new NURBS curve if successful, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_InterpolatedCurveOnSurfaceUV_1.htm"
+    },
+    {
+      "name": "IsAtSeam",
+      "signature": "public int IsAtSeam(double u, double v)",
+      "summary": "Tests if a surface parameter value is at a seam.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "Surface u parameter to test.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "Surface v parameter to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 if not a seam, 1 if u == Domain(0)[i] and srf(u, v) == srf(Domain(0)[1-i], v) 2 if v == Domain(1)[i] and srf(u, v) == srf(u, Domain(1)[1-i]) 3 if 1 and 2 are true."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsAtSeam.htm"
+    },
+    {
+      "name": "IsAtSingularity",
+      "signature": "public bool IsAtSingularity(double u, double v, bool exact)",
+      "summary": "Tests if a surface parameter value is at a singularity.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "Surface u parameter to test.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "Surface v parameter to test.",
+          "optional": false
+        },
+        {
+          "name": "exact",
+          "type": "System.Boolean",
+          "doc": "If true, test if (u,v) is exactly at a singularity. If false, test if close enough to cause numerical problems.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if surface is singular at (s,t)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsAtSingularity.htm"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "public bool IsClosed(int direction)",
+      "summary": "Gets a value indicating if the surface is closed in a direction.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 = U, 1 = V.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The indicating boolean value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsClosed.htm"
+    },
+    {
+      "name": "IsCone()",
+      "signature": "public bool IsCone()",
+      "summary": "Determines if the surface is a portion of a cone within RhinoMath.ZeroTolerance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cone."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsCone.htm"
+    },
+    {
+      "name": "IsCone(Double)",
+      "signature": "public bool IsCone(double tolerance)",
+      "summary": "Determines if the surface is a portion of a cone within a given tolerance.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cone."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsCone_1.htm"
+    },
+    {
+      "name": "IsContinuous",
+      "signature": "public bool IsContinuous(Continuity continuityType, double u, double v)",
+      "summary": "Tests continuity at a surface parameter value.",
+      "params": [
+        {
+          "name": "continuityType",
+          "type": "Rhino.Geometry.Continuity",
+          "doc": "The continuity type to sample.",
+          "optional": false
+        },
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "Surface u parameter to test.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "Surface v parameter to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface has at least the specified continuity at the (u,v) parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsContinuous.htm"
+    },
+    {
+      "name": "IsCylinder()",
+      "signature": "public bool IsCylinder()",
+      "summary": "Determines if the surface is a portion of a cylinder within RhinoMath.ZeroTolerance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsCylinder.htm"
+    },
+    {
+      "name": "IsCylinder(Double)",
+      "signature": "public bool IsCylinder(double tolerance)",
+      "summary": "Determines if the surface is a portion of a cylinder within a given tolerance.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsCylinder_1.htm"
+    },
+    {
+      "name": "IsIsoparametric(BoundingBox)",
+      "signature": "public IsoStatus IsIsoparametric(BoundingBox bbox)",
+      "summary": "Determines if a 2d bounding box is isoparametric in the parameter space of this surface.",
+      "params": [
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Bounding box to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IsoStatus",
+        "doc": "IsoStatus flag describing the iso-parametric relationship between the surface and the bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsIsoparametric.htm"
+    },
+    {
+      "name": "IsIsoparametric(Curve)",
+      "signature": "public IsoStatus IsIsoparametric(Curve curve)",
+      "summary": "Determines if a 2d curve is isoparametric in the parameter space of this surface.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IsoStatus",
+        "doc": "IsoStatus flag describing the iso-parametric relationship between the surface and the curve."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsIsoparametric_1.htm"
+    },
+    {
+      "name": "IsIsoparametric(Curve, Interval)",
+      "signature": "public IsoStatus IsIsoparametric(Curve curve, Interval curveDomain)",
+      "summary": "Determines if a 2D curve is isoparametric in the parameter space of this surface.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve to test.",
+          "optional": false
+        },
+        {
+          "name": "curveDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Sub domain of the curve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IsoStatus",
+        "doc": "IsoStatus flag describing the iso-parametric relationship between the surface and the curve."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsIsoparametric_2.htm"
+    },
+    {
+      "name": "IsoCurve",
+      "signature": "public Curve IsoCurve(int direction, double constantParameter)",
+      "summary": "Gets isoparametric curve.",
+      "remarks": "In this function \u0022direction\u0022 indicates which direction the resulting curve runs. 0: horizontal, 1: vertical In the other Surface functions that take a \u0022direction\u0022 argument, \u0022direction\u0022 indicates if \u0022constantParameter\u0022 is a \u0022u\u0022 or \u0022v\u0022 parameter.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 first parameter varies and second parameter is constant e.g., point on IsoCurve(0,c) at t is srf(t,c) This is a horizontal line from left to right 1 first parameter is constant and second parameter varies e.g., point on IsoCurve(1,c) at t is srf(c,t This is a vertical line from bottom to top.",
+          "optional": false
+        },
+        {
+          "name": "constantParameter",
+          "type": "System.Double",
+          "doc": "The parameter that was constant on the original surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "An isoparametric curve or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsoCurve.htm"
+    },
+    {
+      "name": "IsPeriodic",
+      "signature": "public bool IsPeriodic(int direction)",
+      "summary": "Gets a value indicating if the surface is periodic in a direction (default is false).",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 = U, 1 = V.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The indicating boolean value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsPeriodic.htm"
+    },
+    {
+      "name": "IsPlanar()",
+      "signature": "public bool IsPlanar()",
+      "summary": "Tests a surface to see if it is planar to zero tolerance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is planar (flat) to within RhinoMath.ZeroTolerance units (1e-12)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsPlanar.htm"
+    },
+    {
+      "name": "IsPlanar(Double)",
+      "signature": "public bool IsPlanar(double tolerance)",
+      "summary": "Tests a surface to see if it is planar to a given tolerance.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if there is a plane such that the maximum distance from the surface to the plane is \u003C= tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsPlanar_1.htm"
+    },
+    {
+      "name": "IsSingular",
+      "signature": "public bool IsSingular(int side)",
+      "summary": "true if surface side is collapsed to a point.",
+      "params": [
+        {
+          "name": "side",
+          "type": "System.Int32",
+          "doc": "side of parameter space to test 0 = south, 1 = east, 2 = north, 3 = west.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if this specific side of the surface is singular; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsSingular.htm"
+    },
+    {
+      "name": "IsSphere()",
+      "signature": "public bool IsSphere()",
+      "summary": "Determines if the surface is a portion of a sphere within RhinoMath.ZeroTolerance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a sphere."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsSphere.htm"
+    },
+    {
+      "name": "IsSphere(Double)",
+      "signature": "public bool IsSphere(double tolerance)",
+      "summary": "Determines if the surface is a portion of a sphere within a given tolerance.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a sphere."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsSphere_1.htm"
+    },
+    {
+      "name": "IsTorus()",
+      "signature": "public bool IsTorus()",
+      "summary": "Determines if the surface is a portion of a torus within RhinoMath.ZeroTolerance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a torus."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsTorus.htm"
+    },
+    {
+      "name": "IsTorus(Double)",
+      "signature": "public bool IsTorus(double tolerance)",
+      "summary": "Determines if the surface is a portion of a torus within a given tolerance.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a torus."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_IsTorus_1.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "LocalClosestPoint",
+      "signature": "public bool LocalClosestPoint(Point3d testPoint, double seedU, double seedV, out double u, out double v)",
+      "summary": "Find parameters of the point on a surface that is locally closest to the testPoint. The search for a local close point starts at seed parameters.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point to test against.",
+          "optional": false
+        },
+        {
+          "name": "seedU",
+          "type": "System.Double",
+          "doc": "The seed parameter in the U direction.",
+          "optional": false
+        },
+        {
+          "name": "seedV",
+          "type": "System.Double",
+          "doc": "The seed parameter in the V direction.",
+          "optional": false
+        },
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "U parameter of the surface that is closest to testPoint.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "V parameter of the surface that is closest to testPoint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the search is successful, false if the search fails."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_LocalClosestPoint.htm"
+    },
+    {
+      "name": "MakeCompatible",
+      "signature": "public static bool MakeCompatible(Surface surface0, Surface surface1, out NurbsSurface nurb0, out NurbsSurface nurb1)",
+      "summary": "For expert use only. Makes a pair of compatible NURBS surfaces based on two input surfaces.",
+      "params": [
+        {
+          "name": "surface0",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "The first surface.",
+          "optional": false
+        },
+        {
+          "name": "surface1",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "The second surface.",
+          "optional": false
+        },
+        {
+          "name": "nurb0",
+          "type": "Rhino.Geometry.NurbsSurface",
+          "doc": "The first output NURBS surface.",
+          "optional": false
+        },
+        {
+          "name": "nurb1",
+          "type": "Rhino.Geometry.NurbsSurface",
+          "doc": "The second output NURBS surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_MakeCompatible.htm"
+    },
+    {
+      "name": "MakeDeformable",
+      "signature": "public bool MakeDeformable()",
+      "summary": "If possible, converts the object into a form that can be accurately modified with \u0022squishy\u0022 transformations like projections, shears, an non-uniform scaling.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "false if object cannot be converted to a deformable object. true if object was already deformable or was converted into a deformable object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_MakeDeformable.htm"
+    },
+    {
+      "name": "MakeNonRational",
+      "signature": "public bool MakeNonRational()",
+      "summary": "Makes this surface non-rational.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_MakeNonRational.htm"
+    },
+    {
+      "name": "MakeRational",
+      "signature": "public bool MakeRational()",
+      "summary": "Makes this surface rational.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_MakeRational.htm"
+    },
+    {
+      "name": "MakeUniform",
+      "signature": "public bool MakeUniform(int direction)",
+      "summary": "Changes a NURBS surface so each control point affects the surface exactly the same way. This make the knot vectors uniform without changing the control point locations. This will change the object shape slightly.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "Specify 0 for \u0022u\u0022 direction, 1 for \u0022v\u0022 direction, or 2 for both directions.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_MakeUniform.htm"
+    },
+    {
+      "name": "MatchToCurve",
+      "signature": "public NurbsSurface MatchToCurve(IsoStatus side, Curve targetCurve, double maxEndDistance, double maxInteriorDistance, double matchTolerance, int maxLevel)",
+      "summary": "Constructs a NURBS surface with start and end edge isocurve matching the start and end of targetCurve, and Greville points on targetCurve.",
+      "params": [
+        {
+          "name": "side",
+          "type": "Rhino.Geometry.IsoStatus",
+          "doc": "The isoparamentric curve direction.",
+          "optional": false
+        },
+        {
+          "name": "targetCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The target curve.",
+          "optional": false
+        },
+        {
+          "name": "maxEndDistance",
+          "type": "System.Double",
+          "doc": "If maxEndDistance dist \u003E 0, the edge isocurve must be within maxEndDistance of targetCurve start. If maxEndDistance dist \u003E 0, the edge isocurve must be within maxEndDistance of targetCurve end.",
+          "optional": false
+        },
+        {
+          "name": "maxInteriorDistance",
+          "type": "System.Double",
+          "doc": "If maxInteriorDistance \u003E 0, all interior Greville points of the edge isocurve must be within maxInteriorDistance of targetCurve.",
+          "optional": false
+        },
+        {
+          "name": "matchTolerance",
+          "type": "System.Double",
+          "doc": "The matching tolerance.",
+          "optional": false
+        },
+        {
+          "name": "maxLevel",
+          "type": "System.Int32",
+          "doc": "If maxLevel \u003E 0, the result will be refined up to that many times, attempting to get the result within matchTolerance. If matchTolerance \u003C= 0, no refinement will be done. In any case, the parameters closest points on targetCurve of the Greville points of the edge isocurve must be monotonic increasing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "Surface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_MatchToCurve.htm"
+    },
+    {
+      "name": "MemoryEstimate",
+      "signature": "public uint MemoryEstimate()",
+      "summary": "Computes an estimate of the number of bytes that this object is using in memory.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "An estimated memory footprint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_MemoryEstimate.htm"
+    },
+    {
+      "name": "NonConstOperation",
+      "signature": "protected override void NonConstOperation()",
+      "summary": "Destroy cache handle",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_NonConstOperation.htm"
+    },
+    {
+      "name": "NormalAt",
+      "signature": "public Vector3d NormalAt(double u, double v)",
+      "summary": "Computes the surface normal at a point. This is the simple evaluation call - it does not support error handling.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "A U parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "A V parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The normal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_NormalAt.htm"
+    },
+    {
+      "name": "Offset",
+      "signature": "public Surface Offset(double distance, double tolerance)",
+      "summary": "Constructs a new surface which is offset from the current surface.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "Distance (along surface normal) to offset.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Offset accuracy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "The offset surface or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Offset.htm"
+    },
+    {
+      "name": "OnSwitchToNonConst",
+      "signature": "protected override void OnSwitchToNonConst()",
+      "summary": "Is called when a non-constant operation occurs.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_OnSwitchToNonConst.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double u, double v)",
+      "summary": "Evaluates a point at a given parameter.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "evaluation parameters.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "evaluation parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Point3d.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_PointAt.htm"
+    },
+    {
+      "name": "Pullback(Curve, Double)",
+      "signature": "public Curve Pullback(Curve curve3d, double tolerance)",
+      "summary": "Pulls a 3d curve back to the surface\u0027s parameter space.",
+      "params": [
+        {
+          "name": "curve3d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The curve to pull.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "the maximum acceptable 3d distance between from surface(curve_2d(t)) to the locus of points on the surface that are closest to curve_3d.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "2d curve."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Pullback.htm"
+    },
+    {
+      "name": "Pullback(Curve, Double, Interval)",
+      "signature": "public Curve Pullback(Curve curve3d, double tolerance, Interval curve3dSubdomain)",
+      "summary": "Pulls a 3d curve back to the surface\u0027s parameter space.",
+      "params": [
+        {
+          "name": "curve3d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A curve.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "the maximum acceptable 3d distance between from surface(curve_2d(t)) to the locus of points on the surface that are closest to curve_3d.",
+          "optional": false
+        },
+        {
+          "name": "curve3dSubdomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "A sub-domain of the curve to sample.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "2d curve."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Pullback_1.htm"
+    },
+    {
+      "name": "Pushup(Curve, Double)",
+      "signature": "public Curve Pushup(Curve curve2d, double tolerance)",
+      "summary": "Computes a 3d curve that is the composite of a 2d curve and the surface map.",
+      "params": [
+        {
+          "name": "curve2d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "a 2d curve whose image is in the surface\u0027s domain.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "the maximum acceptable distance from the returned 3d curve to the image of curve_2d on the surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "3d curve."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Pushup.htm"
+    },
+    {
+      "name": "Pushup(Curve, Double, Interval)",
+      "signature": "public Curve Pushup(Curve curve2d, double tolerance, Interval curve2dSubdomain)",
+      "summary": "Computes a 3d curve that is the composite of a 2d curve and the surface map.",
+      "params": [
+        {
+          "name": "curve2d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "a 2d curve whose image is in the surface\u0027s domain.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "the maximum acceptable distance from the returned 3d curve to the image of curve_2d on the surface.",
+          "optional": false
+        },
+        {
+          "name": "curve2dSubdomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The curve interval (a sub-domain of the original curve) to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "3d curve."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Pushup_1.htm"
+    },
+    {
+      "name": "Rebuild",
+      "signature": "public NurbsSurface Rebuild(int uDegree, int vDegree, int uPointCount, int vPointCount)",
+      "summary": "Rebuilds an existing surface to a given degree and point count.",
+      "params": [
+        {
+          "name": "uDegree",
+          "type": "System.Int32",
+          "doc": "the output surface u degree.",
+          "optional": false
+        },
+        {
+          "name": "vDegree",
+          "type": "System.Int32",
+          "doc": "the output surface u degree.",
+          "optional": false
+        },
+        {
+          "name": "uPointCount",
+          "type": "System.Int32",
+          "doc": "The number of points in the output surface u direction. Must be bigger than uDegree (maximum value is 1000)",
+          "optional": false
+        },
+        {
+          "name": "vPointCount",
+          "type": "System.Int32",
+          "doc": "The number of points in the output surface v direction. Must be bigger than vDegree (maximum value is 1000)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "new rebuilt surface on success. null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Rebuild.htm"
+    },
+    {
+      "name": "RebuildOneDirection",
+      "signature": "public NurbsSurface RebuildOneDirection(int direction, int pointCount, LoftType loftType, double refitTolerance)",
+      "summary": "Rebuilds an existing surface with a new surface to a given point count in either the u or v directions independently.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "The direction (0 = U, 1 = V).",
+          "optional": false
+        },
+        {
+          "name": "pointCount",
+          "type": "System.Int32",
+          "doc": "The number of points in the output surface in the \u0022direction\u0022 direction.",
+          "optional": false
+        },
+        {
+          "name": "loftType",
+          "type": "Rhino.Geometry.LoftType",
+          "doc": "The loft type",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "The refit tolerance. When in doubt, use the document\u0027s model absolute tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "new rebuilt surface on success. null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_RebuildOneDirection.htm"
+    },
+    {
+      "name": "RefitSimplySplitSurface",
+      "signature": "public bool RefitSimplySplitSurface(Curve trimCurve3d, Vector3d trimProjectionDir, double tolerance, RefitTrimKnotMode knotAdditionMode, int numInsertKnots, IEnumerable\u003Cdouble\u003E Knots, RefitTrimSectionMode sectionMode, int numNonTrimSpans, bool meetCurve, bool oneSided, Point3d PtActive, bool outputSurface, bool outputCurve, ref int numSections, List\u003CSurface\u003E lowerSurface, List\u003CSurface\u003E upperSurface, List\u003CCurve\u003E edgeCurve, ref double FitMeasurement, ref Curve trimCurveOnSurface, ref Curve splitCurve)",
+      "summary": "This routine accepts a 3-d trim curve (trimCrv3d). The trim curve is assumed to run from one surface edge to the opposite edge; this is referred to as a \u0022simple\u0022 trim curve, roughly parallel to one of the srf directions (either u or v). We refer to that parameter as the \u0022trim parameter\u0022. The routine splits the surface via the trim curve, and then refits either side (\u0022upper\u0022 = \u0022above the trim\u0022, and \u0022lower\u0022 = \u0022below the trim\u0022) as a set of untrimmed Nurbs surfaces. The idea is to retain, as much as possible, the Nurbs structure of srf, especially in the trim parameter.",
+      "params": [
+        {
+          "name": "trimCurve3d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "curve that will trim from one edge to the opposite",
+          "optional": false
+        },
+        {
+          "name": "trimProjectionDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector for projection, or zero vector for no projection",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "3d tolerance for projection, splitting, fitting...",
+          "optional": false
+        },
+        {
+          "name": "knotAdditionMode",
+          "type": "Rhino.Geometry.RefitTrimKnotMode",
+          "doc": "0: no, don\u0027t add any 1: Yes, add nKnots knots, spaced regularly over the entire surface 2: Yes, add nKnots knots, spaced regularly PER EXISTING SPAN 3: Yes, add nKnots knots, as provided in the array Knots",
+          "optional": false
+        },
+        {
+          "name": "numInsertKnots",
+          "type": "System.Int32",
+          "doc": "FOr TrimParamKnots != 3, the number of knots to add",
+          "optional": false
+        },
+        {
+          "name": "Knots",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "For TrimParamKnots=3, the custom knots to add",
+          "optional": false
+        },
+        {
+          "name": "sectionMode",
+          "type": "Rhino.Geometry.RefitTrimSectionMode",
+          "doc": "0: no sections, just output one \u0022upper\u0022 and one \u0022lower\u0022 surface 1: Yes, divide into sections at each of the input surface\u0027s existing knots 2: Yes, divide into sections at each of the \u0022nKnot\u0022 added knot values 3: Yes, divide into sections at ALL knot values (i.e. both 1 and 2)",
+          "optional": false
+        },
+        {
+          "name": "numNonTrimSpans",
+          "type": "System.Int32",
+          "doc": "number of spans in the non-trim parameter",
+          "optional": false
+        },
+        {
+          "name": "meetCurve",
+          "type": "System.Boolean",
+          "doc": "Drag the refit surfaces out to meet the original trim curve",
+          "optional": false
+        },
+        {
+          "name": "oneSided",
+          "type": "System.Boolean",
+          "doc": "Inputting an \u0022active\u0022 point means you only want one side of the \u0022split\u0022 to be refit - In other words, you want a \u0022trim refit\u0022. Results will be returned in \u0022srfLower\u0022",
+          "optional": false
+        },
+        {
+          "name": "PtActive",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Active point",
+          "optional": false
+        },
+        {
+          "name": "outputSurface",
+          "type": "System.Boolean",
+          "doc": "if true, output fit surfaces: srfLower and, if !bActivePt, srfUpper",
+          "optional": false
+        },
+        {
+          "name": "outputCurve",
+          "type": "System.Boolean",
+          "doc": "if true, output fit curve: crvEdge",
+          "optional": false
+        },
+        {
+          "name": "numSections",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022numSections\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Surface.RefitSimplySplitSurface(Rhino.Geometry.Curve,Rhino.Geometry.Vector3d,System.Double,Rhino.Geometry.RefitTrimKnotMode,System.Int32,System.Collections.Generic.IEnumerable{System.Double},Rhino.Geometry.RefitTrimSectionMode,System.Int32,System.Boolean,System.Boolean,Rhino.Geometry.Point3d,System.Boolean,System.Boolean,System.Int32@,System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Curve},System.Double@,Rhino.Geometry.Curve@,Rhino.Geometry.Curve@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "lowerSurface",
+          "type": "System.Collections.Generic.List\u003CSurface\u003E",
+          "doc": "Surfaces (# = nSections) below trim curve in srf\u0027s (u,v) domain",
+          "optional": false
+        },
+        {
+          "name": "upperSurface",
+          "type": "System.Collections.Generic.List\u003CSurface\u003E",
+          "doc": "Surfaces (# = nSections) above trim curve in srf\u0027s (u,v) domain",
+          "optional": false
+        },
+        {
+          "name": "edgeCurve",
+          "type": "System.Collections.Generic.List\u003CCurve\u003E",
+          "doc": "Curves (# = nSections) fit to trim curve with srf\u0027s u/v parameter",
+          "optional": false
+        },
+        {
+          "name": "FitMeasurement",
+          "type": "System.Double",
+          "doc": "Calculated based on trimParamSections",
+          "optional": false
+        },
+        {
+          "name": "trimCurveOnSurface",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "the actual trim curve as it is projected on or pulled to the surface",
+          "optional": false
+        },
+        {
+          "name": "splitCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "the actual fit curve the split the surface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true for zuccess, false for failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_RefitSimplySplitSurface.htm"
+    },
+    {
+      "name": "RefitSplit",
+      "signature": "public int RefitSplit(Curve curve, Vector3d trimProjectionDir, double tolerance, IEnumerable\u003Cdouble\u003E Knots, bool bMeetCurve, bool divideIntoSections, List\u003CSurface\u003E srfLower, List\u003CSurface\u003E srfUpper, List\u003CCurve\u003E edgeCurve, ref Curve trimCurveOnSurface, ref Curve splitCurve)",
+      "summary": "Splits the surface into two and refits the split edge",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The curve used to split the surface. It must be a simple division, from one edge of the parametric space to the opposite edge.",
+          "optional": false
+        },
+        {
+          "name": "trimProjectionDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Vector for projection, or zero vector for no projection",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "3d tolerance for projection, splitting, fitting...",
+          "optional": false
+        },
+        {
+          "name": "Knots",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022Knots\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Surface.RefitSplit(Rhino.Geometry.Curve,Rhino.Geometry.Vector3d,System.Double,System.Collections.Generic.IEnumerable{System.Double},System.Boolean,System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Curve},Rhino.Geometry.Curve@,Rhino.Geometry.Curve@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bMeetCurve",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bMeetCurve\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Surface.RefitSplit(Rhino.Geometry.Curve,Rhino.Geometry.Vector3d,System.Double,System.Collections.Generic.IEnumerable{System.Double},System.Boolean,System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Curve},Rhino.Geometry.Curve@,Rhino.Geometry.Curve@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "divideIntoSections",
+          "type": "System.Boolean",
+          "doc": "If true, the surface is divided at each knot",
+          "optional": false
+        },
+        {
+          "name": "srfLower",
+          "type": "System.Collections.Generic.List\u003CSurface\u003E",
+          "doc": "Surfaces below trim curve in srf\u0027s (u,v) domain",
+          "optional": false
+        },
+        {
+          "name": "srfUpper",
+          "type": "System.Collections.Generic.List\u003CSurface\u003E",
+          "doc": "Surfaces below trim curve in srf\u0027s (u,v) domain",
+          "optional": false
+        },
+        {
+          "name": "edgeCurve",
+          "type": "System.Collections.Generic.List\u003CCurve\u003E",
+          "doc": "Curves (# = nSections) fit to trim curve with srf\u0027s u/v parameter",
+          "optional": false
+        },
+        {
+          "name": "trimCurveOnSurface",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "the actual trim curve as it is projected on or pulled to the surface",
+          "optional": false
+        },
+        {
+          "name": "splitCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "the actual fit curve the split the surface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Surface.RefitSplit(Rhino.Geometry.Curve,Rhino.Geometry.Vector3d,System.Double,System.Collections.Generic.IEnumerable{System.Double},System.Boolean,System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Surface},System.Collections.Generic.List{Rhino.Geometry.Curve},Rhino.Geometry.Curve@,Rhino.Geometry.Curve@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_RefitSplit.htm"
+    },
+    {
+      "name": "Reverse(Int32)",
+      "signature": "public Surface Reverse(int direction)",
+      "summary": "Reverses parameterization Domain changes from [a,b] to [-b,-a]",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 for first parameter\u0027s domain, 1 for second parameter\u0027s domain.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "a new reversed surface on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Reverse.htm"
+    },
+    {
+      "name": "Reverse(Int32, Boolean)",
+      "signature": "public Surface Reverse(int direction, bool inPlace)",
+      "summary": "Same as Reverse, but if inPlace is set to true this Surface is modified instead of a new copy being created.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 for first parameter\u0027s domain, 1 for second parameter\u0027s domain.",
+          "optional": false
+        },
+        {
+          "name": "inPlace",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022inPlace\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Surface.Reverse(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "If inPlace is False, a new reversed surface on success. If inPlace is true, this surface instance is returned on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Reverse_1.htm"
+    },
+    {
+      "name": "Rotate",
+      "signature": "public bool Rotate(double angleRadians, Vector3d rotationAxis, Point3d rotationCenter)",
+      "summary": "Rotates the object about the specified axis. A positive rotation angle results in a counter-clockwise rotation about the axis (right hand rule).",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Angle of rotation in radians.",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Direction of the axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point on the axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully rotated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_Rotate.htm"
+    },
+    {
+      "name": "Scale",
+      "signature": "public bool Scale(double scaleFactor)",
+      "summary": "Scales the object by the specified factor. The scale is centered at the origin.",
+      "params": [
+        {
+          "name": "scaleFactor",
+          "type": "System.Double",
+          "doc": "The uniform scaling factor.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully scaled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_Scale.htm"
+    },
+    {
+      "name": "SetDomain",
+      "signature": "public virtual bool SetDomain(int direction, Interval domain)",
+      "summary": "Sets the domain in a direction.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 sets first parameter\u0027s domain, 1 sets second parameter\u0027s domain.",
+          "optional": false
+        },
+        {
+          "name": "domain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "A new domain to be assigned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if setting succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_SetDomain.htm"
+    },
+    {
+      "name": "SetUserString",
+      "signature": "public bool SetUserString(string key, string value)",
+      "summary": "Attach a user string (key,value combination) to this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve this string.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "string associated with key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_SetUserString.htm"
+    },
+    {
+      "name": "ShortPath",
+      "signature": "public Curve ShortPath(Point2d start, Point2d end, double tolerance)",
+      "summary": "Constructs a geodesic between 2 points, used by ShortPath command in Rhino.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "start point of curve in parameter space. Points must be distinct in the domain of the surface.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "end point of curve in parameter space. Points must be distinct in the domain of the surface.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance used in fitting discrete solution.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "a geodesic curve on the surface on success. null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_ShortPath.htm"
+    },
+    {
+      "name": "Smooth(Double, Boolean, Boolean, Boolean, Boolean, SmoothingCoordinateSystem)",
+      "signature": "public Surface Smooth(double smoothFactor, bool bXSmooth, bool bYSmooth, bool bZSmooth, bool bFixBoundaries, SmoothingCoordinateSystem coordinateSystem)",
+      "summary": "Smooths a surface by averaging the positions of control points in a specified region.",
+      "params": [
+        {
+          "name": "smoothFactor",
+          "type": "System.Double",
+          "doc": "The smoothing factor, which controls how much control points move towards the average of the neighboring control points.",
+          "optional": false
+        },
+        {
+          "name": "bXSmooth",
+          "type": "System.Boolean",
+          "doc": "When true control points move in X axis direction.",
+          "optional": false
+        },
+        {
+          "name": "bYSmooth",
+          "type": "System.Boolean",
+          "doc": "When true control points move in Y axis direction.",
+          "optional": false
+        },
+        {
+          "name": "bZSmooth",
+          "type": "System.Boolean",
+          "doc": "When true control points move in Z axis direction.",
+          "optional": false
+        },
+        {
+          "name": "bFixBoundaries",
+          "type": "System.Boolean",
+          "doc": "When true the surface edges don\u0027t move.",
+          "optional": false
+        },
+        {
+          "name": "coordinateSystem",
+          "type": "Rhino.Geometry.SmoothingCoordinateSystem",
+          "doc": "The coordinates to determine the direction of the smoothing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "The smoothed surface if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Smooth.htm"
+    },
+    {
+      "name": "Smooth(Double, Boolean, Boolean, Boolean, Boolean, SmoothingCoordinateSystem, Plane)",
+      "signature": "public Surface Smooth(double smoothFactor, bool bXSmooth, bool bYSmooth, bool bZSmooth, bool bFixBoundaries, SmoothingCoordinateSystem coordinateSystem, Plane plane)",
+      "summary": "Smooths a surface by averaging the positions of control points in a specified region.",
+      "params": [
+        {
+          "name": "smoothFactor",
+          "type": "System.Double",
+          "doc": "The smoothing factor, which controls how much control points move towards the average of the neighboring control points.",
+          "optional": false
+        },
+        {
+          "name": "bXSmooth",
+          "type": "System.Boolean",
+          "doc": "When true control points move in X axis direction.",
+          "optional": false
+        },
+        {
+          "name": "bYSmooth",
+          "type": "System.Boolean",
+          "doc": "When true control points move in Y axis direction.",
+          "optional": false
+        },
+        {
+          "name": "bZSmooth",
+          "type": "System.Boolean",
+          "doc": "When true control points move in Z axis direction.",
+          "optional": false
+        },
+        {
+          "name": "bFixBoundaries",
+          "type": "System.Boolean",
+          "doc": "When true the surface edges don\u0027t move.",
+          "optional": false
+        },
+        {
+          "name": "coordinateSystem",
+          "type": "Rhino.Geometry.SmoothingCoordinateSystem",
+          "doc": "The coordinates to determine the direction of the smoothing.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "If SmoothingCoordinateSystem.CPlane specified, then the construction plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "The smoothed surface if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Smooth_1.htm"
+    },
+    {
+      "name": "SpanCount",
+      "signature": "public int SpanCount(int direction)",
+      "summary": "Gets number of smooth nonempty spans in the parameter direction.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 gets first parameter\u0027s domain, 1 gets second parameter\u0027s domain.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The span count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_SpanCount.htm"
+    },
+    {
+      "name": "Split",
+      "signature": "public Surface[] Split(int direction, double parameter)",
+      "summary": "Splits (divides) the surface into two parts at the specified parameter",
+      "params": [
+        {
+          "name": "direction",
+          "type": "System.Int32",
+          "doc": "0 = The surface is split vertically. The \u0022west\u0022 side is returned as the first surface in the array and the \u0022east\u0022 side is returned as the second surface in the array. 1 = The surface is split horizontally. The \u0022south\u0022 side is returned as the first surface in the array and the \u0022north\u0022 side is returned as the second surface in the array",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "System.Double",
+          "doc": "value of constant parameter in interval returned by Domain(direction)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface[]",
+        "doc": "Array of two surfaces on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Split.htm"
+    },
+    {
+      "name": "ToBrep",
+      "signature": "public Brep ToBrep()",
+      "summary": "Converts the surface into a Brep.",
+      "params": [],
+      "returns": {
+        "type": "Brep",
+        "doc": "A Brep with a similar shape like this surface or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_ToBrep.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "ToNurbsSurface()",
+      "signature": "public NurbsSurface ToNurbsSurface()",
+      "summary": "Gets a NURBS surface representation of this surface. Default tolerance of 0.0 is used.",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "NurbsSurface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_ToNurbsSurface.htm"
+    },
+    {
+      "name": "ToNurbsSurface(Double, Int32)",
+      "signature": "public NurbsSurface ToNurbsSurface(double tolerance, out int accuracy)",
+      "summary": "Gets a NURBS surface representation of this surface.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when creating NURBS representation.",
+          "optional": false
+        },
+        {
+          "name": "accuracy",
+          "type": "System.Int32",
+          "doc": "0 = unable to create NURBS representation with desired accuracy. 1 = success - returned NURBS parameterization matches the surface\u0027s to the desired accuracy. 2 = success - returned NURBS point locus matches the surface\u0027s to the desired accuracy and the domain of the NURBS surface is correct. However, this surface\u0027s parameterization and the NURBS surface parameterization may not match to the desired accuracy. This situation happens when getting NURBS representations of surfaces that have a transcendental parameterization like spheres, cylinders, and cones.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "NurbsSurface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_ToNurbsSurface_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms the geometry. If the input Transform has a SimilarityType of OrientationReversing, you may want to consider flipping the transformed geometry after calling this function when it makes sense. For example, you may want to call Flip() on a Brep after transforming it.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully transformed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_Transform.htm"
+    },
+    {
+      "name": "Translate(Vector3d)",
+      "signature": "public bool Translate(Vector3d translationVector)",
+      "summary": "Translates the object along the specified vector.",
+      "params": [
+        {
+          "name": "translationVector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A moving vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully translated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_Translate.htm"
+    },
+    {
+      "name": "Translate(Double, Double, Double)",
+      "signature": "public bool Translate(double x, double y, double z)",
+      "summary": "Translates the object along the specified vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X component.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y component.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "The Z component.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully translated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_GeometryBase_Translate_1.htm"
+    },
+    {
+      "name": "Transpose()",
+      "signature": "public Surface Transpose()",
+      "summary": "Transposes surface parameterization (swap U and V)",
+      "params": [],
+      "returns": {
+        "type": "Surface",
+        "doc": "New transposed surface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Transpose.htm"
+    },
+    {
+      "name": "Transpose(Boolean)",
+      "signature": "public Surface Transpose(bool inPlace)",
+      "summary": "Transposes surface parameterization (swap U and V)",
+      "params": [
+        {
+          "name": "inPlace",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022inPlace\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Surface.Transpose(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "New transposed surface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Transpose_1.htm"
+    },
+    {
+      "name": "Trim",
+      "signature": "public Surface Trim(Interval u, Interval v)",
+      "summary": "Constructs a sub-surface that covers the specified UV trimming domain.",
+      "params": [
+        {
+          "name": "u",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Domain of surface along U direction to include in the subsurface.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Domain of surface along V direction to include in the subsurface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "SubSurface on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_Trim.htm"
+    },
+    {
+      "name": "TryGetCone(Cone)",
+      "signature": "public bool TryGetCone(out Cone cone)",
+      "summary": "Tests a surface to see if it is a portion of a cone within RhinoMath.ZeroTolerance and return the cone.",
+      "params": [
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "On success, the cone parameters are filled in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cone."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetCone.htm"
+    },
+    {
+      "name": "TryGetCone(Cone, Double)",
+      "signature": "public bool TryGetCone(out Cone cone, double tolerance)",
+      "summary": "Tests a surface to see if it is a portion of a cone and returns the cone.",
+      "params": [
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "On success, the cone parameters are filled in.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cone."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetCone_1.htm"
+    },
+    {
+      "name": "TryGetCylinder(Cylinder)",
+      "signature": "public bool TryGetCylinder(out Cylinder cylinder)",
+      "summary": "Tests a surface to see if it is a portion of a cylinder within RhinoMath.ZeroTolerance and return the cylinder.",
+      "remarks": "If successful, an infinite cylinder is returned. When a surface has a cylindrical shape, even if its ends are not circles on the cylinder, it returns the axis and radius. You can detect infinite cylinders using Cylinder.IsFinite.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "On success, the cylinder parameters are filled in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetCylinder.htm"
+    },
+    {
+      "name": "TryGetCylinder(Cylinder, Double)",
+      "signature": "public bool TryGetCylinder(out Cylinder cylinder, double tolerance)",
+      "summary": "Tests a surface to see if it is a portion of a cylinder and return the infinite cylinder.",
+      "remarks": "If successful, an infinite cylinder is returned. When a surface has a cylindrical shape, even if its ends are not circles on the cylinder, it returns the axis and radius. You can detect infinite cylinders using Cylinder.IsFinite.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "On success, the cylinder parameters are filled in.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetCylinder_1.htm"
+    },
+    {
+      "name": "TryGetFiniteCylinder",
+      "signature": "public bool TryGetFiniteCylinder(out Cylinder cylinder, double tolerance)",
+      "summary": "Tests a surface with the assumption that it might be a right circular cylinder and returns this geometry.",
+      "remarks": "If successful, a finite cylinder is returned.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "On success, the cylinder parameters are filled in.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetFiniteCylinder.htm"
+    },
+    {
+      "name": "TryGetPlane(Plane)",
+      "signature": "public bool TryGetPlane(out Plane plane)",
+      "summary": "Tests a surface for planarity and return the plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "On success, the plane parameters are filled in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if there is a plane such that the maximum distance from the surface to the plane is \u003C= RhinoMath.ZeroTolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetPlane.htm"
+    },
+    {
+      "name": "TryGetPlane(Plane, Double)",
+      "signature": "public bool TryGetPlane(out Plane plane, double tolerance)",
+      "summary": "Tests a surface for planarity and return the plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "On success, the plane parameters are filled in.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if there is a plane such that the maximum distance from the surface to the plane is \u003C= tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetPlane_1.htm"
+    },
+    {
+      "name": "TryGetSphere(Sphere)",
+      "signature": "public bool TryGetSphere(out Sphere sphere)",
+      "summary": "Test a surface to see if it is a portion of a sphere and return the sphere.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "On success, the sphere parameters are filled in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a sphere."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetSphere.htm"
+    },
+    {
+      "name": "TryGetSphere(Sphere, Double)",
+      "signature": "public bool TryGetSphere(out Sphere sphere, double tolerance)",
+      "summary": "Test a surface to see if it is a portion of a sphere and return the sphere.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "On success, the sphere parameters are filled in.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a sphere."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetSphere_1.htm"
+    },
+    {
+      "name": "TryGetTorus(Torus)",
+      "signature": "public bool TryGetTorus(out Torus torus)",
+      "summary": "Tests a surface to see if it is a portion of a torus within RhinoMath.ZeroTolerance and returns the torus.",
+      "params": [
+        {
+          "name": "torus",
+          "type": "Rhino.Geometry.Torus",
+          "doc": "On success, the torus parameters are filled in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a torus."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetTorus.htm"
+    },
+    {
+      "name": "TryGetTorus(Torus, Double)",
+      "signature": "public bool TryGetTorus(out Torus torus, double tolerance)",
+      "summary": "Tests a surface to see if it is a portion of a torus and returns the torus.",
+      "params": [
+        {
+          "name": "torus",
+          "type": "Rhino.Geometry.Torus",
+          "doc": "On success, the torus parameters are filled in.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "tolerance to use when checking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the surface is a portion of a torus."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_TryGetTorus_1.htm"
+    },
+    {
+      "name": "UVNDirectionsAt",
+      "signature": "public bool UVNDirectionsAt(double u, double v, out Vector3d uDir, out Vector3d vDir, out Vector3d nDir)",
+      "summary": "Calculates the U, V, and N directions of a NURBS surface at a u,v parameter similar to the method used by Rhino\u0027s MoveUVN command.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "The u evaluation parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "The v evaluation parameter.",
+          "optional": false
+        },
+        {
+          "name": "uDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The U direction.",
+          "optional": false
+        },
+        {
+          "name": "vDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The V direction.",
+          "optional": false
+        },
+        {
+          "name": "nDir",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The N direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_NurbsSurface_UVNDirectionsAt.htm"
+    },
+    {
+      "name": "VariableOffset(Double, Double, Double, Double, Double)",
+      "signature": "public Surface VariableOffset(double uMinvMin, double uMinvMax, double uMaxvMin, double uMaxvMax, double tolerance)",
+      "summary": "Copies a surface so that all locations at the corners of the copied surface are specified distances from the original surface.",
+      "params": [
+        {
+          "name": "uMinvMin",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Min, Domain(1).Min.",
+          "optional": false
+        },
+        {
+          "name": "uMinvMax",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Min, Domain(1).Max.",
+          "optional": false
+        },
+        {
+          "name": "uMaxvMin",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Max, Domain(1).Min.",
+          "optional": false
+        },
+        {
+          "name": "uMaxvMax",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Max, Domain(1).Max.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The offset tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "The offset surface if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_VariableOffset_1.htm"
+    },
+    {
+      "name": "VariableOffset(Double, Double, Double, Double, IEnumerable\u003CPoint2d\u003E, IEnumerable\u003CDouble\u003E, Double)",
+      "signature": "public Surface VariableOffset(double uMinvMin, double uMinvMax, double uMaxvMin, double uMaxvMax, IEnumerable\u003CPoint2d\u003E interiorParameters, IEnumerable\u003Cdouble\u003E interiorDistances, double tolerance)",
+      "summary": "Copies a surface so that all locations at the corners, and from specified interior locations, of the copied surface are specified distances from the original surface.",
+      "params": [
+        {
+          "name": "uMinvMin",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Min, Domain(1).Min.",
+          "optional": false
+        },
+        {
+          "name": "uMinvMax",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Min, Domain(1).Max.",
+          "optional": false
+        },
+        {
+          "name": "uMaxvMin",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Max, Domain(1).Min.",
+          "optional": false
+        },
+        {
+          "name": "uMaxvMax",
+          "type": "System.Double",
+          "doc": "Offset distance at Domain(0).Max, Domain(1).Max.",
+          "optional": false
+        },
+        {
+          "name": "interiorParameters",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "An array of interior UV parameters to offset from.",
+          "optional": false
+        },
+        {
+          "name": "interiorDistances",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "\u003EAn array of offset distances at the interior UV parameters.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The offset tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "The offset surface if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Surface_VariableOffset.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "HasBrepForm",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the Brep.TryConvertBrep function will be successful for this object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_GeometryBase_HasBrepForm.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "IsDeformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if object can be accurately modified with \u0022squishy\u0022 transformations like projections, shears, and non-uniform scaling.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_GeometryBase_IsDeformable.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_GeometryBase_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsRational",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the NURBS surface is rational.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_NurbsSurface_IsRational.htm"
+    },
+    {
+      "name": "IsShallowDuplicate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this instance a \u0027shallow copy\u0027. Shallow copies are no different than regular instances with the exception that they will convert to complete independent \u0027deep\u0027 copies if a non const operation is perform on the instance (something that mutates the internal data)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_GeometryBase_IsShallowDuplicate.htm"
+    },
+    {
+      "name": "IsSolid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a values indicating whether a surface is solid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Surface_IsSolid.htm"
+    },
+    {
+      "name": "IsSubDFriendly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the surface is a non-rational, uniform, natural or periodic, cubic NURBS surface. Otherwise, false is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Surface_IsSubDFriendly.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "KnotsU",
+      "type": "NurbsSurfaceKnotList",
+      "getter": true,
+      "setter": false,
+      "summary": "The U direction knot vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_NurbsSurface_KnotsU.htm"
+    },
+    {
+      "name": "KnotsV",
+      "type": "NurbsSurfaceKnotList",
+      "getter": true,
+      "setter": false,
+      "summary": "The V direction knot vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_NurbsSurface_KnotsV.htm"
+    },
+    {
+      "name": "ObjectType",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": false,
+      "summary": "Useful for switch statements that need to differentiate between basic object types like points, curves, surfaces, and so on.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_GeometryBase_ObjectType.htm"
+    },
+    {
+      "name": "OrderU",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the order in the U direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_NurbsSurface_OrderU.htm"
+    },
+    {
+      "name": "OrderV",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the order in the V direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_NurbsSurface_OrderV.htm"
+    },
+    {
+      "name": "Points",
+      "type": "NurbsSurfacePointList",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a collection of surface control points that form this surface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_NurbsSurface_Points.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use shareable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UserStringCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of user strings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_GeometryBase_UserStringCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

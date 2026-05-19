@@ -1,0 +1,545 @@
+{
+  "name": "Picker",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "class",
+  "summary": "The Picker class is used to pick points and objects in the drawing.",
+  "remarks": "Prompts Tekla Structures prefixes the given prompt with \u0022prompt_\u0022 and looks for a translation in the prompts.ail file. If the translation (e.g. \u0022prompt_Pick_first_position\u0022) is not found in the prompts.ail file, the prompt string is displayed as such. This feature can be used to give already translated strings to the picker.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/276155dd-edd3-807b-23e1-91517eaf2f13",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsInteractive",
+      "signature": "public bool IsInteractive()",
+      "summary": "Indicates whether the picker is interactive and currently allowed to access the UI or not. If not, then the plug-in should avoid making dialog calls or message boxes.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the picker is interactive."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/da5bbacc-48fe-9a67-3ea6-bceba9bb9170"
+    },
+    {
+      "name": "PickObject(String)",
+      "signature": "public Tuple\u003CDrawingObject, ViewBase\u003E PickObject(string prompt)",
+      "summary": "Requests the user to pick one object. Returns the picked drawing object and the view in which the pick occurred.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the pick. See the class remarks for more information about prompts.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple\u003CDrawingObject,ViewBase\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e5e5ea6-402d-1136-59b4-b38982a719f5"
+    },
+    {
+      "name": "PickObject(String, DrawingObject., ViewBase.)",
+      "signature": "public void PickObject(string prompt, out DrawingObject pickedObject, out ViewBase pickedView)",
+      "summary": "Requests the user to pick one object.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the pick. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "pickedObject",
+          "type": "Tekla.Structures.Drawing.DrawingObject.",
+          "doc": "The picked drawing object.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8a365ec4-234c-1bcb-58c4-03510172175f"
+    },
+    {
+      "name": "PickObject(String, DrawingObject., ViewBase., Point.)",
+      "signature": "public void PickObject(string prompt, out DrawingObject pickedObject, out ViewBase pickedView, out Point pickedPoint)",
+      "summary": "Requests the user to pick one object. Returns the picked point in addition to the picked object.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the picks. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "pickedObject",
+          "type": "Tekla.Structures.Drawing.DrawingObject.",
+          "doc": "The picked drawing object.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The picked point in the view coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea9439d0-680a-6c28-38eb-43576a70d5fc"
+    },
+    {
+      "name": "PickObject(String, .Type[], DrawingObject., ViewBase., Point.)",
+      "signature": "public void PickObject(string prompt, Type[] typeFilter, out DrawingObject pickedObject, out ViewBase pickedView, out Point pickedPoint)",
+      "summary": "Requests the user to pick one object of the given types. Returns the picked point in addition to the picked object.",
+      "remarks": "The list of types to pick may contain any object derived from DrawingObject or DrawingObject itself. For example, typeof(ModelObject) will allow picking of part, bolts, reinforcements, etc.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the picks. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "typeFilter",
+          "type": ".System.Type.",
+          "doc": "The types to pick. If null, any type is allowed.",
+          "optional": false
+        },
+        {
+          "name": "pickedObject",
+          "type": "Tekla.Structures.Drawing.DrawingObject.",
+          "doc": "The picked drawing object.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The picked point in the view coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0fcee9f-cac6-a2bd-43fe-ff98962669ed"
+    },
+    {
+      "name": "PickObjectAndPoint",
+      "signature": "public Tuple\u003CDrawingObject, ViewBase, Point\u003E PickObjectAndPoint(string prompt)",
+      "summary": "Requests the user to pick one object. Returns the picked drawing object, the view in which the pick occurred and picked point in the view coordinates.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the pick. See the class remarks for more information about prompts.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple\u003CDrawingObject,ViewBase,Point\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a87593a7-ff9c-9236-5a63-8257be35c60d"
+    },
+    {
+      "name": "PickPoint(String)",
+      "signature": "public Tuple\u003CPoint, ViewBase\u003E PickPoint(string prompt)",
+      "summary": "Requests the user to pick one point. Returns the picked point in the view coordinates and the view in which the pick occurred.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar. See the class remarks for more information about prompts.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple\u003CPoint,ViewBase\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aed79bed-3da4-c92a-9905-b014452a3646"
+    },
+    {
+      "name": "PickPoint(String, Point., ViewBase.)",
+      "signature": "public void PickPoint(string prompt, out Point pickedPoint, out ViewBase pickedView)",
+      "summary": "Requests the user to pick one point.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7421218b-def4-b597-3aad-6808da76b797"
+    },
+    {
+      "name": "PickPoints(StringList)",
+      "signature": "public Tuple\u003CPointList, ViewBase\u003E PickPoints(StringList prompts)",
+      "summary": "Requests picks of points from the user. The sequence is terminated by the middle button pick. Returns the picked points in the view coordinates and the view in which the pick occurred.",
+      "params": [
+        {
+          "name": "prompts",
+          "type": "Tekla.Structures.Drawing.StringList",
+          "doc": "The prompts shown in the status bar before the picks. See the class remarks for more information about prompts.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple\u003CPointList,ViewBase\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/44081ef2-4ff6-8b9d-55d1-ba460ff95bd7"
+    },
+    {
+      "name": "PickPoints(Int32, StringList)",
+      "signature": "public Tuple\u003CPointList, ViewBase\u003E PickPoints(int numberOfPicks, StringList prompts)",
+      "summary": "Requests N picks of points from the user. Returns the picked points in the view coordinates and the view in which the pick occurred.",
+      "params": [
+        {
+          "name": "numberOfPicks",
+          "type": "System.Int32",
+          "doc": "The number of requested picks.",
+          "optional": false
+        },
+        {
+          "name": "prompts",
+          "type": "Tekla.Structures.Drawing.StringList",
+          "doc": "The prompts shown in the status bar before the picks. See the class remarks for more information about prompts.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple\u003CPointList,ViewBase\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b689aad-2a96-5dfb-b137-06fe03d555c7"
+    },
+    {
+      "name": "PickPoints(StringList, PointList., ViewBase.)",
+      "signature": "public void PickPoints(StringList prompts, out PointList pickedPoints, out ViewBase pickedView)",
+      "summary": "Requests picks of points from the user. The sequence is terminated by the middle button pick.",
+      "params": [
+        {
+          "name": "prompts",
+          "type": "Tekla.Structures.Drawing.StringList",
+          "doc": "The prompts shown in the status bar before the picks. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoints",
+          "type": "Tekla.Structures.Drawing.PointList.",
+          "doc": "The picked points in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7626f277-a74f-3952-5010-2cd624915b04"
+    },
+    {
+      "name": "PickPoints(Int32, StringList, PointList., ViewBase.)",
+      "signature": "public void PickPoints(int numberOfPicks, StringList prompts, out PointList pickedPoints, out ViewBase pickedView)",
+      "summary": "Requests N picks of points from the user.",
+      "params": [
+        {
+          "name": "numberOfPicks",
+          "type": "System.Int32",
+          "doc": "The number of requested picks.",
+          "optional": false
+        },
+        {
+          "name": "prompts",
+          "type": "Tekla.Structures.Drawing.StringList",
+          "doc": "The prompts shown in the status bar before the picks. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoints",
+          "type": "Tekla.Structures.Drawing.PointList.",
+          "doc": "The picked points in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fc10f2d5-3830-a740-b695-e7e7303d292c"
+    },
+    {
+      "name": "PickThreePoints",
+      "signature": "public void PickThreePoints(string firstPrompt, string secondPrompt, string thirdPrompt, out Point firstPickedPoint, out Point secondPickedPoint, out Point thirdPickedPoint, out ViewBase pickedView)",
+      "summary": "Requests a pick of three points from the user.",
+      "params": [
+        {
+          "name": "firstPrompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the first pick. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "secondPrompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the second pick. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "thirdPrompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the third pick. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "firstPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The first picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "secondPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The second picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "thirdPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The third picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2303df0f-78d7-97b0-bb03-78968762536c"
+    },
+    {
+      "name": "PickTwoPoints",
+      "signature": "public void PickTwoPoints(string firstPrompt, string secondPrompt, out Point firstPickedPoint, out Point secondPickedPoint, out ViewBase pickedView)",
+      "summary": "Requests a pick of two points from the user.",
+      "params": [
+        {
+          "name": "firstPrompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the first pick. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "secondPrompt",
+          "type": "System.String",
+          "doc": "The prompt shown in the status bar before the second pick. See the class remarks for more information about prompts.",
+          "optional": false
+        },
+        {
+          "name": "firstPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The first picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "secondPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point.",
+          "doc": "The second picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase.",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidPluginPickerInputException",
+          "when": "Thrown when the picker is being used through a plug-in which has invalid PluginPickerInputs defined."
+        },
+        {
+          "type": "PickerInterruptedException",
+          "when": "Thrown when the user interrupts the picker before anything has been picked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/158b8403-e2db-f604-2eb9-f1d2a1a80978"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,31 @@
+{
+  "name": "eCreatePatchResult",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "error codes for planar surface creation",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eCreatePatchResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCurvesAreSelfIntersecting",
+      "value": 3
+    },
+    {
+      "name": "eCurvesNotClosed",
+      "value": 2
+    },
+    {
+      "name": "eError",
+      "value": 1
+    },
+    {
+      "name": "eOK",
+      "value": 0
+    }
+  ]
+}

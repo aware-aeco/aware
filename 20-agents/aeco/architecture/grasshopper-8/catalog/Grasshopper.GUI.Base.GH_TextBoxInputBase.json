@@ -1,0 +1,193 @@
+{
+  "name": "GH_TextBoxInputBase",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Base.GH_TextBoxInputBase.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_TextBoxInputBase.htm",
+  "constructors": [
+    {
+      "name": "GH_TextBoxInputBase",
+      "signature": "protected GH_TextBoxInputBase()",
+      "summary": "Initializes a new instance of the GH_TextBoxInputBase class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "HandleTextInputAccepted",
+      "signature": "protected abstract void HandleTextInputAccepted(string text)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_HandleTextInputAccepted.htm"
+    },
+    {
+      "name": "HideTextInputBox",
+      "signature": "public void HideTextInputBox()",
+      "summary": "Hides the text-input override form (if it is displayed).",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_HideTextInputBox.htm"
+    },
+    {
+      "name": "RespondToEnter",
+      "signature": "public GH_ToolstripItemKeyHandlerResult RespondToEnter()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_ToolstripItemKeyHandlerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_RespondToEnter.htm"
+    },
+    {
+      "name": "RespondToEscape",
+      "signature": "public GH_ToolstripItemKeyHandlerResult RespondToEscape()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_ToolstripItemKeyHandlerResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_RespondToEscape.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, String, Boolean)",
+      "signature": "public void ShowTextInputBox(Control owner, string content, bool selectContent)",
+      "summary": "Display a floating text-box on top of the owner control.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control that owns this slider. The coordinates of the Bounds rectangle must be specified in owner coordinates.",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "selectContent",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_ShowTextInputBox.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, String, Boolean, Boolean)",
+      "signature": "public void ShowTextInputBox(Control owner, string content, bool selectContent, bool limitToBoundary)",
+      "summary": "Display a floating text-box on top of the owner control.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control that owns this slider. The coordinates of the Bounds rectangle must be specified in owner coordinates.",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "selectContent",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "limitToBoundary",
+          "type": "System.Boolean",
+          "doc": "If True, the pop up input box will be \u0027clipped\u0027 to the owner boundary. At least some part of the slider must be visible for this to work.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_ShowTextInputBox_1.htm"
+    },
+    {
+      "name": "ShowTextInputBox(Control, String, Boolean, Boolean, Matrix)",
+      "signature": "public void ShowTextInputBox(Control owner, string content, bool selectContent, bool limitToBoundary, Matrix transform)",
+      "summary": "Display a floating text-box on top of the owner control.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control that owns this slider. The coordinates of the Bounds rectangle must be specified in owner coordinates.",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "selectContent",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "limitToBoundary",
+          "type": "System.Boolean",
+          "doc": "If True, the pop up input box will be \u0027clipped\u0027 to the owner boundary. At least some part of the slider must be visible for this to work.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "System.Drawing.Drawing2D.Matrix",
+          "doc": "Transformation matrix to apply to pop up UI.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_TextBoxInputBase_ShowTextInputBox_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Font",
+      "type": "Font",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Font to use in this control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_TextBoxInputBase_Font.htm"
+    },
+    {
+      "name": "IsTextInput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the text input box is currently on screen.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_TextBoxInputBase_IsTextInput.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

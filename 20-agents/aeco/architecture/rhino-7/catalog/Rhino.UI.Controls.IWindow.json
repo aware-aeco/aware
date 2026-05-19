@@ -1,0 +1,92 @@
+{
+  "name": "IWindow",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.IWindow\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_IWindow.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Move",
+      "signature": "void Move(Rectangle pos, bool bRepaint, bool bRepaintBorder)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pos",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022pos\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IWindow.Move(System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bRepaint",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bRepaint\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IWindow.Move(System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bRepaintBorder",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bRepaintBorder\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IWindow.Move(System.Drawing.Rectangle,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IWindow_Move.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Caption",
+      "type": "LocalizeStringPair",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Caption.htm"
+    },
+    {
+      "name": "Created",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Created.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Enabled.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Parent.htm"
+    },
+    {
+      "name": "Shown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Shown.htm"
+    },
+    {
+      "name": "Window",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IWindow_Window.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

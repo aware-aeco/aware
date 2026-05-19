@@ -1,0 +1,29 @@
+{
+  "name": "WidgetColor",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Contains enumerated constant values to represent logical colors associated with elements of the user interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_WidgetColor.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UAxisColor",
+      "value": 0,
+      "summary": "The color of the mapping widget u-axis."
+    },
+    {
+      "name": "VAxisColor",
+      "value": 1,
+      "summary": "The color of the mapping widget v-axis.."
+    },
+    {
+      "name": "WAxisColor",
+      "value": 2,
+      "summary": "The color of the mapping widget w-axis."
+    }
+  ]
+}

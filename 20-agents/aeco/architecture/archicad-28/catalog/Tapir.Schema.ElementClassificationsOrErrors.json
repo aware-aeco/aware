@@ -1,0 +1,22 @@
+{
+  "name": "ElementClassificationsOrErrors",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of element classification identifiers or errors.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementClassificationsOrErrors",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "ElementClassificationOrError[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementClassificationsOrErrors"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

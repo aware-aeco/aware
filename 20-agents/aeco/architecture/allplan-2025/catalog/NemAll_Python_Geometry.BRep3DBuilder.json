@@ -1,0 +1,190 @@
+{
+  "name": "BRep3DBuilder",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Builder for BRep3D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/",
+  "constructors": [
+    {
+      "name": "BRep3DBuilder",
+      "signature": "BRep3DBuilder() | BRep3DBuilder(element: BRep3DBuilder)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddEdge",
+      "signature": "AddEdge(edgeIdx: int, edgeSense: bool, loopIdx: int) -\u003E bool | AddEdge( curve: object, curveSense: bool, edgeSense: bool, loopIdx: int, precision: float, ) -\u003E int",
+      "summary": "Add edge to loop",
+      "remarks": "Add edge to loop",
+      "params": [
+        {
+          "name": "edgeIdx",
+          "type": "int",
+          "doc": "Index of already added edge",
+          "optional": false
+        },
+        {
+          "name": "edgeSense",
+          "type": "bool",
+          "doc": "Sense of edge",
+          "optional": false
+        },
+        {
+          "name": "loopIdx",
+          "type": "int",
+          "doc": "Index of loop to which edge will be added",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddEdge"
+    },
+    {
+      "name": "AddFace",
+      "signature": "AddFace(surface: object, sense: bool) -\u003E int",
+      "summary": "Add face",
+      "remarks": "Add face",
+      "params": [
+        {
+          "name": "surface",
+          "type": "object",
+          "doc": "Geometry of surface",
+          "optional": false
+        },
+        {
+          "name": "sense",
+          "type": "bool",
+          "doc": "Sense of surface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Index of face"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddFace"
+    },
+    {
+      "name": "AddLoop",
+      "signature": "AddLoop(faceIdx: int) -\u003E int",
+      "summary": "Add loop",
+      "remarks": "Add loop",
+      "params": [
+        {
+          "name": "faceIdx",
+          "type": "int",
+          "doc": "Index of face to which loop will be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Index of face"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddLoop"
+    },
+    {
+      "name": "AddVertex",
+      "signature": "AddVertex(point: Point3D, edgeIdx: int, precision: float) -\u003E int | AddVertex(vertexIdx: int, edgeIdx: int) -\u003E bool",
+      "summary": "Add vertex to edge",
+      "remarks": "Add vertex to edge",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Geometry point",
+          "optional": false
+        },
+        {
+          "name": "edgeIdx",
+          "type": "int",
+          "doc": "Index of edge to which vertex will be added",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "float",
+          "doc": "Vertex precision",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Index of vertex"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddVertex"
+    },
+    {
+      "name": "CheckLoop",
+      "signature": "CheckLoop(loopIdx: int) -\u003E bool",
+      "summary": "Check whether loop topology is correct",
+      "remarks": "Check whether loop topology is correct",
+      "params": [
+        {
+          "name": "loopIdx",
+          "type": "int",
+          "doc": "Index of loop to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Flag whether loop is topologically correct"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.CheckLoop"
+    },
+    {
+      "name": "Complete",
+      "signature": "Complete() -\u003E BRep3D",
+      "summary": "Complete topology and create BRep",
+      "remarks": "Complete topology and create BRep",
+      "params": [],
+      "returns": {
+        "type": "BRep3D",
+        "doc": "Created BRep"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.Complete"
+    },
+    {
+      "name": "Init",
+      "signature": "Init(isSolid: bool)",
+      "summary": "Add body, region and shell",
+      "remarks": "Add body, region and shell",
+      "params": [
+        {
+          "name": "isSolid",
+          "type": "bool",
+          "doc": "Flag whether body is solid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.Init"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

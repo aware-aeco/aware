@@ -1,0 +1,30 @@
+{
+  "name": "ConStiffnessAnalysis",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConStiffnessAnalysis.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConStiffnessAnalysis.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "TheoreticalLengthZ",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConStiffnessAnalysis.theoreticalLengthZ.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConStiffnessAnalysis.md"
+    },
+    {
+      "name": "TheoreticalLengthY",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConStiffnessAnalysis.theoreticalLengthY.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConStiffnessAnalysis.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,113 @@
+{
+  "name": "PlacingAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PlacingAttributes class contains the basic attributes for determining an object\u0027s placing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/22655d18-229c-1261-e042-94b9a0bc6cd7",
+  "constructors": [
+    {
+      "name": "PlacingAttributes()",
+      "signature": "public PlacingAttributes()",
+      "summary": "Creates a new placing attributes instance. The default parameters are: IsFixed = true, default PlacingDistanceAttributes, default PlacingQuarterAttributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65465aa5-3ae9-958c-8ed2-c0e7c65b9a7e"
+    },
+    {
+      "name": "PlacingAttributes(Boolean, PlacingDistanceAttributes, PlacingQuarterAttributes)",
+      "signature": "public PlacingAttributes(bool IsFixed, PlacingDistanceAttributes PlacingDistance, PlacingQuarterAttributes PlacingQuarter)",
+      "summary": "Creates a new placing quarter attributes instance with the given parameters.",
+      "params": [
+        {
+          "name": "IsFixed",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object is using fixed or free placing.",
+          "optional": false
+        },
+        {
+          "name": "PlacingDistance",
+          "type": "Tekla.Structures.Drawing.PlacingDistanceAttributes",
+          "doc": "The distances to be used for the placing.",
+          "optional": false
+        },
+        {
+          "name": "PlacingQuarter",
+          "type": "Tekla.Structures.Drawing.PlacingQuarterAttributes",
+          "doc": "The directions in which the placing can find suitable locations.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eb5b2f35-19ab-b3ca-ba98-225e5000a678"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public Object Clone()",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A new object that is a copy of the current instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8cd456cb-5f60-4c00-94fd-ce8f161a4c33"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5788119b-9502-d9c7-a144-ca2179d1b643"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsFixed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object is using fixed or free placing. If set to true, it means that fixed placing is enabled, and the object will not be rearranged in the drawing automatically. If set to false, then free placing is enabled, and the object will be placed in the most appropriate location near the original location.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d2c1611b-9a09-f9a7-ea7f-3985ee893cfd"
+    },
+    {
+      "name": "PlacingDistance",
+      "type": "PlacingDistanceAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the placing distance attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/10b75bf7-9868-8748-3c81-6ff7c1ea9823"
+    },
+    {
+      "name": "PlacingQuarter",
+      "type": "PlacingQuarterAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the placing quarter attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5bf69326-3b12-da2d-319b-906007272567"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

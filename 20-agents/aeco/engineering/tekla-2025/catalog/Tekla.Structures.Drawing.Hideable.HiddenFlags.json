@@ -1,0 +1,29 @@
+{
+  "name": "Hideable.HiddenFlags",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The flag for keeping track of objects hidden status.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/aebce6d6-f892-1132-4837-b50f34eb2fe5",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NotHidden",
+      "value": 0,
+      "summary": "Not hidden."
+    },
+    {
+      "name": "HiddenBySelf",
+      "value": 1,
+      "summary": "Hidden by self (meaning nothing else is hiding it)."
+    },
+    {
+      "name": "HiddenByParent",
+      "value": 2,
+      "summary": "Hidden by parent (the objects parent is hidden and thus this object is also hidden)."
+    }
+  ]
+}

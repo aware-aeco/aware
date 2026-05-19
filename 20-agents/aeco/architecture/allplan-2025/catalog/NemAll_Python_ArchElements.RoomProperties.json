@@ -1,0 +1,195 @@
+{
+  "name": "RoomProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the Room properties",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/",
+  "constructors": [
+    {
+      "name": "RoomProperties",
+      "signature": "RoomProperties() | RoomProperties(RoomProp: RoomProperties)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAttributes",
+      "signature": "GetAttributes( doc: DocumentAdapter, onlyModifiable: bool ) -\u003E list[int | float | str]",
+      "summary": "Get the room attributes",
+      "remarks": "Get the room attributes",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "onlyModifiable",
+          "type": "bool",
+          "doc": "when true, gets only modifiable attributes, otherwise gets all attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[int | float | str]",
+        "doc": "List with the attributes represented with tuples like (attributeID, attributeValue)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.GetAttributes"
+    },
+    {
+      "name": "GetFunction",
+      "signature": "GetFunction() -\u003E str",
+      "summary": "Get the function",
+      "remarks": "Get the function",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Function"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.GetFunction"
+    },
+    {
+      "name": "GetStoreyCode",
+      "signature": "GetStoreyCode() -\u003E str",
+      "summary": "Get the storey code",
+      "remarks": "Get the storey code",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Storey code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.GetStoreyCode"
+    },
+    {
+      "name": "GetText",
+      "signature": "GetText(number: int) -\u003E str",
+      "summary": "Get the value of the attributes Text1 to Text5",
+      "remarks": "Get the value of the attributes Text1 to Text5",
+      "params": [
+        {
+          "name": "number",
+          "type": "int",
+          "doc": "Number (1-5 allowed)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.GetText"
+    },
+    {
+      "name": "SetAttribute",
+      "signature": "SetAttribute( attrib: ( AttributeInteger | AttributeDouble | AttributeString | AttributeEnum ), )",
+      "summary": "Set the attribute",
+      "remarks": "Set the attribute",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "AttributeInteger | AttributeDouble | AttributeString | AttributeEnum",
+          "doc": "Attribute",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.SetAttribute"
+    },
+    {
+      "name": "SetFunction",
+      "signature": "SetFunction(name: str)",
+      "summary": "Set the function",
+      "remarks": "Set the function",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Function",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.SetFunction"
+    },
+    {
+      "name": "SetStoreyCode",
+      "signature": "SetStoreyCode(storeyCode: str)",
+      "summary": "Set the storey code",
+      "remarks": "Set the storey code",
+      "params": [
+        {
+          "name": "storeyCode",
+          "type": "str",
+          "doc": "Storey code",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.SetStoreyCode"
+    },
+    {
+      "name": "SetText",
+      "signature": "SetText(text: str, number: int)",
+      "summary": "Set a value to the attributes Text1 to Text5",
+      "remarks": "Set a value to the attributes Text1 to Text5",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Desired value of the attribute",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "int",
+          "doc": "Number (1-5 allowed)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.SetText"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Function",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the function",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.Function"
+    },
+    {
+      "name": "StoreyCode",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the storey code",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/#NemAll_Python_ArchElements.RoomProperties.StoreyCode"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

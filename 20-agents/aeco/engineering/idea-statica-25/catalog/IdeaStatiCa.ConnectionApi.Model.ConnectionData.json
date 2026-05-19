@@ -1,0 +1,94 @@
+{
+  "name": "ConnectionData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConnectionData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ConnectionPoint",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.connectionPoint.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "Beams",
+      "type": "List\u003CBeamData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.beams.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "Plates",
+      "type": "List\u003CPlateData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.plates.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "FoldedPlates",
+      "type": "List\u003CFoldedPlateData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.foldedPlates.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "BoltGrids",
+      "type": "List\u003CBoltGrid\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.boltGrids.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "AnchorGrids",
+      "type": "List\u003CAnchorGrid\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.anchorGrids.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "PinGrids",
+      "type": "List\u003CPinGrid\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.pinGrids.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "Welds",
+      "type": "List\u003CWeldData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.welds.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "ConcreteBlocks",
+      "type": "List\u003CConcreteBlockData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.concreteBlocks.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    },
+    {
+      "name": "CutBeamByBeams",
+      "type": "List\u003CCutBeamByBeamData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConnectionData.cutBeamByBeams.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConnectionData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

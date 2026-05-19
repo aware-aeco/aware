@@ -1,0 +1,39 @@
+{
+  "name": "ProgressSubOperationBeganEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::ProgressSubOperationBeganEventArgs event",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressSubOperationBeganEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FractionOfRemainingTime",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the fraction of remaining time this sub operation will take",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressSubOperationBeganEventArgs.FractionOfRemainingTime"
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Message property of ProgressSubOperationBeganEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressSubOperationBeganEventArgs.Message"
+    },
+    {
+      "name": "Progress",
+      "type": "Autodesk.Navisworks.Api.Progress",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a reference to the Progress class instance relating to this Event.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressSubOperationBeganEventArgs.Progress"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Localization.LocalizationCallback",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "delegate",
+  "summary": "A delegate for localization functions for different control types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bea6095a-d1ee-2738-2e50-936947cc217f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void LocalizationCallback( Localization localization, Object obj )"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "IGH_StateAwareObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface if you want to be included in state saving/loading.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_StateAwareObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadState",
+      "signature": "void LoadState(string state)",
+      "summary": "Override this function to load your state data. DO NOT START A NEW SOLUTION. This will be handled by the state manager.",
+      "params": [
+        {
+          "name": "state",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_StateAwareObject_LoadState.htm"
+    },
+    {
+      "name": "SaveState",
+      "signature": "string SaveState()",
+      "summary": "Override this function to store your state data. You have to return a deserializable string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_StateAwareObject_SaveState.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

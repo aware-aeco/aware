@@ -1,0 +1,47 @@
+{
+  "name": "FilletCalculus3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class for 3D fillet calculation",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate(line1, line2, radius) | Calculate(line1, line2) | Calculate(line1, endPoint, polyline, startLineIndex, endLineIndex, radius) | Calculate(polyhedron, edges, radius, propagation) | Calculate(brep, radius) | Calculate(brep, edges, radius, propagation)",
+      "summary": "Calculate fillet between two coplanar 3d lines",
+      "remarks": "Calculate fillet between two coplanar 3d lines",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Line3D",
+          "doc": "first Line3D",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Line3D",
+          "doc": "second Line3D",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "radius of fillet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

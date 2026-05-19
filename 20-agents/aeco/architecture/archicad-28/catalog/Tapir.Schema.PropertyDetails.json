@@ -1,0 +1,86 @@
+{
+  "name": "PropertyDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The details of the property.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "propertyId",
+      "type": "PropertyId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyId\u0060 of type \u0060PropertyId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    },
+    {
+      "name": "propertyType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyType\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    },
+    {
+      "name": "propertyGroupName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyGroupName\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    },
+    {
+      "name": "propertyName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyName\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    },
+    {
+      "name": "propertyCollectionType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyCollectionType\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    },
+    {
+      "name": "propertyValueType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyValueType\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    },
+    {
+      "name": "propertyMeasureType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyMeasureType\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    },
+    {
+      "name": "propertyIsEditable",
+      "type": "boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyIsEditable\u0060 of type \u0060boolean\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

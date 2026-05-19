@@ -1,0 +1,26 @@
+{
+  "name": "CodeBlockType",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type CodeBlockType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executable.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Construct",
+      "value": 1
+    },
+    {
+      "name": "Function",
+      "value": 2
+    },
+    {
+      "name": "Language",
+      "value": 0
+    }
+  ]
+}

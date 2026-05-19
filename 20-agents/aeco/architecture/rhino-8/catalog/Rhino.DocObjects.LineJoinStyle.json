@@ -1,0 +1,29 @@
+{
+  "name": "LineJoinStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Shape to be used at the corners of curves",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_LineJoinStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Round",
+      "value": 0,
+      "summary": "Rounds corners"
+    },
+    {
+      "name": "Miter",
+      "value": 1,
+      "summary": "Sharp corners where outer edges are extended to a point where they meet"
+    },
+    {
+      "name": "Bevel",
+      "value": 2,
+      "summary": "Beveled corner where outer edges are connected without extending"
+    }
+  ]
+}

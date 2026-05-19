@@ -1,0 +1,534 @@
+{
+  "name": "RuntimeCore",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "RuntimeCore is an object that is instantiated once across the lifecycle of the runtime This is the entry point of the runtime VM and its input is a DS Executable format. There will only be one instance of RuntimeCore regardless of how many times instances of a DSASM.Executive (runtime VM) is instantiated. Its properties will be persistent and accessible across all instances of a DSASM.Executive",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs",
+  "constructors": [
+    {
+      "name": "RuntimeCore(ProtoCore.DSASM.Heap, ProtoCore.Options, ProtoCore.DSASM.Executable)",
+      "signature": "void RuntimeCore(ProtoCore.DSASM.Heap heap, ProtoCore.Options options, ProtoCore.DSASM.Executable executable)",
+      "summary": "RuntimeCore.RuntimeCore",
+      "params": [
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "ProtoCore.Options",
+          "optional": false
+        },
+        {
+          "name": "executable",
+          "type": "ProtoCore.DSASM.Executable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddCallSiteGCRoot(System.Guid, ProtoCore.DSASM.StackValue)",
+      "signature": "void AddCallSiteGCRoot(System.Guid callSiteID, ProtoCore.DSASM.StackValue sv)",
+      "summary": "RuntimeCore.AddCallSiteGCRoot",
+      "params": [
+        {
+          "name": "callSiteID",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "Cleanup",
+      "signature": "void Cleanup()",
+      "summary": "RuntimeCore.Cleanup",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "GetCurrentBlockId",
+      "signature": "int GetCurrentBlockId()",
+      "summary": "RuntimeCore.GetCurrentBlockId",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "GetCurrentTime",
+      "signature": "System.TimeSpan GetCurrentTime()",
+      "summary": "RuntimeCore.GetCurrentTime",
+      "params": [],
+      "returns": {
+        "type": "System.TimeSpan",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "NotifyExecutionEvent(ProtoCore.ExecutionStateEventArgs.State)",
+      "signature": "void NotifyExecutionEvent(ProtoCore.ExecutionStateEventArgs.State state)",
+      "summary": "RuntimeCore.NotifyExecutionEvent",
+      "params": [
+        {
+          "name": "state",
+          "type": "ProtoCore.ExecutionStateEventArgs.State",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "OnDispose",
+      "signature": "void OnDispose()",
+      "summary": "RuntimeCore.OnDispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RecordExtecutedGraphNode(ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void RecordExtecutedGraphNode(ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "Record the GUID of executed graph node.",
+      "params": [
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RegisterDllTypes(System.Collections.Generic.List\u003CSystem.Type\u003E)",
+      "signature": "void RegisterDllTypes(System.Collections.Generic.List\u003CSystem.Type\u003E dllTypes)",
+      "summary": "Register imported dll types These types are initialzed from Importing dlls",
+      "params": [
+        {
+          "name": "dllTypes",
+          "type": "System.Collections.Generic.List\u003CSystem.Type\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RemoveCallSiteGCRoot(System.Guid)",
+      "signature": "void RemoveCallSiteGCRoot(System.Guid callSiteID)",
+      "summary": "RuntimeCore.RemoveCallSiteGCRoot",
+      "params": [
+        {
+          "name": "callSiteID",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RemoveExecutedAstGuids",
+      "signature": "void RemoveExecutedAstGuids()",
+      "summary": "Clear all recorded AST guids",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ResetForDeltaExecution",
+      "signature": "void ResetForDeltaExecution()",
+      "summary": "RuntimeCore.ResetForDeltaExecution",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "SetProperties(ProtoCore.Options, ProtoCore.DSASM.Executable, ProtoCore.DebugProperties, ProtoCore.Runtime.Context, ProtoCore.DSASM.Executable)",
+      "signature": "void SetProperties(ProtoCore.Options runtimeOptions, ProtoCore.DSASM.Executable executable, ProtoCore.DebugProperties debugProps, ProtoCore.Runtime.Context context, ProtoCore.DSASM.Executable exprInterpreterExe)",
+      "summary": "RuntimeCore.SetProperties",
+      "params": [
+        {
+          "name": "runtimeOptions",
+          "type": "ProtoCore.Options",
+          "optional": false
+        },
+        {
+          "name": "executable",
+          "type": "ProtoCore.DSASM.Executable",
+          "optional": false
+        },
+        {
+          "name": "debugProps",
+          "type": "ProtoCore.DebugProperties",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "exprInterpreterExe",
+          "type": "ProtoCore.DSASM.Executable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "SetStartPC(int)",
+      "signature": "void SetStartPC(int pc)",
+      "summary": "Sets a new entry point pc This can be overrided by another call to SetStartPC",
+      "params": [
+        {
+          "name": "pc",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "SetupForExecution(ProtoCore.Core, int)",
+      "signature": "void SetupForExecution(ProtoCore.Core compileCore, int globalStackFrameSize)",
+      "summary": "Setup before execution This function needs to be called before attempting to execute the RuntimeCore It will initialize the runtime execution data and configuration",
+      "params": [
+        {
+          "name": "compileCore",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "globalStackFrameSize",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "SetupStartPC",
+      "signature": "void SetupStartPC()",
+      "summary": "This function determines what the starting pc should be for the next execution session The StartPC takes precedence if set. Otherwise, the entry pc in the global codeblock is the entry point StartPC is assumed to be reset to kInvalidPC after each execution session",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "StartTimer",
+      "signature": "void StartTimer()",
+      "summary": "RuntimeCore.StartTimer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Breakpoints",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.Breakpoints",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "CallSiteGCRoots",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.CallSiteGCRoots",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "CancellationPending",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.CancellationPending",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "Context",
+      "type": "ProtoCore.Runtime.Context",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.Context",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ContinuationStruct",
+      "type": "ProtoCore.Lang.ContinuationStructure",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.ContinuationStruct",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "CurrentExecutive",
+      "type": "ProtoCore.Executive",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.CurrentExecutive",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "DSExecutable",
+      "type": "ProtoCore.DSASM.Executable",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.DSExecutable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "DebugProps",
+      "type": "ProtoCore.DebugProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.DebugProps",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ExecutedAstGuids",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.ExecutedAstGuids",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ExecutionInstance",
+      "type": "ProtoCore.Executive",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.ExecutionInstance",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ExecutionState",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.ExecutionState",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ExecutiveProvider",
+      "type": "ProtoCore.DSASM.IExecutiveProvider",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.ExecutiveProvider",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ExprInterpreterExe",
+      "type": "ProtoCore.DSASM.Executable",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.ExprInterpreterExe",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "FunctionCallDepth",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.FunctionCallDepth",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "Heap",
+      "type": "ProtoCore.DSASM.Heap",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.Heap",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "InterpreterProps",
+      "type": "System.Collections.Generic.Stack\u003CProtoCore.InterpreterProperties\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.InterpreterProps",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "Mirror",
+      "type": "ProtoCore.DSASM.Mirror.ExecutionMirror",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.Mirror",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "Options",
+      "type": "ProtoCore.Options",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.Options",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "ReasonForExecutionSuspend",
+      "type": "ProtoCore.ReasonForExecutionSuspend",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the reason why the execution was last suspended",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RunningBlock",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The currently executing blockID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RuntimeData",
+      "type": "ProtoCore.RuntimeData",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.RuntimeData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RuntimeMemory",
+      "type": "ProtoCore.Runtime.RuntimeMemory",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.RuntimeMemory",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "RuntimeStatus",
+      "type": "ProtoCore.RuntimeStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.RuntimeStatus",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "StartPC",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "RuntimeCore.StartPC",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "WatchSymbolList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.SymbolNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.WatchSymbolList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "watchClassScope",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.watchClassScope",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "watchFramePointer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.watchFramePointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "watchStack",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "RuntimeCore.watchStack",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "Dispose",
+      "delegate": "ProtoCore.RuntimeCore.DisposeDelegate",
+      "signature": "public event ProtoCore.RuntimeCore.DisposeDelegate Dispose",
+      "summary": "RuntimeCore.Dispose",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ExecutionEvent",
+      "delegate": "System.EventHandler\u003CProtoCore.ExecutionStateEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CProtoCore.ExecutionStateEventArgs\u003E ExecutionEvent",
+      "summary": "RuntimeCore.ExecutionEvent",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

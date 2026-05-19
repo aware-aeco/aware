@@ -1,0 +1,46 @@
+{
+  "name": "LcOpSavedItemsElementStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSavedItemsElementStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElementStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSTATUS_OK",
+      "value": 0
+    },
+    {
+      "name": "eSTATUS_INVALID_PARENT",
+      "value": 1
+    },
+    {
+      "name": "eSTATUS_INVALID_INDEX",
+      "value": 2
+    },
+    {
+      "name": "eSTATUS_LOCK_FAILED",
+      "value": 3
+    },
+    {
+      "name": "eSTATUS_DUPLICATE_GUID",
+      "value": 4
+    },
+    {
+      "name": "eSTATUS_INTERNAL_ERROR",
+      "value": 5
+    },
+    {
+      "name": "eSTATUS_MOVE_PARENT_TO_CHILD",
+      "value": 6
+    },
+    {
+      "name": "eSTATUS_ITEM_HAS_PARENT",
+      "value": 7
+    }
+  ]
+}

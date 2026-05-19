@@ -1,0 +1,79 @@
+{
+  "name": "OsnapModes",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Defines several bit masks for each of the OSnap that are defined. Refer to the Rhino Help file for further information.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_OsnapModes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No OSnap."
+    },
+    {
+      "name": "Near",
+      "value": 2,
+      "summary": "Near OSnap."
+    },
+    {
+      "name": "Focus",
+      "value": 8,
+      "summary": "Focus OSnap."
+    },
+    {
+      "name": "Center",
+      "value": 32,
+      "summary": "Center OSnap."
+    },
+    {
+      "name": "Vertex",
+      "value": 64,
+      "summary": "Vertex OSnap."
+    },
+    {
+      "name": "Knot",
+      "value": 128,
+      "summary": "Knot OSnap."
+    },
+    {
+      "name": "Quadrant",
+      "value": 512,
+      "summary": "Quadrant OSnap."
+    },
+    {
+      "name": "Midpoint",
+      "value": 2048,
+      "summary": "Midpoint OSnap."
+    },
+    {
+      "name": "Intersection",
+      "value": 8192,
+      "summary": "Intersection OSnap."
+    },
+    {
+      "name": "End",
+      "value": 131072,
+      "summary": "End OSnap."
+    },
+    {
+      "name": "Perpendicular",
+      "value": 524288,
+      "summary": "Perpendicular OSnap."
+    },
+    {
+      "name": "Tangent",
+      "value": 2097152,
+      "summary": "Tangent OSnap."
+    },
+    {
+      "name": "Point",
+      "value": 134217728,
+      "summary": "Point OSnap."
+    }
+  ]
+}

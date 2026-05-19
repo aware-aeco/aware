@@ -1,0 +1,795 @@
+{
+  "name": "Interval",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents an interval in one-dimensional space, that is defined as two extrema or bounds.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Interval.htm",
+  "constructors": [
+    {
+      "name": "Interval(Interval)",
+      "signature": "public Interval(Interval other)",
+      "summary": "Initializes a new instance copying the other instance values.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The Rhino.Geometry.Interval to use as a base.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval__ctor.htm"
+    },
+    {
+      "name": "Interval(Double, Double)",
+      "signature": "public Interval(double t0, double t1)",
+      "summary": "Initializes a new instance of the Rhino.Geometry.Interval class.",
+      "params": [
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "The first value.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "The second value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Interval other)",
+      "summary": "Compares this Interval with another interval. The lower bound has first evaluation priority.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The other Interval to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this[0] \u003C other[0]\u002B1: if this[0] \u003E other[0]-1: if this[0] == other[0] and this[1] \u003C other[1]\u002B1: if this[0] == other[0] and this[1] \u003E other[1]."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_CompareTo.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Interval other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Interval.EpsilonEquals(Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Interval.EpsilonEquals(Rhino.Geometry.Interval,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Interval.EpsilonEquals(Rhino.Geometry.Interval,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified Object is equal to the current Interval, comparing by value.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The other object to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is an Interval and has the same bounds; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Interval)",
+      "signature": "public bool Equals(Interval other)",
+      "summary": "Determines whether the specified Interval is equal to the current Interval, comparing by value.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The other interval to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is an Interval and has the same bounds; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_Equals.htm"
+    },
+    {
+      "name": "FromIntersection",
+      "signature": "public static Interval FromIntersection(Interval a, Interval b)",
+      "summary": "Returns a new Interval that is the Intersection of the two input Intervals.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The first input interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The second input interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "If the intersection is not empty, then intersection = [max(a.Min(),b.Min()), min(a.Max(),b.Max())] The interval [ON.UnsetValue,ON.UnsetValue] is considered to be the empty set interval. The result of any intersection involving an empty set interval or disjoint intervals is the empty set interval."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_FromIntersection.htm"
+    },
+    {
+      "name": "FromUnion",
+      "signature": "public static Interval FromUnion(Interval a, Interval b)",
+      "summary": "Returns a new Interval which contains both inputs.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The first input interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The second input interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "The union of an empty set and an increasing interval is the increasing interval. The union of two empty sets is empty.The union of an empty set an a non-empty interval is the non-empty interval.The union of two non-empty intervals is [min(a.Min(),b.Min()), max(a.Max(),b.Max())]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_FromUnion.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes the hash code for this Interval object.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A hash value that might be equal for two different Interval values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_GetHashCode.htm"
+    },
+    {
+      "name": "Grow",
+      "signature": "public void Grow(double value)",
+      "summary": "Grows the Interval to include the given number.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Number to include in this interval.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_Grow.htm"
+    },
+    {
+      "name": "IncludesInterval(Interval)",
+      "signature": "public bool IncludesInterval(Interval interval)",
+      "summary": "Tests another interval for Interval inclusion.",
+      "params": [
+        {
+          "name": "interval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Interval to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the other interval is contained within or is coincident with the limits of this Interval; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_IncludesInterval.htm"
+    },
+    {
+      "name": "IncludesInterval(Interval, Boolean)",
+      "signature": "public bool IncludesInterval(Interval interval, bool strict)",
+      "summary": "Tests another interval for Interval inclusion.",
+      "params": [
+        {
+          "name": "interval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Interval to test.",
+          "optional": false
+        },
+        {
+          "name": "strict",
+          "type": "System.Boolean",
+          "doc": "If true, the other interval must be fully on the inside of the Interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the other interval is contained within the limits of this Interval; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_IncludesInterval_1.htm"
+    },
+    {
+      "name": "IncludesParameter(Double)",
+      "signature": "public bool IncludesParameter(double t)",
+      "summary": "Tests a parameter for Interval inclusion.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if t is contained within or is coincident with the limits of this Interval."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_IncludesParameter.htm"
+    },
+    {
+      "name": "IncludesParameter(Double, Boolean)",
+      "signature": "public bool IncludesParameter(double t, bool strict)",
+      "summary": "Tests a parameter for Interval inclusion.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter to test.",
+          "optional": false
+        },
+        {
+          "name": "strict",
+          "type": "System.Boolean",
+          "doc": "If true, the parameter must be fully on the inside of the Interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if t is contained within the limits of this Interval."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_IncludesParameter_1.htm"
+    },
+    {
+      "name": "MakeIncreasing",
+      "signature": "public void MakeIncreasing()",
+      "summary": "Ensures this Interval is either singleton or increasing.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_MakeIncreasing.htm"
+    },
+    {
+      "name": "NormalizedIntervalAt",
+      "signature": "public Interval NormalizedIntervalAt(Interval intervalParameter)",
+      "summary": "Converts interval value, or pair of values, to normalized parameter.",
+      "params": [
+        {
+          "name": "intervalParameter",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022intervalParameter\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Interval.NormalizedIntervalAt(Rhino.Geometry.Interval)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "Normalized parameter x so that min*(1.0-x) \u002B max*x = intervalParameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_NormalizedIntervalAt.htm"
+    },
+    {
+      "name": "NormalizedParameterAt",
+      "signature": "public double NormalizedParameterAt(double intervalParameter)",
+      "summary": "Converts interval value, or pair of values, to normalized parameter.",
+      "params": [
+        {
+          "name": "intervalParameter",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022intervalParameter\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Interval.NormalizedParameterAt(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Normalized parameter x so that min*(1.0-x) \u002B max*x = intervalParameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_NormalizedParameterAt.htm"
+    },
+    {
+      "name": "ParameterAt",
+      "signature": "public double ParameterAt(double normalizedParameter)",
+      "summary": "Converts normalized parameter to interval value, or pair of values.",
+      "params": [
+        {
+          "name": "normalizedParameter",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022normalizedParameter\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Interval.ParameterAt(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Interval parameter min*(1.0-normalizedParameter) \u002B max*normalizedParameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_ParameterAt.htm"
+    },
+    {
+      "name": "ParameterIntervalAt",
+      "signature": "public Interval ParameterIntervalAt(Interval normalizedInterval)",
+      "summary": "Converts normalized parameter to interval value, or pair of values.",
+      "params": [
+        {
+          "name": "normalizedInterval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022normalizedInterval\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Interval.ParameterIntervalAt(Rhino.Geometry.Interval)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "Interval parameter min*(1.0-normalizedParameter) \u002B max*normalized_paramete."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_ParameterIntervalAt.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public void Reverse()",
+      "summary": "Changes interval to [-T1, -T0].",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_Reverse.htm"
+    },
+    {
+      "name": "Swap",
+      "signature": "public void Swap()",
+      "summary": "Exchanges T0 and T1.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_Swap.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns a string representation of this Interval.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string with T0,T1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_ToString.htm"
+    },
+    {
+      "name": "Addition(Double, Interval)",
+      "signature": "public static Interval operator \u002B(double number, Interval interval)",
+      "summary": "Shifts an interval by a specific amount (addition).",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "The shifting value.",
+          "optional": false
+        },
+        {
+          "name": "interval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The interval to be used as a base.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "A new interval where T0 and T1 are summed with number."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_Addition_1.htm"
+    },
+    {
+      "name": "Addition(Interval, Double)",
+      "signature": "public static Interval operator \u002B(Interval interval, double number)",
+      "summary": "Shifts a Interval by a specific amount (addition).",
+      "params": [
+        {
+          "name": "interval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The interval to be used as a base.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "The shifting value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "A new interval where T0 and T1 are summed with number."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_Addition.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Interval a, Interval b)",
+      "summary": "Determines whether the two Intervals have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The first interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The second interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the components of the two intervals are exactly equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_Equality.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(Interval a, Interval b)",
+      "summary": "Determines whether the first specified Interval comes after (has superior sorting value than) the second Interval. The lower bound has first evaluation priority.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "First interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Second interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a[0] is larger than b[0], or a[0] == b[0] and a[1] is larger than b[1]; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(Interval a, Interval b)",
+      "summary": "Determines whether the first specified Interval comes after (has superior sorting value than) the second Interval, or is equal to it. The lower bound has first evaluation priority.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "First interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Second interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a[0] is larger than b[0], or a[0] == b[0] and a[1] is larger than or equal to b[1]; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Interval a, Interval b)",
+      "summary": "Determines whether the two Intervals have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The first interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The second interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two intervals are different in any value; false if they are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(Interval a, Interval b)",
+      "summary": "Determines whether the first specified Interval comes before (has inferior sorting value than) the second Interval. The lower bound has first evaluation priority.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "First interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Second interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a[0] is smaller than b[0], or a[0] == b[0] and a[1] is smaller than b[1]; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(Interval a, Interval b)",
+      "summary": "Determines whether the first specified Interval comes before (has inferior sorting value than) the second Interval, or is equal to it. The lower bound has first evaluation priority.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "First interval.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Second interval.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a[0] is smaller than b[0], or a[0] == b[0] and a[1] is smaller than or equal to b[1]; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_LessThanOrEqual.htm"
+    },
+    {
+      "name": "Subtraction(Double, Interval)",
+      "signature": "public static Interval operator -(double number, Interval interval)",
+      "summary": "Shifts an interval by a specific amount (subtraction).",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "The shifting value to subtract from (minuend).",
+          "optional": false
+        },
+        {
+          "name": "interval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The interval to be subtracted from (subtrahend).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "A new interval with [number-T0, number-T1]."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_Subtraction_1.htm"
+    },
+    {
+      "name": "Subtraction(Interval, Double)",
+      "signature": "public static Interval operator -(Interval interval, double number)",
+      "summary": "Shifts an interval by a specific amount (subtraction).",
+      "params": [
+        {
+          "name": "interval",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The base interval (minuend).",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "The shifting value to be subtracted (subtrahend).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Interval",
+        "doc": "A new interval with [T0-number, T1-number]."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Interval_op_Subtraction.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsDecreasing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if T[0] \u003E T[1].",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_IsDecreasing.htm"
+    },
+    {
+      "name": "IsIncreasing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if T0 \u003C T1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_IsIncreasing.htm"
+    },
+    {
+      "name": "IsSingleton",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if T0 == T1 != ON.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_IsSingleton.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this Interval is valid. Valid intervals must contain valid numbers.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_IsValid.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the indexed bound of this Interval.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_Item.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the signed length of the numeric range. If the interval is decreasing, a negative length will be returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_Length.htm"
+    },
+    {
+      "name": "Max",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the larger of T0 and T1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_Max.htm"
+    },
+    {
+      "name": "Mid",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the average of T0 and T1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_Mid.htm"
+    },
+    {
+      "name": "Min",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the smaller of T0 and T1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_Min.htm"
+    },
+    {
+      "name": "T0",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lower bound of the Interval.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_T0.htm"
+    },
+    {
+      "name": "T1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the upper bound of the Interval.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_T1.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Interval",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an Interval whose limits are RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Interval_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

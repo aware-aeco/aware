@@ -1,0 +1,73 @@
+{
+  "name": "RotationAngles",
+  "namespace": "StdReinfShapeBuilder.RotationAngles",
+  "kind": "class",
+  "summary": "Implementation of the rotation angles class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/",
+  "constructors": [
+    {
+      "name": "RotationAngles",
+      "signature": "RotationAngles(angle_x, angle_y, angle_z)",
+      "summary": "Set the model angles",
+      "remarks": "Set the model angles",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/#StdReinfShapeBuilder.RotationAngles.RotationAngles.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "change_rotation",
+      "signature": "change_rotation()",
+      "summary": "Get RotationAngles with the changed direction Return: rotation matrix",
+      "remarks": "Get RotationAngles with the changed direction Return: rotation matrix",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/#StdReinfShapeBuilder.RotationAngles.RotationAngles.change_rotation"
+    },
+    {
+      "name": "get_rotation_matrix",
+      "signature": "get_rotation_matrix()",
+      "summary": "Get the rotation matrix Return: rotation matrix",
+      "remarks": "Get the rotation matrix Return: rotation matrix",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/#StdReinfShapeBuilder.RotationAngles.RotationAngles.get_rotation_matrix"
+    }
+  ],
+  "properties": [
+    {
+      "name": "angle_x",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the x angle",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/#StdReinfShapeBuilder.RotationAngles.RotationAngles.angle_x"
+    },
+    {
+      "name": "angle_y",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the y angle",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/#StdReinfShapeBuilder.RotationAngles.RotationAngles.angle_y"
+    },
+    {
+      "name": "angle_z",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the y angle",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/#StdReinfShapeBuilder.RotationAngles.RotationAngles.angle_z"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

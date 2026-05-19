@@ -1,0 +1,24 @@
+{
+  "name": "RdkNotLoadedException",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Is thrown when the RDK is not loaded.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_RdkNotLoadedException.htm",
+  "constructors": [
+    {
+      "name": "RdkNotLoadedException",
+      "signature": "public RdkNotLoadedException()",
+      "summary": "Initializes a new instance of the RDK not loaded exception with a standard message.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RdkNotLoadedException__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

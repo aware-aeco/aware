@@ -1,0 +1,54 @@
+{
+  "name": "IPostEffects",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.IPostEffects\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_IPostEffects.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPostEffects",
+      "signature": "PostEffect[] GetPostEffects(PostEffectType type)",
+      "summary": "",
+      "params": [
+        {
+          "name": "type",
+          "type": "Rhino.Render.PostEffects.PostEffectType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.IPostEffects.GetPostEffects(Rhino.Render.PostEffects.PostEffectType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PostEffect[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.IPostEffects.GetPostEffects(Rhino.Render.PostEffects.PostEffectType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_IPostEffects_GetPostEffects.htm"
+    },
+    {
+      "name": "PostEffectFromId",
+      "signature": "PostEffect PostEffectFromId(Guid uuid)",
+      "summary": "",
+      "params": [
+        {
+          "name": "uuid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuid\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.IPostEffects.PostEffectFromId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PostEffect",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.IPostEffects.PostEffectFromId(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_IPostEffects_PostEffectFromId.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

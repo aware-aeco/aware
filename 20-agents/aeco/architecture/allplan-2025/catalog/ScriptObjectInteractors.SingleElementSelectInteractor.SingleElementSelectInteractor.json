@@ -1,0 +1,97 @@
+{
+  "name": "SingleElementSelectInteractor",
+  "namespace": "ScriptObjectInteractors.SingleElementSelectInteractor",
+  "kind": "class",
+  "summary": "implementation of the interactor for the single element selection",
+  "base": "BaseScriptObjectInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectInteractor/",
+  "constructors": [
+    {
+      "name": "SingleElementSelectInteractor",
+      "signature": "SingleElementSelectInteractor( interactor_result: SingleElementSelectResult, ele_filter: list[GUID] | SingleElementSelectInteractor() | SingleElementSelectInteractor() | SingleElementSelectInteractor()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "interactor_result",
+          "type": "SingleElementSelectResult",
+          "doc": "result of the interactor",
+          "optional": false
+        },
+        {
+          "name": "ele_filter",
+          "type": "list[GUID] | BaseFilterObject | SelectionQuery | None",
+          "doc": "element filter as a list of accepted element type GUIDs or a callable or a selection query returning True, when the element is valid for selection",
+          "optional": false
+        },
+        {
+          "name": "prompt_msg",
+          "type": "str",
+          "doc": "prompt message shown to the user in the dialog line",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectInteractor/#ScriptObjectInteractors.SingleElementSelectInteractor.SingleElementSelectInteractor.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "AddMsgInfo",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectInteractor/#ScriptObjectInteractors.SingleElementSelectInteractor.SingleElementSelectInteractor.process_mouse_msg"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "start the input",
+      "remarks": "start the input",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectInteractor/#ScriptObjectInteractors.SingleElementSelectInteractor.SingleElementSelectInteractor.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "ReinforcingBarFilterExpressions.Diameter",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Diameter class represents the diameter filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/097f4a19-8b04-5bb4-40cd-9f1f6ce04db5",
+  "constructors": [
+    {
+      "name": "ReinforcingBarFilterExpressions.Diameter",
+      "signature": "public Diameter()",
+      "summary": "Initializes a new instance of the Diameter class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/871ebd6b-dab2-df7a-857f-2ca6ab3404a3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

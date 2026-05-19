@@ -1,0 +1,97 @@
+{
+  "name": "GH_DocumentEventServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "RhinoCommon only event server.",
+  "interfaces": [
+    "IGH_DebugDescription"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentEventServer.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentEventServer",
+      "signature": "public GH_DocumentEventServer(GH_Document document)",
+      "summary": "Create and register a new event server.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that owns this event server.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentEventServer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendToDebugLog",
+      "signature": "public void AppendToDebugLog(GH_DebugDescriptionWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "Grasshopper.Kernel.GH_DebugDescriptionWriter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentEventServer_AppendToDebugLog.htm"
+    },
+    {
+      "name": "ClearGuidTable",
+      "signature": "public void ClearGuidTable()",
+      "summary": "Clear the entire ID table.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentEventServer_ClearGuidTable.htm"
+    },
+    {
+      "name": "CreateGuidTable",
+      "signature": "public void CreateGuidTable()",
+      "summary": "Create the entire ID table from scratch.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentEventServer_CreateGuidTable.htm"
+    },
+    {
+      "name": "EnsureGuidTable",
+      "signature": "public void EnsureGuidTable()",
+      "summary": "Create the entire ID table if it doesn\u0027t exist yet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentEventServer_EnsureGuidTable.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state flag for this event watcher.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentEventServer_Enabled.htm"
+    },
+    {
+      "name": "GuidTableRefCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of stored ids in the Guid Table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentEventServer_GuidTableRefCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

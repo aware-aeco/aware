@@ -1,0 +1,62 @@
+{
+  "name": "MeshPart",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a portion of a mesh for partitioning",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshPart.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EndFaceIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "End of subinterval of parent mesh face array",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshPart_EndFaceIndex.htm"
+    },
+    {
+      "name": "EndVertexIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "End of subinterval of parent mesh vertex array",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshPart_EndVertexIndex.htm"
+    },
+    {
+      "name": "StartFaceIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Start of subinterval of parent mesh face array",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshPart_StartFaceIndex.htm"
+    },
+    {
+      "name": "StartVertexIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Start of subinterval of parent mesh vertex array",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshPart_StartVertexIndex.htm"
+    },
+    {
+      "name": "TriangleCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshPart_TriangleCount.htm"
+    },
+    {
+      "name": "VertexCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "EndVertexIndex - StartVertexIndex",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshPart_VertexCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

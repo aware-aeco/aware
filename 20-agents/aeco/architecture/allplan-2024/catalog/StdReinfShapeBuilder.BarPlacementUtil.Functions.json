@@ -1,0 +1,58 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.BarPlacementUtil",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.BarPlacementUtil",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarPlacementUtil/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_placement_start_from_bending_roller",
+      "signature": "get_placement_start_from_bending_roller(shape, side_number, bending_roller, base_line, placement_diameter, local_angles)",
+      "summary": "Calculate the placement start point from the bending roller point at the start of a shape side. The point is local to the start of the base line | | -------- S----x---------------- base line ---\u003E Return: local position of placement start",
+      "remarks": "Calculate the placement start point from the bending roller point at the start of a shape side. The point is local to the start of the base line | | -------- S----x---------------- base line ---\u003E Return: local position of placement start",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarPlacementUtil/_functions/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_start_from_bending_roller"
+    },
+    {
+      "name": "get_placement_end_from_bending_roller",
+      "signature": "get_placement_end_from_bending_roller(shape, side_number, bending_roller, base_line, placement_diameter, local_angles)",
+      "summary": "Calculate the placement start point from the bending roller point at the end of a shape side. The point is local to the end of the base line ----------------x----E base line \u003C--- Return: local position of placement end from E to x",
+      "remarks": "Calculate the placement start point from the bending roller point at the end of a shape side. The point is local to the end of the base line ----------------x----E base line \u003C--- Return: local position of placement end from E to x",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarPlacementUtil/_functions/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_end_from_bending_roller"
+    },
+    {
+      "name": "get_placement_inside_bending_roller",
+      "signature": "get_placement_inside_bending_roller(shape, corner_number, bending_roller, placement_diameter, local_angles, global_point=False)",
+      "summary": "Calculate the position of a placement inside the bending roller | | X -------- Return: local position of placement start as Point3D",
+      "remarks": "Calculate the position of a placement inside the bending roller | | X -------- Return: local position of placement start as Point3D",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarPlacementUtil/_functions/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_inside_bending_roller"
+    },
+    {
+      "name": "get_placement_inside_side_intersection",
+      "signature": "get_placement_inside_side_intersection(shape1, side_number1, above_side1, shape2, side_number2, above_side2, placement_diameter, local_angles, global_point=False)",
+      "summary": "Calculate the position of a placement inside the intersection of two shape sides Return: local placement point as Point2D",
+      "remarks": "Calculate the position of a placement inside the intersection of two shape sides Return: local placement point as Point2D",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/BarPlacementUtil/_functions/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_inside_side_intersection"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

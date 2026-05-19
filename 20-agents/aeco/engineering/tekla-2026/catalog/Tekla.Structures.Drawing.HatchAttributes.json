@@ -1,0 +1,116 @@
+{
+  "name": "HatchAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The HatchAttributes base class, inherited by ModelObjectHatchAttributes and GraphicObjectHatchAttributes, contains hatch attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f9241cbb-e95d-32d9-1575-c794bf55d860",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1fc87d83-33b8-7e4e-7803-dda26a0aa35a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle in which to draw the hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2ab41dab-0b1d-6ba1-0bf8-48b7864d42e0"
+    },
+    {
+      "name": "BackgroundColor",
+      "type": "DrawingHatchColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The background color of the hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/85e035eb-eab7-68c2-8b63-54ef3682378d"
+    },
+    {
+      "name": "Color",
+      "type": "DrawingHatchColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/66cb7c43-e232-0764-972d-82e6dcd403c4"
+    },
+    {
+      "name": "DrawBackgroundColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets whether the background color will be enabled or disabled for the hatch. See also: BackgroundColor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6da44b3c-6eee-ef35-9cbe-44a163fc418e"
+    },
+    {
+      "name": "FactorType",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the hatch factor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f6cd829a-22f6-84f3-bdf9-1c4c607f1a51"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the hatch. If an empty string is given as hatch name it will become \u0022None\u0022.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0665a0d-21d5-93a7-3051-e89844862f79"
+    },
+    {
+      "name": "ScaleX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale value of the hatch in the X-direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6e5945f-9395-9a1e-5db8-bf12efff67f5"
+    },
+    {
+      "name": "ScaleY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale value of the hatch in the Y-direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/60869215-ddf5-50cd-da6e-a76e499d9d32"
+    },
+    {
+      "name": "TrueBackgroundColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (rgb enabled) of the hatch background.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8ccd5161-7960-d1b0-ba52-616605c98831"
+    },
+    {
+      "name": "TrueColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (RGB enabled) of the hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8cad7dff-82fd-64b3-a1f9-cfe23b17f229"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

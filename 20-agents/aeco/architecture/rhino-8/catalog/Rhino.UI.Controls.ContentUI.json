@@ -1,0 +1,136 @@
+{
+  "name": "ContentUI",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "class",
+  "summary": "This class represents the user interface (UI) of a content. A content\u0027s UI appears inside an editor which is represented by IRhRdkContentEditor.The UI is the part of the editor which allows the user to view and modify the persistent state of the selected content(s). This interface is implemented by RDK internally in the core content class, CRhRdkCoreContent. If you do not override CRhRdkCoreContent::CreateUI() you do not have to concern yourself with the details.If however, you do want to override CreateUI() to create your own custom UI, then you must derive your UI class from CRhRdkCustomContentUI and implement this interface to support your own UI design. \\note CRhRdkCustomContentUI implements some of this interface for you.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_ContentUI.htm",
+  "constructors": [
+    {
+      "name": "ContentUI",
+      "signature": "public ContentUI(IntPtr pContentUI)",
+      "summary": "ContentUI constructor",
+      "params": [
+        {
+          "name": "pContentUI",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pContentUI\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ContentUIHolder",
+      "signature": "public virtual ICollapsibleSectionHolder ContentUIHolder()",
+      "summary": "Returns the holder that contains the UI sections, if this is an expandable content UI with sections inside holders. Returns null for custom UIs.",
+      "params": [],
+      "returns": {
+        "type": "ICollapsibleSectionHolder",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.ContentUIHolder\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_ContentUIHolder.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the ContentUI",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_Dispose.htm"
+    },
+    {
+      "name": "EditorUuid",
+      "signature": "public virtual Guid EditorUuid()",
+      "summary": "Get the unique identifier of the editor that the UI is being displayed in.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.EditorUuid\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_EditorUuid.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "ContentUI destructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_Finalize.htm"
+    },
+    {
+      "name": "IsCreated",
+      "signature": "public virtual bool IsCreated()",
+      "summary": "Returns true if the UI is created, else false",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.IsCreated\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_IsCreated.htm"
+    },
+    {
+      "name": "IsShown",
+      "signature": "public virtual bool IsShown()",
+      "summary": "Returns true if the UI is being shown, else false",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.IsShown\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_IsShown.htm"
+    },
+    {
+      "name": "Uuid",
+      "signature": "public virtual Guid Uuid()",
+      "summary": "Get the unique identifier of the UI.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ContentUI.Uuid\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ContentUI_Uuid.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_ContentUI_CppPointer.htm"
+    },
+    {
+      "name": "m_cpp",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_UI_Controls_ContentUI_m_cpp.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

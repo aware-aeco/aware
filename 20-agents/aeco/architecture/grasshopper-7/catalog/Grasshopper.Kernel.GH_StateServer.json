@@ -1,0 +1,224 @@
+{
+  "name": "GH_StateServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Maintains all the recorded states for this document.",
+  "base": "List\u003CGH_State\u003E",
+  "interfaces": [
+    "GH_ISerializable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_StateServer.htm",
+  "constructors": [
+    {
+      "name": "GH_StateServer",
+      "signature": "public GH_StateServer(GH_Document owner)",
+      "summary": "Initializes a new instance of the GH_StateServer class",
+      "params": [
+        {
+          "name": "owner",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "NewStateFromDocument",
+      "signature": "public GH_State NewStateFromDocument()",
+      "summary": "Displays UI for new state creation. If the user aborts, then null is returned. If the user successfully defines a new state, it is appended to this server.",
+      "params": [],
+      "returns": {
+        "type": "GH_State",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer_NewStateFromDocument.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer_Read.htm"
+    },
+    {
+      "name": "RemoveState",
+      "signature": "public bool RemoveState(int index)",
+      "summary": "Remove a certain state. This method adds an undo record to the document.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of state to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer_RemoveState.htm"
+    },
+    {
+      "name": "RestoreState(Int32, Int32, Int32)",
+      "signature": "public bool RestoreState(int index, out int restored_objects, out int missing_objects)",
+      "summary": "Restore a certain state.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of state to restore.",
+          "optional": false
+        },
+        {
+          "name": "restored_objects",
+          "type": "System.Int32",
+          "doc": "Number of objects successfully restored.",
+          "optional": false
+        },
+        {
+          "name": "missing_objects",
+          "type": "System.Int32",
+          "doc": "Number of objects that could not be found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer_RestoreState_1.htm"
+    },
+    {
+      "name": "RestoreState(String, Int32, Int32)",
+      "signature": "public bool RestoreState(string name, out int restored_objects, out int missing_objects)",
+      "summary": "Restore a certain state.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of state to restore. Name is case-sensitive.",
+          "optional": false
+        },
+        {
+          "name": "restored_objects",
+          "type": "System.Int32",
+          "doc": "Number of objects successfully restored.",
+          "optional": false
+        },
+        {
+          "name": "missing_objects",
+          "type": "System.Int32",
+          "doc": "Number of objects that could not be found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer_RestoreState_2.htm"
+    },
+    {
+      "name": "RestoreState(Int32, Boolean, Int32, Int32)",
+      "signature": "public bool RestoreState(int index, bool recompute, out int restored_objects, out int missing_objects)",
+      "summary": "Restore a certain state.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of state to restore.",
+          "optional": false
+        },
+        {
+          "name": "recompute",
+          "type": "System.Boolean",
+          "doc": "If True, a new solution will be started right away.",
+          "optional": false
+        },
+        {
+          "name": "restored_objects",
+          "type": "System.Int32",
+          "doc": "Number of objects successfully restored.",
+          "optional": false
+        },
+        {
+          "name": "missing_objects",
+          "type": "System.Int32",
+          "doc": "Number of objects that could not be found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer_RestoreState.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateServer_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Names",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the state names in this server.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateServer_Names.htm"
+    },
+    {
+      "name": "Owner",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that owns this server.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateServer_Owner.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

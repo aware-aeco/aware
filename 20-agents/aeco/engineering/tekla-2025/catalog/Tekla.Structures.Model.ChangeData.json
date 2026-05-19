@@ -1,0 +1,39 @@
+{
+  "name": "ChangeData",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ChangeData class presents information about the detected change of the modelobject in the model. It is instantiated inside the connected method.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/71408208-1126-6f3d-f4a1-8e524f7875da",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Object",
+      "type": "ModelObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the changed object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/336f8d1a-c1f9-96f8-5f34-906ca393cd7d"
+    },
+    {
+      "name": "Source",
+      "type": "ChangeData.ChangeSourceTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the change source type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2395ea14-bcc2-cc0b-28b6-120b097a3f76"
+    },
+    {
+      "name": "Type",
+      "type": "ChangeData.ChangeTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the change type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f165592b-a841-edfa-0fdd-471f7db25554"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

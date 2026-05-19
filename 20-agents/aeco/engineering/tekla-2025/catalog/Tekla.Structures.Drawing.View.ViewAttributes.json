@@ -1,0 +1,244 @@
+{
+  "name": "View.ViewAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ViewAttributes class contains the attributes for the view.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/37966d35-61b2-f198-c207-c709508a943a",
+  "constructors": [
+    {
+      "name": "View.ViewAttributes()",
+      "signature": "public ViewAttributes()",
+      "summary": "Creates a new view attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/115955f7-d6b4-548e-89d8-4de9cb733381"
+    },
+    {
+      "name": "View.ViewAttributes(String)",
+      "signature": "public ViewAttributes(string AttributesFile)",
+      "summary": "Creates a new view attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The name of the attributes file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e2c5666b-3542-f4fb-d7de-d2d1ec4b473b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88f7ad53-6e09-7bf7-e523-1b30b1fc152b"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string attributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "attributeFile",
+          "type": "System.String",
+          "doc": "The attribute file\u0027s filename.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e31a4e7-f908-e01d-d4b0-99f0582dc4f6"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DatumLevel",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The specified datum level. If ViewPlaneDatumPointForElevations is set to true when DatumLevel is set, the value of ViewPlaneDatumPointForElevations will change to false.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6952b412-a99f-a2dd-658a-bef42be320ce"
+    },
+    {
+      "name": "FixedViewPlacing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the view placing is fixed (true) or free (false).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1185eb8c-6449-884f-dab0-209f6b11c19e"
+    },
+    {
+      "name": "LabelPositionHorizontal",
+      "type": "View.HorizontalLabelPosition",
+      "getter": true,
+      "setter": true,
+      "summary": "The horizontal position of the view label.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b24cbf7f-0ce7-2633-ed67-7f7150d65f41"
+    },
+    {
+      "name": "LabelPositionVertical",
+      "type": "View.VerticalLabelPosition",
+      "getter": true,
+      "setter": true,
+      "summary": "The vertical position of the view label.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c6c17aed-9ce6-7dbe-099c-8590716e9dec"
+    },
+    {
+      "name": "LocationBy",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the location by attribute. Value is ViewAttributes.LocationByModelOrigin, ViewAttributes.LocationByProjectBasePoint or guid of a Basepoint.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3a43cbb1-4bba-4230-cff3-3ea722ed2c09"
+    },
+    {
+      "name": "MarkSymbolAttributes",
+      "type": "View.ViewMarkSymbolAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The view mark symbol attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dce17d9b-1a05-ca7e-f0d7-fe90998dd8ca"
+    },
+    {
+      "name": "MarkSymbolColor",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the mark symbol (see DrawingColors for options).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed92dc86-a5c8-6f5b-1875-2fee45f08407"
+    },
+    {
+      "name": "PartialProfileLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the partial profile length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd119cb0-add8-1a8c-8d70-8ea366440168"
+    },
+    {
+      "name": "PartialProfileOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the partial profile offset",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ebb9f1e-066b-c1e0-e295-3e6274959d63"
+    },
+    {
+      "name": "PourView",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the view is pour view or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9326398c-fb3a-5b3d-3c3f-a8367cdff7d6"
+    },
+    {
+      "name": "ReflectedView",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the view is reflected or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d283fc38-f086-37b8-82b3-fbfbb7032bbc"
+    },
+    {
+      "name": "Scale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The view scale.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ab497284-d46d-832c-b6d3-8e740bca19be"
+    },
+    {
+      "name": "Shortening",
+      "type": "View.ViewShorteningAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the shortening attributes for the view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ee77a4a2-446e-2897-f89b-d32869d4382e"
+    },
+    {
+      "name": "ShowPartOpeningsOrRecessSymbol",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether to show the openings/recess symbol or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c6923e67-c910-1ec4-e8ce-b2e18c4486e6"
+    },
+    {
+      "name": "TagsAttributes",
+      "type": "View.ViewMarkTagsAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The attributes for view mark tags.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4da272ee-b989-3437-8893-beb9b784aeb7"
+    },
+    {
+      "name": "TrueMarkSymbolColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (rgb enabled) of the mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/563a19f3-118d-cd63-b51b-236b8b8f392e"
+    },
+    {
+      "name": "UndeformedView",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the view is undeformed or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c38d9bf-0332-14f7-cec0-73dc2e7674a5"
+    },
+    {
+      "name": "UnfoldedView",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the view is unfolded or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/45ed4b85-639f-571f-4943-619c134efdfa"
+    },
+    {
+      "name": "ViewExtensionForNeighbourParts",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The view extension for neighbour parts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4b511149-bb45-2c59-8031-10319e1c3281"
+    },
+    {
+      "name": "ViewPlaneDatumPointForElevations",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the datum point for elevations is view plane based (true) or specified (false). When set to false, the value of DatumLevel is used. When set to true, DatumLevel will be set to 0.0.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/420a1e6e-3061-8c9d-cd9a-ea2029fda8ec"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

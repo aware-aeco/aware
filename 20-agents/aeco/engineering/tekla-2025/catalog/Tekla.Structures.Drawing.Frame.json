@@ -1,0 +1,146 @@
+{
+  "name": "Frame",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The Frame class defines a frame that can be given to objects, including texts. A frame is a box around the object. You can specify the color and shape of the box.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f031cc4a-bd67-e91d-c143-8fdc4c580b35",
+  "constructors": [
+    {
+      "name": "Frame(FrameTypes, DrawingColors)",
+      "signature": "public Frame(FrameTypes FrameType, DrawingColors FrameColor)",
+      "summary": "Creates a new frame instance with the specified frame type and color.",
+      "params": [
+        {
+          "name": "FrameType",
+          "type": "Tekla.Structures.Drawing.FrameTypes",
+          "doc": "The frame type to be used.",
+          "optional": false
+        },
+        {
+          "name": "FrameColor",
+          "type": "Tekla.Structures.Drawing.DrawingColors",
+          "doc": "The frame color to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5dfc199-bba9-7ea4-fa78-2e04699ef901"
+    },
+    {
+      "name": "Frame(FrameTypes, TeklaDrawingColor)",
+      "signature": "public Frame(FrameTypes FrameType, TeklaDrawingColor FrameColor)",
+      "summary": "Creates a new frame instance with the specified frame type and RGB color.",
+      "params": [
+        {
+          "name": "FrameType",
+          "type": "Tekla.Structures.Drawing.FrameTypes",
+          "doc": "The frame type to be used.",
+          "optional": false
+        },
+        {
+          "name": "FrameColor",
+          "type": "Tekla.Structures.Drawing.TeklaDrawingColor",
+          "doc": "The frame RGB color to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a5e4882f-c238-88e3-4559-0dab5146a960"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public Object Clone()",
+      "summary": "Clones the object.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/443b9742-2894-2ba3-92a8-0889c193cd2b"
+    },
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetAxisAlignedBoundingBox()",
+      "summary": "Returns the bounding box of the frame in the global axis coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the global axis coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/26c9ea8e-b0f0-2043-4f8e-87b9af27d476"
+    },
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "public RectangleBoundingBox GetObjectAlignedBoundingBox()",
+      "summary": "Returns the bounding box of the frame in the local coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the local coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9b7d3ea6-fe6a-1e44-1b7d-8545ffc17e94"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "public bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/867b0d3f-25bd-f1c4-a8b8-16f9b77c3cd1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame\u0027s color.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31860d0b-e79f-5438-7d29-7e0415bc4d77"
+    },
+    {
+      "name": "TrueColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (RGB enabled) of the frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d459b57c-e409-6e59-ac32-43bbbb3f48ea"
+    },
+    {
+      "name": "Type",
+      "type": "FrameTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame\u0027s type (square, round, dashed...).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3fd5bdd2-2bf4-8bc7-5ae6-b976e09a1615"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

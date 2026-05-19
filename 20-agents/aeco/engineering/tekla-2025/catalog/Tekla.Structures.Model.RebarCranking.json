@@ -1,0 +1,90 @@
+{
+  "name": "RebarCranking",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarCranking class represents the cranking of reinforcing bars at a RebarSplitter.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/87bcf96b-78c0-5086-7639-26f9e1fefe60",
+  "constructors": [
+    {
+      "name": "RebarCranking",
+      "signature": "public RebarCranking()",
+      "summary": "Initializes a new instance of the RebarCranking class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f584a632-e75f-222b-6fbd-10e68ae62be8"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CrankedDistance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked distance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6fe009a0-c5a2-a2ca-0f3d-9fc1b318afc3"
+    },
+    {
+      "name": "CrankedLengthType",
+      "type": "RebarCranking.CrankedLengthTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked length type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8c76b185-50cf-5ba2-c57b-0440f408dc9a"
+    },
+    {
+      "name": "CrankedOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked offset.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ecc47e40-bfa5-c3f6-a425-0b0bd4411e36"
+    },
+    {
+      "name": "CrankedRatio",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked ratio.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63da3e3d-0cc8-f8cb-317e-4fb75387fc6b"
+    },
+    {
+      "name": "CrankingType",
+      "type": "RebarCranking.CrankingTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranking type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65181bae-14e6-249c-e16c-afccc7451747"
+    },
+    {
+      "name": "CrankRotation",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crank rotation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ec49643-4d7d-8bfe-d45a-2f33a07e76dc"
+    },
+    {
+      "name": "CrankSide",
+      "type": "RebarCranking.CrankSideEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crank side.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d876c315-c1a7-2452-5065-415657e8229e"
+    },
+    {
+      "name": "CrankStraightLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crank straight length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/08a17497-9224-b8d9-34d9-03aaa823a388"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

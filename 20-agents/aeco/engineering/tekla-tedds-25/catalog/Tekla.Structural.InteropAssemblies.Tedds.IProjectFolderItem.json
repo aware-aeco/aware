@@ -1,0 +1,46 @@
+{
+  "name": "IProjectFolderItem",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for a project folder",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iprojectfolderitem-41835",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsFolder",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns whether the object is a folder",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/014d5106701cfe6eb5da497036970a31371c587da18e48100834afe0a6b4ed6f"
+    },
+    {
+      "name": "Items",
+      "type": "IProjectItems",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection of child project item in the folder",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/d416068a2f4aadd147399b6dc2d6dc5f8a9602f399d380d4d0747fb1e57b6bbf"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Folder name",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/4605561ea563ca547cdfb0827a907b324de4bb9e4087768f49bc100f6c25770b"
+    },
+    {
+      "name": "ParentFolder",
+      "type": "IProjectFolderItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Parent folder in the project hierarchy",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/e35785a25efb7cb927ac5c83d7e22592f809967af9c9a5df65dcb40c13eddcce"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

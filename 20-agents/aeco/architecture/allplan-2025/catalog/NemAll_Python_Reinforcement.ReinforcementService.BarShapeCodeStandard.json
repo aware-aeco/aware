@@ -1,0 +1,36 @@
+{
+  "name": "BarShapeCodeStandard",
+  "namespace": "NemAll_Python_Reinforcement.ReinforcementService",
+  "kind": "enum",
+  "summary": "Standard for the bar shape code",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/#NemAll_Python_Reinforcement.ReinforcementService.BarShapeCodeStandard",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: str | int | float) -\u003E BarShapeCodeStandard",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BarShapeCodeStandard",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/#NemAll_Python_Reinforcement.ReinforcementService.BarShapeCodeStandard.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

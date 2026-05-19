@@ -1,0 +1,59 @@
+{
+  "name": "GH_ArchiveMessageViewer",
+  "namespace": "GH_IO.UserInterface",
+  "kind": "class",
+  "summary": "Viewer/Browser that displays a list of archive messages.",
+  "base": "Form",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_UserInterface_GH_ArchiveMessageViewer.htm",
+  "constructors": [
+    {
+      "name": "GH_ArchiveMessageViewer",
+      "signature": "public GH_ArchiveMessageViewer()",
+      "summary": "Constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_UserInterface_GH_ArchiveMessageViewer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Clean up any resources being used.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if managed resources should be disposed; otherwise, false.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_UserInterface_GH_ArchiveMessageViewer_Dispose.htm"
+    },
+    {
+      "name": "SetArchive",
+      "signature": "public void SetArchive(GH_Archive nArchive)",
+      "summary": "Set a new archive. The messages in this archive will be displayed on the form.",
+      "params": [
+        {
+          "name": "nArchive",
+          "type": "GH_IO.Serialization.GH_Archive",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_UserInterface_GH_ArchiveMessageViewer_SetArchive.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

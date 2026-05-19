@@ -1,0 +1,63 @@
+{
+  "name": "StringConstantFilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The StringConstantFilterExpression class represents a constant string filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1ec9a93f-5ba3-47a6-2336-7185597983dc",
+  "constructors": [
+    {
+      "name": "StringConstantFilterExpression(IEnumerable\u003CString\u003E)",
+      "signature": "public StringConstantFilterExpression(IEnumerable\u003Cstring\u003E Values)",
+      "summary": "Initializes a new instance of the StringConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d09e6892-8ad5-2f5c-2e14-547e0e8a4abc"
+    },
+    {
+      "name": "StringConstantFilterExpression(String)",
+      "signature": "public StringConstantFilterExpression(string Value)",
+      "summary": "Initializes a new instance of the StringConstantFilterExpression class.",
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The value to represent.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fbac95f1-ac33-bbd7-2e60-6f8262a98a3b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

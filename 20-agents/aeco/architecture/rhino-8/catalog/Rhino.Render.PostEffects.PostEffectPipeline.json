@@ -1,0 +1,236 @@
+{
+  "name": "PostEffectPipeline",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "This object provides a way for post effects to access the frame buffer channels from a rendering and create new channels containing post-processed information which can be passed to the next post effect in the chain. Consider a simple post effect that just modifies the red component of a rendering.It will call GetChannel() to get the red channel as its input, and it will call NewChannel() to get a new red channel for its output. It will then read the input channel, do calculations and write to the output channel.When finished, it will call Commit() passing the new channel.Because both channels have the same identifier, this will replace the old channel with the new one so that subsequent post effects in the chain will use the new channel instead of the original.Note that this will only replace the channel used by the pipeline.The original channel will still exist in the frame buffer.This system allows any post effect to access any number of channels for reading and create any number of new channels which may or may not replace existing channels depending on the channel id.The final stage (convert to 8-bit) operates on the channels left in the pipeline by the post effect chain to produce the final 32-bit RGBA image in a dib. It is also possible for a post effect to create and use any number of \u0027scratch\u0027 channels.If a post effect needs a temporary pixel buffer for some intermediate results, it can call NewChannel() with a custom (random) id. Once it is finished with this scratch channel, it can call Discard() on it.",
+  "interfaces": [
+    "IDisposable",
+    "IProgress\u003Cint\u003E",
+    "IPostEffects"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PostEffects_PostEffectPipeline.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dimensions",
+      "signature": "public Size Dimensions()",
+      "summary": "Get the dimensions of the frame buffer. All channels in the frame buffer have the same dimensions.",
+      "params": [],
+      "returns": {
+        "type": "Size",
+        "doc": "Dimension as Size"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_Dimensions.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectPipeline",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_Dispose.htm"
+    },
+    {
+      "name": "Execute",
+      "signature": "public bool Execute(Rectangle p, bool renderingInProgress, PostEffectExecuteContexts usageContexts, PostEffectHistograms histogramsToUpdate)",
+      "summary": "Execute the pipeline. This executes all the post effects in order. Only this rectangle need be modified by the post effects.",
+      "params": [
+        {
+          "name": "p",
+          "type": "System.Drawing.Rectangle",
+          "doc": "p is a rectangle within the frame buffer.",
+          "optional": false
+        },
+        {
+          "name": "renderingInProgress",
+          "type": "System.Boolean",
+          "doc": "rendering is true if rendering is in progress.",
+          "optional": false
+        },
+        {
+          "name": "usageContexts",
+          "type": "Rhino.Render.PostEffects.PostEffectExecuteContexts",
+          "doc": "Context this pipeline is being executed in.",
+          "optional": false
+        },
+        {
+          "name": "histogramsToUpdate",
+          "type": "Rhino.Render.PostEffects.PostEffectHistograms",
+          "doc": "Bitwise list of histograms to update during the execution of the pipeline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectPipeline.Execute(System.Drawing.Rectangle,System.Boolean,Rhino.Render.PostEffects.PostEffectExecuteContexts,Rhino.Render.PostEffects.PostEffectHistograms)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_Execute.htm"
+    },
+    {
+      "name": "ExecutionOrder",
+      "signature": "public Guid[] ExecutionOrder()",
+      "summary": "Returns a list of the post effects to be executed by this pipeline in order.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "A list of the post effects to be executed by this pipeline in order"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_ExecutionOrder.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_Finalize.htm"
+    },
+    {
+      "name": "GetChannelForRead",
+      "signature": "public PostEffectChannel GetChannelForRead(Guid id)",
+      "summary": "Get a channel for reading. A post effect will use this to get channel data as input to its process. Output will be written to new channel(s). \\see GetChannelForWrite() This method returns the current state of the channel at this stage in the pipeline. If the first post effect calls this, it will get the actual frame buffer channel. Subsequent post effects will get the data left behind by the previous post effect. A post effect calls GetChannelForRead() to get its input and GetChannelForWrite() to get the object to which it will write its output. Even when the same channel id is specified, these are separate, unconnected objects.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The channel identifier.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PostEffectChannel",
+        "doc": "A pointer to the channel or null if the channel is not available."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_GetChannelForRead.htm"
+    },
+    {
+      "name": "GetChannelForWrite",
+      "signature": "public PostEffectChannel GetChannelForWrite(Guid id)",
+      "summary": "Get a channel for writing. A post effect will use this to get channel(s) to write the output of its processing to. Input will usually come from existing channels, although a post effect is free to read its own output channels if needed. See GetChannelForRead() You are allowed to create one new channel with the same identifier as an existing channel, in which case IChannel::Commit() will replace the existing channel with the new one in the pipeline.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The channel identifier.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PostEffectChannel",
+        "doc": "A pointer to the new channel or null if the channel could not be created."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_GetChannelForWrite.htm"
+    },
+    {
+      "name": "GetEndTimeInMilliseconds",
+      "signature": "public ulong GetEndTimeInMilliseconds()",
+      "summary": "Get the end time of the rendering expressed in milliseconds since some unspecified epoch. Do not make assumptions about what the epoch is; it might be different on different platforms.",
+      "params": [],
+      "returns": {
+        "type": "UInt64",
+        "doc": "milliseconds"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_GetEndTimeInMilliseconds.htm"
+    },
+    {
+      "name": "GetMaxLuminance",
+      "signature": "public float GetMaxLuminance()",
+      "summary": "Get the max luminance in the rendering.",
+      "params": [],
+      "returns": {
+        "type": "Single",
+        "doc": "max luminance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_GetMaxLuminance.htm"
+    },
+    {
+      "name": "GetStartTimeInMilliseconds",
+      "signature": "public ulong GetStartTimeInMilliseconds()",
+      "summary": "Get the start time of the rendering expressed in milliseconds since some unspecified epoch. Do not make assumptions about what the epoch is; it might be different on different platforms.",
+      "params": [],
+      "returns": {
+        "type": "UInt64",
+        "doc": "milliseconds"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_GetStartTimeInMilliseconds.htm"
+    },
+    {
+      "name": "SetStartTimeInMilliseconds",
+      "signature": "public void SetStartTimeInMilliseconds(ulong ms)",
+      "summary": "Set the start time of the rendering in milliseconds since some unspecified epoch.",
+      "params": [
+        {
+          "name": "ms",
+          "type": "System.UInt64",
+          "doc": "milliseconds",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_SetStartTimeInMilliseconds.htm"
+    },
+    {
+      "name": "ThreadEngine",
+      "signature": "public PostEffectThreadEngine ThreadEngine()",
+      "summary": "Get the post effect thread engine.",
+      "params": [],
+      "returns": {
+        "type": "PostEffectThreadEngine",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectPipeline.ThreadEngine\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectPipeline_ThreadEngine.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "GPUAllowed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Post effect authors should check that GPU use is allowed before using the GPU in a post effect.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectPipeline_GPUAllowed.htm"
+    },
+    {
+      "name": "IsRendering",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "IsRendering",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectPipeline_IsRendering.htm"
+    },
+    {
+      "name": "RenderingId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Return a UUID that uniquely identifies the rendering being processed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectPipeline_RenderingId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

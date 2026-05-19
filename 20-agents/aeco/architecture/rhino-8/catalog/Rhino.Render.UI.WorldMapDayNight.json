@@ -1,0 +1,192 @@
+{
+  "name": "WorldMapDayNight",
+  "namespace": "Rhino.Render.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.UI.WorldMapDayNight\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_UI_WorldMapDayNight.htm",
+  "constructors": [
+    {
+      "name": "WorldMapDayNight",
+      "signature": "public WorldMapDayNight()",
+      "summary": "Initializes a new instance of the WorldMapDayNight class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the WorldMapDayNight",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_Finalize.htm"
+    },
+    {
+      "name": "HasMapForCurrentSettings",
+      "signature": "public bool HasMapForCurrentSettings()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.HasMapForCurrentSettings\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_HasMapForCurrentSettings.htm"
+    },
+    {
+      "name": "LocationToMap",
+      "signature": "public Point LocationToMap(Point2d latlong)",
+      "summary": "",
+      "params": [
+        {
+          "name": "latlong",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "[Missing \u003Cparam name=\u0022latlong\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.LocationToMap(Rhino.Geometry.Point2d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.LocationToMap(Rhino.Geometry.Point2d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_LocationToMap.htm"
+    },
+    {
+      "name": "MakeMapBitmap",
+      "signature": "public void MakeMapBitmap()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_MakeMapBitmap.htm"
+    },
+    {
+      "name": "Map",
+      "signature": "public Image Map()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Image",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.Map\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_Map.htm"
+    },
+    {
+      "name": "MapToLocation",
+      "signature": "public Point2d MapToLocation(Point mapPoint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "mapPoint",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022mapPoint\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.MapToLocation(System.Drawing.Point)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.MapToLocation(System.Drawing.Point)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_MapToLocation.htm"
+    },
+    {
+      "name": "SetDayNightDisplay",
+      "signature": "public void SetDayNightDisplay(bool bOn)",
+      "summary": "",
+      "params": [
+        {
+          "name": "bOn",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bOn\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.SetDayNightDisplay(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_SetDayNightDisplay.htm"
+    },
+    {
+      "name": "SetEnabled",
+      "signature": "public void SetEnabled(bool bEnabled)",
+      "summary": "",
+      "params": [
+        {
+          "name": "bEnabled",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bEnabled\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.SetEnabled(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_SetEnabled.htm"
+    },
+    {
+      "name": "SetTimeInfo",
+      "signature": "public void SetTimeInfo(DateTime dt, double timezone, int daylightSavingMinutes, bool bDaylightSavingsOn)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dt",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022dt\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.SetTimeInfo(System.DateTime,System.Double,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "timezone",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022timezone\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.SetTimeInfo(System.DateTime,System.Double,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "daylightSavingMinutes",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022daylightSavingMinutes\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.SetTimeInfo(System.DateTime,System.Double,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bDaylightSavingsOn",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bDaylightSavingsOn\u0022/\u003E documentation for \u0022M:Rhino.Render.UI.WorldMapDayNight.SetTimeInfo(System.DateTime,System.Double,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_UI_WorldMapDayNight_SetTimeInfo.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

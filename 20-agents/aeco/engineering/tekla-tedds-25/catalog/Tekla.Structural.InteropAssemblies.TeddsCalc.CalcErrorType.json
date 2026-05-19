@@ -1,0 +1,39 @@
+{
+  "name": "CalcErrorType",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "enum",
+  "summary": "Error types",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-teddscalc-calcerrortype-41846",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Expression",
+      "value": 1,
+      "summary": "Expresso expression error - can continue, interrrupt or abort"
+    },
+    {
+      "name": "Filter",
+      "value": 4,
+      "summary": "Filter error - cannot continue"
+    },
+    {
+      "name": "System",
+      "value": 0,
+      "summary": "System error - cannot continue"
+    },
+    {
+      "name": "Units",
+      "value": 3,
+      "summary": "Units library error - can continue only"
+    },
+    {
+      "name": "Variables",
+      "value": 2,
+      "summary": "Variables library error - can continue only"
+    }
+  ]
+}

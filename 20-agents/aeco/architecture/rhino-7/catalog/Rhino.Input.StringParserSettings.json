@@ -1,0 +1,405 @@
+{
+  "name": "StringParserSettings",
+  "namespace": "Rhino.Input",
+  "kind": "class",
+  "summary": "Parameters for parsing strings",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_StringParserSettings.htm",
+  "constructors": [
+    {
+      "name": "StringParserSettings",
+      "signature": "public StringParserSettings()",
+      "summary": "Initializes a new instance of the StringParserSettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParserSettings__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the StringParserSettings",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParserSettings_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the StringParserSettings and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParserSettings_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParserSettings_Finalize.htm"
+    },
+    {
+      "name": "SetAllExpressionSettingsToFalse",
+      "signature": "public void SetAllExpressionSettingsToFalse()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParserSettings_SetAllExpressionSettingsToFalse.htm"
+    },
+    {
+      "name": "SetAllFieldsToFalse",
+      "signature": "public void SetAllFieldsToFalse()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParserSettings_SetAllFieldsToFalse.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultAngleUnitSystem",
+      "type": "AngleUnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_DefaultAngleUnitSystem.htm"
+    },
+    {
+      "name": "DefaultLengthUnitSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_DefaultLengthUnitSystem.htm"
+    },
+    {
+      "name": "DefaultParseSettings",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- The default settings parse just about everything in a reasonable way. - Any angle values with unspecified units will be treated as radians. Angles without units can be encountered while parsing formulas, lengths and points and need to be thoughtfully considered in most parsing situations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_DefaultParseSettings.htm"
+    },
+    {
+      "name": "ParseAddition",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseAddition.htm"
+    },
+    {
+      "name": "ParseArcDegreesMinutesSeconds",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseArcDegreesMinutesSeconds.htm"
+    },
+    {
+      "name": "ParseArithmeticExpression",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseArithmeticExpression.htm"
+    },
+    {
+      "name": "ParseCommaAsDecimalPoint",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseCommaAsDecimalPoint.htm"
+    },
+    {
+      "name": "ParseCommaAsDigitSeparator",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseCommaAsDigitSeparator.htm"
+    },
+    {
+      "name": "ParseDAsExponentInScientificENotation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseDAsExponentInScientificENotation.htm"
+    },
+    {
+      "name": "ParseDivision",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseDivision.htm"
+    },
+    {
+      "name": "ParseExplicitFormulaExpression",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseExplicitFormulaExpression.htm"
+    },
+    {
+      "name": "ParseFeetInches",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseFeetInches.htm"
+    },
+    {
+      "name": "ParseFullStopAsDecimalPoint",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseFullStopAsDecimalPoint.htm"
+    },
+    {
+      "name": "ParseFullStopAsDigitSeparator",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseFullStopAsDigitSeparator.htm"
+    },
+    {
+      "name": "ParseHyphenAsNumberDash",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseHyphenAsNumberDash.htm"
+    },
+    {
+      "name": "ParseHyphenMinusAsNumberDash",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseHyphenMinusAsNumberDash.htm"
+    },
+    {
+      "name": "ParseIntegerDashFraction",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseIntegerDashFraction.htm"
+    },
+    {
+      "name": "ParseLeadingWhiteSpace",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseLeadingWhiteSpace.htm"
+    },
+    {
+      "name": "ParseMathFunctions",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseMathFunctions.htm"
+    },
+    {
+      "name": "ParseMultiplication",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseMultiplication.htm"
+    },
+    {
+      "name": "ParsePairedParentheses",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParsePairedParentheses.htm"
+    },
+    {
+      "name": "ParsePi",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParsePi.htm"
+    },
+    {
+      "name": "ParseRationalNumber",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseRationalNumber.htm"
+    },
+    {
+      "name": "ParseScientificENotation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseScientificENotation.htm"
+    },
+    {
+      "name": "ParseSettingsDegrees",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- The default settings parse just about everything in a reasonable way. - Any angle values with unspecified units will be treated as degrees.Angles without units can be encountered while parsing formulas, lengths and points and need to be thoughtfully considered in most parsing situations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSettingsDegrees.htm"
+    },
+    {
+      "name": "ParseSettingsDoubleNumber",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- The double number settings parse and optional unary \u002B or unary - and then parse a number that can be integer, decimal, or scientific e notation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSettingsDoubleNumber.htm"
+    },
+    {
+      "name": "ParseSettingsEmpty",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- ON_ParseSetting::FalseSettings has all parsing options set to false. - A common use of ON_ParseSettings FalseSettings is to initialize ON_ParseSettings classes that are used to report what happened during parsing.Any parsing results value set to true after parsing indicates that type of parsing occurred.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSettingsEmpty.htm"
+    },
+    {
+      "name": "ParseSettingsIntegerNumber",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- The integer settings parse and optional unary \u002B or unary - and then parses one or more digits.Parsing stops after the last digit.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSettingsIntegerNumber.htm"
+    },
+    {
+      "name": "ParseSettingsRadians",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- The default settings parse just about everything in a reasonable way. - Any angle values with unspecified units will be treated as radians.Angles without units can be encountered while parsing formulas, lengths and points and need to be thoughtfully considered in most parsing situations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSettingsRadians.htm"
+    },
+    {
+      "name": "ParseSettingsRationalNumber",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- The rational number settings parse and optional unary \u002B or unary - and then parse one or more digits.If a rational number fraction bar follows the last digit in the numerator, then it is parsed and an integer denominator is parsed.The denominator cannot have a unary \u002B or - preceding the digits.Parsing stops after the last digit in the denominator.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSettingsRationalNumber.htm"
+    },
+    {
+      "name": "ParseSettingsRealNumber",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "- The real number settings parse and optional unary \u002B or unary - and then parse a number that can be integer, decimal, scientific e notation or pi.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSettingsRealNumber.htm"
+    },
+    {
+      "name": "ParseSignificandDigitSeparators",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSignificandDigitSeparators.htm"
+    },
+    {
+      "name": "ParseSignificandFractionalPart",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSignificandFractionalPart.htm"
+    },
+    {
+      "name": "ParseSignificandIntegerPart",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSignificandIntegerPart.htm"
+    },
+    {
+      "name": "ParseSpaceAsDigitSeparator",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSpaceAsDigitSeparator.htm"
+    },
+    {
+      "name": "ParseSubtraction",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSubtraction.htm"
+    },
+    {
+      "name": "ParseSurveyorsNotation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseSurveyorsNotation.htm"
+    },
+    {
+      "name": "ParseUnaryMinus",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseUnaryMinus.htm"
+    },
+    {
+      "name": "ParseUnaryPlus",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_ParseUnaryPlus.htm"
+    },
+    {
+      "name": "PreferedLocaleId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_StringParserSettings_PreferedLocaleId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

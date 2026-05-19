@@ -1,0 +1,422 @@
+{
+  "name": "MinMax2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D MinMax box.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/",
+  "constructors": [
+    {
+      "name": "MinMax2D",
+      "signature": "MinMax2D() | MinMax2D(min, max) | MinMax2D(point) | MinMax2D(minmax) | MinMax2D(minmax)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Deflate",
+      "signature": "Deflate(x, y) | Deflate(size)",
+      "summary": "Deflate in x and y axis.",
+      "remarks": "Deflate in x and y axis.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Deflate"
+    },
+    {
+      "name": "Inflate",
+      "signature": "Inflate(x, y) | Inflate(size)",
+      "summary": "ame Inflate and deflate minmax box Inflate in x and y axis.",
+      "remarks": "ame Inflate and deflate minmax box Inflate in x and y axis.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Inflate"
+    },
+    {
+      "name": "IsContaining",
+      "signature": "IsContaining(box) | IsContaining(point)",
+      "summary": "Is box inside this box",
+      "remarks": "Is box inside this box",
+      "params": [
+        {
+          "name": "box",
+          "type": "MinMax2D",
+          "doc": "Potentially contained box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if is inside, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.IsContaining"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(minmax) | __iadd__(point) | __iadd__(box)",
+      "summary": "Expand MinMax2D box. Expands the MinMax2D box by the box given in parameter minmax",
+      "remarks": "Expand MinMax2D box. Expands the MinMax2D box by the box given in parameter minmax",
+      "params": [
+        {
+          "name": "minmax",
+          "type": "MinMax2D",
+          "doc": "MinMax2D to be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax2D",
+        "doc": "minmax box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__iadd__"
+    },
+    {
+      "name": "Get",
+      "signature": "Get()",
+      "summary": "Get minimum and maximum point",
+      "remarks": "Get minimum and maximum point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "tuple(minimum point,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Get"
+    },
+    {
+      "name": "GetCenter",
+      "signature": "GetCenter()",
+      "summary": "Get box center point",
+      "remarks": "Get box center point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "center point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.GetCenter"
+    },
+    {
+      "name": "GetMax",
+      "signature": "GetMax()",
+      "summary": "Get maximum point",
+      "remarks": "Get maximum point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "maximum point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.GetMax"
+    },
+    {
+      "name": "GetMin",
+      "signature": "GetMin()",
+      "summary": "Get minimum point",
+      "remarks": "Get minimum point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "minimum point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.GetMin"
+    },
+    {
+      "name": "GetSizeX",
+      "signature": "GetSizeX()",
+      "summary": "Get the size of the box in the X direction",
+      "remarks": "Get the size of the box in the X direction",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "delta X value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.GetSizeX"
+    },
+    {
+      "name": "GetSizeY",
+      "signature": "GetSizeY()",
+      "summary": "Get the size of the box in the Y direction",
+      "remarks": "Get the size of the box in the Y direction",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "delta Y value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.GetSizeY"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Test if box is valid",
+      "remarks": "Test if box is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if box valid, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.IsValid"
+    },
+    {
+      "name": "Overlaps",
+      "signature": "Overlaps(box)",
+      "summary": "Does box overlap this box",
+      "remarks": "Does box overlap this box",
+      "params": [
+        {
+          "name": "box",
+          "type": "MinMax2D",
+          "doc": "Box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if boxes overlap, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Overlaps"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset()",
+      "summary": "Set min point to [DBL_MAX,DBL_MAX] and max point to [-DBL_MAX,-DBL_MAX]",
+      "remarks": "Set min point to [DBL_MAX,DBL_MAX] and max point to [-DBL_MAX,-DBL_MAX]",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Reset"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(min, max)",
+      "summary": "Set minimum and maximum point",
+      "remarks": "Set minimum and maximum point",
+      "params": [
+        {
+          "name": "min",
+          "type": "Point2D",
+          "doc": "minimum point",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "Point2D",
+          "doc": "maximum point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Set"
+    },
+    {
+      "name": "SetMax",
+      "signature": "SetMax(max)",
+      "summary": "Set maximum point",
+      "remarks": "Set maximum point",
+      "params": [
+        {
+          "name": "max",
+          "type": "Point2D",
+          "doc": "maximum point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.SetMax"
+    },
+    {
+      "name": "SetMin",
+      "signature": "SetMin(min)",
+      "summary": "Set minimum point",
+      "remarks": "Set minimum point",
+      "params": [
+        {
+          "name": "min",
+          "type": "Point2D",
+          "doc": "minimum point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.SetMin"
+    },
+    {
+      "name": "ToPolygon2D",
+      "signature": "ToPolygon2D()",
+      "summary": "Creates a 2D polygon from the minmax box the corners of MinMax.",
+      "remarks": "Creates a 2D polygon from the minmax box the corners of MinMax.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(true, if the polygon has been created successfully, otherwise false,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.ToPolygon2D"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(minmax)",
+      "summary": "Expand MinMax2D box. Expands the MinMax2D box by the box given in parameter minmax",
+      "remarks": "Expand MinMax2D box. Expands the MinMax2D box by the box given in parameter minmax",
+      "params": [
+        {
+          "name": "minmax",
+          "type": "MinMax2D",
+          "doc": "MinMax2D to be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax2D",
+        "doc": "minmax box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__add__"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(minmax)",
+      "summary": "Comparison of minmax objects without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of minmax objects without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "minmax",
+          "type": "MinMax2D",
+          "doc": "Compared minmax.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when minmax objects are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__eq__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index)",
+      "summary": "Get the corners of MinMax. Corner index (0-left bottom, 1-right bottom, 2-right top, 3-left top) This method is checked and throwing Geometry::Exception when index is out of range.",
+      "remarks": "Get the corners of MinMax. Corner index (0-left bottom, 1-right bottom, 2-right top, 3-left top) This method is checked and throwing Geometry::Exception when index is out of range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "corner as Point2D in world coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__getitem__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Max",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get maximum point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Max"
+    },
+    {
+      "name": "Min",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get minimum point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Min"
+    },
+    {
+      "name": "SizeX",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the size of the box in the X direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.SizeX"
+    },
+    {
+      "name": "SizeY",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the size of the box in the Y direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.SizeY"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

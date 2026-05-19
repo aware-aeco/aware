@@ -1,0 +1,36 @@
+{
+  "name": "eProfileRotation",
+  "namespace": "NemAll_Python_Reinforcement.ExtrudeBarPlacement",
+  "kind": "enum",
+  "summary": "Profile rotation",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.eProfileRotation",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: str | int | float) -\u003E eProfileRotation",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eProfileRotation",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/#NemAll_Python_Reinforcement.ExtrudeBarPlacement.eProfileRotation.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

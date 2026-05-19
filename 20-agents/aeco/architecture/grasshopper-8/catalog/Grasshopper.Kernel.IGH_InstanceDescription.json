@@ -1,0 +1,164 @@
+{
+  "name": "IGH_InstanceDescription",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Base interface for all objects that participate in the Grasshopper GUI.",
+  "remarks": "See AlsoReferenceGrasshopper.Kernel Namespace",
+  "interfaces": [
+    "GH_ISerializable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_InstanceDescription.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "NewInstanceGuid()",
+      "signature": "void NewInstanceGuid()",
+      "summary": "Generate a new random instance GUID",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_InstanceDescription_NewInstanceGuid.htm"
+    },
+    {
+      "name": "NewInstanceGuid(Guid)",
+      "signature": "void NewInstanceGuid(Guid UUID)",
+      "summary": "Set the instance ID to be a specific GUID. This is very dangerous, only use this function if you\u0027re 6\u00224\u0027 and called David.",
+      "params": [
+        {
+          "name": "UUID",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_InstanceDescription_NewInstanceGuid_1.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "bool Read(GH_IReader reader)",
+      "summary": "This method is called whenever the instance is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Reader object to deserialize from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_GH_ISerializable_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "bool Write(GH_IWriter writer)",
+      "summary": "This method is called whenever the instance is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Writer object to serialize with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_GH_ISerializable_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Category in which this object belongs. If HasCategory() returns false, this field has no meaning.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_Category.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the description of the object. This field typically remains fixed during the lifetime of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_Description.htm"
+    },
+    {
+      "name": "HasCategory",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not the Category field has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_HasCategory.htm"
+    },
+    {
+      "name": "HasSubCategory",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not the SubCategory field has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_HasSubCategory.htm"
+    },
+    {
+      "name": "InstanceDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a description of the current state of the object. This field is usually the same as the Description() field, but it might be variable when overridden.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_InstanceDescription.htm"
+    },
+    {
+      "name": "InstanceGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of this runtime instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_InstanceGuid.htm"
+    },
+    {
+      "name": "Keywords",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of additional keywords that describe the object. Typically this list is empty but you can override this property to aid in object searches.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_Keywords.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the object. This field typically remains fixed during the lifetime of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_Name.htm"
+    },
+    {
+      "name": "NickName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the nickname of the object. This field can be changed by the user.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_NickName.htm"
+    },
+    {
+      "name": "SubCategory",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the SubCategory in which this object belongs. If HasSubCategory() returns false, this field has no meaning.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_InstanceDescription_SubCategory.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

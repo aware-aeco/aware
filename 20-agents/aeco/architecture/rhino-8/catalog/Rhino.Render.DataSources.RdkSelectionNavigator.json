@@ -1,0 +1,156 @@
+{
+  "name": "RdkSelectionNavigator",
+  "namespace": "Rhino.Render.DataSources",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DataSources.RdkSelectionNavigator\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_DataSources_RdkSelectionNavigator.htm",
+  "constructors": [
+    {
+      "name": "RdkSelectionNavigator",
+      "signature": "public RdkSelectionNavigator(IntPtr pRhinoSettings)",
+      "summary": "Initializes a new instance of the RdkSelectionNavigator class",
+      "params": [
+        {
+          "name": "pRhinoSettings",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRhinoSettings\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RdkSelectionNavigator.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(RenderContentCollection selectedContentArray)",
+      "summary": "Add a selection of contents at the current position. Clears the navigator ahead of the current position.",
+      "params": [
+        {
+          "name": "selectedContentArray",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "The selected content",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_Add.htm"
+    },
+    {
+      "name": "CanGoBackwards",
+      "signature": "public bool CanGoBackwards()",
+      "summary": "Check the backwards status of the navigator",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if it is possible to navigate backwards, else false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_CanGoBackwards.htm"
+    },
+    {
+      "name": "CanGoForwards",
+      "signature": "public bool CanGoForwards()",
+      "summary": "Check the forwards status of the navigator",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if it is possible to navigate forwards, else false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_CanGoForwards.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clear the navigator.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_Clear.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RdkSelectionNavigator",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_Finalize.htm"
+    },
+    {
+      "name": "GoBackwards",
+      "signature": "public bool GoBackwards(ref RenderContentCollection selectedContentArray)",
+      "summary": "Navigate backwards if possible",
+      "params": [
+        {
+          "name": "selectedContentArray",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "selectedContentArray is the new selection after navigating backwards",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, else false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_GoBackwards.htm"
+    },
+    {
+      "name": "GoForwards",
+      "signature": "public bool GoForwards(ref RenderContentCollection selectedContentArray)",
+      "summary": "Navigate forwards if possible",
+      "params": [
+        {
+          "name": "selectedContentArray",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "selectedContentArray is the new selection after navigating forwards",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, else false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkSelectionNavigator_GoForwards.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_DataSources_RdkSelectionNavigator_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

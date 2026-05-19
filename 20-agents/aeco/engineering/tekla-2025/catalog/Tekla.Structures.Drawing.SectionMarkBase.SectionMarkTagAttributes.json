@@ -1,0 +1,128 @@
+{
+  "name": "SectionMarkBase.SectionMarkTagAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SectionMarkTagAttributes class contains attributes for section mark tags.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/36943ef9-e37b-1238-0997-d786e733b781",
+  "constructors": [
+    {
+      "name": "SectionMarkBase.SectionMarkTagAttributes()",
+      "signature": "public SectionMarkTagAttributes()",
+      "summary": "Creates a new section mark tag attributes instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4183fcd3-94c4-a8a3-9684-1037e3436188"
+    },
+    {
+      "name": "SectionMarkBase.SectionMarkTagAttributes(SectionMarkBase.SectionMarkTagAttributes.TagShowOnSide, TagLocation, Vector, SectionMarkBase.SectionMarkTagAttributes.TagTextRotation, ContainerElement)",
+      "signature": "public SectionMarkTagAttributes(SectionMarkBase.SectionMarkTagAttributes.TagShowOnSide showOnSide, TagLocation location, Vector offset, SectionMarkBase.SectionMarkTagAttributes.TagTextRotation rotation, ContainerElement tagContent)",
+      "summary": "Creates a new section mark tag attributes instance with the given information.",
+      "params": [
+        {
+          "name": "showOnSide",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes.TagShowOnSide",
+          "doc": "The side(s) on which to show the tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "Tekla.Structures.Drawing.TagLocation",
+          "doc": "The location of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The offset of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "rotation",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes.TagTextRotation",
+          "doc": "The policy for text rotation of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "tagContent",
+          "type": "Tekla.Structures.Drawing.ContainerElement",
+          "doc": "The content of the mark tag to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ae47ed5e-ab27-7dd6-cb4a-c20a7d5ec898"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6fc31695-b20b-b0f1-010f-0627515c22eb"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "TagLocation",
+      "getter": true,
+      "setter": true,
+      "summary": "The location of the mark tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5cfa0bec-7ded-11fb-c125-c9a015d41da7"
+    },
+    {
+      "name": "Offset",
+      "type": "Vector",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset of the mark tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0095c5d2-868d-ae47-8ebd-6c1848a3439f"
+    },
+    {
+      "name": "ShowOnSide",
+      "type": "SectionMarkBase.SectionMarkTagAttributes.TagShowOnSide",
+      "getter": true,
+      "setter": true,
+      "summary": "The side(s) on which the tag is shown.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c65d6031-7b39-409c-72c5-06baed96bf14"
+    },
+    {
+      "name": "TagContent",
+      "type": "ContainerElement",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag content.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/48b0907a-5a0e-b17c-6a7a-b98abb8cadc1"
+    },
+    {
+      "name": "TagRotation",
+      "type": "SectionMarkBase.SectionMarkTagAttributes.TagTextRotation",
+      "getter": true,
+      "setter": true,
+      "summary": "The policy for the tag rotation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f10f2c77-0f4b-24be-716e-78d600f93349"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

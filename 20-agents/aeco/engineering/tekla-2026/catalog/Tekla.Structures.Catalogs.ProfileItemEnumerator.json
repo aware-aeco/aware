@@ -1,0 +1,68 @@
+{
+  "name": "ProfileItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The ProfileItemEnumerator class allows to loop through the catalog profile items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/62285dcc-e4e8-a121-ff28-2be8afdf5cc4",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSize",
+      "signature": "public int GetSize()",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/089f4ae6-eddb-d928-c1be-39c62ab881aa"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/082a4e9c-78eb-f599-2c31-1cd02d530cab"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8b2a71bb-ede6-eca5-c50b-8b5d5680ef64"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "ProfileItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a profile item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2eab2cee-05bf-edf9-e9de-5e28a06ab116"
+    },
+    {
+      "name": "SelectInstances",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates that the instance Select() is called when the \u0027Current\u0027 item is asked from the enumerator. The user can set this to \u0027false\u0027 if no members are ever asked from the instance. This is the case when, for example, asking only for the available profile names or when only certain profiles need to be selected from the model. Without the selection the \u0027Current\u0027 item contains the profile name or the prefix and the profile type. Warning: normally the user should not change this value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a1945196-0992-9181-8f54-21682e3c7695"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

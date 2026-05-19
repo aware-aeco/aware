@@ -1,0 +1,148 @@
+{
+  "name": "DistanceListConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The DistanceListConverter class converts types to and from the distance list type.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/79b0f524-b30b-9529-2b3a-cc7bedde4289",
+  "constructors": [
+    {
+      "name": "DistanceListConverter",
+      "signature": "public DistanceListConverter()",
+      "summary": "Initializes a new instance of the DistanceListConverter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d73f64fa-eff4-2a17-609e-6478c3157121"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "public virtual bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)",
+      "summary": "Checks whether the conversion can be made from the source type to the distance list type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "sourceType",
+          "type": "System.Type",
+          "doc": "The type to convert from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/250881a7-3803-8251-d282-682d3d36bbf4"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "public virtual bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)",
+      "summary": "Checks whether the conversion can be made from the distance list type to the destination type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The type to convert to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/80ab11a8-d1a0-bf20-ee5c-37ec607b61a8"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "public virtual Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)",
+      "summary": "Converts an object from the given culture to the distance list type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The object to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The new distance object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ea469854-98c0-fe1a-9d60-d55ad38a123f"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "public virtual Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)",
+      "summary": "Converts an object from the distance list type to the given destination type.",
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The target culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The distance object to be converted.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The destination type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The given distance object converted to the new type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5b0d37bf-9fc8-5611-2ae2-952e4c48aaad"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

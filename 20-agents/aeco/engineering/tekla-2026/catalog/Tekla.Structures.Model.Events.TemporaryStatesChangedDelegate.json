@@ -1,0 +1,14 @@
+{
+  "name": "Events.TemporaryStatesChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use when objects temporary states are changed.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/71901e95-3384-d85e-852f-352fe6639b50",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void TemporaryStatesChangedDelegate()"
+}

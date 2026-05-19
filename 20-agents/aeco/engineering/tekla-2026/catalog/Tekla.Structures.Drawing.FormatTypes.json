@@ -1,0 +1,59 @@
+{
+  "name": "FormatTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The available format types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ce6c34a2-171f-aad5-b117-917f18799552",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Automatic",
+      "value": 0,
+      "summary": "Automatic, chooses the most appropriate format for the current environment."
+    },
+    {
+      "name": "WholeNumber",
+      "value": 1,
+      "summary": "As shown on the dialog: ###. This format will not show fractions or decimals."
+    },
+    {
+      "name": "OneDecimalIfValidDecimal",
+      "value": 2,
+      "summary": "As shown on the dialog: ###.[#]. This format will not show fractions or decimals, unless the rounded decimal part is a non zero value."
+    },
+    {
+      "name": "OneDecimal",
+      "value": 3,
+      "summary": "As shown on the dialog: ###.#. This format will always show the value with one decimal."
+    },
+    {
+      "name": "TwoDecimalsIfValidDecimals",
+      "value": 4,
+      "summary": "As shown on the dialog: ###.[##]. This format will not show fractions or decimals, unless the rounded decimal part is a non zero value."
+    },
+    {
+      "name": "TwoDecimals",
+      "value": 5,
+      "summary": "As shown on the dialog: ###.##. This format will always show the value with two decimals."
+    },
+    {
+      "name": "ThreeDecimalsIfValidDecimals",
+      "value": 6,
+      "summary": "As shown on the dialog: ###.[###]. This format will not show fractions or decimals, unless the rounded decimal part is a non zero value."
+    },
+    {
+      "name": "ThreeDecimals",
+      "value": 7,
+      "summary": "As shown on the dialog: ###.###. This format will always show the value with three decimals."
+    },
+    {
+      "name": "Fractional",
+      "value": 8,
+      "summary": "As shown on the dialog: ### #/#. This format will always show the value with fractions."
+    }
+  ]
+}

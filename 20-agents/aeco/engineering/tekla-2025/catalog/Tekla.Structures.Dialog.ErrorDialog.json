@@ -1,0 +1,106 @@
+{
+  "name": "ErrorDialog",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The ErrorDialog class represents the common error dialog for the Open API.",
+  "base": "System.Windows.Forms.Form",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b4c6e3f4-243d-34ee-f527-4bc0517919ed",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Show(Exception, ErrorDialog.Severity)",
+      "signature": "public static void Show(Exception Ex, ErrorDialog.Severity Severity)",
+      "summary": "Shows a new error dialog.",
+      "params": [
+        {
+          "name": "Ex",
+          "type": "System.Exception",
+          "doc": "The exception to display in the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Severity",
+          "type": "Tekla.Structures.Dialog.ErrorDialog.Severity",
+          "doc": "The severity of the exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the Ex parameter is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4c2c999d-3234-5abd-04ba-b9eb664972c6"
+    },
+    {
+      "name": "Show(String, List\u003CString\u003E, ErrorDialog.Severity)",
+      "signature": "public static void Show(string Message, List\u003Cstring\u003E Details, ErrorDialog.Severity Severity)",
+      "summary": "Shows a new error dialog.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The message to display in the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Details",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The details to display in the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Severity",
+          "type": "Tekla.Structures.Dialog.ErrorDialog.Severity",
+          "doc": "The severity of the message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the Message parameter is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db4cb25f-92be-3852-aa92-df83625e0677"
+    },
+    {
+      "name": "Show(String, String, ErrorDialog.Severity)",
+      "signature": "public static void Show(string Message, string Details, ErrorDialog.Severity Severity)",
+      "summary": "Shows a new error dialog.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The message to display in the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Details",
+          "type": "System.String",
+          "doc": "The details to display in the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Severity",
+          "type": "Tekla.Structures.Dialog.ErrorDialog.Severity",
+          "doc": "The severity of the message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5292fa06-3a04-0624-86ac-2c1d1f0e7385"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

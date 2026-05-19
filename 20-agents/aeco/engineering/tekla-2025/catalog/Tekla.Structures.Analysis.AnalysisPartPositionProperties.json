@@ -1,0 +1,106 @@
+{
+  "name": "AnalysisPartPositionProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartPositionProperties class contains information related to analysis part position properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/078f86fd-4ad5-70dd-5624-9249b39ab2e6",
+  "constructors": [
+    {
+      "name": "AnalysisPartPositionProperties",
+      "signature": "public AnalysisPartPositionProperties()",
+      "summary": "Initializes a new instance of the AnalysisPartPositionProperties class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f9672eb-4e95-8633-7bf9-8efc6628f6d9"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AxisCoordinateX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis coordinate in the X direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b4cfb6a8-c9b2-55b5-3373-f1fb1365804f"
+    },
+    {
+      "name": "AxisCoordinateY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis coordinate in the Y direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aadf6e7e-0159-57c2-334b-8aca74981562"
+    },
+    {
+      "name": "AxisCoordinateZ",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis coordinate in the Z direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/141f2493-71f2-065e-ede9-8c7b00f92df9"
+    },
+    {
+      "name": "AxisLocation",
+      "type": "AnalysisPartPositionProperties.AxisLocationEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis location of the analysis part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ceb621c3-1a62-db71-be48-1a8bdde27cd4"
+    },
+    {
+      "name": "AxisModifierX",
+      "type": "AnalysisPartPositionProperties.AxisModifierEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis modifier in the X direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b0bf08aa-ca10-98f8-4488-786a710e75b6"
+    },
+    {
+      "name": "AxisModifierY",
+      "type": "AnalysisPartPositionProperties.AxisModifierEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis modifier in the Y direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d68ac692-be76-cedf-261f-d8aabc62831f"
+    },
+    {
+      "name": "AxisModifierZ",
+      "type": "AnalysisPartPositionProperties.AxisModifierEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis modifier in the Z direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/06bb387a-1cc1-b304-ece6-2e5d8dd78b7d"
+    },
+    {
+      "name": "AxisOffset",
+      "type": "Vector",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis offset of the analysis part (in the global coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1e5d1f80-3acf-ee27-dbfc-1a0551235b40"
+    },
+    {
+      "name": "KeepAxis",
+      "type": "AnalysisModel.KeepAxisEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The keep axis setting of the analysis part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8d5cb598-518c-c4a7-59b8-d63b0fa311e9"
+    },
+    {
+      "name": "LongitudinalOffsetMode",
+      "type": "AnalysisPartPositionProperties.LongitudinalOffsetEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The longitudinal offset mode.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bfb68a86-3401-9aea-53c0-0db62aed672d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

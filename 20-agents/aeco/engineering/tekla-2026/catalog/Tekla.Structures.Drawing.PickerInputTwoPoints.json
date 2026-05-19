@@ -1,0 +1,90 @@
+{
+  "name": "PickerInputTwoPoints",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputTwoPoints class represents a pick of two points in a view. Used for values asked by UI.Picker.PickTwoPoints(string FirstPrompt, string SecondPrompt, out Point FirstPickedPoint, out Point SecondPickedPoint, out ViewBase PickedView).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8d4a2bd3-5128-a0f1-1ad1-b1ddeb70c717",
+  "constructors": [
+    {
+      "name": "PickerInputTwoPoints",
+      "signature": "public PickerInputTwoPoints(ViewBase pickedView, Point firstPickedPoint, Point secondPickedPoint)",
+      "summary": "Creates a new PickerInputTwoPoints instance with two points selected in a view.",
+      "params": [
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        },
+        {
+          "name": "firstPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "secondPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second picked point in the view coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cf7c4c27-4015-3b63-d75e-0925a3150d8a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c5b40b5c-1721-87c1-3ebe-b9719f042bda"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FirstPickedPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The first picked point in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/43e633a3-52c1-fe45-4a2d-c218be29b203"
+    },
+    {
+      "name": "PickedView",
+      "type": "ViewBase",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    },
+    {
+      "name": "SecondPickedPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": true,
+      "summary": "The second picked point in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b2bb9c0-4e36-dde2-4a87-24a8a686a2b8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

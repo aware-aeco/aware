@@ -1,0 +1,29 @@
+{
+  "name": "RebarLeg.OriginEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Enumerator for different leg origins.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3060efb6-4306-f18f-573a-867ae166bfd2",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NORMAL",
+      "value": 0,
+      "summary": "The leg is from a face"
+    },
+    {
+      "name": "HOOK",
+      "value": 1,
+      "summary": "The leg is on a hook."
+    },
+    {
+      "name": "CRANK",
+      "value": 2,
+      "summary": "The leg is on a crank."
+    }
+  ]
+}

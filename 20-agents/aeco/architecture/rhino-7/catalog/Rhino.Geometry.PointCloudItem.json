@@ -1,0 +1,86 @@
+{
+  "name": "PointCloudItem",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a single item in a point cloud. A PointCloud item always has a location, but it has an optional normal vector and color.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_PointCloudItem.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of this point cloud item. If this point cloud item does not have a color, System.Drawing.Color.Black is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_Color.htm"
+    },
+    {
+      "name": "Hidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the hidden flag of this point cloud item. If this point cloud item does not have a hidden flag, false is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_Hidden.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of this point cloud item.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_Index.htm"
+    },
+    {
+      "name": "Location",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the location of this point cloud item.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_Location.htm"
+    },
+    {
+      "name": "Normal",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the normal vector for this point cloud item. If this point cloud item does not have a normal vector, Vector3d.Unset is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_Normal.htm"
+    },
+    {
+      "name": "PointValue",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or set the extra value of this point cloud item. The extra value can be used to store a user-defined value, such as intensity. If this point cloud item does not have an extra value, RhinoMath.UnsetValue is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_PointValue.htm"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X component of this point cloud item location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y component of this point cloud item location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_Y.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z component of this point cloud item location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_PointCloudItem_Z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Events.CommandStatusChangeDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for command status change.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a18d14a2-bf19-91d7-d00f-e5815b76e55f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void CommandStatusChangeDelegate( string TSCommand, string TSCommandParam, bool Status )"
+}

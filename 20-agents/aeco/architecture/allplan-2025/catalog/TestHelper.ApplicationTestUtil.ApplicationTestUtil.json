@@ -1,0 +1,35 @@
+{
+  "name": "ApplicationTestUtil",
+  "namespace": "TestHelper.ApplicationTestUtil",
+  "kind": "class",
+  "summary": "implementation of the application test utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ApplicationTestUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "init_application_test",
+      "signature": "init_application_test() -\u003E object",
+      "summary": "initialize the application test",
+      "remarks": "initialize the application test",
+      "params": [
+        {
+          "name": "load_resources",
+          "type": "object",
+          "doc": "load the resources",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Allplan document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ApplicationTestUtil/#TestHelper.ApplicationTestUtil.ApplicationTestUtil.init_application_test"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

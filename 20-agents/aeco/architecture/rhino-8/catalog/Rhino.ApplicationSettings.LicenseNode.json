@@ -1,0 +1,29 @@
+{
+  "name": "LicenseNode",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "License node types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_LicenseNode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Standalone",
+      "value": 0,
+      "summary": "An independent node."
+    },
+    {
+      "name": "Network",
+      "value": 1,
+      "summary": "Network (obtains license from Zoo server)"
+    },
+    {
+      "name": "NetworkCheckedOut",
+      "value": 2,
+      "summary": "Network (has license checked out from Zoo server)"
+    }
+  ]
+}

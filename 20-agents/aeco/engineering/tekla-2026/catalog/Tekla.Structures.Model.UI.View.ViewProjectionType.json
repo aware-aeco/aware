@@ -1,0 +1,24 @@
+{
+  "name": "View.ViewProjectionType",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The view projection types. The projection type can be read but not changed.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9ce44417-bc61-a3fb-a171-a31c0521a6e6",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ORTHOGONAL_PROJECTION",
+      "value": 0,
+      "summary": "The orthogonal view projection type."
+    },
+    {
+      "name": "PERSPECTIVE_PROJECTION",
+      "value": 1,
+      "summary": "The perspective view projection type."
+    }
+  ]
+}

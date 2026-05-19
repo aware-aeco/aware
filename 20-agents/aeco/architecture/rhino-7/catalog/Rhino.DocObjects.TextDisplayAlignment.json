@@ -1,0 +1,34 @@
+{
+  "name": "TextDisplayAlignment",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the line alignment of text.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_TextDisplayAlignment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0,
+      "summary": "Normal alignment."
+    },
+    {
+      "name": "Horizontal",
+      "value": 1,
+      "summary": "Horizontal alignment."
+    },
+    {
+      "name": "AboveLine",
+      "value": 2,
+      "summary": "Above line alignment."
+    },
+    {
+      "name": "InLine",
+      "value": 3,
+      "summary": "In line alignment."
+    }
+  ]
+}

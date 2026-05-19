@@ -1,0 +1,57 @@
+{
+  "name": "PackageAssembly",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type PackageAssembly",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Package.cs",
+  "constructors": [
+    {
+      "name": "PackageAssembly()",
+      "signature": "void PackageAssembly()",
+      "summary": "PackageAssembly.PackageAssembly",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Package.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "System.Reflection.Assembly",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageAssembly.Assembly",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "IsNodeLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageAssembly.IsNodeLibrary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "LocalFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageAssembly.LocalFilePath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageAssembly.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Package.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

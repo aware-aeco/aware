@@ -1,0 +1,34 @@
+{
+  "name": "AreaType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The type of the area measurement unit.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AreaType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SquareMeter",
+      "value": "SquareMeter"
+    },
+    {
+      "name": "SquareCentimeter",
+      "value": "SquareCentimeter"
+    },
+    {
+      "name": "SquareMillimeter",
+      "value": "SquareMillimeter"
+    },
+    {
+      "name": "SquareFoot",
+      "value": "SquareFoot"
+    },
+    {
+      "name": "SquareInch",
+      "value": "SquareInch"
+    }
+  ]
+}

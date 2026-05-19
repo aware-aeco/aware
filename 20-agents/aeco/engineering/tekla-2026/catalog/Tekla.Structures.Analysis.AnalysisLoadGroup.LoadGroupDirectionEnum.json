@@ -1,0 +1,44 @@
+{
+  "name": "AnalysisLoadGroup.LoadGroupDirectionEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The directions of a load group.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/134c41eb-842f-c9f0-a7ce-8165fb7fe744",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DIRECTION_X",
+      "value": 1,
+      "summary": "The X direction."
+    },
+    {
+      "name": "DIRECTION_Y",
+      "value": 2,
+      "summary": "The Y direction."
+    },
+    {
+      "name": "DIRECTION_Z",
+      "value": 3,
+      "summary": "The Z direction."
+    },
+    {
+      "name": "DIRECTION_NEGATIVE_X",
+      "value": 4,
+      "summary": "The negative X direction."
+    },
+    {
+      "name": "DIRECTION_NEGATIVE_Y",
+      "value": 5,
+      "summary": "The negative Y direction."
+    },
+    {
+      "name": "DIRECTION_NEGATIVE_Z",
+      "value": 6,
+      "summary": "The negative Z direction."
+    }
+  ]
+}

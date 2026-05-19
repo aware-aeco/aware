@@ -1,0 +1,46 @@
+{
+  "name": "GH_WireSettings",
+  "namespace": "Grasshopper.GUI.Theme",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Theme.GH_WireSettings.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Theme_GH_WireSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour to use for standard wires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_WireSettings_DefaultColour.htm"
+    },
+    {
+      "name": "EmptyColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour to use for empty wires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_WireSettings_EmptyColour.htm"
+    },
+    {
+      "name": "SelectedColour0",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour of a wire at the selected extreme.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_WireSettings_SelectedColour0.htm"
+    },
+    {
+      "name": "SelectedColour1",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour of a wire at the unselected extreme.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_WireSettings_SelectedColour1.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

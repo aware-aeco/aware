@@ -1,0 +1,121 @@
+{
+  "name": "IPackageDirectoryBuilder",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "interface",
+  "summary": "Type IPackageDirectoryBuilder",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageDirectoryBuilder.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BuildDirectory(Dynamo.PackageManager.Package, string, System.Collections.Generic.IEnumerable\u003Cstring\u003E, System.Collections.Generic.IEnumerable\u003Cstring\u003E)",
+      "signature": "Dynamo.PackageManager.Interfaces.IDirectoryInfo BuildDirectory(Dynamo.PackageManager.Package packages, string packagesDirectory, System.Collections.Generic.IEnumerable\u003Cstring\u003E files, System.Collections.Generic.IEnumerable\u003Cstring\u003E markdownfiles)",
+      "summary": "IPackageDirectoryBuilder.BuildDirectory",
+      "params": [
+        {
+          "name": "packages",
+          "type": "Dynamo.PackageManager.Package",
+          "optional": false
+        },
+        {
+          "name": "packagesDirectory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "files",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "markdownfiles",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Interfaces.IDirectoryInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageDirectoryBuilder.cs"
+    },
+    {
+      "name": "BuildRetainDirectory(Dynamo.PackageManager.Package, string, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E, System.Collections.Generic.IEnumerable\u003Cstring\u003E)",
+      "signature": "Dynamo.PackageManager.Interfaces.IDirectoryInfo BuildRetainDirectory(Dynamo.PackageManager.Package package, string packagesDirectory, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E contentFiles, System.Collections.Generic.IEnumerable\u003Cstring\u003E markdownFiles)",
+      "summary": "IPackageDirectoryBuilder.BuildRetainDirectory",
+      "params": [
+        {
+          "name": "package",
+          "type": "Dynamo.PackageManager.Package",
+          "optional": false
+        },
+        {
+          "name": "packagesDirectory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "contentFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "markdownFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Interfaces.IDirectoryInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageDirectoryBuilder.cs"
+    },
+    {
+      "name": "BuildRetainDirectory(Dynamo.PackageManager.Package, string, System.Collections.Generic.IEnumerable\u003Cstring\u003E, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E, System.Collections.Generic.IEnumerable\u003Cstring\u003E)",
+      "signature": "Dynamo.PackageManager.Interfaces.IDirectoryInfo BuildRetainDirectory(Dynamo.PackageManager.Package package, string packagesDirectory, System.Collections.Generic.IEnumerable\u003Cstring\u003E roots, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E contentFiles, System.Collections.Generic.IEnumerable\u003Cstring\u003E markdownFiles)",
+      "summary": "IPackageDirectoryBuilder.BuildRetainDirectory",
+      "params": [
+        {
+          "name": "package",
+          "type": "Dynamo.PackageManager.Package",
+          "optional": false
+        },
+        {
+          "name": "packagesDirectory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "roots",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "contentFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "markdownFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Interfaces.IDirectoryInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageDirectoryBuilder.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

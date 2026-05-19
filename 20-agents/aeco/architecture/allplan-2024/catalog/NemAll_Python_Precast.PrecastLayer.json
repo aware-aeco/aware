@@ -1,0 +1,47 @@
+{
+  "name": "PrecastLayer",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "PrecastLayer class",
+  "base": "AllplanElement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/",
+  "constructors": [
+    {
+      "name": "PrecastLayer",
+      "signature": "PrecastLayer() | PrecastLayer(Properties)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/#NemAll_Python_Precast.PrecastLayer.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/#NemAll_Python_Precast.PrecastLayer.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/#NemAll_Python_Precast.PrecastLayer.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,127 @@
+{
+  "name": "IFC2X3_ParametricObject_UShapeProfile",
+  "namespace": "Tekla.Structures.Model.Collaboration",
+  "kind": "class",
+  "summary": "The IFC2X3_ParametricObject_UShapeProfile class contains the U-shape profile definition.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0e00b2e9-7eff-98ba-5db8-721bff48a418",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The depth.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2997d305-06e8-3929-ac9a-299827fcdbb7"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The description of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4ef1a853-3a08-64d7-d9e1-7a972a0d95e5"
+    },
+    {
+      "name": "EdgeRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The edge radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ecdccaf8-ac9a-6f3c-2854-4a7ace0bfcd4"
+    },
+    {
+      "name": "Extrusion",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The extrusion vector.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3e9298b4-f968-cb57-f5ac-956c82e4c313"
+    },
+    {
+      "name": "FilletRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The fillet radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/668bf9ac-532f-bdaa-afb2-293858692e44"
+    },
+    {
+      "name": "FlangeSlope",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The flange slope.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0f030be4-5e18-77a6-abe3-f0244455e578"
+    },
+    {
+      "name": "FlangeThickness",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The flange thickness.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce5be1d5-974e-8d80-e825-71326b4f45ca"
+    },
+    {
+      "name": "FlangeWidth",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The flange width.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/65991ee3-75f5-4ccf-4492-7276da9fc318"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/43a7f690-62b8-9b4e-e09e-0eeed73914fa"
+    },
+    {
+      "name": "ObjectType",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The object type of the product.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0fd3c96-e406-88ca-3007-cfc1aad8e489"
+    },
+    {
+      "name": "Origin",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "The origin of the extrusion.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/79c545ba-bb67-a069-6955-04b7403bc9b8"
+    },
+    {
+      "name": "ProfileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the profile (often empty).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9c5b500f-8651-e219-ab65-8a5297a10e01"
+    },
+    {
+      "name": "WebThickness",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The web thickness.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0dd58ff-be36-f522-f534-69c10eb779a5"
+    },
+    {
+      "name": "xDir",
+      "type": "Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "The X-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1c58725d-7f05-89c1-bbe6-5ad2ed4e00eb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

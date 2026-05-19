@@ -1,0 +1,39 @@
+{
+  "name": "GH_DifferentialSolver",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "enum",
+  "summary": "Enumerates all implemented differential samplers.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_DifferentialSolver.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Unset solver, always returns a zero-length tensor."
+    },
+    {
+      "name": "Euler",
+      "value": 1,
+      "summary": "Euler differential solver."
+    },
+    {
+      "name": "RungeKutta2",
+      "value": 2,
+      "summary": "Runge-Kutta second order solver."
+    },
+    {
+      "name": "RungeKutta3",
+      "value": 3,
+      "summary": "Runge-Kutta third order solver."
+    },
+    {
+      "name": "RungeKutta4",
+      "value": 4,
+      "summary": "Runge-Kutta fourth order solver."
+    }
+  ]
+}

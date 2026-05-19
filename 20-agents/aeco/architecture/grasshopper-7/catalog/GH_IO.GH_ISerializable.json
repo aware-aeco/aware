@@ -1,0 +1,54 @@
+{
+  "name": "GH_ISerializable",
+  "namespace": "GH_IO",
+  "kind": "interface",
+  "summary": "Every object which needs to (de)serialize itself using GH_IO methodology must implement this interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_GH_ISerializable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "bool Read(GH_IReader reader)",
+      "summary": "This method is called whenever the instance is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Reader object to deserialize from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_GH_ISerializable_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "bool Write(GH_IWriter writer)",
+      "summary": "This method is called whenever the instance is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Writer object to serialize with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_GH_ISerializable_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

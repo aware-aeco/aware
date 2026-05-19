@@ -1,0 +1,256 @@
+{
+  "name": "FunctionEndPoint",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type FunctionEndPoint",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs",
+  "constructors": [
+    {
+      "name": "FunctionEndPoint()",
+      "signature": "void FunctionEndPoint()",
+      "summary": "FunctionEndPoint.FunctionEndPoint",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CoerceParameters(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E CoerceParameters(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Convert the parameters passed to the types specified in this fep",
+      "params": [
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "ComputeTypeDistance(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.ClassTable, ProtoCore.RuntimeCore, bool)",
+      "signature": "int ComputeTypeDistance(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E args, ProtoCore.DSASM.ClassTable classTable, ProtoCore.RuntimeCore runtimeCore, bool allowArrayPromotion)",
+      "summary": "Compute the number of type transforms needed to turn the current type into the target type Note that this method returns int[] -\u003E char[] as an exact match",
+      "params": [
+        {
+          "name": "args",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "allowArrayPromotion",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "DoesPredicateMatch(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E)",
+      "signature": "bool DoesPredicateMatch(ProtoCore.Runtime.Context c, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions)",
+      "summary": "FunctionEndPoint.DoesPredicateMatch",
+      "params": [
+        {
+          "name": "c",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "DoesTypeDeepMatch(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.RuntimeCore)",
+      "signature": "bool DoesTypeDeepMatch(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "FunctionEndPoint.DoesTypeDeepMatch",
+      "params": [
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "Execute(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue Execute(ProtoCore.Runtime.Context c, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "FunctionEndPoint.Execute",
+      "params": [
+        {
+          "name": "c",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "GetConversionDistance(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.ClassTable, bool, ProtoCore.RuntimeCore)",
+      "signature": "int GetConversionDistance(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E reducedParamSVs, ProtoCore.DSASM.ClassTable classTable, bool allowArrayPromotion, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "FunctionEndPoint.GetConversionDistance",
+      "params": [
+        {
+          "name": "reducedParamSVs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "optional": false
+        },
+        {
+          "name": "allowArrayPromotion",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "FunctionEndPoint.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BlockScope",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "FunctionEndPoint.BlockScope",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "ClassOwnerIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "FunctionEndPoint.ClassOwnerIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "FormalParams",
+      "type": "ProtoCore.Type[]",
+      "getter": true,
+      "setter": true,
+      "summary": "FunctionEndPoint.FormalParams",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    },
+    {
+      "name": "procedureNode",
+      "type": "ProtoCore.DSASM.ProcedureNode",
+      "getter": true,
+      "setter": true,
+      "summary": "FunctionEndPoint.procedureNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionEndPoint.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

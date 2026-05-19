@@ -1,0 +1,27 @@
+{
+  "name": "DrawingFileLoadState",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Load state of the drawing file",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileLoadState/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ActiveBackground",
+      "value": 2
+    },
+    {
+      "name": "ActiveForeground",
+      "value": 3
+    },
+    {
+      "name": "PassiveBackground",
+      "value": 1
+    }
+  ]
+}

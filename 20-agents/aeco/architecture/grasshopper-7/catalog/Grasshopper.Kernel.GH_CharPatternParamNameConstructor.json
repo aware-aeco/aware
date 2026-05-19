@@ -1,0 +1,62 @@
+{
+  "name": "GH_CharPatternParamNameConstructor",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.GH_CharPatternParamNameConstructor.)",
+  "base": "GH_StringPattern",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_CharPatternParamNameConstructor.htm",
+  "constructors": [
+    {
+      "name": "GH_CharPatternParamNameConstructor()",
+      "signature": "public GH_CharPatternParamNameConstructor()",
+      "summary": "Initializes a new instance of the GH_CharPatternParamNameConstructor class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_CharPatternParamNameConstructor__ctor.htm"
+    },
+    {
+      "name": "GH_CharPatternParamNameConstructor(String)",
+      "signature": "public GH_CharPatternParamNameConstructor(string char_pool)",
+      "summary": "Initializes a new instance of the GH_CharPatternParamNameConstructor class",
+      "params": [
+        {
+          "name": "char_pool",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_CharPatternParamNameConstructor__ctor_1.htm"
+    },
+    {
+      "name": "GH_CharPatternParamNameConstructor(String, Int32)",
+      "signature": "public GH_CharPatternParamNameConstructor(string char_pool, int depth)",
+      "summary": "Initializes a new instance of the GH_CharPatternParamNameConstructor class",
+      "params": [
+        {
+          "name": "char_pool",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_CharPatternParamNameConstructor__ctor_2.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

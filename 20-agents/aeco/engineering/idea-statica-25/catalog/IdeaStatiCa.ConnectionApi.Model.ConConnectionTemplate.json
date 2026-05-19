@@ -1,0 +1,62 @@
+{
+  "name": "ConConnectionTemplate",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConConnectionTemplate.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionTemplate.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LibraryTemplateId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionTemplate.libraryTemplateId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionTemplate.md"
+    },
+    {
+      "name": "TemplateId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionTemplate.templateId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionTemplate.md"
+    },
+    {
+      "name": "Members",
+      "type": "List\u003CConItem\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionTemplate.members.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionTemplate.md"
+    },
+    {
+      "name": "Operations",
+      "type": "List\u003CConItem\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionTemplate.operations.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionTemplate.md"
+    },
+    {
+      "name": "ParameterKeys",
+      "type": "List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionTemplate.parameterKeys.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionTemplate.md"
+    },
+    {
+      "name": "CommonProperties",
+      "type": "ConOperationCommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionTemplate.commonProperties.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionTemplate.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "ConcreteCheckResultOverallItem",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ConcreteCheckResultOverallItem.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultOverallItem.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ResultType",
+      "type": "CheckResultType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultOverallItem.resultType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultOverallItem.md"
+    },
+    {
+      "name": "Result",
+      "type": "CheckResult",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultOverallItem.result.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultOverallItem.md"
+    },
+    {
+      "name": "CheckValue",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResultOverallItem.checkValue.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResultOverallItem.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

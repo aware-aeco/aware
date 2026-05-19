@@ -1,0 +1,124 @@
+{
+  "name": "PrecastMWSElement",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "PrecastMWSElement class",
+  "base": "PrecastElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/",
+  "constructors": [
+    {
+      "name": "PrecastMWSElement",
+      "signature": "PrecastMWSElement() | PrecastMWSElement( factory: str, name: str, number: int, piecefactor: int, longitBarHeight: int, SegmentNumber: int, SegmentVector: Point3D, SegementPointList: list, ReinforcementList: list, )",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Factory",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Factory Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.Factory"
+    },
+    {
+      "name": "IndexLongitBar",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of the longitudinal bar in the Reinfrocementlist Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.IndexLongitBar"
+    },
+    {
+      "name": "LongitBarHeight",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Heightposition of the longitudinal bar (1 = Position 1, 2 = Position 2) Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.LongitBarHeight"
+    },
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Name Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.Name"
+    },
+    {
+      "name": "Number",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Number Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.Number"
+    },
+    {
+      "name": "Piecefactor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Piecefactor Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.Piecefactor"
+    },
+    {
+      "name": "ReinforcementList",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "list of reinforcement placements Value type: list :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.ReinforcementList"
+    },
+    {
+      "name": "SegmentNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of the main segement of the transversal shape Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.SegmentNumber"
+    },
+    {
+      "name": "SegmentPointList",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Pointlist of the transversal shape Value type: list :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.SegmentPointList"
+    },
+    {
+      "name": "SegmentVector",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Norm Catalog Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.SegmentVector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "DimensionStyle.ArrowFit",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Arrow display position inside or outside extension lines",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DimensionStyle_ArrowFit.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Auto",
+      "value": 0,
+      "summary": "Auto - Display when space permits"
+    },
+    {
+      "name": "ArrowsInside",
+      "value": 1,
+      "summary": "Force arrows inside extensions"
+    },
+    {
+      "name": "ArrowsOutside",
+      "value": 2,
+      "summary": "Force arrows outside extensions"
+    }
+  ]
+}

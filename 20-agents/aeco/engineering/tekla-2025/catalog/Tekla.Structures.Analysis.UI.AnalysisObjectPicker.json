@@ -1,0 +1,90 @@
+{
+  "name": "AnalysisObjectPicker",
+  "namespace": "Tekla.Structures.Analysis.UI",
+  "kind": "class",
+  "summary": "The AnalysisObjectPicker class can be used to prompt the user to do manual picks of analysis objects. The methods throw an exception if the user interrupts (cancels) the pick command.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/523a09a5-c6e6-d69d-0d24-26ee5f69f9ac",
+  "constructors": [
+    {
+      "name": "AnalysisObjectPicker",
+      "signature": "public AnalysisObjectPicker()",
+      "summary": "Initializes a new instance of the AnalysisObjectPicker class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3feb04f0-75ba-0848-e909-59ccc3e5496c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PickObject",
+      "signature": "public AnalysisObject PickObject(string analysisModelName, AnalysisObjectPicker.PickObjectType type, string prompt)",
+      "summary": "Prompts the user to pick object from the model with the given prompt. Object is either analysis object or model object.",
+      "params": [
+        {
+          "name": "analysisModelName",
+          "type": "System.String",
+          "doc": "The analysis model name.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Analysis.UI.AnalysisObjectPicker.PickObjectType",
+          "doc": "The type of object to pick.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AnalysisObject",
+        "doc": "The analysis object instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8dea0aee-506d-06df-c9db-27e86bbdf77e"
+    },
+    {
+      "name": "PickObjects",
+      "signature": "public List\u003CAnalysisObject\u003E PickObjects(string analysisModelName, AnalysisObjectPicker.PickObjectType type, string prompt)",
+      "summary": "Prompts the user to pick objects from the model with the given prompt.",
+      "params": [
+        {
+          "name": "analysisModelName",
+          "type": "System.String",
+          "doc": "The analysis model name.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Analysis.UI.AnalysisObjectPicker.PickObjectType",
+          "doc": "The type of objects to pick.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CAnalysisObject\u003E",
+        "doc": "An enumerator of analysis object instances."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a9e9fa8a-ead4-44b2-3838-ce4e26602695"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

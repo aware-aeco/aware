@@ -1,0 +1,46 @@
+{
+  "name": "SurfaceType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The type of a surface material.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SurfaceType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "General",
+      "value": "General"
+    },
+    {
+      "name": "Simple",
+      "value": "Simple"
+    },
+    {
+      "name": "Matte",
+      "value": "Matte"
+    },
+    {
+      "name": "Metal",
+      "value": "Metal"
+    },
+    {
+      "name": "Plastic",
+      "value": "Plastic"
+    },
+    {
+      "name": "Glass",
+      "value": "Glass"
+    },
+    {
+      "name": "Glowing",
+      "value": "Glowing"
+    },
+    {
+      "name": "Constant",
+      "value": "Constant"
+    }
+  ]
+}

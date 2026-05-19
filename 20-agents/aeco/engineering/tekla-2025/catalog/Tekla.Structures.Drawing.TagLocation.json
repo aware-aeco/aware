@@ -1,0 +1,44 @@
+{
+  "name": "TagLocation",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The mark tag location values.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/cf4a5079-333d-3f02-24ca-d86be19552f1",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AboveLine",
+      "value": 1,
+      "summary": "The mark tag is above the line."
+    },
+    {
+      "name": "BelowLine",
+      "value": 2,
+      "summary": "The mark tag is below the line."
+    },
+    {
+      "name": "MiddleLevelOfSymbol",
+      "value": 3,
+      "summary": "The mark tag is in the middle level of the mark symbol."
+    },
+    {
+      "name": "AboveSymbolCenterLine",
+      "value": 4,
+      "summary": "The mark tag is above the center line of the mark symbol."
+    },
+    {
+      "name": "BelowSymbolCenterLine",
+      "value": 5,
+      "summary": "The mark tag is below the center line of the mark symbol."
+    },
+    {
+      "name": "CustomRelativeToSymbol",
+      "value": 6,
+      "summary": "The mark tag is in a custom location relative to the mark symbol."
+    }
+  ]
+}

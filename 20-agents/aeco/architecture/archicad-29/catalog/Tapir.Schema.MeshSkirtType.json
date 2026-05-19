@@ -1,0 +1,26 @@
+{
+  "name": "MeshSkirtType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The type of the skirt structure.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#MeshSkirtType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SurfaceOnlyWithoutSkirt",
+      "value": "SurfaceOnlyWithoutSkirt"
+    },
+    {
+      "name": "WithSkirt",
+      "value": "WithSkirt"
+    },
+    {
+      "name": "SolidBodyWithSkirt",
+      "value": "SolidBodyWithSkirt"
+    }
+  ]
+}

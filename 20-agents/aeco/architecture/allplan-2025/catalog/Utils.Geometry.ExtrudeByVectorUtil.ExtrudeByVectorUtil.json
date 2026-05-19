@@ -1,0 +1,53 @@
+{
+  "name": "ExtrudeByVectorUtil",
+  "namespace": "Utils.Geometry.ExtrudeByVectorUtil",
+  "kind": "class",
+  "summary": "implementation of the extrude by vector utility",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Geometry/ExtrudeByVectorUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "extrude",
+      "signature": "extrude( geo_elements: list[CURVES], extrusion_vec: Vector3D, from_center: bool, closed_volume: bool, ) -\u003E Polyhedron3D | BRep3D | None",
+      "summary": "extrude the geometry elements by an extrusion vector",
+      "remarks": "extrude the geometry elements by an extrusion vector",
+      "params": [
+        {
+          "name": "geo_elements",
+          "type": "list[CURVES]",
+          "doc": "geometry elements",
+          "optional": false
+        },
+        {
+          "name": "extrusion_vec",
+          "type": "Vector3D",
+          "doc": "extrusion vector",
+          "optional": false
+        },
+        {
+          "name": "from_center",
+          "type": "bool",
+          "doc": "extrude from center",
+          "optional": false
+        },
+        {
+          "name": "closed_volume",
+          "type": "bool",
+          "doc": "closed volume state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyhedron3D | BRep3D | None",
+        "doc": "extrusion element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Geometry/ExtrudeByVectorUtil/#Utils.Geometry.ExtrudeByVectorUtil.ExtrudeByVectorUtil.extrude"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

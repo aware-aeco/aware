@@ -1,0 +1,38 @@
+{
+  "name": "ISearchCategory\u003CTEntry\u003E",
+  "namespace": "Dynamo.Search",
+  "kind": "interface",
+  "summary": "A search category.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchCategory.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Entries",
+      "type": "System.Collections.Generic.IEnumerable\u003CTEntry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Entries contained in this category.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchCategory.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of this category.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchCategory.cs"
+    },
+    {
+      "name": "SubCategories",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Search.ISearchCategory\u003CTEntry\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Sub-categories contained in this category",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchCategory.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

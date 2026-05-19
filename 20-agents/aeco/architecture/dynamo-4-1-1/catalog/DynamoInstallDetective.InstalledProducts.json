@@ -1,0 +1,65 @@
+{
+  "name": "InstalledProducts",
+  "namespace": "DynamoInstallDetective",
+  "kind": "class",
+  "summary": "Type InstalledProducts",
+  "interfaces": [
+    "DynamoInstallDetective.IProductCollection"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs",
+  "constructors": [
+    {
+      "name": "InstalledProducts()",
+      "signature": "void InstalledProducts()",
+      "summary": "InstalledProducts.InstalledProducts",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetLatestProduct",
+      "signature": "DynamoInstallDetective.IInstalledProduct GetLatestProduct()",
+      "summary": "InstalledProducts.GetLatestProduct",
+      "params": [],
+      "returns": {
+        "type": "DynamoInstallDetective.IInstalledProduct",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "LookUpAndInitProducts(DynamoInstallDetective.IProductLookUp)",
+      "signature": "void LookUpAndInitProducts(DynamoInstallDetective.IProductLookUp lookUp)",
+      "summary": "InstalledProducts.LookUpAndInitProducts",
+      "params": [
+        {
+          "name": "lookUp",
+          "type": "DynamoInstallDetective.IProductLookUp",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Products",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamoInstallDetective.IInstalledProduct\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "InstalledProducts.Products",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "PointFaceRelation",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Enumerates the possible point/BrepFace spatial relationships.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_PointFaceRelation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Exterior",
+      "value": 0,
+      "summary": "Point is on the exterior (the trimmed part) of the face."
+    },
+    {
+      "name": "Interior",
+      "value": 1,
+      "summary": "Point is on the interior (the existing part) of the face."
+    },
+    {
+      "name": "Boundary",
+      "value": 2,
+      "summary": "Point is in limbo."
+    }
+  ]
+}

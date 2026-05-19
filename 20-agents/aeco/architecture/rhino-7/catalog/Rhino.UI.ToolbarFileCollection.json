@@ -1,0 +1,129 @@
+{
+  "name": "ToolbarFileCollection",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ToolbarFileCollection\u0022]",
+  "interfaces": [
+    "IEnumerable\u003CToolbarFile\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ToolbarFileCollection.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindByName",
+      "signature": "public ToolbarFile FindByName(string name, bool ignoreCase)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.FindByName(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022ignoreCase\u0022/\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.FindByName(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolbarFile",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.FindByName(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ToolbarFileCollection_FindByName.htm"
+    },
+    {
+      "name": "FindByPath",
+      "signature": "public ToolbarFile FindByPath(string path)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.FindByPath(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolbarFile",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.FindByPath(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ToolbarFileCollection_FindByPath.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CToolbarFile\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CToolbarFile\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ToolbarFileCollection_GetEnumerator.htm"
+    },
+    {
+      "name": "Open",
+      "signature": "public ToolbarFile Open(string path)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.Open(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolbarFile",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ToolbarFileCollection.Open(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ToolbarFileCollection_Open.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of open toolbar files",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ToolbarFileCollection_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "ToolbarFile",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ToolbarFileCollection_Item.htm"
+    },
+    {
+      "name": "MruSidebarIsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ToolbarFileCollection_MruSidebarIsVisible.htm"
+    },
+    {
+      "name": "SidebarIsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ToolbarFileCollection_SidebarIsVisible.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "ClassificationIdOrError",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A classification identifier or an error.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ClassificationIdOrError",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

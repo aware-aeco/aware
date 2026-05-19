@@ -1,0 +1,162 @@
+{
+  "name": "HiddenCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Hidden calculation service implementation, user part.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/",
+  "constructors": [
+    {
+      "name": "HiddenCalculus",
+      "signature": "HiddenCalculus()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddElement",
+      "signature": "AddElement(elementGeometry_object, elenentMaterial, elementTag)",
+      "summary": "Add element geometry to hidden world.",
+      "remarks": "Add element geometry to hidden world.",
+      "params": [
+        {
+          "name": "elementGeometry_object",
+          "type": "object",
+          "doc": "Element geometry.",
+          "optional": false
+        },
+        {
+          "name": "elenentMaterial",
+          "type": "HiddenMaterial",
+          "doc": "Element material.",
+          "optional": false
+        },
+        {
+          "name": "elementTag",
+          "type": "int",
+          "doc": "Tag transferred over hidden calculation from element to line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.AddElement"
+    },
+    {
+      "name": "Calculate",
+      "signature": "Calculate()",
+      "summary": "Runs hidden calculation. hrow Exception in case of internal error.",
+      "remarks": "Runs hidden calculation. hrow Exception in case of internal error.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.Calculate"
+    },
+    {
+      "name": "Configure",
+      "signature": "Configure(parameters)",
+      "summary": "Sets parameters of calculation.",
+      "remarks": "Sets parameters of calculation.",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "HiddenCalculationParameters",
+          "doc": "New parameters.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.Configure"
+    },
+    {
+      "name": "GetLinesCount",
+      "signature": "GetLinesCount()",
+      "summary": "Gets total count of lines calculated.",
+      "remarks": "Gets total count of lines calculated.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "size_t Lines count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.GetLinesCount"
+    },
+    {
+      "name": "GetResultLine",
+      "signature": "GetResultLine(lineIndex)",
+      "summary": "GetResultLine",
+      "remarks": "GetResultLine",
+      "params": [
+        {
+          "name": "lineIndex",
+          "type": "int",
+          "doc": "Index of line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line3D",
+        "doc": "tuple(Line calculated by hidden itself,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.GetResultLine"
+    },
+    {
+      "name": "GetResultLineMaterial",
+      "signature": "GetResultLineMaterial(lineIndex)",
+      "summary": "Gets hidden material of element line is from.",
+      "remarks": "Gets hidden material of element line is from.",
+      "params": [
+        {
+          "name": "lineIndex",
+          "type": "int",
+          "doc": "Index of line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HiddenMaterial",
+        "doc": "HiddenMaterial Material."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.GetResultLineMaterial"
+    },
+    {
+      "name": "GetResultLineTag",
+      "signature": "GetResultLineTag(lineIndex)",
+      "summary": "Gets (reference to) tag hooked to element line is from.",
+      "remarks": "Gets (reference to) tag hooked to element line is from.",
+      "params": [
+        {
+          "name": "lineIndex",
+          "type": "int",
+          "doc": "Index of line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "const TagType Reference to tag object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/#NemAll_Python_Geometry.HiddenCalculus.GetResultLineTag"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

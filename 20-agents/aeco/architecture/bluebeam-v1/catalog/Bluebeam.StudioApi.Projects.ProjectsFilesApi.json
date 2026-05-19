@@ -1,0 +1,503 @@
+{
+  "name": "ProjectsFilesApi",
+  "namespace": "Bluebeam.StudioApi.Projects",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Projects / Files endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CheckoutFile",
+      "signature": "Task CheckoutFile(Guid projectId, Guid id)",
+      "summary": "Checkout file for modification",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "DeleteFileCheckout",
+      "signature": "Task DeleteFileCheckout(Guid projectId, Guid id)",
+      "summary": "Revoke file checkout. This will put the file in a conflicted state in Revu if there are local changes",
+      "remarks": "HTTP DELETE \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetFileByPath",
+      "signature": "Task GetFileByPath(Guid projectId)",
+      "summary": "Get file metadata by path.              Includes DownloadUrl which can be used to download file content",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/files/by-path\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/by-path\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CreateProjectFile",
+      "signature": "Task CreateProjectFile(Guid projectId, CreateProjectFileRequest request)",
+      "summary": "Create metadata for a new project file.              PUT actual file to UploadUrl returned in a create response              POST confirm-upload at the end of file upload to make it available in a project",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CreateProjectFileRequest",
+          "doc": "Request body. JSON object with fields: CRC, Name, ParentFolderId, Size.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListProjectFiles",
+      "signature": "Task ListProjectFiles(Guid projectId)",
+      "summary": "Get all files in a project",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/files\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CheckoutToSessionFile",
+      "signature": "Task CheckoutToSessionFile(Guid projectId, Guid id, CheckoutToSessionFileRequest request)",
+      "summary": "Checkout project file to Studio Session.              This operation will link project to a Session",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout-to-session\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout-to-session\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkout-to-session\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CheckoutToSessionFileRequest",
+          "doc": "Request body. JSON object with fields: SessionId.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CheckinFile",
+      "signature": "Task CheckinFile(Guid projectId, Guid id)",
+      "summary": "Checkin project file.              PUT actual file to UploadUrl returned in a create response              POST confirm-checkin at the end of file upload to make it available in a project",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkin\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkin\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/checkin\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ConfirmCheckinFile",
+      "signature": "Task ConfirmCheckinFile(Guid projectId, Guid id, ConfirmCheckinFileRequest request)",
+      "summary": "Confirm checkin of project file",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files/{id}/confirm-checkin\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/confirm-checkin\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/confirm-checkin\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "ConfirmCheckinFileRequest",
+          "doc": "Request body. JSON object with fields: CRC, Comment, Size.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetRevision",
+      "signature": "Task GetRevision(Guid projectId, int fileId, Guid id)",
+      "summary": "Get a file revision metadata.              Includes DownloadUrl which can be used to download file content.              For DownloadUrl of most recent revision use Get /v1/projects/{PublicId}/files/{id}",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "fileId",
+          "type": "int",
+          "doc": "Path parameter \u0060fileId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ConfirmUploadFile",
+      "signature": "Task ConfirmUploadFile(Guid projectId, Guid id)",
+      "summary": "Confirm Project file upload and make it available in a Session. Should be called after uploading project file",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files/{id}/confirm-upload\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/confirm-upload\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/confirm-upload\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "RestoreRevision",
+      "signature": "Task RestoreRevision(Guid projectId, int fileId, Guid id)",
+      "summary": "Restore file revision",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}/restore\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}/restore\u0060.",
+          "optional": false
+        },
+        {
+          "name": "fileId",
+          "type": "int",
+          "doc": "Path parameter \u0060fileId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}/restore\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions/{id}/restore\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetFile",
+      "signature": "Task GetFile(Guid projectId, Guid id)",
+      "summary": "Get file metadata.              Includes DownloadUrl which can be used to download file content",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateFile",
+      "signature": "Task UpdateFile(Guid projectId, Guid id, UpdateFileRequest request)",
+      "summary": "Update project file. To move the file, change its parent folder id",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateFileRequest",
+          "doc": "Request body. JSON object with fields: Name, ParentFolderId.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "DeleteFile",
+      "signature": "Task DeleteFile(Guid projectId, Guid id)",
+      "summary": "Delete a project file",
+      "remarks": "HTTP DELETE \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CopyFile",
+      "signature": "Task CopyFile(Guid projectId, Guid id, CopyFileRequest request)",
+      "summary": "Copy a file",
+      "remarks": "HTTP POST \u0060/publicapi/v1/projects/{projectId}/files/{id}/copy\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/copy\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{id}/copy\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CopyFileRequest",
+          "doc": "Request body. JSON object with fields: Name, ParentFolderId.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListFileRevisions",
+      "signature": "Task ListFileRevisions(Guid projectId, int fileId)",
+      "summary": "Get all file revisions",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "fileId",
+          "type": "int",
+          "doc": "Path parameter \u0060fileId\u0060 from \u0060/publicapi/v1/projects/{projectId}/files/{fileId}/revisions\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

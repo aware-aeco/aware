@@ -1,0 +1,24 @@
+{
+  "name": "ConnectionBase.InputObjectType",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the input object type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1a07ad5c-4674-2484-581f-40fd5bf24da7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INPUTOBJECT_PART",
+      "value": 0,
+      "summary": "The input object is a part instance."
+    },
+    {
+      "name": "INPUTOBJECT_CUSTOMPART",
+      "value": 1,
+      "summary": "The input object can be a custom part (component)."
+    }
+  ]
+}

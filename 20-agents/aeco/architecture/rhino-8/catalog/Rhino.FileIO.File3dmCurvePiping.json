@@ -1,0 +1,62 @@
+{
+  "name": "File3dmCurvePiping",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents the curve piping attached to file3dm object attributes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmCurvePiping.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Accuracy",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the accuracy of the pipe in the range 0 to 100.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmCurvePiping_Accuracy.htm"
+    },
+    {
+      "name": "CapType",
+      "type": "File3dmCurvePiping.CapTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the cap type to use.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmCurvePiping_CapType.htm"
+    },
+    {
+      "name": "Faceted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether the pipe is faceted or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmCurvePiping_Faceted.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether curve piping is enabled or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmCurvePiping_On.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the radius of the pipe (minimum value 0.0001).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmCurvePiping_Radius.htm"
+    },
+    {
+      "name": "Segments",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the number of segments in the pipe (minimum value 2).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmCurvePiping_Segments.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

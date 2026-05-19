@@ -1,0 +1,31 @@
+{
+  "name": "eTrackLineType",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Definition of the track line types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eTrackLineType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "TRACKLINE_ENDLESS",
+      "value": 1
+    },
+    {
+      "name": "TRACKLINE_EXTENSION",
+      "value": 2
+    },
+    {
+      "name": "TRACKLINE_EXTENSION_END",
+      "value": 3
+    },
+    {
+      "name": "TRACKLINE_NO",
+      "value": 0
+    }
+  ]
+}

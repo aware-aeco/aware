@@ -1,0 +1,151 @@
+{
+  "name": "ILocalizationService",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ILocalizationService\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ILocalizationService.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LocalizeCommandName",
+      "signature": "string LocalizeCommandName(Assembly assembly, int languageId, string english)",
+      "summary": "",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeCommandName(System.Reflection.Assembly,System.Int32,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "languageId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022languageId\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeCommandName(System.Reflection.Assembly,System.Int32,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeCommandName(System.Reflection.Assembly,System.Int32,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeCommandName(System.Reflection.Assembly,System.Int32,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ILocalizationService_LocalizeCommandName.htm"
+    },
+    {
+      "name": "LocalizeDialogItem",
+      "signature": "string LocalizeDialogItem(Assembly assembly, int languageId, string key, string english)",
+      "summary": "",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeDialogItem(System.Reflection.Assembly,System.Int32,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "languageId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022languageId\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeDialogItem(System.Reflection.Assembly,System.Int32,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeDialogItem(System.Reflection.Assembly,System.Int32,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeDialogItem(System.Reflection.Assembly,System.Int32,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeDialogItem(System.Reflection.Assembly,System.Int32,System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ILocalizationService_LocalizeDialogItem.htm"
+    },
+    {
+      "name": "LocalizeForm",
+      "signature": "void LocalizeForm(Assembly assembly, int languageId, Object formOrUserControl)",
+      "summary": "",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeForm(System.Reflection.Assembly,System.Int32,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "languageId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022languageId\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeForm(System.Reflection.Assembly,System.Int32,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "formOrUserControl",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022formOrUserControl\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeForm(System.Reflection.Assembly,System.Int32,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ILocalizationService_LocalizeForm.htm"
+    },
+    {
+      "name": "LocalizeString",
+      "signature": "string LocalizeString(Assembly assembly, int languageId, string english, int contextId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeString(System.Reflection.Assembly,System.Int32,System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "languageId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022languageId\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeString(System.Reflection.Assembly,System.Int32,System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeString(System.Reflection.Assembly,System.Int32,System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "contextId",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022contextId\u0022/\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeString(System.Reflection.Assembly,System.Int32,System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ILocalizationService.LocalizeString(System.Reflection.Assembly,System.Int32,System.String,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ILocalizationService_LocalizeString.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

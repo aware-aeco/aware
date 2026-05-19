@@ -1,0 +1,181 @@
+{
+  "name": "VariableInputNode",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Base class for nodes that have dynamic incoming ports. E.g. list.create.",
+  "base": "Dynamo.Graph.Nodes.NodeModel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs",
+  "constructors": [
+    {
+      "name": "VariableInputNode()",
+      "signature": "void VariableInputNode()",
+      "summary": "Protected constructor for deserialization",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "VariableInputNode(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E)",
+      "signature": "void VariableInputNode(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E inPorts, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E outPorts)",
+      "summary": "Protected constructor for deserialization",
+      "params": [
+        {
+          "name": "inPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "outPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddInput",
+      "signature": "void AddInput()",
+      "summary": "VariableInputNode.AddInput",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "VariableInputNode.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "GetInputIndex",
+      "signature": "int GetInputIndex()",
+      "summary": "VariableInputNode.GetInputIndex",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "GetInputName(int)",
+      "signature": "string GetInputName(int index)",
+      "summary": "VariableInputNode.GetInputName",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "GetInputTooltip(int)",
+      "signature": "string GetInputTooltip(int index)",
+      "summary": "VariableInputNode.GetInputTooltip",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "OnBuilt",
+      "signature": "void OnBuilt()",
+      "summary": "VariableInputNode.OnBuilt",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "RemoveInput",
+      "signature": "void RemoveInput()",
+      "summary": "VariableInputNode.RemoveInput",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "VariableInputNode.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "VariableInputPorts",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "A flag used during serialization to indicated that the node has a variable number of input ports.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

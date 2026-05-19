@@ -1,0 +1,74 @@
+{
+  "name": "GH_LibraryLicense",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible library types for GHA assemblies.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_LibraryLicense.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "unset",
+      "value": 0,
+      "summary": "Unset library type. You should not return this value."
+    },
+    {
+      "name": "expired",
+      "value": 1,
+      "summary": "The license for this library has expired and it can no longer be used."
+    },
+    {
+      "name": "alpha",
+      "value": 2,
+      "summary": "This library is an Alpha release."
+    },
+    {
+      "name": "beta",
+      "value": 3,
+      "summary": "This library is a Beta release."
+    },
+    {
+      "name": "free",
+      "value": 4,
+      "summary": "This library is freeware."
+    },
+    {
+      "name": "opensource",
+      "value": 5,
+      "summary": "This library is distributed under an open source license."
+    },
+    {
+      "name": "trial",
+      "value": 6,
+      "summary": "This library is running in Trial mode."
+    },
+    {
+      "name": "commercial",
+      "value": 7,
+      "summary": "This library is running under a Commercial license."
+    },
+    {
+      "name": "educational",
+      "value": 8,
+      "summary": "This library is running under an Educational license."
+    },
+    {
+      "name": "developer",
+      "value": 9,
+      "summary": "This library is running under a Developer license."
+    },
+    {
+      "name": "reseller",
+      "value": 10,
+      "summary": "This library is running under a Reseller license."
+    },
+    {
+      "name": "other",
+      "value": 11,
+      "summary": "Undefined library type."
+    }
+  ]
+}

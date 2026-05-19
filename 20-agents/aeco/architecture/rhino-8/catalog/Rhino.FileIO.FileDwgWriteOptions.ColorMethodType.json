@@ -1,0 +1,22 @@
+{
+  "name": "FileDwgWriteOptions.ColorMethodType",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileDwgWriteOptions.ColorMethodType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileDwgWriteOptions_ColorMethodType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ACI",
+      "value": 0
+    },
+    {
+      "name": "RGB",
+      "value": 1
+    }
+  ]
+}

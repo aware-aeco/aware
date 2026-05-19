@@ -1,0 +1,38 @@
+{
+  "name": "RayShootEvent",
+  "namespace": "Rhino.Geometry.Intersect",
+  "kind": "struct",
+  "summary": "Represents an element which is part of a ray shoot.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Intersect_RayShootEvent.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BrepFaceIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "If GeometryIndex references a Brep, then the index of the Brep face that was hit. If GeometryIndex references a surface, than RhinoMath.UnsetIntIndex.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Intersect_RayShootEvent_BrepFaceIndex.htm"
+    },
+    {
+      "name": "GeometryIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the surface or Brep that was hit.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Intersect_RayShootEvent_GeometryIndex.htm"
+    },
+    {
+      "name": "Point",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "The 3d hit point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Intersect_RayShootEvent_Point.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

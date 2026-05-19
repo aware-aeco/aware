@@ -1,0 +1,31 @@
+{
+  "name": "ElementsWithExecutionResults",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The response of the GetElementsByType command.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementsWithExecutionResults",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "elements",
+      "type": "Elements",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060elements\u0060 of type \u0060Elements\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementsWithExecutionResults"
+    },
+    {
+      "name": "executionResultForDatabases",
+      "type": "ExecutionResults",
+      "getter": true,
+      "setter": true,
+      "summary": "Property \u0060executionResultForDatabases\u0060 of type \u0060ExecutionResults\u0060 (optional).",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementsWithExecutionResults"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

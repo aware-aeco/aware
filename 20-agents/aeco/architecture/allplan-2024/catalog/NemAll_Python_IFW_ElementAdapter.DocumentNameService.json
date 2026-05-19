@@ -1,0 +1,159 @@
+{
+  "name": "DocumentNameService",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.DocumentNameService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentNameService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetActiveDocumentName",
+      "signature": "GetActiveDocumentName()",
+      "summary": "Get the name of the active document",
+      "remarks": "Get the name of the active document",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Name of the active document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentNameService/#NemAll_Python_IFW_ElementAdapter.DocumentNameService.GetActiveDocumentName"
+    },
+    {
+      "name": "GetDocumentName",
+      "signature": "GetDocumentName(ele, withNumber, withLabel, delimiter)",
+      "summary": "Get the name of the element",
+      "remarks": "Get the name of the element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "withNumber",
+          "type": "bool",
+          "doc": "Add the document number: true/false",
+          "optional": false
+        },
+        {
+          "name": "withLabel",
+          "type": "bool",
+          "doc": "Add the label: true/false",
+          "optional": false
+        },
+        {
+          "name": "delimiter",
+          "type": "str",
+          "doc": "Delimiter between number and name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Name of the document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentNameService/#NemAll_Python_IFW_ElementAdapter.DocumentNameService.GetDocumentName"
+    },
+    {
+      "name": "GetDocumentNameByFileIndex",
+      "signature": "GetDocumentNameByFileIndex(fileIndex, withNumber, withLabel, delimiter)",
+      "summary": "Get the document name by the document index (load index)",
+      "remarks": "Get the document name by the document index (load index)",
+      "params": [
+        {
+          "name": "fileIndex",
+          "type": "int",
+          "doc": "Document file index",
+          "optional": false
+        },
+        {
+          "name": "withNumber",
+          "type": "bool",
+          "doc": "Add the document number: true/false",
+          "optional": false
+        },
+        {
+          "name": "withLabel",
+          "type": "bool",
+          "doc": "Add the label: true/false",
+          "optional": false
+        },
+        {
+          "name": "delimiter",
+          "type": "str",
+          "doc": "Delimiter between number and name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Document name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentNameService/#NemAll_Python_IFW_ElementAdapter.DocumentNameService.GetDocumentNameByFileIndex"
+    },
+    {
+      "name": "GetDocumentNameByFileNumber",
+      "signature": "GetDocumentNameByFileNumber(fileNumber, withNumber, withLabel, delimiter)",
+      "summary": "Get the document name by the file number",
+      "remarks": "Get the document name by the file number",
+      "params": [
+        {
+          "name": "fileNumber",
+          "type": "int",
+          "doc": "Document file number",
+          "optional": false
+        },
+        {
+          "name": "withNumber",
+          "type": "bool",
+          "doc": "Add the document number: true/false",
+          "optional": false
+        },
+        {
+          "name": "withLabel",
+          "type": "bool",
+          "doc": "Add the label: true/false",
+          "optional": false
+        },
+        {
+          "name": "delimiter",
+          "type": "str",
+          "doc": "Delimiter between number and name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Document name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentNameService/#NemAll_Python_IFW_ElementAdapter.DocumentNameService.GetDocumentNameByFileNumber"
+    },
+    {
+      "name": "GetLoadedDocumentsNameData",
+      "signature": "GetLoadedDocumentsNameData()",
+      "summary": "Get the names and file numbers of the loaded documents",
+      "remarks": "Get the names and file numbers of the loaded documents",
+      "params": [],
+      "returns": {
+        "type": "list[tuple[str, int]]",
+        "doc": "Names of the loaded documents"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/DocumentNameService/#NemAll_Python_IFW_ElementAdapter.DocumentNameService.GetLoadedDocumentsNameData"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

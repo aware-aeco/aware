@@ -1,0 +1,74 @@
+{
+  "name": "ConvertibleExtensions",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Extension methods for IConvertible that work when an object is a Variant.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ConvertibleExtensions.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToColor4f",
+      "signature": "public static Color4f ToColor4f(this IConvertible variant)",
+      "summary": "",
+      "params": [
+        {
+          "name": "variant",
+          "type": "System.IConvertible",
+          "doc": "[Missing \u003Cparam name=\u0022variant\u0022/\u003E documentation for \u0022M:Rhino.Render.ConvertibleExtensions.ToColor4f(System.IConvertible)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color4f",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ConvertibleExtensions.ToColor4f(System.IConvertible)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ConvertibleExtensions_ToColor4f.htm"
+    },
+    {
+      "name": "ToVector2d",
+      "signature": "public static Vector2d ToVector2d(this IConvertible variant)",
+      "summary": "",
+      "params": [
+        {
+          "name": "variant",
+          "type": "System.IConvertible",
+          "doc": "[Missing \u003Cparam name=\u0022variant\u0022/\u003E documentation for \u0022M:Rhino.Render.ConvertibleExtensions.ToVector2d(System.IConvertible)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ConvertibleExtensions.ToVector2d(System.IConvertible)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ConvertibleExtensions_ToVector2d.htm"
+    },
+    {
+      "name": "ToVector3d",
+      "signature": "public static Vector3d ToVector3d(this IConvertible variant)",
+      "summary": "",
+      "params": [
+        {
+          "name": "variant",
+          "type": "System.IConvertible",
+          "doc": "[Missing \u003Cparam name=\u0022variant\u0022/\u003E documentation for \u0022M:Rhino.Render.ConvertibleExtensions.ToVector3d(System.IConvertible)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ConvertibleExtensions.ToVector3d(System.IConvertible)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ConvertibleExtensions_ToVector3d.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

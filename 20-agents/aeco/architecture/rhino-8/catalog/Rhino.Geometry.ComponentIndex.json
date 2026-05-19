@@ -1,0 +1,313 @@
+{
+  "name": "ComponentIndex",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents an index of an element contained in another object.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_ComponentIndex.htm",
+  "constructors": [
+    {
+      "name": "ComponentIndex",
+      "signature": "public ComponentIndex(ComponentIndexType type, int index)",
+      "summary": "Construct component index with a specific type/index combination",
+      "params": [
+        {
+          "name": "type",
+          "type": "Rhino.Geometry.ComponentIndexType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Geometry.ComponentIndex.#ctor(Rhino.Geometry.ComponentIndexType,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.ComponentIndex.#ctor(Rhino.Geometry.ComponentIndexType,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(ComponentIndex other)",
+      "summary": "Compares this ComponentIndex with another ComponentIndex.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The other ComponentIndex to use in comparison",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this.ComponentIndexType \u003C other.ComponentIndexType-1: if this.ComponentIndexType == other.ComponentIndexType and this.Index \u003C other.Index\u002B1: otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_CompareTo.htm"
+    },
+    {
+      "name": "Equals(ComponentIndex)",
+      "signature": "public bool Equals(ComponentIndex other)",
+      "summary": "Determines whether the specified ComponentIndex is equal to the current ComponentIndex, comparing by value.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The other ComponentIndex to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if other has the same ComponentIndexType and Index as this; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified Object is equal to the current ComponentIndex, comparing by value.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The other object to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a ComponentIndex and ComponentIndexType and Index is the same; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes the hash code for this ComponentIndex object.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A hash value that might be equal for two different ComponentIndex values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_GetHashCode.htm"
+    },
+    {
+      "name": "IsUnset",
+      "signature": "public bool IsUnset()",
+      "summary": "Return true is this component index is the same as the Unset component index",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.ComponentIndex.IsUnset\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_IsUnset.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(ComponentIndex a, ComponentIndex b)",
+      "summary": "Determines whether two ComponentIndexes have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The first ComponentIndex",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The second ComponentIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the ComponentIndexes are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_op_Equality.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(ComponentIndex a, ComponentIndex b)",
+      "summary": "Determines whether the first ComponentIndex comes after the second.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The first ComponentIndex",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The second ComponentIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the first comes after the second; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(ComponentIndex a, ComponentIndex b)",
+      "summary": "Determines whether the first ComponentIndex comes after the second, or it is equal to it.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The first ComponentIndex",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The second ComponentIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the first is equal to the second or comes after it; otherwise, false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(ComponentIndex a, ComponentIndex b)",
+      "summary": "Determines whether two ComponentIndexes have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The first ComponentIndex",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The second ComponentIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the ComponentIndexes are unequal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(ComponentIndex a, ComponentIndex b)",
+      "summary": "Determines whether the first ComponentIndex comes before the second.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The first ComponentIndex",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The second ComponentIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the first comes before the second; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(ComponentIndex a, ComponentIndex b)",
+      "summary": "Determines whether the first ComponentIndex comes before the second, or it is equal to it.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The first ComponentIndex",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The second ComponentIndex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the first is equal to the second or comes before it; otherwise, false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ComponentIndex_op_LessThanOrEqual.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentIndexType",
+      "type": "ComponentIndexType",
+      "getter": true,
+      "setter": false,
+      "summary": "The interpretation of Index depends on the Type value. Type m_index interpretation (0 based indices) no_type used when context makes it clear what array is being index brep_vertex Brep.m_V[] array index brep_edge Brep.m_E[] array index brep_face Brep.m_F[] array index brep_trim Brep.m_T[] array index brep_loop Brep.m_L[] array index mesh_vertex Mesh.m_V[] array index meshtop_vertex MeshTopology.m_topv[] array index meshtop_edge MeshTopology.m_tope[] array index mesh_face Mesh.m_F[] array index idef_part InstanceDefinition.m_object_uuid[] array index polycurve_segment PolyCurve::m_segment[] array index dim_linear_point LinearDimension2::POINT_INDEX dim_radial_point RadialDimension2::POINT_INDEX dim_angular_point AngularDimension2::POINT_INDEX dim_ordinate_point OrdinateDimension2::POINT_INDEX dim_text_point TextEntity2 origin point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ComponentIndex_ComponentIndexType.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The interpretation of m_index depends on the m_type value. m_type m_index interpretation (0 based indices) no_type used when context makes it clear what array is being index brep_vertex Brep.m_V[] array index brep_edge Brep.m_E[] array index brep_face Brep.m_F[] array index brep_trim Brep.m_T[] array index brep_loop Brep.m_L[] array index mesh_vertex Mesh.m_V[] array index meshtop_vertex MeshTopology.m_topv[] array index meshtop_edge MeshTopology.m_tope[] array index mesh_face Mesh.m_F[] array index idef_part InstanceDefinition.m_object_uuid[] array index polycurve_segment PolyCurve::m_segment[] array index dim_linear_point LinearDimension2::POINT_INDEX dim_radial_point RadialDimension2::POINT_INDEX dim_angular_point AngularDimension2::POINT_INDEX dim_ordinate_point OrdinateDimension2::POINT_INDEX dim_text_point TextEntity2 origin point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ComponentIndex_Index.htm"
+    },
+    {
+      "name": "IsSet",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if is set to a value between and .",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ComponentIndex_IsSet.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "ComponentIndex",
+      "getter": true,
+      "setter": false,
+      "summary": "The unset value of component index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ComponentIndex_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

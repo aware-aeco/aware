@@ -1,0 +1,199 @@
+{
+  "name": "File3dmViewTable",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Provides access to views in the 3dm file.",
+  "interfaces": [
+    "IList\u003CViewInfo\u003E",
+    "ICollection\u003CViewInfo\u003E",
+    "IEnumerable\u003CViewInfo\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmViewTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(ViewInfo item)",
+      "summary": "Adds a",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022item\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmViewTable.Add(Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all items from the table.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_Clear.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(ViewInfo item)",
+      "summary": "Returns an indication of the presence of a view in the table.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "The view to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the item is in the table; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_Contains.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(ViewInfo[] array, int arrayIndex)",
+      "summary": "Copies the content of the table to an array.",
+      "params": [
+        {
+          "name": "array",
+          "type": "Rhino.DocObjects.ViewInfo[]",
+          "doc": "[Missing \u003Cparam name=\u0022array\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmViewTable.CopyTo(Rhino.DocObjects.ViewInfo[],System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022arrayIndex\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmViewTable.CopyTo(Rhino.DocObjects.ViewInfo[],System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_CopyTo.htm"
+    },
+    {
+      "name": "Delete(Int32)",
+      "signature": "public bool Delete(int index)",
+      "summary": "Removes an item.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the item to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the item was removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_Delete_1.htm"
+    },
+    {
+      "name": "Delete(ViewInfo)",
+      "signature": "public bool Delete(ViewInfo item)",
+      "summary": "Deletes an item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022item\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmViewTable.Delete(Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmViewTable.Delete(Rhino.DocObjects.ViewInfo)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_Delete.htm"
+    },
+    {
+      "name": "FindName",
+      "signature": "public ViewInfo FindName(string name)",
+      "summary": "Finds a ViewInfo given its name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the ViewInfo to be searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ViewInfo",
+        "doc": "An ViewInfo, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_FindName.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CViewInfo\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that yields all views in the table.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CViewInfo\u003E",
+        "doc": "An enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_GetEnumerator.htm"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "public int IndexOf(ViewInfo item)",
+      "summary": "Returns the index of the current ViewInfo.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "The item to be searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the ViewInfo."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmViewTable_IndexOf.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of items in the table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmViewTable_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "ViewInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the view info at an index. The set method always throws NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmViewTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

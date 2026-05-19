@@ -1,0 +1,283 @@
+{
+  "name": "StringParser",
+  "namespace": "Rhino.Input",
+  "kind": "class",
+  "summary": "Parse strings to numbers, distances and angles",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_StringParser.htm",
+  "constructors": [
+    {
+      "name": "StringParser",
+      "signature": "public StringParser()",
+      "summary": "Initializes a new instance of the StringParser class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParser__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ParseAngleExpession",
+      "signature": "public static int ParseAngleExpession(string expression, int start_offset, int expression_length, StringParserSettings parse_settings_in, AngleUnitSystem output_angle_unit_system, out double value_out, ref StringParserSettings parse_results, ref AngleUnitSystem parsed_unit_system)",
+      "summary": "",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022expression\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "start_offset",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022start_offset\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "expression_length",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022expression_length\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parse_settings_in",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "[Missing \u003Cparam name=\u0022parse_settings_in\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "output_angle_unit_system",
+          "type": "Rhino.AngleUnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022output_angle_unit_system\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value_out",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value_out\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parse_results",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "[Missing \u003Cparam name=\u0022parse_results\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parsed_unit_system",
+          "type": "Rhino.AngleUnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022parsed_unit_system\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpession(System.String,System.Int32,System.Int32,Rhino.Input.StringParserSettings,Rhino.AngleUnitSystem,System.Double@,Rhino.Input.StringParserSettings@,Rhino.AngleUnitSystem@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParser_ParseAngleExpession.htm"
+    },
+    {
+      "name": "ParseAngleExpressionDegrees",
+      "signature": "public static bool ParseAngleExpressionDegrees(string expression, out double angle_degrees)",
+      "summary": "",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022expression\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpressionDegrees(System.String,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "angle_degrees",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022angle_degrees\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpressionDegrees(System.String,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpressionDegrees(System.String,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParser_ParseAngleExpressionDegrees.htm"
+    },
+    {
+      "name": "ParseAngleExpressionRadians",
+      "signature": "public static bool ParseAngleExpressionRadians(string expression, out double angle_radians)",
+      "summary": "",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022expression\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpressionRadians(System.String,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "angle_radians",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022angle_radians\u0022/\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpressionRadians(System.String,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.StringParser.ParseAngleExpressionRadians(System.String,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParser_ParseAngleExpressionRadians.htm"
+    },
+    {
+      "name": "ParseLengthExpession(String, StringParserSettings, UnitSystem, Double)",
+      "signature": "public static int ParseLengthExpession(string expression, StringParserSettings parse_settings_in, UnitSystem output_unit_system, out double value_out)",
+      "summary": "Parse a string for a length value. Expression can include complex expressions Simplest version of Length parsing",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "doc": "[In] The string to parse",
+          "optional": false
+        },
+        {
+          "name": "parse_settings_in",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "[In] Determines what input will be parsed",
+          "optional": false
+        },
+        {
+          "name": "output_unit_system",
+          "type": "Rhino.UnitSystem",
+          "doc": "[In] Output value is in this unit system",
+          "optional": false
+        },
+        {
+          "name": "value_out",
+          "type": "System.Double",
+          "doc": "[Out] The length value result",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Count of characters parsed or 0 for failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParser_ParseLengthExpession.htm"
+    },
+    {
+      "name": "ParseLengthExpession(String, Int32, Int32, StringParserSettings, UnitSystem, Double, StringParserSettings, UnitSystem)",
+      "signature": "public static int ParseLengthExpession(string expression, int start_offset, int expression_length, StringParserSettings parse_settings_in, UnitSystem output_unit_system, out double value_out, ref StringParserSettings parse_results, ref UnitSystem parsed_unit_system)",
+      "summary": "Parse a string for a length value. Expression can include complex expressions Most complex version of length parsing",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "doc": "[In] The string to parse",
+          "optional": false
+        },
+        {
+          "name": "start_offset",
+          "type": "System.Int32",
+          "doc": "[In] Offset position in string to start parsing",
+          "optional": false
+        },
+        {
+          "name": "expression_length",
+          "type": "System.Int32",
+          "doc": "[In] Maximum length of string to parse. -1 means parse to a terminating character or end of string",
+          "optional": false
+        },
+        {
+          "name": "parse_settings_in",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "[In] Determines what input will be parsed",
+          "optional": false
+        },
+        {
+          "name": "output_unit_system",
+          "type": "Rhino.UnitSystem",
+          "doc": "[In] Output value is returned in this unit system",
+          "optional": false
+        },
+        {
+          "name": "value_out",
+          "type": "System.Double",
+          "doc": "[Out] The length value result",
+          "optional": false
+        },
+        {
+          "name": "parse_results",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "[Out] Describes the results of the parse operation",
+          "optional": false
+        },
+        {
+          "name": "parsed_unit_system",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Out] If a unit system name was found in the string, it is returned here. The output value is in the unit system specified in output_unit_system",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Returns the count of characters that were parsed or 0 if the operation was unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParser_ParseLengthExpession_1.htm"
+    },
+    {
+      "name": "ParseNumber",
+      "signature": "public static int ParseNumber(string expression, int max_count, StringParserSettings settings_in, ref StringParserSettings settings_out, out double answer)",
+      "summary": "Parse a string expression to get a number",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "doc": "String to parse",
+          "optional": false
+        },
+        {
+          "name": "max_count",
+          "type": "System.Int32",
+          "doc": "Maximum number of characters to parse",
+          "optional": false
+        },
+        {
+          "name": "settings_in",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "Determines what input will be parsed",
+          "optional": false
+        },
+        {
+          "name": "settings_out",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "Reports the results of the parse operation",
+          "optional": false
+        },
+        {
+          "name": "answer",
+          "type": "System.Double",
+          "doc": "The number result of the parse operation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Count of characters in expression parsed if ParseNumber() returns 0, parse was unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_StringParser_ParseNumber.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,56 @@
+{
+  "name": "TypeLoadData",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "This class represents data loaded from assembly for each type. Based on this info node model is created.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/TypeLoadData.cs",
+  "constructors": [
+    {
+      "name": "TypeLoadData(System.Type)",
+      "signature": "void TypeLoadData(System.Type typeIn)",
+      "summary": "Creates TypeLoadData.",
+      "params": [
+        {
+          "name": "typeIn",
+          "type": "System.Type",
+          "doc": "Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/TypeLoadData.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "System.Reflection.Assembly",
+      "getter": true,
+      "setter": false,
+      "summary": "Assembly containing the type.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/TypeLoadData.cs"
+    },
+    {
+      "name": "Category",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The category of this type, used in search.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/TypeLoadData.cs"
+    },
+    {
+      "name": "IsObsolete",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies whether or not this Type is obsolete.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/TypeLoadData.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Operation",
+  "namespace": "Dynamo.Models.ViewOperationEventArgs",
+  "kind": "enum",
+  "summary": "Type Operation",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEventArgs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FitView",
+      "value": 0
+    },
+    {
+      "name": "ZoomIn",
+      "value": 1
+    },
+    {
+      "name": "ZoomOut",
+      "value": 2
+    }
+  ]
+}

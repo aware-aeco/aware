@@ -1,0 +1,34 @@
+{
+  "name": "HiddenLineDrawingSegment.SideFill",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "When a silhouette is projected on the image plane (determined by the camera location or direction), and projects to a curve (not a point), the image area to the left or right of a projected silhouette curve is filled with either the surface or a void.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_HiddenLineDrawingSegment_SideFill.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SideUnset",
+      "value": 0,
+      "summary": "Unset"
+    },
+    {
+      "name": "SideSurface",
+      "value": 1,
+      "summary": "Surface"
+    },
+    {
+      "name": "SideVoid",
+      "value": 2,
+      "summary": "Void"
+    },
+    {
+      "name": "OtherSurface",
+      "value": 3,
+      "summary": "Other Surface"
+    }
+  ]
+}

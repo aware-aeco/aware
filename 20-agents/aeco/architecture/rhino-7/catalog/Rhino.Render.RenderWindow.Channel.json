@@ -1,0 +1,332 @@
+{
+  "name": "RenderWindow.Channel",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderWindow.Channel\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderWindow_Channel.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddValue",
+      "signature": "public void AddValue(int x, int y, Color4f value)",
+      "summary": "Add value to existing values at point x, y. If x or y are out of range, the function will fail and may crash Rhino.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "The horizontal pixel position. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "The vertical pixel position. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The color to store in the channel at the specified position.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_AddValue.htm"
+    },
+    {
+      "name": "Clone",
+      "signature": "public RenderWindow.Channel Clone()",
+      "summary": "Return a clone of the channel.",
+      "params": [],
+      "returns": {
+        "type": "RenderWindow.Channel",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.Clone\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_Clone.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RenderWindow.Channel",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the RenderWindow.Channel and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_Dispose_1.htm"
+    },
+    {
+      "name": "GetMinMaxValues",
+      "signature": "public void GetMinMaxValues(out float min, out float max)",
+      "summary": "Get the minimum and maximum values in the channel. minThe channel\u0027s minimum value. maxThe channel\u0027s maximum value.",
+      "params": [
+        {
+          "name": "min",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022min\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetMinMaxValues(System.Single@,System.Single@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022max\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetMinMaxValues(System.Single@,System.Single@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_GetMinMaxValues.htm"
+    },
+    {
+      "name": "GetValue",
+      "signature": "public void GetValue(int x, int y, ComponentOrders componentOrder, ref float[] values)",
+      "summary": "Get values from the channel.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022x\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValue(System.Int32,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022y\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValue(System.Int32,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "componentOrder",
+          "type": "Rhino.Render.ComponentOrders",
+          "doc": "[Missing \u003Cparam name=\u0022componentOrder\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValue(System.Int32,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Single[]",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValue(System.Int32,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_GetValue.htm"
+    },
+    {
+      "name": "GetValues",
+      "signature": "public void GetValues(Rectangle rectangle, int stride, ComponentOrders componentOrder, ref float[] values)",
+      "summary": "Get a rectangle of values from the channel. The input parameters are checked for validity. If the rectangle is not fully inside the frame buffer, the function will fail.",
+      "params": [
+        {
+          "name": "rectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rectangle\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValues(System.Drawing.Rectangle,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "stride",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022stride\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValues(System.Drawing.Rectangle,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "componentOrder",
+          "type": "Rhino.Render.ComponentOrders",
+          "doc": "[Missing \u003Cparam name=\u0022componentOrder\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValues(System.Drawing.Rectangle,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Single[]",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.GetValues(System.Drawing.Rectangle,System.Int32,Rhino.Render.ComponentOrders,System.Single[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_GetValues.htm"
+    },
+    {
+      "name": "PixelSize",
+      "signature": "public int PixelSize()",
+      "summary": "Returns the size of the data in one pixel in the channel. For RDK standard channels, this value is always sizeof(float). For the special chanRGBA collective channel, this value is 4 * sizeof(float).",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The size of a pixel."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_PixelSize.htm"
+    },
+    {
+      "name": "SetValue(Int32, Int32, Color4f)",
+      "signature": "public void SetValue(int x, int y, Color4f value)",
+      "summary": "If x or y are out of range, the function will fail and may crash Rhino.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "The horizontal pixel position. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "The vertical pixel position. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Display.Color4f",
+          "doc": "The color to store in the channel at the specified position.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_SetValue.htm"
+    },
+    {
+      "name": "SetValue(Int32, Int32, Single)",
+      "signature": "public void SetValue(int x, int y, float value)",
+      "summary": "Assign value to a pixel at coordinate (x, y).",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Int32",
+          "doc": "The horizontal pixel position. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Int32",
+          "doc": "the vertical pixel position. No validation is done on this value. The caller is responsible for ensuring that it is within the frame buffer.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "The value to store in the channel at the specified position.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_SetValue_1.htm"
+    },
+    {
+      "name": "SetValues",
+      "signature": "public void SetValues(Rectangle rectangle, Size bufferResolution, PixelBuffer colorBuffer)",
+      "summary": "Set a pixel buffer",
+      "params": [
+        {
+          "name": "rectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rectangle\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.SetValues(System.Drawing.Rectangle,System.Drawing.Size,Rhino.Render.PixelBuffer)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bufferResolution",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022bufferResolution\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.SetValues(System.Drawing.Rectangle,System.Drawing.Size,Rhino.Render.PixelBuffer)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "colorBuffer",
+          "type": "Rhino.Render.PixelBuffer",
+          "doc": "PixelBuffer to a color buffer of floats in RGBA format.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_SetValues.htm"
+    },
+    {
+      "name": "SetValuesFlipped",
+      "signature": "public void SetValuesFlipped(Rectangle rectangle, Size bufferResolution, PixelBuffer colorBuffer)",
+      "summary": "Set a pixel buffer y-flipped.",
+      "params": [
+        {
+          "name": "rectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rectangle\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.SetValuesFlipped(System.Drawing.Rectangle,System.Drawing.Size,Rhino.Render.PixelBuffer)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bufferResolution",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022bufferResolution\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderWindow.Channel.SetValuesFlipped(System.Drawing.Rectangle,System.Drawing.Size,Rhino.Render.PixelBuffer)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "colorBuffer",
+          "type": "Rhino.Render.PixelBuffer",
+          "doc": "PixelBuffer to a color buffer of floats in RGBA format.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderWindow_Channel_SetValuesFlipped.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Height",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the channel height.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderWindow_Channel_Height.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the channel id.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderWindow_Channel_Id.htm"
+    },
+    {
+      "name": "Width",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the channel width.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderWindow_Channel_Width.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

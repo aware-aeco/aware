@@ -1,0 +1,604 @@
+{
+  "name": "ControlProperties",
+  "namespace": "ControlProperties",
+  "kind": "enum",
+  "summary": "Implementation of the control properties class",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/",
+  "constructors": [
+    {
+      "name": "ControlProperties",
+      "signature": "ControlProperties( text: str, value_name: str, enable_condition: str, visible_condition: str, page: int, expander_name: str, row_name: str, value_str: str, value_list: str, value_list_2: str, event_id: str, control_type: ControlType = CONTROL, value_index_name: str = \u0022\u0022, value_list_start_row: int = 0, value_dialog: ValueDialogType | ControlProperties()",
+      "summary": "Set the properties of the control",
+      "remarks": "Set the properties of the control",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Text of the control",
+          "optional": false
+        },
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "Name of the assigned value from the building element",
+          "optional": false
+        },
+        {
+          "name": "enable_condition",
+          "type": "str",
+          "doc": "Condition for enabled state of the control",
+          "optional": false
+        },
+        {
+          "name": "visible_condition",
+          "type": "str",
+          "doc": "Condition for visible state of the control",
+          "optional": false
+        },
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "page index of the modified property",
+          "optional": false
+        },
+        {
+          "name": "expander_name",
+          "type": "str",
+          "doc": "Expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row_name",
+          "optional": false
+        },
+        {
+          "name": "value_str",
+          "type": "str",
+          "doc": "Control value as string",
+          "optional": false
+        },
+        {
+          "name": "value_list",
+          "type": "str",
+          "doc": "Text with the values for the combo box list like 1|2|5|7 or",
+          "optional": false
+        },
+        {
+          "name": "value_list_2",
+          "type": "str",
+          "doc": "Second string list separated by | example 1|2|5|7 or",
+          "optional": false
+        },
+        {
+          "name": "event_id",
+          "type": "str",
+          "doc": "event id of the clicked button control",
+          "optional": false
+        },
+        {
+          "name": "control_type",
+          "type": "ControlType",
+          "doc": "Type of the control",
+          "optional": false
+        },
+        {
+          "name": "value_index_name",
+          "type": "str",
+          "doc": "Index name of the value (in case of list with single value by value index)",
+          "optional": false
+        },
+        {
+          "name": "value_list_start_row",
+          "type": "int",
+          "doc": "Start row of the value list row numbering inside the palette",
+          "optional": false
+        },
+        {
+          "name": "value_dialog",
+          "type": "ValueDialogType | None",
+          "doc": "Dialog type for the value input",
+          "optional": false
+        },
+        {
+          "name": "value_list_textids",
+          "type": "str",
+          "doc": "text ID\u0027s of the value list",
+          "optional": false
+        },
+        {
+          "name": "as_slider",
+          "type": "bool",
+          "doc": "Show the control as slider",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "str",
+          "doc": "Control height in pixel, only used in a row",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "str",
+          "doc": "Control width in pixel, only used in a row",
+          "optional": false
+        },
+        {
+          "name": "font_style",
+          "type": "int",
+          "doc": "font style",
+          "optional": false
+        },
+        {
+          "name": "font_face_code",
+          "type": "int",
+          "doc": "font face code",
+          "optional": false
+        },
+        {
+          "name": "background_color",
+          "type": "str",
+          "doc": "Background color in the format \u0022(red, green, blue)\u0022 with \u0022(-1, -1, -1)\u0022 or \u0022\u0022 as default",
+          "optional": false
+        },
+        {
+          "name": "row_state_key",
+          "type": "str",
+          "doc": "row state key",
+          "optional": false
+        },
+        {
+          "name": "expander_state_key",
+          "type": "str",
+          "doc": "expander state key",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "create the string from the values",
+      "remarks": "create the string from the values",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "string from the values"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.__repr__"
+    },
+    {
+      "name": "deep_copy",
+      "signature": "deep_copy() -\u003E ControlProperties",
+      "summary": "deep copy of the data",
+      "remarks": "deep copy of the data",
+      "params": [],
+      "returns": {
+        "type": "ControlProperties",
+        "doc": "copied control properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.deep_copy"
+    },
+    {
+      "name": "modify_visible_condition",
+      "signature": "modify_visible_condition(value_name: str, value: str)",
+      "summary": "Modify the visible condition",
+      "remarks": "Modify the visible condition",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "Name of the value",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "condition value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.modify_visible_condition"
+    },
+    {
+      "name": "reset_refresh_control",
+      "signature": "reset_refresh_control()",
+      "summary": "reset the refresh state of the control",
+      "remarks": "reset the refresh state of the control",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.reset_refresh_control"
+    },
+    {
+      "name": "set_member_text",
+      "signature": "set_member_text(member_name: str, member_text: str)",
+      "summary": "Set the member text of the property member",
+      "remarks": "Set the member text of the property member",
+      "params": [
+        {
+          "name": "member_name",
+          "type": "str",
+          "doc": "member name",
+          "optional": false
+        },
+        {
+          "name": "member_text",
+          "type": "str",
+          "doc": "member text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.set_member_text"
+    },
+    {
+      "name": "set_visible_condition",
+      "signature": "set_visible_condition(value_name: str, condition: str)",
+      "summary": "Set the visible condition of the property",
+      "remarks": "Set the visible condition of the property",
+      "params": [
+        {
+          "name": "value_name",
+          "type": "str",
+          "doc": "Name of the value",
+          "optional": false
+        },
+        {
+          "name": "condition",
+          "type": "str",
+          "doc": "Visible condition",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.set_visible_condition"
+    }
+  ],
+  "properties": [
+    {
+      "name": "as_slider",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the control as slider state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.as_slider"
+    },
+    {
+      "name": "background_color",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the background color of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.background_color"
+    },
+    {
+      "name": "constraint",
+      "type": "list[str]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the constraint name of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.constraint"
+    },
+    {
+      "name": "control_type",
+      "type": "ControlType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the control type of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.control_type"
+    },
+    {
+      "name": "enable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the enable state of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.enable"
+    },
+    {
+      "name": "enable_condition",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the enable condition of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.enable_condition"
+    },
+    {
+      "name": "enable_function",
+      "type": "Callable[..., bool] | None",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the enable function of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.enable_function"
+    },
+    {
+      "name": "event_id",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the event id of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.event_id"
+    },
+    {
+      "name": "expander_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the name of the current expander control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.expander_name"
+    },
+    {
+      "name": "expander_state_key",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the expander state key of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.expander_state_key"
+    },
+    {
+      "name": "font_face_code",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the font face code of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.font_face_code"
+    },
+    {
+      "name": "font_style",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the font style of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.font_style"
+    },
+    {
+      "name": "group_text",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the group text of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.group_text"
+    },
+    {
+      "name": "height",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the height of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.height"
+    },
+    {
+      "name": "interval_value",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the interval value of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.interval_value"
+    },
+    {
+      "name": "list_group_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the name of the list group",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.list_group_name"
+    },
+    {
+      "name": "max_value",
+      "type": "int | float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the max value of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.max_value"
+    },
+    {
+      "name": "max_value_condition",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the max value condition of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.max_value_condition"
+    },
+    {
+      "name": "member_text",
+      "type": "dict[str, str]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the member text of the property members",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.member_text"
+    },
+    {
+      "name": "min_value",
+      "type": "int | float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the min value of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.min_value"
+    },
+    {
+      "name": "min_value_condition",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the min value condition of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.min_value_condition"
+    },
+    {
+      "name": "page",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the page of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.page"
+    },
+    {
+      "name": "palette_layout_dict",
+      "type": "dict[str, Any]",
+      "getter": true,
+      "setter": true,
+      "summary": "get the palette layout dictionary",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.palette_layout_dict"
+    },
+    {
+      "name": "refresh_control",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the refresh control state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.refresh_control"
+    },
+    {
+      "name": "row_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the row name of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.row_name"
+    },
+    {
+      "name": "row_state_key",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the row state key of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.row_state_key"
+    },
+    {
+      "name": "text",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the control text",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.text"
+    },
+    {
+      "name": "value_dialog",
+      "type": "ValueDialogType | None",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the dialog name for the value input dialog",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_dialog"
+    },
+    {
+      "name": "value_index_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the value index name of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_index_name"
+    },
+    {
+      "name": "value_list",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the values for the value list list like 1|2|...|...",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_list"
+    },
+    {
+      "name": "value_list_2",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the second value list",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_list_2"
+    },
+    {
+      "name": "value_list_start_row",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the start row of the value list row numbering inside the palette",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_list_start_row"
+    },
+    {
+      "name": "value_list_textids",
+      "type": "str",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the second value list",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_list_textids"
+    },
+    {
+      "name": "value_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the name of the assigned value from the building element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_name"
+    },
+    {
+      "name": "value_str",
+      "type": "str",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the control value string",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_str"
+    },
+    {
+      "name": "value_text_list",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the text corresponding to the value list like Rectangle|Circle|...|...",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.value_text_list"
+    },
+    {
+      "name": "visible",
+      "type": "bool | list[bool]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visible state of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.visible"
+    },
+    {
+      "name": "visible_condition",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visible condition of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.visible_condition"
+    },
+    {
+      "name": "visible_function",
+      "type": "Callable[..., bool] | None",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visible function of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.visible_function"
+    },
+    {
+      "name": "width",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the width of the control",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/#ControlProperties.ControlProperties.width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

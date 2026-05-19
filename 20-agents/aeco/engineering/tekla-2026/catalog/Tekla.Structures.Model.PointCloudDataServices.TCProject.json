@@ -1,0 +1,13 @@
+{
+  "name": "TCProject",
+  "namespace": "Tekla.Structures.Model.PointCloudDataServices",
+  "kind": "struct",
+  "summary": "Represents a Trimble Connect Project tenancy with point cloud data services.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0c2dfb0d-0a8c-46a9-d291-a338eeaa2fdb",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

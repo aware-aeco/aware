@@ -1,0 +1,57 @@
+{
+  "name": "MeshBooleanOptions",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Contains a set of data to pass to boolean options.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshBooleanOptions.htm",
+  "constructors": [
+    {
+      "name": "MeshBooleanOptions",
+      "signature": "public MeshBooleanOptions()",
+      "summary": "Initializes a new instance of the MeshBooleanOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshBooleanOptions__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CancellationToken",
+      "type": "CancellationToken",
+      "getter": true,
+      "setter": true,
+      "summary": "A token that allows to request the cancellation of the operation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshBooleanOptions_CancellationToken.htm"
+    },
+    {
+      "name": "ProgressReporter",
+      "type": "IProgress\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the object that is responsible to keep track of calculation progression.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshBooleanOptions_ProgressReporter.htm"
+    },
+    {
+      "name": "TextLog",
+      "type": "TextLog",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a text log to write computed operations into.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshBooleanOptions_TextLog.htm"
+    },
+    {
+      "name": "Tolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a tolerance value for intersections and overlaps.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshBooleanOptions_Tolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

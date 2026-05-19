@@ -1,0 +1,185 @@
+{
+  "name": "BitmapDefinition",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BasisElements.BitmapDefinition.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create",
+      "signature": "Create(bitmapName: str) -\u003E BitmapDefinition",
+      "summary": "Create a bitmap definition",
+      "remarks": "Create a bitmap definition",
+      "params": [
+        {
+          "name": "bitmapName",
+          "type": "str",
+          "doc": "Path and name of the bitmap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BitmapDefinition",
+        "doc": "Bitmap definition"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.Create"
+    },
+    {
+      "name": "Dump",
+      "signature": "Dump(deep: bool)",
+      "summary": "Dump the bitmap definition",
+      "remarks": "Dump the bitmap definition",
+      "params": [
+        {
+          "name": "deep",
+          "type": "bool",
+          "doc": "True for a deep dump",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.Dump"
+    },
+    {
+      "name": "GetBitmapName",
+      "signature": "GetBitmapName() -\u003E str",
+      "summary": "Get the name",
+      "remarks": "Get the name",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetBitmapName"
+    },
+    {
+      "name": "GetHeight",
+      "signature": "GetHeight() -\u003E int",
+      "summary": "Get bitmap height",
+      "remarks": "Get bitmap height",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "height in pixels"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetHeight"
+    },
+    {
+      "name": "GetPixel",
+      "signature": "GetPixel(x: int, y: int) -\u003E int",
+      "summary": "Get the color of a specific pixel",
+      "remarks": "Get the color of a specific pixel",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "doc": "horizontal position",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "doc": "vertical position",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Color as ARGB"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetPixel"
+    },
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth() -\u003E int",
+      "summary": "Get bitmap width",
+      "remarks": "Get bitmap width",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Width in pixels"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetWidth"
+    },
+    {
+      "name": "IsHDRI",
+      "signature": "IsHDRI() -\u003E bool",
+      "summary": "Is High Dynamic Range Image",
+      "remarks": "Is High Dynamic Range Image",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Bitmap is a HDR image"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.IsHDRI"
+    },
+    {
+      "name": "LoadBitmap",
+      "signature": "LoadBitmap() -\u003E bool",
+      "summary": "Load bitmap",
+      "remarks": "Load bitmap",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True, when loading was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.LoadBitmap"
+    },
+    {
+      "name": "setName",
+      "signature": "setName(resourceName: str)",
+      "summary": "Set the name of the bitmap",
+      "remarks": "Set the name of the bitmap",
+      "params": [
+        {
+          "name": "resourceName",
+          "type": "str",
+          "doc": "name to assign",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.setName"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AbsolutePath",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Absolute path of the bitmap",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.AbsolutePath"
+    },
+    {
+      "name": "RelativeName",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Relative name of the bitmap",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.RelativeName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

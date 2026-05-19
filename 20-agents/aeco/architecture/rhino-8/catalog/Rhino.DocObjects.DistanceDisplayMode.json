@@ -1,0 +1,29 @@
+{
+  "name": "DistanceDisplayMode",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the display of distances in US customary and Imperial units.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DistanceDisplayMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Decimal",
+      "value": 0,
+      "summary": "Shows distance decimals."
+    },
+    {
+      "name": "Feet",
+      "value": 1,
+      "summary": "Show feet."
+    },
+    {
+      "name": "FeetAndInches",
+      "value": 2,
+      "summary": "Show feet and inches."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "VisualAnalysisMode.AnalysisStyle",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Contains enumerated values for analysis styles, such as wireframe, texture or false colors..",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_VisualAnalysisMode_AnalysisStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Wireframe",
+      "value": 1,
+      "summary": "The analysis is showing with wires."
+    },
+    {
+      "name": "Texture",
+      "value": 2,
+      "summary": "The analysis is showing with textures."
+    },
+    {
+      "name": "FalseColor",
+      "value": 4,
+      "summary": "The analysis is showing with false colors."
+    }
+  ]
+}

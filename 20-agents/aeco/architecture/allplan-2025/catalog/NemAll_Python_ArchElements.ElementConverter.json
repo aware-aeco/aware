@@ -1,0 +1,47 @@
+{
+  "name": "ElementConverter",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Utility providing methods for conversion of architectural components",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ElementConverter/",
+  "constructors": [
+    {
+      "name": "ElementConverter",
+      "signature": "ElementConverter()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ElementConverter/#NemAll_Python_ArchElements.ElementConverter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConvertToUDElement",
+      "signature": "ConvertToUDElement(elements: BaseElementAdapterList) -\u003E BaseElementAdapterList",
+      "summary": "Create user defined elements (U-D element) from 3D objects",
+      "remarks": "Create user defined elements (U-D element) from 3D objects",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Element adapters pointing to the 3D objects to convert",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Element adapters pointing to the converted 3D objects"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ElementConverter/#NemAll_Python_ArchElements.ElementConverter.ConvertToUDElement"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

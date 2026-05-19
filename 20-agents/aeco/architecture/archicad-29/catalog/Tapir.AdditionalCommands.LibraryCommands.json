@@ -1,0 +1,62 @@
+{
+  "name": "LibraryCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Library Commands\u0027 command group \u2014 3 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLibraries",
+      "signature": "GetLibraries(): object",
+      "summary": "Gets the list of loaded libraries.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: libraries."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetLibraries",
+      "since": "1.0.1"
+    },
+    {
+      "name": "ReloadLibraries",
+      "signature": "ReloadLibraries(): ExecutionResult",
+      "summary": "Executes the reload libraries command.",
+      "params": [],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ReloadLibraries",
+      "since": "1.0.0"
+    },
+    {
+      "name": "AddFilesToEmbeddedLibrary",
+      "signature": "AddFilesToEmbeddedLibrary(files: LibraryFileAdditions): object",
+      "summary": "Adds the given files into the embedded library.",
+      "params": [
+        {
+          "name": "files",
+          "type": "LibraryFileAdditions",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AddFilesToEmbeddedLibrary",
+      "since": "1.2.2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

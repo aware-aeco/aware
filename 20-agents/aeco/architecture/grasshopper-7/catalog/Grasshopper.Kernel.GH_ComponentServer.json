@@ -1,0 +1,857 @@
+{
+  "name": "GH_ComponentServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Maintains proxies for all components, parameters and other object types as defined in all grasshopper assemblies.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ComponentServer.htm",
+  "constructors": [
+    {
+      "name": "GH_ComponentServer",
+      "signature": "public GH_ComponentServer()",
+      "summary": "Initializes a new instance of the GH_ComponentServer class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAlias",
+      "signature": "public void AddAlias(string alias, Guid target)",
+      "summary": "Add an alias to a target.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "Alias to add. If the alias string contains spaces or commas, those will be used to harvest partial aliases.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Guid",
+          "doc": "Component ID of object that is targeted by the alias.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_AddAlias.htm"
+    },
+    {
+      "name": "AddCategoryIcon",
+      "signature": "public void AddCategoryIcon(string fullCategoryName, Bitmap icon)",
+      "summary": "Add an icon for a tab category. 16x16 images are required.",
+      "params": [
+        {
+          "name": "fullCategoryName",
+          "type": "System.String",
+          "doc": "The full name of the category.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Bitmap",
+          "doc": "the icon to display on the tab (has to be a 16x16 image).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_AddCategoryIcon.htm"
+    },
+    {
+      "name": "AddCategoryShortName",
+      "signature": "public void AddCategoryShortName(string fullCategoryName, string categoryAbbreviation)",
+      "summary": "Add an abbreviation for a tab category. 2~4 letter abbreviations are best.",
+      "params": [
+        {
+          "name": "fullCategoryName",
+          "type": "System.String",
+          "doc": "The full name of the category.",
+          "optional": false
+        },
+        {
+          "name": "categoryAbbreviation",
+          "type": "System.String",
+          "doc": "The abbreviation to display on the tab.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_AddCategoryShortName.htm"
+    },
+    {
+      "name": "AddCategorySymbolName",
+      "signature": "public void AddCategorySymbolName(string fullCategoryName, char symbol)",
+      "summary": "Add a single char category description.",
+      "params": [
+        {
+          "name": "fullCategoryName",
+          "type": "System.String",
+          "doc": "The full name of the category.",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "System.Char",
+          "doc": "The single char representing the category.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_AddCategorySymbolName.htm"
+    },
+    {
+      "name": "AliasTargets",
+      "signature": "public List\u003CGuid\u003E AliasTargets(string alias)",
+      "summary": "Get all the target Component IDs for a given alias.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "Alias to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_AliasTargets.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clear all caches.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_Clear.htm"
+    },
+    {
+      "name": "ClearStaleUserObjects",
+      "signature": "public void ClearStaleUserObjects()",
+      "summary": "Remove all user objects that no longer point to existing files.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_ClearStaleUserObjects.htm"
+    },
+    {
+      "name": "CompareProxies",
+      "signature": "public static int CompareProxies(IGH_ObjectProxy A, IGH_ObjectProxy B)",
+      "summary": "Compare two object proxies. Names and exposures are taken into account.",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.IGH_ObjectProxy",
+          "doc": "First proxy to compare.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.IGH_ObjectProxy",
+          "doc": "Second proxy to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "-1 if A is valued lower than B, 0 if A and B are considered equal, \u002B1 if A is valued higher than B."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_CompareProxies.htm"
+    },
+    {
+      "name": "CopyFileToAppropriateFolder",
+      "signature": "public static string CopyFileToAppropriateFolder(string filepath, bool moveOriginalToBin)",
+      "summary": "Copy a GHA or GHUSER file into the appropriate Roaming Application Data folder. Of the file is already in the top-level roaming folder it will not be copied.",
+      "params": [
+        {
+          "name": "filepath",
+          "type": "System.String",
+          "doc": "The file to copy.",
+          "optional": false
+        },
+        {
+          "name": "moveOriginalToBin",
+          "type": "System.Boolean",
+          "doc": "If true, the original file will be placed in the recycle bin upon a successful copy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The path of the copied file."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_CopyFileToAppropriateFolder.htm"
+    },
+    {
+      "name": "DestroyLoadingUI",
+      "signature": "public void DestroyLoadingUI()",
+      "summary": "Destroy the loading UI (the banner and the progress bar).",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_DestroyLoadingUI.htm"
+    },
+    {
+      "name": "EmitGraph",
+      "signature": "public IGH_Graph EmitGraph(Guid id)",
+      "summary": "Create a new instance of the IGH_Graph that matches the id. If no proxy can be matched to the id, a null reference will be returned.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The graph type id to instantiate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_Graph",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_EmitGraph.htm"
+    },
+    {
+      "name": "EmitObject",
+      "signature": "public IGH_DocumentObject EmitObject(Guid id)",
+      "summary": "Create a new instance of the IGH_DocumentObject that matches the id. If no proxy can be matched to the id, a null reference will be returned.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The component type id to instantiate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_DocumentObject",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_EmitObject.htm"
+    },
+    {
+      "name": "EmitObjectIcon",
+      "signature": "public Bitmap EmitObjectIcon(Guid id)",
+      "summary": "Get the icon that is associated with the given Object ID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "Icon of object or null if object is not defined or if object does not have an icon."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_EmitObjectIcon.htm"
+    },
+    {
+      "name": "EmitObjectProxy",
+      "signature": "public IGH_ObjectProxy EmitObjectProxy(Guid id)",
+      "summary": "Get the proxy that is associated with the given Object ID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_ObjectProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_EmitObjectProxy.htm"
+    },
+    {
+      "name": "ExternalFiles",
+      "signature": "public static List\u003CGH_ExternalFile\u003E ExternalFiles(bool testGrasshopperCollisions, bool testExternalCollisions)",
+      "summary": "Get lists of all the external files (GHA, GHUSER and GHCLUSTER) that will be loaded by Grasshopper. Note: this does not equal the files that may already have been loaded, just the files that we\u0027ll attempt to load if we were asked to load all plugins now. The list contains no duplicate file paths, but it may contain identical files which won\u0027t be filtered until actual loading.",
+      "params": [
+        {
+          "name": "testGrasshopperCollisions",
+          "type": "System.Boolean",
+          "doc": "If true, invalid duplicates of Grasshopper.dll will be tested for and warned about.",
+          "optional": false
+        },
+        {
+          "name": "testExternalCollisions",
+          "type": "System.Boolean",
+          "doc": "If true, duplicates of GHA, GHUSER and GHCLUSTER files will be tested for and warned about.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_ExternalFile\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_ExternalFiles.htm"
+    },
+    {
+      "name": "FindAssembly",
+      "signature": "public GH_AssemblyInfo FindAssembly(Guid libraryId)",
+      "summary": "Gets the assembly that corresponds to the given library ID.",
+      "params": [
+        {
+          "name": "libraryId",
+          "type": "System.Guid",
+          "doc": "Library ID to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_AssemblyInfo",
+        "doc": "The library info, or null if the ID is not registered."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_FindAssembly.htm"
+    },
+    {
+      "name": "FindAssemblyByObject(Guid)",
+      "signature": "public GH_AssemblyInfo FindAssemblyByObject(Guid objectId)",
+      "summary": "Gets the assembly that corresponds to the given library ID.",
+      "params": [
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "The object ComponentGuid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_AssemblyInfo",
+        "doc": "The library info, or null if the ID is not registered."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_FindAssemblyByObject_1.htm"
+    },
+    {
+      "name": "FindAssemblyByObject(IGH_DocumentObject)",
+      "signature": "public GH_AssemblyInfo FindAssemblyByObject(IGH_DocumentObject object)",
+      "summary": "Gets the assembly that corresponds to the given library ID.",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "doc": "Object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_AssemblyInfo",
+        "doc": "The library info, or null if the ID is not registered."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_FindAssemblyByObject.htm"
+    },
+    {
+      "name": "FindObjectByName",
+      "signature": "public IGH_ObjectProxy FindObjectByName(string name, bool ignoreWhiteSpace, bool ignoreCapitalisation)",
+      "summary": "Find an object by name. Obsolete and hidden objects are ignored. Only exact matches are included.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name to search for. Name may be prefixed by Category and Subcategory.",
+          "optional": false
+        },
+        {
+          "name": "ignoreWhiteSpace",
+          "type": "System.Boolean",
+          "doc": "If true, whitespace is ignored during matching.",
+          "optional": false
+        },
+        {
+          "name": "ignoreCapitalisation",
+          "type": "System.Boolean",
+          "doc": "If true, capitalisation is ignored during matching.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_ObjectProxy",
+        "doc": "The proxy that matches the name, or null if no such object could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_FindObjectByName.htm"
+    },
+    {
+      "name": "FindObjects(Guid)",
+      "signature": "public List\u003CIGH_ObjectProxy\u003E FindObjects(Guid libraryID)",
+      "summary": "Find all the objects that are part of a certain library.",
+      "params": [
+        {
+          "name": "libraryID",
+          "type": "System.Guid",
+          "doc": "ID of library to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CIGH_ObjectProxy\u003E",
+        "doc": "A list of all the objects that are defined in the specified library."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_FindObjects.htm"
+    },
+    {
+      "name": "FindObjects(String[], Int32, IGH_ObjectProxy[], Double[])",
+      "signature": "public int FindObjects(string[] terms, int maximumResults, ref IGH_ObjectProxy[] results, ref double[] resultWeights)",
+      "summary": "Searches the list of cached object proxies for objects that might be implied by a search term.",
+      "params": [
+        {
+          "name": "terms",
+          "type": "System.String[]",
+          "doc": "Search terms to use.",
+          "optional": false
+        },
+        {
+          "name": "maximumResults",
+          "type": "System.Int32",
+          "doc": "Maximum number of allowed hits.",
+          "optional": false
+        },
+        {
+          "name": "results",
+          "type": "Grasshopper.Kernel.IGH_ObjectProxy[]",
+          "optional": false
+        },
+        {
+          "name": "resultWeights",
+          "type": "System.Double[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "A sorted list of search results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_FindObjects_1.htm"
+    },
+    {
+      "name": "FindUpgrader",
+      "signature": "public IGH_UpgradeObject FindUpgrader(Guid target)",
+      "summary": "Find the upgrader that can convert from the given target.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Guid",
+          "doc": "ComponentID of object to upgrade.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_UpgradeObject",
+        "doc": "Matching upgrader or null if no upgrader is defined."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_FindUpgrader.htm"
+    },
+    {
+      "name": "GetAlias",
+      "signature": "public string GetAlias(Guid target)",
+      "summary": "Gets the alias display string for a given object.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Guid",
+          "doc": "Object id to retrieve aliases for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A parsable display string of aliases."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_GetAlias.htm"
+    },
+    {
+      "name": "GetCategoryIcon",
+      "signature": "public Bitmap GetCategoryIcon(string fullName)",
+      "summary": "Get the icon for a specific category. If the icon hasn\u0027t been defined, this method will return the default icon.",
+      "params": [
+        {
+          "name": "fullName",
+          "type": "System.String",
+          "doc": "Full name of category.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The category icon."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_GetCategoryIcon.htm"
+    },
+    {
+      "name": "GetCategoryShortName",
+      "signature": "public string GetCategoryShortName(string fullName)",
+      "summary": "Get the abbreviation (short name) for a specific category. If the short name hasn\u0027t been defined, this method will return the full name instead.",
+      "params": [
+        {
+          "name": "fullName",
+          "type": "System.String",
+          "doc": "Full name of category.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The abbreviated name or the full name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_GetCategoryShortName.htm"
+    },
+    {
+      "name": "GetCategorySymbolName",
+      "signature": "public string GetCategorySymbolName(string fullName)",
+      "summary": "Get the single char representation for a specific category. If the char hasn\u0027t been defined, this method will return the first char of the full name instead.",
+      "params": [
+        {
+          "name": "fullName",
+          "type": "System.String",
+          "doc": "Full name of category.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The category char."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_GetCategorySymbolName.htm"
+    },
+    {
+      "name": "IsGraphCached",
+      "signature": "public bool IsGraphCached(Guid id)",
+      "summary": "Tests the graph cache for an existing graph type ID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The ID to test for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the ID is cached, false if it aint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_IsGraphCached.htm"
+    },
+    {
+      "name": "IsObjectCached",
+      "signature": "public bool IsObjectCached(Guid id)",
+      "summary": "Tests the caches for an existing object type ID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The ID to test for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the ID is cached, false if it aint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_IsObjectCached.htm"
+    },
+    {
+      "name": "IsUpgrader",
+      "signature": "public bool IsUpgrader(IEnumerable\u003CIGH_DocumentObject\u003E objs)",
+      "summary": "Checks to see if at least one upgrader is defined for a collection of objects.",
+      "params": [
+        {
+          "name": "objs",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_DocumentObject\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_IsUpgrader.htm"
+    },
+    {
+      "name": "LoadAliases",
+      "signature": "public void LoadAliases()",
+      "summary": "Load the Alias table from the settings directory. Only use this function if you suspect the alias table settings file has changed due to some external process.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_LoadAliases.htm"
+    },
+    {
+      "name": "NewUserObject",
+      "signature": "public static bool NewUserObject(IGH_DocumentObject obj)",
+      "summary": "Create a new UserObject and write it to the Grasshopper User Object folder.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "doc": "Object to write.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_NewUserObject.htm"
+    },
+    {
+      "name": "RemoveCachedGraph",
+      "signature": "public bool RemoveCachedGraph(Guid id)",
+      "summary": "Remove a cache entry from the graph cache. This cannot be undone.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The id to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_RemoveCachedGraph.htm"
+    },
+    {
+      "name": "RemoveCachedObject(Guid)",
+      "signature": "public bool RemoveCachedObject(Guid id)",
+      "summary": "Remove a cache entry from the object cache. This cannot be undone.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The id to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_RemoveCachedObject.htm"
+    },
+    {
+      "name": "RemoveCachedObject(String)",
+      "signature": "public bool RemoveCachedObject(string userObjectFilePath)",
+      "summary": "Remove the user object (if any) that loads itself from a specified *.ghuser file.",
+      "params": [
+        {
+          "name": "userObjectFilePath",
+          "type": "System.String",
+          "doc": "File name path of user object proxy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if an object proxy was removed, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_RemoveCachedObject_1.htm"
+    },
+    {
+      "name": "SaveAliases",
+      "signature": "public void SaveAliases()",
+      "summary": "Save the alias table to the settings directory. Use this function if you change the alias table while ignoring usual channels.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_SaveAliases.htm"
+    },
+    {
+      "name": "SetAlias",
+      "signature": "public void SetAlias(string alias, Guid target)",
+      "summary": "Sets the aliases for a given target.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "Alias to add. If the alias string contains spaces or commas, those will be used to harvest partial aliases. Use a zero-length alias to remove all aliases to the target.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Guid",
+          "doc": "Component ID of object that is targeted by the alias.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_SetAlias.htm"
+    },
+    {
+      "name": "UpdateRibbonUI",
+      "signature": "public static void UpdateRibbonUI()",
+      "summary": "Forces an update of the Ribbon control on the Grasshopper main form.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ComponentServer_UpdateRibbonUI.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Aliases",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the defined aliases.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_Aliases.htm"
+    },
+    {
+      "name": "CompleteRibbonLayout",
+      "type": "GH_Layout",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default component layout featuring all non-hidden components and parameters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_CompleteRibbonLayout.htm"
+    },
+    {
+      "name": "DiscardedProxies",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the total number of IGH_DocumentObjects that were discarded during assembly parsing. This includes both skipped and replaced proxies.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_DiscardedProxies.htm"
+    },
+    {
+      "name": "GraphProxies",
+      "type": "IList\u003CGH_GraphProxy\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a list of all cached GH_GraphProxy instances.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_GraphProxies.htm"
+    },
+    {
+      "name": "Libraries",
+      "type": "ReadOnlyCollection\u003CGH_AssemblyInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a list of Assembly Info objects describing all loaded assemblies.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_Libraries.htm"
+    },
+    {
+      "name": "LoadingExceptions",
+      "type": "List\u003CGH_LoadingException\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the exceptions that were recorded during the most recent loading sequence.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_LoadingExceptions.htm"
+    },
+    {
+      "name": "ObjectProxies",
+      "type": "IList\u003CIGH_ObjectProxy\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a list of all cached GH_ObjectProxy instances.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_ObjectProxies.htm"
+    },
+    {
+      "name": "ObjectProxyNames",
+      "type": "AutoCompleteStringCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a specialized string collection of all component names.",
+      "remarks": "This property is used for autocompletion in textboxes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_ObjectProxyNames.htm"
+    },
+    {
+      "name": "TypeHints",
+      "type": "IList\u003CType\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all IGH_TypeHint types in all loaded assemblies.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_TypeHints.htm"
+    },
+    {
+      "name": "Upgraders",
+      "type": "IList\u003CIGH_UpgradeObject\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the upgraders that have been cached.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ComponentServer_Upgraders.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "GHAFileLoaded",
+      "delegate": "Grasshopper.Kernel.GH_ComponentServer.GHAFileLoadedEventHandler",
+      "signature": "public event GH_ComponentServer.GHAFileLoadedEventHandler GHAFileLoaded",
+      "summary": "Raised whenever a GHA file has been successfully loaded.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Kernel_GH_ComponentServer_GHAFileLoaded.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

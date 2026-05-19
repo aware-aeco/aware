@@ -1,0 +1,176 @@
+{
+  "name": "SimpleArrayByte",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Wrapper for ON_SimpleArray\u003Cunsigned char\u003E. If you are not writing C\u002B\u002B code then this class is not for you.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_InteropWrappers_SimpleArrayByte.htm",
+  "constructors": [
+    {
+      "name": "SimpleArrayByte()",
+      "signature": "public SimpleArrayByte()",
+      "summary": "Initializes a new SimpleArrayByte class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte__ctor.htm"
+    },
+    {
+      "name": "SimpleArrayByte(IEnumerable\u003CByte\u003E)",
+      "signature": "public SimpleArrayByte(IEnumerable\u003Cbyte\u003E values)",
+      "summary": "Initializes a new SimpleArrayByte class",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CByte\u003E",
+          "doc": "initial set of integers to add to the array",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte__ctor_2.htm"
+    },
+    {
+      "name": "SimpleArrayByte(Int32)",
+      "signature": "public SimpleArrayByte(int initialSize)",
+      "summary": "Initializes a new SimpleArrayByte class. Initial size of the array - all values are set to zero.",
+      "params": [
+        {
+          "name": "initialSize",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022initialSize\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.SimpleArrayByte.#ctor(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte__ctor_3.htm"
+    },
+    {
+      "name": "SimpleArrayByte(SimpleArrayByte)",
+      "signature": "public SimpleArrayByte(SimpleArrayByte other)",
+      "summary": "Initializes a new SimpleArrayByte with the contents of another SimpleArrayByte.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Runtime.InteropWrappers.SimpleArrayByte",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.SimpleArrayByte.#ctor(Rhino.Runtime.InteropWrappers.SimpleArrayByte)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Array",
+      "signature": "public IntPtr Array()",
+      "summary": "Return the raw data.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.SimpleArrayByte.Array\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte_Array.htm"
+    },
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "Gets the constant (immutable) pointer of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte_ConstPointer.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(SimpleArrayByte other)",
+      "summary": "Copies the contents of a SimpleArrayByte into another SimpleArrayByte.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Runtime.InteropWrappers.SimpleArrayByte",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.SimpleArrayByte.CopyTo(Rhino.Runtime.InteropWrappers.SimpleArrayByte)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte_CopyTo.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte_Finalize.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "Gets the non-constant pointer (for modification) of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The non-constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte_NonConstPointer.htm"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public byte[] ToArray()",
+      "summary": "Returns the managed counterpart of the unmanaged array.",
+      "params": [],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "The managed array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayByte_ToArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of elements in this array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_InteropWrappers_SimpleArrayByte_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

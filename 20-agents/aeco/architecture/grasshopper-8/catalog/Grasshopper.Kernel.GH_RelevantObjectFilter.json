@@ -1,0 +1,54 @@
+{
+  "name": "GH_RelevantObjectFilter",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible filters to use in relevant object searches.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_RelevantObjectFilter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Blank filter. When combined with another filter it is ignored."
+    },
+    {
+      "name": "Groups",
+      "value": 1,
+      "summary": "Include group objects in the search."
+    },
+    {
+      "name": "InputGrips",
+      "value": 2,
+      "summary": "Include input grips in the search."
+    },
+    {
+      "name": "OutputGrips",
+      "value": 4,
+      "summary": "Include output grips in the search."
+    },
+    {
+      "name": "Grips",
+      "value": 6,
+      "summary": "Include both input and outpu grips in the search."
+    },
+    {
+      "name": "Attributes",
+      "value": 8,
+      "summary": "Include attribute bounds in the search."
+    },
+    {
+      "name": "Wires",
+      "value": 1024,
+      "summary": "Include wires (currently not yet supported)"
+    },
+    {
+      "name": "All",
+      "value": 2147483647,
+      "summary": "Search all possible objects."
+    }
+  ]
+}

@@ -1,0 +1,447 @@
+{
+  "name": "ExecutionMirror",
+  "namespace": "ProtoCore.DSASM.Mirror",
+  "kind": "class",
+  "summary": "Provides reflective capabilities over the execution of a DSASM Executable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs",
+  "constructors": [
+    {
+      "name": "ExecutionMirror(ProtoCore.DSASM.Executive, ProtoCore.RuntimeCore)",
+      "signature": "void ExecutionMirror(ProtoCore.DSASM.Executive exec, ProtoCore.RuntimeCore coreObj)",
+      "summary": "Create a mirror for a given executive",
+      "params": [
+        {
+          "name": "exec",
+          "type": "ProtoCore.DSASM.Executive",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "coreObj",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetArrayElements(ProtoCore.Lang.Obj)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.Lang.Obj\u003E GetArrayElements(ProtoCore.Lang.Obj obj)",
+      "summary": "ExecutionMirror.GetArrayElements",
+      "params": [
+        {
+          "name": "obj",
+          "type": "ProtoCore.Lang.Obj",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Obj\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetClassTrace(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.Heap, int, bool)",
+      "signature": "string GetClassTrace(ProtoCore.DSASM.StackValue val, ProtoCore.DSASM.Heap heap, int langblock, bool forPrint)",
+      "summary": "ExecutionMirror.GetClassTrace",
+      "params": [
+        {
+          "name": "val",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        },
+        {
+          "name": "langblock",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "forPrint",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetDebugValue(string)",
+      "signature": "ProtoCore.Lang.Obj GetDebugValue(string name)",
+      "summary": "ExecutionMirror.GetDebugValue",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Lang.Obj",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetFirstValue(string, int, int)",
+      "signature": "ProtoCore.Lang.Obj GetFirstValue(string name, int startBlock, int classcope)",
+      "summary": "ExecutionMirror.GetFirstValue",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "startBlock",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classcope",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Lang.Obj",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetProperties(ProtoCore.Lang.Obj, bool)",
+      "signature": "System.Collections.Generic.Dictionary\u003Cstring, ProtoCore.Lang.Obj\u003E GetProperties(ProtoCore.Lang.Obj obj, bool excludeStatic)",
+      "summary": "ExecutionMirror.GetProperties",
+      "params": [
+        {
+          "name": "obj",
+          "type": "ProtoCore.Lang.Obj",
+          "optional": false
+        },
+        {
+          "name": "excludeStatic",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003Cstring, ProtoCore.Lang.Obj\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetRawFirstValue(string, int, int)",
+      "signature": "ProtoCore.DSASM.StackValue GetRawFirstValue(string name, int startBlock, int classcope)",
+      "summary": "ExecutionMirror.GetRawFirstValue",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "startBlock",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classcope",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetStringValue(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.Heap, int, bool)",
+      "signature": "string GetStringValue(ProtoCore.DSASM.StackValue val, ProtoCore.DSASM.Heap heap, int langblock, bool forPrint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "val",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "langblock",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "forPrint",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetStringValue(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.Heap, int, int, int, bool)",
+      "signature": "string GetStringValue(ProtoCore.DSASM.StackValue val, ProtoCore.DSASM.Heap heap, int langblock, int maxArraySize, int maxOutputDepth, bool forPrint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "val",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "langblock",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "maxArraySize",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "maxOutputDepth",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "forPrint",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetType(ProtoCore.Lang.Obj)",
+      "signature": "string GetType(ProtoCore.Lang.Obj obj)",
+      "summary": "ExecutionMirror.GetType",
+      "params": [
+        {
+          "name": "obj",
+          "type": "ProtoCore.Lang.Obj",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetType(string)",
+      "signature": "string GetType(string name)",
+      "summary": "ExecutionMirror.GetType",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetValue(string, int)",
+      "signature": "ProtoCore.DSASM.StackValue GetValue(string name, int startBlock)",
+      "summary": "Searching variable name starting from specified block. Exception: SymbolNotFoundException if variable not found.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "startBlock",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "GetWatchValue",
+      "signature": "ProtoCore.Lang.Obj GetWatchValue()",
+      "summary": "ExecutionMirror.GetWatchValue",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.Lang.Obj",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "SetValueAndExecute(string, System.Nullable\u003Cint\u003E)",
+      "signature": "void SetValueAndExecute(string varName, System.Nullable\u003Cint\u003E value)",
+      "summary": "Reset an existing value and re-execute the vm",
+      "params": [
+        {
+          "name": "varName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Nullable\u003Cint\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "Unpack(ProtoCore.DSASM.StackValue)",
+      "signature": "ProtoCore.Lang.Obj Unpack(ProtoCore.DSASM.StackValue val)",
+      "summary": "Do the recursive unpacking of the data structure into mirror objects",
+      "params": [
+        {
+          "name": "val",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Lang.Obj",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    },
+    {
+      "name": "Unpack(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.Heap, ProtoCore.RuntimeCore, int)",
+      "signature": "ProtoCore.Lang.Obj Unpack(ProtoCore.DSASM.StackValue val, ProtoCore.DSASM.Heap heap, ProtoCore.RuntimeCore runtimeCore, int type)",
+      "summary": "Do the recursive unpacking of the data structure into mirror objects",
+      "params": [
+        {
+          "name": "val",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Lang.Obj",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MirrorTarget",
+      "type": "ProtoCore.DSASM.Executive",
+      "getter": true,
+      "setter": false,
+      "summary": "ExecutionMirror.MirrorTarget",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

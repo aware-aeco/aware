@@ -1,0 +1,69 @@
+{
+  "name": "GH_ObjectSpecies",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Contains all object species.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ObjectSpecies.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "none",
+      "value": 0,
+      "summary": "Indicates no object type"
+    },
+    {
+      "name": "doc_object",
+      "value": 1,
+      "summary": "Represents any object that implements IGH_DocumentObject"
+    },
+    {
+      "name": "parameter",
+      "value": 16,
+      "summary": "Indicates classes that implement IGH_Param"
+    },
+    {
+      "name": "component",
+      "value": 32,
+      "summary": "Indicates classes that implement IGH_Component"
+    },
+    {
+      "name": "group",
+      "value": 64,
+      "summary": "Indicates classes of type GH_Group"
+    },
+    {
+      "name": "wire",
+      "value": 128,
+      "summary": "Currently this is not yet an object type."
+    },
+    {
+      "name": "grip_in",
+      "value": 256,
+      "summary": "Represents an input grip."
+    },
+    {
+      "name": "grip_out",
+      "value": 512,
+      "summary": "Represents an output grip."
+    },
+    {
+      "name": "grip",
+      "value": 768,
+      "summary": "Represents an input or output grip."
+    },
+    {
+      "name": "balloon",
+      "value": 1024,
+      "summary": "Represents an attribute balloon."
+    },
+    {
+      "name": "any",
+      "value": "4294967295",
+      "summary": "Indicates all object types."
+    }
+  ]
+}

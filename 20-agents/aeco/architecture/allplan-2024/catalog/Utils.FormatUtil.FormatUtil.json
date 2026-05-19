@@ -1,0 +1,128 @@
+{
+  "name": "FormatUtil",
+  "namespace": "Utils.FormatUtil",
+  "kind": "class",
+  "summary": "Implementation of the format utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/FormatUtil/FormatUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_layer_pen_stroke_color",
+      "signature": "get_layer_pen_stroke_color(layer)",
+      "summary": "get the pen, stroke and color from the layer",
+      "remarks": "get the pen, stroke and color from the layer",
+      "params": [
+        {
+          "name": "layer",
+          "type": "int | str",
+          "doc": "number of the layer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, int, int, int]",
+        "doc": "tuple(pen, stroke, color)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/FormatUtil/FormatUtil/#Utils.FormatUtil.FormatUtil.get_layer_pen_stroke_color"
+    },
+    {
+      "name": "init_by_global_properties",
+      "signature": "init_by_global_properties(build_ele)",
+      "summary": "initialize the values by global properties",
+      "remarks": "initialize the values by global properties",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/FormatUtil/FormatUtil/#Utils.FormatUtil.FormatUtil.init_by_global_properties"
+    },
+    {
+      "name": "init_list_by_global_properties",
+      "signature": "init_list_by_global_properties(build_ele)",
+      "summary": "initialize the values by global properties",
+      "remarks": "initialize the values by global properties",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/FormatUtil/FormatUtil/#Utils.FormatUtil.FormatUtil.init_list_by_global_properties"
+    },
+    {
+      "name": "update_by_layer",
+      "signature": "update_by_layer(color, color_by_layer, pen, pen_by_layer, stroke, stroke_by_layer, layer)",
+      "summary": "Update the common properties by layer",
+      "remarks": "Update the common properties by layer",
+      "params": [
+        {
+          "name": "color",
+          "type": "int",
+          "doc": "color",
+          "optional": false
+        },
+        {
+          "name": "color_by_layer",
+          "type": "bool",
+          "doc": "color by layer state",
+          "optional": false
+        },
+        {
+          "name": "pen",
+          "type": "int",
+          "doc": "pen",
+          "optional": false
+        },
+        {
+          "name": "pen_by_layer",
+          "type": "bool",
+          "doc": "pen by layer state",
+          "optional": false
+        },
+        {
+          "name": "stroke",
+          "type": "int",
+          "doc": "stroke",
+          "optional": false
+        },
+        {
+          "name": "stroke_by_layer",
+          "type": "bool",
+          "doc": "stroke by layer state",
+          "optional": false
+        },
+        {
+          "name": "layer",
+          "type": "int",
+          "doc": "layer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[int, int, int]",
+        "doc": "color, pen, stroke"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/FormatUtil/FormatUtil/#Utils.FormatUtil.FormatUtil.update_by_layer"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,98 @@
+{
+  "name": "WindowType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The type of a window.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#WindowType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FloorPlan",
+      "value": "FloorPlan"
+    },
+    {
+      "name": "Section",
+      "value": "Section"
+    },
+    {
+      "name": "Details",
+      "value": "Details"
+    },
+    {
+      "name": "3DModel",
+      "value": "3DModel"
+    },
+    {
+      "name": "Layout",
+      "value": "Layout"
+    },
+    {
+      "name": "Drawing",
+      "value": "Drawing"
+    },
+    {
+      "name": "CustomText",
+      "value": "CustomText"
+    },
+    {
+      "name": "CustomDraw",
+      "value": "CustomDraw"
+    },
+    {
+      "name": "MasterLayout",
+      "value": "MasterLayout"
+    },
+    {
+      "name": "Elevation",
+      "value": "Elevation"
+    },
+    {
+      "name": "InteriorElevation",
+      "value": "InteriorElevation"
+    },
+    {
+      "name": "Worksheet",
+      "value": "Worksheet"
+    },
+    {
+      "name": "Report",
+      "value": "Report"
+    },
+    {
+      "name": "3DDocument",
+      "value": "3DDocument"
+    },
+    {
+      "name": "External3D",
+      "value": "External3D"
+    },
+    {
+      "name": "Movie3D",
+      "value": "Movie3D"
+    },
+    {
+      "name": "MovieRendering",
+      "value": "MovieRendering"
+    },
+    {
+      "name": "Rendering",
+      "value": "Rendering"
+    },
+    {
+      "name": "ModelCompare",
+      "value": "ModelCompare"
+    },
+    {
+      "name": "Interactive Schedule",
+      "value": "Interactive Schedule"
+    },
+    {
+      "name": "Unknown",
+      "value": "Unknown"
+    }
+  ]
+}

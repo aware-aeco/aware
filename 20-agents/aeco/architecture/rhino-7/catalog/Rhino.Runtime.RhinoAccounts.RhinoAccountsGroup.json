@@ -1,0 +1,54 @@
+{
+  "name": "RhinoAccountsGroup",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Represents a Rhino Accounts group.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsGroup.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsGroup",
+      "signature": "public RhinoAccountsGroup(string id, string name)",
+      "summary": "Represents a group in Rhino Accounts. Groups are a collection of individual members that can share resources.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.RhinoAccounts.RhinoAccountsGroup.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.RhinoAccounts.RhinoAccountsGroup.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsGroup__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The id of the group. The id is unique to a group within Rhino Accounts.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_RhinoAccountsGroup_Id.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the group. The name can be changed at anytime by group members.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_RhinoAccountsGroup_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

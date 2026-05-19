@@ -1,0 +1,288 @@
+{
+  "name": "GH_Version",
+  "namespace": "GH_IO.Types",
+  "kind": "struct",
+  "summary": "Basic version type. Contains Major, Minor and Revision fields.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Types_GH_Version.htm",
+  "constructors": [
+    {
+      "name": "GH_Version(GH_Version)",
+      "signature": "public GH_Version(GH_Version other)",
+      "summary": "Copy constructor. Duplicate an existing version structure.",
+      "params": [
+        {
+          "name": "other",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to duplicate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version__ctor.htm"
+    },
+    {
+      "name": "GH_Version(Int32, Int32, Int32)",
+      "signature": "public GH_Version(int v_major, int v_minor, int v_revision)",
+      "summary": "Default constructor. Create a new version from specified fields.",
+      "params": [
+        {
+          "name": "v_major",
+          "type": "System.Int32",
+          "doc": "Major component of version.",
+          "optional": false
+        },
+        {
+          "name": "v_minor",
+          "type": "System.Int32",
+          "doc": "Minor component of version.",
+          "optional": false
+        },
+        {
+          "name": "v_revision",
+          "type": "System.Int32",
+          "doc": "Revision component of version.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Performs value equality comparison.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "Object to compare with. If obj is a null reference or not a GH_Version instance, false is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if obj is a GH_Version instance which is equal to this one."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Returns the hash code for this instance.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A hash code for the current version object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_GetHashCode.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Default formatter for Version data: M.m.RRRR Revision section is padded with zeroes until it is at least 4 digits long.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string represtation of the Version structure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_ToString.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(GH_Version A, GH_Version B)",
+      "summary": "Compares two version structures for equality.",
+      "params": [
+        {
+          "name": "A",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all version fields in A and B are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_op_Equality.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(GH_Version A, GH_Version B)",
+      "summary": "Compares versions for larger than relationships.",
+      "params": [
+        {
+          "name": "A",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if A is newer than B."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(GH_Version A, GH_Version B)",
+      "summary": "Compares versions for larger than or equal to relationships.",
+      "params": [
+        {
+          "name": "A",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if A is newer than or equal to B."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(GH_Version A, GH_Version B)",
+      "summary": "Compares two version structures for inequality.",
+      "params": [
+        {
+          "name": "A",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if A is different from B."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(GH_Version A, GH_Version B)",
+      "summary": "Compares versions for smaller than relationships.",
+      "params": [
+        {
+          "name": "A",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if A represents an older version than B."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(GH_Version A, GH_Version B)",
+      "summary": "Compares versions for smaller than or equal to relationships.",
+      "params": [
+        {
+          "name": "A",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "GH_IO.Types.GH_Version",
+          "doc": "Version to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if A is older than or equal to B."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Version_op_LessThanOrEqual.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "major",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Major component of version structure.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_Version_major.htm"
+    },
+    {
+      "name": "minor",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Minor component of version structure.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_Version_minor.htm"
+    },
+    {
+      "name": "revision",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Revision component of version structure.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_Version_revision.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

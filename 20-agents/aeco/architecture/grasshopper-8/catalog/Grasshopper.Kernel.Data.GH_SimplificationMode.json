@@ -1,0 +1,29 @@
+{
+  "name": "GH_SimplificationMode",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "enum",
+  "summary": "Enumerates the possible data structure simplification modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_SimplificationMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Specifies no simplification is to take place."
+    },
+    {
+      "name": "CollapseLeadingOverlaps",
+      "value": 1,
+      "summary": "Only overlaps at the leading portion of paths will be simplified."
+    },
+    {
+      "name": "CollapseAllOverlaps",
+      "value": 2,
+      "summary": "Overlaps along the entire span of the paths will be simplified."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "ICurve",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "interface",
+  "summary": "Interface that represents an abstract curved geometry defined by a set of points. This interface is intended to be the base class of 3D curves.",
+  "interfaces": [
+    "IEquatable\u003CICurve\u003E"
+  ],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/101740ff-cebe-b199-47f4-7dbaa88045d6",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "ICurve Clone()",
+      "summary": "Returns a deep copy of the geometry",
+      "params": [],
+      "returns": {
+        "type": "ICurve",
+        "doc": "Copy of self"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cfb5dd66-0d7e-3aec-4fb1-38b1615347b5"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the end point of the curve. May be the same as StartPoint if the curve is closed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/36120cc8-f303-d513-a8af-f064d2e16f25"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the length of the curve",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3582508d-5271-dcb5-c3eb-324cd3dccf02"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the start point of the curve",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/be414bb3-c86c-eff0-feb2-9c64fdb524b3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

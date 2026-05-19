@@ -1,0 +1,22 @@
+{
+  "name": "LuceneStorage",
+  "namespace": "Dynamo.Utilities.LuceneSearchUtility",
+  "kind": "enum",
+  "summary": "Type LuceneStorage",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Utilities/LuceneSearchUtility.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FILE_SYSTEM",
+      "value": 1
+    },
+    {
+      "name": "RAM",
+      "value": 0
+    }
+  ]
+}

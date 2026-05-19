@@ -1,0 +1,38 @@
+{
+  "name": "LcOpSimulationSourceDisplay",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSimulationSourceDisplay enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceDisplay",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDISPLAY_NONE",
+      "value": 0
+    },
+    {
+      "name": "eDISPLAY_GUI",
+      "value": 1
+    },
+    {
+      "name": "eDISPLAY_HIGHLIGHT",
+      "value": 2
+    },
+    {
+      "name": "eDISPLAY_MOVE",
+      "value": 4
+    },
+    {
+      "name": "eDISPLAY_TRIGGERS",
+      "value": 8
+    },
+    {
+      "name": "eDISPLAY_ALL",
+      "value": 15
+    }
+  ]
+}

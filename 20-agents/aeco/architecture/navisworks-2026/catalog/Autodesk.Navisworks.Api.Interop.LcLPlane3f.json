@@ -1,0 +1,1011 @@
+{
+  "name": "LcLPlane3f",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcLPlane3f class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+  "constructors": [
+    {
+      "name": "LcLPlane3f()",
+      "signature": "LcLPlane3f()",
+      "summary": "Constructs a new LcLPlane3f.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.%23ctor"
+    },
+    {
+      "name": "LcLPlane3f(Autodesk.Navisworks.Api.Interop.LcLPlane3f)",
+      "signature": "LcLPlane3f(Autodesk.Navisworks.Api.Interop.LcLPlane3f p)",
+      "summary": "Constructs a new LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.%23ctor%28Autodesk.Navisworks.Api.Interop.LcLPlane3f%29"
+    },
+    {
+      "name": "LcLPlane3f(Autodesk.Navisworks.Api.UnitVector3D, Autodesk.Navisworks.Api.Point3D)",
+      "signature": "LcLPlane3f(Autodesk.Navisworks.Api.UnitVector3D normal, Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "Constructs a new LcLPlane3f.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.%23ctor%28Autodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "LcLPlane3f(Autodesk.Navisworks.Api.UnitVector3D, double)",
+      "signature": "LcLPlane3f(Autodesk.Navisworks.Api.UnitVector3D normal, double distance)",
+      "summary": "Constructs a new LcLPlane3f.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.%23ctor%28Autodesk.Navisworks.Api.UnitVector3D%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Opposite",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f Opposite()",
+      "summary": "Opposite method of LcLPlane3f.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Opposite"
+    },
+    {
+      "name": "RotatedBy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f RotatedBy(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "RotatedBy method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.RotatedBy%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "TransformedBy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedBy(Autodesk.Navisworks.Api.Interop.LcLAffine3f m)",
+      "summary": "TransformedBy method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLAffine3f",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedBy%28Autodesk.Navisworks.Api.Interop.LcLAffine3f%29"
+    },
+    {
+      "name": "TransformedBy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedBy(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m)",
+      "summary": "TransformedBy method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedBy%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "TransformedBy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedBy(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "TransformedBy method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedBy%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "TransformedBy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedBy(Autodesk.Navisworks.Api.Transform3D m)",
+      "summary": "TransformedBy method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedBy%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "TransformedByInverse",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedByInverse(Autodesk.Navisworks.Api.Interop.LcLAffine3f m)",
+      "summary": "TransformedByInverse method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLAffine3f",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedByInverse%28Autodesk.Navisworks.Api.Interop.LcLAffine3f%29"
+    },
+    {
+      "name": "TransformedByInverse",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedByInverse(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m)",
+      "summary": "TransformedByInverse method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedByInverse%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "TransformedByInverse",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedByInverse(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "TransformedByInverse method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedByInverse%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "TransformedByInverse",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TransformedByInverse(Autodesk.Navisworks.Api.Transform3D m)",
+      "summary": "TransformedByInverse method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TransformedByInverse%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "TranslatedBy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f TranslatedBy(Autodesk.Navisworks.Api.Vector3D t)",
+      "summary": "TranslatedBy method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "t",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.TranslatedBy%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "Autodesk.Navisworks.Api.Point3D ClosestPoint(Autodesk.Navisworks.Api.Point3D p)",
+      "summary": "ClosestPoint method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.ClosestPoint%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "EditNormal",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D EditNormal()",
+      "summary": "EditNormal method of LcLPlane3f.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.EditNormal"
+    },
+    {
+      "name": "GetNormal",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetNormal()",
+      "summary": "GetNormal method of LcLPlane3f.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.GetNormal"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Interop.LcLPlane3f p)",
+      "summary": "Equals method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Equals%28Autodesk.Navisworks.Api.Interop.LcLPlane3f%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Interop.LcLPlane3f p, double resnor)",
+      "summary": "Equals method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+          "optional": false
+        },
+        {
+          "name": "resnor",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Equals%28Autodesk.Navisworks.Api.Interop.LcLPlane3f%2CSystem.Double%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Interop.LcLPlane3f p, double resnor, double resabs)",
+      "summary": "Equals method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+          "optional": false
+        },
+        {
+          "name": "resnor",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "resabs",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Equals%28Autodesk.Navisworks.Api.Interop.LcLPlane3f%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "IsInHalfspace",
+      "signature": "bool IsInHalfspace(Autodesk.Navisworks.Api.Point3D pt)",
+      "summary": "IsInHalfspace method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.IsInHalfspace%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "bool SetValue(Autodesk.Navisworks.Api.Point3D p0, Autodesk.Navisworks.Api.Point3D p1, Autodesk.Navisworks.Api.Point3D p2)",
+      "summary": "SetValue method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p0",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "p1",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "p2",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.SetValue%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "DistanceFromPlane",
+      "signature": "double DistanceFromPlane(Autodesk.Navisworks.Api.Point3D pt)",
+      "summary": "DistanceFromPlane method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.DistanceFromPlane%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "GetDistance",
+      "signature": "double GetDistance()",
+      "summary": "GetDistance method of LcLPlane3f.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.GetDistance"
+    },
+    {
+      "name": "MaxDistanceFromPlane",
+      "signature": "double MaxDistanceFromPlane(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "MaxDistanceFromPlane method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.MaxDistanceFromPlane%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "MinDistanceFromPlane",
+      "signature": "double MinDistanceFromPlane(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "MinDistanceFromPlane method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.MinDistanceFromPlane%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcLPlane3f InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "IsPointInTriangle",
+      "signature": "static bool IsPointInTriangle(Autodesk.Navisworks.Api.Point3D p, Autodesk.Navisworks.Api.Point3D v0, Autodesk.Navisworks.Api.Point3D v1, Autodesk.Navisworks.Api.Point3D v2)",
+      "summary": "IsPointInTriangle method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v0",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v1",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v2",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.IsPointInTriangle%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "IsPointInTriangle",
+      "signature": "static bool IsPointInTriangle(Autodesk.Navisworks.Api.Point3D p, Autodesk.Navisworks.Api.Point3D v0, Autodesk.Navisworks.Api.Point3D v1, Autodesk.Navisworks.Api.Point3D v2, Autodesk.Navisworks.Api.Vector3D barycentric)",
+      "summary": "IsPointInTriangle method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v0",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v1",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v2",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "barycentric",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.IsPointInTriangle%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "IsPointInTriangle",
+      "signature": "static bool IsPointInTriangle(Autodesk.Navisworks.Api.Point3D p, Autodesk.Navisworks.Api.UnitVector3D normal, Autodesk.Navisworks.Api.Point3D v0, Autodesk.Navisworks.Api.Point3D v1, Autodesk.Navisworks.Api.Point3D v2)",
+      "summary": "IsPointInTriangle method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "v0",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v1",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v2",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.IsPointInTriangle%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "IsPointInTriangle",
+      "signature": "static bool IsPointInTriangle(Autodesk.Navisworks.Api.Point3D p, Autodesk.Navisworks.Api.UnitVector3D normal, Autodesk.Navisworks.Api.Point3D v0, Autodesk.Navisworks.Api.Point3D v1, Autodesk.Navisworks.Api.Point3D v2, Autodesk.Navisworks.Api.Vector3D barycentric)",
+      "summary": "IsPointInTriangle method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "v0",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v1",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "v2",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "barycentric",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.IsPointInTriangle%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "InverseTransform",
+      "signature": "void InverseTransform(Autodesk.Navisworks.Api.Interop.LcLAffine3f m)",
+      "summary": "InverseTransform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLAffine3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.InverseTransform%28Autodesk.Navisworks.Api.Interop.LcLAffine3f%29"
+    },
+    {
+      "name": "InverseTransform",
+      "signature": "void InverseTransform(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m)",
+      "summary": "InverseTransform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.InverseTransform%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "InverseTransform",
+      "signature": "void InverseTransform(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "InverseTransform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.InverseTransform%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "InverseTransform",
+      "signature": "void InverseTransform(Autodesk.Navisworks.Api.Transform3D m)",
+      "summary": "InverseTransform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.InverseTransform%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "Negate",
+      "signature": "void Negate()",
+      "summary": "Negate method of LcLPlane3f.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Negate"
+    },
+    {
+      "name": "Offset",
+      "signature": "void Offset(double d)",
+      "summary": "Offset method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "d",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Offset%28System.Double%29"
+    },
+    {
+      "name": "Rotate",
+      "signature": "void Rotate(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "Rotate method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Rotate%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "SetDistance",
+      "signature": "void SetDistance(double distance)",
+      "summary": "SetDistance method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.SetDistance%28System.Double%29"
+    },
+    {
+      "name": "SetNormal",
+      "signature": "void SetNormal(Autodesk.Navisworks.Api.UnitVector3D normal)",
+      "summary": "SetNormal method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.SetNormal%28Autodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.Interop.LcLPlane3f p)",
+      "summary": "SetValue method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.SetValue%28Autodesk.Navisworks.Api.Interop.LcLPlane3f%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.UnitVector3D normal, Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "SetValue method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.SetValue%28Autodesk.Navisworks.Api.UnitVector3D%2CAutodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.UnitVector3D normal, double distance)",
+      "summary": "SetValue method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.SetValue%28Autodesk.Navisworks.Api.UnitVector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "Transform",
+      "signature": "void Transform(Autodesk.Navisworks.Api.Interop.LcLAffine3f m)",
+      "summary": "Transform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLAffine3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Transform%28Autodesk.Navisworks.Api.Interop.LcLAffine3f%29"
+    },
+    {
+      "name": "Transform",
+      "signature": "void Transform(Autodesk.Navisworks.Api.Interop.LcLMatrix4f m)",
+      "summary": "Transform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLMatrix4f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Transform%28Autodesk.Navisworks.Api.Interop.LcLMatrix4f%29"
+    },
+    {
+      "name": "Transform",
+      "signature": "void Transform(Autodesk.Navisworks.Api.Matrix3 m)",
+      "summary": "Transform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Transform%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "Transform",
+      "signature": "void Transform(Autodesk.Navisworks.Api.Transform3D m)",
+      "summary": "Transform method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "m",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Transform%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "Translate",
+      "signature": "void Translate(Autodesk.Navisworks.Api.Vector3D t)",
+      "summary": "Translate method of LcLPlane3f.",
+      "params": [
+        {
+          "name": "t",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.Translate%28Autodesk.Navisworks.Api.Vector3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcLPlane3f.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcLPlane3f.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

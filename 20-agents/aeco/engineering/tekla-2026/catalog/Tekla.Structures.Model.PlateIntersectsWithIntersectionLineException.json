@@ -1,0 +1,25 @@
+{
+  "name": "PlateIntersectsWithIntersectionLineException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The PlateIntersectsWithIntersectionLineException class represents an error when, plate polygon extends beyond intersection line.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/092874f5-d392-7d82-429f-f7a9167ca364",
+  "constructors": [
+    {
+      "name": "PlateIntersectsWithIntersectionLineException",
+      "signature": "public PlateIntersectsWithIntersectionLineException()",
+      "summary": "Initializes a new instance of the PlateIntersectsWithIntersectionLineException class with \u0022Plate polygon extends beyond intersection line\u0022 error message.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ccb32934-48e0-003b-bd93-40aa18525515"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

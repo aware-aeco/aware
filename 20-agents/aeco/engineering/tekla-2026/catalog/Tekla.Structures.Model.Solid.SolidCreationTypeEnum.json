@@ -1,0 +1,49 @@
+{
+  "name": "Solid.SolidCreationTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The creation type of the solid.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/91495004-3272-05f8-52b1-cdc3d386ea19",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "RAW",
+      "value": 0,
+      "summary": "The solid is created without any boolean operations."
+    },
+    {
+      "name": "FITTED",
+      "value": 1,
+      "summary": "The solid is created with fittings."
+    },
+    {
+      "name": "NORMAL",
+      "value": 2,
+      "summary": "The solid is created including all cutting and fitting operations."
+    },
+    {
+      "name": "HIGH_ACCURACY",
+      "value": 3,
+      "summary": "The solid is created as normal with an exact profile cross section."
+    },
+    {
+      "name": "PLANECUTTED",
+      "value": 4,
+      "summary": "The solid is created with fittings and cut planes."
+    },
+    {
+      "name": "NORMAL_WITHOUT_EDGECHAMFERS",
+      "value": 5,
+      "summary": "The solid is created including all cutting and fitting operations without edge chamfers."
+    },
+    {
+      "name": "NORMAL_WITHOUT_WELDPREPS",
+      "value": 6,
+      "summary": "The solid is created including all cutting and fitting operations without weld prepping."
+    }
+  ]
+}

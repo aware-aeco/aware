@@ -1,0 +1,108 @@
+{
+  "name": "PourBreak.PourBreakAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PourBreakAttributes class is the attributes class for the pour break.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4fa0263e-e4ce-f9b7-70f4-2da5d9551389",
+  "constructors": [
+    {
+      "name": "PourBreak.PourBreakAttributes()",
+      "signature": "public PourBreakAttributes()",
+      "summary": "Creates a new default pour break attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b73ad236-69ac-b82a-4176-3a040d42fd38"
+    },
+    {
+      "name": "PourBreak.PourBreakAttributes(String)",
+      "signature": "public PourBreakAttributes(string AttributeFile)",
+      "summary": "Creates a new pour break attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/12947121-206d-8518-0239-29f122fcb5cd"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b994540c-2208-45a6-70d7-2f5fee66233d"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50ff8c5e-d2a4-3fad-ed02-c8f4e9cc691b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawHiddenLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether hidden lines are used to draw the pour break or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fed5d5d2-2906-28a7-227a-1c00dfbba087"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The hidden line type of the pour break.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9550bcee-886b-4715-43e9-194cca28f0b0"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "LineTypeAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "The visible line type of the pour break.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce089ce9-1143-f6a2-6991-cec0b2b9be5c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

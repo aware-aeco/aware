@@ -1,0 +1,25 @@
+{
+  "name": "GeneralConnectiveGeometryException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The GeneralConnectiveGeometryException class represents a general error that occurred during the ConnectiveGeometry creation or modification.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9a296802-ce5e-ef31-9f8a-37c708592065",
+  "constructors": [
+    {
+      "name": "GeneralConnectiveGeometryException",
+      "signature": "public GeneralConnectiveGeometryException()",
+      "summary": "Initializes a new instance of the GeneralConnectiveGeometryException class with \u0022Failed to create or modify connective geometry\u0022 message.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b123af8f-496c-d315-46a6-ab8cd10bb94e"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

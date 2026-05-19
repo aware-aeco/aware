@@ -1,0 +1,94 @@
+{
+  "name": "BuildingElementMaterialStringTable",
+  "namespace": "BuildingElementMaterialStringTable",
+  "kind": "class",
+  "summary": "Definition of class MaterialStringTable",
+  "base": "BuildingElementStringTableBase",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementMaterialStringTable/",
+  "constructors": [
+    {
+      "name": "BuildingElementMaterialStringTable",
+      "signature": "BuildingElementMaterialStringTable(path: str, numeric: bool, lang: str)",
+      "summary": "Initialization of class StringTable",
+      "remarks": "Initialization of class StringTable",
+      "params": [
+        {
+          "name": "path",
+          "type": "str",
+          "doc": "path of according .py file. The file name will be set internally to _xyz.xml",
+          "optional": false
+        },
+        {
+          "name": "numeric",
+          "type": "bool",
+          "doc": "the string table will be created only from numeric (123..) text ids or not numeric text ids (e_THE_VALUE)",
+          "optional": false
+        },
+        {
+          "name": "lang",
+          "type": "str",
+          "doc": "language short cut",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementMaterialStringTable/#BuildingElementMaterialStringTable.BuildingElementMaterialStringTable.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_entry",
+      "signature": "add_entry(val_number: str, val_str: str) -\u003E bool",
+      "summary": "Creates an string table entry",
+      "remarks": "Creates an string table entry",
+      "params": [
+        {
+          "name": "val_number",
+          "type": "str",
+          "doc": "index number in the list",
+          "optional": false
+        },
+        {
+          "name": "val_str",
+          "type": "str",
+          "doc": "string value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True for success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementMaterialStringTable/#BuildingElementMaterialStringTable.BuildingElementMaterialStringTable.add_entry"
+    },
+    {
+      "name": "get_entry",
+      "signature": "get_entry(str_val_number: str) -\u003E Tuple[str, bool]",
+      "summary": "Returns an string table entry",
+      "remarks": "Returns an string table entry",
+      "params": [
+        {
+          "name": "str_val_number",
+          "type": "str",
+          "doc": "value or number of the string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple[str, bool]",
+        "doc": "(string result, True/False for success)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementMaterialStringTable/#BuildingElementMaterialStringTable.BuildingElementMaterialStringTable.get_entry"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

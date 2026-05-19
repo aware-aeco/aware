@@ -1,0 +1,526 @@
+{
+  "name": "BaseElementAdapter",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "Implementation of the base element adapter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/",
+  "constructors": [
+    {
+      "name": "BaseElementAdapter",
+      "signature": "BaseElementAdapter() | BaseElementAdapter(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(element) | __eq__(eleTypeUUID)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(eleType) | __ne__(eleType)",
+      "summary": "Not equal operator for checking the element type",
+      "remarks": "Not equal operator for checking the element type",
+      "params": [
+        {
+          "name": "eleType",
+          "type": "BaseElementAdapter",
+          "doc": "Element type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__ne__"
+    },
+    {
+      "name": "FromGUID",
+      "signature": "FromGUID(guid, doc)",
+      "summary": "Get elements from GUID",
+      "remarks": "Get elements from GUID",
+      "params": [
+        {
+          "name": "guid",
+          "type": "GUID",
+          "doc": "GUID of the element",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.FromGUID"
+    },
+    {
+      "name": "FromNOIGUID",
+      "signature": "FromNOIGUID(guidstr, doc)",
+      "summary": "Get elements from NOI GUID",
+      "remarks": "Get elements from NOI GUID",
+      "params": [
+        {
+          "name": "guidStr",
+          "type": "object",
+          "doc": "NOI-GUID string of the element",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.FromNOIGUID"
+    },
+    {
+      "name": "GetArchElementType",
+      "signature": "GetArchElementType()",
+      "summary": "Check the type of an architectural element (PRGBER_ELEM_ARCH)",
+      "remarks": "Check the type of an architectural element (PRGBER_ELEM_ARCH)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetArchElementType"
+    },
+    {
+      "name": "GetAttributes",
+      "signature": "GetAttributes(readState)",
+      "summary": "Get the attributes",
+      "remarks": "Get the attributes",
+      "params": [
+        {
+          "name": "readState",
+          "type": "eAttibuteReadState",
+          "doc": "Attribute read state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[tuple[int, Union[int, float, str]]]",
+        "doc": "Attributes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetAttributes"
+    },
+    {
+      "name": "GetCommonProperties",
+      "signature": "GetCommonProperties()",
+      "summary": "Get the common properties of the element",
+      "remarks": "Get the common properties of the element",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Common properties of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetCommonProperties"
+    },
+    {
+      "name": "GetDisplayName",
+      "signature": "GetDisplayName()",
+      "summary": "Get the displace name of the element",
+      "remarks": "Get the displace name of the element",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Display name of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetDisplayName"
+    },
+    {
+      "name": "GetDocument",
+      "signature": "GetDocument()",
+      "summary": "Get the document",
+      "remarks": "Get the document",
+      "params": [],
+      "returns": {
+        "type": "DocumentAdapter",
+        "doc": "Document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetDocument"
+    },
+    {
+      "name": "GetDrawingfileNumber",
+      "signature": "GetDrawingfileNumber()",
+      "summary": "Get the drawing file number of the element",
+      "remarks": "Get the drawing file number of the element",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Drawing file number of the element / negative means drawing is in passive mode"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetDrawingfileNumber"
+    },
+    {
+      "name": "GetElementAdapterType",
+      "signature": "GetElementAdapterType()",
+      "summary": "Get the type of the element",
+      "remarks": "Get the type of the element",
+      "params": [],
+      "returns": {
+        "type": "ElementAdapterType",
+        "doc": "Type ID of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetElementAdapterType"
+    },
+    {
+      "name": "GetElementUUID",
+      "signature": "GetElementUUID()",
+      "summary": "Get the UUID of the element",
+      "remarks": "Get the UUID of the element",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "UUID of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetElementUUID"
+    },
+    {
+      "name": "GetGeometry",
+      "signature": "GetGeometry()",
+      "summary": "Get elements geometry",
+      "remarks": "Get elements geometry",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "Document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetGeometry"
+    },
+    {
+      "name": "GetGroundViewArchitectureElementGeometry",
+      "signature": "GetGroundViewArchitectureElementGeometry()",
+      "summary": "Get ground view geometry of an architecture element (if exist)",
+      "remarks": "Get ground view geometry of an architecture element (if exist)",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "Geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetGroundViewArchitectureElementGeometry"
+    },
+    {
+      "name": "GetModelElementUUID",
+      "signature": "GetModelElementUUID()",
+      "summary": "Get the UUID of the model element",
+      "remarks": "Get the UUID of the model element",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "UUID of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetModelElementUUID"
+    },
+    {
+      "name": "GetModelGeometry",
+      "signature": "GetModelGeometry()",
+      "summary": "Get element model geometry",
+      "remarks": "Get element model geometry",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "Geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetModelGeometry"
+    },
+    {
+      "name": "GetParentElementAdapterType",
+      "signature": "GetParentElementAdapterType()",
+      "summary": "Get the type of the parent element",
+      "remarks": "Get the type of the parent element",
+      "params": [],
+      "returns": {
+        "type": "ElementAdapterType",
+        "doc": "Type ID of the parent element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetParentElementAdapterType"
+    },
+    {
+      "name": "GetPureArchitectureElementGeometry",
+      "signature": "GetPureArchitectureElementGeometry()",
+      "summary": "Get the pure geometry of an architecture element (if exist). The geometry is without openings, ...",
+      "remarks": "Get the pure geometry of an architecture element (if exist). The geometry is without openings, ...",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "Geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetPureArchitectureElementGeometry"
+    },
+    {
+      "name": "GetTimeStamp",
+      "signature": "GetTimeStamp()",
+      "summary": "Get the time stamp of the element",
+      "remarks": "Get the time stamp of the element",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Time stamp of the element creation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.GetTimeStamp"
+    },
+    {
+      "name": "Is3DElement",
+      "signature": "Is3DElement()",
+      "summary": "Get the 3D state of the element",
+      "remarks": "Get the 3D state of the element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is a 3D element: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.Is3DElement"
+    },
+    {
+      "name": "IsActive",
+      "signature": "IsActive()",
+      "summary": "Get the activation state of the element",
+      "remarks": "Get the activation state of the element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True, if the element is activated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsActive"
+    },
+    {
+      "name": "IsChildParentType",
+      "signature": "IsChildParentType(childType, parentType)",
+      "summary": "Check for child (current element) and parent type connection",
+      "remarks": "Check for child (current element) and parent type connection",
+      "params": [
+        {
+          "name": "childType",
+          "type": "GUID",
+          "doc": "Type of the element",
+          "optional": false
+        },
+        {
+          "name": "parentType",
+          "type": "GUID",
+          "doc": "Type of the parent element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsChildParentType"
+    },
+    {
+      "name": "IsDeleted",
+      "signature": "IsDeleted()",
+      "summary": "Get the deleted state of the element",
+      "remarks": "Get the deleted state of the element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True, if the element is deleted"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsDeleted"
+    },
+    {
+      "name": "IsGeneralElement",
+      "signature": "IsGeneralElement()",
+      "summary": "Check if element is general (PRGBER_ELEM_ALLG)",
+      "remarks": "Check if element is general (PRGBER_ELEM_ALLG)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is general (PRGBER_ELEM_ALLG)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsGeneralElement"
+    },
+    {
+      "name": "IsInActiveDocument",
+      "signature": "IsInActiveDocument()",
+      "summary": "If element is in active document return true.",
+      "remarks": "If element is in active document return true.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if element is in active document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsInActiveDocument"
+    },
+    {
+      "name": "IsInActiveLayer",
+      "signature": "IsInActiveLayer()",
+      "summary": "If element is in active layer return true.",
+      "remarks": "If element is in active layer return true.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if element is in active layer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsInActiveLayer"
+    },
+    {
+      "name": "IsInMacro",
+      "signature": "IsInMacro()",
+      "summary": "Check if element has parent object",
+      "remarks": "Check if element has parent object",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element has parent"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsInMacro"
+    },
+    {
+      "name": "IsLabelElement",
+      "signature": "IsLabelElement()",
+      "summary": "Check if element is a part of some label (Variables Textbild)",
+      "remarks": "Check if element is a part of some label (Variables Textbild)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is a part of some label: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsLabelElement"
+    },
+    {
+      "name": "IsNull",
+      "signature": "IsNull()",
+      "summary": "Check for an empty element",
+      "remarks": "Check for an empty element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is empty: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsNull"
+    },
+    {
+      "name": "IsValidForSelectFace",
+      "signature": "IsValidForSelectFace()",
+      "summary": "Check if element is valid for face select",
+      "remarks": "Check if element is valid for face select",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is valid for face select"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.IsValidForSelectFace"
+    },
+    {
+      "name": "SetVisibilityState",
+      "signature": "SetVisibilityState(visible)",
+      "summary": "Set the visibility state of the element",
+      "remarks": "Set the visibility state of the element",
+      "params": [
+        {
+          "name": "visible",
+          "type": "bool",
+          "doc": "She visibility state to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.SetVisibilityState"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

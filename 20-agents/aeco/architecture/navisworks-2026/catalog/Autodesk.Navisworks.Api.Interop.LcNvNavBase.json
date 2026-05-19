@@ -1,0 +1,392 @@
+{
+  "name": "LcNvNavBase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcNvNavBase class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvNavBase",
+  "constructors": [
+    {
+      "name": "LcNvNavBase()",
+      "signature": "LcNvNavBase()",
+      "summary": "Constructs a new LcNvNavBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D GetBoundingBox()",
+      "summary": "GetBoundingBox method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.GetBoundingBox"
+    },
+    {
+      "name": "BeginEditing",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint BeginEditing()",
+      "summary": "BeginEditing method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.BeginEditing"
+    },
+    {
+      "name": "GetViewPoint",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint GetViewPoint()",
+      "summary": "GetViewPoint method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.GetViewPoint"
+    },
+    {
+      "name": "NormRightVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D NormRightVector(Autodesk.Navisworks.Api.Interop.LcNvViewPoint vp, bool nearest)",
+      "summary": "NormRightVector method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "nearest",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.NormRightVector%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%2CSystem.Boolean%29"
+    },
+    {
+      "name": "NormRightVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D NormRightVector(bool nearest)",
+      "summary": "NormRightVector method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "nearest",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.NormRightVector%28System.Boolean%29"
+    },
+    {
+      "name": "NormViewDir",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D NormViewDir(Autodesk.Navisworks.Api.Interop.LcNvViewPoint vp, Autodesk.Navisworks.Api.UnitVector3D wup, bool nearest)",
+      "summary": "NormViewDir method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "wup",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "nearest",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.NormViewDir%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%2CAutodesk.Navisworks.Api.UnitVector3D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "NormViewDir",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D NormViewDir(Autodesk.Navisworks.Api.Interop.LcNvViewPoint vp, bool nearest)",
+      "summary": "NormViewDir method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "nearest",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.NormViewDir%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%2CSystem.Boolean%29"
+    },
+    {
+      "name": "NormViewDir",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D NormViewDir(bool nearest)",
+      "summary": "NormViewDir method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "nearest",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.NormViewDir%28System.Boolean%29"
+    },
+    {
+      "name": "RequireWorldUpVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D RequireWorldUpVector()",
+      "summary": "RequireWorldUpVector method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.RequireWorldUpVector"
+    },
+    {
+      "name": "RequireWorldUpVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D RequireWorldUpVector(Autodesk.Navisworks.Api.Interop.LcNvViewPoint vp)",
+      "summary": "RequireWorldUpVector method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.RequireWorldUpVector%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%29"
+    },
+    {
+      "name": "GetDefaultAngularSpeed",
+      "signature": "double GetDefaultAngularSpeed()",
+      "summary": "GetDefaultAngularSpeed method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.GetDefaultAngularSpeed"
+    },
+    {
+      "name": "GetDefaultLinearSpeed",
+      "signature": "double GetDefaultLinearSpeed()",
+      "summary": "GetDefaultLinearSpeed method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.GetDefaultLinearSpeed"
+    },
+    {
+      "name": "RequireAngularSpeed",
+      "signature": "double RequireAngularSpeed()",
+      "summary": "RequireAngularSpeed method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.RequireAngularSpeed"
+    },
+    {
+      "name": "RequireFocalDistance",
+      "signature": "double RequireFocalDistance()",
+      "summary": "RequireFocalDistance method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.RequireFocalDistance"
+    },
+    {
+      "name": "RequireLinearSpeed",
+      "signature": "double RequireLinearSpeed()",
+      "summary": "RequireLinearSpeed method of LcNvNavBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.RequireLinearSpeed"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcNvNavBase InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvNavBase",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "EndEditing",
+      "signature": "void EndEditing()",
+      "summary": "EndEditing method of LcNvNavBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.EndEditing"
+    },
+    {
+      "name": "EndEditing",
+      "signature": "void EndEditing(bool jump_cut)",
+      "summary": "EndEditing method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "jump_cut",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.EndEditing%28System.Boolean%29"
+    },
+    {
+      "name": "SetLighting",
+      "signature": "void SetLighting(Autodesk.Navisworks.Api.ViewpointLighting p)",
+      "summary": "SetLighting method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.ViewpointLighting",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.SetLighting%28Autodesk.Navisworks.Api.ViewpointLighting%29"
+    },
+    {
+      "name": "SetRenderStyle",
+      "signature": "void SetRenderStyle(Autodesk.Navisworks.Api.ViewpointRenderStyle p)",
+      "summary": "SetRenderStyle method of LcNvNavBase.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.ViewpointRenderStyle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.SetRenderStyle%28Autodesk.Navisworks.Api.ViewpointRenderStyle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcNvNavBase.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcNvNavBase.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

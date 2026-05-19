@@ -1,0 +1,46 @@
+{
+  "name": "FileAmf",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for writing amf file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileAmf.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Write",
+      "signature": "public static bool Write(string path, RhinoDoc doc, FileAmfWriteOptions options)",
+      "summary": "Write a amf file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to write a file to",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to get geometry from",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileAmfWriteOptions",
+          "doc": "options used for generating the amf file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileAmf_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

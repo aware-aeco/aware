@@ -1,0 +1,203 @@
+{
+  "name": "RhinoSettings",
+  "namespace": "Rhino.Render.DataSources",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DataSources.RhinoSettings\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_DataSources_RhinoSettings.htm",
+  "constructors": [
+    {
+      "name": "RhinoSettings",
+      "signature": "public RhinoSettings(IntPtr pRhinoSettings)",
+      "summary": "Initializes a new instance of the RhinoSettings class",
+      "params": [
+        {
+          "name": "pRhinoSettings",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRhinoSettings\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ActiveView",
+      "signature": "public RhinoView ActiveView()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "RhinoView",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.ActiveView\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_ActiveView.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RhinoSettings",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_Finalize.htm"
+    },
+    {
+      "name": "GetCustomRenderSizes",
+      "signature": "public List\u003CSize\u003E GetCustomRenderSizes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "List\u003CSize\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.GetCustomRenderSizes\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_GetCustomRenderSizes.htm"
+    },
+    {
+      "name": "GetRenderSettings",
+      "signature": "public RenderSettings GetRenderSettings()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "RenderSettings",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.GetRenderSettings\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_GetRenderSettings.htm"
+    },
+    {
+      "name": "GroundPlaneOnInViewDisplayMode",
+      "signature": "public bool GroundPlaneOnInViewDisplayMode(RhinoView view)",
+      "summary": "",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.GroundPlaneOnInViewDisplayMode(Rhino.Display.RhinoView)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.GroundPlaneOnInViewDisplayMode(Rhino.Display.RhinoView)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_GroundPlaneOnInViewDisplayMode.htm"
+    },
+    {
+      "name": "RenderingView",
+      "signature": "public ViewInfo RenderingView()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ViewInfo",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.RenderingView\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_RenderingView.htm"
+    },
+    {
+      "name": "SetGroundPlaneOnInViewDisplayMode",
+      "signature": "public void SetGroundPlaneOnInViewDisplayMode(RhinoView view, bool bOn)",
+      "summary": "",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.SetGroundPlaneOnInViewDisplayMode(Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bOn",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bOn\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.SetGroundPlaneOnInViewDisplayMode(Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_SetGroundPlaneOnInViewDisplayMode.htm"
+    },
+    {
+      "name": "SetRenderSettings",
+      "signature": "public void SetRenderSettings(RenderSettings renderSettings)",
+      "summary": "",
+      "params": [
+        {
+          "name": "renderSettings",
+          "type": "Rhino.Render.RenderSettings",
+          "doc": "[Missing \u003Cparam name=\u0022renderSettings\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.SetRenderSettings(Rhino.Render.RenderSettings)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_SetRenderSettings.htm"
+    },
+    {
+      "name": "ViewSupportsShading",
+      "signature": "public bool ViewSupportsShading(RhinoView view)",
+      "summary": "",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.ViewSupportsShading(Rhino.Display.RhinoView)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.RhinoSettings.ViewSupportsShading(Rhino.Display.RhinoView)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DataSources_RhinoSettings_ViewSupportsShading.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DataSources_RhinoSettings_CppPointer.htm"
+    },
+    {
+      "name": "CustomImageSizeIsPreset",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DataSources_RhinoSettings_CustomImageSizeIsPreset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

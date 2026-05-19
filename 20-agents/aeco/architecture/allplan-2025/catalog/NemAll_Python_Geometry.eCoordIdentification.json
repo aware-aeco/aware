@@ -1,0 +1,27 @@
+{
+  "name": "eCoordIdentification",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Coordinate identification",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eCoordIdentification/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "X_COORD",
+      "value": 0
+    },
+    {
+      "name": "Y_COORD",
+      "value": 1
+    },
+    {
+      "name": "Z_COORD",
+      "value": 2
+    }
+  ]
+}

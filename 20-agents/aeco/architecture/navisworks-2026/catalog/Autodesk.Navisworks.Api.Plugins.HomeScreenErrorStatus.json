@@ -1,0 +1,90 @@
+{
+  "name": "HomeScreenErrorStatus",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "enum",
+  "summary": "HomeScreenErrorStatus enum in Autodesk.Navisworks.Api.Plugins.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.HomeScreenErrorStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0
+    },
+    {
+      "name": "CertificateCommonNameIsIncorrect",
+      "value": 1
+    },
+    {
+      "name": "CertificateExpired",
+      "value": 2
+    },
+    {
+      "name": "ClientCertificateContainsErrors",
+      "value": 3
+    },
+    {
+      "name": "CertificateRevoked",
+      "value": 4
+    },
+    {
+      "name": "CertificateIsInvalid",
+      "value": 5
+    },
+    {
+      "name": "ServerUnreachable",
+      "value": 6
+    },
+    {
+      "name": "Timeout",
+      "value": 7
+    },
+    {
+      "name": "ErrorHttpInvalidServerResponse",
+      "value": 8
+    },
+    {
+      "name": "ConnectionAborted",
+      "value": 9
+    },
+    {
+      "name": "ConnectionReset",
+      "value": 10
+    },
+    {
+      "name": "Disconnected",
+      "value": 11
+    },
+    {
+      "name": "CannotConnect",
+      "value": 12
+    },
+    {
+      "name": "HostNameNotResolved",
+      "value": 13
+    },
+    {
+      "name": "OperationCanceled",
+      "value": 14
+    },
+    {
+      "name": "RedirectFailed",
+      "value": 15
+    },
+    {
+      "name": "UnexpectedError",
+      "value": 16
+    },
+    {
+      "name": "ValidAuthenticationCredentialsRequired",
+      "value": 17
+    },
+    {
+      "name": "ValidProxyAuthenticationRequired",
+      "value": 18
+    }
+  ]
+}

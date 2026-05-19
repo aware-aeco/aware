@@ -1,0 +1,35 @@
+{
+  "name": "ePlanarSurfaceError",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "error codes for planar surface creation",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ePlanarSurfaceError/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCollinear",
+      "value": 0
+    },
+    {
+      "name": "eError",
+      "value": 3
+    },
+    {
+      "name": "eNotContinuous",
+      "value": 2
+    },
+    {
+      "name": "eNotPlanar",
+      "value": 1
+    },
+    {
+      "name": "eOK",
+      "value": 4
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "name": "AssociativeViewElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "AssociativeViewElement class",
+  "base": "AllplanElement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/",
+  "constructors": [
+    {
+      "name": "AssociativeViewElement",
+      "signature": "AssociativeViewElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClippingPathProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the clipping path properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.ClippingPathProperties"
+    },
+    {
+      "name": "DimensionElements",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the dimension elements :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.DimensionElements"
+    },
+    {
+      "name": "PlacementAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the placement angle :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.PlacementAngle"
+    },
+    {
+      "name": "PlacementPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the placement point :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.PlacementPoint"
+    },
+    {
+      "name": "ReinforcementLabels",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the reinforcement labels :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.ReinforcementLabels"
+    },
+    {
+      "name": "SectionAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the section angle :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.SectionAngle"
+    },
+    {
+      "name": "SectionPolyhedron",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the section polyhedron :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.SectionPolyhedron"
+    },
+    {
+      "name": "TextElements",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the text elements :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.TextElements"
+    },
+    {
+      "name": "ViewMatrix",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the view matrix :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.ViewMatrix"
+    },
+    {
+      "name": "ViewProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the view properties :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewElement/#NemAll_Python_BasisElements.AssociativeViewElement.ViewProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

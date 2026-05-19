@@ -1,0 +1,472 @@
+{
+  "name": "ViewCaptureWriter",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Callback system used by SVG and PDF exporter to generate documents",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_ViewCaptureWriter.htm",
+  "constructors": [
+    {
+      "name": "ViewCaptureWriter",
+      "signature": "public ViewCaptureWriter(double dpi, Size pageSize)",
+      "summary": "Initializes a new instance of the ViewCaptureWriter class",
+      "params": [
+        {
+          "name": "dpi",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022dpi\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.#ctor(System.Double,System.Drawing.Size)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pageSize",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022pageSize\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.#ctor(System.Double,System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Draw",
+      "signature": "public void Draw(IntPtr constPtrPrintInfo, RhinoDoc doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "constPtrPrintInfo",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022constPtrPrintInfo\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.Draw(System.IntPtr,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.Draw(System.IntPtr,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_Draw.htm"
+    },
+    {
+      "name": "DrawBitmap",
+      "signature": "protected abstract void DrawBitmap(Bitmap bitmap, double m11, double m12, double m21, double m22, double dx, double dy)",
+      "summary": "",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022bitmap\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawBitmap(System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "m11",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022m11\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawBitmap(System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "m12",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022m12\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawBitmap(System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "m21",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022m21\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawBitmap(System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "m22",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022m22\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawBitmap(System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022dx\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawBitmap(System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022dy\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawBitmap(System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_DrawBitmap.htm"
+    },
+    {
+      "name": "DrawCircle",
+      "signature": "protected abstract void DrawCircle(PointF center, float diameter, Color fillColor, float strokeWidth, Color strokeColor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "center",
+          "type": "System.Drawing.PointF",
+          "doc": "[Missing \u003Cparam name=\u0022center\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawCircle(System.Drawing.PointF,System.Single,System.Drawing.Color,System.Single,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022diameter\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawCircle(System.Drawing.PointF,System.Single,System.Drawing.Color,System.Single,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fillColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022fillColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawCircle(System.Drawing.PointF,System.Single,System.Drawing.Color,System.Single,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeWidth",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022strokeWidth\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawCircle(System.Drawing.PointF,System.Single,System.Drawing.Color,System.Single,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022strokeColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawCircle(System.Drawing.PointF,System.Single,System.Drawing.Color,System.Single,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_DrawCircle.htm"
+    },
+    {
+      "name": "DrawGradientHatch",
+      "signature": "protected abstract void DrawGradientHatch(DisplayPipeline pipeline, Hatch hatch, HatchPattern pattern, Color[] gradientColors, float[] gradientStops, Point3d gradientPoint1, Point3d gradientPoint2, bool linearGradient, Color boundaryColor, double pointScale, double effectiveHatchScale)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pipeline",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "[Missing \u003Cparam name=\u0022pipeline\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "hatch",
+          "type": "Rhino.Geometry.Hatch",
+          "doc": "[Missing \u003Cparam name=\u0022hatch\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "[Missing \u003Cparam name=\u0022pattern\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientColors",
+          "type": "System.Drawing.Color[]",
+          "doc": "[Missing \u003Cparam name=\u0022gradientColors\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientStops",
+          "type": "System.Single[]",
+          "doc": "[Missing \u003Cparam name=\u0022gradientStops\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientPoint1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022gradientPoint1\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientPoint2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022gradientPoint2\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "linearGradient",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022linearGradient\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "boundaryColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022boundaryColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pointScale",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022pointScale\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "effectiveHatchScale",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022effectiveHatchScale\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawGradientHatch(Rhino.Display.DisplayPipeline,Rhino.Geometry.Hatch,Rhino.DocObjects.HatchPattern,System.Drawing.Color[],System.Single[],Rhino.Geometry.Point3d,Rhino.Geometry.Point3d,System.Boolean,System.Drawing.Color,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_DrawGradientHatch.htm"
+    },
+    {
+      "name": "DrawPath",
+      "signature": "protected abstract void DrawPath(ViewCaptureWriter.PathPoint[] points, ViewCaptureWriter.Pen pen, Color brushColor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Runtime.ViewCaptureWriter.PathPoint[]",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawPath(Rhino.Runtime.ViewCaptureWriter.PathPoint[],Rhino.Runtime.ViewCaptureWriter.Pen,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pen",
+          "type": "Rhino.Runtime.ViewCaptureWriter.Pen",
+          "doc": "[Missing \u003Cparam name=\u0022pen\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawPath(Rhino.Runtime.ViewCaptureWriter.PathPoint[],Rhino.Runtime.ViewCaptureWriter.Pen,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "brushColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022brushColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawPath(Rhino.Runtime.ViewCaptureWriter.PathPoint[],Rhino.Runtime.ViewCaptureWriter.Pen,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_DrawPath.htm"
+    },
+    {
+      "name": "DrawRectangle",
+      "signature": "protected abstract void DrawRectangle(RectangleF rect, Color fillColor, float strokeWidth, Color strokeColor, float cornerRadius)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rect",
+          "type": "System.Drawing.RectangleF",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawRectangle(System.Drawing.RectangleF,System.Drawing.Color,System.Single,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fillColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022fillColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawRectangle(System.Drawing.RectangleF,System.Drawing.Color,System.Single,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeWidth",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022strokeWidth\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawRectangle(System.Drawing.RectangleF,System.Drawing.Color,System.Single,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strokeColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022strokeColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawRectangle(System.Drawing.RectangleF,System.Drawing.Color,System.Single,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cornerRadius",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022cornerRadius\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawRectangle(System.Drawing.RectangleF,System.Drawing.Color,System.Single,System.Drawing.Color,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_DrawRectangle.htm"
+    },
+    {
+      "name": "DrawScreenText",
+      "signature": "protected abstract void DrawScreenText(string text, Color textColor, double x, double y, float angle, int horizontalAlignment, float heightPoints, Font font)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022text\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "textColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022textColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022x\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022y\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022angle\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "horizontalAlignment",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022horizontalAlignment\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "heightPoints",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022heightPoints\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "Rhino.DocObjects.Font",
+          "doc": "[Missing \u003Cparam name=\u0022font\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.DrawScreenText(System.String,System.Drawing.Color,System.Double,System.Double,System.Single,System.Int32,System.Single,Rhino.DocObjects.Font)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_DrawScreenText.htm"
+    },
+    {
+      "name": "FillPolygon",
+      "signature": "protected abstract void FillPolygon(PointF[] points, Color fillColor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Drawing.PointF[]",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.FillPolygon(System.Drawing.PointF[],System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fillColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022fillColor\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.FillPolygon(System.Drawing.PointF[],System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_FillPolygon.htm"
+    },
+    {
+      "name": "Flush",
+      "signature": "protected void Flush()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_Flush.htm"
+    },
+    {
+      "name": "PopClipPath",
+      "signature": "protected void PopClipPath()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_PopClipPath.htm"
+    },
+    {
+      "name": "PushClipPath(RectangleF)",
+      "signature": "protected void PushClipPath(RectangleF rect)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rect",
+          "type": "System.Drawing.RectangleF",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.PushClipPath(System.Drawing.RectangleF)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_PushClipPath_1.htm"
+    },
+    {
+      "name": "PushClipPath(ViewCaptureWriter.PathPoint[])",
+      "signature": "protected void PushClipPath(ViewCaptureWriter.PathPoint[] points)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Runtime.ViewCaptureWriter.PathPoint[]",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.PushClipPath(Rhino.Runtime.ViewCaptureWriter.PathPoint[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_PushClipPath.htm"
+    },
+    {
+      "name": "SetClipPath",
+      "signature": "protected abstract void SetClipPath(ViewCaptureWriter.PathPoint[] points)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Runtime.ViewCaptureWriter.PathPoint[]",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Runtime.ViewCaptureWriter.SetClipPath(Rhino.Runtime.ViewCaptureWriter.PathPoint[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_ViewCaptureWriter_SetClipPath.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Dpi",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_ViewCaptureWriter_Dpi.htm"
+    },
+    {
+      "name": "PageSize",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_ViewCaptureWriter_PageSize.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

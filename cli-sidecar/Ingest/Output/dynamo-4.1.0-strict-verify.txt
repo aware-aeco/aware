@@ -1,0 +1,60 @@
+Sampled 50 types from 707 (seed = 1958593892):
+
+
+idx ns                                             name                                    kind         result issues
+--- --                                             ----                                    ----         ------ ------
+651 ProtoCore.DSASM                                StackFrameType                          enum         PASS         
+171 Dynamo.Graph.Workspaces                        DummyNodeWriteConverter                 class        PASS         
+ 89 Dynamo.Extensions                              IExtensionSource                        interface    PASS         
+340 Dynamo.PackageManager                          PackageDownloadHandle                   class        PASS         
+633 ProtoCore.DSASM                                InstructionStream                       class        PASS         
+588 ProtoCore.Lang.Replication                     DominantListStructure                   class        PASS         
+509 ProtoCore.AST.ImperativeAST                    TypedIdentifierNode                     class        PASS         
+424 ProtoCore                                      CodeGen                                 class        PASS         
+189 Dynamo.Graph.Nodes                             DoNotLoadOnPlatformsAttribute           class        PASS         
+598 ProtoCore.Exceptions                           EndOfScript                             class        PASS         
+479 ProtoCore.Runtime                              WarningID                               enum         PASS         
+384 Dynamo.Utilities                               Rect2D                                  struct       PASS         
+533 ProtoCore.AST.AssociativeAST                   AstKind                                 enum         PASS         
+322 Dynamo.Graph.Nodes.Statement                   State                                   enum         PASS         
+240 Dynamo.Graph.Nodes.CustomNodes                 Symbol                                  class        PASS         
+127 Dynamo.Models                                  NodeHandler                             delegate     PASS         
+504 ProtoCore.AST.ImperativeAST                    ImperativeNode                          class        PASS         
+ 77 Dynamo.Library                                 TypedParameter                          class        PASS         
+641 ProtoCore.DSASM                                IExecutiveProvider                      interface    PASS         
+160 Dynamo.Graph.Workspaces                        LayoutExtensions                        static-class PASS         
+333 Dynamo.PackageManager                          IFileSystem                             interface    PASS         
+516 ProtoCore.AST.ImperativeAST                    ArrayNode                               class        PASS         
+262 Dynamo.Search.SearchElements.SearchElementBase SearchElementHandler                    delegate     PASS         
+540 ProtoCore.AST.AssociativeAST                   GroupExpressionNode                     class        PASS         
+ 46 Dynamo.Scheduler                               TaskProcessMode                         enum         PASS         
+122 Dynamo.Models                                  DynamoPreferencesData                   class        PASS         
+661 ProtoCore.DSASM                                ArgumentInfo                            struct       PASS         
+271 Dynamo.Engine.LibraryServices                  LibraryLoadedEventArgs                  class        PASS         
+176 Dynamo.Graph.Workspaces                        SerializationExtensions                 static-class PASS         
+ 26 Dynamo.Search                                  SearchLibrary<TEntry, TItem>            class        PASS         
+545 ProtoCore.AST.AssociativeAST                   DoubleNode                              class        PASS         
+252 Dynamo.Configuration                           GraphChecksumItem                       class        PASS         
+457 ProtoCore.Utils                                CoreUtils                               static-class PASS         
+ 52 Dynamo.Migration                               MigrationManager                        class        PASS         
+112 Dynamo.Engine                                  LibraryServices                         class        PASS         
+ 51 Dynamo.Annotations                             NotifyPropertyChangedInvocatorAttribute class        PASS         
+100 Dynamo.Exceptions                              CustomNodePackageLoadException          class        PASS         
+213 Dynamo.Graph.Nodes                             NodeModel                               class        PASS         
+373 Dynamo.Utilities                               IRecursiveGrouping<T>                   interface    PASS         
+102 Dynamo.Engine                                  AstBuiltEventHandler                    delegate     PASS         
+339 Dynamo.PackageManager                          IPackageDirectoryBuilder                interface    PASS         
+ 29 Dynamo.Search.SearchElements                   CustomNodeSearchElement                 class        PASS         
+524 ProtoCore.AST.ImperativeAST                    IfStmtNode                              class        PASS         
+185 Dynamo.Graph.Notes                             NoteModel                               class        PASS         
+190 Dynamo.Graph.Nodes                             NodeDeprecatedAttribute                 class        PASS         
+453 ProtoCore.Utils                                ClassUtils                              static-class PASS         
+675 ProtoCore.AssociativeGraph                     UpdateBlock                             class        PASS         
+136 Dynamo.Models.Migration.Python                 PythonEngineUpgradeService              class        PASS         
+357 Dynamo.PackageManager.PackageLoadState         ScheduledTypes                          enum         PASS         
+461 ProtoCore.Utils                                ParseResult                             class        PASS         
+
+
+
+
+Strict verification summary: 50 pass / 0 fail / 50 total

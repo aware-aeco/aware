@@ -1,0 +1,196 @@
+{
+  "name": "DefaultStartConfiguration",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "struct",
+  "summary": "Type DefaultStartConfiguration",
+  "interfaces": [
+    "Dynamo.Models.DynamoModel.IStartConfiguration",
+    "Dynamo.Models.DynamoModel.IStartConfigurationLogger"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs",
+  "constructors": [
+    {
+      "name": "DefaultStartConfiguration()",
+      "signature": "void DefaultStartConfiguration()",
+      "summary": "Initializes a new instance of the DefaultStartConfiguration struct.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AuthProvider",
+      "type": "Greg.IAuthProvider",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.AuthProvider",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "CLILocale",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.CLILocale",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "CLIMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "CLIMode indicates if we are running in DynamoCLI or DynamoWPFCLI mode.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Context",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.Context",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "DefaultPythonEngine",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Default Python script engine",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "DynamoCorePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.DynamoCorePath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "DynamoHostPath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.DynamoHostPath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "EnableUnTrustedLocationsNotifications",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disables notifications about untrusted file locations. When true (default), notifications are shown in the notification center. When false, no notifications are displayed for untrusted locations.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Extensions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.Extensions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "GeometryFactoryPath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.GeometryFactoryPath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "HostAnalyticsInfo",
+      "type": "Dynamo.Models.HostAnalyticsInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.HostAnalyticsInfo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsHeadless",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.IsHeadless",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsServiceMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.IsServiceMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Logger",
+      "type": "Dynamo.Logging.DynamoLogger",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the logger instance used for logging messages and events. This property should be set to a valid Dynamo.Logging.DynamoLogger instance to enable logging during the initialization and runtime of Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "NoNetworkMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.NoNetworkMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PathResolver",
+      "type": "Dynamo.Interfaces.IPathResolver",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.PathResolver",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Preferences",
+      "type": "Dynamo.Interfaces.IPreferences",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.Preferences",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ProcessMode",
+      "type": "Dynamo.Scheduler.TaskProcessMode",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.ProcessMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PythonTemplatePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.PythonTemplatePath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "SchedulerThread",
+      "type": "Dynamo.Scheduler.ISchedulerThread",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.SchedulerThread",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "StartInTestMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultStartConfiguration.StartInTestMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

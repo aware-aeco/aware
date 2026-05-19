@@ -1,0 +1,62 @@
+{
+  "name": "IGH_Tooltip",
+  "namespace": "Grasshopper.GUI",
+  "kind": "interface",
+  "summary": "Accessor interface for the Grasshopper Tooltip form.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_IGH_Tooltip.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tooltip Description. The Description is optional and is displayed in the same area as the TooltipDiagram image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_Tooltip_Description.htm"
+    },
+    {
+      "name": "Diagram",
+      "type": "Image",
+      "getter": false,
+      "setter": true,
+      "summary": "Sets the tooltip diagram image. The diagram image is optional and is displayed in the same area as the ToolTipDescription text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_Tooltip_Diagram.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Image",
+      "getter": false,
+      "setter": true,
+      "summary": "Sets the Tooltip Icon image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_Tooltip_Icon.htm"
+    },
+    {
+      "name": "Palette",
+      "type": "GH_TooltipPalette",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tooltip colour palette.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_Tooltip_Palette.htm"
+    },
+    {
+      "name": "Text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tooltip Text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_Tooltip_Text.htm"
+    },
+    {
+      "name": "Title",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tooltip Title.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_Tooltip_Title.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

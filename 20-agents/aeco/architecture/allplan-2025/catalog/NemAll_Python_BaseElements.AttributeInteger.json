@@ -1,0 +1,89 @@
+{
+  "name": "AttributeInteger",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Integer attribute",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/",
+  "constructors": [
+    {
+      "name": "AttributeInteger",
+      "signature": "AttributeInteger() | AttributeInteger(id: int, value: int) | AttributeInteger(element: AttributeInteger)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/#NemAll_Python_BaseElements.AttributeInteger.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(element: AttributeInteger) -\u003E bool",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeInteger",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/#NemAll_Python_BaseElements.AttributeInteger.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(element: AttributeInteger) -\u003E bool",
+      "summary": "Unequal operator",
+      "remarks": "Unequal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeInteger",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are unequal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/#NemAll_Python_BaseElements.AttributeInteger.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/#NemAll_Python_BaseElements.AttributeInteger.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the attribute value",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/#NemAll_Python_BaseElements.AttributeInteger.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

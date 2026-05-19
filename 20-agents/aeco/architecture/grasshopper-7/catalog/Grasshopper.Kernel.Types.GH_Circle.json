@@ -1,0 +1,509 @@
+{
+  "name": "GH_Circle",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Represents a 3D circle. GH_Circle re-implements the OpenNURBS OnCircle class.",
+  "base": "Circle",
+  "interfaces": [
+    "IGH_BakeAwareData",
+    "IGH_PreviewData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Circle.htm",
+  "constructors": [
+    {
+      "name": "GH_Circle()",
+      "signature": "public GH_Circle()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle__ctor.htm"
+    },
+    {
+      "name": "GH_Circle(Circle)",
+      "signature": "public GH_Circle(Circle circle)",
+      "summary": "Create a duplicate of another circle",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Circle",
+          "doc": "Circle to copy. If null, a default circle will be created.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle__ctor_2.htm"
+    },
+    {
+      "name": "GH_Circle(GH_Circle)",
+      "signature": "public GH_Circle(GH_Circle other)",
+      "summary": "Create a duplicate of another circle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Types.GH_Circle",
+          "doc": "Circle to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BakeGeometry",
+      "signature": "public bool BakeGeometry(RhinoDoc doc, ObjectAttributes att, ref Guid obj_guid)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "optional": false
+        },
+        {
+          "name": "obj_guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_BakeGeometry.htm"
+    },
+    {
+      "name": "CastFrom",
+      "signature": "public override bool CastFrom(Object source)",
+      "summary": "Remote to Local caster function. This stuff is complex, don\u0027t concern yourself with casting logic.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "Local to Remote caster function. This stuff is complex, don\u0027t concern yourself with casting logic.",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public override bool CastTo\u003CQ\u003E(out Q target)",
+      "summary": "Attempt a cast to type T.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public virtual bool CastTo\u003CQ\u003E(ref Q target)",
+      "summary": "Attempt a cast to type Q.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_CastTo__1.htm"
+    },
+    {
+      "name": "ClearCaches",
+      "signature": "public virtual void ClearCaches()",
+      "summary": "Clears all caches. Typically if the geometry is referenced, this will erase the local copy. If your T is a value-type, you must override this function and specifically unset the local value.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_ClearCaches.htm"
+    },
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "public void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "public void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public override IGH_Goo Duplicate()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Duplicate().)",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateCircle",
+      "signature": "public GH_Circle DuplicateCircle()",
+      "summary": "Create a duplicate of this circle.",
+      "params": [],
+      "returns": {
+        "type": "GH_Circle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_DuplicateCircle.htm"
+    },
+    {
+      "name": "DuplicateGeometry",
+      "signature": "public override IGH_GeometricGoo DuplicateGeometry()",
+      "summary": "Create a duplicate of this circle.",
+      "params": [],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_DuplicateGeometry.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public override IGH_GooProxy EmitProxy()",
+      "summary": "Returns a proxy that represents this circle. Do not call this function unless you\u0027re",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_EmitProxy.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public override BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.GetBoundingBox(Transform).)",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_GetBoundingBox.htm"
+    },
+    {
+      "name": "LoadGeometry()",
+      "signature": "public virtual bool LoadGeometry()",
+      "summary": "If the geometry is referenced and currently unloaded, forces loading of the geometry. Not all IGH_GeometricGoo implementations support referenced geometry.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_LoadGeometry.htm"
+    },
+    {
+      "name": "LoadGeometry(RhinoDoc)",
+      "signature": "public virtual bool LoadGeometry(RhinoDoc doc)",
+      "summary": "If the geometry is referenced and currently unloaded, forces loading of the geometry. Not all IGH_GeometricGoo implementations support referenced geometry. The default is to always return True.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document to use for loading.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_LoadGeometry_1.htm"
+    },
+    {
+      "name": "Morph",
+      "signature": "public override IGH_GeometricGoo Morph(SpaceMorph xmorph)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Morph(SpaceMorph).)",
+      "params": [
+        {
+          "name": "xmorph",
+          "type": "SpaceMorph",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_Morph.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public override bool Read(GH_IReader reader)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Read(GH_IReader).)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public virtual Object ScriptVariable()",
+      "summary": "This function will be called when the local IGH_Goo instance disappears into a user Script. This would be an excellent place to cast your IGH_Goo type to a simple data type.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "The default implementation of this function returns the Value instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_ScriptVariable.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Format the circle using default grasshopper formatting logic.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_ToString.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public override IGH_GeometricGoo Transform(Transform xform)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Transform(Transform).)",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_Transform.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public override bool Write(GH_IWriter writer)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Write(GH_IWriter).)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Circle_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boundingbox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the boundingbox for this geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Circle_Boundingbox.htm"
+    },
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Circle_ClippingBox.htm"
+    },
+    {
+      "name": "IsGeometryLoaded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this geometry is currently loaded (assuming it is referenced). Not all IGH_GeometricGoo implementations support referenced geometry. The default is to always return True.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_IsGeometryLoaded.htm"
+    },
+    {
+      "name": "IsReferencedGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this geometry is referenced. Not all IGH_GeometricGoo implementations support referenced geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_IsReferencedGeometry.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the validity of this instance. Circles are valid when their base planes are valid and when the radius is larger than zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Circle_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string describing the state of \u0022invalidness\u0022. If the instance is valid, then this property should return Nothing or String.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Circle_IsValidWhyNot.htm"
+    },
+    {
+      "name": "ReferenceID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Guid of the object that is referenced. Not all IGH_GeometricGoo implementations support referenced geometry. The default implementation is to always return Guid.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_ReferenceID.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeDescription.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Circle_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeName.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Circle_TypeName.htm"
+    },
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value of this type. Note that if the type has a ReferenceID this value might get destroyed in the future.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Value.htm"
+    },
+    {
+      "name": "m_value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Goo\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_Goo_1_m_value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

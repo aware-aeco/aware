@@ -1,0 +1,64 @@
+{
+  "name": "AnalysisBar.CardinalPointEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The cardinal point types of the analysis bar.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/acd4ff4b-1095-b5ce-e3b3-871095db92d4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CARDINAL_POINT_CENTROID",
+      "value": 0,
+      "summary": "The cardinal point is centroid."
+    },
+    {
+      "name": "CARDINAL_POINT_TOP_LEFT",
+      "value": 1,
+      "summary": "The cardinal point is top left."
+    },
+    {
+      "name": "CARDINAL_POINT_TOP_CENTER",
+      "value": 2,
+      "summary": "The cardinal point is top center."
+    },
+    {
+      "name": "CARDINAL_POINT_TOP_RIGHT",
+      "value": 3,
+      "summary": "The cardinal point is top right."
+    },
+    {
+      "name": "CARDINAL_POINT_MIDDLE_LEFT",
+      "value": 4,
+      "summary": "The cardinal point is middle left."
+    },
+    {
+      "name": "CARDINAL_POINT_MIDDLE_CENTER",
+      "value": 5,
+      "summary": "The cardinal point is middle center."
+    },
+    {
+      "name": "CARDINAL_POINT_MIDDLE_RIGHT",
+      "value": 6,
+      "summary": "The cardinal point is middle right."
+    },
+    {
+      "name": "CARDINAL_POINT_BOTTOM_LEFT",
+      "value": 7,
+      "summary": "The cardinal point is bottom left."
+    },
+    {
+      "name": "CARDINAL_POINT_BOTTOM_CENTER",
+      "value": 8,
+      "summary": "The cardinal point is bottom center."
+    },
+    {
+      "name": "CARDINAL_POINT_BOTTOM_RIGHT",
+      "value": 9,
+      "summary": "The cardinal point is bottom right."
+    }
+  ]
+}

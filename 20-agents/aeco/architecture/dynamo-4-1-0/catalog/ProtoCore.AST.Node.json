@@ -1,0 +1,144 @@
+{
+  "name": "Node",
+  "namespace": "ProtoCore.AST",
+  "kind": "class",
+  "summary": "Type Node",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs",
+  "constructors": [
+    {
+      "name": "Node()",
+      "signature": "void Node()",
+      "summary": "Node.Node",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "Node(ProtoCore.AST.Node)",
+      "signature": "void Node(ProtoCore.AST.Node rhs)",
+      "summary": "Node.Node",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Children",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Children()",
+      "summary": "Node.Children",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "InheritID(int)",
+      "signature": "void InheritID(int id)",
+      "summary": "An explicit mechanism to manually set the ID of an AST node",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ID",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Node.ID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "charPos",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.charPos",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "col",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.col",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "endCharPos",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.endCharPos",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "endCol",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.endCol",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "endLine",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.endLine",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "line",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.line",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    },
+    {
+      "name": "skipMe",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Node.skipMe",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

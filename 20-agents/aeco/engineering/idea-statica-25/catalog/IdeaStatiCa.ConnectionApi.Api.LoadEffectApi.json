@@ -1,0 +1,263 @@
+{
+  "name": "LoadEffectApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 LoadEffect endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLoadEffectsAsync",
+      "signature": "Task\u003CList\u003CConLoadEffect\u003E\u003E GetLoadEffectsAsync(Guid projectId, int connectionId, bool isPercentage)",
+      "summary": "Gets all load effects defined in the specified connection.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection.",
+          "optional": false
+        },
+        {
+          "name": "isPercentage",
+          "type": "bool",
+          "doc": "Optional flag indicating whether to return percentage-based load effects.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "List\u003CConLoadEffect\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md"
+    },
+    {
+      "name": "AddLoadEffectAsync",
+      "signature": "Task\u003CConLoadEffect\u003E AddLoadEffectAsync(Guid projectId, int connectionId, ConLoadEffect conLoadEffect)",
+      "summary": "Adds a new load effect to the connection.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection.",
+          "optional": false
+        },
+        {
+          "name": "conLoadEffect",
+          "type": "ConLoadEffect",
+          "doc": "The load effect data to add.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConLoadEffect",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md"
+    },
+    {
+      "name": "UpdateLoadEffectAsync",
+      "signature": "Task\u003CConLoadEffect\u003E UpdateLoadEffectAsync(Guid projectId, int connectionId, ConLoadEffect conLoadEffect)",
+      "summary": "Update load impulses in conLoading",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "conLoadEffect",
+          "type": "ConLoadEffect",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConLoadEffect",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md"
+    },
+    {
+      "name": "DeleteLoadEffectAsync",
+      "signature": "Task\u003Cint\u003E DeleteLoadEffectAsync(Guid projectId, int connectionId, int loadEffectId)",
+      "summary": "Delete load effect loadEffectId",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "loadEffectId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "**int**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md"
+    },
+    {
+      "name": "GetLoadEffectAsync",
+      "signature": "Task\u003CConLoadEffect\u003E GetLoadEffectAsync(Guid projectId, int connectionId, int loadEffectId, bool isPercentage)",
+      "summary": "Gets load impulses from the specified load effect.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection.",
+          "optional": false
+        },
+        {
+          "name": "loadEffectId",
+          "type": "int",
+          "doc": "The ID of the load effect to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "isPercentage",
+          "type": "bool",
+          "doc": "Optional flag indicating whether to return percentage-based load effects.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConLoadEffect",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md"
+    },
+    {
+      "name": "GetLoadSettingsAsync",
+      "signature": "Task\u003CConLoadSettings\u003E GetLoadSettingsAsync(Guid projectId, int connectionId)",
+      "summary": "Get Load settings for connection in project",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConLoadSettings",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md"
+    },
+    {
+      "name": "SetLoadSettingsAsync",
+      "signature": "Task\u003CConLoadSettings\u003E SetLoadSettingsAsync(Guid projectId, int connectionId, ConLoadSettings conLoadSettings)",
+      "summary": "Set Load settings for connection in project",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "conLoadSettings",
+          "type": "ConLoadSettings",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConLoadSettings",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/LoadEffectApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

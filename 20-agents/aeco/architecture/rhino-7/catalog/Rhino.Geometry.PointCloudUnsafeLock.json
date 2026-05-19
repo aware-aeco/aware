@@ -1,0 +1,107 @@
+{
+  "name": "PointCloudUnsafeLock",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Permits access to the underlying PointCloud raw data structures in an unsafe way.",
+  "remarks": "This lock object needs to be disposed before using the PointCloud in other calculations and this can be achieved with the using keyword (Using in VB.Net).",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_PointCloudUnsafeLock.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ColorArray",
+      "signature": "public int* ColorArray(out int length)",
+      "summary": "Retrieves a pointer to the raw array of colors, which are represented as 32-bit integers in ARGB format, or null if none is available.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#). 0 is returned when there is no single precision array.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32*",
+        "doc": "The beginning of the color array. Item 0 is the first vertex, and item length-1 is the last valid one. If no array is available, null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_PointCloudUnsafeLock_ColorArray.htm"
+    },
+    {
+      "name": "NormalArray",
+      "signature": "public Vector3d* NormalArray(out int length)",
+      "summary": "Retrieves a pointer to the raw array of point normals, or null if none is available.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#). 0 is returned when there is no single precision array.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d*",
+        "doc": "The beginning of the vector array. Item 0 is the first vertex, and item length-1 is the last valid one. If no array is available, null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_PointCloudUnsafeLock_NormalArray.htm"
+    },
+    {
+      "name": "PointArray",
+      "signature": "public Point3d* PointArray(out int length)",
+      "summary": "Retrieves a pointer to the raw point array, which uses coordinates defined with double precision floating point numbers, or null if none is available.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#). 0 is returned when there is no single precision array.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d*",
+        "doc": "The beginning of the point array. Item 0 is the first vertex, and item length-1 is the last valid one. If no array is available, null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_PointCloudUnsafeLock_PointArray.htm"
+    },
+    {
+      "name": "Release",
+      "signature": "public void Release()",
+      "summary": "Releases the lock and updates the underlying unmanaged data structures.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_PointCloudUnsafeLock_Release.htm"
+    },
+    {
+      "name": "ValueArray",
+      "signature": "public double* ValueArray(out int length)",
+      "summary": "Retrieves a pointer to the raw array of point values, or null if none is available.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#). 0 is returned when there is no single precision array.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double*",
+        "doc": "The beginning of the value array. Item 0 is the first vertex, and item length-1 is the last valid one. If no array is available, null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_PointCloudUnsafeLock_ValueArray.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

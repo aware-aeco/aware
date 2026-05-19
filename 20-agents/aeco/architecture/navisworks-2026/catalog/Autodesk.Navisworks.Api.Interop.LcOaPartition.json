@@ -1,0 +1,291 @@
+{
+  "name": "LcOaPartition",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaPartition class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOaGroup",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaPartition",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetRuntimeBoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D GetRuntimeBoundingBox()",
+      "summary": "GetRuntimeBoundingBox method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetRuntimeBoundingBox"
+    },
+    {
+      "name": "GetRuntimeBoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D GetRuntimeBoundingBox(bool ignore_hidden)",
+      "summary": "GetRuntimeBoundingBox method of LcOaPartition.",
+      "params": [
+        {
+          "name": "ignore_hidden",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetRuntimeBoundingBox%28System.Boolean%29"
+    },
+    {
+      "name": "GetPublishAttribute",
+      "signature": "Autodesk.Navisworks.Api.PublishProperties GetPublishAttribute()",
+      "summary": "GetPublishAttribute method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PublishProperties",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetPublishAttribute"
+    },
+    {
+      "name": "GetFileTransform",
+      "signature": "Autodesk.Navisworks.Api.Transform3D GetFileTransform(Autodesk.Navisworks.Api.Interop.LcOaPartition world_partition)",
+      "summary": "GetFileTransform method of LcOaPartition.",
+      "params": [
+        {
+          "name": "world_partition",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPartition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetFileTransform%28Autodesk.Navisworks.Api.Interop.LcOaPartition%29"
+    },
+    {
+      "name": "GetFrontVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetFrontVector()",
+      "summary": "GetFrontVector method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetFrontVector"
+    },
+    {
+      "name": "GetNorthVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetNorthVector()",
+      "summary": "GetNorthVector method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetNorthVector"
+    },
+    {
+      "name": "GetRightVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetRightVector()",
+      "summary": "GetRightVector method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetRightVector"
+    },
+    {
+      "name": "GetUpVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetUpVector()",
+      "summary": "GetUpVector method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetUpVector"
+    },
+    {
+      "name": "GetViewDirection",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetViewDirection(Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection dir)",
+      "summary": "GetViewDirection method of LcOaPartition.",
+      "params": [
+        {
+          "name": "dir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetViewDirection%28Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection%29"
+    },
+    {
+      "name": "GetViewDirectionUpVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetViewDirectionUpVector(Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection dir)",
+      "summary": "GetViewDirectionUpVector method of LcOaPartition.",
+      "params": [
+        {
+          "name": "dir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetViewDirectionUpVector%28Autodesk.Navisworks.Api.Interop.LcOaPartitionViewDirection%29"
+    },
+    {
+      "name": "GetLinearUnits",
+      "signature": "Autodesk.Navisworks.Api.Units GetLinearUnits()",
+      "summary": "GetLinearUnits method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Units",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetLinearUnits"
+    },
+    {
+      "name": "IsTransformReflected",
+      "signature": "bool IsTransformReflected()",
+      "summary": "IsTransformReflected method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.IsTransformReflected"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaPartition InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaPartition.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaPartition",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaPartition.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetCreator",
+      "signature": "string GetCreator()",
+      "summary": "GetCreator method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetCreator"
+    },
+    {
+      "name": "GetFilename",
+      "signature": "string GetFilename()",
+      "summary": "GetFilename method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetFilename"
+    },
+    {
+      "name": "GetSourceFilename",
+      "signature": "string GetSourceFilename()",
+      "summary": "GetSourceFilename method of LcOaPartition.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.GetSourceFilename"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaPartition.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaPartition.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

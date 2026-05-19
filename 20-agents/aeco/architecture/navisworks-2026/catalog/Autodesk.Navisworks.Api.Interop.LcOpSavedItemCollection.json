@@ -1,0 +1,33 @@
+{
+  "name": "LcOpSavedItemCollection",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "static-class",
+  "summary": "LcOpSavedItemCollection static class in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemCollection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetGroup",
+      "signature": "static Autodesk.Navisworks.Api.GroupItem GetGroup(Autodesk.Navisworks.Api.SavedItemCollection that)",
+      "summary": "GetGroup method of LcOpSavedItemCollection.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.GroupItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemCollection.GetGroup%28Autodesk.Navisworks.Api.SavedItemCollection%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

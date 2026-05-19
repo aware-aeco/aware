@@ -1,0 +1,22 @@
+{
+  "name": "PackageManagerSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Settings specific to Rhino\u0027s package manager",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_PackageManagerSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Sources",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "semicolon separated list of paths/urls that the package manager uses for sources",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_PackageManagerSettings_Sources.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

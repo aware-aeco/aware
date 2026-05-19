@@ -1,0 +1,110 @@
+{
+  "name": "SlideRequest",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.SlideRequest.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Title of the slide.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "PresentationId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Unique Id of the presentation to add the current slide.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Type",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Type of the issue.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Status",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Status of the issue.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Stage",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Stage of the issue.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Priority",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Priority of the issue.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Description of the issue.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Responsibilities",
+      "type": "List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Assignees responsible for the issue resolution.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Labels",
+      "type": "List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Labels associated to the issue.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Duedate",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Due date(YYYY-MM-DD) for the issue resolution.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "Components",
+      "type": "List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "IFC GUIDs of the components associated to the issue.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    },
+    {
+      "name": "ModifiedTimeInExternalSystem",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Time when the slide was modified in some external system.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=SlideRequest"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

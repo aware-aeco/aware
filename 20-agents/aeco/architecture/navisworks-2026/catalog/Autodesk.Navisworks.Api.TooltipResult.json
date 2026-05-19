@@ -1,0 +1,41 @@
+{
+  "name": "TooltipResult",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a Tooltip and an identifier, that is returned from a call to a ToolPlugin or InputPlugin.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.TooltipResult",
+  "constructors": [
+    {
+      "name": "TooltipResult()",
+      "signature": "TooltipResult()",
+      "summary": "Constructor for a TooltipResult.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TooltipResult.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Tooltip display name.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TooltipResult.DisplayName"
+    },
+    {
+      "name": "Id",
+      "type": "ulong",
+      "getter": true,
+      "setter": true,
+      "summary": "Tooltip Id.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TooltipResult.Id"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

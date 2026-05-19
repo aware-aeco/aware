@@ -1,0 +1,131 @@
+{
+  "name": "ProjectsPermissionsApi",
+  "namespace": "Bluebeam.StudioApi.Projects",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Projects / Permissions endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ListFolderPermissions",
+      "signature": "Task ListFolderPermissions(Guid projectId, int folderId)",
+      "summary": "Get project folder permission.              Will return empty string if permission is not set",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/folders/{folderId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{folderId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "folderId",
+          "type": "int",
+          "doc": "Path parameter \u0060folderId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{folderId}/permissions\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateFolderPermissions",
+      "signature": "Task UpdateFolderPermissions(Guid projectId, int folderId, UpdateFolderPermissionsRequest request)",
+      "summary": "Update project folder permissions.              Permission types: Hidden, Read, ReadWrite, ReadWriteDelete.              Set Permission to null to inherit permission from parent folder",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{projectId}/folders/{folderId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{folderId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "folderId",
+          "type": "int",
+          "doc": "Path parameter \u0060folderId\u0060 from \u0060/publicapi/v1/projects/{projectId}/folders/{folderId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateFolderPermissionsRequest",
+          "doc": "Request body. JSON object with fields: Permission, UserId.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListProjectPermissions",
+      "signature": "Task ListProjectPermissions(Guid projectId)",
+      "summary": "Get project permissions",
+      "remarks": "HTTP GET \u0060/publicapi/v1/projects/{projectId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/permissions\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateProjectPermissions",
+      "signature": "Task UpdateProjectPermissions(Guid projectId, UpdateProjectPermissionsRequest request)",
+      "summary": "Update project permissions.              Set value to allow, deny, or default",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/projects/{projectId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060projectId\u0060 from \u0060/publicapi/v1/projects/{projectId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateProjectPermissionsRequest",
+          "doc": "Request body. JSON object with fields: Allow, Type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

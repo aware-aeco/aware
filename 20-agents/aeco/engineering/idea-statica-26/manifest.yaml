@@ -1,427 +1,392 @@
 agent:        idea-statica-26
-version:      0.1.0
-sdk-target:   26.0.1.2450
-display-name: IDEA StatiCa 26 (raw — OpenModel)
+version:      0.30.0
+sdk-target:   26.0
+display-name: idea-statica-26 (raw — 178 types, full coverage)
+
 description: |
-  Auto-generated agent from `IdeaStatiCa.OpenModel@26.0.1.2450` on
-  NuGet via `aware build agent --from-nuget`. Reflects the public-API
-  surface of the IDEA Open Model for IDEA StatiCa 26. Companion to
-  `idea-statica-25`.
+  Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml, https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml)
+  on 2026-05-19.
 
-  Covers 18 classes × 116 commands across connection geometry,
-  member definitions, loads, materials, and code-check results.
+  Coverage: 178 types, 117 methods,
+  0 events, 544 properties.
 
-  Vendor-proprietary library; AWARE-generated text is Apache-2.0.
-  Users need their own IDEA StatiCa installation + license.
-
-  Marked `stateful: false` — OpenModel construction is request/response.
+  Behavioral notes from vendor remarks/summary preserved per member.
+  See skills/ for narrative, catalog/ for structured per-type data.
 
 stateful: false
 
 vendor:   idea-statica
 license:  Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/idea-statica-26
-keywords: [aeco, engineering, structural, connection-design, steel, idea-statica, generated, raw, 26, nuget]
+keywords: [aeco, engineering, idea-statica, idea-statica, generated, raw, v0.30, full-coverage]
 
 provenance:
-  generated-by: aware-agent-builder
-  generator-version: 0.8.1
+  generated-by:     aware-agent-builder
+  generator-version: 0.30.0
   source:
-    license: UNKNOWN
-    package: IdeaStatiCa.OpenModel
-    type: nuget
-    version: 26.0.1.2450
-  generated-at: 2026-05-17T06:34:27.747231500+00:00
-engineering:
-  pinnable:
-    - id: code-of-practice
-      description: Connection-design code (EC3-1-8, AISC 360, etc.) + revision
-      required: true
-      example: 'eurocode-3-1-8@2005+uk-na'
-    - id: bolt-catalogue
-      description: Bolt grade catalogue + revision (EN 14399, ASTM F3125)
-      required: true
-      example: 'en-14399@2018'
-    - id: weld-electrode-catalogue
-      description: Weld electrode catalogue (EN ISO 14341, AWS A5.1)
-      required: false
-      example: 'en-iso-14341@2020'
-    - id: gamma-factors
-      description: Partial factors for connection-design checks
-      required: false
-      example: 'en-1993-1-8@2005+uk-na-gamma-m2-1.25'
-    - id: solver-build
-      description: IDEA solver binary hash (auto-resolved by transport)
-      required: true
-      example: 'idea-26.0.1.2450-build-XX'
+    type: hybrid
+    urls: ["https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml", "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml"]
+  generated-at: 2026-05-19T04:34:58.4884528Z
+
 transport:
   cli:
-    binary: aware-idea-statica-26
+    binary: aware-idea-statica
+
 commands:
-  connection-setup-init-by-code:
+  calculation-api-calculate-async:
     lifecycle: single
-    description: Inicialize by setted code
-  cross-section-factory-fill-box-web:
+    description: Runs CBFEM calculation and returns the summary of the results.
+  calculation-api-get-raw-json-results-async:
     lifecycle: single
-    description: CrossSectionFactory.FillBoxWeb
-  cross-section-factory-fill-box2:
+    description: Gets JSON string which represents raw CBFEM results (an instance of CheckResultsData).
+  calculation-api-get-results-async:
     lifecycle: single
-    description: CrossSectionFactory.FillBox2
-  cross-section-factory-fill-box2-i:
+    description: Gets detailed results of the CBFEM analysis.
+  client-api-connect-client-async:
     lifecycle: single
-    description: Box 2I - steel shape
-  cross-section-factory-fill-box2-l:
+    description: Connects a client to the ConnectionRestApi service and returns a unique identifier for the client.
+  client-api-get-version-async:
     lifecycle: single
-    description: Box 2L - steel shape
-  cross-section-factory-fill-box4-l:
+    description: Gets the IdeaStatica API assembly version.
+  connection-api-copy-connection-async:
     lifecycle: single
-    description: Box 4L - steel shape
-  cross-section-factory-fill-chspar:
+    description: Creates a copy of an existing connection in the project.
+  connection-api-create-empty-connection-async:
     lifecycle: single
-    description: CrossSectionFactory.FillCHSPar
-  cross-section-factory-fill-circle:
+    description: Adds a new empty connection to the project.
+  connection-api-delete-connection-async:
     lifecycle: single
-    description: Circular shape - for steel or concrete shape
-  cross-section-factory-fill-cold-formed-c:
+    description: Deletes a specific connection from the project.
+  connection-api-get-connection-async:
     lifecycle: single
-    description: Fill parameters for cold formed C section
-  cross-section-factory-fill-cold-formed-cf2-co:
+    description: Gets data about a specific connection in the project.
+  connection-api-get-connection-topology-async:
     lifecycle: single
-    description: Cold-formed 2C closed section (back-to-back C sections)
-  cross-section-factory-fill-cold-formed-cf2-cpo:
+    description: Gets the topology of the connection in JSON format.
+  connection-api-get-connections-async:
     lifecycle: single
-    description: Cold-formed 2C+ open section (back-to-back C+ sections)
-  cross-section-factory-fill-cold-formed-channel:
+    description: Gets data about all connections in the project.
+  connection-api-get-production-cost-async:
     lifecycle: single
-    description: Fill parameters for cold formed C channel
-  cross-section-factory-fill-cold-formed-cp:
+    description: Gets the production cost of the connection.
+  connection-api-update-connection-async:
     lifecycle: single
-    description: Cold-formed C+ section
-  cross-section-factory-fill-cold-formed-general:
+    description: Updates data of a specific connection in the project.
+  connection-library-api-get-design-item-picture-async:
     lifecycle: single
-    description: Fill center line for general cold formed css
-  cross-section-factory-fill-cold-formed-l:
+    description: Retrieves the picture associated with the specified design item as a PNG image.
+  connection-library-api-get-design-sets-async:
     lifecycle: single
-    description: Fill parameters for cold formed L section
-  cross-section-factory-fill-cold-formed-lgen:
+    description: Retrieves a list of design sets available for the user.
+  connection-library-api-get-template-async:
     lifecycle: single
-    description: Fill parameters for cold formed L - gen section
-  cross-section-factory-fill-cold-formed-omega:
+    description: Retrieves the template associated with the specified design set and design item.
+  connection-library-api-propose-async:
     lifecycle: single
-    description: Fill parameters for cold formed Omega section
-  cross-section-factory-fill-cold-formed-regular-polygon:
+    description: Proposes a list of design items for a specified connection within a project.
+  connection-library-api-publish-connection-async:
     lifecycle: single
-    description: Fill parameters for cold formed Regular polygon section
-  cross-section-factory-fill-cold-formed-rhs:
+    description: Publish template to Private or Company set
+  conversion-api-change-code-async:
     lifecycle: single
-    description: Fill parameters for cold formed RHS section
-  cross-section-factory-fill-cold-formed-sigma:
+    description: Changes the design code of the project.
+  conversion-api-get-conversion-mapping-async:
     lifecycle: single
-    description: Fill parameters for cold formed sigma section
-  cross-section-factory-fill-cold-formed-z:
+    description: Gets default conversion mappings for converting the project to a different design code.
+  export-api-export-ifcasync:
     lifecycle: single
-    description: Fill parameters for cold formed Z section
-  cross-section-factory-fill-cold-formed-zed:
+    description: Exports the connection to IFC format.
+  export-api-export-iom-async:
     lifecycle: single
-    description: Fill parameters for cold formed Z-ed section
-  cross-section-factory-fill-composed-dbl-lt:
+    description: "Exports the connection to XML which includes the OpenModelContainer (https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/OpenModelContainer.cs)."
+  export-api-export-iom-connection-data-async:
     lifecycle: single
-    description: Creates a new L shape css
-  cross-section-factory-fill-composed-dbl-lu:
+    description: "Gets the ConnectionData for the specified connection (https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/Connection/ConnectionData.cs)."
+  load-effect-api-add-load-effect-async:
     lifecycle: single
-    description: Creates a new L shape css.
-  cross-section-factory-fill-composed-dbl-uc:
+    description: Adds a new load effect to the connection.
+  load-effect-api-delete-load-effect-async:
     lifecycle: single
-    description: Fills a double channel steel section. They form an closed/back-to-back [] shape.
-  cross-section-factory-fill-composed-dbl-uo:
+    description: Delete load effect loadEffectId
+  load-effect-api-get-load-effect-async:
     lifecycle: single
-    description: Fills a double channel steel section. They form an open/front-to-front ][ shape.
-  cross-section-factory-fill-css-iarc:
+    description: Gets load impulses from the specified load effect.
+  load-effect-api-get-load-effects-async:
     lifecycle: single
-    description: CrossSectionFactory.FillCssIarc
-  cross-section-factory-fill-css-rectangle-hollow:
+    description: Gets all load effects defined in the specified connection.
+  load-effect-api-get-load-settings-async:
     lifecycle: single
-    description: Fill cross-section of shape rectangular for concrete sections
-  cross-section-factory-fill-css-steel-angle:
+    description: Get Load settings for connection in project
+  load-effect-api-set-load-settings-async:
     lifecycle: single
-    description: CrossSectionFactory.FillCssSteelAngle
-  cross-section-factory-fill-css-steel-channel:
+    description: Set Load settings for connection in project
+  load-effect-api-update-load-effect-async:
     lifecycle: single
-    description: CrossSectionFactory.FillCssSteelChannel
-  cross-section-factory-fill-css-steel-circular-hollow:
+    description: Update load impulses in conLoading
+  material-api-add-bolt-assembly-async:
     lifecycle: single
-    description: CrossSectionFactory.FillCssSteelCircularHollow
-  cross-section-factory-fill-css-steel-rectangular-hollow:
+    description: Add bolt assembly to the project
+  material-api-add-cross-section-async:
     lifecycle: single
-    description: CrossSectionFactory.FillCssSteelRectangularHollow
-  cross-section-factory-fill-css-tarc:
+    description: Add cross section to the project
+  material-api-add-material-bolt-grade-async:
     lifecycle: single
-    description: CrossSectionFactory.FillCssTarc
-  cross-section-factory-fill-general-shape:
+    description: Adds a material to the project.
+  material-api-add-material-concrete-async:
     lifecycle: single
-    description: Fill general shape
-  cross-section-factory-fill-library-shape:
+    description: Adds a material to the project.
+  material-api-add-material-steel-async:
     lifecycle: single
-    description: CrossSectionFactory.FillLibraryShape
-  cross-section-factory-fill-ohollow:
+    description: Adds a material to the project.
+  material-api-add-material-weld-async:
     lifecycle: single
-    description: Fill massive pipe shape
-  cross-section-factory-fill-rectangle:
+    description: Adds a material to the project.
+  material-api-get-all-materials-async:
     lifecycle: single
-    description: Rectangle shape - massive concrete shape
-  cross-section-factory-fill-rolled-angle:
+    description: Gets materials used in the specified project.
+  material-api-get-bolt-assemblies-async:
     lifecycle: single
-    description: Rolled steel angle
-  cross-section-factory-fill-rolled-channel:
+    description: Gets bolt assemblies used in the specified project.
+  material-api-get-bolt-grade-materials-async:
     lifecycle: single
-    description: Rolled steel channel
-  cross-section-factory-fill-rolled-chs:
+    description: Gets materials used in the specified project.
+  material-api-get-concrete-materials-async:
     lifecycle: single
-    description: Steel circular hollow section
-  cross-section-factory-fill-rolled-double-i:
+    description: Gets materials used in the specified project.
+  material-api-get-cross-sections-async:
     lifecycle: single
-    description: Rolled steel double I section
-  cross-section-factory-fill-rolled-i:
+    description: Gets cross sections used in the specified project.
+  material-api-get-steel-materials-async:
     lifecycle: single
-    description: Rolled steel I section
-  cross-section-factory-fill-rolled-rhs:
+    description: Gets materials used in the specified project.
+  material-api-get-welding-materials-async:
     lifecycle: single
-    description: Steel rectangular hollow section
-  cross-section-factory-fill-rolled-t:
+    description: Gets materials used in the specified project.
+  member-api-add-member-async:
     lifecycle: single
-    description: Rolled steel T section
-  cross-section-factory-fill-rolled-tfrom-i:
+    description: Adds a new member to the connection.
+  member-api-get-member-async:
     lifecycle: single
-    description: Rolled steel T section (I-cut)
-  cross-section-factory-fill-shape-dbl-l:
+    description: Gets information about the specified member in the connection.
+  member-api-get-members-async:
     lifecycle: single
-    description: CrossSectionFactory.FillShapeDblL
-  cross-section-factory-fill-shape-dbl-lu:
+    description: Gets information about all members in the connection.
+  member-api-set-bearing-member-async:
     lifecycle: single
-    description: CrossSectionFactory.FillShapeDblLu
-  cross-section-factory-fill-shape-dbl-u:
+    description: Set bearing member for memberIt
+  member-api-update-member-async:
     lifecycle: single
-    description: CrossSectionFactory.FillShapeDblU
-  cross-section-factory-fill-shape-i:
+    description: Updates the member in the connection with the provided data.
+  operation-api-delete-operations-async:
     lifecycle: single
-    description: I shape - massive concrete shape
-  cross-section-factory-fill-shape-ibase:
+    description: Delete all operations for the connection
+  operation-api-get-common-operation-properties-async:
     lifecycle: single
-    description: I shape base - massive concrete shape
-  cross-section-factory-fill-shape-l:
+    description: Gets common operation properties.
+  operation-api-get-operations-async:
     lifecycle: single
-    description: Creates a new L shape css - massive concrete shape
-  cross-section-factory-fill-shape-t:
+    description: Gets the list of operations for the connection.
+  operation-api-pre-design-welds-async:
     lifecycle: single
-    description: T shape  - massive concrete shape
-  cross-section-factory-fill-shape-trapezoid1:
+    description: Pre-designs welds in the connection.
+  operation-api-update-common-operation-properties-async:
     lifecycle: single
-    description: Trapezoid shape
-  cross-section-factory-fill-shape-trev:
+    description: Updates common properties for all operations.
+  parameter-api-delete-parameters-async:
     lifecycle: single
-    description: T turned shape - massive concrete shape
-  cross-section-factory-fill-shape-trev1:
+    description: Delete all parameters and parameter model links for the connection connectionId in the project projectId
+  parameter-api-evaluate-expression-async:
     lifecycle: single
-    description: T turned shape - massive concrete shape
-  cross-section-factory-fill-shape-tt:
+    description: "Evaluate the expression and return the result. For more detailssee documentation about parameters: https://developer.ideastatica.com/docs/api/api_parameters_getting_started.html nor https://develop..."
+  parameter-api-get-parameters-async:
     lifecycle: single
-    description: TT shape  - massive concrete shape
-  cross-section-factory-fill-shape-twh:
+    description: Gets all parameters defined for the specified project and connection.
+  parameter-api-update-async:
     lifecycle: single
-    description: T shape  - massive concrete shape
-  cross-section-factory-fill-shape-u:
+    description: Updates parameters for the specified connection in the project with the values provided.
+  presentation-api-get-data-scene3dasync:
     lifecycle: single
-    description: Creates a U shape of css.
-  cross-section-factory-fill-steel-ti:
+    description: Returns data for Scene3D visualization.
+  presentation-api-get-data-scene3dtext-async:
     lifecycle: single
-    description: CrossSectionFactory.FillSteelTI
-  cross-section-factory-fill-steel-tube:
+    description: Returns serialized data for Scene3D in JSON format.
+  project-api-close-project-async:
     lifecycle: single
-    description: CrossSectionFactory.FillSteelTube
-  cross-section-factory-fill-triangle:
+    description: Closes the project and releases resources in the service.
+  project-api-create-empty-project-async:
     lifecycle: single
-    description: CrossSectionFactory.FillTriangle
-  cross-section-factory-fill-welded-asym-i:
+    description: Creates a new empty IdeaCon project with no connections.
+  project-api-download-project-async:
     lifecycle: single
-    description: Welded I asymetrical - steel shape
-  cross-section-factory-fill-welded-box-delta:
+    description: Downloads the current IdeaCon project from the service, includingall changes made by previous API calls.
+  project-api-get-active-projects-async:
     lifecycle: single
-    description: CrossSectionFactory.FillWeldedBoxDelta
-  cross-section-factory-fill-welded-box-flange:
+    description: "Gets the list of projects in the service that were opened by the client connected via M:IdeaStatiCa.ConnectionRestApi.Controllers.ClientController.ConnectClient."
+  project-api-get-project-data-async:
     lifecycle: single
-    description: Box 2 - steel shape
-  cross-section-factory-fill-welded-box-web:
+    description: Get data of the project.
+  project-api-import-iomasync:
     lifecycle: single
-    description: CrossSectionFactory.FillWeldedBoxWeb
-  cross-section-factory-fill-welded-i:
+    description: "Create the IDEA Connection project from IOM provided in xml format. nThe parameter 'containerXmlFile' passed in HTTP body represents : [IdeaRS.OpenModel.OpenModelContainer](https://github.com/idea-..."
+  project-api-open-project-async:
     lifecycle: single
-    description: Fill steel section of welded I
-  cross-section-factory-fill-welded-t:
+    description: Opens an IdeaCon project from the provided file.
+  project-api-update-from-iomasync:
     lifecycle: single
-    description: Fill steel section of welded T
-  cross-section-factory-fill-welded-triangle:
+    description: "Update the IDEA Connection project by [IdeaRS.OpenModel.OpenModelContainer](https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/OpenModelContainer.cs) (model and resul..."
+  project-api-update-project-data-async:
     lifecycle: single
-    description: CrossSectionFactory.FillWeldedTriangle
-  cross-section-factory-fill-welded-u:
+    description: Updates ConProjectData of project
+  report-api-generate-html-zip-async:
     lifecycle: single
-    description: CrossSectionFactory.FillWeldedU
-  cross-section-factory-fill-welded2-lt:
+    description: Generates a report for the specified connection in PDF, Word, or HTMLzip format.
+  report-api-generate-pdf-async:
     lifecycle: single
-    description: CrossSectionFactory.FillWelded2Lt
-  cross-section-factory-fill-welded2-lu:
+    description: Generates a report for the specified connection in PDF, Word, or HTMLzip format.
+  report-api-generate-pdf-for-mutliple-async:
     lifecycle: single
-    description: CrossSectionFactory.FillWelded2Lu
-  cross-section-factory-fill-welded2-uc:
+    description: Generates a report for multiple connections in PDF or Word format.
+  report-api-generate-word-async:
     lifecycle: single
-    description: CrossSectionFactory.FillWelded2Uc
-  ideaprogress-report:
+    description: Generates a report for the specified connection in PDF, Word, or HTMLzip format.
+  report-api-generate-word-for-multiple-async:
     lifecycle: single
-    description: Report
-  list-of-result-of-member-get-schema:
+    description: Generates a report for multiple connections in PDF or Word format.
+  settings-api-get-settings-async:
     lifecycle: single
-    description: Gets schema
-  list-of-result-of-member-read-xml:
+    description: Gets setting values for the project.
+  settings-api-update-settings-async:
     lifecycle: single
-    description: Reads XML
-  list-of-result-of-member-write-xml:
+    description: Updates one or multiple setting values in the project.
+  template-api-apply-template-async:
     lifecycle: single
-    description: Writes XML
-  member2-dreact-extensions-get-point-value-index:
+    description: Apply the connection template applyTemplateParam on the connection connectionId in the project projectId
+  template-api-create-con-template-async:
     lifecycle: single
-    description: Member2DReactExtensions.GetPointValueIndex
-  member2-dreact-extensions-get-section-value-index:
+    description: Create a template for the connection connectionId in the project projectId
+  template-api-delete-all-async:
     lifecycle: single
-    description: Member2DReactExtensions.GetSectionValueIndex
-  member2-dreact-extensions-get-value-in-point:
+    description: Delete all templates in connection
+  template-api-delete-async:
     lifecycle: single
-    description: Member2DReactExtensions.GetValueInPoint
-  member2-dreact-extensions-get-value-in-section:
+    description: Delete specific template
+  template-api-explode-all-async:
     lifecycle: single
-    description: Member2DReactExtensions.GetValueInSection
-  member2-dreact-extensions-set-values-in-point:
+    description: Explode all templates (delete parameters, keep operations)
+  template-api-explode-async:
     lifecycle: single
-    description: Member2DReactExtensions.SetValuesInPoint
-  member2-dreact-extensions-set-values-in-section:
+    description: Explode specific template (delete parameters, keep operations)
+  template-api-get-default-template-mapping-async:
     lifecycle: single
-    description: Member2DReactExtensions.SetValuesInSection
-  number-groups-create:
+    description: Get the default mappings for the application of the connection templatepassed in templateToApply on connectionId in the project projectId
+  template-api-get-template-common-operation-properties-async:
     lifecycle: single
-    description: Creates new instance with list of ValueCount .
-  number-groups-create-groups:
+    description: Get Common properties for specific template
+  template-api-get-template-in-connection-async:
     lifecycle: single
-    description: Creates new instance with groups with with one value in group.
-  open-message-create:
+    description: Retrieves a specific template by its ID for a given connection within a project.
+  template-api-get-templates-in-connection-async:
     lifecycle: single
-    description: Creating message
-  open-messages-add:
+    description: Retrieves a list of templates associated with a specific connection within a project.
+  template-api-load-defaults-async:
     lifecycle: single
-    description: Add a message
-  open-messages-remove:
+    description: Load parameter defaults for specific template.
+  template-api-update-template-common-operation-properties-async:
     lifecycle: single
-    description: Remove a message
-  open-model-add-object:
+    description: Set common properties for specific template
+  calculation-api-calculate-async-2:
     lifecycle: single
-    description: Add new atribute object into collections
-  open-model-get-existing-object:
+    description: Calculate RCS project
+  calculation-api-get-raw-results-async:
     lifecycle: single
-    description: Add new object into collections
-  open-model-get-max-id:
+    description: Get calculated results in XML format
+  calculation-api-get-results-async-2:
     lifecycle: single
-    description: Get max Id value for specified type
-  open-model-get-object:
+    description: Get calculated results
+  client-api-get-version-async-2:
     lifecycle: single
-    description: Gets the Open element object from the Reference element
-  open-model-load-from-stream:
+    description: Get the IdeaStatica version
+  cross-section-api-add-reinforced-cross-section-async:
     lifecycle: single
-    description: Creates the instance of Open Model from the stream
-  open-model-load-from-string:
+    description: Add a new reinforced cross-section to the project from embedded geometry
+  cross-section-api-get-reinforced-cross-section-data-async:
     lifecycle: single
-    description: Creates the instance of Open Model from xml string
-  open-model-load-from-xml-file:
+    description: Get reinforced cross-section with full geometry (IOM format)
+  cross-section-api-import-reinforced-cross-section-async:
     lifecycle: single
-    description: Creates the instance of Open Model from the XML file
-  open-model-reference-elements-reconstruction:
+    description: Import reinforced cross-section from template
+  cross-section-api-reinforced-cross-sections-async:
     lifecycle: single
-    description: Should be called after deserialization of the open model from xml
-  open-model-result-load-from-stream:
+    description: Get reinforced cross sections
+  design-member-api-members-async:
     lifecycle: single
-    description: Creates the instance of Open Model Result  from the stream
-  open-model-result-load-from-xml-file:
+    description: Get members
+  internal-forces-api-get-section-loading-async:
     lifecycle: single
-    description: Creates the instance of Open Model Result from the XML file
-  open-model-result-save-to-xml-file:
+    description: Get section loading
+  internal-forces-api-set-section-loading-async:
     lifecycle: single
-    description: Saves content into file as a XML format
-  open-model-save-to-xml-file:
+    description: Set section loading
+  material-api-add-concrete-material-async:
     lifecycle: single
-    description: Saves content into file as a XML format
-  steel-setup-aus-friction-coefficient-pbolt-default:
+    description: Add a new material to the project. The material type is determined by the endpoint path.
+  material-api-add-prestress-material-async:
     lifecycle: single
-    description: Friction Coefficient Pbolt Default
-  steel-setup-friction-coefficient-pbolt-default:
+    description: Add a new material to the project. The material type is determined by the endpoint path.
+  material-api-add-reinforcement-material-async:
     lifecycle: single
-    description: Friction Coefficient Pbolt Default
-  steel-setup-hkg-friction-coefficient-pbolt-default:
+    description: Add a new material to the project. The material type is determined by the endpoint path.
+  material-api-get-all-materials-async-2:
     lifecycle: single
-    description: Friction Coefficient Pbolt Default
-  steel-setup-ind-friction-coefficient-pbolt-default:
+    description: Get materials from the project. Use specific path to filter by material type.
+  material-api-get-concrete-materials-async-2:
     lifecycle: single
-    description: Friction Coefficient Pbolt Default
-  steel-setup-rus-friction-coefficient-pbolt-default:
+    description: Get materials from the project. Use specific path to filter by material type.
+  material-api-get-prestress-materials-async:
     lifecycle: single
-    description: Friction Coefficient Pbolt Default
-  tools-connection-data-from-xml:
+    description: Get materials from the project. Use specific path to filter by material type.
+  material-api-get-reinforcement-materials-async:
     lifecycle: single
-    description: Deserialize ConnectionData from xml
-  tools-connection-data-to-xml:
+    description: Get materials from the project. Use specific path to filter by material type.
+  project-api-close-project-async-2:
     lifecycle: single
-    description: Serialize ConnectionData to xml
-  tools-deserialize-model:
+    description: PUT /api/1/projects/{projectId}/close
+  project-api-download-project-async-2:
     lifecycle: single
-    description: Tools.DeserializeModel
-  tools-deserialize-model-from-file:
+    description: Download the actual rcs project from the service. It includes all changes which were made by previous API calls.
+  project-api-get-active-project-async:
     lifecycle: single
-    description: Tools.DeserializeModelFromFile
-  tools-deserialize-model-from-stream:
+    description: GET /api/1/projects/active-project
+  project-api-get-code-settings-async:
     lifecycle: single
-    description: Tools.DeserializeModelFromStream
-  tools-open-model-container-from-file:
+    description: GET /api/1/projects/{projectId}/code-settings
+  project-api-get-code-settings-json-async:
     lifecycle: single
-    description: Deserialize OpenModelContainer from file
-  tools-open-model-container-from-xml:
+    description: GET /api/1/projects/{projectId}/code-settings-json
+  project-api-import-iomasync-2:
     lifecycle: single
-    description: Deserialize OpenModelContainer from Xml
-  tools-open-model-container-to-file:
+    description: POST /api/1/projects/import-iom
+  project-api-import-iomfile-async:
     lifecycle: single
-    description: Serialize OpenModelContainer to xml
-  tools-open-model-container-to-xml:
+    description: POST /api/1/projects/import-iom-file
+  project-api-open-async:
     lifecycle: single
-    description: Serialize OpenModelContainer to Xml
-  tools-serialize-model:
+    description: POST /api/1/projects/open
+  project-api-open-project-async-2:
     lifecycle: single
-    description: Tools.SerializeModel
-  tools-serialize-model-to-file:
+    description: Open Rcs project from rcsFile
+  project-api-update-code-settings-async:
     lifecycle: single
-    description: Tools.SerializeModelToFile
-  value-count-create:
+    description: PUT /api/1/projects/{projectId}/code-settings
+  section-api-sections-async:
     lifecycle: single
-    description: Creates a new instance with specified value.
+    description: Get sections
+  section-api-update-section-async:
+    lifecycle: single
+    description: Update a section in the RCS project
+
 skills:
-  - idea-rs-open-model-beam.md
-  - idea-rs-open-model-concrete-check-result.md
-  - idea-rs-open-model-concrete-load.md
-  - idea-rs-open-model-concrete.md
-  - idea-rs-open-model-connection.md
-  - idea-rs-open-model-cross-section.md
-  - idea-rs-open-model-detail-loading.md
-  - idea-rs-open-model-detail.md
-  - idea-rs-open-model-geometry2-d.md
-  - idea-rs-open-model-geometry3-d.md
-  - idea-rs-open-model-libraries-material.md
-  - idea-rs-open-model-loading.md
-  - idea-rs-open-model-material.md
-  - idea-rs-open-model-message.md
-  - idea-rs-open-model-model.md
-  - idea-rs-open-model-parameters.md
-  - idea-rs-open-model-result.md
-  - idea-rs-open-model.md
+  - ideastatica-connectionapi-api.md
+  - ideastatica-connectionapi-model.md
+  - ideastatica-rcsapi-api.md
+  - ideastatica-rcsapi-model.md

@@ -1,0 +1,162 @@
+{
+  "name": "NodeInCodeTable",
+  "namespace": "Rhino.NodeInCode",
+  "kind": "class",
+  "summary": "Permits rapid access to references to all Grasshopper functions.",
+  "base": "DynamicObject",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_NodeInCode_NodeInCodeTable.htm",
+  "constructors": [
+    {
+      "name": "NodeInCodeTable",
+      "signature": "public NodeInCodeTable(IEnumerable\u003CComponentFunctionInfo\u003E items = null)",
+      "summary": "Instantiates the table. Users of RhinoCommon do not typically need to call this constructor.",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CComponentFunctionInfo\u003E",
+          "doc": "Items.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_NodeInCodeTable__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(ComponentFunctionInfo item)",
+      "summary": "Adds, or replaces a new instance of component function information.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.NodeInCode.ComponentFunctionInfo",
+          "doc": "[Missing \u003Cparam name=\u0022item\u0022/\u003E documentation for \u0022M:Rhino.NodeInCode.NodeInCodeTable.Add(Rhino.NodeInCode.ComponentFunctionInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_NodeInCodeTable_Add.htm"
+    },
+    {
+      "name": "GetDynamicMemberNames",
+      "signature": "public override IEnumerable\u003Cstring\u003E GetDynamicMemberNames()",
+      "summary": "Returns all additional names in the table.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerable\u003CString\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.NodeInCode.NodeInCodeTable.GetDynamicMemberNames\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_NodeInCodeTable_GetDynamicMemberNames.htm"
+    },
+    {
+      "name": "TryGetIndex",
+      "signature": "public override bool TryGetIndex(GetIndexBinder binder, Object[] indexes, out Object result)",
+      "summary": "Gets the ComponentFunctionInfo at",
+      "params": [
+        {
+          "name": "binder",
+          "type": "System.Dynamic.GetIndexBinder",
+          "doc": "The binder.",
+          "optional": false
+        },
+        {
+          "name": "indexes",
+          "type": "System.Object[]",
+          "doc": "ONE string index.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "System.Object",
+          "doc": "The bound info.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.NodeInCode.NodeInCodeTable.TryGetIndex(System.Dynamic.GetIndexBinder,System.Object[],System.Object@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_NodeInCodeTable_TryGetIndex.htm"
+    },
+    {
+      "name": "TryGetMember",
+      "signature": "public override bool TryGetMember(GetMemberBinder binder, out Object result)",
+      "summary": "Dynamically binds the table to property-like access via its item names.",
+      "params": [
+        {
+          "name": "binder",
+          "type": "System.Dynamic.GetMemberBinder",
+          "doc": "The dynamic binder.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "System.Object",
+          "doc": "Returns the result.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.NodeInCode.NodeInCodeTable.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_NodeInCodeTable_TryGetMember.htm"
+    },
+    {
+      "name": "TryInvokeMember",
+      "signature": "public override bool TryInvokeMember(InvokeMemberBinder binder, Object[] args, out Object result)",
+      "summary": "Dynamically invokes a member of the table.",
+      "params": [
+        {
+          "name": "binder",
+          "type": "System.Dynamic.InvokeMemberBinder",
+          "doc": "The binder.",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "The arguments.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "System.Object",
+          "doc": "The result.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_NodeInCodeTable_TryInvokeMember.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the amount of items in this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_NodeInCode_NodeInCodeTable_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,70 @@
+{
+  "name": "ConConversionSettings",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConConversionSettings.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "TargetDesignCode",
+      "type": "CountryCode",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConversionSettings.targetDesignCode.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md"
+    },
+    {
+      "name": "Concrete",
+      "type": "List\u003CConversionMapping\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConversionSettings.concrete.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md"
+    },
+    {
+      "name": "CrossSections",
+      "type": "List\u003CConversionMapping\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConversionSettings.crossSections.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md"
+    },
+    {
+      "name": "Fasteners",
+      "type": "List\u003CConversionMapping\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConversionSettings.fasteners.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md"
+    },
+    {
+      "name": "Steel",
+      "type": "List\u003CConversionMapping\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConversionSettings.steel.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md"
+    },
+    {
+      "name": "Welds",
+      "type": "List\u003CConversionMapping\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConversionSettings.welds.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md"
+    },
+    {
+      "name": "BoltGrade",
+      "type": "List\u003CConversionMapping\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConversionSettings.boltGrade.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConversionSettings.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

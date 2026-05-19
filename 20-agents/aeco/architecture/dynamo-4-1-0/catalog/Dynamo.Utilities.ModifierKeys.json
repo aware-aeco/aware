@@ -1,0 +1,34 @@
+{
+  "name": "ModifierKeys",
+  "namespace": "Dynamo.Utilities",
+  "kind": "enum",
+  "summary": "Type ModifierKeys",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/ModifierKeys.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Alt",
+      "value": 1
+    },
+    {
+      "name": "Control",
+      "value": 2
+    },
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Shift",
+      "value": 4
+    },
+    {
+      "name": "Windows",
+      "value": 8
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "File3dmRenderMaterials",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.File3dmRenderMaterials\u0022]",
+  "interfaces": [
+    "IEnumerable\u003CFile3dmRenderMaterial\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmRenderMaterials.htm",
+  "constructors": [
+    {
+      "name": "File3dmRenderMaterials",
+      "signature": "public File3dmRenderMaterials(File3dm f)",
+      "summary": "Initializes a new instance of the File3dmRenderMaterials class",
+      "params": [
+        {
+          "name": "f",
+          "type": "Rhino.FileIO.File3dm",
+          "doc": "[Missing \u003Cparam name=\u0022f\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderMaterials.#ctor(Rhino.FileIO.File3dm)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmRenderMaterials__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Find",
+      "signature": "public File3dmRenderMaterial Find(Guid g)",
+      "summary": "Finds a material by its id, if possible. Returns null on failure.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022g\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderMaterials.Find(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dmRenderMaterial",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderMaterials.Find(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmRenderMaterials_Find.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CFile3dmRenderMaterial\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CFile3dmRenderMaterial\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderMaterials.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmRenderMaterials_GetEnumerator.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

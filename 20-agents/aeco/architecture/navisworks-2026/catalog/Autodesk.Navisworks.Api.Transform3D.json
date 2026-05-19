@@ -1,0 +1,638 @@
+{
+  "name": "Transform3D",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A generic transformation in 3D space.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Transform3D",
+  "constructors": [
+    {
+      "name": "Transform3D()",
+      "signature": "Transform3D()",
+      "summary": "Default constructor. Makes an Identity transform.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.%23ctor"
+    },
+    {
+      "name": "Transform3D(Autodesk.Navisworks.Api.Matrix3, Autodesk.Navisworks.Api.Vector3D)",
+      "signature": "Transform3D(Autodesk.Navisworks.Api.Matrix3 linear, Autodesk.Navisworks.Api.Vector3D trans)",
+      "summary": "Make a transform from a matrix and a vector.",
+      "params": [
+        {
+          "name": "linear",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027linear\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027linear\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027trans\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027trans\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.%23ctor%28Autodesk.Navisworks.Api.Matrix3%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Transform3D(Autodesk.Navisworks.Api.Rotation3D)",
+      "signature": "Transform3D(Autodesk.Navisworks.Api.Rotation3D rotation)",
+      "summary": "Make a transform from a rotation (3D homogenous).",
+      "params": [
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027rotation\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027rotation\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.%23ctor%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "Transform3D(Autodesk.Navisworks.Api.Rotation3D, Autodesk.Navisworks.Api.Vector3D)",
+      "signature": "Transform3D(Autodesk.Navisworks.Api.Rotation3D rotation, Autodesk.Navisworks.Api.Vector3D translation)",
+      "summary": "Make a transform from a rotation and a translation.",
+      "params": [
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        },
+        {
+          "name": "translation",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027rotation\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027rotation\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027translation\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027translation\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.%23ctor%28Autodesk.Navisworks.Api.Rotation3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Transform3D(Autodesk.Navisworks.Api.Transform3D)",
+      "signature": "Transform3D(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "Make a transform from another transform.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027transform\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027transform\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.%23ctor%28Autodesk.Navisworks.Api.Transform3D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Inverse",
+      "signature": "Autodesk.Navisworks.Api.Transform3D Inverse()",
+      "summary": "Return inverse of matrix. Matrix must be non-singular (non-zero determinant).",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.Inverse"
+    },
+    {
+      "name": "Factor",
+      "signature": "Autodesk.Navisworks.Api.Transform3DComponents Factor()",
+      "summary": "Treat as homogenous 3D matrix and factor into scale orientation, scale, rotation and translation components.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3DComponents",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.Factor"
+    },
+    {
+      "name": "Factor",
+      "signature": "Autodesk.Navisworks.Api.Transform3DComponents Factor(Autodesk.Navisworks.Api.Vector3D worldCenter)",
+      "summary": "Treat as homogenous 3D matrix and factor into scale orientation, scale, rotation and translation components.",
+      "params": [
+        {
+          "name": "worldCenter",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3DComponents",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027worldCenter\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027worldCenter\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.Factor%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.Equals%28System.Object%29"
+    },
+    {
+      "name": "IsAffine",
+      "signature": "bool IsAffine()",
+      "summary": "Determines if the transform is affine.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.IsAffine"
+    },
+    {
+      "name": "IsIdentity",
+      "signature": "bool IsIdentity()",
+      "summary": "Determines if the transform is an identity.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.IsIdentity"
+    },
+    {
+      "name": "IsLinear",
+      "signature": "bool IsLinear()",
+      "summary": "Determines if the transform is linear.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.IsLinear"
+    },
+    {
+      "name": "IsRotation",
+      "signature": "bool IsRotation()",
+      "summary": "Determines if the transform is a rotation.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.IsRotation"
+    },
+    {
+      "name": "IsTranslation",
+      "signature": "bool IsTranslation()",
+      "summary": "Determines if the transform is a translation.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.IsTranslation"
+    },
+    {
+      "name": "IsUniformScale",
+      "signature": "bool IsUniformScale()",
+      "summary": "Determines if the transform is a uniform scaling.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.IsUniformScale"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "bool TolerantEquals(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "Equal within a tolerance. Each element of matrix is equal to corresponding element, within the given tolerance.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027transform\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027transform\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.TolerantEquals%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "bool TolerantEquals(Autodesk.Navisworks.Api.Transform3D transform, double tolerance)",
+      "summary": "Equal within a tolerance. Each element of matrix is equal to corresponding element, within the given tolerance.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027transform\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027transform\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.TolerantEquals%28Autodesk.Navisworks.Api.Transform3D%2CSystem.Double%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.GetHashCode"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Transform3D.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CreateIdentity",
+      "signature": "static Autodesk.Navisworks.Api.Transform3D CreateIdentity()",
+      "summary": "Create an identity transform.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.CreateIdentity"
+    },
+    {
+      "name": "CreateTranslation",
+      "signature": "static Autodesk.Navisworks.Api.Transform3D CreateTranslation(Autodesk.Navisworks.Api.Vector3D translation)",
+      "summary": "Set matrix to be 3D homogenous translation matrix.",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027translation\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027translation\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.CreateTranslation%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Transform3D InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Transform3D.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "Multiply",
+      "signature": "static Autodesk.Navisworks.Api.Transform3D Multiply(Autodesk.Navisworks.Api.Transform3D leftTransform, Autodesk.Navisworks.Api.Transform3D rightTransform)",
+      "summary": "Multiply two transforms in the order that the arguments are given, and return the result.",
+      "params": [
+        {
+          "name": "leftTransform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        },
+        {
+          "name": "rightTransform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027leftTransform\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027leftTransform\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027rightTransform\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027rightTransform\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.Multiply%28Autodesk.Navisworks.Api.Transform3D%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "TranslateRight",
+      "signature": "static Autodesk.Navisworks.Api.Transform3D TranslateRight(Autodesk.Navisworks.Api.Vector3D translation, Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "Translate a transform by a vector.",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027translation\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027translation\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027transform\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027transform\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.TranslateRight%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transform3D.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Transform3D.IsReadOnly"
+    },
+    {
+      "name": "Linear",
+      "type": "Autodesk.Navisworks.Api.Matrix3",
+      "getter": true,
+      "setter": false,
+      "summary": "Get parts of matrix which represent orthogonal transforms.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Transform3D.Linear"
+    },
+    {
+      "name": "Translation",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Get parts of matrix which represent the translation.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Transform3D.Translation"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

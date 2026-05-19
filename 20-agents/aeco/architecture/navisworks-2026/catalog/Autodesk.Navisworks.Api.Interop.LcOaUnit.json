@@ -1,0 +1,1198 @@
+{
+  "name": "LcOaUnit",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaUnit class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaUnit",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaUnit InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaUnit.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaUnit",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ParseInput",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaUnitParseStatus ParseInput(string str, ref double value, ref Autodesk.Navisworks.Api.Units unit)",
+      "summary": "ParseInput method of LcOaUnit.",
+      "params": [
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitParseStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ParseInput%28System.String%2CSystem.Double%40%2CAutodesk.Navisworks.Api.Units%40%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaUnit.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Convert",
+      "signature": "static Autodesk.Navisworks.Api.VariantData Convert(Autodesk.Navisworks.Api.VariantData value, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular from, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular to)",
+      "summary": "Convert method of LcOaUnit.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Convert%28Autodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%29"
+    },
+    {
+      "name": "Convert",
+      "signature": "static Autodesk.Navisworks.Api.VariantData Convert(Autodesk.Navisworks.Api.VariantData value, Autodesk.Navisworks.Api.Units from, Autodesk.Navisworks.Api.Units to)",
+      "summary": "Convert method of LcOaUnit.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Convert%28Autodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Units%29"
+    },
+    {
+      "name": "Scale",
+      "signature": "static Autodesk.Navisworks.Api.VariantData Scale(Autodesk.Navisworks.Api.VariantData value, Autodesk.Navisworks.Api.Units from, Autodesk.Navisworks.Api.Units to)",
+      "summary": "Scale method of LcOaUnit.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Scale%28Autodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Units%29"
+    },
+    {
+      "name": "DecodeAngularFormat",
+      "signature": "static bool DecodeAngularFormat(int index, ref Autodesk.Navisworks.Api.Interop.LcOaUnitAngular units, ref Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat format)",
+      "summary": "DecodeAngularFormat method of LcOaUnit.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.DecodeAngularFormat%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%40%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat%40%29"
+    },
+    {
+      "name": "DecodeLinearFormat",
+      "signature": "static bool DecodeLinearFormat(int index, ref Autodesk.Navisworks.Api.Units units, ref Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat format)",
+      "summary": "DecodeLinearFormat method of LcOaUnit.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.DecodeLinearFormat%28System.Int32%2CAutodesk.Navisworks.Api.Units%40%2CAutodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat%40%29"
+    },
+    {
+      "name": "DecodeLinearNameEnum",
+      "signature": "static bool DecodeLinearNameEnum(string name, ref Autodesk.Navisworks.Api.Units units)",
+      "summary": "DecodeLinearNameEnum method of LcOaUnit.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.DecodeLinearNameEnum%28System.String%2CAutodesk.Navisworks.Api.Units%40%29"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcOaUnit.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.IsInitialised"
+    },
+    {
+      "name": "StrToUnitFormat",
+      "signature": "static bool StrToUnitFormat(string item, ref Autodesk.Navisworks.Api.Interop.LcOaUnitAngular unit)",
+      "summary": "StrToUnitFormat method of LcOaUnit.",
+      "params": [
+        {
+          "name": "item",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.StrToUnitFormat%28System.String%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%40%29"
+    },
+    {
+      "name": "StrToUnitFormat",
+      "signature": "static bool StrToUnitFormat(string item, ref Autodesk.Navisworks.Api.Units unit)",
+      "summary": "StrToUnitFormat method of LcOaUnit.",
+      "params": [
+        {
+          "name": "item",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.StrToUnitFormat%28System.String%2CAutodesk.Navisworks.Api.Units%40%29"
+    },
+    {
+      "name": "Convert",
+      "signature": "static double Convert(double v, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular from, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular to)",
+      "summary": "Convert method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Convert%28System.Double%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%29"
+    },
+    {
+      "name": "Convert",
+      "signature": "static double Convert(double v, Autodesk.Navisworks.Api.Units from, Autodesk.Navisworks.Api.Units to)",
+      "summary": "Convert method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Convert%28System.Double%2CAutodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Units%29"
+    },
+    {
+      "name": "Convert",
+      "signature": "static double Convert(double v, Autodesk.Navisworks.Api.Units from, Autodesk.Navisworks.Api.Units to, int dimension)",
+      "summary": "Convert method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "dimension",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Convert%28System.Double%2CAutodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Units%2CSystem.Int32%29"
+    },
+    {
+      "name": "CurrentScaleFactor",
+      "signature": "static double CurrentScaleFactor(Autodesk.Navisworks.Api.Units from)",
+      "summary": "CurrentScaleFactor method of LcOaUnit.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.CurrentScaleFactor%28Autodesk.Navisworks.Api.Units%29"
+    },
+    {
+      "name": "ParseInput",
+      "signature": "static double ParseInput(string str)",
+      "summary": "ParseInput method of LcOaUnit.",
+      "params": [
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ParseInput%28System.String%29"
+    },
+    {
+      "name": "ScaleFactor",
+      "signature": "static double ScaleFactor(Autodesk.Navisworks.Api.Interop.LcOaUnitAngular from, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular to)",
+      "summary": "ScaleFactor method of LcOaUnit.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ScaleFactor%28Autodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%29"
+    },
+    {
+      "name": "ScaleFactor",
+      "signature": "static double ScaleFactor(Autodesk.Navisworks.Api.Units from, Autodesk.Navisworks.Api.Units to)",
+      "summary": "ScaleFactor method of LcOaUnit.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ScaleFactor%28Autodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Units%29"
+    },
+    {
+      "name": "ScaleFactor",
+      "signature": "static double ScaleFactor(Autodesk.Navisworks.Api.Units from, Autodesk.Navisworks.Api.Units to, int dimension)",
+      "summary": "ScaleFactor method of LcOaUnit.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "dimension",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ScaleFactor%28Autodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Units%2CSystem.Int32%29"
+    },
+    {
+      "name": "Dimension",
+      "signature": "static int Dimension(Autodesk.Navisworks.Api.VariantData value)",
+      "summary": "Dimension method of LcOaUnit.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Dimension%28Autodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "EncodeAngularFormat",
+      "signature": "static int EncodeAngularFormat(Autodesk.Navisworks.Api.Interop.LcOaUnitAngular units, Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat format)",
+      "summary": "EncodeAngularFormat method of LcOaUnit.",
+      "params": [
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.EncodeAngularFormat%28Autodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat%29"
+    },
+    {
+      "name": "EncodeLinearFormat",
+      "signature": "static int EncodeLinearFormat(Autodesk.Navisworks.Api.Units units, Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat format)",
+      "summary": "EncodeLinearFormat method of LcOaUnit.",
+      "params": [
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.EncodeLinearFormat%28Autodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat%29"
+    },
+    {
+      "name": "GetMaxFractionalPrecision",
+      "signature": "static int GetMaxFractionalPrecision()",
+      "summary": "GetMaxFractionalPrecision method of LcOaUnit.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.GetMaxFractionalPrecision"
+    },
+    {
+      "name": "AddMinusSign",
+      "signature": "static void AddMinusSign(out string buffer)",
+      "summary": "AddMinusSign method of LcOaUnit.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.AddMinusSign%28System.String%40%29"
+    },
+    {
+      "name": "ConvertAndPrettyPrint",
+      "signature": "static void ConvertAndPrettyPrint(Autodesk.Navisworks.Api.VariantData value, Autodesk.Navisworks.Api.Units input_units, out string result, bool attach_unit_abbrev)",
+      "summary": "ConvertAndPrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "input_units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ConvertAndPrettyPrint%28Autodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ConvertAndPrettyPrint",
+      "signature": "static void ConvertAndPrettyPrint(double v, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular input_units, out string result)",
+      "summary": "ConvertAndPrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "input_units",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ConvertAndPrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CSystem.String%40%29"
+    },
+    {
+      "name": "ConvertAndPrettyPrint",
+      "signature": "static void ConvertAndPrettyPrint(double v, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular input_units, out string result, bool attach_unit_abbrev)",
+      "summary": "ConvertAndPrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "input_units",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ConvertAndPrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CSystem.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ConvertAndPrettyPrint",
+      "signature": "static void ConvertAndPrettyPrint(double v, Autodesk.Navisworks.Api.Units input_units, out string result)",
+      "summary": "ConvertAndPrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "input_units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ConvertAndPrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%29"
+    },
+    {
+      "name": "ConvertAndPrettyPrint",
+      "signature": "static void ConvertAndPrettyPrint(double v, Autodesk.Navisworks.Api.Units input_units, out string result, bool attach_unit_abbrev)",
+      "summary": "ConvertAndPrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "input_units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ConvertAndPrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ConvertAndPrettyPrint",
+      "signature": "static void ConvertAndPrettyPrint(double v, Autodesk.Navisworks.Api.Units input_units, out string result, bool attach_unit_abbrev, int dimension)",
+      "summary": "ConvertAndPrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "input_units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "dimension",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.ConvertAndPrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%2CSystem.Boolean%2CSystem.Int32%29"
+    },
+    {
+      "name": "EncodeLinearNameEnum",
+      "signature": "static void EncodeLinearNameEnum(Autodesk.Navisworks.Api.Units units, out string name)",
+      "summary": "EncodeLinearNameEnum method of LcOaUnit.",
+      "params": [
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.EncodeLinearNameEnum%28Autodesk.Navisworks.Api.Units%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetUnitAbbreviation",
+      "signature": "static void GetUnitAbbreviation(Autodesk.Navisworks.Api.Interop.LcOaUnitAngular unit, Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat format, out string abbrev)",
+      "summary": "GetUnitAbbreviation method of LcOaUnit.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat",
+          "optional": false
+        },
+        {
+          "name": "abbrev",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.GetUnitAbbreviation%28Autodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetUnitAbbreviation",
+      "signature": "static void GetUnitAbbreviation(Autodesk.Navisworks.Api.Units unit, Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat format, out string abbrev)",
+      "summary": "GetUnitAbbreviation method of LcOaUnit.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat",
+          "optional": false
+        },
+        {
+          "name": "abbrev",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.GetUnitAbbreviation%28Autodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetUnitAbbreviation",
+      "signature": "static void GetUnitAbbreviation(Autodesk.Navisworks.Api.Units unit, Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat format, out string abbrev, int dimension)",
+      "summary": "GetUnitAbbreviation method of LcOaUnit.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat",
+          "optional": false
+        },
+        {
+          "name": "abbrev",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "dimension",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.GetUnitAbbreviation%28Autodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat%2CSystem.String%40%2CSystem.Int32%29"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcOaUnit.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Initialise"
+    },
+    {
+      "name": "PrettyPrint",
+      "signature": "static void PrettyPrint(Autodesk.Navisworks.Api.VariantData v, Autodesk.Navisworks.Api.Units unit, out string str)",
+      "summary": "PrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.PrettyPrint%28Autodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%29"
+    },
+    {
+      "name": "PrettyPrint",
+      "signature": "static void PrettyPrint(Autodesk.Navisworks.Api.VariantData v, Autodesk.Navisworks.Api.Units unit, out string str, bool attach_unit_abbrev)",
+      "summary": "PrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.PrettyPrint%28Autodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "PrettyPrint",
+      "signature": "static void PrettyPrint(double v, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular unit, out string str)",
+      "summary": "PrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.PrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CSystem.String%40%29"
+    },
+    {
+      "name": "PrettyPrint",
+      "signature": "static void PrettyPrint(double v, Autodesk.Navisworks.Api.Interop.LcOaUnitAngular unit, out string str, bool attach_unit_abbrev)",
+      "summary": "PrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.PrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CSystem.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "PrettyPrint",
+      "signature": "static void PrettyPrint(double v, Autodesk.Navisworks.Api.Units unit, out string str)",
+      "summary": "PrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.PrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%29"
+    },
+    {
+      "name": "PrettyPrint",
+      "signature": "static void PrettyPrint(double v, Autodesk.Navisworks.Api.Units unit, out string str, bool attach_unit_abbrev)",
+      "summary": "PrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.PrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "PrettyPrint",
+      "signature": "static void PrettyPrint(double v, Autodesk.Navisworks.Api.Units unit, out string str, bool attach_unit_abbrev, int dimension)",
+      "summary": "PrettyPrint method of LcOaUnit.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "attach_unit_abbrev",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "dimension",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.PrettyPrint%28System.Double%2CAutodesk.Navisworks.Api.Units%2CSystem.String%40%2CSystem.Boolean%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetupNames",
+      "signature": "static void SetupNames()",
+      "summary": "SetupNames method of LcOaUnit.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.SetupNames"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcOaUnit.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.Terminate"
+    },
+    {
+      "name": "UnitFormatToStr",
+      "signature": "static void UnitFormatToStr(Autodesk.Navisworks.Api.Interop.LcOaUnitAngular unit, out string text)",
+      "summary": "UnitFormatToStr method of LcOaUnit.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.UnitFormatToStr%28Autodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CSystem.String%40%29"
+    },
+    {
+      "name": "UnitFormatToStr",
+      "signature": "static void UnitFormatToStr(Autodesk.Navisworks.Api.Units unit, out string text)",
+      "summary": "UnitFormatToStr method of LcOaUnit.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.UnitFormatToStr%28Autodesk.Navisworks.Api.Units%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaUnit.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaUnit.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

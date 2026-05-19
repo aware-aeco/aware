@@ -1,0 +1,125 @@
+{
+  "name": "MultiElementSelectInteractor",
+  "namespace": "ScriptObjectInteractors.MultiElementSelectInteractor",
+  "kind": "class",
+  "summary": "Implementation of the interactor for selecting multiple elements",
+  "base": "BaseScriptObjectInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/",
+  "constructors": [
+    {
+      "name": "MultiElementSelectInteractor",
+      "signature": "MultiElementSelectInteractor( interactor_result: MultiElementSelectInteractorResult, ele_filter: list[GUID] | MultiElementSelectInteractor() | MultiElementSelectInteractor() | MultiElementSelectInteractor()",
+      "summary": "Initialize the multiple element selection interactor",
+      "remarks": "Initialize the multiple element selection interactor",
+      "params": [
+        {
+          "name": "interactor_result",
+          "type": "MultiElementSelectInteractorResult",
+          "doc": "object, where to save the selection results to",
+          "optional": false
+        },
+        {
+          "name": "ele_filter",
+          "type": "list[GUID] | BaseFilterObject | SelectionQuery | None",
+          "doc": "element filter as a list of accepted element type GUIDs or a callable or a selection query returning True, when the element is valid for selection",
+          "optional": false
+        },
+        {
+          "name": "prompt_msg",
+          "type": "str",
+          "doc": "prompt message shown to the user in the dialog line",
+          "optional": false
+        },
+        {
+          "name": "active_elements",
+          "type": "bool",
+          "doc": "When set to True, only elements on active layers and drawing files can be selected. When set to False, elements on both active and passive layers and drawing files can be selected.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/#ScriptObjectInteractors.MultiElementSelectInteractor.MultiElementSelectInteractor.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__del__",
+      "signature": "__del__()",
+      "summary": "Default destructor Remove the selection function from the stack, if it is running.",
+      "remarks": "Default destructor Remove the selection function from the stack, if it is running.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/#ScriptObjectInteractors.MultiElementSelectInteractor.MultiElementSelectInteractor.__del__"
+    },
+    {
+      "name": "close_selection",
+      "signature": "close_selection()",
+      "summary": "close the selection",
+      "remarks": "close the selection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/#ScriptObjectInteractors.MultiElementSelectInteractor.MultiElementSelectInteractor.close_selection"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg( _mouse_msg: int, _pnt: Point2D, _msg_info: AddMsgInfo ) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "_mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "_pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "_msg_info",
+          "type": "AddMsgInfo",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/#ScriptObjectInteractors.MultiElementSelectInteractor.MultiElementSelectInteractor.process_mouse_msg"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "Start the multiple element selection",
+      "remarks": "Start the multiple element selection",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/#ScriptObjectInteractors.MultiElementSelectInteractor.MultiElementSelectInteractor.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

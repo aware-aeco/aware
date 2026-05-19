@@ -1,0 +1,31 @@
+{
+  "name": "EventInfoArgs",
+  "namespace": "Rhino.UI.Controls.DataSource",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.DataSource.EventInfoArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_DataSource_EventInfoArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DataType",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_EventInfoArgs_DataType.htm"
+    },
+    {
+      "name": "EventInfoPtr",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_DataSource_EventInfoArgs_EventInfoPtr.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

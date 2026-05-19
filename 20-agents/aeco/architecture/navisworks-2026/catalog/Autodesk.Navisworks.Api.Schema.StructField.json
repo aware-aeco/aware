@@ -1,0 +1,116 @@
+{
+  "name": "StructField",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "class",
+  "summary": "Represents the definition of a structure within a SchemaDefinition.",
+  "base": "Autodesk.Navisworks.Api.Schema.GroupField",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.StructField",
+  "constructors": [
+    {
+      "name": "StructField()",
+      "signature": "StructField()",
+      "summary": "Default constructor. No identifier specified.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.StructField.%23ctor"
+    },
+    {
+      "name": "StructField(string)",
+      "signature": "StructField(string id)",
+      "summary": "Constructs the field with a given identifier.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Provided field ID is invalid or missing. 7-bit ASCII without spaces must be used."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027id\u0027 is not convertable to a 7-bit ASCII string"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.StructField.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of StructField.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.StructField.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Schema.StructField InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of StructField.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.StructField",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.StructField.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Fields",
+      "type": "Autodesk.Navisworks.Api.Schema.FieldCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "The fields that comprise the struct content.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.StructField.Fields"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.StructField.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

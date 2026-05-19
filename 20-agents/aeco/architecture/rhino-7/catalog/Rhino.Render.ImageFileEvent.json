@@ -1,0 +1,29 @@
+{
+  "name": "ImageFileEvent",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.ImageFileEvent\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_ImageFileEvent.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Saved",
+      "value": 0,
+      "summary": "Render image file has been successfully written"
+    },
+    {
+      "name": "Loaded",
+      "value": 1,
+      "summary": "Render image file has been successfully loaded"
+    },
+    {
+      "name": "Deleted",
+      "value": 2,
+      "summary": "Render image file was just deleted"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisSupport.SupportEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The connectivity types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2952a91b-17a5-30fe-344b-162c691c522b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SUPPORT_FREE",
+      "value": 0,
+      "summary": "The support is free."
+    },
+    {
+      "name": "SUPPORT_FIXED",
+      "value": 1,
+      "summary": "The support is fixed."
+    },
+    {
+      "name": "SUPPORT_SPRING",
+      "value": 2,
+      "summary": "The support is a spring."
+    }
+  ]
+}

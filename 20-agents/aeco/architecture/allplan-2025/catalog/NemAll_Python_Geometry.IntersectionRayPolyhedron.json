@@ -1,0 +1,85 @@
+{
+  "name": "IntersectionRayPolyhedron",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Intersection result of the ray - Polyhedron3D intersection",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/",
+  "constructors": [
+    {
+      "name": "IntersectionRayPolyhedron",
+      "signature": "IntersectionRayPolyhedron(element: IntersectionRayPolyhedron)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "IntersectionRayPolyhedron",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/#NemAll_Python_Geometry.IntersectionRayPolyhedron.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/#NemAll_Python_Geometry.IntersectionRayPolyhedron.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FaceIdx",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "face index of the face of the best intersection (if found, not unique) beginning from 0",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/#NemAll_Python_Geometry.IntersectionRayPolyhedron.FaceIdx"
+    },
+    {
+      "name": "FaceNv",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "normal vector of best-intersected face (if found, not unique)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/#NemAll_Python_Geometry.IntersectionRayPolyhedron.FaceNv"
+    },
+    {
+      "name": "IntersectionPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "intersection point (if found)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/#NemAll_Python_Geometry.IntersectionRayPolyhedron.IntersectionPoint"
+    },
+    {
+      "name": "Lambda",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "ray parameter of returned intersection (if found)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/#NemAll_Python_Geometry.IntersectionRayPolyhedron.Lambda"
+    },
+    {
+      "name": "RetCode",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "-1: only neg. inters. found",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayPolyhedron/#NemAll_Python_Geometry.IntersectionRayPolyhedron.RetCode"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

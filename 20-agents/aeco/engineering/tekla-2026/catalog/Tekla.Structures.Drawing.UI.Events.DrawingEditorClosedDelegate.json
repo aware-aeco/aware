@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingEditorClosedDelegate",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing editor closing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b7c732ea-318f-1fdf-e56f-01029f1e8552",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingEditorClosedDelegate()"
+}

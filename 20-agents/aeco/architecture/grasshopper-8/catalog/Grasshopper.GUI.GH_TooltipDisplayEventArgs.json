@@ -1,0 +1,87 @@
+{
+  "name": "GH_TooltipDisplayEventArgs",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Event arguments used in the Tooltip Component.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_TooltipDisplayEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Control",
+      "type": "Control",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the control for whom the tooltip is about to be displayed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Control.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the description of the tooltip. This field is optional.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Description.htm"
+    },
+    {
+      "name": "Diagram",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the image that is displayed in the details section of the tooltip. This field is optional, but when it is defined, the Description property is ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Diagram.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the icon that is displayed in the upper left hand corner of the tooltip. This field is optional.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Icon.htm"
+    },
+    {
+      "name": "Point",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point in control coordinates for the tooltip locus.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Point.htm"
+    },
+    {
+      "name": "Region",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the active region (in control coordinates) for this tooltip. Once a tooltip is shown inside the region, the tooltip will \u0027stick\u0027 to the mouse for as long as the mouse remains within this region. By default the region is set to Rectangle.Empty, which indicates that region tracking is not used for this tooltip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Region.htm"
+    },
+    {
+      "name": "Text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text of the tooltip. If you do not set the Text property, you must set the Title property or the tooltip will not be shown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Text.htm"
+    },
+    {
+      "name": "Title",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the title of the tooltip. If you do not set the Title property, you must set the Text property or the tooltip will not be shown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Title.htm"
+    },
+    {
+      "name": "Valid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether there is currently enough data to display a tooltip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipDisplayEventArgs_Valid.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

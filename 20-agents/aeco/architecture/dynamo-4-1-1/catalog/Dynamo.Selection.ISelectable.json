@@ -1,0 +1,43 @@
+{
+  "name": "ISelectable",
+  "namespace": "Dynamo.Selection",
+  "kind": "interface",
+  "summary": "Interface, that provides selectable objects. These are objects, which user can select by mouse. E.g. nodes, connectors, groups etc.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/DynamoSelection.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Deselect",
+      "signature": "void Deselect()",
+      "summary": "Deselect object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/DynamoSelection.cs"
+    },
+    {
+      "name": "Select",
+      "signature": "void Select()",
+      "summary": "Select object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/DynamoSelection.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsSelected",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Bool value indicates if object is selected or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Core/DynamoSelection.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

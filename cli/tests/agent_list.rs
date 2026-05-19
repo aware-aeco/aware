@@ -55,6 +55,9 @@ fn json_output_returns_envelope() {
     assert_eq!(v["ok"], true);
     assert_eq!(v["meta"]["command"], "agent list");
     let agents = v["data"]["agents"].as_array().unwrap();
-    assert_eq!(agents.len(), 57);
+    // The fixture mirrors every `manifest.yaml` under `20-agents/`. Count grew from 57 (v0.28
+    // baseline) to 63 with v0.29's broader vendor coverage. A strict equality keeps this honest
+    // — bump it whenever a new agent lands.
+    assert_eq!(agents.len(), 63);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
 }

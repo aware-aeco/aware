@@ -1,0 +1,88 @@
+{
+  "name": "GH_DocumentAssociations",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.GH_DocumentAssociations.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentAssociations.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentAssociations",
+      "signature": "public GH_DocumentAssociations()",
+      "summary": "Initializes a new instance of the GH_DocumentAssociations class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentAssociations__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Associate",
+      "signature": "public void Associate(string rhinoFile, string grasshopperFile)",
+      "summary": "Add an association between a Rhino and a Grasshopper file. If a similar association already exists, it will be overwritten. This function reads and writes to the disk, it is SLOW. Only call it when you KNOW something changed.",
+      "params": [
+        {
+          "name": "rhinoFile",
+          "type": "System.String",
+          "doc": "Path to Rhino 3dm file.",
+          "optional": false
+        },
+        {
+          "name": "grasshopperFile",
+          "type": "System.String",
+          "doc": "Path to Grasshopper ghx or gh file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentAssociations_Associate.htm"
+    },
+    {
+      "name": "GetGrasshopperAssociations",
+      "signature": "public List\u003Cstring\u003E GetGrasshopperAssociations(string rhinoFile)",
+      "summary": "Find all the Grasshopper ghx files that have been associated with a given Rhino file.",
+      "params": [
+        {
+          "name": "rhinoFile",
+          "type": "System.String",
+          "doc": "Rhino file path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "A list of files, ordered chronologically (most recent association first)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentAssociations_GetGrasshopperAssociations.htm"
+    },
+    {
+      "name": "GetRhinoAssociations",
+      "signature": "public List\u003Cstring\u003E GetRhinoAssociations(string grasshopperFile)",
+      "summary": "Find all the Rhino 3dm files that have been associated with a given Grasshopper file.",
+      "params": [
+        {
+          "name": "grasshopperFile",
+          "type": "System.String",
+          "doc": "Grasshopper file path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "A list of files, ordered chronologically (most recent association first)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentAssociations_GetRhinoAssociations.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,243 @@
+{
+  "name": "ViewHandler",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The ViewHandler class contains methods for handling views.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d65d9ef6-7f02-5524-6054-15a0126614e7",
+  "constructors": [
+    {
+      "name": "ViewHandler",
+      "signature": "public ViewHandler()",
+      "summary": "Initializes a new instance of the ViewHandler class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3b3479a-9107-c6d5-0938-f19d21950d50"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetActiveView",
+      "signature": "public static View GetActiveView()",
+      "summary": "Get the current active MDI child window view",
+      "params": [],
+      "returns": {
+        "type": "View",
+        "doc": "currently active view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0a00b23a-98fd-37b3-9bc3-9616d63a2c47"
+    },
+    {
+      "name": "GetAllViews",
+      "signature": "public static ModelViewEnumerator GetAllViews()",
+      "summary": "Fetches all the views from the model.",
+      "params": [],
+      "returns": {
+        "type": "ModelViewEnumerator",
+        "doc": "A model view enumerator with all the views."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0caa8a9f-c41c-0d38-fdb4-70d46f656bd9"
+    },
+    {
+      "name": "GetPermanentViews",
+      "signature": "public static ModelViewEnumerator GetPermanentViews()",
+      "summary": "Returns the permanent views.",
+      "params": [],
+      "returns": {
+        "type": "ModelViewEnumerator",
+        "doc": "A model view enumerator with the permanent views."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/843d23db-2a34-56d7-abfb-792b5fe57558"
+    },
+    {
+      "name": "GetSelectedViews",
+      "signature": "public static ModelViewEnumerator GetSelectedViews()",
+      "summary": "Returns the views the user has selected.",
+      "params": [],
+      "returns": {
+        "type": "ModelViewEnumerator",
+        "doc": "A model view enumerator with the selected views."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/99f504e2-d095-f9c4-4852-870dd721f35e"
+    },
+    {
+      "name": "GetTemporaryViews",
+      "signature": "public static ModelViewEnumerator GetTemporaryViews()",
+      "summary": "Returns the temporary views.",
+      "params": [],
+      "returns": {
+        "type": "ModelViewEnumerator",
+        "doc": "A model view enumerator with the temporary views."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c33af31d-4e77-1ed5-baac-bb270bd4af2b"
+    },
+    {
+      "name": "GetVisibleViews",
+      "signature": "public static ModelViewEnumerator GetVisibleViews()",
+      "summary": "Returns the visible views.",
+      "params": [],
+      "returns": {
+        "type": "ModelViewEnumerator",
+        "doc": "A model view enumerator with the visible views."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8ea2983b-ed89-6d3f-5fef-f08de2397e6f"
+    },
+    {
+      "name": "HideView",
+      "signature": "public static bool HideView(View view)",
+      "summary": "Closes a model view.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Model.UI.View",
+          "doc": "The view that is to be closed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0f04ff24-f332-4456-c8eb-41f24566efec"
+    },
+    {
+      "name": "RedrawView",
+      "signature": "public static bool RedrawView(View view)",
+      "summary": "Redraws a model view.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Model.UI.View",
+          "doc": "The view that is to be redrawn.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2bf7baba-1ff8-00c3-012d-cb8023362c85"
+    },
+    {
+      "name": "RedrawWorkplane",
+      "signature": "public static bool RedrawWorkplane()",
+      "summary": "Sets the workplane to current transformation plane and redraws it.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/13a65fe3-f0fc-1cef-233f-48c5c471de84"
+    },
+    {
+      "name": "SetRepresentation",
+      "signature": "public static bool SetRepresentation(string Representation)",
+      "summary": "Sets the object representation.",
+      "params": [
+        {
+          "name": "Representation",
+          "type": "System.String",
+          "doc": "The representation that is to be used. 257 characters at most.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/54ce1cb1-f8e3-4544-7558-fbf7f200fd49"
+    },
+    {
+      "name": "ShowView",
+      "signature": "public static bool ShowView(View view)",
+      "summary": "Opens a model view.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Model.UI.View",
+          "doc": "The view that is to be shown.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ad1a67d1-4535-d9fd-c4ef-6f8855c4e934"
+    },
+    {
+      "name": "ZoomToBoundingBox(AABB)",
+      "signature": "public static bool ZoomToBoundingBox(AABB box)",
+      "summary": "Zooms the current model view.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Tekla.Structures.Geometry3d.AABB",
+          "doc": "The bounding box the current view is zoomed to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cabd4471-1f0a-285c-b4ed-688a935b7c17"
+    },
+    {
+      "name": "ZoomToBoundingBox(View, AABB)",
+      "signature": "public static bool ZoomToBoundingBox(View view, AABB B)",
+      "summary": "Zooms a model view.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Model.UI.View",
+          "doc": "The view that is to be zoomed.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Tekla.Structures.Geometry3d.AABB",
+          "doc": "The bounding box the view is zoomed to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5554e2b7-1f8f-5b6c-37e3-b7217202a73c"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

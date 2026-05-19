@@ -1,0 +1,285 @@
+{
+  "name": "Notification",
+  "namespace": "Rhino.Runtime.Notifications",
+  "kind": "class",
+  "summary": "A Notification instance can be used to inform the user about various events. For a Notification instance to be displayed in Rhino, it must be added to the NotificationCenter. When added, it will be displayed in the Notifications panel in Rhino. A Notification contains 1 to 3 buttons that are automatically wired to its ButtonClicked Action if it is not null. The buttons are displayed when the Notification is shown modally by either the user clicking on a particular notification in the Notifications panel, or by programatically showing it using ShowModal(). Currently, only process-wide notifications are supported; document specific notifications are not possible. Notification instances contain metadata that can be added, modified, or removed during its life. The metadata is important for LINQ queries and other patterns. For example, a particular action may require that multiple notifications be modified. Thus, a LINQ query can be performed on the NotificationCenter using metadata to retrieve related Notification objects and modify them as a batch. Notification objects implement IAssemblyRestrictedObject. By default, a Notification can be editedby any assembly, but explicitly specifing allowed assemblies in the constructor changes this behavior. Notification objects are not thread-safe and should only be manipulated in UI thread.",
+  "interfaces": [
+    "INotifyPropertyChanged",
+    "IAssemblyRestrictedObject"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_Notifications_Notification.htm",
+  "constructors": [
+    {
+      "name": "Notification()",
+      "signature": "public Notification()",
+      "summary": "Creates a new instance that can be edited by any assembly.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification__ctor.htm"
+    },
+    {
+      "name": "Notification(IEnumerable\u003CAssembly\u003E)",
+      "signature": "public Notification(IEnumerable\u003CAssembly\u003E allowedAssemblies)",
+      "summary": "Creates a new instance that can be edited by the given assemblies.",
+      "remarks": "Specifying one or more assemblies limits certain operations with the notification object, throwing an InvalidOperationException if an assembly outside the ones passed tries to interact with it. Any code that tries to interact with a notification object that has restricted assemblies must be wrapped in a ExecuteAssemblyProtectedCode(Action). For performance reasons, it is imporant that such methods are kept as simple as possible.",
+      "params": [
+        {
+          "name": "allowedAssemblies",
+          "type": "System.Collections.Generic.IEnumerable\u003CAssembly\u003E",
+          "doc": "The assemblies that will be allowed to edit the instance. If null or empty, any assembly will be able to edit this notification.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Editable",
+      "signature": "public bool Editable()",
+      "summary": "Determines whether an assembly can modify the instance. Any code that modifies an assembly protected notification must be wrapped in a ExecuteAssemblyProtectedCode(Action) method.",
+      "remarks": "Before modifying a notification you are not sure you created (such as a notification returned from a LINQ query), you should call this method first to ensure you can indeed edit the object.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Notifications.Notification.Editable\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification_Editable.htm"
+    },
+    {
+      "name": "ExecuteAssemblyProtectedCode(Action)",
+      "signature": "public static void ExecuteAssemblyProtectedCode(Action action)",
+      "summary": "If a Notification object is only allowed to be modified by certain assemblies, then any code that interacts with it must be wrapped around this method, or a InvalidOperationException will be thrown. For performance reasons, the code wrapped by this method should be kept as simple as possible.",
+      "remarks": "This method is not thread-safe and should only be manipulated in UI thread.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "doc": "The code to run that modifies one or more notification objects",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification_ExecuteAssemblyProtectedCode.htm"
+    },
+    {
+      "name": "ExecuteAssemblyProtectedCode\u003CTResult\u003E(Func\u003CTResult\u003E)",
+      "signature": "public static TResult ExecuteAssemblyProtectedCode\u003CTResult\u003E(Func\u003CTResult\u003E func)",
+      "summary": "If a Notification object is only allowed to be modified by certain assemblies, then any code that interacts with it must be wrapped around this method, or a InvalidOperationException will be thrown. For performance reasons, the code wrapped by this method should be kept as simple as possible.",
+      "remarks": "This method is not thread-safe and should only be manipulated in UI thread.",
+      "params": [
+        {
+          "name": "func",
+          "type": "System.Func\u003CTResult\u003E",
+          "doc": "The code to run that modifies one or more notification objects",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Notifications.Notification.ExecuteAssemblyProtectedCode\u0060\u00601(System.Func{\u0060\u00600})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification_ExecuteAssemblyProtectedCode__1.htm"
+    },
+    {
+      "name": "HideModal",
+      "signature": "public void HideModal()",
+      "summary": "Tells Rhino to hide the notification if it is being currently shown as a modal.",
+      "remarks": "If the notification is not being currently shown but is being queued by Rhino as a result of calling ShowModal(), then the notification will be dequeued. If the notification was never queued, then this method has no effect.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if the calling assembly cannot modify this instance"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification_HideModal.htm"
+    },
+    {
+      "name": "RemoveMetadata",
+      "signature": "public bool RemoveMetadata(string key)",
+      "summary": "Removes metadata from this instance.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key of the metadata to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the metada was removed; otherwise false."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if the calling assembly cannot modify this instance"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification_RemoveMetadata.htm"
+    },
+    {
+      "name": "ShowModal",
+      "signature": "public void ShowModal()",
+      "summary": "Tells Rhino to display the notification modally.",
+      "remarks": "The notification will only be displayed if/once the instance is added to the NotificationCenter. Rhino keeps a queue of notifications that need to be shown modally, so calling this method does not mean that this particular notification will be immediately displayed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification_ShowModal.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns a readable string representation of the instance.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Notifications.Notification.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_Notification_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowedAssemblies",
+      "type": "ICollection\u003CAssembly\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The assemblies that can modify this instance.",
+      "remarks": "If empty, any assembly is allowed to edit the instance. You may specify additional assemblies that should have access to an instance at creation time.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_AllowedAssemblies.htm"
+    },
+    {
+      "name": "AlternateButtonTitle",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The localized title of the Alternate button.",
+      "remarks": "Notifications can 1 to 3 buttons for user input. Each button can have a localized title. With the exception of the Cancel button, setting a button title to null (the default) will prevent that button from appearing in the interface. Note that in order for buttons other than the Cancel button to be displayed, you must set a ButtonClicked Action.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_AlternateButtonTitle.htm"
+    },
+    {
+      "name": "ButtonClicked",
+      "type": "Action\u003CButtonType\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "An Action that will be invoked whenever a button for the notification is clicked or the notification is closed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_ButtonClicked.htm"
+    },
+    {
+      "name": "CancelButtonTitle",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The localized title of the Cancel button.",
+      "remarks": "Notifications can 1 to 3 buttons for user input. Each button can have a localized title. With the exception of the Cancel button, setting a button title to null (the default) will prevent that button from appearing in the interface. Note that in order for buttons other than the Cancel button to be displayed, you must set a ButtonClicked Action.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_CancelButtonTitle.htm"
+    },
+    {
+      "name": "ConfirmButtonTitle",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The localized title of the Confirm button.",
+      "remarks": "Notifications can 1 to 3 buttons for user input. Each button can have a localized title. With the exception of the Cancel button, setting a button title to null (the default) will prevent that button from appearing in the interface. Note that in order for buttons other than the Cancel button to be displayed, you must set a ButtonClicked Action.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_ConfirmButtonTitle.htm"
+    },
+    {
+      "name": "DateUpdated",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "The date the notification was last modified.",
+      "remarks": "Only visible elements of the notification will cause this property to change. Changes in metadata or other non-visible members will have no effect on this property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_DateUpdated.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The description of the notification. The description is displayed in the Notifications panel in Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_Description.htm"
+    },
+    {
+      "name": "Item",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets metadata for this instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_Item.htm"
+    },
+    {
+      "name": "Message",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The message of the notification. The message is shown only when the instance is displayed modally. It should contain details about the notification.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_Message.htm"
+    },
+    {
+      "name": "MetadataCopy",
+      "type": "IDictionary\u003CString,String\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A copy of all the metadata for this class.",
+      "remarks": "Modifying the returned dictionary will have no effect on the metadata for this notification.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_MetadataCopy.htm"
+    },
+    {
+      "name": "SeverityLevel",
+      "type": "Notification.Severity",
+      "getter": true,
+      "setter": true,
+      "summary": "The severity of the notification. Changing the severity of the notification may change the way Rhino chooses to display the Notifications panel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_SeverityLevel.htm"
+    },
+    {
+      "name": "ShowEventId",
+      "type": "Nullable\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A field used by Rhino for displaying notifications. Not intended for public use.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_ShowEventId.htm"
+    },
+    {
+      "name": "Title",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The title of the notification. The title is displayed when the notification is displayed modally in Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_Notification_Title.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "PropertyChanged",
+      "delegate": "System.ComponentModel.PropertyChangedEventHandler",
+      "signature": "public event PropertyChangedEventHandler PropertyChanged",
+      "summary": "Triggered whenever a visible property of the instance changes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Runtime_Notifications_Notification_PropertyChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

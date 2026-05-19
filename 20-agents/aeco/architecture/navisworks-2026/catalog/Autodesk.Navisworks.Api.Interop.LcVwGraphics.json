@@ -1,0 +1,820 @@
+{
+  "name": "LcVwGraphics",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcVwGraphics class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcVwGraphics",
+  "constructors": [
+    {
+      "name": "LcVwGraphics(Autodesk.Navisworks.Api.Graphics)",
+      "signature": "LcVwGraphics(Autodesk.Navisworks.Api.Graphics gfx)",
+      "summary": "Constructs a new LcVwGraphics.",
+      "params": [
+        {
+          "name": "gfx",
+          "type": "Autodesk.Navisworks.Api.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.%23ctor%28Autodesk.Navisworks.Api.Graphics%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanRenderText2D",
+      "signature": "bool CanRenderText2D(int font_index, string text)",
+      "summary": "CanRenderText2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "font_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.CanRenderText2D%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "GetWindowHeight",
+      "signature": "int GetWindowHeight()",
+      "summary": "GetWindowHeight method of LcVwGraphics.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.GetWindowHeight"
+    },
+    {
+      "name": "GetWindowWidth",
+      "signature": "int GetWindowWidth()",
+      "summary": "GetWindowWidth method of LcVwGraphics.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.GetWindowWidth"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcVwGraphics InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcVwGraphics",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "BeginWindowContext",
+      "signature": "void BeginWindowContext()",
+      "summary": "BeginWindowContext method of LcVwGraphics.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.BeginWindowContext"
+    },
+    {
+      "name": "BeginWorldContext",
+      "signature": "void BeginWorldContext()",
+      "summary": "BeginWorldContext method of LcVwGraphics.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.BeginWorldContext"
+    },
+    {
+      "name": "Bitmap2D",
+      "signature": "void Bitmap2D(int index, Autodesk.Navisworks.Api.Interop.LcVwData2f point, double alpha)",
+      "summary": "Bitmap2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Bitmap2D%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcVwData2f%2CSystem.Double%29"
+    },
+    {
+      "name": "Blend",
+      "signature": "void Blend(bool enabled)",
+      "summary": "Blend method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Blend%28System.Boolean%29"
+    },
+    {
+      "name": "Circle2D",
+      "signature": "void Circle2D(Autodesk.Navisworks.Api.Interop.LcVwData2f centre, double radius, bool filled)",
+      "summary": "Circle2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Circle2D%28Autodesk.Navisworks.Api.Interop.LcVwData2f%2CSystem.Double%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Circle3D",
+      "signature": "void Circle3D(Autodesk.Navisworks.Api.Interop.LcVwData3f centre, Autodesk.Navisworks.Api.Interop.LcVwData3f normal, double radius, bool filled)",
+      "summary": "Circle3D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Circle3D%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Double%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Color",
+      "signature": "void Color(double r, double g, double b, double a)",
+      "summary": "Color method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "r",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Color%28System.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "Cone",
+      "signature": "void Cone(Autodesk.Navisworks.Api.Interop.LcVwData3f top, double top_radius, Autodesk.Navisworks.Api.Interop.LcVwData3f bottom, double bottom_radius)",
+      "summary": "Cone method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "top",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "top_radius",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "bottom_radius",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Cone%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Double%29"
+    },
+    {
+      "name": "Cuboid",
+      "signature": "void Cuboid(Autodesk.Navisworks.Api.Interop.LcVwData3f origin, Autodesk.Navisworks.Api.Interop.LcVwData3f x_vector, Autodesk.Navisworks.Api.Interop.LcVwData3f y_vector, Autodesk.Navisworks.Api.Interop.LcVwData3f z_vector, bool filled)",
+      "summary": "Cuboid method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "x_vector",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "y_vector",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "z_vector",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Cuboid%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Cylinder",
+      "signature": "void Cylinder(Autodesk.Navisworks.Api.Interop.LcVwData3f top, Autodesk.Navisworks.Api.Interop.LcVwData3f bottom, double radius)",
+      "summary": "Cylinder method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "top",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Cylinder%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Double%29"
+    },
+    {
+      "name": "DepthMask",
+      "signature": "void DepthMask(bool enabled)",
+      "summary": "DepthMask method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.DepthMask%28System.Boolean%29"
+    },
+    {
+      "name": "DepthTest",
+      "signature": "void DepthTest(bool enabled)",
+      "summary": "DepthTest method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.DepthTest%28System.Boolean%29"
+    },
+    {
+      "name": "EndWindowContext",
+      "signature": "void EndWindowContext()",
+      "summary": "EndWindowContext method of LcVwGraphics.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.EndWindowContext"
+    },
+    {
+      "name": "EndWorldContext",
+      "signature": "void EndWorldContext()",
+      "summary": "EndWorldContext method of LcVwGraphics.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.EndWorldContext"
+    },
+    {
+      "name": "Lighting",
+      "signature": "void Lighting(bool enabled)",
+      "summary": "Lighting method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Lighting%28System.Boolean%29"
+    },
+    {
+      "name": "Line2D",
+      "signature": "void Line2D(Autodesk.Navisworks.Api.Interop.LcVwData2f start, Autodesk.Navisworks.Api.Interop.LcVwData2f end)",
+      "summary": "Line2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Line2D%28Autodesk.Navisworks.Api.Interop.LcVwData2f%2CAutodesk.Navisworks.Api.Interop.LcVwData2f%29"
+    },
+    {
+      "name": "Line3D",
+      "signature": "void Line3D(Autodesk.Navisworks.Api.Interop.LcVwData3f start, Autodesk.Navisworks.Api.Interop.LcVwData3f end)",
+      "summary": "Line3D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Line3D%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%29"
+    },
+    {
+      "name": "LineWidth",
+      "signature": "void LineWidth(double width)",
+      "summary": "LineWidth method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "width",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.LineWidth%28System.Double%29"
+    },
+    {
+      "name": "Point2D",
+      "signature": "void Point2D(Autodesk.Navisworks.Api.Interop.LcVwData2f point)",
+      "summary": "Point2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Point2D%28Autodesk.Navisworks.Api.Interop.LcVwData2f%29"
+    },
+    {
+      "name": "Point3D",
+      "signature": "void Point3D(Autodesk.Navisworks.Api.Interop.LcVwData3f point)",
+      "summary": "Point3D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Point3D%28Autodesk.Navisworks.Api.Interop.LcVwData3f%29"
+    },
+    {
+      "name": "PointSize",
+      "signature": "void PointSize(double size)",
+      "summary": "PointSize method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "size",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.PointSize%28System.Double%29"
+    },
+    {
+      "name": "Rectangle2D",
+      "signature": "void Rectangle2D(Autodesk.Navisworks.Api.Interop.LcVwData2f bottomLeft, Autodesk.Navisworks.Api.Interop.LcVwData2f topRight, bool filled)",
+      "summary": "Rectangle2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "bottomLeft",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "topRight",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Rectangle2D%28Autodesk.Navisworks.Api.Interop.LcVwData2f%2CAutodesk.Navisworks.Api.Interop.LcVwData2f%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Rectangle3D",
+      "signature": "void Rectangle3D(Autodesk.Navisworks.Api.Interop.LcVwData3f origin, Autodesk.Navisworks.Api.Interop.LcVwData3f xVector, Autodesk.Navisworks.Api.Interop.LcVwData3f yVector, bool filled)",
+      "summary": "Rectangle3D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "xVector",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "yVector",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Rectangle3D%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ScaleTexture",
+      "signature": "void ScaleTexture(double u, double v)",
+      "summary": "ScaleTexture method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "u",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.ScaleTexture%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SetTexture",
+      "signature": "void SetTexture(int image_id)",
+      "summary": "SetTexture method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "image_id",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.SetTexture%28System.Int32%29"
+    },
+    {
+      "name": "Sphere",
+      "signature": "void Sphere(Autodesk.Navisworks.Api.Interop.LcVwData3f centre, double radius)",
+      "summary": "Sphere method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "centre",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Sphere%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Double%29"
+    },
+    {
+      "name": "Text2D",
+      "signature": "void Text2D(int font_index, string text, Autodesk.Navisworks.Api.Interop.LcVwData2f origin, int x_offset, int y_offset)",
+      "summary": "Text2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "font_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "origin",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "x_offset",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y_offset",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Text2D%28System.Int32%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcVwData2f%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Text2DExtents",
+      "signature": "void Text2DExtents(int font_index, string text, ref int left, ref int right, ref int bottom, ref int top, ref int x_origin, ref int y_origin)",
+      "summary": "Text2DExtents method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "font_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "x_origin",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y_origin",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Text2DExtents%28System.Int32%2CSystem.String%2CSystem.Int32%40%2CSystem.Int32%40%2CSystem.Int32%40%2CSystem.Int32%40%2CSystem.Int32%40%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "Triangle2D",
+      "signature": "void Triangle2D(Autodesk.Navisworks.Api.Interop.LcVwData2f point1, Autodesk.Navisworks.Api.Interop.LcVwData2f point2, Autodesk.Navisworks.Api.Interop.LcVwData2f point3, bool filled)",
+      "summary": "Triangle2D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "point3",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData2f",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Triangle2D%28Autodesk.Navisworks.Api.Interop.LcVwData2f%2CAutodesk.Navisworks.Api.Interop.LcVwData2f%2CAutodesk.Navisworks.Api.Interop.LcVwData2f%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Triangle3D",
+      "signature": "void Triangle3D(Autodesk.Navisworks.Api.Interop.LcVwData3f point1, Autodesk.Navisworks.Api.Interop.LcVwData3f point2, Autodesk.Navisworks.Api.Interop.LcVwData3f point3, bool filled)",
+      "summary": "Triangle3D method of LcVwGraphics.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "point3",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "filled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.Triangle3D%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CSystem.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcVwGraphics.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcVwGraphics.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

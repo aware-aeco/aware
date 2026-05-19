@@ -1,0 +1,66 @@
+{
+  "name": "RebarHookDataNullable",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarHookDataNullable class defines the hook at the end of a reinforcing bar. Hooks are used for anchoring purposes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e74062d0-32e0-6406-59ca-959ba934408d",
+  "constructors": [
+    {
+      "name": "RebarHookDataNullable",
+      "signature": "public RebarHookDataNullable()",
+      "summary": "Initializes a new instance of the RebarHookDataNullable class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4313d378-c1b3-fadf-5bea-51e63824571a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the angle of the hook. The value is between -270 to \u002B270 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df56dc2a-3b1f-0ff3-daa1-84c3ac864a7f"
+    },
+    {
+      "name": "Length",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the length of the straight part of the hook.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c3e92cb5-1b6a-4d9f-2404-32f540adfbde"
+    },
+    {
+      "name": "Radius",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bending radius of the hook.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e5be68d-7a9f-4341-7a3b-5e1b919dc2c7"
+    },
+    {
+      "name": "Rotation",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotation of the hook.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/01bd22e6-4f99-2b93-cf94-da08498f4984"
+    },
+    {
+      "name": "Shape",
+      "type": "Nullable\u003CRebarHookData.RebarHookShapeEnum\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the shape of the hook. The options are: NO_HOOK. Sets the angle, radius and length to 0.HOOK_90_DEGREES.HOOK_135_DEGREES.HOOK_180_DEGREES.CUSTOM_HOOK. The angle, radius and length values have to be set manually.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5d846430-4850-32d2-aaf5-6f071db3ba49"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

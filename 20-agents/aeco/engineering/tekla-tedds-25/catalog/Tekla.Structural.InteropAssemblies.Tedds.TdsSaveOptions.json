@@ -1,0 +1,29 @@
+{
+  "name": "TdsSaveOptions",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "enum",
+  "summary": "File save options",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-tdssaveoptions-41843",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DoNotSaveChanges",
+      "value": 0,
+      "summary": "Discard unsaved changes"
+    },
+    {
+      "name": "PromptToSaveChanges",
+      "value": -2,
+      "summary": "Prompt the user to confirm saving any unsaved changes"
+    },
+    {
+      "name": "SaveChanges",
+      "value": -1,
+      "summary": "Save any unsaved changes"
+    }
+  ]
+}

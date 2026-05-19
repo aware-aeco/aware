@@ -1,0 +1,14 @@
+{
+  "name": "CustomRenderSaveFileTypes.SaveFileHandler",
+  "namespace": "Rhino.PlugIns",
+  "kind": "delegate",
+  "summary": "Called when a user chooses to save a rendered scene as this custom file type.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_CustomRenderSaveFileTypes_SaveFileHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate bool SaveFileHandler( string fileName, bool includeAlpha, RenderWindow renderWindow )"
+}

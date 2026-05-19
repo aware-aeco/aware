@@ -1,0 +1,13 @@
+{
+  "name": "IDataType",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "interface",
+  "summary": "The IDataType interface is the root interface for converting all the Tekla.Structures.Datatype.* types to basic types supported by the Tekla Structures Object Dialog tree.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9dad6c8c-50eb-7195-bdce-0f1e40ff3c26",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

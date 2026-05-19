@@ -1,0 +1,199 @@
+{
+  "name": "CrossSection",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The CrossSection class defines a with cross section points",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/35f56e00-3ebc-f537-971a-78530f8315dc",
+  "constructors": [
+    {
+      "name": "CrossSection(String)",
+      "signature": "public CrossSection(string ProfileString)",
+      "summary": "Creates a new cross section point instance.",
+      "params": [
+        {
+          "name": "ProfileString",
+          "type": "System.String",
+          "doc": "The profile string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1eeba68c-9178-a840-0bc5-2688326f1ee7"
+    },
+    {
+      "name": "CrossSection(ProfileName)",
+      "signature": "public CrossSection(ProfileName Profile)",
+      "summary": "Creates a new cross section point instance.",
+      "params": [
+        {
+          "name": "Profile",
+          "type": "Tekla.Structures.Catalogs.ProfileName",
+          "doc": "The profile definition.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed97d96b-f8e7-170b-d24c-b38edfaec080"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetInnerContours",
+      "signature": "public List\u003CPolycurve\u003E GetInnerContours()",
+      "summary": "Gets the inner loop geometries as Polycurve.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CPolycurve\u003E",
+        "doc": "List"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce3e7313-3691-0e3b-9ea3-f73187e2761f"
+    },
+    {
+      "name": "GetOuterContour",
+      "signature": "public Polycurve GetOuterContour()",
+      "summary": "Gets the outer loop geometry as Polycurve.",
+      "params": [],
+      "returns": {
+        "type": "Polycurve",
+        "doc": "Polycurve"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/403e20e9-8043-3c61-b70b-bbba11e3387a"
+    },
+    {
+      "name": "Select(Double, Double)",
+      "signature": "public bool Select(double Location = 0, double Length = 1000)",
+      "summary": "Selects the cross section from the profile definition.",
+      "params": [
+        {
+          "name": "Location",
+          "type": "System.Double",
+          "doc": "The location from where cross section is fetched.",
+          "optional": true
+        },
+        {
+          "name": "Length",
+          "type": "System.Double",
+          "doc": "The total length of the profile.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True in success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/899646b5-12f5-a29e-511a-08e4ac3bfb6f"
+    },
+    {
+      "name": "Select(Boolean, Double, Double)",
+      "signature": "public bool Select(bool HighAccuracy, double Location = 0, double Length = 1000)",
+      "summary": "Selects the cross section from the profile definition.",
+      "params": [
+        {
+          "name": "HighAccuracy",
+          "type": "System.Boolean",
+          "doc": "The geometric accuracy level.",
+          "optional": false
+        },
+        {
+          "name": "Location",
+          "type": "System.Double",
+          "doc": "The location from where cross section is fetched.",
+          "optional": true
+        },
+        {
+          "name": "Length",
+          "type": "System.Double",
+          "doc": "The total length of the profile.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True in success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bd26d42e-ce1b-40d8-f039-3c8620dfd204"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HighAccuracy",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The contour geometry accuracy.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1bba1d97-ac1f-26f0-4780-9e9b22fd7f57"
+    },
+    {
+      "name": "InnerSurfacePoints",
+      "type": "List\u003CList\u003CPoint\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the points for inner surfaces.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7658ea6-f8d3-a540-efd6-0e8be1e28efa"
+    },
+    {
+      "name": "InnerSurfaces",
+      "type": "List\u003CList\u003CCrossSectionPoint\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the cross section points for inner surfaces.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3bcfc567-3b5f-393a-4dc3-3e3c30618a6f"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The total length",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc03e785-0bf5-95dd-dc30-04b714c99cbd"
+    },
+    {
+      "name": "Location",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The location in relation to length, 0.0 referring to start of the profile",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/68059156-28d5-9df7-2cf0-c030a6f4fe26"
+    },
+    {
+      "name": "OuterSurface",
+      "type": "List\u003CCrossSectionPoint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the cross section points for outer surface.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f81270bd-8600-ba46-e9f5-24db6bc86874"
+    },
+    {
+      "name": "OuterSurfacePoints",
+      "type": "List\u003CPoint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the cross section points for outer surface.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ff2564a3-aa99-0c71-742b-ff3971b0e5bb"
+    },
+    {
+      "name": "Profile",
+      "type": "ProfileName",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile where cross section is asked from",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0447ecec-f45b-c48d-43f0-a3b8ade4cfc0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

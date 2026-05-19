@@ -1,0 +1,416 @@
+{
+  "name": "LcOpAnimationControllerBase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAnimationControllerBase class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpAnimationObserver",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEngine",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine GetEngine()",
+      "summary": "GetEngine method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.GetEngine"
+    },
+    {
+      "name": "GetStatus",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus GetStatus()",
+      "summary": "GetStatus method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.GetStatus"
+    },
+    {
+      "name": "IsActive",
+      "signature": "bool IsActive()",
+      "summary": "IsActive method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.IsActive"
+    },
+    {
+      "name": "OnUpdatePause",
+      "signature": "bool OnUpdatePause(ref bool is_active)",
+      "summary": "OnUpdatePause method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdatePause%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnUpdatePlay",
+      "signature": "bool OnUpdatePlay(ref bool is_active)",
+      "summary": "OnUpdatePlay method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdatePlay%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnUpdateReversePlay",
+      "signature": "bool OnUpdateReversePlay(ref bool is_active)",
+      "summary": "OnUpdateReversePlay method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdateReversePlay%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnUpdateStepBack",
+      "signature": "bool OnUpdateStepBack()",
+      "summary": "OnUpdateStepBack method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdateStepBack"
+    },
+    {
+      "name": "OnUpdateStepForward",
+      "signature": "bool OnUpdateStepForward()",
+      "summary": "OnUpdateStepForward method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdateStepForward"
+    },
+    {
+      "name": "OnUpdateStop",
+      "signature": "bool OnUpdateStop()",
+      "summary": "OnUpdateStop method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdateStop"
+    },
+    {
+      "name": "OnUpdateWindToEnd",
+      "signature": "bool OnUpdateWindToEnd()",
+      "summary": "OnUpdateWindToEnd method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdateWindToEnd"
+    },
+    {
+      "name": "OnUpdateWindToStart",
+      "signature": "bool OnUpdateWindToStart()",
+      "summary": "OnUpdateWindToStart method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnUpdateWindToStart"
+    },
+    {
+      "name": "GetDuration",
+      "signature": "double GetDuration()",
+      "summary": "GetDuration method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.GetDuration"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "double GetPosition()",
+      "summary": "GetPosition method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.GetPosition"
+    },
+    {
+      "name": "GetStepSize",
+      "signature": "double GetStepSize()",
+      "summary": "GetStepSize method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.GetStepSize"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddObserver",
+      "signature": "void AddObserver(Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerObserver p)",
+      "summary": "AddObserver method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerObserver",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.AddObserver%28Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerObserver%29"
+    },
+    {
+      "name": "OnPause",
+      "signature": "void OnPause()",
+      "summary": "OnPause method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnPause"
+    },
+    {
+      "name": "OnPlay",
+      "signature": "void OnPlay()",
+      "summary": "OnPlay method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnPlay"
+    },
+    {
+      "name": "OnReversePlay",
+      "signature": "void OnReversePlay()",
+      "summary": "OnReversePlay method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnReversePlay"
+    },
+    {
+      "name": "OnStepBack",
+      "signature": "void OnStepBack()",
+      "summary": "OnStepBack method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnStepBack"
+    },
+    {
+      "name": "OnStepForward",
+      "signature": "void OnStepForward()",
+      "summary": "OnStepForward method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnStepForward"
+    },
+    {
+      "name": "OnStop",
+      "signature": "void OnStop()",
+      "summary": "OnStop method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnStop"
+    },
+    {
+      "name": "OnWindToEnd",
+      "signature": "void OnWindToEnd()",
+      "summary": "OnWindToEnd method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnWindToEnd"
+    },
+    {
+      "name": "OnWindToStart",
+      "signature": "void OnWindToStart()",
+      "summary": "OnWindToStart method of LcOpAnimationControllerBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.OnWindToStart"
+    },
+    {
+      "name": "RemoveObserver",
+      "signature": "void RemoveObserver(Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerObserver p)",
+      "summary": "RemoveObserver method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerObserver",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.RemoveObserver%28Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerObserver%29"
+    },
+    {
+      "name": "SetPosition",
+      "signature": "void SetPosition(double time)",
+      "summary": "SetPosition method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "time",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.SetPosition%28System.Double%29"
+    },
+    {
+      "name": "SetStepSize",
+      "signature": "void SetStepSize(double size)",
+      "summary": "SetStepSize method of LcOpAnimationControllerBase.",
+      "params": [
+        {
+          "name": "size",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.SetStepSize%28System.Double%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAnimationControllerBase.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

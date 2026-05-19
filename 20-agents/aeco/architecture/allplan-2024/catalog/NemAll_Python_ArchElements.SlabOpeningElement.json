@@ -1,0 +1,99 @@
+{
+  "name": "SlabOpeningElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the slab opening element",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/",
+  "constructors": [
+    {
+      "name": "SlabOpeningElement",
+      "signature": "SlabOpeningElement() | SlabOpeningElement(slabOpeningProp, placementPoint, slabConnectionUUID) | SlabOpeningElement(element)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties()",
+      "summary": "Get the slab opening properties",
+      "remarks": "Get the slab opening properties",
+      "params": [],
+      "returns": {
+        "type": "SlabOpeningProperties",
+        "doc": "Slab opening properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.GetProperties"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.SetCommonProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(slabOpeningProp)",
+      "summary": "Set the SlabOpening properties",
+      "remarks": "Set the SlabOpening properties",
+      "params": [
+        {
+          "name": "slabOpeningProp",
+          "type": "SlabOpeningProperties",
+          "doc": "Slab opening properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "SlabOpeningProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the slab opening properties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

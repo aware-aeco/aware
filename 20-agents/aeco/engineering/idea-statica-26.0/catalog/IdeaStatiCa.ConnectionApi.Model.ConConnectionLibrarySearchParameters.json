@@ -1,0 +1,110 @@
+{
+  "name": "ConConnectionLibrarySearchParameters",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConConnectionLibrarySearchParameters.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Members",
+      "type": "List\u003Cint\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.members.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "InPredefinedSet",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.inPredefinedSet.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "InCompanySet",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.inCompanySet.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "InPersonalSet",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.inPersonalSet.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "HasBolts",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.hasBolts.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "HasWelds",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.hasWelds.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "HasAnchor",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.hasAnchor.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "HasClipAngles",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.hasClipAngles.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "IsMoment",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.isMoment.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "IsShear",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.isShear.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "IsTruss",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.isTruss.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    },
+    {
+      "name": "IsParametric",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConConnectionLibrarySearchParameters.isParametric.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConConnectionLibrarySearchParameters.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

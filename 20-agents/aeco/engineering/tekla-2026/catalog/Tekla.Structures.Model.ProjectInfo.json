@@ -1,0 +1,556 @@
+{
+  "name": "ProjectInfo",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ProjectInfo class provides project information about the currently open Tekla Structures model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e7a57d92-16ad-f456-ecda-fc014e592028",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetBasePointByGuid",
+      "signature": "public static BasePoint GetBasePointByGuid(Guid guid)",
+      "summary": "Gets a base point by given guid.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "The guid of the base point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BasePoint",
+        "doc": "If found, the base point, otherwise empty base point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c5e4596a-269a-8f7c-042b-f506eae10f75"
+    },
+    {
+      "name": "GetBasePointByName",
+      "signature": "public static BasePoint GetBasePointByName(string name)",
+      "summary": "Gets a base point by given name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the base point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BasePoint",
+        "doc": "If found, the base point, otherwise empty base point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a2ec01e-ffdf-f922-a016-de0b9f23416e"
+    },
+    {
+      "name": "GetBasePoints",
+      "signature": "public static List\u003CBasePoint\u003E GetBasePoints()",
+      "summary": "Gets all available base points as a list.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CBasePoint\u003E",
+        "doc": "The list of available base points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/871a85de-6e86-1a99-cf44-e90705150737"
+    },
+    {
+      "name": "GetCurrentCoordsysBasePoint",
+      "signature": "public static BasePoint GetCurrentCoordsysBasePoint()",
+      "summary": "Gets the current base point, if set.",
+      "params": [],
+      "returns": {
+        "type": "BasePoint",
+        "doc": "The current base point, if set. Otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/13fbb64f-969a-841e-a222-4b3db6e9f71e"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "public bool GetDoubleUserProperties(ref Hashtable Values)",
+      "summary": "Retrieves all double properties for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ebe59860-a0f1-b2c4-e57a-3f6bbce2b456"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "public bool GetDynamicStringProperty(string Name, ref string Value)",
+      "summary": "Gets a dynamic string property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dbc7cb81-a36f-9692-9645-d9a48de7db31"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "public bool GetIntegerUserProperties(ref Hashtable Values)",
+      "summary": "Retrieves all integer properties for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/425be37f-a8f7-d04a-2397-51912ff18b08"
+    },
+    {
+      "name": "GetProjectBasePoint",
+      "signature": "public static BasePoint GetProjectBasePoint()",
+      "summary": "Gets the project base point, if any set.",
+      "params": [],
+      "returns": {
+        "type": "BasePoint",
+        "doc": "The project base point, if set. Otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9f95fde2-4622-8461-5844-f0995494662f"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "public bool GetStringUserProperties(ref Hashtable Values)",
+      "summary": "Retrieves all string properties for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/816242b1-4315-c23e-0790-e4925c6a66f2"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "public bool GetUserProperty(string Name, ref double Value)",
+      "summary": "Retrieves a double property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f18fcc6-1609-a5dc-73d7-361a14b1a5a9"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "public bool GetUserProperty(string Name, ref int Value)",
+      "summary": "Retrieves an integer property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/275e26b2-9fc5-8756-7f67-c90664ae5e3b"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "public bool GetUserProperty(string Name, ref string Value)",
+      "summary": "Retrieves a string property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d1103e9-6a84-8f5e-9790-24e51a651b4c"
+    },
+    {
+      "name": "Modify",
+      "signature": "public bool Modify()",
+      "summary": "Modifies the current project information.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/61a78724-f119-4cf7-b39d-79a9aeabc575"
+    },
+    {
+      "name": "SetCurrentCoordsysToBasePoint",
+      "signature": "public static bool SetCurrentCoordsysToBasePoint(BasePoint basePoint)",
+      "summary": "Sets the current base point.",
+      "params": [
+        {
+          "name": "basePoint",
+          "type": "Tekla.Structures.Model.BasePoint",
+          "doc": "The base point to be set as current base point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3137b89c-5c12-7f57-0f7d-77e97ac58b7b"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "public bool SetDynamicStringProperty(string Name, string Value)",
+      "summary": "Sets a dynamic string property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/72527889-8db9-9984-1ec5-1f3d33a7055c"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "public bool SetUserProperty(string Name, double Value)",
+      "summary": "Sets a double property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4da75f17-48d2-4a94-1242-40e1e6315de7"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "public bool SetUserProperty(string Name, int Value)",
+      "summary": "Sets an integer property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7590f0f-f1a3-b931-2a79-359f7933c0ea"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "public bool SetUserProperty(string Name, string Value)",
+      "summary": "Sets a string property for the ProjectInfo.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6a33fba-1e5b-23d9-7955-f7ea4248d1f7"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Address",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The address information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/317a0c9d-2466-aad2-c41e-703e3968682e"
+    },
+    {
+      "name": "Builder",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The builder information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/75f8d3ea-644c-ec24-9761-23f9cb47c03e"
+    },
+    {
+      "name": "Country",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The address country information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c978ae5d-e39a-9c43-df95-23d9dfd27c1c"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The description of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fd4b96cf-617f-0dc0-c254-086b50624bc3"
+    },
+    {
+      "name": "Designer",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The designer information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1c7d9cac-d519-91cd-24f9-5840fcdf139c"
+    },
+    {
+      "name": "EndDate",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The end date information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/685504f4-78e2-e2b8-c2d4-3e7ae86db104"
+    },
+    {
+      "name": "GUID",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The GUID field of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fe939320-b637-0dfd-4a3a-d7d09bace5ad"
+    },
+    {
+      "name": "Info1",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The Info 1 field of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5fd1d106-531d-4e65-2fe5-5e9e796b608a"
+    },
+    {
+      "name": "Info2",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The Info 2 field of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f83da943-cb8c-6089-6c9c-dcb6d63c3e25"
+    },
+    {
+      "name": "Location",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The address location information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a168fa90-58f9-71bd-c1f4-13fe53005f2b"
+    },
+    {
+      "name": "ModelSharingLocalPath",
+      "type": "DirectoryInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "The local folder for model sharing. Is null if not defined for the model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/602f753f-694d-00d1-a809-741adbeb1065"
+    },
+    {
+      "name": "ModelSharingServerPath",
+      "type": "Uri",
+      "getter": true,
+      "setter": true,
+      "summary": "The server path for model sharing. Is null if not defined for the model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a62d4c6d-de60-5a2c-0739-a227814dc482"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The name information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6f9f8e4b-7302-bcb9-038d-9243ebbc241c"
+    },
+    {
+      "name": "Object",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The object information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e7c0f6c6-e654-4521-64e0-cc4e63bfa858"
+    },
+    {
+      "name": "PostalBox",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The address postal box information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b866d8a-98e2-ebbf-c216-7b632baf5282"
+    },
+    {
+      "name": "PostalCode",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The address postal code information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4dc02f9b-a4b6-88c4-bbea-472552007c31"
+    },
+    {
+      "name": "ProjectNumber",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The project number information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5b2c69f1-7778-0be0-3a6c-c8fabc9f1537"
+    },
+    {
+      "name": "Region",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The address region information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1ed13ac1-ccf8-4281-4f20-66b9df494961"
+    },
+    {
+      "name": "StartDate",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The start date information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d319b504-24c6-a8aa-1dda-0675b0eaa3d5"
+    },
+    {
+      "name": "Town",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The address town information of the ProjectInfo.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7f11abb-6068-254d-ccdd-e8895ee103c9"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

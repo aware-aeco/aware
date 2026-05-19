@@ -1,0 +1,182 @@
+{
+  "name": "FixtureSlideProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "FixtureSlideProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/",
+  "constructors": [
+    {
+      "name": "FixtureSlideProperties",
+      "signature": "FixtureSlideProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: FixtureSlideProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "FixtureSlideProperties",
+          "doc": "FixtureSlideProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndScaleRange",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for end reference scale of slide Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.EndScaleRange"
+    },
+    {
+      "name": "OffsetOfReferencePoint1",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for first offset value to reference point Value type: Vector3D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.OffsetOfReferencePoint1"
+    },
+    {
+      "name": "OffsetOfReferencePoint2",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for second offset value to reference point Value type: Vector3D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.OffsetOfReferencePoint2"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for reference point Value type: Point3D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.ReferencePoint"
+    },
+    {
+      "name": "ResizeSettingVx",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for resize setting for x direction Value type: eCombinationType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.ResizeSettingVx"
+    },
+    {
+      "name": "ResizeSettingVy",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for resize setting for y direction Value type: eCombinationType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.ResizeSettingVy"
+    },
+    {
+      "name": "ResizeSettingVz",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for resize setting for z direction Value type: eCombinationType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.ResizeSettingVz"
+    },
+    {
+      "name": "StartScaleRange",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for start reference scale of slide Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.StartScaleRange"
+    },
+    {
+      "name": "Type",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for type of slide Value type: eSlideType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.Type"
+    },
+    {
+      "name": "ViewType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for view type of slide Value type: eSlideViewType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.ViewType"
+    },
+    {
+      "name": "VisibilityGeo2D",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for geometry 2D visibility of slide Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.VisibilityGeo2D"
+    },
+    {
+      "name": "VisibilityGeo3D",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for geometry 3D visibility of slide Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.VisibilityGeo3D"
+    },
+    {
+      "name": "VisibilityLayerA",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for layer A visibility of slide Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.VisibilityLayerA"
+    },
+    {
+      "name": "VisibilityLayerB",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for layer B visibility of slide Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.VisibilityLayerB"
+    },
+    {
+      "name": "VisibilityLayerC",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for layer C visibility of slide Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideProperties/#NemAll_Python_Precast.FixtureSlideProperties.VisibilityLayerC"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

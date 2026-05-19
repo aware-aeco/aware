@@ -1,0 +1,14 @@
+{
+  "name": "eSurfaceTextureID",
+  "namespace": "NemAll_Python_BasisElements.SurfaceDefinition",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BasisElements.SurfaceDefinition.eSurfaceTextureID.)",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.eSurfaceTextureID",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

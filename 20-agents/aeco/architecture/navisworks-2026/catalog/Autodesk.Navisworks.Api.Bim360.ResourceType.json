@@ -1,0 +1,29 @@
+{
+  "name": "ResourceType",
+  "namespace": "Autodesk.Navisworks.Api.Bim360",
+  "kind": "enum",
+  "summary": "Resource Type.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Bim360.ResourceType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Project",
+      "value": 0,
+      "summary": "Project."
+    },
+    {
+      "name": "Model",
+      "value": 1,
+      "summary": "Model."
+    },
+    {
+      "name": "MergedModel",
+      "value": 2,
+      "summary": "Merged Model."
+    }
+  ]
+}

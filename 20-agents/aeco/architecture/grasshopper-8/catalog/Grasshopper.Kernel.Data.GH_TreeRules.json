@@ -1,0 +1,308 @@
+{
+  "name": "GH_TreeRules",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Represents an entire data tree rule set.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_TreeRules.htm",
+  "constructors": [
+    {
+      "name": "GH_TreeRules",
+      "signature": "public GH_TreeRules(IEnumerable\u003CIGH_Rule\u003E pathRules, IGH_Rule indexRule)",
+      "summary": "Constructs a new rule set for testing data trees. Unless you know exactly what you are doing, use the FromString() static method instead.",
+      "params": [
+        {
+          "name": "pathRules",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_Rule\u003E",
+          "doc": "A collection of path rules.",
+          "optional": false
+        },
+        {
+          "name": "indexRule",
+          "type": "Grasshopper.Kernel.Data.IGH_Rule",
+          "doc": "Optional index rule (may be null).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeRules__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Apply(GH_Path)",
+      "signature": "public bool Apply(GH_Path path)",
+      "summary": "Apply all the local rules to a path.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if path passes all the rule tests."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeRules_Apply.htm"
+    },
+    {
+      "name": "Apply(GH_Path, Int32)",
+      "signature": "public bool Apply(GH_Path path, int index)",
+      "summary": "Apply all the local rules to a path\u002Bindex combination.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "Path to test.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if path\u002Bindex pass all the rule tests."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeRules_Apply_1.htm"
+    },
+    {
+      "name": "FromString",
+      "signature": "public static GH_TreeRules FromString(string text, ref string message = null)",
+      "summary": "Attempt to parse a Pattern string.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "String to parse.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "If this function fails, msg will contain a message describing the error.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "GH_TreeRules",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeRules_FromString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeRules_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasItemRule",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this rule set has a defined index rule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_TreeRules_HasItemRule.htm"
+    },
+    {
+      "name": "HasPathRules",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this rule set has any path rules.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_TreeRules_HasPathRules.htm"
+    },
+    {
+      "name": "PathRuleCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of defined path rules.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_TreeRules_PathRuleCount.htm"
+    },
+    {
+      "name": "AllowedChars",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_AllowedChars.htm"
+    },
+    {
+      "name": "AndOperator",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_AndOperator.htm"
+    },
+    {
+      "name": "AnyNumbersSymbol",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_AnyNumbersSymbol.htm"
+    },
+    {
+      "name": "AnyNumberSymbol",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_AnyNumberSymbol.htm"
+    },
+    {
+      "name": "ItemBrackets",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_ItemBrackets.htm"
+    },
+    {
+      "name": "ItemCloseBracket",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_ItemCloseBracket.htm"
+    },
+    {
+      "name": "ItemOpenBracket",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_ItemOpenBracket.htm"
+    },
+    {
+      "name": "NotOperator",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_NotOperator.htm"
+    },
+    {
+      "name": "OrOperator",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_OrOperator.htm"
+    },
+    {
+      "name": "PathBrackets",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_PathBrackets.htm"
+    },
+    {
+      "name": "PathCloseBracket",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_PathCloseBracket.htm"
+    },
+    {
+      "name": "PathOpenBracket",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_PathOpenBracket.htm"
+    },
+    {
+      "name": "PathSeparator",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_PathSeparator.htm"
+    },
+    {
+      "name": "RangeSymbol",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_RangeSymbol.htm"
+    },
+    {
+      "name": "RuleBrackets",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_RuleBrackets.htm"
+    },
+    {
+      "name": "RuleCloseBracket",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_RuleCloseBracket.htm"
+    },
+    {
+      "name": "RuleOpenBracket",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_RuleOpenBracket.htm"
+    },
+    {
+      "name": "Separator",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_Separator.htm"
+    },
+    {
+      "name": "SequenceCode",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_SequenceCode.htm"
+    },
+    {
+      "name": "SequenceSymbol",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeRules_SequenceSymbol.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

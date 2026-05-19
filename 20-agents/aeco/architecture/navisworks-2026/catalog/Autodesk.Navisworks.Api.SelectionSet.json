@@ -1,0 +1,409 @@
+{
+  "name": "SelectionSet",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "SavedItem containing a saved ModelItemCollection or Search",
+  "base": "Autodesk.Navisworks.Api.SavedItem",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SelectionSet",
+  "constructors": [
+    {
+      "name": "SelectionSet()",
+      "signature": "SelectionSet()",
+      "summary": "Create a SelectionSet with empty ExplicitModelItems",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.%23ctor"
+    },
+    {
+      "name": "SelectionSet(Autodesk.Navisworks.Api.ModelItemCollection)",
+      "signature": "SelectionSet(Autodesk.Navisworks.Api.ModelItemCollection items)",
+      "summary": "Create a SelectionSet with ExplicitModelItems",
+      "params": [
+        {
+          "name": "items",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027items\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027items\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.%23ctor%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "SelectionSet(Autodesk.Navisworks.Api.Search)",
+      "signature": "SelectionSet(Autodesk.Navisworks.Api.Search search)",
+      "summary": "Create a SelectionSet with a Search",
+      "params": [
+        {
+          "name": "search",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027search\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027search\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027search\u0027 has no SearchConditions"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.%23ctor%28Autodesk.Navisworks.Api.Search%29"
+    },
+    {
+      "name": "SelectionSet(Autodesk.Navisworks.Api.SelectionSet)",
+      "signature": "SelectionSet(Autodesk.Navisworks.Api.SelectionSet value)",
+      "summary": "Create a copy of another SelectionSet",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.SelectionSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.%23ctor%28Autodesk.Navisworks.Api.SelectionSet%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSelectedItems",
+      "signature": "Autodesk.Navisworks.Api.ModelItemCollection GetSelectedItems()",
+      "summary": "Returns a ModelItemCollection that represents the items specified by this SelectionSet in the document which it is associated with.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "No document is associated with this SelectionSet"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.GetSelectedItems"
+    },
+    {
+      "name": "GetSelectedItems",
+      "signature": "Autodesk.Navisworks.Api.ModelItemCollection GetSelectedItems(Autodesk.Navisworks.Api.Document document)",
+      "summary": "Returns a ModelItemCollection that represents the items specified by this SelectionSet in document.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Autodesk.Navisworks.Api.Document",
+          "doc": "Document to search (if required)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027document\u0027 is null"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "SelectionSet contains explicit items from a different document"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.GetSelectedItems%28Autodesk.Navisworks.Api.Document%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "bool ValueEquals(Autodesk.Navisworks.Api.SelectionSet value)",
+      "summary": "Performs comparison \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.SelectionSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.ValueEquals%28Autodesk.Navisworks.Api.SelectionSet%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SelectionSet.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.SelectionSet InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SelectionSet.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SelectionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "static bool ValueEquals(Autodesk.Navisworks.Api.SelectionSet value1, Autodesk.Navisworks.Api.SelectionSet value2)",
+      "summary": "Compares the two references \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.SelectionSet",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.SelectionSet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.ValueEquals%28Autodesk.Navisworks.Api.SelectionSet%2CAutodesk.Navisworks.Api.SelectionSet%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.ModelItemCollection items)",
+      "summary": "Initialize SelectionSet with copy of ExplicitModelItems",
+      "params": [
+        {
+          "name": "items",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027items\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027items\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.CopyFrom%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.Search search)",
+      "summary": "Initialize SelectionSet with copy of a Search",
+      "params": [
+        {
+          "name": "search",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027search\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027search\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027search\u0027 has no SearchConditions"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.CopyFrom%28Autodesk.Navisworks.Api.Search%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.SelectionSet value)",
+      "summary": "Initialize SelectionSet with copy of another SelectionSet",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.SelectionSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.CopyFrom%28Autodesk.Navisworks.Api.SelectionSet%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E from)",
+      "summary": "Initialise as explicit ModelItems with items in from",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+          "doc": "The collection to copy contents from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SelectionSet.CopyFrom%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.ModelItem%7D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ExplicitModelItems",
+      "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "The explicit ModelItems stored in the selection set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SelectionSet.ExplicitModelItems"
+    },
+    {
+      "name": "HasExplicitModelItems",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does the SelectionSet contain an explicit set of ModelItems ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SelectionSet.HasExplicitModelItems"
+    },
+    {
+      "name": "HasSearch",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does the SelectionSet contain a Search ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SelectionSet.HasSearch"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SelectionSet.IsReadOnly"
+    },
+    {
+      "name": "Search",
+      "type": "Autodesk.Navisworks.Api.Search",
+      "getter": true,
+      "setter": false,
+      "summary": "The Search stored in the selection set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SelectionSet.Search"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

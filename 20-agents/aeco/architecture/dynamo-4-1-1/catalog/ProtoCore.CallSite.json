@@ -1,0 +1,361 @@
+{
+  "name": "CallSite",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type CallSite",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs",
+  "constructors": [
+    {
+      "name": "CallSite(int, string, ProtoCore.Lang.FunctionTable, ProtoCore.ExecutionMode, string)",
+      "signature": "void CallSite(int classScope, string methodName, ProtoCore.Lang.FunctionTable globalFunctionTable, ProtoCore.ExecutionMode execMode, string serializedTraceData)",
+      "summary": "Constructs an instance of the CallSite object given its scope and method information. This constructor optionally takes in a preloaded trace data information.",
+      "params": [
+        {
+          "name": "classScope",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "methodName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "globalFunctionTable",
+          "type": "ProtoCore.Lang.FunctionTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "execMode",
+          "type": "ProtoCore.ExecutionMode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "serializedTraceData",
+          "type": "string",
+          "doc": "An optional Base64 encoded string representing the trace data that the callsite could use as part of its re-construction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAllSerializablesFromSingleRunTraceData(ProtoCore.CallSite.RawTraceData)",
+      "signature": "System.Collections.Generic.IList\u003Cstring\u003E GetAllSerializablesFromSingleRunTraceData(ProtoCore.CallSite.RawTraceData callSiteData)",
+      "summary": "Returns a flat collection of strings from a serialized representation of a SingleRunTraceData object.",
+      "params": [
+        {
+          "name": "callSiteData",
+          "type": "ProtoCore.CallSite.RawTraceData",
+          "doc": "The serialized representation of a SingleRunTraceData object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IList\u003Cstring\u003E",
+        "doc": "A flat collection of strings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "GetOrphanedSerializables",
+      "signature": "System.Collections.Generic.IList\u003Cstring\u003E GetOrphanedSerializables()",
+      "summary": "Returns all serializables that were created historically, but were not re-created in the most recent graph update.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IList\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "GetTraceDataToSave",
+      "signature": "string GetTraceDataToSave()",
+      "summary": "Call this method to obtain the Base64 encoded string that represents this callsite instance\u0027s trace data",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "Returns the Base64 encoded string that represents the trace data of this callsite"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "JILDispatch(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E, ProtoCore.Lang.Replication.DominantListStructure, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore, ProtoCore.Runtime.Context)",
+      "signature": "ProtoCore.DSASM.StackValue JILDispatch(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E replicationGuides, ProtoCore.Lang.Replication.DominantListStructure domintListStructure, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore, ProtoCore.Runtime.Context context)",
+      "summary": "CallSite.JILDispatch",
+      "params": [
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationGuides",
+          "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "domintListStructure",
+          "type": "ProtoCore.Lang.Replication.DominantListStructure",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "JILDispatchViaNewInterpreter(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E, ProtoCore.Lang.Replication.DominantListStructure, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue JILDispatchViaNewInterpreter(ProtoCore.Runtime.Context context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E replicationGuides, ProtoCore.Lang.Replication.DominantListStructure domintListStructure, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "CallSite.JILDispatchViaNewInterpreter",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationGuides",
+          "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "domintListStructure",
+          "type": "ProtoCore.Lang.Replication.DominantListStructure",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "LoadSerializedDataIntoTraceCache(string)",
+      "signature": "void LoadSerializedDataIntoTraceCache(string serializedTraceData)",
+      "summary": "Load the serialized data provided into this callsite\u0027s trace cache",
+      "params": [
+        {
+          "name": "serializedTraceData",
+          "type": "string",
+          "doc": "The data to load",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "PerformReturnTypeCoerce(ProtoCore.DSASM.ProcedureNode, ProtoCore.RuntimeCore, ProtoCore.DSASM.StackValue)",
+      "signature": "ProtoCore.DSASM.StackValue PerformReturnTypeCoerce(ProtoCore.DSASM.ProcedureNode procNode, ProtoCore.RuntimeCore runtimeCore, ProtoCore.DSASM.StackValue ret)",
+      "summary": "CallSite.PerformReturnTypeCoerce",
+      "params": [
+        {
+          "name": "procNode",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "PerformReturnTypeCoerce(ProtoCore.FunctionEndPoint, ProtoCore.RuntimeCore, ProtoCore.DSASM.StackValue)",
+      "signature": "ProtoCore.DSASM.StackValue PerformReturnTypeCoerce(ProtoCore.FunctionEndPoint functionEndPoint, ProtoCore.RuntimeCore runtimeCore, ProtoCore.DSASM.StackValue ret)",
+      "summary": "CallSite.PerformReturnTypeCoerce",
+      "params": [
+        {
+          "name": "functionEndPoint",
+          "type": "ProtoCore.FunctionEndPoint",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "ret",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "UpdateCallSite(int, string)",
+      "signature": "void UpdateCallSite(int classScope, string methodName)",
+      "summary": "CallSite.UpdateCallSite",
+      "params": [
+        {
+          "name": "classScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "WillCallReplicate(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore, ref System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E\u003E)",
+      "signature": "bool WillCallReplicate(ProtoCore.Runtime.Context context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E partialReplicationGuides, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore, ref System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E\u003E replicationTrials)",
+      "summary": "Conservative guess as to whether this call will replicate or not This may give inaccurate answers if the node cluster doesn\u0027t actually exist",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "partialReplicationGuides",
+          "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "replicationTrials",
+          "type": "ref System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CallSiteID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "CallSite.CallSiteID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "MethodName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The method group name that is associated with this function",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "TraceData",
+      "type": "System.Collections.Generic.List\u003CProtoCore.CallSite.SingleRunTraceData\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "CallSite.TraceData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

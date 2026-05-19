@@ -1,0 +1,95 @@
+{
+  "name": "SettingsProxy",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The SettingsProxy class is a proxy for the settings.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4f296ae4-7b22-7536-4d51-6f0c786b1f24",
+  "constructors": [
+    {
+      "name": "SettingsProxy",
+      "signature": "public SettingsProxy()",
+      "summary": "Creates a new settings proxy instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8826bdeb-9325-8841-203b-a524429b072b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetValue",
+      "signature": "public Object GetValue(string name)",
+      "summary": "Gets the value of the setting with the given name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The value of the given setting."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aff544dc-6a76-16cc-fa9d-00deef9d60b8"
+    },
+    {
+      "name": "SetValue",
+      "signature": "public void SetValue(string name, Object value)",
+      "summary": "Sets a setting to a value.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the setting.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The new value for the setting.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2652bc46-1ae5-fcbb-f343-4960697413fc"
+    },
+    {
+      "name": "TryGetValue",
+      "signature": "public bool TryGetValue(string name, out Object obj)",
+      "summary": "Tries to get the value of the setting with the given name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the setting.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "System.Object.",
+          "doc": "The value of the given setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e499dc9-15ec-89fa-013f-82afbab6ec18"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,65 @@
+{
+  "name": "UndoRedoCommand",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "class",
+  "summary": "Type UndoRedoCommand",
+  "base": "Dynamo.Models.DynamoModel.RecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "UndoRedoCommand(Dynamo.Models.DynamoModel.UndoRedoCommand.Operation)",
+      "signature": "void UndoRedoCommand(Dynamo.Models.DynamoModel.UndoRedoCommand.Operation operation)",
+      "summary": "",
+      "params": [
+        {
+          "name": "operation",
+          "type": "Dynamo.Models.DynamoModel.UndoRedoCommand.Operation",
+          "doc": "The operation to perform.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "UndoRedoCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "UndoRedoCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

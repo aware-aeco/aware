@@ -1,0 +1,102 @@
+{
+  "name": "GH_PageSettings",
+  "namespace": "Grasshopper.GUI.Theme",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Theme.GH_PageSettings.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Theme_GH_PageSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DrawGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the grid ought to be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_DrawGrid.htm"
+    },
+    {
+      "name": "DrawPage",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the page ought to be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_DrawPage.htm"
+    },
+    {
+      "name": "DrawShadow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the page shadow ought to be drawn. If the page is not drawn, neither is the page shadow, irregardless of this property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_DrawShadow.htm"
+    },
+    {
+      "name": "EdgeColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page edge colour to be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_EdgeColour.htm"
+    },
+    {
+      "name": "FillColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page fill colour to be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_FillColour.htm"
+    },
+    {
+      "name": "GridColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page grid colour to be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_GridColour.htm"
+    },
+    {
+      "name": "GridHeight",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the height of a page grid cell.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_GridHeight.htm"
+    },
+    {
+      "name": "GridPattern",
+      "type": "Single[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the dash pattern to apply to grid lines. Leave null or empty for a solid line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_GridPattern.htm"
+    },
+    {
+      "name": "GridWidth",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the width of a page grid cell.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_GridWidth.htm"
+    },
+    {
+      "name": "ShadowColour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or set the page shadow colour to be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_ShadowColour.htm"
+    },
+    {
+      "name": "ShadowSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size of the page shadow.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Theme_GH_PageSettings_ShadowSize.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,119 @@
+{
+  "name": "FileSkpReadOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options used when reading a Skp file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileSkpReadOptions.htm",
+  "constructors": [
+    {
+      "name": "FileSkpReadOptions",
+      "signature": "public FileSkpReadOptions()",
+      "summary": "Initializes a new instance of the FileSkpReadOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileSkpReadOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Import function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileSkpReadOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileSkpReadOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AddObjectsToGroups",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_AddObjectsToGroups.htm"
+    },
+    {
+      "name": "EmbedTexturesInModel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_EmbedTexturesInModel.htm"
+    },
+    {
+      "name": "ImportCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_ImportCurves.htm"
+    },
+    {
+      "name": "ImportFacesAsMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to false for trimmed planes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_ImportFacesAsMeshes.htm"
+    },
+    {
+      "name": "JoinEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_JoinEdges.htm"
+    },
+    {
+      "name": "JoinFaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_JoinFaces.htm"
+    },
+    {
+      "name": "UseGroupLayers",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_UseGroupLayers.htm"
+    },
+    {
+      "name": "UseSketchUpTextureWriter",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_UseSketchUpTextureWriter.htm"
+    },
+    {
+      "name": "Weld",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_Weld.htm"
+    },
+    {
+      "name": "WeldAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileSkpReadOptions_WeldAngle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

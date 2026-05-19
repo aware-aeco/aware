@@ -1,0 +1,26 @@
+{
+  "name": "PostEffectExecuteWhileRenderingOptions",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectExecuteWhileRenderingOptions.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Always",
+      "value": 1
+    },
+    {
+      "name": "UseDelay",
+      "value": 2
+    }
+  ]
+}

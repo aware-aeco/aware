@@ -1,0 +1,47 @@
+{
+  "name": "PageViewPropertiesChangeEventArgs",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "PageView properties change event arguments.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_PageViewPropertiesChangeEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Rhino document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_PageViewPropertiesChangeEventArgs_Document.htm"
+    },
+    {
+      "name": "DocumentSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "The serial number of the Rhino document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_PageViewPropertiesChangeEventArgs_DocumentSerialNumber.htm"
+    },
+    {
+      "name": "PageView",
+      "type": "RhinoPageView",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Rhino page view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_PageViewPropertiesChangeEventArgs_PageView.htm"
+    },
+    {
+      "name": "PageViewSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "The serial number of the page view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_PageViewPropertiesChangeEventArgs_PageViewSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,727 @@
+{
+  "name": "MigrationManager",
+  "namespace": "Dynamo.Migration",
+  "kind": "class",
+  "summary": "This class contains methods and properties used for migration of Dynamo workspaces.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs",
+  "constructors": [
+    {
+      "name": "MigrationManager(Dynamo.Migration.MigrationManager.FutureFileCallback, Dynamo.Migration.MigrationManager.ObsoleteFileCallback)",
+      "signature": "void MigrationManager(Dynamo.Migration.MigrationManager.FutureFileCallback displayFutureFileMessage, Dynamo.Migration.MigrationManager.ObsoleteFileCallback displayObsoleteFileMessage)",
+      "summary": "Initializes a new instance of Dynamo.Migration.MigrationManager class",
+      "params": [
+        {
+          "name": "displayFutureFileMessage",
+          "type": "Dynamo.Migration.MigrationManager.FutureFileCallback",
+          "doc": "Functions that can be used as a callback in the event a file from a later version of Dynamo is attempting to be loaded",
+          "optional": false
+        },
+        {
+          "name": "displayObsoleteFileMessage",
+          "type": "Dynamo.Migration.MigrationManager.ObsoleteFileCallback",
+          "doc": "Functions that can be used as a callback in the event an obsolete file is attempted to be loaded.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddMigrationType(Dynamo.Graph.Nodes.TypeLoadData)",
+      "signature": "void AddMigrationType(Dynamo.Graph.Nodes.TypeLoadData t)",
+      "summary": "Adds a new type containing Migration methods into this manager.",
+      "params": [
+        {
+          "name": "t",
+          "type": "Dynamo.Graph.Nodes.TypeLoadData",
+          "doc": "Type data to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CloneAndChangeName(System.Xml.XmlElement, string, string, bool)",
+      "signature": "System.Xml.XmlElement CloneAndChangeName(System.Xml.XmlElement element, string type, string name, bool cloneInnerXml)",
+      "summary": "Call this method to create a clone of the original XmlElement and change its type at one go. This method preserves all the attributes while updating only the type name.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "The XmlElement to be cloned and the type name updated.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "doc": "The fully qualified name of the new type.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The new name, by which this node is known.",
+          "optional": false
+        },
+        {
+          "name": "cloneInnerXml",
+          "type": "bool",
+          "doc": "Parameter indicating whether the inner xml of the original node should be cloned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the cloned and updated XmlElement."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateCodeBlockNodeFrom(System.Xml.XmlElement)",
+      "signature": "System.Xml.XmlElement CreateCodeBlockNodeFrom(System.Xml.XmlElement srcElement)",
+      "summary": "Call this method to create an empty Code Block node, with all attributes carried over from an existing src XmlElement.",
+      "params": [
+        {
+          "name": "srcElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "The source element from which the Code Block node XmlElement is constructed. All attributes of the source XmlElement will be copied over, and Code Block node specific attributes will be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns an XmlElement that represents the resulting Code Block node."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateCodeBlockNodeModelNode(System.Xml.XmlDocument, System.Xml.XmlElement, int, string)",
+      "signature": "System.Xml.XmlElement CreateCodeBlockNodeModelNode(System.Xml.XmlDocument document, System.Xml.XmlElement oldNode, int nodeIndex, string codeText)",
+      "summary": "This method creates an empty CodeBlockNodeModel node that contains basic code block node information.",
+      "params": [
+        {
+          "name": "document",
+          "type": "System.Xml.XmlDocument",
+          "doc": "The XmlDocument to create the node in.",
+          "optional": false
+        },
+        {
+          "name": "oldNode",
+          "type": "System.Xml.XmlElement",
+          "doc": "Base node to create a new one",
+          "optional": false
+        },
+        {
+          "name": "nodeIndex",
+          "type": "int",
+          "doc": "Index of the node",
+          "optional": false
+        },
+        {
+          "name": "codeText",
+          "type": "string",
+          "doc": "Code block content",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the XmlElement that represents a CodeBlockNodeModel node with its basic function information with default attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateCustomNodeFrom(System.Xml.XmlDocument, System.Xml.XmlElement, string, string, string, System.Collections.Generic.List\u003Cstring\u003E, System.Collections.Generic.List\u003Cstring\u003E)",
+      "signature": "System.Xml.XmlElement CreateCustomNodeFrom(System.Xml.XmlDocument document, System.Xml.XmlElement srcElement, string id, string name, string description, System.Collections.Generic.List\u003Cstring\u003E inputs, System.Collections.Generic.List\u003Cstring\u003E outputs)",
+      "summary": "Create a custom node as a replacement for an existing node.",
+      "params": [
+        {
+          "name": "document",
+          "type": "System.Xml.XmlDocument",
+          "doc": "The XmlDocument to create the node in.",
+          "optional": false
+        },
+        {
+          "name": "srcElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "The source XmlElement object.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "The custom node id.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The custom node name.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "doc": "The custom node\u0027s description.",
+          "optional": false
+        },
+        {
+          "name": "inputs",
+          "type": "System.Collections.Generic.List\u003Cstring\u003E",
+          "doc": "A list of input names.",
+          "optional": false
+        },
+        {
+          "name": "outputs",
+          "type": "System.Collections.Generic.List\u003Cstring\u003E",
+          "doc": "A list of output names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the XmlElement that represents a custom node with its basic function information with default attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateDummyNode(System.Xml.XmlElement, int, int)",
+      "signature": "System.Xml.XmlElement CreateDummyNode(System.Xml.XmlElement element, int inportCount, int outportCount)",
+      "summary": "Call this method to create a dummy node, should a node failed to be migrated. This results in a dummy node with a description of what the original node type was, and also retain the number of input and output ports.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "XmlElement representing the original node which has failed migration.",
+          "optional": false
+        },
+        {
+          "name": "inportCount",
+          "type": "int",
+          "doc": "The number of input ports required on the new dummy node. This number must be a positive number greater or equal to zero.",
+          "optional": false
+        },
+        {
+          "name": "outportCount",
+          "type": "int",
+          "doc": "The number of output ports required on the new dummy node. This number must be a positive number greater or equal to zero.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns a new XmlElement representing the dummy node."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateFunctionNode(System.Xml.XmlDocument, System.Xml.XmlElement, int, string, string, string)",
+      "signature": "System.Xml.XmlElement CreateFunctionNode(System.Xml.XmlDocument document, System.Xml.XmlElement oldNode, int nodeIndex, string assembly, string name, string signature)",
+      "summary": "Call this method to create an empty DSFunction node that contains basic function node information.",
+      "params": [
+        {
+          "name": "document",
+          "type": "System.Xml.XmlDocument",
+          "doc": "The XmlDocument to create the node in.",
+          "optional": false
+        },
+        {
+          "name": "oldNode",
+          "type": "System.Xml.XmlElement",
+          "doc": "Base node to create a new one",
+          "optional": false
+        },
+        {
+          "name": "nodeIndex",
+          "type": "int",
+          "doc": "Index of the node",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "string",
+          "doc": "Name of the assembly that implements this function.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name to display on the node.",
+          "optional": false
+        },
+        {
+          "name": "signature",
+          "type": "string",
+          "doc": "The signature of the function.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the XmlElement that represents a DSFunction node with its basic function information with default attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateFunctionNodeFrom(System.Xml.XmlElement)",
+      "signature": "System.Xml.XmlElement CreateFunctionNodeFrom(System.Xml.XmlElement srcElement)",
+      "summary": "Call this method to create a duplicated XmlElement with all the attributes found from the source XmlElement.",
+      "params": [
+        {
+          "name": "srcElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "The source XmlElement to duplicate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the duplicated XmlElement with all attributes found in the source XmlElement. The resulting XmlElement will also have a mandatory \u0022type\u0022 attribute with value \u0022Dynamo.Graph.Nodes.ZeroTouch.DSFunction\u0022."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateFunctionNodeFrom(System.Xml.XmlElement, string[])",
+      "signature": "System.Xml.XmlElement CreateFunctionNodeFrom(System.Xml.XmlElement srcElement, string[] attribNames)",
+      "summary": "Call this method to create a XmlElement with a set of attributes carried over from the source XmlElement. The new XmlElement will have a name of \u0022Dynamo.Graph.Nodes.ZeroTouch.DSFunction\u0022.",
+      "params": [
+        {
+          "name": "srcElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "The source XmlElement object.",
+          "optional": false
+        },
+        {
+          "name": "attribNames",
+          "type": "string[]",
+          "doc": "The list of attribute names whose values are to be carried over to the resulting XmlElement. This list is mandatory and it cannot be empty. If a specified attribute cannot be found in srcElement, an empty attribute with the same name will be created in the resulting XmlElement.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the resulting XmlElement with specified attributes duplicated from srcElement. The resulting XmlElement will also have a mandatory \u0022type\u0022 attribute with value \u0022Dynamo.Graph.Nodes.ZeroTouch.DSFunction\u0022."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateMissingNode(System.Xml.XmlElement, int, int)",
+      "signature": "System.Xml.XmlElement CreateMissingNode(System.Xml.XmlElement element, int inportCount, int outportCount)",
+      "summary": "Call this method to create a dummy node, should a node failed to be migrated. This results in a dummy node with a description of what the original node type was, and also retain the number of input and output ports.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "XmlElement representing the original node which has failed migration.",
+          "optional": false
+        },
+        {
+          "name": "inportCount",
+          "type": "int",
+          "doc": "The number of input ports required on the new dummy node. This number must be a positive number greater or equal to zero.",
+          "optional": false
+        },
+        {
+          "name": "outportCount",
+          "type": "int",
+          "doc": "The number of output ports required on the new dummy node. This number must be a positive number greater or equal to zero.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns a new XmlElement representing the dummy node."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateNode(System.Xml.XmlDocument, System.Xml.XmlElement, int, string, string)",
+      "signature": "System.Xml.XmlElement CreateNode(System.Xml.XmlDocument document, System.Xml.XmlElement oldNode, int nodeIndex, string type, string name)",
+      "summary": "This method creates an empty NodeModel node that contains basic code block node information.",
+      "params": [
+        {
+          "name": "document",
+          "type": "System.Xml.XmlDocument",
+          "doc": "The XmlDocument to create the node in.",
+          "optional": false
+        },
+        {
+          "name": "oldNode",
+          "type": "System.Xml.XmlElement",
+          "doc": "Base node to create a new one",
+          "optional": false
+        },
+        {
+          "name": "nodeIndex",
+          "type": "int",
+          "doc": "Index of the node",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "doc": "Node type name",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name to display on the node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the XmlElement that represents a NodeModel node with its basic function information with default attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateVarArgFunctionNode(System.Xml.XmlDocument, System.Xml.XmlElement, int, string, string, string, string)",
+      "signature": "System.Xml.XmlElement CreateVarArgFunctionNode(System.Xml.XmlDocument document, System.Xml.XmlElement oldNode, int nodeIndex, string assembly, string name, string signature, string inputcount)",
+      "summary": "Call this method to create an empty DSVarArgFunction node that contains basic function node information.",
+      "params": [
+        {
+          "name": "document",
+          "type": "System.Xml.XmlDocument",
+          "doc": "The XmlDocument to create the node in.",
+          "optional": false
+        },
+        {
+          "name": "oldNode",
+          "type": "System.Xml.XmlElement",
+          "doc": "Base node to create a new one",
+          "optional": false
+        },
+        {
+          "name": "nodeIndex",
+          "type": "int",
+          "doc": "Index of the node",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "string",
+          "doc": "Name of the assembly that implements this function.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name to display on the node.",
+          "optional": false
+        },
+        {
+          "name": "signature",
+          "type": "string",
+          "doc": "The signature of the function.",
+          "optional": false
+        },
+        {
+          "name": "inputcount",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the XmlElement that represents a DSVarArgFunction node with its basic function information with default attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateVarArgFunctionNodeFrom(System.Xml.XmlElement)",
+      "signature": "System.Xml.XmlElement CreateVarArgFunctionNodeFrom(System.Xml.XmlElement srcElement)",
+      "summary": "This method creates a duplicated XmlElement representing DSVarArgFunction with all the attributes found from the source XmlElement.",
+      "params": [
+        {
+          "name": "srcElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "The source XmlElement to duplicate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the duplicated XmlElement representing DSVarArgFunction with all attributes found in the source XmlElement. The resulting XmlElement will also have a mandatory \u0022type\u0022 attribute with value \u0022Dynamo.Graph.Nodes.ZeroTouch.DSVarArgFunction\u0022."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "GetGuidFromXmlElement(System.Xml.XmlElement)",
+      "signature": "string GetGuidFromXmlElement(System.Xml.XmlElement element)",
+      "summary": "Returns node guid specified in given System.Xml.XmlElement",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "System.Xml.XmlElement containing node guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Guid of the node"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "MigrateXmlNode(System.Version, System.Xml.XmlNode, System.Type, System.Version)",
+      "signature": "Dynamo.Migration.NodeMigrationData MigrateXmlNode(System.Version currentVersion, System.Xml.XmlNode elNode, System.Type type, System.Version workspaceVersion)",
+      "summary": "Attempts to migrate a node to the current version of Dynamo by given xml data",
+      "params": [
+        {
+          "name": "currentVersion",
+          "type": "System.Version",
+          "doc": "Current Dynamo version",
+          "optional": false
+        },
+        {
+          "name": "elNode",
+          "type": "System.Xml.XmlNode",
+          "doc": "Xml data about node to migrate",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "Type of node",
+          "optional": false
+        },
+        {
+          "name": "workspaceVersion",
+          "type": "System.Version",
+          "doc": "Version of workspace which the node belongs to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Migration.NodeMigrationData",
+        "doc": "Data about migration of the node"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "ProcessNodesInWorkspace(System.Xml.XmlDocument, System.Version, System.Version, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory)",
+      "signature": "void ProcessNodesInWorkspace(System.Xml.XmlDocument xmlDoc, System.Version workspaceVersion, System.Version currentVersion, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory nodeFactory)",
+      "summary": "Attempts to migrate nodes in a workspace to the current version of Dynamo.",
+      "params": [
+        {
+          "name": "xmlDoc",
+          "type": "System.Xml.XmlDocument",
+          "doc": "Xml data about workspace with nodes to migrate",
+          "optional": false
+        },
+        {
+          "name": "workspaceVersion",
+          "type": "System.Version",
+          "doc": "Version of workspace to migrate",
+          "optional": false
+        },
+        {
+          "name": "currentVersion",
+          "type": "System.Version",
+          "doc": "Current Dynamo version",
+          "optional": false
+        },
+        {
+          "name": "nodeFactory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "Factory to create nodes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "ProcessWorkspace(Dynamo.Graph.Workspaces.WorkspaceInfo, System.Xml.XmlDocument, bool, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory)",
+      "signature": "bool ProcessWorkspace(Dynamo.Graph.Workspaces.WorkspaceInfo workspaceInfo, System.Xml.XmlDocument xmlDoc, bool isTestMode, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory)",
+      "summary": "Attempts to migrate a workspace to the current version of Dynamo.",
+      "params": [
+        {
+          "name": "workspaceInfo",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "doc": "Information about workspace to migrate",
+          "optional": false
+        },
+        {
+          "name": "xmlDoc",
+          "type": "System.Xml.XmlDocument",
+          "doc": "Xml data about workspace to migrate",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Indicates if current code is running in tests",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "Factory to create nodes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the workspace is migrated successfully"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "ProcessWorkspaceMigrations(System.Version, System.Xml.XmlDocument, System.Version)",
+      "signature": "void ProcessWorkspaceMigrations(System.Version currentVersion, System.Xml.XmlDocument xmlDoc, System.Version workspaceVersion)",
+      "summary": "Runs all migration methods found on the listed migration target types.",
+      "params": [
+        {
+          "name": "currentVersion",
+          "type": "System.Version",
+          "doc": "Current Dynamo version",
+          "optional": false
+        },
+        {
+          "name": "xmlDoc",
+          "type": "System.Xml.XmlDocument",
+          "doc": "Xml data about workspace to migrate",
+          "optional": false
+        },
+        {
+          "name": "workspaceVersion",
+          "type": "System.Version",
+          "doc": "Version of workspace to migrate",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "ReplaceAttributeValue(System.Xml.XmlElement, string, string, string)",
+      "signature": "void ReplaceAttributeValue(System.Xml.XmlElement element, string attribute, string from, string to)",
+      "summary": "Call this method to replace the value of attribute.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml element where to replace attribute value",
+          "optional": false
+        },
+        {
+          "name": "attribute",
+          "type": "string",
+          "doc": "Attribute name",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "string",
+          "doc": "Original value",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "doc": "New value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "SetFunctionSignature(System.Xml.XmlElement, string, string, string)",
+      "signature": "void SetFunctionSignature(System.Xml.XmlElement element, string assemblyName, string methodName, string signature)",
+      "summary": "Sets function data such as assembly, display name and function signature",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml element where to set data",
+          "optional": false
+        },
+        {
+          "name": "assemblyName",
+          "type": "string",
+          "doc": "Assembly name of the function",
+          "optional": false
+        },
+        {
+          "name": "methodName",
+          "type": "string",
+          "doc": "Name of the function",
+          "optional": false
+        },
+        {
+          "name": "signature",
+          "type": "string",
+          "doc": "FullName of the function",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MigrationTargets",
+      "type": "System.Collections.Generic.List\u003CSystem.Type\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A collection of types which contain migration methods.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

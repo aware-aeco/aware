@@ -1,0 +1,110 @@
+{
+  "name": "File3dmSettings",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "General settings in a 3dm file.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_File3dmSettings.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ModelAbsoluteTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model space absolute tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_ModelAbsoluteTolerance.htm"
+    },
+    {
+      "name": "ModelAngleToleranceDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_ModelAngleToleranceDegrees.htm"
+    },
+    {
+      "name": "ModelAngleToleranceRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_ModelAngleToleranceRadians.htm"
+    },
+    {
+      "name": "ModelBasepoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model base point that is used when the file is read as an instance definition. This point is mapped to the origin in the instance definition.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_ModelBasepoint.htm"
+    },
+    {
+      "name": "ModelRelativeTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model space relative tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_ModelRelativeTolerance.htm"
+    },
+    {
+      "name": "ModelUnitSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model unit system, using UnitSystem enumeration.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_ModelUnitSystem.htm"
+    },
+    {
+      "name": "ModelUrl",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a Uniform Resource Locator (URL) direction for the model.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_ModelUrl.htm"
+    },
+    {
+      "name": "PageAbsoluteTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page space absolute tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_PageAbsoluteTolerance.htm"
+    },
+    {
+      "name": "PageAngleToleranceDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_PageAngleToleranceDegrees.htm"
+    },
+    {
+      "name": "PageAngleToleranceRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page space angle tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_PageAngleToleranceRadians.htm"
+    },
+    {
+      "name": "PageRelativeTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page space relative tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_PageRelativeTolerance.htm"
+    },
+    {
+      "name": "PageUnitSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the page unit system, using UnitSystem enumeration.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmSettings_PageUnitSystem.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

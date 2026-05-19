@@ -1,0 +1,59 @@
+{
+  "name": "ProgressBar",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Utility.ProgressBar.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/",
+  "constructors": [
+    {
+      "name": "ProgressBar",
+      "signature": "ProgressBar(arg2, countOfSteps, text)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "countOfSteps",
+          "type": "int",
+          "doc": "Count of steps",
+          "optional": false
+        },
+        {
+          "name": "headerTextNumber",
+          "type": "object",
+          "doc": "Header text number, 0=standard",
+          "optional": false
+        },
+        {
+          "name": "bWithCancel",
+          "type": "object",
+          "doc": "With cancel: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Step",
+      "signature": "Step()",
+      "summary": "Show next step",
+      "remarks": "Show next step",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Cancel was clicked: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.Step"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

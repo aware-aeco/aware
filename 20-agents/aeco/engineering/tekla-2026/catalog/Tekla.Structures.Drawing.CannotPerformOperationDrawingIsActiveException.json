@@ -1,0 +1,32 @@
+{
+  "name": "CannotPerformOperationDrawingIsActiveException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotPerformOperationDrawingIsActiveException class defines the exception that is thrown when a user tries to do an operation which requires that the drawing is not active.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/68121f5f-165a-4167-1d2f-3e94360abb60",
+  "constructors": [
+    {
+      "name": "CannotPerformOperationDrawingIsActiveException",
+      "signature": "public CannotPerformOperationDrawingIsActiveException(string Message)",
+      "summary": "Creates a new cannot perform operation drawing is active exception instance.",
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6de7d12f-e3d1-7091-59df-a894dd29e047"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

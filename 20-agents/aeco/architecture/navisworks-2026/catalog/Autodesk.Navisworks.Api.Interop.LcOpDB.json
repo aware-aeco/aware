@@ -1,0 +1,324 @@
+{
+  "name": "LcOpDB",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpDB class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDB",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDB InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpDB.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDB",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "GetControlMode",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDBEMode GetControlMode()",
+      "summary": "GetControlMode method of LcOpDB.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDBEMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.GetControlMode"
+    },
+    {
+      "name": "DeclareExchangePackage",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpExchangePackage DeclareExchangePackage(string id, string install_path, string name, string description, string author, string version)",
+      "summary": "DeclareExchangePackage method of LcOpDB.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "install_path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpExchangePackage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.DeclareExchangePackage%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "GetExchangePackage",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpExchangePackage GetExchangePackage(int index)",
+      "summary": "GetExchangePackage method of LcOpDB.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpExchangePackage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.GetExchangePackage%28System.Int32%29"
+    },
+    {
+      "name": "GetPlugin",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpPlugin GetPlugin(int index)",
+      "summary": "GetPlugin method of LcOpDB.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpPlugin",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.GetPlugin%28System.Int32%29"
+    },
+    {
+      "name": "GetPluginByName",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpPlugin GetPluginByName(string name)",
+      "summary": "GetPluginByName method of LcOpDB.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpPlugin",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.GetPluginByName%28System.String%29"
+    },
+    {
+      "name": "LoadOptionSetFromConfig",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpPlugin LoadOptionSetFromConfig(string config_file, string options_path)",
+      "summary": "LoadOptionSetFromConfig method of LcOpDB.",
+      "params": [
+        {
+          "name": "config_file",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "options_path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpPlugin",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.LoadOptionSetFromConfig%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpDB.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetNumExchangePackages",
+      "signature": "static int GetNumExchangePackages()",
+      "summary": "GetNumExchangePackages method of LcOpDB.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.GetNumExchangePackages"
+    },
+    {
+      "name": "GetNumPlugins",
+      "signature": "static int GetNumPlugins()",
+      "summary": "GetNumPlugins method of LcOpDB.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.GetNumPlugins"
+    },
+    {
+      "name": "ActivateStateWatcherPlugins",
+      "signature": "static void ActivateStateWatcherPlugins()",
+      "summary": "ActivateStateWatcherPlugins method of LcOpDB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.ActivateStateWatcherPlugins"
+    },
+    {
+      "name": "AppInitialising",
+      "signature": "static void AppInitialising()",
+      "summary": "AppInitialising method of LcOpDB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.AppInitialising"
+    },
+    {
+      "name": "AppTerminating",
+      "signature": "static void AppTerminating()",
+      "summary": "AppTerminating method of LcOpDB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.AppTerminating"
+    },
+    {
+      "name": "BeginWatchStateWatcherPlugins",
+      "signature": "static void BeginWatchStateWatcherPlugins(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "BeginWatchStateWatcherPlugins method of LcOpDB.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.BeginWatchStateWatcherPlugins%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "DeactivateStateWatcherPlugins",
+      "signature": "static void DeactivateStateWatcherPlugins()",
+      "summary": "DeactivateStateWatcherPlugins method of LcOpDB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.DeactivateStateWatcherPlugins"
+    },
+    {
+      "name": "EndWatchStateWatcherPlugins",
+      "signature": "static void EndWatchStateWatcherPlugins(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "EndWatchStateWatcherPlugins method of LcOpDB.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.EndWatchStateWatcherPlugins%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "LoadPluginsFromFile",
+      "signature": "static void LoadPluginsFromFile(string file_name)",
+      "summary": "LoadPluginsFromFile method of LcOpDB.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDB.LoadPluginsFromFile%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpDB.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDB.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

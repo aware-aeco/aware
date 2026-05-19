@@ -1,0 +1,34 @@
+{
+  "name": "GH_DigitAlign",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "enum",
+  "summary": "Enumerates the possible alignments for digits inside the GH_DigitScroller control.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_DigitAlign.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Justify",
+      "value": 0,
+      "summary": "Digits expand to fill out the entire free space."
+    },
+    {
+      "name": "Left",
+      "value": 1,
+      "summary": "Digits are stacked against the left side of the control."
+    },
+    {
+      "name": "Center",
+      "value": 2,
+      "summary": "Digits are stacked together in the center of the control."
+    },
+    {
+      "name": "Right",
+      "value": 3,
+      "summary": "Digits are stacked against the right side of the control."
+    }
+  ]
+}

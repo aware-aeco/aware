@@ -1,0 +1,186 @@
+{
+  "name": "AssociativeViewProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BasisElements.AssociativeViewProperties.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/",
+  "constructors": [
+    {
+      "name": "AssociativeViewProperties",
+      "signature": "AssociativeViewProperties() | AssociativeViewProperties(arg2) | AssociativeViewProperties(arg2)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AdjacentEdges",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the adjacent edges state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.AdjacentEdges"
+    },
+    {
+      "name": "ColorHiddenEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the color of the hidden edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.ColorHiddenEdge"
+    },
+    {
+      "name": "ColorVisibleEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the color of the visible edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.ColorVisibleEdge"
+    },
+    {
+      "name": "ConvertTo2D",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the convert to 2D state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.ConvertTo2D"
+    },
+    {
+      "name": "ElementRepresentation",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the element representation :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.ElementRepresentation"
+    },
+    {
+      "name": "Hidden",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the hidden state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.Hidden"
+    },
+    {
+      "name": "LayerBoundaryLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the layer of the boundary line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.LayerBoundaryLine"
+    },
+    {
+      "name": "LayerFinishLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the layer of the finish line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.LayerFinishLine"
+    },
+    {
+      "name": "LayerHiddenEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the layer of the hidden edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.LayerHiddenEdge"
+    },
+    {
+      "name": "LayerHiddenSectionLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the layer of the hidden section line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.LayerHiddenSectionLine"
+    },
+    {
+      "name": "LayerSectionLine",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the layer of the section line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.LayerSectionLine"
+    },
+    {
+      "name": "LayerVisibleEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the layer of the visible edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.LayerVisibleEdge"
+    },
+    {
+      "name": "PenHiddenEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the pen of the hidden edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.PenHiddenEdge"
+    },
+    {
+      "name": "PenVisibleEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the pen of the visible edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.PenVisibleEdge"
+    },
+    {
+      "name": "RemoveAdjacentEdges",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the remove adjacent edges state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.RemoveAdjacentEdges"
+    },
+    {
+      "name": "ShowHiddenEdges",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show hidden edges state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.ShowHiddenEdges"
+    },
+    {
+      "name": "ShowSectionBody",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": ":type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.ShowSectionBody"
+    },
+    {
+      "name": "ShowVisibleEdges",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show visible edges state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.ShowVisibleEdges"
+    },
+    {
+      "name": "StrokeHiddenEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the stroke of the hidden edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.StrokeHiddenEdge"
+    },
+    {
+      "name": "StrokeVisibleEdge",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the stroke of the visible edges :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/#NemAll_Python_BasisElements.AssociativeViewProperties.StrokeVisibleEdge"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

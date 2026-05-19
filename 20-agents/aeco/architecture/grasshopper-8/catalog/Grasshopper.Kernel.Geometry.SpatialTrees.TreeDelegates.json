@@ -1,0 +1,231 @@
+{
+  "name": "TreeDelegates",
+  "namespace": "Grasshopper.Kernel.Geometry.SpatialTrees",
+  "kind": "class",
+  "summary": "Provides a bunch of standard coordinate extractor methods.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Node2Coordinates",
+      "signature": "public static void Node2Coordinates(Node2 pt, ref double x, ref double y, ref double z)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Node2",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates_Node2Coordinates.htm"
+    },
+    {
+      "name": "Node3Coordinates",
+      "signature": "public static void Node3Coordinates(Node3 pt, ref double x, ref double y, ref double z)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Node3",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates_Node3Coordinates.htm"
+    },
+    {
+      "name": "Point2dCoordinates",
+      "signature": "public static void Point2dCoordinates(Point2d pt, ref double x, ref double y, ref double z)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Point2d",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates_Point2dCoordinates.htm"
+    },
+    {
+      "name": "Point2fCoordinates",
+      "signature": "public static void Point2fCoordinates(Point2d pt, ref double x, ref double y, ref double z)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Point2d",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates_Point2fCoordinates.htm"
+    },
+    {
+      "name": "Point3dCoordinates",
+      "signature": "public static void Point3dCoordinates(Point3d pt, ref double x, ref double y, ref double z)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Point3d",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates_Point3dCoordinates.htm"
+    },
+    {
+      "name": "Point3fCoordinates",
+      "signature": "public static void Point3fCoordinates(Point3d pt, ref double x, ref double y, ref double z)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Point3d",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates_Point3fCoordinates.htm"
+    },
+    {
+      "name": "PointCoordinates",
+      "signature": "public static void PointCoordinates(Point pt, ref double x, ref double y, ref double z)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Point",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Geometry_SpatialTrees_TreeDelegates_PointCoordinates.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

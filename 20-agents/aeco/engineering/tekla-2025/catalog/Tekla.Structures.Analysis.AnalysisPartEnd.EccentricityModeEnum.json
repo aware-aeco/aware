@@ -1,0 +1,24 @@
+{
+  "name": "AnalysisPartEnd.EccentricityModeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The eccentricity modes of the part end.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/feb2738e-06b6-ceed-ebf5-1bb155e41e74",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ECCENTRICITY_MODE_MANUAL",
+      "value": 0,
+      "summary": "The manual eccentricity mode."
+    },
+    {
+      "name": "ECCENTRICITY_MODE_AUTOMATIC",
+      "value": 1,
+      "summary": "The automatic eccentricity mode."
+    }
+  ]
+}

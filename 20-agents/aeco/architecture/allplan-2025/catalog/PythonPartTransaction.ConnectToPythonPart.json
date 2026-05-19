@@ -1,0 +1,13 @@
+{
+  "name": "ConnectToPythonPart",
+  "namespace": "PythonPartTransaction",
+  "kind": "class",
+  "summary": "Data class for the PythonPart connection.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartTransaction/ConnectToPythonPart/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

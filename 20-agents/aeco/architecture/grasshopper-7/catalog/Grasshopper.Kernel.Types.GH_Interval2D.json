@@ -1,0 +1,271 @@
+{
+  "name": "GH_Interval2D",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Represents a two-dimensional numeric domain.",
+  "base": "GH_Goo\u003CUVInterval\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Interval2D.htm",
+  "constructors": [
+    {
+      "name": "GH_Interval2D()",
+      "signature": "public GH_Interval2D()",
+      "summary": "Default constructor. Creates two empty intervals.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D__ctor.htm"
+    },
+    {
+      "name": "GH_Interval2D(GH_Interval2D)",
+      "signature": "public GH_Interval2D(GH_Interval2D other)",
+      "summary": "Create a duplicate of another two-dimensional interval",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Types.GH_Interval2D",
+          "doc": "Interval to copy. If null, a default interval will be created.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D__ctor_1.htm"
+    },
+    {
+      "name": "GH_Interval2D(UVInterval)",
+      "signature": "public GH_Interval2D(UVInterval uv)",
+      "summary": "Duplicates a one-dimensional interval in both directions.",
+      "params": [
+        {
+          "name": "uv",
+          "type": "Grasshopper.Kernel.Types.UVInterval",
+          "doc": "UVInterval value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CastFrom",
+      "signature": "public override bool CastFrom(Object source)",
+      "summary": "Remote to Local caster function. This stuff is complex, don\u0027t concern yourself with casting logic.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public virtual bool CastTo\u003CQ\u003E(ref Q target)",
+      "summary": "Attempt a cast to type Q.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(ref T target)",
+      "summary": "Local to Remote caster function. this stuff is complex, don\u0027t concern yourself with casting logic.",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_CastTo__1.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public override IGH_Goo Duplicate()",
+      "summary": "Create a duplicate of this interval.",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateInterval",
+      "signature": "public GH_Interval2D DuplicateInterval()",
+      "summary": "Create a duplicate of this interval.",
+      "params": [],
+      "returns": {
+        "type": "GH_Interval2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_DuplicateInterval.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public override IGH_GooProxy EmitProxy()",
+      "summary": "Returns a proxy that represents this interval. Do not call this function unless you\u0027re",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_EmitProxy.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public override bool Read(GH_IReader reader)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Read(GH_IReader).)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public virtual Object ScriptVariable()",
+      "summary": "This function will be called when the local IGH_Goo instance disappears into a user Script. This would be an excellent place to cast your IGH_Goo type to a simple data type.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "The default implementation of this function returns the Value instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_ScriptVariable.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Format the interval using default grasshopper formatting logic.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_ToString.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public override bool Write(GH_IWriter writer)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Write(GH_IWriter).)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Interval2D_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the validity of this instance. Valid intervals contain no #NaN extremes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Interval2D_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string describing the state of \u0022invalidness\u0022. If the instance is valid, then this property should return Nothing or String.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Interval2D_IsValidWhyNot.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeDescription.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Interval2D_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeName.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Interval2D_TypeName.htm"
+    },
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the internal data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Goo_1_Value.htm"
+    },
+    {
+      "name": "m_value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Goo\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_Goo_1_m_value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

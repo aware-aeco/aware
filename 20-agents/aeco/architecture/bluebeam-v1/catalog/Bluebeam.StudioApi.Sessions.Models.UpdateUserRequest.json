@@ -1,0 +1,30 @@
+{
+  "name": "UpdateUserRequest",
+  "namespace": "Bluebeam.StudioApi.Sessions.Models",
+  "kind": "class",
+  "summary": "Request body DTO for the corresponding \u0060UpdateUser\u0060 operation. Synthesized from the Postman example schema.",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "RestrictedStatus",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060RestrictedStatus\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "StatusMessage",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060StatusMessage\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

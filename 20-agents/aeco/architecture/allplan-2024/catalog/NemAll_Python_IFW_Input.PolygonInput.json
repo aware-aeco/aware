@@ -1,0 +1,101 @@
+{
+  "name": "PolygonInput",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the polygon input",
+  "base": "CoordinateInput",
+  "interfaces": [
+    "InputViewDocumentData"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolygonInput/",
+  "constructors": [
+    {
+      "name": "PolygonInput",
+      "signature": "PolygonInput(coordInput, bZCoord, multiPolygon)",
+      "summary": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state multiPolygon: Multi polygon with openings, ...",
+      "remarks": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state multiPolygon: Multi polygon with openings, ...",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolygonInput/#NemAll_Python_IFW_Input.PolygonInput.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteInput",
+      "signature": "ExecuteInput(mouseMsg, pnt, pMsgInfo)",
+      "summary": "Execute the input",
+      "remarks": "Execute the input",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View input point",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "execution state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolygonInput/#NemAll_Python_IFW_Input.PolygonInput.ExecuteInput"
+    },
+    {
+      "name": "GetPolygon",
+      "signature": "GetPolygon()",
+      "summary": "get the final polygon",
+      "remarks": "get the final polygon",
+      "params": [],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "final polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolygonInput/#NemAll_Python_IFW_Input.PolygonInput.GetPolygon"
+    },
+    {
+      "name": "GetPreviewPolygon",
+      "signature": "GetPreviewPolygon()",
+      "summary": "get the preview polygon",
+      "remarks": "get the preview polygon",
+      "params": [],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "preview polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolygonInput/#NemAll_Python_IFW_Input.PolygonInput.GetPreviewPolygon"
+    },
+    {
+      "name": "StartNewInput",
+      "signature": "StartNewInput()",
+      "summary": "Start new input",
+      "remarks": "Start new input",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolygonInput/#NemAll_Python_IFW_Input.PolygonInput.StartNewInput"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

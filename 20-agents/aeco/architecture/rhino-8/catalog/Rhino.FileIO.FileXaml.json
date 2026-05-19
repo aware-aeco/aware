@@ -1,0 +1,46 @@
+{
+  "name": "FileXaml",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for writing Xaml file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileXaml.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Write",
+      "signature": "public static bool Write(string path, RhinoDoc doc, FileFbxWriteOptions options)",
+      "summary": "Write a Xaml file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to write a file to",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to get geometry from",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileFbxWriteOptions",
+          "doc": "options used for generating the Xaml file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileXaml_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

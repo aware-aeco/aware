@@ -1,0 +1,57 @@
+{
+  "name": "ShortcutKeySettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to control keyboard shortcut keys",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_ShortcutKeySettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetMacro",
+      "signature": "public static string GetMacro(ShortcutKey key)",
+      "summary": "Get macro associated with a given keyboard shortcut",
+      "params": [
+        {
+          "name": "key",
+          "type": "Rhino.ApplicationSettings.ShortcutKey",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetMacro(Rhino.ApplicationSettings.ShortcutKey)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetMacro(Rhino.ApplicationSettings.ShortcutKey)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_GetMacro.htm"
+    },
+    {
+      "name": "SetMacro",
+      "signature": "public static void SetMacro(ShortcutKey key, string macro)",
+      "summary": "Set macro associated with a keyboard shortcut",
+      "params": [
+        {
+          "name": "key",
+          "type": "Rhino.ApplicationSettings.ShortcutKey",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.SetMacro(Rhino.ApplicationSettings.ShortcutKey,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "macro",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022macro\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.SetMacro(Rhino.ApplicationSettings.ShortcutKey,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_SetMacro.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

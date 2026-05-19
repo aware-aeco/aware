@@ -1,0 +1,154 @@
+{
+  "name": "AstKind",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "enum",
+  "summary": "Type AstKind",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ArgumentSignature",
+      "value": 2
+    },
+    {
+      "name": "Array",
+      "value": 0
+    },
+    {
+      "name": "ArrayName",
+      "value": 1
+    },
+    {
+      "name": "AtLevel",
+      "value": 3
+    },
+    {
+      "name": "BinaryExpression",
+      "value": 4
+    },
+    {
+      "name": "Boolean",
+      "value": 5
+    },
+    {
+      "name": "Char",
+      "value": 6
+    },
+    {
+      "name": "ClassDeclaration",
+      "value": 7
+    },
+    {
+      "name": "CodeBlock",
+      "value": 8
+    },
+    {
+      "name": "Comment",
+      "value": 9
+    },
+    {
+      "name": "Constructor",
+      "value": 10
+    },
+    {
+      "name": "DefaultArgument",
+      "value": 11
+    },
+    {
+      "name": "Double",
+      "value": 12
+    },
+    {
+      "name": "Dynamic",
+      "value": 13
+    },
+    {
+      "name": "DynamicBlock",
+      "value": 14
+    },
+    {
+      "name": "ExpressionList",
+      "value": 15
+    },
+    {
+      "name": "FunctionCall",
+      "value": 16
+    },
+    {
+      "name": "FunctionDefintion",
+      "value": 17
+    },
+    {
+      "name": "FunctionDotCall",
+      "value": 18
+    },
+    {
+      "name": "GroupExpression",
+      "value": 19
+    },
+    {
+      "name": "Identifier",
+      "value": 21
+    },
+    {
+      "name": "IdentifierList",
+      "value": 20
+    },
+    {
+      "name": "If",
+      "value": 22
+    },
+    {
+      "name": "Import",
+      "value": 23
+    },
+    {
+      "name": "InlineConditional",
+      "value": 24
+    },
+    {
+      "name": "Integer",
+      "value": 25
+    },
+    {
+      "name": "LanguageBlock",
+      "value": 26
+    },
+    {
+      "name": "Null",
+      "value": 27
+    },
+    {
+      "name": "RangeExpression",
+      "value": 28
+    },
+    {
+      "name": "ReplicationGuide",
+      "value": 29
+    },
+    {
+      "name": "String",
+      "value": 30
+    },
+    {
+      "name": "ThisPointer",
+      "value": 31
+    },
+    {
+      "name": "TypedIdentifier",
+      "value": 32
+    },
+    {
+      "name": "UnaryExpression",
+      "value": 33
+    },
+    {
+      "name": "VariableDeclaration",
+      "value": 34
+    }
+  ]
+}

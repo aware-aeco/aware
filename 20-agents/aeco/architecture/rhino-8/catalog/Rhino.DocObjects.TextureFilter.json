@@ -1,0 +1,24 @@
+{
+  "name": "TextureFilter",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Determines how the color of the image pixel is calculated when the image pixel corresponds to multiple texture bitmap pixels.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_TextureFilter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Nearest",
+      "value": 0,
+      "summary": "Nearest texture pixel is used."
+    },
+    {
+      "name": "Linear",
+      "value": 1,
+      "summary": "Weighted average of corresponding texture pixels."
+    }
+  ]
+}

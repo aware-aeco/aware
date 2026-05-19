@@ -1,0 +1,30 @@
+{
+  "name": "IIndexed\u003CT\u003E",
+  "namespace": "Dynamo.Utilities.ExtensionMethods",
+  "kind": "interface",
+  "summary": "Type IIndexed\u003CT\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/EnumerableExtensions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Element",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "IIndexed.Element",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "Index",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "IIndexed.Index",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/EnumerableExtensions.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

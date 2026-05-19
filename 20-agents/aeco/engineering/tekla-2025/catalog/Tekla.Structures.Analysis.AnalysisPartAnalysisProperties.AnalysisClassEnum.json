@@ -1,0 +1,54 @@
+{
+  "name": "AnalysisPartAnalysisProperties.AnalysisClassEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The analysis classes.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4cbde6d4-92ff-295c-6aba-7c2a92af06ac",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ANALYSIS_CLASS_COLUMN",
+      "value": 1,
+      "summary": "The column analysis class."
+    },
+    {
+      "name": "ANALYSIS_CLASS_BEAM",
+      "value": 2,
+      "summary": "The beam analysis class."
+    },
+    {
+      "name": "ANALYSIS_CLASS_WALL",
+      "value": 3,
+      "summary": "The wall analysis class."
+    },
+    {
+      "name": "ANALYSIS_CLASS_SLAB",
+      "value": 4,
+      "summary": "The slab analysis class."
+    },
+    {
+      "name": "ANALYSIS_CLASS_CONTOUR_PLATE",
+      "value": 5,
+      "summary": "The contour plate analysis class."
+    },
+    {
+      "name": "ANALYSIS_CLASS_SECONDARY",
+      "value": 99,
+      "summary": "The old secondary object analysis class. Named now as bracing."
+    },
+    {
+      "name": "ANALYSIS_CLASS_BRACING",
+      "value": 99,
+      "summary": "The bracing object analysis class."
+    },
+    {
+      "name": "ANALYSIS_CLASS_SECONDARY_MEMBER",
+      "value": 100,
+      "summary": "The secondary object analysis class."
+    }
+  ]
+}

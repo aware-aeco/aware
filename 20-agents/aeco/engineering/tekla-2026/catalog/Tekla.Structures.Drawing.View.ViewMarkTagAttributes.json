@@ -1,0 +1,114 @@
+{
+  "name": "View.ViewMarkTagAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ViewMarkTagAttributes class contains attributes for view mark tags.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d14a53c7-82c7-69b3-101e-81403379a9df",
+  "constructors": [
+    {
+      "name": "View.ViewMarkTagAttributes()",
+      "signature": "public ViewMarkTagAttributes()",
+      "summary": "Creates a new mark tag attributes instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ffcade7f-45c3-1784-b99f-428c7f2a15ae"
+    },
+    {
+      "name": "View.ViewMarkTagAttributes(Vector, TagLocation, TextAlignment, ContainerElement)",
+      "signature": "public ViewMarkTagAttributes(Vector offset, TagLocation location, TextAlignment alignment, ContainerElement tagContent)",
+      "summary": "Creates a new mark tag attributes instance with the given offset, location, alignment and content.",
+      "params": [
+        {
+          "name": "offset",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The offset of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "Tekla.Structures.Drawing.TagLocation",
+          "doc": "The location of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "alignment",
+          "type": "Tekla.Structures.Drawing.TextAlignment",
+          "doc": "The alignment of the mark tag text to be used.",
+          "optional": false
+        },
+        {
+          "name": "tagContent",
+          "type": "Tekla.Structures.Drawing.ContainerElement",
+          "doc": "The content of the mark tag to be used.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2b78ed8c-3445-6a1f-0fee-6fa9e13ed890"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa40044e-5b47-ea87-43b9-db5751e4c0aa"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "TagLocation",
+      "getter": true,
+      "setter": true,
+      "summary": "The location of the mark tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5cfa0bec-7ded-11fb-c125-c9a015d41da7"
+    },
+    {
+      "name": "Offset",
+      "type": "Vector",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset of the mark tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0095c5d2-868d-ae47-8ebd-6c1848a3439f"
+    },
+    {
+      "name": "TagAlignment",
+      "type": "TextAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag text alignment.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b170e6b0-1d9b-72ff-b0b4-178e9ec1890f"
+    },
+    {
+      "name": "TagContent",
+      "type": "ContainerElement",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag content.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/48b0907a-5a0e-b17c-6a7a-b98abb8cadc1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,132 @@
+{
+  "name": "Symbol.SymbolAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SymbolAttributes class contains the attributes for the symbol.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b10faf4e-f57b-f8ce-e4b7-6127b94600e7",
+  "constructors": [
+    {
+      "name": "Symbol.SymbolAttributes()",
+      "signature": "public SymbolAttributes()",
+      "summary": "Creates a new default symbol attributes instance that loads standard attributes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/539433fb-b2cb-3a9b-7a71-0a8a703ba575"
+    },
+    {
+      "name": "Symbol.SymbolAttributes(String)",
+      "signature": "public SymbolAttributes(string AttributesFile)",
+      "summary": "Creates a symbol attributes instance that loads the specified attributes.",
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1f069dc7-5ea9-d8f1-2337-6b80291aaedb"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ccd8468-c5e8-7d1e-0de9-78423f575142"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "public override bool LoadAttributes(string attributeFile)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [
+        {
+          "name": "attributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7bbea6d2-d775-8e1a-ad4b-4fae564d6b74"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle of the symbol. Cannot be changed for an editor-created symbol when the symbol is created \u0022along line\u0022.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b774e642-492e-a65b-7e77-ee5ceba194f6"
+    },
+    {
+      "name": "Color",
+      "type": "DrawingColors",
+      "getter": true,
+      "setter": true,
+      "summary": "The symbol color. Does not have an effect on symbols where the color is already defined in the symbol file.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0d0b9b67-4bea-50f1-912e-be4fccc40d7e"
+    },
+    {
+      "name": "Frame",
+      "type": "Frame",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame for the symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9f767253-6c39-bd07-d0cf-ee1c81c215ac"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3699a29f-ddcd-3d0c-e8ac-81a2089900a0"
+    },
+    {
+      "name": "PreferredPlacing",
+      "type": "PreferredPlacingTypeBase",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5efe8bfb-1d5d-d070-5316-44680b3d5cdc"
+    },
+    {
+      "name": "TrueColor",
+      "type": "TeklaDrawingColor",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (RGB enabled) of the symbol. Does not have an effect on symbols where the color is already defined in the symbol file.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c24c55ca-657f-2b8a-ad0e-bfeb5bfb9c71"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

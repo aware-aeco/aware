@@ -1,0 +1,38 @@
+{
+  "name": "DatabaseChange",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "The element of DatabaseChangeCollection.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.DatabaseChange",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ChangedType",
+      "type": "Autodesk.Navisworks.Api.Data.DatabaseChangeTypes",
+      "getter": true,
+      "setter": false,
+      "summary": "The type of change DatabaseChangeTypes.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.DatabaseChange.ChangedType"
+    },
+    {
+      "name": "RowId",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "The row id of current database change, use the RowId to find out all columns.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.DatabaseChange.RowId"
+    },
+    {
+      "name": "TableName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The table name of current database change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.DatabaseChange.TableName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

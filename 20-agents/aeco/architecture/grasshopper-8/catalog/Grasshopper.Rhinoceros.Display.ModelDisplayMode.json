@@ -1,0 +1,396 @@
+{
+  "name": "ModelDisplayMode",
+  "namespace": "Grasshopper.Rhinoceros.Display",
+  "kind": "class",
+  "summary": "Represents a Rhino display mode. Wraps the functionality of the DisplayModeDescription type.",
+  "base": "ModelContent",
+  "interfaces": [
+    "IGH_BakeAwareData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Display_ModelDisplayMode.htm",
+  "constructors": [
+    {
+      "name": "ModelDisplayMode()",
+      "signature": "public ModelDisplayMode()",
+      "summary": "Initializes a new instance of the ModelDisplayMode class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode__ctor.htm"
+    },
+    {
+      "name": "ModelDisplayMode(ModelDisplayMode.Attributes)",
+      "signature": "public ModelDisplayMode(ModelDisplayMode.Attributes attributes)",
+      "summary": "Initializes a new instance of the ModelDisplayMode class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Display.ModelDisplayMode.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode__ctor_1.htm"
+    },
+    {
+      "name": "ModelDisplayMode(DisplayModeDescription)",
+      "signature": "public ModelDisplayMode(DisplayModeDescription displayMode)",
+      "summary": "Initializes a new instance of the ModelDisplayMode class",
+      "params": [
+        {
+          "name": "displayMode",
+          "type": "DisplayModeDescription",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode__ctor_2.htm"
+    },
+    {
+      "name": "ModelDisplayMode(Guid)",
+      "signature": "public ModelDisplayMode(Guid id)",
+      "summary": "Initializes a new instance of the ModelDisplayMode class",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static ModelDisplayMode Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelDisplayMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_CastTo__1.htm"
+    },
+    {
+      "name": "Equals(ModelContent)",
+      "signature": "public bool Equals(ModelContent other)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelContent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Equals.htm"
+    },
+    {
+      "name": "Equals(ModelData)",
+      "signature": "public bool Equals(ModelData other)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_GetHashCode.htm"
+    },
+    {
+      "name": "ToAttributes",
+      "signature": "public ModelDisplayMode.Attributes ToAttributes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ModelDisplayMode.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_ToAttributes.htm"
+    },
+    {
+      "name": "ToDetails",
+      "signature": "public string ToDetails()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_ToDetails.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public override string TooltipString()",
+      "summary": "(Overrides ModelContent.TooltipString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ModelContent.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelDisplayMode.Attributes to ModelDisplayMode)",
+      "signature": "public static implicit operator ModelDisplayMode (ModelDisplayMode.Attributes attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Display.ModelDisplayMode.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelDisplayMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(DisplayModeDescription to ModelDisplayMode)",
+      "signature": "public static implicit operator ModelDisplayMode (DisplayModeDescription mode)",
+      "summary": "",
+      "params": [
+        {
+          "name": "mode",
+          "type": "DisplayModeDescription",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelDisplayMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_op_Implicit_1.htm"
+    },
+    {
+      "name": "Implicit(Guid to ModelDisplayMode)",
+      "signature": "public static implicit operator ModelDisplayMode (Guid id)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelDisplayMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_op_Implicit_2.htm"
+    },
+    {
+      "name": "Implicit(String to ModelDisplayMode)",
+      "signature": "public static implicit operator ModelDisplayMode (string name)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelDisplayMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelDisplayMode_op_Implicit_3.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Nullable\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Id.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_IsValid.htm"
+    },
+    {
+      "name": "Name",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Name.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Notes.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Parent.htm"
+    },
+    {
+      "name": "Path",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Path.htm"
+    },
+    {
+      "name": "Tags",
+      "type": "ModelTags",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Tags.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "ModelDisplayMode",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ModelDisplayMode_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

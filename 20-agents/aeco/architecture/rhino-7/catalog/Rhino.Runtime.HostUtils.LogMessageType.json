@@ -1,0 +1,39 @@
+{
+  "name": "HostUtils.LogMessageType",
+  "namespace": "Rhino.Runtime",
+  "kind": "enum",
+  "summary": "Represents the type of message that is being sent to the OnSendLogMessageToCloud event",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_HostUtils_LogMessageType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "unknown",
+      "value": 0,
+      "summary": "Unknown message type"
+    },
+    {
+      "name": "information",
+      "value": 1,
+      "summary": "Message is informational only"
+    },
+    {
+      "name": "warning",
+      "value": 2,
+      "summary": "Message is a warning"
+    },
+    {
+      "name": "error",
+      "value": 3,
+      "summary": "Message is an error"
+    },
+    {
+      "name": "assert",
+      "value": 4,
+      "summary": "Message is a debug ASSERT"
+    }
+  ]
+}

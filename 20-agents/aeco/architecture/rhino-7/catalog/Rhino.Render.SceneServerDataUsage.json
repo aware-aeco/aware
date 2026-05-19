@@ -1,0 +1,22 @@
+{
+  "name": "SceneServerDataUsage",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "SceneServerData Usage (Synchronous or Asynchronous)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_SceneServerDataUsage.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Synchronous",
+      "value": 0
+    },
+    {
+      "name": "Asynchronous",
+      "value": 1
+    }
+  ]
+}

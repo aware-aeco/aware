@@ -1,0 +1,64 @@
+{
+  "name": "NodeDescriptionAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "The NodeDescriptionAttribute attribute allows the node implementer to define node description.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "NodeDescriptionAttribute(string)",
+      "signature": "void NodeDescriptionAttribute(string description)",
+      "summary": "Creates NodeDescriptionAttribute with string.",
+      "params": [
+        {
+          "name": "description",
+          "type": "string",
+          "doc": "String description. E.g. \u0022Get a color given a color range.\u0022 for ColorRange node.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    },
+    {
+      "name": "NodeDescriptionAttribute(string, System.Type)",
+      "signature": "void NodeDescriptionAttribute(string descriptionResourceID, System.Type resourceType)",
+      "summary": "Creates NodeDescriptionAttribute with description from resx file.",
+      "params": [
+        {
+          "name": "descriptionResourceID",
+          "type": "string",
+          "doc": "Resource name",
+          "optional": false
+        },
+        {
+          "name": "resourceType",
+          "type": "System.Type",
+          "doc": "Type of Resource. E.g. typeof(Resource)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ElementDescription",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Description of the node. E.g. \u0022Get a color given a color range.\u0022 for ColorRange node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

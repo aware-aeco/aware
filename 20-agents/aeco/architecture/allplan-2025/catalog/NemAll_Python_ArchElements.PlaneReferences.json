@@ -1,0 +1,895 @@
+{
+  "name": "PlaneReferences",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the plane references",
+  "base": "BasePlaneReferences",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/",
+  "constructors": [
+    {
+      "name": "PlaneReferences",
+      "signature": "PlaneReferences(doc: DocumentAdapter, refElement: BaseElementAdapter) | PlaneReferences(element: PlaneReferences)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element for the plane (if current exist)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAbsBottomElevation",
+      "signature": "GetAbsBottomElevation() -\u003E float",
+      "summary": "Get the absolute bottom elevation",
+      "remarks": "Get the absolute bottom elevation",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Absolute bottom elevation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetAbsBottomElevation"
+    },
+    {
+      "name": "GetAbsTopElevation",
+      "signature": "GetAbsTopElevation() -\u003E float",
+      "summary": "Get the absolute top elevation",
+      "remarks": "Get the absolute top elevation",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Absolute top elevation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetAbsTopElevation"
+    },
+    {
+      "name": "GetBottomDirection",
+      "signature": "GetBottomDirection() -\u003E Direction",
+      "summary": "Get the bottom direction",
+      "remarks": "Get the bottom direction",
+      "params": [],
+      "returns": {
+        "type": "Direction",
+        "doc": "Bottom direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetBottomDirection"
+    },
+    {
+      "name": "GetBottomElevation",
+      "signature": "GetBottomElevation() -\u003E float",
+      "summary": "Get the bottom plane elevation relative to the bottom plane of the document",
+      "remarks": "Get the bottom plane elevation relative to the bottom plane of the document",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Bottom plane elevation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetBottomElevation"
+    },
+    {
+      "name": "GetBottomOffset",
+      "signature": "GetBottomOffset() -\u003E float",
+      "summary": "Get the offset relative to the defined plane for the bottom",
+      "remarks": "Get the offset relative to the defined plane for the bottom",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Offset relative to the defined plane for the bottom"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetBottomOffset"
+    },
+    {
+      "name": "GetBottomPlaneDependency",
+      "signature": "GetBottomPlaneDependency() -\u003E PlaneReferenceDependency",
+      "summary": "Get the bottom plane dependency",
+      "remarks": "Get the bottom plane dependency",
+      "params": [],
+      "returns": {
+        "type": "PlaneReferenceDependency",
+        "doc": "Bottom plane dependency"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetBottomPlaneDependency"
+    },
+    {
+      "name": "GetBottomPlaneSurface",
+      "signature": "GetBottomPlaneSurface() -\u003E Any",
+      "summary": "Get the bottom plane surface",
+      "remarks": "Get the bottom plane surface",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "Bottom plane surface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetBottomPlaneSurface"
+    },
+    {
+      "name": "GetBottomReferencePlane",
+      "signature": "GetBottomReferencePlane() -\u003E ReferencePlaneID",
+      "summary": "Get the bottom reference plane",
+      "remarks": "Get the bottom reference plane",
+      "params": [],
+      "returns": {
+        "type": "ReferencePlaneID",
+        "doc": "Bottom reference plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetBottomReferencePlane"
+    },
+    {
+      "name": "GetDocument",
+      "signature": "GetDocument() -\u003E DocumentAdapter",
+      "summary": "Get the document",
+      "remarks": "Get the document",
+      "params": [],
+      "returns": {
+        "type": "DocumentAdapter",
+        "doc": "Document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetDocument"
+    },
+    {
+      "name": "GetHeight",
+      "signature": "GetHeight() -\u003E float",
+      "summary": "Get the height",
+      "remarks": "Get the height",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Height"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetHeight"
+    },
+    {
+      "name": "GetMaximumHeight",
+      "signature": "GetMaximumHeight() -\u003E float",
+      "summary": "Get the maximum height",
+      "remarks": "Get the maximum height",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Maximum height"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetMaximumHeight"
+    },
+    {
+      "name": "GetReferenceElement",
+      "signature": "GetReferenceElement() -\u003E BaseElementAdapter",
+      "summary": "Get the reference element for the plane",
+      "remarks": "Get the reference element for the plane",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetReferenceElement"
+    },
+    {
+      "name": "GetTopDirection",
+      "signature": "GetTopDirection() -\u003E Direction",
+      "summary": "Get the top direction",
+      "remarks": "Get the top direction",
+      "params": [],
+      "returns": {
+        "type": "Direction",
+        "doc": "Top direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetTopDirection"
+    },
+    {
+      "name": "GetTopElevation",
+      "signature": "GetTopElevation() -\u003E float",
+      "summary": "Get the top plane elevation relative to the top plane of the document",
+      "remarks": "Get the top plane elevation relative to the top plane of the document",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Top plane elevation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetTopElevation"
+    },
+    {
+      "name": "GetTopOffset",
+      "signature": "GetTopOffset() -\u003E float",
+      "summary": "Get the offset relative to the defined plane for the top",
+      "remarks": "Get the offset relative to the defined plane for the top",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Offset relative to the defined plane for the top"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetTopOffset"
+    },
+    {
+      "name": "GetTopPlaneDependency",
+      "signature": "GetTopPlaneDependency() -\u003E PlaneReferenceDependency",
+      "summary": "Get the top plane dependency",
+      "remarks": "Get the top plane dependency",
+      "params": [],
+      "returns": {
+        "type": "PlaneReferenceDependency",
+        "doc": "Top plane dependency"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetTopPlaneDependency"
+    },
+    {
+      "name": "GetTopPlaneSurface",
+      "signature": "GetTopPlaneSurface() -\u003E Any",
+      "summary": "Get the top plane surface",
+      "remarks": "Get the top plane surface",
+      "params": [],
+      "returns": {
+        "type": "Any",
+        "doc": "Top plane surface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetTopPlaneSurface"
+    },
+    {
+      "name": "GetTopReferencePlane",
+      "signature": "GetTopReferencePlane() -\u003E ReferencePlaneID",
+      "summary": "Get the top reference plane",
+      "remarks": "Get the top reference plane",
+      "params": [],
+      "returns": {
+        "type": "ReferencePlaneID",
+        "doc": "Top reference plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.GetTopReferencePlane"
+    },
+    {
+      "name": "SetAbsBottomElevation",
+      "signature": "SetAbsBottomElevation(absElevation: float)",
+      "summary": "Set the absolute bottom elevation",
+      "remarks": "Set the absolute bottom elevation",
+      "params": [
+        {
+          "name": "absElevation",
+          "type": "float",
+          "doc": "Absolute bottom elevation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetAbsBottomElevation"
+    },
+    {
+      "name": "SetAbsTopElevation",
+      "signature": "SetAbsTopElevation(absElevation: float)",
+      "summary": "Set the absolute top elevation",
+      "remarks": "Set the absolute top elevation",
+      "params": [
+        {
+          "name": "absElevation",
+          "type": "float",
+          "doc": "Absolute top elevation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetAbsTopElevation"
+    },
+    {
+      "name": "SetBottomDirection",
+      "signature": "SetBottomDirection(direction: Direction)",
+      "summary": "Set the bottom plane Direction",
+      "remarks": "Set the bottom plane Direction",
+      "params": [
+        {
+          "name": "direction",
+          "type": "Direction",
+          "doc": "Direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomDirection"
+    },
+    {
+      "name": "SetBottomElevation",
+      "signature": "SetBottomElevation(elevation: float)",
+      "summary": "Set the bottom plane elevation relative to the bottom plane of the document",
+      "remarks": "Set the bottom plane elevation relative to the bottom plane of the document",
+      "params": [
+        {
+          "name": "elevation",
+          "type": "float",
+          "doc": "Elevation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomElevation"
+    },
+    {
+      "name": "SetBottomOffset",
+      "signature": "SetBottomOffset(offset: float)",
+      "summary": "Set the offset relative to the defined plane for the bottom",
+      "remarks": "Set the offset relative to the defined plane for the bottom",
+      "params": [
+        {
+          "name": "offset",
+          "type": "float",
+          "doc": "Offset relative to the defined plane for the bottom",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomOffset"
+    },
+    {
+      "name": "SetBottomPlaneDependency",
+      "signature": "SetBottomPlaneDependency(dependency: PlaneReferenceDependency)",
+      "summary": "Set the bottom plane dependency",
+      "remarks": "Set the bottom plane dependency",
+      "params": [
+        {
+          "name": "dependency",
+          "type": "PlaneReferenceDependency",
+          "doc": "Dependency",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomPlaneDependency"
+    },
+    {
+      "name": "SetBottomPlaneSurface",
+      "signature": "SetBottomPlaneSurface(bottomSurface: object)",
+      "summary": "Set the bottom plane surface",
+      "remarks": "Set the bottom plane surface",
+      "params": [
+        {
+          "name": "bottomSurface",
+          "type": "object",
+          "doc": "Bottom plane surface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomPlaneSurface"
+    },
+    {
+      "name": "SetBottomReferencePlane",
+      "signature": "SetBottomReferencePlane(bottomReferencePlane: ReferencePlaneID)",
+      "summary": "Set the bottom reference plane",
+      "remarks": "Set the bottom reference plane",
+      "params": [
+        {
+          "name": "bottomReferencePlane",
+          "type": "ReferencePlaneID",
+          "doc": "Bottom reference plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomReferencePlane"
+    },
+    {
+      "name": "SetBottomSurfacePlaneElement",
+      "signature": "SetBottomSurfacePlaneElement(surfacePlane: BaseElementAdapter)",
+      "summary": "Set the bottom surface plane",
+      "remarks": "Set the bottom surface plane",
+      "params": [
+        {
+          "name": "surfacePlane",
+          "type": "BaseElementAdapter",
+          "doc": "Bottom surface plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomSurfacePlaneElement"
+    },
+    {
+      "name": "SetBottomToBottom",
+      "signature": "SetBottomToBottom(planeRef: PlaneReferences)",
+      "summary": "Set the bottom level to the bottom level of the source plane reference",
+      "remarks": "Set the bottom level to the bottom level of the source plane reference",
+      "params": [
+        {
+          "name": "planeRef",
+          "type": "PlaneReferences",
+          "doc": "Source plane reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomToBottom"
+    },
+    {
+      "name": "SetBottomToTop",
+      "signature": "SetBottomToTop(planeRef: PlaneReferences)",
+      "summary": "Set the bottom level to the top level of the source plane reference",
+      "remarks": "Set the bottom level to the top level of the source plane reference",
+      "params": [
+        {
+          "name": "planeRef",
+          "type": "PlaneReferences",
+          "doc": "Source plane reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetBottomToTop"
+    },
+    {
+      "name": "SetDocument",
+      "signature": "SetDocument(doc: DocumentAdapter)",
+      "summary": "Set the document",
+      "remarks": "Set the document",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetDocument"
+    },
+    {
+      "name": "SetElementToPlaneModeling",
+      "signature": "SetElementToPlaneModeling(elementToPlaneModeling: ElementToPlaneModeling)",
+      "summary": "Set element to plane modeling",
+      "remarks": "Set element to plane modeling",
+      "params": [
+        {
+          "name": "elementToPlaneModeling",
+          "type": "ElementToPlaneModeling",
+          "doc": "ElementToPlaneModeling",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetElementToPlaneModeling"
+    },
+    {
+      "name": "SetHeight",
+      "signature": "SetHeight(height: float)",
+      "summary": "Set the height",
+      "remarks": "Set the height",
+      "params": [
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "Height",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetHeight"
+    },
+    {
+      "name": "SetMaximumHeight",
+      "signature": "SetMaximumHeight(maximumHeight: float)",
+      "summary": "Set maximum height",
+      "remarks": "Set maximum height",
+      "params": [
+        {
+          "name": "maximumHeight",
+          "type": "float",
+          "doc": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetMaximumHeight"
+    },
+    {
+      "name": "SetReferenceElement",
+      "signature": "SetReferenceElement(refElement: BaseElementAdapter)",
+      "summary": "Set the reference element for the plane",
+      "remarks": "Set the reference element for the plane",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetReferenceElement"
+    },
+    {
+      "name": "SetTopDirection",
+      "signature": "SetTopDirection(direction: Direction)",
+      "summary": "Set the top plane Direction",
+      "remarks": "Set the top plane Direction",
+      "params": [
+        {
+          "name": "direction",
+          "type": "Direction",
+          "doc": "Direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopDirection"
+    },
+    {
+      "name": "SetTopElevation",
+      "signature": "SetTopElevation(elevation: float)",
+      "summary": "Set the top plane elevation relative to the top plane of the document",
+      "remarks": "Set the top plane elevation relative to the top plane of the document",
+      "params": [
+        {
+          "name": "elevation",
+          "type": "float",
+          "doc": "Elevation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopElevation"
+    },
+    {
+      "name": "SetTopOffset",
+      "signature": "SetTopOffset(offset: float)",
+      "summary": "Set the offset relative to the defined plane for the top",
+      "remarks": "Set the offset relative to the defined plane for the top",
+      "params": [
+        {
+          "name": "offset",
+          "type": "float",
+          "doc": "Offset relative to the defined plane for the top",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopOffset"
+    },
+    {
+      "name": "SetTopPlaneDependency",
+      "signature": "SetTopPlaneDependency(dependency: PlaneReferenceDependency)",
+      "summary": "Set the top plane dependency",
+      "remarks": "Set the top plane dependency",
+      "params": [
+        {
+          "name": "dependency",
+          "type": "PlaneReferenceDependency",
+          "doc": "Dependency",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopPlaneDependency"
+    },
+    {
+      "name": "SetTopPlaneSurface",
+      "signature": "SetTopPlaneSurface(topPlaneSurface: object)",
+      "summary": "Set the top plane surface",
+      "remarks": "Set the top plane surface",
+      "params": [
+        {
+          "name": "topPlaneSurface",
+          "type": "object",
+          "doc": "Top plane surface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopPlaneSurface"
+    },
+    {
+      "name": "SetTopReferencePlane",
+      "signature": "SetTopReferencePlane(topReferencePlane: ReferencePlaneID)",
+      "summary": "Set the top reference plane",
+      "remarks": "Set the top reference plane",
+      "params": [
+        {
+          "name": "topReferencePlane",
+          "type": "ReferencePlaneID",
+          "doc": "Top reference plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopReferencePlane"
+    },
+    {
+      "name": "SetTopSurfacePlaneElement",
+      "signature": "SetTopSurfacePlaneElement(surfacePlane: BaseElementAdapter)",
+      "summary": "Set the top surface plane",
+      "remarks": "Set the top surface plane",
+      "params": [
+        {
+          "name": "surfacePlane",
+          "type": "BaseElementAdapter",
+          "doc": "Top surface plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopSurfacePlaneElement"
+    },
+    {
+      "name": "SetTopToBottom",
+      "signature": "SetTopToBottom(planeRef: PlaneReferences)",
+      "summary": "Set the top level to the bottom level of the source plane reference",
+      "remarks": "Set the top level to the bottom level of the source plane reference",
+      "params": [
+        {
+          "name": "planeRef",
+          "type": "PlaneReferences",
+          "doc": "Source plane reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopToBottom"
+    },
+    {
+      "name": "SetTopToTop",
+      "signature": "SetTopToTop(planeRef: PlaneReferences)",
+      "summary": "Set the top level to the top level of the source plane reference",
+      "remarks": "Set the top level to the top level of the source plane reference",
+      "params": [
+        {
+          "name": "planeRef",
+          "type": "PlaneReferences",
+          "doc": "Source plane reference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.SetTopToTop"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AbsBottomElevation",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the absolute bottom elevation",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.AbsBottomElevation"
+    },
+    {
+      "name": "AbsTopElevation",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the absolute top elevation",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.AbsTopElevation"
+    },
+    {
+      "name": "BottomDirection",
+      "type": "Direction",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bottom direction",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.BottomDirection"
+    },
+    {
+      "name": "BottomElevation",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bottom plane elevation relative to the bottom plane of the document",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.BottomElevation"
+    },
+    {
+      "name": "BottomOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Offset between the reference plane and the bottom edge of an architectural component. If the property BottomPlaneDependency is set to eAbsElevation, this is the absolute elevation of the bottom edge.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.BottomOffset"
+    },
+    {
+      "name": "BottomPlaneDependency",
+      "type": "PlaneReferenceDependency",
+      "getter": true,
+      "setter": true,
+      "summary": "Type of dependency of the bottom edge of the architectural component",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.BottomPlaneDependency"
+    },
+    {
+      "name": "BottomPlaneSurface",
+      "type": "Any",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bottom plane surface",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.BottomPlaneSurface"
+    },
+    {
+      "name": "BottomReferencePlane",
+      "type": "ReferencePlaneID",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bottom reference plane",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.BottomReferencePlane"
+    },
+    {
+      "name": "Document",
+      "type": "DocumentAdapter",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the document",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.Document"
+    },
+    {
+      "name": "Height",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the height",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.Height"
+    },
+    {
+      "name": "MaximumHeight",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the maximum height",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.MaximumHeight"
+    },
+    {
+      "name": "ReferenceElement",
+      "type": "BaseElementAdapter",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference element for the plane",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.ReferenceElement"
+    },
+    {
+      "name": "TopDirection",
+      "type": "Direction",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top direction",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.TopDirection"
+    },
+    {
+      "name": "TopElevation",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top plane elevation relative to the top plane of the document",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.TopElevation"
+    },
+    {
+      "name": "TopOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Offset between the reference plane and the top edge of an architectural component. If the property TopPlaneDependency is set to eAbsElevation, this is the absolute elevation of the top edge.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.TopOffset"
+    },
+    {
+      "name": "TopPlaneDependency",
+      "type": "PlaneReferenceDependency",
+      "getter": true,
+      "setter": true,
+      "summary": "Type of dependency of the top edge of the architectural component",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.TopPlaneDependency"
+    },
+    {
+      "name": "TopPlaneSurface",
+      "type": "Any",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top plane surface",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.TopPlaneSurface"
+    },
+    {
+      "name": "TopReferencePlane",
+      "type": "ReferencePlaneID",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top reference plane",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.TopReferencePlane"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

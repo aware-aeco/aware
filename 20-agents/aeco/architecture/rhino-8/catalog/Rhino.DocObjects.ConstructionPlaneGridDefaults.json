@@ -1,0 +1,81 @@
+{
+  "name": "ConstructionPlaneGridDefaults",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Default grid settings for a document",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ConstructionPlaneGridDefaults.htm",
+  "constructors": [
+    {
+      "name": "ConstructionPlaneGridDefaults",
+      "signature": "public ConstructionPlaneGridDefaults()",
+      "summary": "Initializes a new instance of the ConstructionPlaneGridDefaults class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ConstructionPlaneGridDefaults__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "GridLineCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Number of grid lines in each direction",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ConstructionPlaneGridDefaults_GridLineCount.htm"
+    },
+    {
+      "name": "GridSpacing",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Distance between grid lines",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ConstructionPlaneGridDefaults_GridSpacing.htm"
+    },
+    {
+      "name": "GridThickFrequency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "This line frequency. 0: none, 1: all lines are thick, 2: every other is thick, ...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ConstructionPlaneGridDefaults_GridThickFrequency.htm"
+    },
+    {
+      "name": "ShowGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show the grid",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ConstructionPlaneGridDefaults_ShowGrid.htm"
+    },
+    {
+      "name": "ShowGridAxes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show the grid axes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ConstructionPlaneGridDefaults_ShowGridAxes.htm"
+    },
+    {
+      "name": "ShowWorldAxes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show the world axes icon in the corner",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ConstructionPlaneGridDefaults_ShowWorldAxes.htm"
+    },
+    {
+      "name": "SnapSpacing",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "When grid snap is enabled, the distance between snap points. Typically this is the same distance as grid spacing",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ConstructionPlaneGridDefaults_SnapSpacing.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

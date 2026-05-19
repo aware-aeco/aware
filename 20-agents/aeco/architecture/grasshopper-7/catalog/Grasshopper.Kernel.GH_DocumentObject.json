@@ -1,0 +1,1915 @@
+{
+  "name": "GH_DocumentObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Standard implementation of IGH_DocumentObject.",
+  "base": "GH_InstanceDescription",
+  "interfaces": [
+    "IGH_DocumentObject"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentObject.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentObject(IGH_InstanceDescription)",
+      "signature": "protected GH_DocumentObject(IGH_InstanceDescription tag)",
+      "summary": "Initializes a new instance of the GH_DocumentObject class",
+      "params": [
+        {
+          "name": "tag",
+          "type": "Grasshopper.Kernel.IGH_InstanceDescription",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject__ctor.htm"
+    },
+    {
+      "name": "GH_DocumentObject(String, String, String, String)",
+      "signature": "protected GH_DocumentObject(string name, string nickname, string description, string category)",
+      "summary": "Initializes a new instance of the GH_DocumentObject class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "category",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject__ctor_1.htm"
+    },
+    {
+      "name": "GH_DocumentObject(String, String, String, String, String)",
+      "signature": "protected GH_DocumentObject(string name, string nickName, string description, string category, string subCategory)",
+      "summary": "Initializes a new instance of the GH_DocumentObject class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "nickName",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "category",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "subCategory",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddedToDocument",
+      "signature": "public virtual void AddedToDocument(GH_Document document)",
+      "summary": "This method will be called when an object is added to a document. Override this method if you want to handle such events.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that now owns this object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_AddedToDocument.htm"
+    },
+    {
+      "name": "AppendMenuItems",
+      "signature": "public virtual bool AppendMenuItems(ToolStripDropDown menu)",
+      "summary": "This function is called when a context menu is about to be displayed. Override it to set custom items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Menu object to populate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If true, the menu will be displayed, if false the menu will be supressed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_AppendMenuItems.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public void CopyFrom(IGH_InstanceDescription other)",
+      "summary": "Copy all fields (except the instance ID) from another instance description.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.IGH_InstanceDescription",
+          "doc": "Object to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_CopyFrom.htm"
+    },
+    {
+      "name": "CreateAttributes",
+      "signature": "public abstract void CreateAttributes()",
+      "summary": "This function creates the stand-alone attributes for this object. If you wish to supply your own Attributes, you must override this function.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_CreateAttributes.htm"
+    },
+    {
+      "name": "DestroyIconCache",
+      "signature": "protected void DestroyIconCache()",
+      "summary": "Call this method to erase the existing icon cache. You must call this if you want to change the display icon of an object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_DestroyIconCache.htm"
+    },
+    {
+      "name": "DocumentContextChanged",
+      "signature": "public virtual void DocumentContextChanged(GH_Document document, GH_DocumentContext context)",
+      "summary": "This method will be called when the document that owns this object moves into a different context.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that owns this object.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Grasshopper.Kernel.GH_DocumentContext",
+          "doc": "The reason for this event.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_DocumentContextChanged.htm"
+    },
+    {
+      "name": "ExpirePreview",
+      "signature": "public virtual void ExpirePreview(bool redraw)",
+      "summary": "Call this function when you suspect that the preview has expired for this object. This will cause the display cache to be eradicated.",
+      "params": [
+        {
+          "name": "redraw",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_ExpirePreview.htm"
+    },
+    {
+      "name": "ExpireSolution",
+      "signature": "public virtual void ExpireSolution(bool recompute)",
+      "summary": "Call this function whenever you do something which expires the current solution. This will make sure all caches are erased, all downstream objects are expired and that the event is raised. The default implementation merely places a call to OnSolutionExpired(), override this function in derived classes to make sure you clear local data caches and expire downstream objects.",
+      "params": [
+        {
+          "name": "recompute",
+          "type": "System.Boolean",
+          "doc": "If True, the solution will be recomputed straight away.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_ExpireSolution.htm"
+    },
+    {
+      "name": "GetValue(String, Boolean)",
+      "signature": "protected bool GetValue(string valueName, bool default)",
+      "summary": "Get a boolean value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of boolean to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Boolean",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The boolean value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue.htm"
+    },
+    {
+      "name": "GetValue(String, Double)",
+      "signature": "protected double GetValue(string valueName, double default)",
+      "summary": "Get a double value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of double to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Double",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The double value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_1.htm"
+    },
+    {
+      "name": "GetValue(String, Color)",
+      "signature": "protected Color GetValue(string valueName, Color default)",
+      "summary": "Get a color value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of color to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Drawing.Color",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The color value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_2.htm"
+    },
+    {
+      "name": "GetValue(String, Int32)",
+      "signature": "protected int GetValue(string valueName, int default)",
+      "summary": "Get an integer value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of integer to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Int32",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The integer value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_3.htm"
+    },
+    {
+      "name": "GetValue(String, String)",
+      "signature": "protected string GetValue(string valueName, string default)",
+      "summary": "Get a string value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of string to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.String",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_4.htm"
+    },
+    {
+      "name": "HtmlHelp_Source",
+      "signature": "protected internal virtual string HtmlHelp_Source()",
+      "summary": "Return a String which contains HTML formatted source for the help topic. If you want to pass a URL that points to a remote page, then prefix the URL with a GOTO: tag, like so: GOTO:http://www.YourWebAddressHere.com",
+      "remarks": "You can use the GUI.GH_HtmlFormatter class to generate an HTML page which conforms to Grasshopper Help standards",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_HtmlHelp_Source.htm"
+    },
+    {
+      "name": "IsolateObject",
+      "signature": "public virtual void IsolateObject()",
+      "summary": "Destroy all connections to other objects.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_IsolateObject.htm"
+    },
+    {
+      "name": "Menu_AppendColourPicker",
+      "signature": "public static GH_ColourPicker Menu_AppendColourPicker(ToolStripDropDown menu, Color colour, GH_DocumentObject.ColourEventHandler colourChanged)",
+      "summary": "Add a colour picker to a menu.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Menu to add to.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Default colour.",
+          "optional": false
+        },
+        {
+          "name": "colourChanged",
+          "type": "Grasshopper.Kernel.GH_DocumentObject.ColourEventHandler",
+          "doc": "Handler for Colour picker changed events.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ColourPicker",
+        "doc": "Menu item representing the colour picker."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendColourPicker.htm"
+    },
+    {
+      "name": "Menu_AppendCustomItem(ToolStripDropDown, Control)",
+      "signature": "public static bool Menu_AppendCustomItem(ToolStripDropDown menu, Control control)",
+      "summary": "Utility function for inserting exotic controls into dropdown menus.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Dropdown to add a control to.",
+          "optional": false
+        },
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control to insert.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendCustomItem.htm"
+    },
+    {
+      "name": "Menu_AppendCustomItem(ToolStripDropDown, Control, KeyDownEventHandler)",
+      "signature": "public static bool Menu_AppendCustomItem(ToolStripDropDown menu, Control control, KeyDownEventHandler keydown)",
+      "summary": "Utility function for inserting exotic controls into dropdown menus.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Dropdown to add a control to.",
+          "optional": false
+        },
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control to insert.",
+          "optional": false
+        },
+        {
+          "name": "keydown",
+          "type": "KeyDownEventHandler",
+          "doc": "Delegate for key-presses.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendCustomItem_1.htm"
+    },
+    {
+      "name": "Menu_AppendCustomItem(ToolStripDropDown, Control, KeyDownEventHandler, Boolean, Int32, Boolean)",
+      "signature": "public static bool Menu_AppendCustomItem(ToolStripDropDown menu, Control control, KeyDownEventHandler keydown, bool enabled, int width, bool lockOnFocus)",
+      "summary": "Utility function for inserting exotic controls into dropdown menus.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Dropdown to add a control to.",
+          "optional": false
+        },
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control to insert.",
+          "optional": false
+        },
+        {
+          "name": "keydown",
+          "type": "KeyDownEventHandler",
+          "doc": "Delegate for key-presses.",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "If true, the control will be enabled.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "Width hint for the control.",
+          "optional": false
+        },
+        {
+          "name": "lockOnFocus",
+          "type": "System.Boolean",
+          "doc": "If true and the control gets focus, the rest of the menu will be locked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendCustomItem_2.htm"
+    },
+    {
+      "name": "Menu_AppendDigitScrollerItem",
+      "signature": "public static GH_DigitScrollerBase Menu_AppendDigitScrollerItem(ToolStripDropDown menu, decimal min, decimal max, decimal value, int decimals)",
+      "summary": "Utility function for inserting a digit scroller into menus.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        },
+        {
+          "name": "min",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "decimals",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_DigitScrollerBase",
+        "doc": "The digit scroller object that was inserted into the menu."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendDigitScrollerItem.htm"
+    },
+    {
+      "name": "Menu_AppendGenericMenuItem",
+      "signature": "[ObsoleteAttribute(\u0022This method is obsolete\u0022)] public static ToolStripMenuItem Menu_AppendGenericMenuItem(ToolStrip menu, string text, EventHandler on_click = null, Image image = null, Object tag = null, bool enabled = true, bool checked = false)",
+      "summary": "This method is obsolete.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "on_click",
+          "type": "System.EventHandler",
+          "optional": true
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "optional": true
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "optional": true
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "optional": true
+        },
+        {
+          "name": "checked",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendGenericMenuItem.htm"
+    },
+    {
+      "name": "Menu_AppendItem(ToolStrip, String)",
+      "signature": "public static ToolStripMenuItem Menu_AppendItem(ToolStrip menu, string text)",
+      "summary": "Utility function for appending generic menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append item to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Item text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": "The appended item"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendItem.htm"
+    },
+    {
+      "name": "Menu_AppendItem(ToolStrip, String, EventHandler)",
+      "signature": "public static ToolStripMenuItem Menu_AppendItem(ToolStrip menu, string text, EventHandler click)",
+      "summary": "Utility function for appending generic menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append item to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Item text.",
+          "optional": false
+        },
+        {
+          "name": "click",
+          "type": "System.EventHandler",
+          "doc": "Delegate that handles click events. If nothing, the click event will not be handled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": "The appended item"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendItem_1.htm"
+    },
+    {
+      "name": "Menu_AppendItem(ToolStrip, String, EventHandler, Boolean)",
+      "signature": "public static ToolStripMenuItem Menu_AppendItem(ToolStrip menu, string text, EventHandler click, bool enabled)",
+      "summary": "Utility function for appending generic menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append item to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Item text.",
+          "optional": false
+        },
+        {
+          "name": "click",
+          "type": "System.EventHandler",
+          "doc": "Delegate that handles click events. If nothing, the click event will not be handled.",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "If true, the item will be enabled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": "The appended item"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendItem_2.htm"
+    },
+    {
+      "name": "Menu_AppendItem(ToolStrip, String, EventHandler, Image)",
+      "signature": "public static ToolStripMenuItem Menu_AppendItem(ToolStrip menu, string text, EventHandler click, Image icon)",
+      "summary": "Utility function for appending generic menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append item to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Item text.",
+          "optional": false
+        },
+        {
+          "name": "click",
+          "type": "System.EventHandler",
+          "doc": "Delegate that handles click events. If nothing, the click event will not be handled.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Item icon, or null for no icon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": "The appended item"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendItem_4.htm"
+    },
+    {
+      "name": "Menu_AppendItem(ToolStrip, String, EventHandler, Boolean, Boolean)",
+      "signature": "public static ToolStripMenuItem Menu_AppendItem(ToolStrip menu, string text, EventHandler click, bool enabled, bool checked)",
+      "summary": "Utility function for appending generic menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append item to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Item text.",
+          "optional": false
+        },
+        {
+          "name": "click",
+          "type": "System.EventHandler",
+          "doc": "Delegate that handles click events. If nothing, the click event will not be handled.",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "If true, the item will be enabled.",
+          "optional": false
+        },
+        {
+          "name": "checked",
+          "type": "System.Boolean",
+          "doc": "If true, the item will be checked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": "The appended item"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendItem_3.htm"
+    },
+    {
+      "name": "Menu_AppendItem(ToolStrip, String, EventHandler, Image, Object)",
+      "signature": "public static ToolStripMenuItem Menu_AppendItem(ToolStrip menu, string text, EventHandler click, Image icon, Object tag)",
+      "summary": "Utility function for appending generic menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append item to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Item text.",
+          "optional": false
+        },
+        {
+          "name": "click",
+          "type": "System.EventHandler",
+          "doc": "Delegate that handles click events. If nothing, the click event will not be handled.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Item icon, or null for no icon.",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "doc": "Tag to assign to menu item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": "The appended item"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendItem_6.htm"
+    },
+    {
+      "name": "Menu_AppendItem(ToolStrip, String, EventHandler, Image, Boolean, Boolean)",
+      "signature": "public static ToolStripMenuItem Menu_AppendItem(ToolStrip menu, string text, EventHandler click, Image icon, bool enabled, bool checked)",
+      "summary": "Utility function for appending generic menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append item to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Item text.",
+          "optional": false
+        },
+        {
+          "name": "click",
+          "type": "System.EventHandler",
+          "doc": "Delegate that handles click events.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Item icon.",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "If true, the item will be enabled.",
+          "optional": false
+        },
+        {
+          "name": "checked",
+          "type": "System.Boolean",
+          "doc": "If true, the item will be checked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": "The appended item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendItem_5.htm"
+    },
+    {
+      "name": "Menu_AppendObjectHelp",
+      "signature": "protected void Menu_AppendObjectHelp(ToolStripDropDown menu)",
+      "summary": "Appends the default object Help menu item.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendObjectHelp.htm"
+    },
+    {
+      "name": "Menu_AppendObjectName",
+      "signature": "protected void Menu_AppendObjectName(ToolStripDropDown menu)",
+      "summary": "Appends the old-fashioned object name menu item. If you also want the Display mode toggle then use Menu_AppendObjectNameEx()",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendObjectName.htm"
+    },
+    {
+      "name": "Menu_AppendObjectNameEx",
+      "signature": "protected void Menu_AppendObjectNameEx(ToolStripDropDown menu)",
+      "summary": "Appends the default object name \u002B display mode menu item.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendObjectNameEx.htm"
+    },
+    {
+      "name": "Menu_AppendPublish",
+      "signature": "protected void Menu_AppendPublish(ToolStripDropDown menu)",
+      "summary": "Appends the default item for publishing to RCP. This menu will only appear if the current class implement IRcpAwareObject",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendPublish.htm"
+    },
+    {
+      "name": "Menu_AppendSeparator",
+      "signature": "public static ToolStripSeparator Menu_AppendSeparator(ToolStrip menu)",
+      "summary": "Utility function for appending separators to a menu dropdown. If the dropdown is empty or if it already has a separator at the bottom, nothing will happen.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStrip",
+          "doc": "Menu to append separator to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripSeparator",
+        "doc": "The appended separator or null if no separator was appended."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendSeparator.htm"
+    },
+    {
+      "name": "Menu_AppendTextItem(ToolStripDropDown, String, GH_MenuTextBox.KeyDownEventHandler, GH_MenuTextBox.TextChangedEventHandler, Boolean)",
+      "signature": "public static ToolStripTextBox Menu_AppendTextItem(ToolStripDropDown menu, string text, GH_MenuTextBox.KeyDownEventHandler keydown, GH_MenuTextBox.TextChangedEventHandler textchanged, bool lockOnFocus)",
+      "summary": "Utility function for inserting text boxes into menus.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Menu to add a textbox to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Content of textbox.",
+          "optional": false
+        },
+        {
+          "name": "keydown",
+          "type": "Grasshopper.GUI.GH_MenuTextBox.KeyDownEventHandler",
+          "doc": "Delegate for the KeyDown event.",
+          "optional": false
+        },
+        {
+          "name": "textchanged",
+          "type": "Grasshopper.GUI.GH_MenuTextBox.TextChangedEventHandler",
+          "doc": "Delegate for the TextChanged event.",
+          "optional": false
+        },
+        {
+          "name": "lockOnFocus",
+          "type": "System.Boolean",
+          "doc": "If true, then a GotFocus event will lock the other menu items.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripTextBox",
+        "doc": "The appended text box item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendTextItem.htm"
+    },
+    {
+      "name": "Menu_AppendTextItem(ToolStripDropDown, String, GH_MenuTextBox.KeyDownEventHandler, GH_MenuTextBox.TextChangedEventHandler, Boolean, Int32, Boolean)",
+      "signature": "public static ToolStripTextBox Menu_AppendTextItem(ToolStripDropDown menu, string text, GH_MenuTextBox.KeyDownEventHandler keydown, GH_MenuTextBox.TextChangedEventHandler textchanged, bool enabled, int width, bool lockOnFocus)",
+      "summary": "Utility function for inserting text boxes into menus.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Menu to add a textbox to.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Content of textbox.",
+          "optional": false
+        },
+        {
+          "name": "keydown",
+          "type": "Grasshopper.GUI.GH_MenuTextBox.KeyDownEventHandler",
+          "doc": "Delegate for the KeyDown event.",
+          "optional": false
+        },
+        {
+          "name": "textchanged",
+          "type": "Grasshopper.GUI.GH_MenuTextBox.TextChangedEventHandler",
+          "doc": "Delegate for the TextChanged event.",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "If true, the textbox will be enabled.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "If larger than zero, we\u0027ll do our very best to grow the menu to the given width. No guarantees.",
+          "optional": false
+        },
+        {
+          "name": "lockOnFocus",
+          "type": "System.Boolean",
+          "doc": "If true, then a GotFocus event will lock the other menu items.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ToolStripTextBox",
+        "doc": "The appended text box item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendTextItem_1.htm"
+    },
+    {
+      "name": "Menu_MoveItem(ToolStripItem, String[])",
+      "signature": "public static bool Menu_MoveItem(ToolStripItem item, params string[] precedingItems)",
+      "summary": "Utility function for moving menu items.",
+      "params": [
+        {
+          "name": "item",
+          "type": "System.Windows.Forms.ToolStripItem",
+          "doc": "Item to move, it must already be part of a dropdown menu.",
+          "optional": false
+        },
+        {
+          "name": "precedingItems",
+          "type": "System.String[]",
+          "doc": "Names of preceding items, the item will be inserted below the first name, if that fails the second, etc. etc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_MoveItem_1.htm"
+    },
+    {
+      "name": "Menu_MoveItem(ToolStripItem, Boolean, String[])",
+      "signature": "public static bool Menu_MoveItem(ToolStripItem item, bool insertBelow, params string[] targets)",
+      "summary": "Utility function for moving menu items.",
+      "params": [
+        {
+          "name": "item",
+          "type": "System.Windows.Forms.ToolStripItem",
+          "doc": "Item to move, it must already be part of the dropdown menu.",
+          "optional": false
+        },
+        {
+          "name": "insertBelow",
+          "type": "System.Boolean",
+          "doc": "If true, the item will be inserted below the match, if false, above the match.",
+          "optional": false
+        },
+        {
+          "name": "targets",
+          "type": "System.String[]",
+          "doc": "Names of move to targets, the item will be inserted next to the first name, if that fails the second, etc. etc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_MoveItem.htm"
+    },
+    {
+      "name": "MovedBetweenDocuments",
+      "signature": "public virtual void MovedBetweenDocuments(GH_Document oldDocument, GH_Document newDocument)",
+      "summary": "This method will be called when an object is moved from one document to another. Override this method if you want to handle such events.",
+      "params": [
+        {
+          "name": "oldDocument",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that used to own this object.",
+          "optional": false
+        },
+        {
+          "name": "newDocument",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that now owns ths object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_MovedBetweenDocuments.htm"
+    },
+    {
+      "name": "NewInstanceGuid()",
+      "signature": "public void NewInstanceGuid()",
+      "summary": "Generate a new random instance GUID",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_NewInstanceGuid.htm"
+    },
+    {
+      "name": "NewInstanceGuid(Guid)",
+      "signature": "public void NewInstanceGuid(Guid UUID)",
+      "summary": "Set the instance ID to be a specific GUID. This is very dangerous, only use this function if you\u0027re 6\u00224\u0027 and your first name is David.",
+      "params": [
+        {
+          "name": "UUID",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_NewInstanceGuid_1.htm"
+    },
+    {
+      "name": "OnAttributesChanged",
+      "signature": "public void OnAttributesChanged()",
+      "summary": "Raises the AttributesChanged event on the toplevel object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnAttributesChanged.htm"
+    },
+    {
+      "name": "OnDisplayExpired",
+      "signature": "public void OnDisplayExpired(bool redraw)",
+      "summary": "Raises the DisplayExpired event on the toplevel object.",
+      "params": [
+        {
+          "name": "redraw",
+          "type": "System.Boolean",
+          "doc": "If True, the canvas will be immediately redrawn.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnDisplayExpired.htm"
+    },
+    {
+      "name": "OnObjectChanged(String)",
+      "signature": "public void OnObjectChanged(string customEvent)",
+      "summary": "",
+      "params": [
+        {
+          "name": "customEvent",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_3.htm"
+    },
+    {
+      "name": "OnObjectChanged(GH_ObjectChangedEventArgs)",
+      "signature": "public void OnObjectChanged(GH_ObjectChangedEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Grasshopper.Kernel.GH_ObjectChangedEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged.htm"
+    },
+    {
+      "name": "OnObjectChanged(GH_ObjectEventType)",
+      "signature": "public void OnObjectChanged(GH_ObjectEventType eventType)",
+      "summary": "",
+      "params": [
+        {
+          "name": "eventType",
+          "type": "Grasshopper.Kernel.GH_ObjectEventType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_1.htm"
+    },
+    {
+      "name": "OnObjectChanged(String, Object)",
+      "signature": "public void OnObjectChanged(string customEvent, Object tag)",
+      "summary": "",
+      "params": [
+        {
+          "name": "customEvent",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_4.htm"
+    },
+    {
+      "name": "OnObjectChanged(GH_ObjectEventType, Object)",
+      "signature": "public void OnObjectChanged(GH_ObjectEventType eventType, Object tag)",
+      "summary": "",
+      "params": [
+        {
+          "name": "eventType",
+          "type": "Grasshopper.Kernel.GH_ObjectEventType",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_2.htm"
+    },
+    {
+      "name": "OnPingDocument",
+      "signature": "public GH_Document OnPingDocument()",
+      "summary": "Raise the PingDocument Event on the toplevel object and try to find the document which owns this object.",
+      "params": [],
+      "returns": {
+        "type": "GH_Document",
+        "doc": "The document which owns this object if successful, or nothing if no document owns this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnPingDocument.htm"
+    },
+    {
+      "name": "OnPreviewExpired",
+      "signature": "public void OnPreviewExpired(bool redraw)",
+      "summary": "Raises the PreviewExpired event on the toplevel object.",
+      "params": [
+        {
+          "name": "redraw",
+          "type": "System.Boolean",
+          "doc": "If True, the viewports will be immediately redrawn.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnPreviewExpired.htm"
+    },
+    {
+      "name": "OnSolutionExpired",
+      "signature": "public void OnSolutionExpired(bool recompute)",
+      "summary": "Raises the SolutionExpired event on the toplevel object. You probably want to call ExpireSolution() instead of this method directly.",
+      "params": [
+        {
+          "name": "recompute",
+          "type": "System.Boolean",
+          "doc": "If True, the solution will be immediately recalculated.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnSolutionExpired.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public override bool Read(GH_IReader reader)",
+      "summary": "(Overrides GH_InstanceDescription.Read(GH_IReader).)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Read.htm"
+    },
+    {
+      "name": "ReadFull",
+      "signature": "public virtual bool ReadFull(GH_IReader reader)",
+      "summary": "GH_InstanceDescription does not by default serialize all fields. Use this function to read all fields from the archive. This method is compatible with the default Write()/Read() operations.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Writer for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_ReadFull.htm"
+    },
+    {
+      "name": "RecordUndoEvent(String)",
+      "signature": "public Guid RecordUndoEvent(string undoName)",
+      "summary": "Record a generic object change undo event.",
+      "params": [
+        {
+          "name": "undoName",
+          "type": "System.String",
+          "doc": "Name of undo record.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The ID of the newly added record or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RecordUndoEvent_1.htm"
+    },
+    {
+      "name": "RecordUndoEvent(GH_UndoRecord)",
+      "signature": "public void RecordUndoEvent(GH_UndoRecord record)",
+      "summary": "Record an entire undo record.",
+      "params": [
+        {
+          "name": "record",
+          "type": "Grasshopper.Kernel.Undo.GH_UndoRecord",
+          "doc": "Record to push.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RecordUndoEvent.htm"
+    },
+    {
+      "name": "RecordUndoEvent(String, IGH_UndoAction)",
+      "signature": "public Guid RecordUndoEvent(string undoName, IGH_UndoAction action)",
+      "summary": "Record a specific object change undo event.",
+      "params": [
+        {
+          "name": "undoName",
+          "type": "System.String",
+          "doc": "Name of undo record.",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Grasshopper.Kernel.Undo.IGH_UndoAction",
+          "doc": "Undo action to record.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The ID of the newly added record or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RecordUndoEvent_2.htm"
+    },
+    {
+      "name": "RemovedFromDocument",
+      "signature": "public virtual void RemovedFromDocument(GH_Document document)",
+      "summary": "This method will be called when an object is removed from a document. Override this method if you want to handle such events.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that now no longer owns this object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RemovedFromDocument.htm"
+    },
+    {
+      "name": "SetIconOverride",
+      "signature": "public void SetIconOverride(Bitmap customIcon)",
+      "summary": "Set a new custom icon override for this object.",
+      "params": [
+        {
+          "name": "customIcon",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Icon override. Should be a 24x24 image.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetIconOverride.htm"
+    },
+    {
+      "name": "SetValue(String, Boolean)",
+      "signature": "protected void SetValue(string valueName, bool value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue.htm"
+    },
+    {
+      "name": "SetValue(String, Double)",
+      "signature": "protected void SetValue(string valueName, double value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_1.htm"
+    },
+    {
+      "name": "SetValue(String, Color)",
+      "signature": "protected void SetValue(string valueName, Color value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_2.htm"
+    },
+    {
+      "name": "SetValue(String, Int32)",
+      "signature": "protected void SetValue(string valueName, int value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_3.htm"
+    },
+    {
+      "name": "SetValue(String, String)",
+      "signature": "protected void SetValue(string valueName, string value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_4.htm"
+    },
+    {
+      "name": "TriggerAutoSave()",
+      "signature": "public void TriggerAutoSave()",
+      "summary": "Triggers the AutoSave function on the owner document with the object_changed flag.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave.htm"
+    },
+    {
+      "name": "TriggerAutoSave(Guid)",
+      "signature": "public void TriggerAutoSave(Guid id)",
+      "summary": "Triggers the AutoSave function on the owner document with the object_changed flag.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of autosave event. Consecutive autosave requests with the same ID will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave_3.htm"
+    },
+    {
+      "name": "TriggerAutoSave(GH_AutoSaveTrigger)",
+      "signature": "public void TriggerAutoSave(GH_AutoSaveTrigger trigger)",
+      "summary": "Triggers the AutoSave function on the owner document with a custom flag.",
+      "params": [
+        {
+          "name": "trigger",
+          "type": "Grasshopper.Kernel.GH_AutoSaveTrigger",
+          "doc": "Reason for the autosave operation. It is possible that a user has decided to avoid autosave events for specific types, so if you can, try and provide a correct trigger flag.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave_1.htm"
+    },
+    {
+      "name": "TriggerAutoSave(GH_AutoSaveTrigger, Guid)",
+      "signature": "public void TriggerAutoSave(GH_AutoSaveTrigger trigger, Guid id)",
+      "summary": "Triggers the AutoSave function on the owner document with a custom flag.",
+      "params": [
+        {
+          "name": "trigger",
+          "type": "Grasshopper.Kernel.GH_AutoSaveTrigger",
+          "doc": "Reason for the autosave operation. It is possible that a user has decided to avoid autosave events for specific types, so if you can, try and provide a correct trigger flag.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of autosave event. Consecutive autosave requests with the same ID will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave_2.htm"
+    },
+    {
+      "name": "ValuesChanged",
+      "signature": "protected virtual void ValuesChanged()",
+      "summary": "Override this method if you want to respond to changes to the value table. The base implementation is empty, so you don\u0027t have to call it.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_ValuesChanged.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public override bool Write(GH_IWriter writer)",
+      "summary": "(Overrides GH_InstanceDescription.Write(GH_IWriter).)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Write.htm"
+    },
+    {
+      "name": "WriteFull",
+      "signature": "public virtual bool WriteFull(GH_IWriter writer)",
+      "summary": "GH_InstanceDescription does not by default serialize all fields. Use this function to write all fields to the archive. This method is compatible with the default Write()/Read() operations.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Writer for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_WriteFull.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the attributes that are associated with this object. Only set custom attributes if you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Attributes.htm"
+    },
+    {
+      "name": "Category",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Category in which this object belongs. If HasCategory() returns false, this field has no meaning.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Category.htm"
+    },
+    {
+      "name": "ComponentGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a consistent ID for this object type. Every object must supply a unique and unchanging ID that is used to identify objects of the same type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_ComponentGuid.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the description of the object. This field typically remains fixed during the lifetime of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Description.htm"
+    },
+    {
+      "name": "Exposure",
+      "type": "GH_Exposure",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the exposure of this object in the Graphical User Interface. The default is to expose everywhere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Exposure.htm"
+    },
+    {
+      "name": "HasCategory",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not the Category field has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_HasCategory.htm"
+    },
+    {
+      "name": "HasSubCategory",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not the SubCategory field has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_HasSubCategory.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Override this function to supply a custom icon (24x24 pixels). The result of this property is cached, so don\u0027t worry if icon retrieval is not very fast.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Icon.htm"
+    },
+    {
+      "name": "Icon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "The icon associated with this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Icon_24x24.htm"
+    },
+    {
+      "name": "Icon_24x24_Locked",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "The greyscale icon of this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Icon_24x24_Locked.htm"
+    },
+    {
+      "name": "IconDisplayMode",
+      "type": "GH_IconDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the current display mode of the object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_IconDisplayMode.htm"
+    },
+    {
+      "name": "InstanceDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a description of the current state of the object. This field is usually the same as the Description() field, but it might be variable when overridden.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_InstanceDescription.htm"
+    },
+    {
+      "name": "InstanceGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of this runtime instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_InstanceGuid.htm"
+    },
+    {
+      "name": "Keywords",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of additional keywords that describe the object. Typically this list is empty but you can override this property to aid in object searches.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Keywords.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the object. This field typically remains fixed during the lifetime of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Name.htm"
+    },
+    {
+      "name": "NickName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the nickname of the object. This field can be changed by the user.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_NickName.htm"
+    },
+    {
+      "name": "Obsolete",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this object is obsolete. Default implementation returns true if the class name contains the string \u0022OBSOLETE\u0022 or if this class has been decorated with the ObsoleteAttribute. You are free to override this if you want, but I suggest adding the ObsoleteAttribute instead.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Obsolete.htm"
+    },
+    {
+      "name": "SubCategory",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the SubCategory in which this object belongs. If HasSubCategory() returns false, this field has no meaning.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_SubCategory.htm"
+    },
+    {
+      "name": "m_attributes",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_DocumentObject_m_attributes.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "AttributesChanged",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.AttributesChangedEventHandler",
+      "signature": "public event IGH_DocumentObject.AttributesChangedEventHandler AttributesChanged",
+      "summary": "Raised whenever the number or kind of attributes changes. This event is handled by GH_Documents who subsequently wipe their attribute caches.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_AttributesChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DisplayExpired",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.DisplayExpiredEventHandler",
+      "signature": "public event IGH_DocumentObject.DisplayExpiredEventHandler DisplayExpired",
+      "summary": "Raised whenever the display (on the Canvas) of a certain object becomes invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_DisplayExpired.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ObjectChanged",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.ObjectChangedEventHandler",
+      "signature": "public event IGH_DocumentObject.ObjectChangedEventHandler ObjectChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_ObjectChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PingDocument",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.PingDocumentEventHandler",
+      "signature": "public event IGH_DocumentObject.PingDocumentEventHandler PingDocument",
+      "summary": "Raised whenever an object needs to know which GH_Document it belongs to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_PingDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PreviewExpired",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.PreviewExpiredEventHandler",
+      "signature": "public event IGH_DocumentObject.PreviewExpiredEventHandler PreviewExpired",
+      "summary": "Raised whenever the display (in the Rhino viewports) of a certain object becomes invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_PreviewExpired.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SolutionExpired",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.SolutionExpiredEventHandler",
+      "signature": "public event IGH_DocumentObject.SolutionExpiredEventHandler SolutionExpired",
+      "summary": "Raised whenever the solution of a certain object becomes invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_SolutionExpired.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

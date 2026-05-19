@@ -1,0 +1,66 @@
+{
+  "name": "UserPropertyOption",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The UserPropertyOption class contains the properties of a user property value option.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/86507770-2daf-f78b-4ecc-008b470b1721",
+  "constructors": [
+    {
+      "name": "UserPropertyOption",
+      "signature": "public UserPropertyOption()",
+      "summary": "Initializes a new instance of the UserPropertyOption class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a41ec50-f2b2-7b8b-09e3-92d0b240d691"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DoubleValue",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The double value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5610cff5-0ff5-0d45-c78b-9962ac729bf1"
+    },
+    {
+      "name": "IntValue",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The integer value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e4286c11-7300-fe92-ab5e-b5c49e37a3e4"
+    },
+    {
+      "name": "OptionLabel",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The option name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f631a948-2e5a-a6a3-13b0-6dcdd1f0fa0b"
+    },
+    {
+      "name": "OptionLabelTranslated",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The translated option name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/80dd34c2-3147-aa32-2048-cb70d100117f"
+    },
+    {
+      "name": "StringValue",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The string value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ee3775df-06a6-fb3f-fdcb-26b1faa542f1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

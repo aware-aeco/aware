@@ -1,0 +1,34 @@
+{
+  "name": "MaterialName",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The MaterialName class contains the name of the material item.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e2e27770-8e50-518f-f6d8-a8cc391c97a2",
+  "constructors": [
+    {
+      "name": "MaterialName",
+      "signature": "public MaterialName()",
+      "summary": "Initializes a new instance of the MaterialName class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1da892af-ad2f-fc1e-cd72-b69e85be23cc"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The material item name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7d3961a2-b82c-1f32-36a1-43b50e20000f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

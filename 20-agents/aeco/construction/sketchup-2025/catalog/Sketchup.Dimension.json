@@ -1,0 +1,153 @@
+{
+  "name": "Dimension",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The Dimension class provides base functionality for classes DimensionLinear and DimensionRadial. It\u0027s not instantiable.",
+  "base": "Drawingelement",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "add_observer",
+      "signature": "add_observer(observer) =\u003E Object",
+      "summary": "Note: If the given observer responds to onTextChanged, it will be added as a Sketchup::DimensionObserver.",
+      "remarks": "Note: If the given observer responds to onTextChanged, it will be added as a Sketchup::DimensionObserver. If not, the base Entity#add_observer will be called. The add_observer method is used to add a DimensionObserver to the dimension.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "A DimensionObserver.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#add_observer-instance_method"
+    },
+    {
+      "name": "has_aligned_text?",
+      "signature": "has_aligned_text? =\u003E Boolean",
+      "summary": "The has_aligned_text method is used to determine whether the dimension\u0027s text is aligned to the dimension or to the screen.",
+      "remarks": "The has_aligned_text method is used to determine whether the dimension\u0027s text is aligned to the dimension or to the screen.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "status - true if text is aligned to the dimension. False if dimension text is aligned to the screen."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#has_aligned_text?-instance_method"
+    },
+    {
+      "name": "plane",
+      "signature": "plane =\u003E Object",
+      "summary": "The plane method is used to retrieve the plane of the dimension.",
+      "remarks": "The plane method is used to retrieve the plane of the dimension. Refer to the Geom module for information on how planes are represented.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "the plane of the dimension"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#plane-instance_method"
+    },
+    {
+      "name": "remove_observer",
+      "signature": "remove_observer(observer) =\u003E Object",
+      "summary": "The remove_observer method is used to remove a DimensionObserver from the dimension.",
+      "remarks": "The remove_observer method is used to remove a DimensionObserver from the dimension. Note that, if the given observer responds to \u0027onTextChanged\u0027, it will be removed as a DimensionObserver. If not, the base Entity.remove_observer will be called.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "A DimensionObserver.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#remove_observer-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "arrow_type",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The #arrow_type method retrieves the current arrow type of the dimension.",
+      "remarks": "The #arrow_type method retrieves the current arrow type of the dimension. Valid arrow types are: ARROW_NONE ARROW_SLASH ARROW_DOT ARROW_CLOSED ARROW_OPEN",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#arrow_type-instance_method"
+    },
+    {
+      "name": "had_aligned_text",
+      "type": "Boolean",
+      "getter": false,
+      "setter": true,
+      "summary": "The has_aligned_text= method accepts true or false indicating whether the dimension\u0027s text is aligned to the dimension or to the screen.",
+      "remarks": "The has_aligned_text= method accepts true or false indicating whether the dimension\u0027s text is aligned to the dimension or to the screen.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#has_aligned_text=-instance_method"
+    },
+    {
+      "name": "text",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The text method is used to retrieve the dimension text.",
+      "remarks": "The text method is used to retrieve the dimension text.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#text-instance_method"
+    },
+    {
+      "name": "ARROW_NONE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#ARROW_NONE-constant"
+    },
+    {
+      "name": "ARROW_SLASH",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#ARROW_SLASH-constant"
+    },
+    {
+      "name": "ARROW_DOT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#ARROW_DOT-constant"
+    },
+    {
+      "name": "ARROW_CLOSED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#ARROW_CLOSED-constant"
+    },
+    {
+      "name": "ARROW_OPEN",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Dimension.html#ARROW_OPEN-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

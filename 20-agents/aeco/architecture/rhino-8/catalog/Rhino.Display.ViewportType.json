@@ -1,0 +1,34 @@
+{
+  "name": "ViewportType",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.ViewportType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ViewportType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "StandardModelingViewport",
+      "value": 0
+    },
+    {
+      "name": "PageViewMainViewport",
+      "value": 1
+    },
+    {
+      "name": "DetailViewport",
+      "value": 2
+    },
+    {
+      "name": "UVEditorViewport",
+      "value": 3
+    },
+    {
+      "name": "BlockEditorViewport",
+      "value": 4
+    }
+  ]
+}

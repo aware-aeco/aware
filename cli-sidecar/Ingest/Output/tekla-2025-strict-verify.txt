@@ -1,0 +1,56 @@
+﻿
+ idx ns                                    name                                                         kind  result issues
+ --- --                                    ----                                                         ----  ------ ------
+ 475 Tekla.Structures.Drawing              PreferredTextPlacingTypes                                    class PASS         
+ 424 Tekla.Structures.Drawing              LinkAttributes                                               class PASS         
+ 455 Tekla.Structures.Drawing              PlacingDistanceAttributes                                    class PASS         
+  38 Tekla.Structures.Analysis             AnalysisDesignParameter                                      class PASS         
+1240 Tekla.Structures.Plugins              CustomPartInputTypeAttribute                                 class PASS         
+ 104 Tekla.Structures.Analysis             AnalysisModelGeneralProperties.MemberAxisLocationEnum        enum  PASS         
+ 554 Tekla.Structures.Drawing              ViewMarkBasicSymbolAttributes                                class PASS         
+ 746 Tekla.Structures.Filtering.Categories ObjectFilterExpressions.CustomDateTime                       class PASS         
+ 754 Tekla.Structures.Filtering.Categories ObjectTypesFilterExpressions                                 class PASS         
+ 515 Tekla.Structures.Drawing              SectionMark                                                  class PASS         
+ 599 Tekla.Structures.Drawing              DrawingColors                                                enum  PASS         
+ 781 Tekla.Structures.Filtering.Categories PourBreakFilterExpressions.CustomDateTime                    class PASS         
+ 592 Tekla.Structures.Drawing              DotPrintAreaType                                             enum  PASS         
+ 848 Tekla.Structures.Filtering.Categories TemplateFilterExpressions.CustomDateTime                     class PASS         
+ 396 Tekla.Structures.Drawing              Grid                                                         class PASS         
+ 299 Tekla.Structures.Dialog.UIControls    SaveLoad.HelpFileTypeEnum                                    enum  PASS         
+1077 Tekla.Structures.Model                BentPlateGeometrySolver.OperationStatus                      enum  PASS         
+1105 Tekla.Structures.Model                LoadGroup.LoadGroupType                                      enum  PASS         
+ 296 Tekla.Structures.Dialog.UIControls    WpfSaveLoad                                                  class PASS         
+ 102 Tekla.Structures.Analysis             AnalysisModel.ConstructionMethodEnum                         enum  PASS         
+ 710 Tekla.Structures.Filtering.Categories BoltFilterExpressions.Size                                   class PASS         
+ 472 Tekla.Structures.Drawing              PreferredMarkPlacingTypes                                    class PASS         
+1092 Tekla.Structures.Model                ControlCircle.ControlCircleColorEnum                         enum  PASS         
+  81 Tekla.Structures.Analysis             AnalysisResultPositions                                      class PASS         
+1072 Tekla.Structures.Model                BaseWeld.WeldPreparationTypeEnum                             enum  PASS         
+ 173 Tekla.Structures.Catalogs             ProfileName                                                  class PASS         
+  72 Tekla.Structures.Analysis             AnalysisPartBarAttributes                                    class PASS         
+ 759 Tekla.Structures.Filtering.Categories ObjectTypesFilterExpressions.CustomString                    class PASS         
+  74 Tekla.Structures.Analysis             AnalysisPartLoadingProperties                                class PASS         
+ 456 Tekla.Structures.Drawing              PlacingBase                                                  class PASS         
+ 301 Tekla.Structures.Drawing              AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType class PASS         
+ 494 Tekla.Structures.Drawing              RadiusDimension                                              class PASS         
+ 277 Tekla.Structures.Dialog.UIControls    PropertiesDialog                                             class PASS         
+ 114 Tekla.Structures.Analysis             AnalysisPart.ItemTypeEnum                                    enum  PASS         
+ 608 Tekla.Structures.Drawing              Hideable.ShouldBeHiddenFlags                                 enum  PASS         
+ 906 Tekla.Structures.Model                BoltArray                                                    class PASS         
+ 615 Tekla.Structures.Drawing              Part.Representation                                          enum  PASS         
+ 617 Tekla.Structures.Drawing              ReinforcementBase.HookedEndSymbolTypes                       enum  PASS         
+ 900 Tekla.Structures.Model                BaseWeld                                                     class PASS         
+ 915 Tekla.Structures.Model                ChangeData                                                   class PASS         
+ 612 Tekla.Structures.Drawing              LineTypesEnum                                                enum  PASS         
+ 305 Tekla.Structures.Drawing              AlongPartCenteredPlacingType                                 class PASS         
+ 333 Tekla.Structures.Drawing              CannotSetAttributeForPluginDueToInexistantFieldException     class PASS         
+ 352 Tekla.Structures.Drawing              CurvedDimensionSetRadial                                     class PASS         
+ 190 Tekla.Structures.Catalogs             ProfileItem.ProfileItemSubTypeEnum                           enum  PASS         
+ 767 Tekla.Structures.Filtering.Categories PartFilterExpressions.Finish                                 class PASS         
+ 821 Tekla.Structures.Filtering.Categories ReinforcingBarFilterExpressions.Prefix                       class PASS         
+ 152 Tekla.Structures.Catalogs             CrossSectionPoint                                            class PASS         
+ 743 Tekla.Structures.Filtering.Categories LogicalAreaFilterExpressions.Story                           class PASS         
+ 709 Tekla.Structures.Filtering.Categories BoltFilterExpressions.Standard                               class PASS         
+
+
+

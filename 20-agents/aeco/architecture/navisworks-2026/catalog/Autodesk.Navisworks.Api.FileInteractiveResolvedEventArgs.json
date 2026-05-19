@@ -1,0 +1,31 @@
+{
+  "name": "FileInteractiveResolvedEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::FileInteractiveResolved event",
+  "base": "Autodesk.Navisworks.Api.FileResolutionEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileInteractiveResolvedEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ResolvedFileReference",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get file reference that FileReference has been resolved to, or null if not resolved",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileInteractiveResolvedEventArgs.ResolvedFileReference"
+    },
+    {
+      "name": "Response",
+      "type": "Autodesk.Navisworks.Api.FileResolutionResponse",
+      "getter": true,
+      "setter": false,
+      "summary": "Get user\u0027s response from interactive dialog.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileInteractiveResolvedEventArgs.Response"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

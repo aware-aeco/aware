@@ -1,0 +1,13 @@
+{
+  "name": "PropertyIdOrError",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A propertyId or an error.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyIdOrError",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

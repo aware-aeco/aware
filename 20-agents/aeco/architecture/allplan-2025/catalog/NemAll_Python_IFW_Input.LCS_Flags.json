@@ -1,0 +1,35 @@
+{
+  "name": "LCS_Flags",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "eStandard: standard coordinate system symbol eSmall : small coordinate system symbol eHoverX : the x arrow will be black eHoverY : the y arrow will be black eHoverZ : the z arrow will be black",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/LCS_Flags/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eHoverX",
+      "value": 2
+    },
+    {
+      "name": "eHoverY",
+      "value": 4
+    },
+    {
+      "name": "eHoverZ",
+      "value": 8
+    },
+    {
+      "name": "eSmall",
+      "value": 1
+    },
+    {
+      "name": "eStandard",
+      "value": 0
+    }
+  ]
+}

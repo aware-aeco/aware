@@ -1,0 +1,110 @@
+{
+  "name": "BoltGrid",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.BoltGrid.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ShearInThread",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.shearInThread.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "BoltInteraction",
+      "type": "BoltShearType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.boltInteraction.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "BoltAssembly",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.boltAssembly.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.origin.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "AxisX",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.axisX.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "AxisY",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.axisY.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "AxisZ",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.axisZ.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "Positions",
+      "type": "List\u003CPoint3D\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.positions.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "ConnectedParts",
+      "type": "List\u003CReferenceElement\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.connectedParts.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "Length",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.length.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BoltGrid.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/BoltGrid.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

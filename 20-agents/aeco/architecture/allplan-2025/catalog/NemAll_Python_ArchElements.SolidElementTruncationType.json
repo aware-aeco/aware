@@ -1,0 +1,35 @@
+{
+  "name": "SolidElementTruncationType",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Type of cutting/stretching method of a structural framing element at its start or end",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SolidElementTruncationType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FreePlane",
+      "value": 3,
+      "summary": "Cutting with any plane"
+    },
+    {
+      "name": "Horizontal",
+      "value": 1,
+      "summary": "Horizontal cutting"
+    },
+    {
+      "name": "NormalToBodyAxis",
+      "value": 0,
+      "summary": "Perpendicular to the element axis"
+    },
+    {
+      "name": "Vertical",
+      "value": 2,
+      "summary": "Vertical cutting"
+    }
+  ]
+}

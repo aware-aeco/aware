@@ -1,0 +1,562 @@
+{
+  "name": "DisplayMaterial",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayMaterial\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayMaterial.htm",
+  "constructors": [
+    {
+      "name": "DisplayMaterial()",
+      "signature": "public DisplayMaterial()",
+      "summary": "Constructs a default material.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial__ctor.htm"
+    },
+    {
+      "name": "DisplayMaterial(Color)",
+      "signature": "public DisplayMaterial(Color diffuse)",
+      "summary": "Constructs a default material with a specific diffuse color.",
+      "params": [
+        {
+          "name": "diffuse",
+          "type": "System.Drawing.Color",
+          "doc": "Diffuse color of material. The alpha component of the Diffuse color is ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial__ctor_3.htm"
+    },
+    {
+      "name": "DisplayMaterial(DisplayMaterial)",
+      "signature": "public DisplayMaterial(DisplayMaterial other)",
+      "summary": "Duplicate another material.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Display.DisplayMaterial",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.#ctor(Rhino.Display.DisplayMaterial)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial__ctor_1.htm"
+    },
+    {
+      "name": "DisplayMaterial(Material)",
+      "signature": "public DisplayMaterial(Material material)",
+      "summary": "Initializes a new instance of the DisplayMaterial class",
+      "params": [
+        {
+          "name": "material",
+          "type": "Rhino.DocObjects.Material",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.#ctor(Rhino.DocObjects.Material)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial__ctor_2.htm"
+    },
+    {
+      "name": "DisplayMaterial(Color, Double)",
+      "signature": "public DisplayMaterial(Color diffuse, double transparency)",
+      "summary": "Constructs a default material with a specific diffuse color and transparency.",
+      "params": [
+        {
+          "name": "diffuse",
+          "type": "System.Drawing.Color",
+          "doc": "Diffuse color of material. The alpha component of the Diffuse color is ignored.",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "System.Double",
+          "doc": "Transparency factor (0.0 = opaque, 1.0 = transparent)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial__ctor_4.htm"
+    },
+    {
+      "name": "DisplayMaterial(Color, Color, Color, Color, Double, Double)",
+      "signature": "public DisplayMaterial(Color diffuse, Color specular, Color ambient, Color emission, double shine, double transparency)",
+      "summary": "Constructs a material with custom properties.",
+      "params": [
+        {
+          "name": "diffuse",
+          "type": "System.Drawing.Color",
+          "doc": "Diffuse color of material. The alpha component of the Diffuse color is ignored.",
+          "optional": false
+        },
+        {
+          "name": "specular",
+          "type": "System.Drawing.Color",
+          "doc": "Specular color of material. The alpha component of the Specular color is ignored.",
+          "optional": false
+        },
+        {
+          "name": "ambient",
+          "type": "System.Drawing.Color",
+          "doc": "Ambient color of material. The alpha component of the Ambient color is ignored.",
+          "optional": false
+        },
+        {
+          "name": "emission",
+          "type": "System.Drawing.Color",
+          "doc": "Emission color of material. The alpha component of the Emission color is ignored.",
+          "optional": false
+        },
+        {
+          "name": "shine",
+          "type": "System.Double",
+          "doc": "Shine (highlight size) of material.",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "System.Double",
+          "doc": "Transparency of material (0.0 = opaque, 1.0 = transparent)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial__ctor_5.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the DisplayMaterial",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the DisplayMaterial and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_Finalize.htm"
+    },
+    {
+      "name": "GetBitmapTexture",
+      "signature": "public Texture GetBitmapTexture(bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.GetBitmapTexture(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Texture",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.GetBitmapTexture(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_GetBitmapTexture.htm"
+    },
+    {
+      "name": "GetBumpTexture",
+      "signature": "public Texture GetBumpTexture(bool front)",
+      "summary": "Gets the bump texture for this display material.",
+      "params": [
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.GetBumpTexture(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Texture",
+        "doc": "The texture, or null if no bump texture has been added to this material."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_GetBumpTexture.htm"
+    },
+    {
+      "name": "GetEnvironmentTexture",
+      "signature": "public Texture GetEnvironmentTexture(bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.GetEnvironmentTexture(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Texture",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.GetEnvironmentTexture(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_GetEnvironmentTexture.htm"
+    },
+    {
+      "name": "GetTransparencyTexture",
+      "signature": "public Texture GetTransparencyTexture(bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.GetTransparencyTexture(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Texture",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.GetTransparencyTexture(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_GetTransparencyTexture.htm"
+    },
+    {
+      "name": "SetBitmapTexture(String, Boolean)",
+      "signature": "public bool SetBitmapTexture(string filename, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBitmapTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBitmapTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBitmapTexture(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetBitmapTexture_1.htm"
+    },
+    {
+      "name": "SetBitmapTexture(Texture, Boolean)",
+      "signature": "public bool SetBitmapTexture(Texture texture, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.DocObjects.Texture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBitmapTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBitmapTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBitmapTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetBitmapTexture.htm"
+    },
+    {
+      "name": "SetBumpTexture(String, Boolean)",
+      "signature": "public bool SetBumpTexture(string filename, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBumpTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBumpTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBumpTexture(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetBumpTexture_1.htm"
+    },
+    {
+      "name": "SetBumpTexture(Texture, Boolean)",
+      "signature": "public bool SetBumpTexture(Texture texture, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.DocObjects.Texture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBumpTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBumpTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetBumpTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetBumpTexture.htm"
+    },
+    {
+      "name": "SetEnvironmentTexture(String, Boolean)",
+      "signature": "public bool SetEnvironmentTexture(string filename, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetEnvironmentTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetEnvironmentTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetEnvironmentTexture(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetEnvironmentTexture_1.htm"
+    },
+    {
+      "name": "SetEnvironmentTexture(Texture, Boolean)",
+      "signature": "public bool SetEnvironmentTexture(Texture texture, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.DocObjects.Texture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetEnvironmentTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetEnvironmentTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetEnvironmentTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetEnvironmentTexture.htm"
+    },
+    {
+      "name": "SetTransparencyTexture(String, Boolean)",
+      "signature": "public bool SetTransparencyTexture(string filename, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetTransparencyTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetTransparencyTexture(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetTransparencyTexture(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetTransparencyTexture_1.htm"
+    },
+    {
+      "name": "SetTransparencyTexture(Texture, Boolean)",
+      "signature": "public bool SetTransparencyTexture(Texture texture, bool front)",
+      "summary": "",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.DocObjects.Texture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetTransparencyTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022front\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetTransparencyTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayMaterial.SetTransparencyTexture(Rhino.DocObjects.Texture,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayMaterial_SetTransparencyTexture.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackDiffuse",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Diffuse color of the back side of the Material. The alpha component of the color will be ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_BackDiffuse.htm"
+    },
+    {
+      "name": "BackEmission",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Emissive color of the back side of the Material. The alpha component of the color will be ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_BackEmission.htm"
+    },
+    {
+      "name": "BackShine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the shine factor of the back side of the material (0.0 to 1.0)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_BackShine.htm"
+    },
+    {
+      "name": "BackSpecular",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Specular color of the back side of the Material. The alpha component of the color will be ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_BackSpecular.htm"
+    },
+    {
+      "name": "BackTransparency",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the transparency of the back side material (0.0 = opaque to 1.0 = transparent)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_BackTransparency.htm"
+    },
+    {
+      "name": "Diffuse",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Diffuse color of the Material. The alpha component of the color will be ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_Diffuse.htm"
+    },
+    {
+      "name": "Emission",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Emissive color of the Material. The alpha component of the color will be ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_Emission.htm"
+    },
+    {
+      "name": "IsTwoSided",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_IsTwoSided.htm"
+    },
+    {
+      "name": "Shine",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the shine factor of the material (0.0 to 1.0)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_Shine.htm"
+    },
+    {
+      "name": "Specular",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Specular color of the Material. The alpha component of the color will be ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_Specular.htm"
+    },
+    {
+      "name": "Transparency",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the transparency of the material (0.0 = opaque to 1.0 = transparent)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayMaterial_Transparency.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

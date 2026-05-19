@@ -1,0 +1,24 @@
+{
+  "name": "OutputFormat",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "enum",
+  "summary": "Document output formats",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-outputformat-64159",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Pdf",
+      "value": 2,
+      "summary": "Adobe Portable Document Format"
+    },
+    {
+      "name": "Rtf",
+      "value": 1,
+      "summary": "Microsoft Rich Text Format"
+    }
+  ]
+}

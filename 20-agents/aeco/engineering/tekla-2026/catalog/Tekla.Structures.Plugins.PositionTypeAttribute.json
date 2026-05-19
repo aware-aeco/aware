@@ -1,0 +1,58 @@
+{
+  "name": "PositionTypeAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The PositionTypeAttribute class is used for storing the position type of the connection. Based on the type the system will then position the connection in the creation. The attribute is initialized from the custom attribute [PositionType(PositionTypeEnum.COLLISION_PLANE)] in the connection source.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/85869afb-56cb-102f-dc01-3c8aa94b473c",
+  "constructors": [
+    {
+      "name": "PositionTypeAttribute(Int32)",
+      "signature": "public PositionTypeAttribute(int Type)",
+      "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The position type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/36e2152e-276f-da8a-f0ac-f36c39129a6e"
+    },
+    {
+      "name": "PositionTypeAttribute(PositionTypeEnum)",
+      "signature": "public PositionTypeAttribute(PositionTypeEnum Type)",
+      "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.PositionTypeEnum",
+          "doc": "The position type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5f6d7530-60a1-008f-378a-1cbedd8c5a2a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "PositionTypeEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6063b3bf-6d52-e52f-1b07-535c11639f30"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,90 @@
+{
+  "name": "AnalysisPartCompositeProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartCompositeProperties class contains information related to analysis part composite properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fca7e2a4-a548-78fa-dc81-d2d64f7c25db",
+  "constructors": [
+    {
+      "name": "AnalysisPartCompositeProperties",
+      "signature": "public AnalysisPartCompositeProperties()",
+      "summary": "Initializes a new instance of the AnalysisPartCompositeProperties class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98248c1f-fbe0-5b8c-af6a-3137a20504c0"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CompositeBeamSlabMaterial",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam slab material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ac2689ad-633b-ed29-6c48-9e9bded7cae0"
+    },
+    {
+      "name": "CompositeBeamSlabThickness",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam slab thickness.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f26bc12f-6c3f-d60b-e393-f6a00bd32034"
+    },
+    {
+      "name": "CompositeBeamType",
+      "type": "AnalysisPartCompositeProperties.CompositeBeamEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed619da6-8ab5-f269-193f-193eda60d4af"
+    },
+    {
+      "name": "CompositeBeamWidthFromSpanFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam width from span factor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/04ae3968-d737-3eb4-20eb-baaa4d5df589"
+    },
+    {
+      "name": "CompositeBeamWidthLeft",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam width left.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1e7fadb0-f242-6eca-8494-c52593cf24db"
+    },
+    {
+      "name": "CompositeBeamWidthModeLeft",
+      "type": "AnalysisPartCompositeProperties.CompositeBeamWidthEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam width mode left.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fbaff13f-9331-51be-d054-bc84d423b1ee"
+    },
+    {
+      "name": "CompositeBeamWidthModeRight",
+      "type": "AnalysisPartCompositeProperties.CompositeBeamWidthEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam width mode right.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c010fac5-0f41-e91e-7c5d-dd14c3475377"
+    },
+    {
+      "name": "CompositeBeamWidthRight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The composite beam width right.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/45e43f6d-f180-91c2-cc64-665e2c8489a9"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "LineHelpConstruction",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Geometry.LineHelpConstruction.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/LineHelpConstruction/",
+  "constructors": [
+    {
+      "name": "LineHelpConstruction",
+      "signature": "LineHelpConstruction(element: LineHelpConstruction)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "LineHelpConstruction",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/LineHelpConstruction/#NemAll_Python_Geometry.LineHelpConstruction.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Line",
+      "type": "Line2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Help construction geometry - Line2D",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/LineHelpConstruction/#NemAll_Python_Geometry.LineHelpConstruction.Line"
+    },
+    {
+      "name": "Vector",
+      "type": "Vector2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Tangent vector",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/LineHelpConstruction/#NemAll_Python_Geometry.LineHelpConstruction.Vector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,240 @@
+{
+  "name": "DocumentCurrentSelection",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The current selection in a Document",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.Selection CreateCopy()",
+      "summary": "Creates a copy of the Selection associated with this object",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Selection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.CreateCopy"
+    },
+    {
+      "name": "ToSelection",
+      "signature": "Autodesk.Navisworks.Api.Selection ToSelection()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Selection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.ToSelection"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.Selection op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Selection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection%29~Autodesk.Navisworks.Api.Selection"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Adds a ModelItem to the Selection",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "The ModelItem we wish to add to the selection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.Add%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "AddRange",
+      "signature": "void AddRange(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E range)",
+      "summary": "Adds a range of ModelItem to the Selection",
+      "params": [
+        {
+          "name": "range",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+          "doc": "The ModelItems we wish to add to the selection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.AddRange%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.ModelItem%7D%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Removes all entries from",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.Clear"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.ModelItemCollection from)",
+      "summary": "Copies the ModelItems from a ModelItemCollection and replaces the list of entries held in SelectedItems",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "doc": "The ModelItems to reference for this operation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.CopyFrom%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.Selection selection)",
+      "summary": "Copies the Selection from selection and replaces the list of entries held in SelectedItems",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.Selection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.CopyFrom%28Autodesk.Navisworks.Api.Selection%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.SelectionSourceCollection selectionSources)",
+      "summary": "Updates the SelectionSources in Selection from selectionSources and replaces the list of entries held in SelectedItems",
+      "params": [
+        {
+          "name": "selectionSources",
+          "type": "Autodesk.Navisworks.Api.SelectionSourceCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.CopyFrom%28Autodesk.Navisworks.Api.SelectionSourceCollection%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E from)",
+      "summary": "Copies the ModelItems from a IEnumerable\u003EModelItem\u003C and replaces the list of entries held in SelectedItems",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+          "doc": "The ModelItems to reference for this operation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.CopyFrom%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.ModelItem%7D%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "void Remove(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Removes a ModelItem from the Selection",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "The ModelItems we wish to remove from the selection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.Remove%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "SelectAll",
+      "signature": "void SelectAll()",
+      "summary": "Selects all the ModelItems in the current document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.SelectAll"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true when there are no ModelItems in the selection",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.IsEmpty"
+    },
+    {
+      "name": "SelectedItems",
+      "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of instances of ModelItem in this Selection",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.SelectedItems"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.Selection",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the current selection within the document",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changed",
+      "summary": "Occurs when the Selection contained in this object has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the Selection contained in this object is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,225 @@
+{
+  "name": "PhysicallyBasedMaterial.ParametersNames",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Helper class with fields containing the names of fields available in our PBR implementation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PhysicallyBasedMaterial_ParametersNames.htm",
+  "constructors": [
+    {
+      "name": "PhysicallyBasedMaterial.ParametersNames",
+      "signature": "public ParametersNames()",
+      "summary": "Initializes a new instance of the PhysicallyBasedMaterial.ParametersNames class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PhysicallyBasedMaterial_ParametersNames__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AmbientOcclusion",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_AmbientOcclusion.htm"
+    },
+    {
+      "name": "Anisotropic",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Anisotropic.htm"
+    },
+    {
+      "name": "AnisotropicRotation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_AnisotropicRotation.htm"
+    },
+    {
+      "name": "BaseColor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_BaseColor.htm"
+    },
+    {
+      "name": "BRDF",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_BRDF.htm"
+    },
+    {
+      "name": "Bump",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Bump.htm"
+    },
+    {
+      "name": "Clearcoat",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Clearcoat.htm"
+    },
+    {
+      "name": "ClearcoatBump",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_ClearcoatBump.htm"
+    },
+    {
+      "name": "ClearcoatRoughness",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_ClearcoatRoughness.htm"
+    },
+    {
+      "name": "Displacement",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Displacement.htm"
+    },
+    {
+      "name": "Emission",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Emission.htm"
+    },
+    {
+      "name": "Metallic",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Metallic.htm"
+    },
+    {
+      "name": "Normal",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Normal.htm"
+    },
+    {
+      "name": "Opacity",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Opacity.htm"
+    },
+    {
+      "name": "OpacityIor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_OpacityIor.htm"
+    },
+    {
+      "name": "OpacityRoughness",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_OpacityRoughness.htm"
+    },
+    {
+      "name": "Roughness",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Roughness.htm"
+    },
+    {
+      "name": "Sheen",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Sheen.htm"
+    },
+    {
+      "name": "SheenTint",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_SheenTint.htm"
+    },
+    {
+      "name": "Smudge",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Smudge.htm"
+    },
+    {
+      "name": "Specular",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Specular.htm"
+    },
+    {
+      "name": "SpecularTint",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_SpecularTint.htm"
+    },
+    {
+      "name": "Subsurface",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_Subsurface.htm"
+    },
+    {
+      "name": "SubsurfaceScatteringColor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_SubsurfaceScatteringColor.htm"
+    },
+    {
+      "name": "SubsurfaceScatteringRadius",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Obsolete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PhysicallyBasedMaterial_ParametersNames_SubsurfaceScatteringRadius.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

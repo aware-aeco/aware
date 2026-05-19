@@ -1,0 +1,58 @@
+{
+  "name": "LayoutMasterLegendData",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Representation of a legend inside a print layout.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterLegendData/",
+  "constructors": [
+    {
+      "name": "LayoutMasterLegendData",
+      "signature": "LayoutMasterLegendData()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterLegendData/#NemAll_Python_BaseElements.LayoutMasterLegendData.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the file ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterLegendData/#NemAll_Python_BaseElements.LayoutMasterLegendData.FileID"
+    },
+    {
+      "name": "ItemID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the item ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterLegendData/#NemAll_Python_BaseElements.LayoutMasterLegendData.ItemID"
+    },
+    {
+      "name": "LegendName",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the legend name :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterLegendData/#NemAll_Python_BaseElements.LayoutMasterLegendData.LegendName"
+    },
+    {
+      "name": "PathID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the path ID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterLegendData/#NemAll_Python_BaseElements.LayoutMasterLegendData.PathID"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

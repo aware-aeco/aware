@@ -1,0 +1,269 @@
+{
+  "name": "LcUInt32Vector",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUInt32Vector class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+  "constructors": [
+    {
+      "name": "LcUInt32Vector()",
+      "signature": "LcUInt32Vector()",
+      "summary": "Constructs a new LcUInt32Vector.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.%23ctor"
+    },
+    {
+      "name": "LcUInt32Vector(Autodesk.Navisworks.Api.Interop.LcUInt32Vector)",
+      "signature": "LcUInt32Vector(Autodesk.Navisworks.Api.Interop.LcUInt32Vector x)",
+      "summary": "Constructs a new LcUInt32Vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.%23ctor%28Autodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Compare",
+      "signature": "int Compare(Autodesk.Navisworks.Api.Interop.LcUInt32Vector to)",
+      "summary": "Compare method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.Compare%28Autodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "Find",
+      "signature": "int Find(int to_find)",
+      "summary": "Find method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "to_find",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.Find%28System.Int32%29"
+    },
+    {
+      "name": "ItemAt",
+      "signature": "int ItemAt(int index)",
+      "summary": "ItemAt method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.ItemAt%28System.Int32%29"
+    },
+    {
+      "name": "Size",
+      "signature": "int Size()",
+      "summary": "Size method of LcUInt32Vector.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.Size"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUInt32Vector InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of LcUInt32Vector.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.Clear"
+    },
+    {
+      "name": "PopBack",
+      "signature": "void PopBack()",
+      "summary": "PopBack method of LcUInt32Vector.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.PopBack"
+    },
+    {
+      "name": "PushBack",
+      "signature": "void PushBack(int x)",
+      "summary": "PushBack method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.PushBack%28System.Int32%29"
+    },
+    {
+      "name": "Reserve",
+      "signature": "void Reserve(int n)",
+      "summary": "Reserve method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.Reserve%28System.Int32%29"
+    },
+    {
+      "name": "SetFrom",
+      "signature": "void SetFrom(Autodesk.Navisworks.Api.Interop.LcUInt32Vector x)",
+      "summary": "SetFrom method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.SetFrom%28Autodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "SetSize",
+      "signature": "void SetSize(int size)",
+      "summary": "SetSize method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.SetSize%28System.Int32%29"
+    },
+    {
+      "name": "Swap",
+      "signature": "void Swap(Autodesk.Navisworks.Api.Interop.LcUInt32Vector x)",
+      "summary": "Swap method of LcUInt32Vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.Swap%28Autodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUInt32Vector.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUInt32Vector.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

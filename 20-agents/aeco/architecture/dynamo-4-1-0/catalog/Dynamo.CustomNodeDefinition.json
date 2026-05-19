@@ -1,0 +1,166 @@
+{
+  "name": "CustomNodeDefinition",
+  "namespace": "Dynamo",
+  "kind": "class",
+  "summary": "Compiler definition of a Custom Node.",
+  "interfaces": [
+    "Dynamo.Engine.IFunctionDescriptor"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs",
+  "constructors": [
+    {
+      "name": "CustomNodeDefinition(System.Guid, string, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E)",
+      "signature": "void CustomNodeDefinition(System.Guid functionId, string displayName, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodeModels)",
+      "summary": "This function creates CustomNodeDefinition.",
+      "params": [
+        {
+          "name": "functionId",
+          "type": "System.Guid",
+          "doc": "Custom node unique ID",
+          "optional": false
+        },
+        {
+          "name": "displayName",
+          "type": "string",
+          "doc": "Custom node name",
+          "optional": false
+        },
+        {
+          "name": "nodeModels",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "Nodes inside custom node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ContainsInvalidInput",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether any of this definition\u0027s input parameters are invalid. An input is invalid when its input expression fails to parse. For example, this would happen if the input name contained spaces or illegal characters.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "Dependencies",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeDefinition\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns all custom node definitions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "DirectDependencies",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeDefinition\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns custom node definitions for direct dependencies.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "User friendly name on UI.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "DisplayParameters",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "User-friendly parameters",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "FunctionBody",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModels making up the body of the custom node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "FunctionId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Function unique ID.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "FunctionName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Function name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "IsProxy",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this CustomNodeDefinition properly loaded?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "MangledName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name to create custom node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "OutputNodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifiers associated with the outputs of the custom node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "Parameters",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Function parameters.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "ReturnKeys",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "If the function returns a dictionary, this specifies all keys in that dictionary.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "ReturnType",
+      "type": "ProtoCore.Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Return type.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "Returns",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003Cstring, string\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The collection of output name and its description.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

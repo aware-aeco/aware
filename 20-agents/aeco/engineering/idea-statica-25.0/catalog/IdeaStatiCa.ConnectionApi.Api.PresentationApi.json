@@ -1,0 +1,77 @@
+{
+  "name": "PresentationApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Presentation endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PresentationApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDataScene3DAsync",
+      "signature": "Task\u003CDrawData\u003E GetDataScene3DAsync(Guid projectId, int connectionId)",
+      "summary": "Returns data for Scene3D visualization.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection to be presented in Scene3D.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawData",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PresentationApi.md"
+    },
+    {
+      "name": "GetDataScene3DTextAsync",
+      "signature": "Task\u003Cstring\u003E GetDataScene3DTextAsync(Guid projectId, int connectionId)",
+      "summary": "Returns serialized data for Scene3D in JSON format.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection to be presented.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PresentationApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

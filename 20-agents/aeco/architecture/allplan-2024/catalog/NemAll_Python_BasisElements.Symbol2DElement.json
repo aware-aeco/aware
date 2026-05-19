@@ -1,0 +1,75 @@
+{
+  "name": "Symbol2DElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Symbol2DElement class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/",
+  "constructors": [
+    {
+      "name": "Symbol2DElement",
+      "signature": "Symbol2DElement() | Symbol2DElement(commonProp, Symbol2DProp, geometryObject)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/#NemAll_Python_BasisElements.Symbol2DElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSymbol2DProperties",
+      "signature": "GetSymbol2DProperties()",
+      "summary": "Get the Symbol2D properties",
+      "remarks": "Get the Symbol2D properties",
+      "params": [],
+      "returns": {
+        "type": "Symbol2DProperties",
+        "doc": "Symbol2D properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/#NemAll_Python_BasisElements.Symbol2DElement.GetSymbol2DProperties"
+    },
+    {
+      "name": "SetSymbol2DProperties",
+      "signature": "SetSymbol2DProperties(symbol2DProp)",
+      "summary": "Set the Symbol2D properties",
+      "remarks": "Set the Symbol2D properties",
+      "params": [
+        {
+          "name": "symbol2DProp",
+          "type": "Symbol2DProperties",
+          "doc": "Symbol2D properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/#NemAll_Python_BasisElements.Symbol2DElement.SetSymbol2DProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/#NemAll_Python_BasisElements.Symbol2DElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

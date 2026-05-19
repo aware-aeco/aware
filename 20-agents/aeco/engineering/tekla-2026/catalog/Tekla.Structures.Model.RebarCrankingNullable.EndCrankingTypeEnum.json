@@ -1,0 +1,29 @@
+{
+  "name": "RebarCrankingNullable.EndCrankingTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The end cranking type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/db0dacf9-363d-f0b3-37c1-4a9eb2eaba1c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NO_CRANKING",
+      "value": 0,
+      "summary": "No cranking."
+    },
+    {
+      "name": "CUSTOM_CRANKING",
+      "value": 1,
+      "summary": "Custom cranking."
+    },
+    {
+      "name": "STANDARD_CRANKING",
+      "value": 2,
+      "summary": "Standard cranking."
+    }
+  ]
+}

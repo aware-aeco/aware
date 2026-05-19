@@ -1,0 +1,29 @@
+{
+  "name": "DotPrintToMultipleSheet",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The print to multiple sheet type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2937328b-0757-f390-dd0a-dfc66159f212",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Off",
+      "value": 0,
+      "summary": "Off."
+    },
+    {
+      "name": "LeftToRightAndTopToBottom",
+      "value": 1,
+      "summary": "Left to right and top to bottom."
+    },
+    {
+      "name": "BottomToTopAndRightToLeft",
+      "value": 2,
+      "summary": "Bottom to top and right to left."
+    }
+  ]
+}

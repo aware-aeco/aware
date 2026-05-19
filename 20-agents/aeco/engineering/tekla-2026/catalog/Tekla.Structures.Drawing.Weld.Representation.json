@@ -1,0 +1,24 @@
+{
+  "name": "Weld.Representation",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The weld representations.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ddf07234-73d3-b433-f405-508278135d49",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Outline",
+      "value": 1,
+      "summary": "The outline solid representation."
+    },
+    {
+      "name": "Path",
+      "value": 2,
+      "summary": "The path representation."
+    }
+  ]
+}

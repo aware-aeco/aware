@@ -1,0 +1,76 @@
+{
+  "name": "CompilerUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type CompilerUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PreCompile(string, ProtoCore.Core, ProtoCore.AST.AssociativeAST.CodeBlockNode, ref int)",
+      "signature": "ProtoCore.BuildStatus PreCompile(string code, ProtoCore.Core core, ProtoCore.AST.AssociativeAST.CodeBlockNode codeBlock, ref int blockId)",
+      "summary": "Does the first pass of compilation and returns a list of wanrnings in compilation",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "codeBlock",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "ref int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.BuildStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "TryLoadAssemblyIntoCore(ProtoCore.Core, string)",
+      "signature": "bool TryLoadAssemblyIntoCore(ProtoCore.Core core, string assemblyPath)",
+      "summary": "CompilerUtils.TryLoadAssemblyIntoCore",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "assemblyPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,297 @@
+{
+  "name": "GH_MouseTracker",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Record mouse-movements over time.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_MouseTracker.htm",
+  "constructors": [
+    {
+      "name": "GH_MouseTracker()",
+      "signature": "public GH_MouseTracker()",
+      "summary": "Create a new mouse tracker.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker__ctor.htm"
+    },
+    {
+      "name": "GH_MouseTracker(Point)",
+      "signature": "public GH_MouseTracker(Point initialPosition)",
+      "summary": "Create a new mouse tracker.",
+      "params": [
+        {
+          "name": "initialPosition",
+          "type": "System.Drawing.Point",
+          "doc": "First point in tracker.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker__ctor_1.htm"
+    },
+    {
+      "name": "GH_MouseTracker(Point, Object)",
+      "signature": "public GH_MouseTracker(Point initialPosition, Object tag)",
+      "summary": "Create a new mouse tracker.",
+      "params": [
+        {
+          "name": "initialPosition",
+          "type": "System.Drawing.Point",
+          "doc": "First point in tracker.",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "doc": "First tag in tracker.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Deviation()",
+      "signature": "public double Deviation()",
+      "summary": "Gets the maximum deviation of the recorded mouse path. The maximum deviation is the furthest distance the mouse has been from the first point in the history record.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_Deviation.htm"
+    },
+    {
+      "name": "Deviation(DateTime, DateTime)",
+      "signature": "public double Deviation(DateTime t0, DateTime t1)",
+      "summary": "Gets the maximum deviation of the recorded mouse path. The maximum deviation is the furthest distance the mouse has been from the first point in the history span. It does not measure the largest deviation between any two points in the time span, only the first and any subsequent point.",
+      "params": [
+        {
+          "name": "t0",
+          "type": "System.DateTime",
+          "doc": "Represents the earliest time to include.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.DateTime",
+          "doc": "Represents the latest time to include.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_Deviation_1.htm"
+    },
+    {
+      "name": "DropFrames(DateTime)",
+      "signature": "public void DropFrames(DateTime timeLimit)",
+      "summary": "Drop all frames older than a given limit.",
+      "params": [
+        {
+          "name": "timeLimit",
+          "type": "System.DateTime",
+          "doc": "All frames older than the limit will be dropped.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_DropFrames.htm"
+    },
+    {
+      "name": "DropFrames(Double)",
+      "signature": "public void DropFrames(double deviation)",
+      "summary": "Find the youngest frame that deviates too much from the current locus and drop it and everything preceding it.",
+      "params": [
+        {
+          "name": "deviation",
+          "type": "System.Double",
+          "doc": "Local deviation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_DropFrames_1.htm"
+    },
+    {
+      "name": "DropFrames(Double, Point)",
+      "signature": "public void DropFrames(double deviation, Point anchor)",
+      "summary": "Find the youngest frame that deviates too much from the given locus and drop it and everything preceding it.",
+      "params": [
+        {
+          "name": "deviation",
+          "type": "System.Double",
+          "doc": "Local deviation.",
+          "optional": false
+        },
+        {
+          "name": "anchor",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_DropFrames_2.htm"
+    },
+    {
+      "name": "LastFrameWithinDeviation",
+      "signature": "public int LastFrameWithinDeviation(double deviation)",
+      "summary": "Starting from the youngest frame, finds the oldest frame that is still within a maximum deviation of the youngest frame.",
+      "params": [
+        {
+          "name": "deviation",
+          "type": "System.Double",
+          "doc": "Maximum allowed deviation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the oldest frame with a distance less than the deviation from the youngest frame, or -1 if no such frame could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_LastFrameWithinDeviation.htm"
+    },
+    {
+      "name": "Record(Point)",
+      "signature": "public void Record(Point position)",
+      "summary": "Record a new mouse event frame. If this frame is closer than [Accuracy]ms to the previously recorded frame, it is not included.",
+      "params": [
+        {
+          "name": "position",
+          "type": "System.Drawing.Point",
+          "doc": "Location of new frame.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_Record.htm"
+    },
+    {
+      "name": "Record(Point, Object)",
+      "signature": "public void Record(Point position, Object tag)",
+      "summary": "Record a new mouse event frame. If this frame is closer than [Accuracy]ms to the previously recorded frame, it is not included.",
+      "params": [
+        {
+          "name": "position",
+          "type": "System.Drawing.Point",
+          "doc": "Location of new frame.",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_Record_1.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MouseTracker_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Duration",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the timespan that has passed between the oldest and youngest recorded frames. This is not the same as the time that has passed since recording began.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_Duration.htm"
+    },
+    {
+      "name": "Frame",
+      "type": "GH_TrackerFrame",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the position (in control coordinates) of the frame at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_Frame.htm"
+    },
+    {
+      "name": "FrameCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of recorded frames.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_FrameCount.htm"
+    },
+    {
+      "name": "MaximumDuration",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum allowed duration of the entire record. When new frames are recorded, old frames that are more distant than MaximumDuration will be dropped. The default duration is 10 seconds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_MaximumDuration.htm"
+    },
+    {
+      "name": "MaximumFrameCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum number of frames to keep in history. If more frames are added, the oldest ones will be dropped. The default is 16,384 frames.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_MaximumFrameCount.htm"
+    },
+    {
+      "name": "NewestFrame",
+      "type": "GH_TrackerFrame",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the most recent frame in recorded history.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_NewestFrame.htm"
+    },
+    {
+      "name": "OldestFrame",
+      "type": "GH_TrackerFrame",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the oldest frame in recorded history.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_OldestFrame.htm"
+    },
+    {
+      "name": "TemporalAccuracy",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum temporal accuracy. Frames that are closer together than the accuracy will not be recorded. The default accuracy equals 5ms.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MouseTracker_TemporalAccuracy.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
